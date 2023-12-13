@@ -1,5 +1,6 @@
 ---
-tags: [{{VALUE:Tags}}]
+tags:
+{{VALUE:Tags}}<% tp.file.cursor(0) %>
 aliases:
   - {{VALUE:Date}}
   - {{VALUE:Note}}
@@ -9,4 +10,4 @@ mtime: {{VALUE:Time}}
 
 # {{VALUE:Note}}
 
-<% tp.file.cursor() %>
+<% tp.file.cursor(1) %>

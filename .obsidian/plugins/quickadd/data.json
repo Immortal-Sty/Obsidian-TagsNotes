@@ -62,18 +62,6 @@
           }
         },
         {
-          "name": "Linter: 格式化当前文件",
-          "type": "Obsidian",
-          "id": "9e01abdc-8e17-4965-96a3-7275fecf261e",
-          "commandId": "obsidian-linter:lint-file"
-        },
-        {
-          "name": "Templater: Jump to next cursor location",
-          "type": "Obsidian",
-          "id": "eb02661c-d73d-4368-a11e-833ec7e6f12b",
-          "commandId": "templater-obsidian:jump-to-next-cursor-location"
-        },
-        {
           "name": "将焦点切换至编辑区",
           "type": "Obsidian",
           "id": "44139f74-4043-493e-b1a1-38b8ae0be7d1",
