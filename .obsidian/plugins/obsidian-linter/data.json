@@ -255,7 +255,12 @@
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
-  "lintCommands": [],
+  "lintCommands": [
+    {
+      "id": "oz-clear-unused-images:clear-images-obsidian",
+      "name": "Clear Unused Images: Clear Unused Images"
+    }
+  ],
   "customRegexes": [],
   "commonStyles": {
     "aliasArrayStyle": "multi-line",
