@@ -1,0 +1,12 @@
+/* 图片设计，左侧边，居中，绿色背景*/
+img{
+  width: auto; /* 对于其他图片保持原始宽度 */
+  height: auto; /* 保持图片的高宽比 */
+  border: 1px solid #4891E1E1; /* 边框颜色和宽度 */
+  padding: 0px; /* 边框内的填充 */
+  background-color: white; /* 边框内部的背景颜色 */
+  display: block;
+  margin: 16px auto; /* 图片上下的间距，并在页面中居中显示 */
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.2); /* 阴影效果 */
+  border-radius: 15px; /* 边框圆角 */
+}

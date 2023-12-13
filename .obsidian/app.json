@@ -1,0 +1,22 @@
+{
+  "strictLineBreaks": true,
+  "propertiesInDocument": "source",
+  "showLineNumber": true,
+  "spellcheck": false,
+  "autoPairBrackets": false,
+  "autoPairMarkdown": true,
+  "vimMode": true,
+  "trashOption": "local",
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "relative",
+  "showUnsupportedFiles": true,
+  "useMarkdownLinks": true,
+  "attachmentFolderPath": "Images",
+  "userIgnoreFilters": [
+    "/\\.(pn|jpe?|sv)g$/"
+  ],
+  "showInlineTitle": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "Notes"
+}

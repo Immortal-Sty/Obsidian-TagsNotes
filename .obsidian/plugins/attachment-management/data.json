@@ -1,0 +1,18 @@
+{
+  "attachPath": {
+    "attachmentRoot": "Images",
+    "saveAttE": "inFolderBelow",
+    "attachmentPath": "${notename}",
+    "attachFormat": "${notename}-${date}-${originalname}",
+    "type": "GLOBAL"
+  },
+  "dateFormat": "YYYYMMDDHHmmssSSS",
+  "excludeExtensionPattern": "",
+  "autoRenameAttachment": true,
+  "excludedPaths": "Template",
+  "excludePathsArray": [
+    "Template"
+  ],
+  "excludeSubpaths": true,
+  "overridePath": {}
+}
