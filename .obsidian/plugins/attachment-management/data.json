@@ -2,7 +2,7 @@
   "attachPath": {
     "attachmentRoot": "Images",
     "saveAttE": "inFolderBelow",
-    "attachmentPath": "${notename}",
+    "attachmentPath": "",
     "attachFormat": "${notename}-${date}-${originalname}",
     "type": "GLOBAL"
   },
