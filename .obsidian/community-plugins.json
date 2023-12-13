@@ -7,5 +7,7 @@
   "attachment-management",
   "quickadd",
   "metaedit",
-  "obsidian-frontmatter-tag-suggest"
+  "obsidian-frontmatter-tag-suggest",
+  "obsidian-relative-line-numbers",
+  "oz-clear-unused-images"
 ]

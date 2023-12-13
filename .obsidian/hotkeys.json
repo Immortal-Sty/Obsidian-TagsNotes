@@ -153,5 +153,23 @@
       ],
       "key": "Delete"
     }
+  ],
+  "editor:toggle-checklist-status": [],
+  "editor:toggle-source": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "/"
+    }
+  ],
+  "workspace:new-tab": [],
+  "app:reload": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "0"
+    }
   ]
 }
