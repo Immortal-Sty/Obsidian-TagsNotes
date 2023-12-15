@@ -171,5 +171,33 @@
       ],
       "key": "0"
     }
+  ],
+  "cm-typewriter-scroll-obsidian:toggle-typewriter-sroll": [
+    {
+      "modifiers": [],
+      "key": "F9"
+    }
+  ],
+  "cm-typewriter-scroll-obsidian:toggle-typewriter-sroll-zen": [
+    {
+      "modifiers": [],
+      "key": "F8"
+    }
+  ],
+  "editor:focus": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ],
+  "obsidian-hider:toggle-tab-containers": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "F"
+    }
   ]
 }
