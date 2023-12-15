@@ -1,0 +1,3 @@
+.view-header-title-container.mod-at-start.mod-fade :not(:hover) {
+  opacity: 0;
+}
