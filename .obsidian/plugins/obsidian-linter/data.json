@@ -261,7 +261,14 @@
       "name": "Clear Unused Images: Clear Unused Images"
     }
   ],
-  "customRegexes": [],
+  "customRegexes": [
+    {
+      "label": "",
+      "find": "(?<=([^\\\\]|^)\\[(([^\\]\\r\\n]|\\\\\\])*[^\\\\\\]\\r\\n])?(\\\\\\\\)*\\]\\()\\/?(?<link>([^\\.\\\\\\)\\/\\:\\r\\n]|\\.[^\\.\\\\\\)\\/\\:\\r\\n]|\\.\\.[^\\\\\\)\\/\\:\\r\\n]|\\\\[^\\\\\\/\\:\\r\\n])(([^\\)\\:\\r\\n]|\\\\\\))*[^\\\\\\)\\:\\r\\n])?(\\\\\\\\)*|\\.{1,2})(?=\\))",
+      "replace": "./$<link>",
+      "flags": "gm"
+    }
+  ],
   "commonStyles": {
     "aliasArrayStyle": "multi-line",
     "tagArrayStyle": "multi-line",
