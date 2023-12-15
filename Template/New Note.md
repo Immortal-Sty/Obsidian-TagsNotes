@@ -1,6 +1,6 @@
 ---
 tags:
-{{VALUE:Tags}}<% tp.file.cursor(0) %>
+{{VALUE:Tags}}
 aliases:
   - {{VALUE:Date}}
   - {{VALUE:Note}}

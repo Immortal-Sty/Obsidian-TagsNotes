@@ -9,7 +9,7 @@ module.exports = async (params) => {
 
     let first = true;
     let tagList = await getPropertyValue("tags", app.workspace.getActiveFile());
-    if (tagList) {
+    if (tagList.length) {
         for (let i of tagList) {
             if (first) {
                 params.variables["Tags"] = "  - " + i;
@@ -19,7 +19,7 @@ module.exports = async (params) => {
             }
         }
     } else {
-        params.variables["Tags"] = "  - ";
+        params.variables["Tags"] = "  - <% tp.file.cursor(0) %>";
     }
     // params.variables["Tags"] = await getPropertyValue("tags", app.workspace.getActiveFile());
     params.variables["Note"] = await inputPrompt("📕 Note Name");
