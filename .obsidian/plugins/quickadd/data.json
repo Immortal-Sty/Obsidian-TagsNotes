@@ -13,6 +13,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "38222a40-737b-4d3a-a3c3-893b34f226fb"
+    },
+    {
+      "id": "4bf80663-0d47-406b-a234-4ecfa5657c30",
+      "name": "Hide Title Bar",
+      "type": "Macro",
+      "command": true,
+      "macroId": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04"
     }
   ],
   "macros": [
@@ -88,6 +95,22 @@
           "path": "Template/JavaScript/Toggle Snippets.js",
           "settings": {
             "CSS 片段文件名": "状态栏自动隐藏_外部"
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Hide Title Bar",
+      "id": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04",
+      "commands": [
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "da980873-6bdf-49f1-936b-c778e4d7d636",
+          "path": "Template/JavaScript/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "标题栏自动隐藏_外部"
           }
         }
       ],

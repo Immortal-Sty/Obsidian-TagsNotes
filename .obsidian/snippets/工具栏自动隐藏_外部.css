@@ -10,7 +10,7 @@ body {
 }
 body .workspace-ribbon.side-dock-ribbon.mod-left {
   position: absolute;
-  transform: translateX(calc(3px - 100%));
+  transform: translateX(calc(10px - 100%));
   transition: transform 300ms 150ms;
   bottom: 0px;
   left: 0px;

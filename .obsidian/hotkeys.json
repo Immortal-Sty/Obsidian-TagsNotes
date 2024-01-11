@@ -290,5 +290,15 @@
       ],
       "key": "1"
     }
+  ],
+  "quickadd:choice:4bf80663-0d47-406b-a234-4ecfa5657c30": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "3"
+    }
   ]
 }
