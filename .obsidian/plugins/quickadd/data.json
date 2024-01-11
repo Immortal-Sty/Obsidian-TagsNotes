@@ -20,6 +20,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04"
+    },
+    {
+      "id": "cf2eaf10-d353-4bbe-9ef2-1a7d7bc35b95",
+      "name": "Hide Tab Bar",
+      "type": "Macro",
+      "command": true,
+      "macroId": "e716715d-b07c-41c9-9572-32f42649730d"
     }
   ],
   "macros": [
@@ -111,6 +118,22 @@
           "path": "Template/JavaScript/Toggle Snippets.js",
           "settings": {
             "CSS 片段文件名": "标题栏自动隐藏_外部"
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Hide Tab Bar",
+      "id": "e716715d-b07c-41c9-9572-32f42649730d",
+      "commands": [
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "11a77c5b-2223-4b85-80c4-c131863375bb",
+          "path": "Template/JavaScript/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "标签页隐藏_外部"
           }
         }
       ],

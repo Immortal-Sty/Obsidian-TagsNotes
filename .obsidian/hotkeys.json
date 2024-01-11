@@ -298,6 +298,16 @@
         "Mod",
         "Shift"
       ],
+      "key": "2"
+    }
+  ],
+  "quickadd:choice:cf2eaf10-d353-4bbe-9ef2-1a7d7bc35b95": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
       "key": "3"
     }
   ]
