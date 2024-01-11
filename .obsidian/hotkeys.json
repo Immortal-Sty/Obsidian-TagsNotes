@@ -310,5 +310,8 @@
       ],
       "key": "3"
     }
-  ]
+  ],
+  "various-complements:add-word-custom-dictionary": [],
+  "various-complements:reload-custom-dictionaries": [],
+  "various-complements:show-suggestions": []
 }
