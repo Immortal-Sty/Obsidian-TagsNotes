@@ -9,9 +9,9 @@
   "dateFormat": "YYYYMMDDHHmmssSSS",
   "excludeExtensionPattern": "",
   "autoRenameAttachment": true,
-  "excludedPaths": "Template",
+  "excludedPaths": "Template\nLATEX",
   "excludePathsArray": [
-    "Template"
+    "Template\nLATEX"
   ],
   "excludeSubpaths": true,
   "overridePath": {}

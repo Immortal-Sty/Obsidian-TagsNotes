@@ -1,7 +1,7 @@
 {
   "deleteOption": ".trash",
-  "logsModal": false,
-  "excludedFolders": "Template",
+  "logsModal": true,
+  "excludedFolders": "Template\nLATEX",
   "ribbonIcon": false,
-  "excludeSubfolders": false
+  "excludeSubfolders": true
 }

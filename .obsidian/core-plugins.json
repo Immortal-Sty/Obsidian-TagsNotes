@@ -1,13 +1,10 @@
 [
   "file-explorer",
-  "global-search",
-  "graph",
   "backlink",
   "outgoing-link",
   "tag-pane",
   "properties",
   "page-preview",
   "markdown-importer",
-  "outline",
   "file-recovery"
 ]

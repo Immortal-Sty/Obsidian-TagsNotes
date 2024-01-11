@@ -21,7 +21,7 @@
       "default-array-style": "multi-line",
       "default-array-keys": true,
       "force-single-line-array-style": "",
-      "force-multi-line-array-style": ""
+      "force-multi-line-array-style": "aliases"
     },
     "insert-yaml-attributes": {
       "enabled": false,
@@ -57,7 +57,7 @@
       "mode": "first-h1-or-filename-if-h1-missing"
     },
     "yaml-title-alias": {
-      "enabled": false,
+      "enabled": true,
       "preserve-existing-alias-section-style": true,
       "keep-alias-that-matches-the-filename": false,
       "use-yaml-key-to-keep-track-of-old-filename-or-heading": true
@@ -251,7 +251,9 @@
   "settingsConvertedToConfigKeyValues": true,
   "foldersToIgnore": [
     "Images",
-    "Template"
+    "LATEX",
+    "Template",
+    "Template/JavaScript"
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
@@ -263,8 +265,8 @@
   ],
   "customRegexes": [
     {
-      "label": "",
-      "find": "(?<=([^\\\\]|^)\\[(([^\\]\\r\\n]|\\\\\\])*[^\\\\\\]\\r\\n])?(\\\\\\\\)*\\]\\()\\/?(?<link>([^\\.\\\\\\)\\/\\:\\r\\n]|\\.[^\\.\\\\\\)\\/\\:\\r\\n]|\\.\\.[^\\\\\\)\\/\\:\\r\\n]|\\\\[^\\\\\\/\\:\\r\\n])(([^\\)\\:\\r\\n]|\\\\\\))*[^\\\\\\)\\:\\r\\n])?(\\\\\\\\)*|\\.{1,2})(?=\\))",
+      "label": "相对路径修复",
+      "find": "(?<=([^\\\\]|^)\\[(([^\\]\\r\\n]|\\\\\\])*[^\\\\\\]\\r\\n])?(\\\\\\\\)*\\]\\()\\/?(?<link>([^\\.\\\\\\)\\/\\:\\r\\n\\s]|\\.[^\\.\\\\\\)\\/\\:\\r\\n\\s]|\\.\\.[^\\\\\\)\\/\\:\\r\\n\\s]|\\\\[^\\\\\\/\\:\\r\\n\\s])(([^\\)\\:\\r\\n\\s]|\\\\\\))*[^\\\\\\)\\:\\r\\n\\s])?(\\\\\\\\)*|\\.{1,2})(?=\\))",
       "replace": "./$<link>",
       "flags": "gm"
     }

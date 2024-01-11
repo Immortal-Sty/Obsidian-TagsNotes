@@ -9,7 +9,7 @@ module.exports = async (params) => {
 
     let first = true;
     let tagList = await getPropertyValue("tags", app.workspace.getActiveFile());
-    if (tagList.length) {
+    if (tagList) {
         for (let i of tagList) {
             if (first) {
                 params.variables["Tags"] = "  - " + i;

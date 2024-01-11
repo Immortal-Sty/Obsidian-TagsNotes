@@ -41,14 +41,6 @@
       "key": "N"
     }
   ],
-  "app:go-back": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "ArrowLeft"
-    }
-  ],
   "workspace:close-window": [],
   "workspace:close-others": [
     {
@@ -98,15 +90,6 @@
         "Mod"
       ],
       "key": "ArrowLeft"
-    }
-  ],
-  "editor:toggle-comments": [
-    {
-      "modifiers": [
-        "Alt",
-        "Mod"
-      ],
-      "key": "/"
     }
   ],
   "workspace:goto-tab-1": [],
@@ -187,17 +170,115 @@
   "editor:focus": [
     {
       "modifiers": [
-        "Mod"
+        "Alt"
       ],
       "key": "E"
+    }
+  ],
+  "editor:toggle-comments": [],
+  "open-with-default-app:open": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "D"
+    }
+  ],
+  "obsidian-footnotes:insert-autonumbered-footnote": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "F"
+    }
+  ],
+  "editor:focus-top": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowUp"
+    }
+  ],
+  "editor:focus-bottom": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowDown"
+    }
+  ],
+  "editor:focus-right": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowRight"
+    }
+  ],
+  "editor:focus-left": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowLeft"
+    }
+  ],
+  "obsidian-hider:toggle-hider-status": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "1"
     }
   ],
   "obsidian-hider:toggle-tab-containers": [
     {
       "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "2"
+    }
+  ],
+  "omnisearch:show-modal": [
+    {
+      "modifiers": [
         "Mod"
       ],
+      "key": "O"
+    }
+  ],
+  "editor:rename-heading": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "F2"
+    }
+  ],
+  "clever-search:clever-search-in-vault": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
       "key": "F"
+    }
+  ],
+  "app:go-back": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "ArrowLeft"
     }
   ]
 }

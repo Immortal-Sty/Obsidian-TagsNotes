@@ -1,0 +1,29 @@
+/* ================ */
+/* === 代码块限高 === */
+/* ================ */
+
+pre code{
+  display: block;
+  max-height: 400px !important;
+  overflow: auto;
+}
+
+/* ======================== */
+/* === 超长滚动，而不是换行 === */
+/* ======================== */
+
+/* 不换行 */
+/*
+.HyperMD-codeblock {
+  white-space: nowrap;
+}
+*/
+
+/* 加滚动 */
+/*
+.markdown-reading-view code[class*="language-"] {
+  overflow-x: scroll;
+  white-space: pre;
+  padding: 15px 0px;
+}
+*/

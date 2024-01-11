@@ -4,7 +4,7 @@
   "showLineNumber": true,
   "spellcheck": false,
   "autoPairBrackets": false,
-  "autoPairMarkdown": true,
+  "autoPairMarkdown": false,
   "vimMode": true,
   "trashOption": "local",
   "promptDelete": false,
@@ -18,5 +18,6 @@
   ],
   "showInlineTitle": false,
   "newFileLocation": "folder",
-  "newFileFolderPath": "Notes"
+  "newFileFolderPath": "Notes",
+  "smartIndentList": true
 }

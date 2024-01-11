@@ -54,6 +54,7 @@ function pathToStack(path) {
   return path.split(SEP);
 }
 function stackToPath(stack) {
+  if (stack.length === 1) stack.unshift(".");
   return stack.join(SEP);
 }
 

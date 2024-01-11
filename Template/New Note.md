@@ -2,10 +2,10 @@
 tags:
 {{VALUE:Tags}}
 aliases:
-  - {{VALUE:Date}}
   - {{VALUE:Note}}
 ctime: {{VALUE:Time}}
 mtime: {{VALUE:Time}}
+linter-yaml-title-alias: {{VALUE:Note}}
 ---
 
 # {{VALUE:Note}}
