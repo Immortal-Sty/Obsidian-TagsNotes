@@ -228,16 +228,6 @@
       "key": "ArrowLeft"
     }
   ],
-  "obsidian-hider:toggle-hider-status": [
-    {
-      "modifiers": [
-        "Alt",
-        "Mod",
-        "Shift"
-      ],
-      "key": "1"
-    }
-  ],
   "obsidian-hider:toggle-tab-containers": [
     {
       "modifiers": [
@@ -288,7 +278,7 @@
         "Mod",
         "Shift"
       ],
-      "key": "3"
+      "key": "1"
     }
   ]
 }

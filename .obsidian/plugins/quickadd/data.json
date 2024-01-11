@@ -13,6 +13,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "837de590-f48b-4abc-9aa9-f88eb16b2ec5"
+    },
+    {
+      "id": "cfe7869f-2c40-49d8-a771-9008dc5dcd8b",
+      "name": "Demo",
+      "type": "Macro",
+      "command": true,
+      "macroId": "fddce49a-23f2-40ee-afd2-722d07b94733"
     }
   ],
   "macros": [
@@ -84,9 +91,28 @@
         {
           "name": "Toggle Snippets",
           "type": "UserScript",
-          "id": "6266521d-0672-44fd-b282-44fc1f264086",
+          "id": "ffecdf8f-e53e-45a5-959b-0ab96d07edab",
           "path": "Template/JavaScript/Toggle Snippets.js",
           "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Demo",
+      "id": "fddce49a-23f2-40ee-afd2-722d07b94733",
+      "commands": [
+        {
+          "name": "Demo",
+          "type": "UserScript",
+          "id": "ca5c1808-b3a3-478d-8aec-623be92ffbb0",
+          "path": "Template/JavaScript/Demo.js",
+          "settings": {
+            "Text field": "",
+            "Checkbox": false,
+            "Dropdown": "Option 1",
+            "Format": "{{DATE:YYYY-MM-DD}}"
+          }
         }
       ],
       "runOnStartup": false
