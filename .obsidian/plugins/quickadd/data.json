@@ -8,18 +8,11 @@
       "macroId": "130b23f0-044f-4917-99bb-6d65eabbce90"
     },
     {
-      "id": "26a9212b-beeb-45ec-a251-17a931110947",
-      "name": "Toggle Snippets",
+      "id": "8fa2bc82-060a-452d-93cd-9e09ce4b98cd",
+      "name": "Hide Status Bar",
       "type": "Macro",
       "command": true,
-      "macroId": "837de590-f48b-4abc-9aa9-f88eb16b2ec5"
-    },
-    {
-      "id": "cfe7869f-2c40-49d8-a771-9008dc5dcd8b",
-      "name": "Demo",
-      "type": "Macro",
-      "command": true,
-      "macroId": "fddce49a-23f2-40ee-afd2-722d07b94733"
+      "macroId": "38222a40-737b-4d3a-a3c3-893b34f226fb"
     }
   ],
   "macros": [
@@ -85,33 +78,16 @@
       "runOnStartup": false
     },
     {
-      "name": "Toggle Snippets",
-      "id": "837de590-f48b-4abc-9aa9-f88eb16b2ec5",
+      "name": "Hide Status Bar",
+      "id": "38222a40-737b-4d3a-a3c3-893b34f226fb",
       "commands": [
         {
           "name": "Toggle Snippets",
           "type": "UserScript",
-          "id": "ffecdf8f-e53e-45a5-959b-0ab96d07edab",
+          "id": "4bde6a05-ce1c-468f-8841-6bbc92ea835e",
           "path": "Template/JavaScript/Toggle Snippets.js",
-          "settings": {}
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Demo",
-      "id": "fddce49a-23f2-40ee-afd2-722d07b94733",
-      "commands": [
-        {
-          "name": "Demo",
-          "type": "UserScript",
-          "id": "ca5c1808-b3a3-478d-8aec-623be92ffbb0",
-          "path": "Template/JavaScript/Demo.js",
           "settings": {
-            "Text field": "",
-            "Checkbox": false,
-            "Dropdown": "Option 1",
-            "Format": "{{DATE:YYYY-MM-DD}}"
+            "CSS 片段文件名": "状态栏自动隐藏_外部"
           }
         }
       ],
