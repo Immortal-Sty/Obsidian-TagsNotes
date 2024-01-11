@@ -6,6 +6,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "130b23f0-044f-4917-99bb-6d65eabbce90"
+    },
+    {
+      "id": "26a9212b-beeb-45ec-a251-17a931110947",
+      "name": "Toggle Snippets",
+      "type": "Macro",
+      "command": true,
+      "macroId": "837de590-f48b-4abc-9aa9-f88eb16b2ec5"
     }
   ],
   "macros": [
@@ -66,6 +73,20 @@
           "type": "Obsidian",
           "id": "44139f74-4043-493e-b1a1-38b8ae0be7d1",
           "commandId": "editor:focus"
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Toggle Snippets",
+      "id": "837de590-f48b-4abc-9aa9-f88eb16b2ec5",
+      "commands": [
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "6266521d-0672-44fd-b282-44fc1f264086",
+          "path": "Template/JavaScript/Toggle Snippets.js",
+          "settings": {}
         }
       ],
       "runOnStartup": false

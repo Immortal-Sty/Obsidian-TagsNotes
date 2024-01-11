@@ -280,5 +280,15 @@
       ],
       "key": "ArrowLeft"
     }
+  ],
+  "quickadd:choice:26a9212b-beeb-45ec-a251-17a931110947": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "3"
+    }
   ]
 }
