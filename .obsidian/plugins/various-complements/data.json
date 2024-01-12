@@ -7,7 +7,7 @@
   "matchingWithoutEmoji": true,
   "treatAccentDiacriticsAsAlphabeticCharacters": false,
   "maxNumberOfSuggestions": 15,
-  "maxNumberOfWordsAsPhrase": 1,
+  "maxNumberOfWordsAsPhrase": 3,
   "minNumberOfCharactersTriggered": 1,
   "minNumberOfWordsTriggeredPhrase": 1,
   "complementAutomatically": true,
@@ -29,8 +29,7 @@
     "select": [
       {
         "modifiers": [],
-        "key": "Enter",
-        "hideHotkeyGuide": false
+        "key": "Enter"
       }
     ],
     "up": [
@@ -72,14 +71,14 @@
   "excludeCurrentVaultPathPrefixPatterns": "",
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
   "enableCustomDictionaryComplement": true,
-  "customDictionaryPaths": ".obsidian\\plugins\\various-complements\\callout.txt",
+  "customDictionaryPaths": ".obsidian\\plugins\\various-complements\\Callout.txt",
   "columnDelimiter": "Tab",
-  "customDictionaryWordRegexPattern": "",
+  "customDictionaryWordRegexPattern": ".*",
   "delimiterToHideSuggestion": ">;;;>",
   "delimiterToDivideSuggestionsForDisplayFromInsertion": ";>>>;",
   "caretLocationSymbolAfterComplement": "<CURSOR>",
   "displayedTextSuffix": "➡ …",
-  "enableInternalLinkComplement": false,
+  "enableInternalLinkComplement": true,
   "suggestInternalLinkWithAlias": true,
   "excludeInternalLinkPathPrefixPatterns": "Images/\nLATEX/\nTemplate/",
   "updateInternalLinksOnSave": true,

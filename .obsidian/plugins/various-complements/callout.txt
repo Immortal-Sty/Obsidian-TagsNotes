@@ -1,3 +1,0 @@
-!Note;>>>;> [!note]
-
-!Info;>>>;> [!info]
