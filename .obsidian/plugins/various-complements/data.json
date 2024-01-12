@@ -71,7 +71,7 @@
   "excludeCurrentVaultPathPrefixPatterns": "",
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
   "enableCustomDictionaryComplement": true,
-  "customDictionaryPaths": ".obsidian\\plugins\\various-complements\\Callout.txt\n.obsidian\\plugins\\various-complements\\CodeBlock.txt",
+  "customDictionaryPaths": ".various-complements\\Callout.txt\n.various-complements\\CodeBlock.txt",
   "columnDelimiter": "Tab",
   "customDictionaryWordRegexPattern": ".*",
   "delimiterToHideSuggestion": ">;;;>",
@@ -93,7 +93,7 @@
   "insertCommaAfterFrontMatterCompletion": false,
   "intelligentSuggestionPrioritization": {
     "enabled": true,
-    "historyFilePath": "",
+    "historyFilePath": ".various-complements\\histories.json",
     "maxDaysToKeepHistory": 30,
     "maxNumberOfHistoryToKeep": 0
   },

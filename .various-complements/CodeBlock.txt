@@ -1,5 +1,7 @@
+``C;>>>;```c\n<CURSOR>\n```	CodeBlock
 ``C++;>>>;```cpp\n<CURSOR>\n```	CodeBlock
 ``Cpp;>>>;```cpp\n<CURSOR>\n```	CodeBlock
+``C#;>>>;```c#\n<CURSOR>\n```	CodeBlock
 ``Python;>>>;```python\n<CURSOR>\n```	CodeBlock
 ``PowerShell;>>>;```powershell\n<CURSOR>\n```	CodeBlock
 ``MatLab;>>>;```matlab\n<CURSOR>\n```	CodeBlock
