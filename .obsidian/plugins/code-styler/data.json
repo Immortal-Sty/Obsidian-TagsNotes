@@ -536,7 +536,7 @@
   "exampleCodeblockContent": "#include <iostream>\n\nint main()\n{\n\tstd::cout << \"Hello world!\" << std::endl;\n\n\treturn 0;\n}",
   "exampleInlineCode": "{cpp icon title:foo} std::cout << \"Hello world!\" << std::endl;",
   "decoratePrint": true,
-  "excludedLanguages": "ad-*,dataview*",
+  "excludedLanguages": "ad-*,dataview,dataviewjs",
   "processedCodeblocksWhitelist": "run-*",
   "redirectLanguages": {},
   "version": "1.1.4"
