@@ -24,7 +24,7 @@
   "showMatchStrategy": false,
   "showComplementAutomatically": false,
   "showIndexingStatus": false,
-  "descriptionOnSuggestion": "None",
+  "descriptionOnSuggestion": "Short",
   "hotkeys": {
     "select": [
       {

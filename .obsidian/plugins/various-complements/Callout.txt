@@ -1,1 +1,15 @@
-!Note
+!Note;>>>;> [!note]	笔记
+!Abstract;>>>;> [!abstract]	摘要
+!Summary;>>>;> [!summary]	摘要
+!Tldr;>>>;> [!tldr]	摘要
+!Info;>>>;> [!info]	信息
+!Todo;>>>;> [!todo]	待办
+!Tip;>>>;> [!tip]	提示
+!Hint;>>>;> [!hint]	提示
+!Important;>>>;> [!important]	提示
+!Success;>>>;> [!success]	完成
+!Check;>>>;> [!check]	完成
+!Done;>>>;> [!done]	完成
+!Question;>>>;> [!question]	帮助
+!Help;>>>;> [!help]	帮助
+!
