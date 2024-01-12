@@ -1,7 +1,7 @@
 !Note;>>>;> [!note]	笔记
 !Abstract;>>>;> [!abstract]	摘要
 !Summary;>>>;> [!summary]	摘要
-!Tldr;>>>;> [!tldr]	摘要
+!TLDR;>>>;> [!tldr]	摘要
 !Info;>>>;> [!info]	信息
 !Todo;>>>;> [!todo]	待办
 !Tip;>>>;> [!tip]	提示
@@ -12,4 +12,16 @@
 !Done;>>>;> [!done]	完成
 !Question;>>>;> [!question]	帮助
 !Help;>>>;> [!help]	帮助
-!
+!FAQ;>>>;> [!faq]	帮助
+!Warning;>>>;> [!warning]	警告
+!Caution;>>>;> [!caution]	警告
+!Attention;>>>;> [!attention]	警告
+!Failure;>>>;> [!failure]	失败
+!Fail;>>>;> [!fail]	失败
+!Missing;>>>;> [!missing]	失败
+!Danger;>>>;> [!danger]	错误
+!Error;>>>;> [!error]	错误
+!Bug;>>>;> [!bug]	漏洞
+!Example;>>>;> [!example]	举例
+!Quote;>>>;> [!quote]	引用
+!Cite;>>>;> [!cite]	引用
