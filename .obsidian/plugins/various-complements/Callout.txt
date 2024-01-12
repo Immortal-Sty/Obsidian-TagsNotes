@@ -1,27 +1,29 @@
-!Note;>>>;> [!note]	笔记
-!Abstract;>>>;> [!abstract]	摘要
-!Summary;>>>;> [!summary]	摘要
-!TLDR;>>>;> [!tldr]	摘要
-!Info;>>>;> [!info]	信息
-!Todo;>>>;> [!todo]	待办
-!Tip;>>>;> [!tip]	提示
-!Hint;>>>;> [!hint]	提示
-!Important;>>>;> [!important]	提示
-!Success;>>>;> [!success]	完成
-!Check;>>>;> [!check]	完成
-!Done;>>>;> [!done]	完成
-!Question;>>>;> [!question]	帮助
-!Help;>>>;> [!help]	帮助
-!FAQ;>>>;> [!faq]	帮助
-!Warning;>>>;> [!warning]	警告
-!Caution;>>>;> [!caution]	警告
-!Attention;>>>;> [!attention]	警告
-!Failure;>>>;> [!failure]	失败
-!Fail;>>>;> [!fail]	失败
-!Missing;>>>;> [!missing]	失败
-!Danger;>>>;> [!danger]	错误
-!Error;>>>;> [!error]	错误
-!Bug;>>>;> [!bug]	漏洞
-!Example;>>>;> [!example]	举例
-!Quote;>>>;> [!quote]	引用
-!Cite;>>>;> [!cite]	引用
+!Note;>>>;> [!note]	笔记	Callous
+!Abstract;>>>;> [!abstract]	摘要	Callous
+!Summary;>>>;> [!summary]	摘要	Callous
+!TLDR;>>>;> [!tldr]	摘要	Callous
+!Info;>>>;> [!info]	信息	Callous
+!Todo;>>>;> [!todo]	待办,Callous
+!Tip;>>>;> [!tip]	提示,Callous
+!Hint;>>>;> [!hint]	提示,Callous
+!Important;>>>;> [!important]	提示,Callous
+!Success;>>>;> [!success]	完成,Callous
+!Check;>>>;> [!check]	完成,Callous
+!Done;>>>;> [!done]	完成,Callous
+!Question;>>>;> [!question]	帮助,Callous
+!Help;>>>;> [!help]	帮助,Callous
+!FAQ;>>>;> [!faq]	帮助,Callous
+!Warning;>>>;> [!warning]	警告,Callous
+!Caution;>>>;> [!caution]	警告,Callous
+!Attention;>>>;> [!attention]	警告,Callous
+!Failure;>>>;> [!failure]	失败,Callous
+!Fail;>>>;> [!fail]	失败,Callous
+!Missing;>>>;> [!missing]	失败,Callous
+!Danger;>>>;> [!danger]	错误,Callous
+!Error;>>>;> [!error]	错误,Callous
+!Bug;>>>;> [!bug]	漏洞,Callous
+!Example;>>>;> [!example]	举例,Callous
+!Quote;>>>;> [!quote]	引用,Callous
+!Cite;>>>;> [!cite]	引用,Callous
+!MultiColumn;>>>;> [!multi-column]	多列,Callous
+!Blank;>>>;> [!blank]	无,Callous
