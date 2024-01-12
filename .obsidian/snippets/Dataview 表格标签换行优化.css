@@ -1,0 +1,9 @@
+div.block-language-dataview.node-insert-event table td ul {
+	list-style: none;
+	flex-direction: row-reverse;
+}
+
+.tag {
+	float: left;
+	white-space: nowrap;
+}
