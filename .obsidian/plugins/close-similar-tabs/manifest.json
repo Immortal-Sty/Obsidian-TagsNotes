@@ -1,0 +1,10 @@
+{
+	"id": "close-similar-tabs",
+	"name": "Close Similar Tabs",
+	"version": "2.3.7",
+	"minAppVersion": "0.15.0",
+	"description": "Avoid to have a file opened several times in your tabs. (+setting: by window or everywhere)",
+	"author": "1C0D",
+	"authorUrl": "",
+	"isDesktopOnly": false
+}
