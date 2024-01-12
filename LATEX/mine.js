@@ -106,7 +106,6 @@
     {trigger: "'", replacement: "'$0'$1", options: "tA"},
     {trigger: "\"", replacement: "\"$0\"$1", options: "tA"},
     {trigger: /(?<!`)`/, replacement: "`$0`$1", options: "tA"},
-    {trigger: /(\n|^)```/, replacement: "\n```$0\n```", options: "tA"},
     {trigger: "_", replacement: "_$0_$1", options: "tA"},
     {trigger: "**", replacement: "**$0**$1", options: "tA"},
     {trigger: "(", replacement: "($0)$1", options: "tA"},
