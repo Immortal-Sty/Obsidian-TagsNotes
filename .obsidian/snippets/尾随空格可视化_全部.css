@@ -1,5 +1,5 @@
 /* Mark a line break, trailing space, tab when in Edit mode */
-.cm-trailing-space-new-line, .cm-trailing-space-a, .cm-trailing-space-b, .cm-tab, .cm-indent{
+.cm-trailing-space-new-line, .cm-trailing-space-a, .cm-trailing-space-b, .cm-tab {
     font-size: 0;
 }
 .cm-trailing-space-a::before, .cm-trailing-space-b::before, .cm-trailing-space-new-line::before, .cm-tab::before{
@@ -12,8 +12,4 @@
 }
 .cm-tab::before {
     content:'⟶'
-}
-
-.cm-indent::before {
-    content:'󰌒 '
 }
