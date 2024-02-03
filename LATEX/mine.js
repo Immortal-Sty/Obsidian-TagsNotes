@@ -116,19 +116,27 @@
     {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"}
 
     // 快速生成表格
-    {trigger: /iden(\d)/, replacement: (match) => {
-		const n = match[1];
+    {trigger: /\|(\d+)\|(\d+)\|/, replacement: (match) => {
+		const m = match[1];
+		const n = match[2];
+		let table_row = "|";
+		let table_row_first = "| $0";
+		let table_row_ = "|";
 
-		let arr = [];
-		for (let j = 0; j < n; j++) {
-			arr[j] = [];
-			for (let i = 0; i < n; i++) {
-				arr[j][i] = (i === j) ? 1 : 0;
-			}
+		for (let i = 0; i < m; ++i)
+		{
+			table_row += "   |";
+			table_row_first += "   |";
+			table_row_ += " - |";
 		}
 
-		let output = arr.map(el => el.join(" & ")).join(" \\\\\n");
-		output = `\\begin{pmatrix}\n${output}\n\\end{pmatrix}`;
-		return output;
-	}, options: "mA"},
+		let table_all = table_row_first + '\n' + table_row_;
+
+		for (let i = 1; i < n; ++i)
+		{
+			table_all += '\n' + table_row;
+		}
+
+		return table_all;
+	}, options: "t"},
 ]
