@@ -1,0 +1,21 @@
+{
+  "logLevel": "info",
+  "enableStopWordsEn": true,
+  "enableChinesePatch": true,
+  "enableStopWordsZh": true,
+  "apiProvider1": {
+    "domain": "",
+    "key": ""
+  },
+  "apiProvider2": {
+    "domain": "",
+    "key": ""
+  },
+  "excludeExtensions": [],
+  "ui": {
+    "openInNewPane": true,
+    "maxItemResults": 30,
+    "showedExtension": "except md",
+    "collapseDevSettingByDefault": true
+  }
+}

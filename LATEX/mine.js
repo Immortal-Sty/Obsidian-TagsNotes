@@ -116,28 +116,28 @@
     {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"}
 
     // 快速生成表格
-    {trigger: /(\d)asdf(\d)/, replacement: (match) => {
-		const m = match[1];
-		const n = match[2];
-
-		let tableRow = "|";
-		let tableRowFirst = "| \$0";
-		let tableRow2 = "|";
-
-		for (let i = 0; i < m; ++i)
-		{
-			tableRow = `${tableRow}   |`;
-			tableRowFirst = `${tableRowFirst}   |`;
-			tableRow2 = `${tableRow2} - |`;
-		}
-
-		let tableAll = `${tableRowFirst}\n${tableRow2}`;
-
-		for (let i = 1; i < n; ++i)
-		{
-			tableAll = `${tableAll}\n${tableRow}`;
-		}
-
-		return tableAll;
-	}, options: "t"},
+ //    {trigger: /(\d)asdf(\d)/, replacement: (match) => {
+	// 	const m = match[1];
+	// 	const n = match[2];
+ //
+	// 	let table_row = "|";
+	// 	let table_row_first = "| $0";
+	// 	let table_row_ = "|";
+ //
+	// 	for (let i = 0; i < m; ++i)
+	// 	{
+	// 		table_row += "   |";
+	// 		table_row_first += "   |";
+	// 		table_row_ += " - |";
+	// 	}
+ //
+	// 	let table_all += `\n${table_row_}`;
+ //
+	// 	for (let i = 1; i < n; ++i)
+	// 	{
+	// 		table_all += `\n${table_row}`;
+	// 	}
+ //
+	// 	return table_all;
+	// }, options: "t"},
 ]
