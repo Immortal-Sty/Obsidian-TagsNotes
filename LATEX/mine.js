@@ -119,24 +119,25 @@
     {trigger: /(\d)asdf(\d)/, replacement: (match) => {
 		const m = match[1];
 		const n = match[2];
-		let table_row = "|";
-		let table_row_first = "| $0";
-		let table_row_ = "|";
+
+		let tableRow = "|";
+		let tableRowFirst = "| \$0";
+		let tableRow2 = "|";
 
 		for (let i = 0; i < m; ++i)
 		{
-			table_row = `${table_row}   |`;
-			table_row_first = `${table_row_first}   |`;
-			table_row_ = `${table_row_} - |`;
+			tableRow = `${tableRow}   |`;
+			tableRowFirst = `${tableRowFirst}   |`;
+			tableRow2 = `${tableRow2} - |`;
 		}
 
-		let table_all = `${table_row_first}\n${table_row_}`;
+		let tableAll = `${tableRowFirst}\n${tableRow2}`;
 
 		for (let i = 1; i < n; ++i)
 		{
-			table_all = `${table_all}\n${table_row}`;
+			tableAll = `${tableAll}\n${tableRow}`;
 		}
 
-		return table_all;
+		return tableAll;
 	}, options: "t"},
 ]
