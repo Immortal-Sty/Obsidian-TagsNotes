@@ -116,7 +116,7 @@
     {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"}
 
     // 快速生成表格
-    {trigger: /\|(\d+)\|(\d+)\|/, replacement: (match) => {
+    {trigger: /(\d)asdf(\d)/, replacement: (match) => {
 		const m = match[1];
 		const n = match[2];
 		let table_row = "|";
@@ -125,16 +125,16 @@
 
 		for (let i = 0; i < m; ++i)
 		{
-			table_row += "   |";
-			table_row_first += "   |";
-			table_row_ += " - |";
+			table_row = `${table_row}   |`;
+			table_row_first = `${table_row_first}   |`;
+			table_row_ = `${table_row_} - |`;
 		}
 
-		let table_all = table_row_first + '\n' + table_row_;
+		let table_all = `${table_row_first}\n${table_row_}`;
 
 		for (let i = 1; i < n; ++i)
 		{
-			table_all += '\n' + table_row;
+			table_all = `${table_all}\n${table_row}`;
 		}
 
 		return table_all;
