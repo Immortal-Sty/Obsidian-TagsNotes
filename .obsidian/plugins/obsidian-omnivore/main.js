@@ -12485,6 +12485,7 @@ var renderArticleContnet = async (article, template, highlightOrder, dateHighlig
     state: getArticleState(article),
     dateArchived: article.archivedAt,
     image: article.image,
+    updatedAt: article.updatedAt,
     ...functionMap
   };
   let frontMatter = {
@@ -12570,7 +12571,8 @@ var FRONT_MATTER_VARIABLES = [
   "words_count",
   "read_length",
   "state",
-  "date_archived"
+  "date_archived",
+  "image"
 ];
 var DEFAULT_SETTINGS = {
   dateHighlightedFormat: "yyyy-MM-dd HH:mm:ss",

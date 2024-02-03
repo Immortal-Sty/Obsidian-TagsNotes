@@ -114,4 +114,21 @@
 
     // 常用 html 标签简化补全
     {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"}
+
+    // 快速生成表格
+    {trigger: /iden(\d)/, replacement: (match) => {
+		const n = match[1];
+
+		let arr = [];
+		for (let j = 0; j < n; j++) {
+			arr[j] = [];
+			for (let i = 0; i < n; i++) {
+				arr[j][i] = (i === j) ? 1 : 0;
+			}
+		}
+
+		let output = arr.map(el => el.join(" & ")).join(" \\\\\n");
+		output = `\\begin{pmatrix}\n${output}\n\\end{pmatrix}`;
+		return output;
+	}, options: "mA"},
 ]

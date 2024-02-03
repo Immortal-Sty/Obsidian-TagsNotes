@@ -1,5 +1,4 @@
 [
-  "cm-chs-patch",
   "update-relative-links",
   "obsidian-relative-line-numbers",
   "attachment-management",
@@ -15,7 +14,6 @@
   "templater-obsidian",
   "obsidian-trash-explorer",
   "obsidian-vimrc-support",
-  "omnisearch",
   "code-styler",
   "obsidian-footnotes",
   "better-search-views",
@@ -28,7 +26,9 @@
   "obsidian-latex-suite",
   "dataview",
   "various-complements",
-  "close-similar-tabs",
   "obsidian-omnivore",
-  "obsidian-advanced-uri"
+  "obsidian-advanced-uri",
+  "close-similar-tabs",
+  "omnisearch",
+  "cm-chs-patch"
 ]
