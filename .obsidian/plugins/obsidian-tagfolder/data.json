@@ -14,7 +14,7 @@
   "targetFolders": "Notes",
   "scanDelay": 250,
   "useTitle": true,
-  "reduceNestedParent": false,
+  "reduceNestedParent": true,
   "frontmatterKey": "title",
   "useTagInfo": false,
   "tagInfo": ".pininfo.pin",
