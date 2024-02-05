@@ -3,7 +3,7 @@
   "dateSavedFormat": "yyyy-MM-ddTHH:mm:ss",
   "apiKey": "8b4550e4-0205-48a9-9a02-05d30d9ab727",
   "filter": "ALL",
-  "syncAt": "2024-02-05T17:28:23",
+  "syncAt": "2024-02-05T17:38:33",
   "customQuery": "",
   "template": "# {{{title}}}\n\n- [Read on Omnivore]({{{omnivoreUrl}}})；\n- [Read Original]({{{originalUrl}}})。\n\n{{{ content }}}",
   "highlightOrder": "LOCATION",
