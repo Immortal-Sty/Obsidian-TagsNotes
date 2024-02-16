@@ -25,5 +25,5 @@
 >!Example;>>>;> [!example]	举例,Callous
 >!Quote;>>>;> [!quote]	引用,Callous
 >!Cite;>>>;> [!cite]	引用,Callous
->!MultiColumn;>>>;> [!multi-column]\n>\n> > [!blank]\n> >\n> > <CURSOR>\n>\n> > [!blank]\n> >\n> > <% tp.file.cursor() %>	多列,Callous
+>!MultiColumn;>>>;> [!multi-column]\n>\n> > [!blank]\n> >\n> > 	多列,Callous
 >!Blank;>>>;> [!blank]\n> >\n> > 	无,Callous
