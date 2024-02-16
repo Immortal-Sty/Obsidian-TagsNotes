@@ -14,7 +14,7 @@
   "filename": "{{{title}}}",
   "filenameDateFormat": "yyyyMMddHHmmss",
   "attachmentFolder": "Images",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "isSingleFile": false,
   "frequency": 0,
   "intervalId": 0,

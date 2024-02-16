@@ -19,5 +19,7 @@
   "label_direction": "right",
   "drag_modify": true,
   "locate_by_cursor": true,
+  "show_popover_key": "ctrlKey",
+  "remember_state": false,
   "show_popover": true
 }

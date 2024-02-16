@@ -25,10 +25,9 @@
   "obsidian-plugin-update-tracker",
   "obsidian-latex-suite",
   "dataview",
-  "various-complements",
   "obsidian-omnivore",
-  "obsidian-advanced-uri",
-  "close-similar-tabs",
   "omnisearch",
-  "cm-chs-patch"
+  "cm-chs-patch",
+  "close-similar-tabs",
+  "various-complements"
 ]

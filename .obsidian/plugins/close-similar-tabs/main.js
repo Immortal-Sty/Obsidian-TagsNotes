@@ -445,12 +445,13 @@ function openLinkWrapper(plugin) {
             sourcePath.split(".").slice(0, -1).join(".")
           ) || linktext.trim().startsWith("#")) && newLeaf !== "tab" && !plugin.ctrl && OpenViewState === void 0
         ) {
-          Console.debug("to same page");
+          const text = !!newLeaf ? "newleaf true, not 'tab'" : "to same page newleaf false";
+          Console.debug("text", text);
           return old.apply(this, [
             linktext,
             sourcePath,
-            newLeaf = false,
-            // don't open new tab
+            newLeaf = !!newLeaf,
+            // changed for URI 
             OpenViewState
           ]);
         } else {
@@ -625,8 +626,9 @@ function openFileWrapper(plugin) {
               await removeEmpty(plugin, activeEl, 0);
             } else {
               Console.debug("quick switch or drag header or today note");
-              if (plugin.getLeafPath(activeLeaf2) !== target)
+              if (plugin.getLeafPath(activeLeaf2) !== target) {
                 await activateDetach(plugin, duplis, activeLeaf2, 10);
+              }
               if (state == null ? void 0 : state.eState)
                 await removeEmpty(plugin, activeEl, 0);
             }

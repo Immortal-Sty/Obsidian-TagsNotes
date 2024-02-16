@@ -15,8 +15,8 @@
   "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "Notes",
-      "template": "Template/New Note.md"
+      "folder": "",
+      "template": ""
     }
   ],
   "syntax_highlighting": true,

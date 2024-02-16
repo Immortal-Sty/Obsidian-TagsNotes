@@ -12373,25 +12373,25 @@ var getArticleState = (article) => {
   return "INBOX" /* Inbox */;
 };
 function lowerCase() {
-  return function(text, render3) {
-    return render3(text).toLowerCase();
+  return function(text, render4) {
+    return render4(text).toLowerCase();
   };
 }
 function upperCase() {
-  return function(text, render3) {
-    return render3(text).toUpperCase();
+  return function(text, render4) {
+    return render4(text).toUpperCase();
   };
 }
 function upperCaseFirst() {
-  return function(text, render3) {
-    const str = render3(text);
+  return function(text, render4) {
+    const str = render4(text);
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 }
 function formatDateFunc() {
-  return function(text, render3) {
+  return function(text, render4) {
     const [dateVariable, format] = text.split(",", 2);
-    const date = render3(dateVariable);
+    const date = render4(dateVariable);
     if (!date) {
       return "";
     }
@@ -12404,18 +12404,11 @@ var functionMap = {
   upperCaseFirst,
   formatDate: formatDateFunc
 };
+var getOmnivoreUrl = (article) => {
+  return `https://omnivore.app/me/${article.slug}`;
+};
 var renderFilename = (article, filename, dateFormat) => {
-  var _a;
-  const date = formatDate(article.savedAt, dateFormat);
-  const datePublished = article.publishedAt ? formatDate(article.publishedAt, dateFormat).trim() : void 0;
-  const renderedFilename = mustache_default.render(filename, {
-    title: article.title,
-    author: (_a = article.author) != null ? _a : "unknown-author",
-    date,
-    dateSaved: date,
-    datePublished,
-    id: article.id
-  });
+  const renderedFilename = render3(article, filename, dateFormat);
   return (0, import_lodash.truncate)(renderedFilename, {
     length: 100
   });
@@ -12539,16 +12532,26 @@ ${frontMatterYaml}---`;
 
 ${contentWithoutFrontMatter}`;
 };
-var renderFolderName = (article, template, dateFormat) => {
-  var _a;
-  const date = formatDate(article.savedAt, dateFormat);
+var render3 = (article, template, dateFormat) => {
+  const dateSaved = formatDate(article.savedAt, dateFormat);
   const datePublished = article.publishedAt ? formatDate(article.publishedAt, dateFormat).trim() : void 0;
-  return mustache_default.render(template, {
-    date,
-    dateSaved: date,
+  const dateArchived = article.archivedAt ? formatDate(article.archivedAt, dateFormat).trim() : void 0;
+  const dateRead = article.readAt ? formatDate(article.readAt, dateFormat).trim() : void 0;
+  const view = {
+    ...article,
+    author: article.author || "unknown-author",
+    omnivoreUrl: getOmnivoreUrl(article),
+    originalUrl: article.originalArticleUrl,
+    date: dateSaved,
+    dateSaved,
     datePublished,
-    author: (_a = article.author) != null ? _a : "unknown-author"
-  });
+    dateArchived,
+    dateRead,
+    type: article.pageType,
+    state: getArticleState(article),
+    ...functionMap
+  };
+  return mustache_default.render(template, view);
 };
 var preParseTemplate = (template) => {
   return mustache_default.parse(template);
@@ -14234,7 +14237,9 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
     });
     this.addSettingTab(new OmnivoreSettingTab(this.app, this));
     this.scheduleSync();
-    await this.fetchOmnivore();
+    if (this.settings.frequency > 0) {
+      await this.fetchOmnivore();
+    }
   }
   onunload() {
   }
@@ -14264,7 +14269,7 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
       url,
       contentType: "application/pdf"
     });
-    const folderName = (0, import_obsidian6.normalizePath)(renderFolderName(article, this.settings.attachmentFolder, this.settings.folderDateFormat));
+    const folderName = (0, import_obsidian6.normalizePath)(render3(article, this.settings.attachmentFolder, this.settings.folderDateFormat));
     const folder = app.vault.getAbstractFileByPath(folderName);
     if (!(folder instanceof import_obsidian6.TFolder)) {
       await app.vault.createFolder(folderName);
@@ -14311,9 +14316,10 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
       const includeFileAttachment = templateSpans.some((templateSpan) => templateSpan[1] === "fileAttachment");
       const size = 50;
       for (let hasNextPage = true, articles = [], after = 0; hasNextPage; after += size) {
+        ;
         [articles, hasNextPage] = await loadArticles(this.settings.endpoint, apiKey, after, size, parseDateTime(syncAt).toISO() || void 0, getQueryFromFilter(filter, customQuery), includeContent, "highlightedMarkdown");
         for (const article of articles) {
-          const folderName = (0, import_obsidian6.normalizePath)(renderFolderName(article, folder, this.settings.folderDateFormat));
+          const folderName = (0, import_obsidian6.normalizePath)(render3(article, folder, this.settings.folderDateFormat));
           const omnivoreFolder = this.app.vault.getAbstractFileByPath(folderName);
           if (!(omnivoreFolder instanceof import_obsidian6.TFolder)) {
             await this.app.vault.createFolder(folderName);
