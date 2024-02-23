@@ -1,0 +1,59 @@
+ /* @settings
+name: Table美化
+id: Mo
+settings:
+  -
+    id: tbMH-th
+    title: 表格标题颜色调整
+    type: variable-themed-color
+    default-light: '#'
+    default-dark: '#'
+    format: 'rgb-values'
+  -
+    id: tbMH-td
+    title: 表格间隔层颜色调整
+    type: variable-themed-color
+    default-light: '#'
+    default-dark: '#'
+    format: 'rgb-values'
+  -
+    id: table-thickness
+    title: 表格框架粗度调整
+    type: variable-number
+    default: 2
+    format: px
+  -
+*/
+
+body.theme-light {
+    --table-border-color: black;
+}
+
+body.theme-dark {
+    --table-border-color: white;
+}
+
+
+body.theme-light .markdown-source-view.mod-cm6 .cm-table-widget th {
+    background-color: rgb(var(--tbMH-th, 145, 163, 143))
+}
+
+body.theme-light .is-live-preview:not(.cards):not(.table-disable) tr:nth-child(2n) td {
+    background-color:rgb(var(--tbMH-th, 145, 163, 143))
+}
+
+body.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th {
+    background-color:rgb(var(--tbMH-th, 32, 23, 23))
+}
+
+body.theme-dark .is-live-preview:not(.cards):not(.table-disable) tr:nth-child(2n) td {
+    background-color:rgb(var(--tbMH-th, 32, 23, 23))
+}
+
+.theme-dark, .theme-light {
+--table-border-width: var(--table-thickness, 2px);
+}
+
+.kanban-plugin__board > div {
+  --kanban-dot-color: rgb(67 70 90 / 0%);
+}
