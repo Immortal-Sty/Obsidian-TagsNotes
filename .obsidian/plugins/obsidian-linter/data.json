@@ -257,12 +257,7 @@
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
-  "lintCommands": [
-    {
-      "id": "oz-clear-unused-images:clear-images-obsidian",
-      "name": "Clear Unused Images: Clear Unused Images"
-    }
-  ],
+  "lintCommands": [],
   "customRegexes": [
     {
       "label": "相对路径修复",
