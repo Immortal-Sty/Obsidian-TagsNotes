@@ -1,13 +1,3 @@
-/**********/
-/* 表格全宽 */
-/**********/
-
-/*
-.markdown-rendered table:not(.dataview) {
-  width: 100%;
-}
-*/
-
 /********************/
 /* 仿 Typora 表格样式 */
 /********************/
@@ -18,78 +8,78 @@ body {
 	/* 表格按钮颜色 */
 	--table-btn-color: #fff;
 	/* 表格按钮背景色 */
-	--table-btn-bg: #ddd;
+	--table-btn-bg: #292929;
 	/* 表格头背景色 */
-	--table-header-bg: #f4f4f4;
+	--table-header-bg: #242424;
 	/* 表格隔行背景色 */
-	--table-alt-line-bg: #f4f4f4;
+	--table-alt-line-bg: #242424;
 	/* 动画时间 */
 	--animation: 200ms var(--anim-motion-smooth);
 }
 
-.markdown-rendered table {
+.markdown-rendered table:not(.dataview) {
 	border-collapse: initial;
 	border-spacing: 0;
 }
 
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) {
 	--table-white-space: break-all;
 	width: 100%;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-editor {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) .table-editor {
 	width: 100%;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-col-btn {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) .table-col-btn {
 	border-top-right-radius: var(--table-radius);
 	border-bottom-right-radius: var(--table-radius);
 	color: var(--table-btn-color);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-row-btn {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) .table-row-btn {
 	border-bottom-left-radius: var(--table-radius);
 	border-bottom-right-radius: var(--table-radius);
 	color: var(--table-btn-color);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) :is(.table-col-btn, .table-row-btn, .table-col-drag-handle:hover, .table-row-drag-handle:hover) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) :is(.table-col-btn, .table-row-btn, .table-col-drag-handle:hover, .table-row-drag-handle:hover) {
 	transition: var(--animation);
 	background-color: var(--table-btn-bg);
 	--table-drag-handle-color: var(--table-btn-color);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) :is(tr:hover .table-row-drag-handle, th:hover .table-col-drag-handle) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) :is(tr:hover .table-row-drag-handle, th:hover .table-col-drag-handle) {
 	opacity: 1;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) th:first-child:not(:has(:is(.table-row-drag-handle, .table-col-drag-handle):hover)) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) th:first-child:not(:has(:is(.table-row-drag-handle, .table-col-drag-handle):hover)) {
 	border-top-left-radius: var(--table-radius);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) th:last-child:not(:has(.table-col-drag-handle:hover)) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) th:last-child:not(:has(.table-col-drag-handle:hover)) {
 	border-top-right-radius: var(--table-radius);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table):has(.table-col-btn:hover) th:last-child {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)):has(.table-col-btn:hover) th:last-child {
 	border-top-right-radius: 0;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tr:last-child td:first-child {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) tr:last-child td:first-child {
 	border-bottom-left-radius: var(--table-radius);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table):has(.table-row-btn:hover) tr:last-child td:first-child {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)):has(.table-row-btn:hover) tr:last-child td:first-child {
 	border-bottom-left-radius: 0;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tr:last-child td:last-child {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) tr:last-child td:last-child {
 	border-bottom-right-radius: var(--table-radius);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table):has(:is(.table-col-btn, .table-row-btn):hover) tr:last-child td:last-child {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)):has(:is(.table-col-btn, .table-row-btn):hover) tr:last-child td:last-child {
 	border-bottom-right-radius: 0;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) :is(th, td):not(:first-child) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) :is(th, td):not(:first-child) {
 	border-left: 0;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody td {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) tbody td {
 	border-top: 0;
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) thead tr {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) thead tr {
 	background-color: var(--table-header-bg);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody tr:nth-of-type(2n) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) tbody tr:nth-of-type(2n) {
 	background-color: var(--table-alt-line-bg);
 }
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody tr:nth-of-type(2n+1) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(.dataview)) tbody tr:nth-of-type(2n+1) {
 	background-color: var(--background-primary);
 }
