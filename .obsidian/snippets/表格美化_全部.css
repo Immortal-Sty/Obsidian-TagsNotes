@@ -2,7 +2,7 @@
 /* 仿 Typora 表格样式 */
 /********************/
 
-body {
+body.theme-dark {
 	/* 表格圆角大小 */
 	--table-radius: var(--size-2-3);
 	/* 表格按钮颜色 */
@@ -13,6 +13,21 @@ body {
 	--table-header-bg: #242424;
 	/* 表格隔行背景色 */
 	--table-alt-line-bg: #242424;
+	/* 动画时间 */
+	--animation: 200ms var(--anim-motion-smooth);
+}
+
+body.theme-light {
+	/* 表格圆角大小 */
+	--table-radius: var(--size-2-3);
+	/* 表格按钮颜色 */
+	--table-btn-color: #fff;
+	/* 表格按钮背景色 */
+	--table-btn-bg: #fff;
+	/* 表格头背景色 */
+	--table-header-bg: #f4f4f4;
+	/* 表格隔行背景色 */
+	--table-alt-line-bg: #f4f4f4;
 	/* 动画时间 */
 	--animation: 200ms var(--anim-motion-smooth);
 }
