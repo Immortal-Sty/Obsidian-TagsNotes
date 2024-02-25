@@ -1,6 +1,5 @@
 [
   "update-relative-links",
-  "obsidian-relative-line-numbers",
   "attachment-management",
   "obsidian-better-command-palette",
   "better-fn",
@@ -29,5 +28,6 @@
   "omnisearch",
   "cm-chs-patch",
   "close-similar-tabs",
-  "various-complements"
+  "various-complements",
+  "obsidian-relative-line-numbers"
 ]
