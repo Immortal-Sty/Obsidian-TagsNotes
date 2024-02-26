@@ -241,6 +241,21 @@
     },
     "remove-multiple-blank-lines-on-paste": {
       "enabled": true
+    },
+    "dedupe-yaml-array-values": {
+      "enabled": true,
+      "dedupe-alias-key": true,
+      "dedupe-tag-key": true,
+      "dedupe-array-keys": true,
+      "ignore-keys": ""
+    },
+    "sort-yaml-array-values": {
+      "enabled": false,
+      "sort-alias-key": false,
+      "sort-tag-key": false,
+      "sort-array-keys": false,
+      "ignore-keys": "",
+      "sort-order": "Ascending Alphabetical"
     }
   },
   "lintOnSave": true,

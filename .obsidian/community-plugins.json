@@ -24,10 +24,10 @@
   "obsidian-plugin-update-tracker",
   "obsidian-latex-suite",
   "dataview",
-  "obsidian-omnivore",
   "omnisearch",
   "cm-chs-patch",
   "close-similar-tabs",
   "various-complements",
-  "obsidian-relative-line-numbers"
+  "obsidian-relative-line-numbers",
+  "obsidian-omnivore"
 ]

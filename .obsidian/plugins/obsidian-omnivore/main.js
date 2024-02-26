@@ -12296,16 +12296,18 @@ function formatDate(date, format) {
   }
   return DateTime.fromJSDate(new Date(date)).toFormat(format);
 }
-var getQueryFromFilter = (filter, customQuery) => {
+var getQueryFromFilter = (filter) => {
   switch (filter) {
     case "ALL":
       return "in:all";
     case "HIGHLIGHTS":
-      return `has:highlights in:all`;
-    case "ADVANCED":
-      return customQuery;
+      return `in:all has:highlights`;
+    case "ARCHIVED":
+      return `in:archive`;
+    case "LIBRARY":
+      return `in:library`;
     default:
-      return "";
+      return "in:all";
   }
 };
 var siteNameFromUrl = (originalArticleUrl) => {
@@ -12598,12 +12600,14 @@ var DEFAULT_SETTINGS = {
   frequency: 0,
   intervalId: 0,
   frontMatterVariables: [],
-  frontMatterTemplate: ""
+  frontMatterTemplate: "",
+  syncOnStart: true
 };
 var Filter = /* @__PURE__ */ ((Filter2) => {
-  Filter2["ALL"] = "import all my articles";
-  Filter2["HIGHLIGHTS"] = "import just highlights";
-  Filter2["ADVANCED"] = "advanced";
+  Filter2["ALL"] = "Sync all the items";
+  Filter2["LIBRARY"] = "Sync only the library items";
+  Filter2["ARCHIVED"] = "Sync only the archived items";
+  Filter2["HIGHLIGHTS"] = "Sync only the highlighted items";
   return Filter2;
 })(Filter || {});
 var HighlightOrder = /* @__PURE__ */ ((HighlightOrder2) => {
@@ -14199,7 +14203,7 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
     const currentVersion = this.settings.version;
     if (latestVersion !== currentVersion) {
       this.settings.version = latestVersion;
-      this.saveSettings();
+      await this.saveSettings();
       const releaseNotes = `Omnivore plugin is upgraded to ${latestVersion}.
     
     What's new: https://github.com/omnivore-app/obsidian-omnivore/blob/main/CHANGELOG.md
@@ -14209,25 +14213,25 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
     this.addCommand({
       id: "sync",
       name: "Sync new changes",
-      callback: () => {
-        this.fetchOmnivore();
+      callback: async () => {
+        await this.fetchOmnivore();
       }
     });
     this.addCommand({
       id: "deleteArticle",
       name: "Delete Current Article from Omnivore",
-      callback: () => {
-        this.deleteCurrentArticle(this.app.workspace.getActiveFile());
+      callback: async () => {
+        await this.deleteCurrentArticle(this.app.workspace.getActiveFile());
       }
     });
     this.addCommand({
       id: "resync",
       name: "Resync all articles",
-      callback: () => {
+      callback: async () => {
         this.settings.syncAt = "";
-        this.saveSettings();
+        await this.saveSettings();
         new import_obsidian6.Notice("Omnivore Last Sync reset");
-        this.fetchOmnivore();
+        await this.fetchOmnivore();
       }
     });
     const iconId = "Omnivore";
@@ -14237,7 +14241,7 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
     });
     this.addSettingTab(new OmnivoreSettingTab(this.app, this));
     this.scheduleSync();
-    if (this.settings.frequency > 0) {
+    if (this.settings.syncOnStart) {
       await this.fetchOmnivore();
     }
   }
@@ -14245,11 +14249,24 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    if (this.settings.filter === "ADVANCED") {
+      this.settings.filter = "ALL";
+      console.log("obsidian-omnivore: advanced filter is replaced with all filter");
+      const customQuery = this.settings.customQuery;
+      this.settings.customQuery = `in:all ${customQuery ? `(${customQuery})` : ""}`;
+      console.log(`obsidian-omnivore: custom query is set to ${this.settings.customQuery}`);
+      this.saveSettings();
+    }
+    if (!this.settings.customQuery) {
+      this.settings.customQuery = getQueryFromFilter(this.settings.filter);
+      console.log(`obsidian-omnivore: custom query is set to ${this.settings.customQuery}`);
+      this.saveSettings();
+    }
   }
   async saveSettings() {
     await this.saveData(this.settings);
   }
-  scheduleSync() {
+  async scheduleSync() {
     if (this.settings.intervalId > 0) {
       window.clearInterval(this.settings.intervalId);
     }
@@ -14259,7 +14276,7 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
         await this.fetchOmnivore(false);
       }, frequency * 60 * 1e3);
       this.settings.intervalId = intervalId;
-      this.saveSettings();
+      await this.saveSettings();
       this.registerInterval(intervalId);
     }
   }
@@ -14286,7 +14303,6 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
     const {
       syncAt,
       apiKey,
-      filter,
       customQuery,
       highlightOrder,
       syncing,
@@ -14317,7 +14333,7 @@ var OmnivorePlugin = class extends import_obsidian6.Plugin {
       const size = 50;
       for (let hasNextPage = true, articles = [], after = 0; hasNextPage; after += size) {
         ;
-        [articles, hasNextPage] = await loadArticles(this.settings.endpoint, apiKey, after, size, parseDateTime(syncAt).toISO() || void 0, getQueryFromFilter(filter, customQuery), includeContent, "highlightedMarkdown");
+        [articles, hasNextPage] = await loadArticles(this.settings.endpoint, apiKey, after, size, parseDateTime(syncAt).toISO() || void 0, customQuery, includeContent, "highlightedMarkdown");
         for (const article of articles) {
           const folderName = (0, import_obsidian6.normalizePath)(render3(article, folder, this.settings.folderDateFormat));
           const omnivoreFolder = this.app.vault.getAbstractFileByPath(folderName);
@@ -14452,19 +14468,21 @@ var OmnivoreSettingTab = class extends import_obsidian6.PluginSettingTab {
       this.plugin.settings.apiKey = value;
       await this.plugin.saveSettings();
     }));
-    new import_obsidian6.Setting(containerEl).setName("Filter").setDesc("Select an Omnivore search filter type. Changing this would reset the 'Last sync' timestamp").addDropdown((dropdown) => {
+    new import_obsidian6.Setting(containerEl).setName("Filter").setDesc("Select an Omnivore search filter type. Changing this would update the 'Custom Query' accordingly and reset the 'Last sync' timestamp").addDropdown((dropdown) => {
       dropdown.addOptions(Filter);
       dropdown.setValue(this.plugin.settings.filter).onChange(async (value) => {
         this.plugin.settings.filter = value;
+        this.plugin.settings.customQuery = getQueryFromFilter(value);
         this.plugin.settings.syncAt = "";
         await this.plugin.saveSettings();
+        this.display();
       });
     });
-    new import_obsidian6.Setting(containerEl).setName("Custom query").setDesc(createFragment((fragment) => {
+    new import_obsidian6.Setting(containerEl).setName("Custom Query").setDesc(createFragment((fragment) => {
       fragment.append("See ", fragment.createEl("a", {
         text: "https://docs.omnivore.app/using/search",
         href: "https://docs.omnivore.app/using/search"
-      }), " for more info on search query syntax. Make sure your Filter (in the section above) is set to advanced when using a custom query.", " Changing this would reset the 'Last Sync' timestamp");
+      }), " for more info on search query syntax. Changing this would reset the 'Last Sync' timestamp");
     })).addText((text) => text.setPlaceholder("Enter an Omnivore custom search query if advanced filter is selected").setValue(this.plugin.settings.customQuery).onChange(async (value) => {
       this.plugin.settings.customQuery = value;
       this.plugin.settings.syncAt = "";
@@ -14514,6 +14532,10 @@ var OmnivoreSettingTab = class extends import_obsidian6.PluginSettingTab {
         new import_obsidian6.Notice("Template reset");
       });
     });
+    new import_obsidian6.Setting(containerEl).setName("Sync on Start").setDesc("Check this box if you want to sync with Omnivore when the app is loaded").addToggle((toggle) => toggle.setValue(this.plugin.settings.syncOnStart).onChange(async (value) => {
+      this.plugin.settings.syncOnStart = value;
+      await this.plugin.saveSettings();
+    }));
     new import_obsidian6.Setting(containerEl).setName("Frequency").setDesc("Enter the frequency in minutes to sync with Omnivore automatically. 0 means manual sync").addText((text) => text.setPlaceholder("Enter the frequency").setValue(this.plugin.settings.frequency.toString()).onChange(async (value) => {
       const frequency = parseInt(value);
       if (isNaN(frequency)) {

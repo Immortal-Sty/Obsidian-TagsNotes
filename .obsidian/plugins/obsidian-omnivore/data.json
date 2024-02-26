@@ -3,8 +3,8 @@
   "dateSavedFormat": "yyyy-MM-ddTHH:mm:ss",
   "apiKey": "8b4550e4-0205-48a9-9a02-05d30d9ab727",
   "filter": "ALL",
-  "syncAt": "2024-02-16T15:43:06",
-  "customQuery": "",
+  "syncAt": "2024-02-26T15:05:57",
+  "customQuery": "in:all",
   "template": "# {{{title}}}\n\n- [Read on Omnivore]({{{omnivoreUrl}}})；\n- [Read Original]({{{originalUrl}}})。\n\n{{{ content }}}",
   "highlightOrder": "LOCATION",
   "syncing": false,
@@ -14,10 +14,11 @@
   "filename": "{{{title}}}",
   "filenameDateFormat": "yyyyMMddHHmmss",
   "attachmentFolder": "Images",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "isSingleFile": false,
   "frequency": 0,
   "intervalId": 0,
   "frontMatterVariables": [],
-  "frontMatterTemplate": "id: {{{id}}}\nctime: {{{dateSaved}}}\nmtime: {{{dateSaved}}}"
+  "frontMatterTemplate": "id: {{{id}}}\nctime: {{{dateSaved}}}\nmtime: {{{dateSaved}}}",
+  "syncOnStart": true
 }

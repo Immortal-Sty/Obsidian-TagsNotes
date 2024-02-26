@@ -282,7 +282,8 @@ var GFM_IMAGE_FORMAT = "![]({0})";
 var DEFAULT_SETTINGS = {
   output: "output",
   attachment: "attachment",
-  GFM: true
+  GFM: true,
+  fileNameEncode: true
 };
 
 // src/utils.ts
@@ -428,7 +429,8 @@ async function tryCopyImage(plugin, contentPath) {
         if (imageLink.contains("|")) {
           imageLink = imageLink.split("|")[0];
         }
-        const imageLinkMd5 = (0, import_md5.default)(imageLink);
+        const fileName = path2.parse(path2.basename(imageLink)).name;
+        const imageLinkMd5 = plugin.settings.fileNameEncode ? (0, import_md5.default)(imageLink) : fileName;
         const imageExt = path2.extname(imageLink);
         const ifile = plugin.app.metadataCache.getFirstLinkpathDest(imageLink, contentPath);
         const filePath = ifile !== null ? ifile.path : path2.join(path2.dirname(contentPath), imageLink);
@@ -481,7 +483,8 @@ async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath
         if (imageLink.contains("|")) {
           imageLink = imageLink.split("|")[0];
         }
-        const imageLinkMd5 = (0, import_md5.default)(imageLink);
+        const fileName = path2.parse(path2.basename(imageLink)).name;
+        const imageLinkMd5 = plugin.settings.fileNameEncode ? (0, import_md5.default)(imageLink) : encodeURI(fileName);
         const imageExt = path2.extname(imageLink);
         const clickSubRoute = getClickSubRoute(outputSubPath);
         const hashLink = path2.join(clickSubRoute, plugin.settings.attachment, imageLinkMd5.concat(imageExt)).replace(/\\/g, "/");
@@ -594,6 +597,10 @@ var MarkdownExportSettingTab = class extends import_obsidian3.PluginSettingTab {
     }));
     new import_obsidian3.Setting(containerEl).setName("Use GitHub Flavored Markdown Format").setDesc("The format of markdown is more inclined to choose Github Flavored Markdown").addToggle((toggle) => toggle.setValue(this.plugin.settings.GFM).onChange(async (value) => {
       this.plugin.settings.GFM = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Encode file name").setDesc("true default, if you want to keep the original file name, set this to false").addToggle((toggle) => toggle.setValue(this.plugin.settings.fileNameEncode).onChange(async (value) => {
+      this.plugin.settings.fileNameEncode = value;
       await this.plugin.saveSettings();
     }));
   }
