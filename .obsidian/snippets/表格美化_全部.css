@@ -1,3 +1,11 @@
+/***************/
+/* 表格内自动折行 */
+/***************/
+
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper .cm-active, .markdown-rendered table) {
+	word-break: break-all;
+}
+
 /********************/
 /* 仿 Typora 表格样式 */
 /********************/

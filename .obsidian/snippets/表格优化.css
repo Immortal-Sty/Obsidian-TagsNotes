@@ -133,7 +133,7 @@ body.theme-dark tr:nth-child(2n) td {
   width: 100%;
 }
 
-body.tbMH-yuan :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-editor {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-editor {
   width: 100%;
 }
 
@@ -170,6 +170,7 @@ body.tbMH-yuan :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper
   border-bottom-right-radius: 0;
 }
 
+/*按钮圆角调整*/
 body.tbMH-yuan :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) .table-col-btn {
   border-top-right-radius: var(--table-radius);
   border-bottom-right-radius: var(--table-radius);
@@ -178,6 +179,7 @@ body.tbMH-yuan :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper
   border-bottom-left-radius: var(--table-radius);
   border-bottom-right-radius: var(--table-radius);
 }
+
 
 body.tbMH-yuan :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) :is(th, td):not(:first-child) {
   border-left: 0;
@@ -196,9 +198,8 @@ body.theme-dark .markdown-source-view.mod-cm6 .cm-table-widget th.is-selected::a
 }
 
 /*不超过模式*/
-body.tbMH-kd-ncc :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table)  {
-  table-layout: fixed; 
-  word-wrap: break-word;
+body.tbMH-kd-ncc :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper .cm-active, .markdown-rendered table) {
+  word-break: break-all;
 }
 
 /*透明底色模式*/
@@ -214,3 +215,4 @@ body.tbMH-ds-tm :is(.markdown-preview-view,.markdown-source-view.mod-cm6 .cm-tab
 body.tbMH-ds-tm tr:nth-child(2n) td {
   background-color:transparent;
 }
+
