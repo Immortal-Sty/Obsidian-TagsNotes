@@ -5,7 +5,6 @@
   "better-fn",
   "oz-clear-unused-images",
   "obsidian-icon-shortcodes",
-  "obsidian-linter",
   "metaedit",
   "quickadd",
   "tag-wrangler",
@@ -31,5 +30,6 @@
   "obsidian-relative-line-numbers",
   "obsidian-omnivore",
   "remotely-save",
-  "obsidian-style-settings"
+  "obsidian-style-settings",
+  "obsidian-linter"
 ]
