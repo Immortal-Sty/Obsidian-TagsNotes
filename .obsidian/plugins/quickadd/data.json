@@ -62,6 +62,41 @@
       },
       "openFile": false,
       "openFileInMode": "default"
+    },
+    {
+      "id": "2763e489-04f4-4451-a0d9-3f416fa66f3b",
+      "name": "Temp Note",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "Others/Temp.md",
+      "captureToActiveFile": false,
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "\\n- {{VALUE:✏临时速记}} (ctime :: {{DATE:Y-MM-DDTHH:mm:ss}})"
+      },
+      "insertAfter": {
+        "enabled": true,
+        "after": "# Temp",
+        "insertAtEnd": false,
+        "considerSubsections": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
     }
   ],
   "macros": [
