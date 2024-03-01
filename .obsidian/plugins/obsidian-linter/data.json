@@ -168,7 +168,7 @@
       "enabled": true
     },
     "empty-line-around-code-fences": {
-      "enabled": true
+      "enabled": false
     },
     "empty-line-around-math-blocks": {
       "enabled": false
