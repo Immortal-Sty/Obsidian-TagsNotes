@@ -27,6 +27,41 @@
       "type": "Macro",
       "command": true,
       "macroId": "e716715d-b07c-41c9-9572-32f42649730d"
+    },
+    {
+      "id": "0e0f17f3-fa70-4643-aef6-2d9c50d69799",
+      "name": "DV Table",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "",
+      "captureToActiveFile": true,
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "```dataview\ntable without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\" as \"<% tp.file.cursor(1) %>\",\n\t<% tp.file.cursor(2) %>\nwhere tags[<% tp.file.cursor(3) %>] = this.tags[<% tp.file.cursor(4) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(5) %>], \"\\s+\", \"\")\nsort <% tp.file.cursor(6) %>\n```"
+      },
+      "insertAfter": {
+        "enabled": false,
+        "after": "",
+        "insertAtEnd": false,
+        "considerSubsections": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
     }
   ],
   "macros": [
