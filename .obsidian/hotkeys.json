@@ -322,5 +322,13 @@
       ],
       "key": "H"
     }
+  ],
+  "homepage:open-homepage": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "H"
+    }
   ]
 }
