@@ -330,5 +330,13 @@
       ],
       "key": "H"
     }
+  ],
+  "typewriter-mode:move-typewriter-down": [],
+  "typewriter-mode:move-typewriter-up": [],
+  "typewriter-mode:isTypewriterScrollEnabled": [
+    {
+      "modifiers": [],
+      "key": "F9"
+    }
   ]
 }
