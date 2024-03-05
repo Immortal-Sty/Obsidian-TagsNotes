@@ -5,7 +5,6 @@
   "better-fn",
   "oz-clear-unused-images",
   "obsidian-icon-shortcodes",
-  "metaedit",
   "quickadd",
   "tag-wrangler",
   "obsidian-tagfolder",
@@ -32,5 +31,6 @@
   "remotely-save",
   "obsidian-linter",
   "homepage",
-  "typewriter-mode"
+  "typewriter-mode",
+  "metadata-menu"
 ]

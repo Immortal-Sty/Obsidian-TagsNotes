@@ -21,7 +21,7 @@
       "default-array-style": "multi-line",
       "default-array-keys": true,
       "force-single-line-array-style": "",
-      "force-multi-line-array-style": "aliases"
+      "force-multi-line-array-style": "aliases\ntags\nmocs"
     },
     "insert-yaml-attributes": {
       "enabled": false,
@@ -38,7 +38,7 @@
     },
     "yaml-key-sort": {
       "enabled": true,
-      "yaml-key-priority-sort-order": "tags\naliases\nctime\nmtime",
+      "yaml-key-priority-sort-order": "tags\naliases\nmocs\nctime\nmtime",
       "priority-keys-at-start-of-yaml": true,
       "yaml-sort-order-for-other-keys": "Ascending Alphabetical"
     },
