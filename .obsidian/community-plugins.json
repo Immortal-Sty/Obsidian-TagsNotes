@@ -1,6 +1,5 @@
 [
   "update-relative-links",
-  "attachment-management",
   "obsidian-better-command-palette",
   "better-fn",
   "oz-clear-unused-images",
@@ -33,5 +32,6 @@
   "homepage",
   "typewriter-mode",
   "metaedit",
-  "obsidian-style-settings"
+  "obsidian-style-settings",
+  "attachment-management"
 ]
