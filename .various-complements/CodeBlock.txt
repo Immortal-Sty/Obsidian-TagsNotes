@@ -8,5 +8,20 @@
 `Java;>>>;```java\n<CURSOR>\n``	CodeBlock
 `CSS;>>>;```css\n<CURSOR>\n``	CodeBlock
 `Dataview;>>>;```dataview\n<CURSOR>\n``	CodeBlock
+`DataviewJS;>>>;```dataviewjs\n<CURSOR>\n``	CodeBlock
 `Json;>>>;```json\n<CURSOR>\n``	CodeBlock
 `JavaScript;>>>;```javascript\n<CURSOR>\n``	CodeBlock
+
+`C;>>>;`{c} <CURSOR>	InlineCode
+`C++;>>>;`{cpp} <CURSOR>	InlineCode
+`CPP;>>>;`{cpp} <CURSOR>	InlineCode
+`C#;>>>;`{c#} <CURSOR>	InlineCode
+`Python;>>>;`{python} <CURSOR>	InlineCode
+`PowerShell;>>>;`{powershell} <CURSOR>	InlineCode
+`MatLab;>>>;`{matlab} <CURSOR>	InlineCode
+`Java;>>>;`{java} <CURSOR>	InlineCode
+`CSS;>>>;`{css} <CURSOR>	InlineCode
+`DV;>>>;`{dv} <CURSOR>	InlineCode
+`DVJS;>>>;`{dvjs} <CURSOR>	InlineCode
+`Json;>>>;`{json} <CURSOR>	InlineCode
+`JavaScript;>>>;`{javascript} <CURSOR>	InlineCode
