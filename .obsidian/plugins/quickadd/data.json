@@ -29,6 +29,41 @@
       "macroId": "e716715d-b07c-41c9-9572-32f42649730d"
     },
     {
+      "id": "2763e489-04f4-4451-a0d9-3f416fa66f3b",
+      "name": "Temp Note",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "Others/Temp.md",
+      "captureToActiveFile": false,
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "\\n- {{VALUE:✏临时速记}} (ctime :: {{DATE:Y-MM-DDTHH:mm:ss}})"
+      },
+      "insertAfter": {
+        "enabled": true,
+        "after": "# Temp",
+        "insertAtEnd": false,
+        "considerSubsections": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
+    },
+    {
       "id": "0e0f17f3-fa70-4643-aef6-2d9c50d69799",
       "name": "DV Table",
       "type": "Capture",
@@ -43,7 +78,7 @@
       },
       "format": {
         "enabled": true,
-        "format": "```dataview\ntable without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\" as \"<% tp.file.cursor(1) %>\",\n\t<% tp.file.cursor(2) %>\nwhere tags[<% tp.file.cursor(3) %>] = this.tags[<% tp.file.cursor(4) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(5) %>], \"\\s+\", \"\")\nsort <% tp.file.cursor(6) %>\n```"
+        "format": "```dataview\ntable without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\" as \"<% tp.file.cursor(1) %>\",\n\t<% tp.file.cursor(2) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(3) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(4) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(5) %>\n```"
       },
       "insertAfter": {
         "enabled": false,
@@ -64,13 +99,13 @@
       "openFileInMode": "default"
     },
     {
-      "id": "2763e489-04f4-4451-a0d9-3f416fa66f3b",
-      "name": "Temp Note",
+      "id": "dfe12ee5-1512-476b-a1da-ebba62319afd",
+      "name": "DV List",
       "type": "Capture",
       "command": true,
       "appendLink": false,
-      "captureTo": "Others/Temp.md",
-      "captureToActiveFile": false,
+      "captureTo": "",
+      "captureToActiveFile": true,
       "createFileIfItDoesntExist": {
         "enabled": false,
         "createWithTemplate": false,
@@ -78,11 +113,11 @@
       },
       "format": {
         "enabled": true,
-        "format": "\\n- {{VALUE:✏临时速记}} (ctime :: {{DATE:Y-MM-DDTHH:mm:ss}})"
+        "format": "```dataview\nlist without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\"<% tp.file.cursor(1) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(2) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(3) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(4) %>\n```"
       },
       "insertAfter": {
-        "enabled": true,
-        "after": "# Temp",
+        "enabled": false,
+        "after": "",
         "insertAtEnd": false,
         "considerSubsections": false,
         "createIfNotFound": false,
