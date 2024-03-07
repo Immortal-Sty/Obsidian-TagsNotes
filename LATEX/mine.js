@@ -113,7 +113,11 @@
     {trigger: "{", replacement: "{$0}$1", options: "tA"},
 
     // 常用 html 标签简化补全
-    {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"}
+    {trigger: "<jdt ", replacement: "<progress max=$0 value=$1></progress>$2", options: "tA"},
+
+    // 补全内嵌属性语法
+    {trigger: "[; ", replacement: "[$0 :: $1", options: "tA"},
+    {trigger: "(; ", replacement: "($0 :: $1", options: "tA"},
 
     // 快速生成表格
  //    {trigger: /(\d)asdf(\d)/, replacement: (match) => {
