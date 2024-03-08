@@ -31,6 +31,6 @@
   "typewriter-mode",
   "metaedit",
   "obsidian-style-settings",
-  "attachment-management",
-  "obsidian-linter"
+  "obsidian-linter",
+  "obsidian-attachment-name-formatting"
 ]
