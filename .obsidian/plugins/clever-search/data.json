@@ -1,0 +1,39 @@
+{
+  "customExtensions": {
+    "plaintext": [
+      "md"
+    ]
+  },
+  "followObsidianExcludedFiles": true,
+  "excludedPaths": [
+    "Images",
+    "LATEX",
+    "Others",
+    "Template"
+  ],
+  "logLevel": "warn",
+  "enableStopWordsEn": true,
+  "enableChinesePatch": true,
+  "enableStopWordsZh": true,
+  "apiProvider1": {
+    "domain": "",
+    "key": ""
+  },
+  "apiProvider2": {
+    "domain": "",
+    "key": ""
+  },
+  "ui": {
+    "openInNewPane": true,
+    "maxItemResults": 100,
+    "floatingWindowForInFile": true,
+    "showedExtension": "except md",
+    "collapseDevSettingByDefault": false,
+    "inFileFloatingWindowTop": "2.7em",
+    "inFileFloatingWindowLeft": "2.5em"
+  },
+  "semantic": {
+    "isEnabled": false,
+    "serverType": "local"
+  }
+}

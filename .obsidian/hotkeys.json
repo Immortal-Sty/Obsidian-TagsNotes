@@ -218,15 +218,6 @@
       "key": "F2"
     }
   ],
-  "clever-search:clever-search-in-vault": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "F"
-    }
-  ],
   "app:go-back": [
     {
       "modifiers": [
@@ -337,6 +328,15 @@
     {
       "modifiers": [],
       "key": "F9"
+    }
+  ],
+  "clever-search:clever-search-in-vault": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "S"
     }
   ]
 }
