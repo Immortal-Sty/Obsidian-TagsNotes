@@ -4058,7 +4058,6 @@ function displayValue7(managedField, container, onClicked) {
 }
 function createDvField6(managedField, dv, p, fieldContainer, attrs = {}) {
   var _a;
-  attrs.cls = "value-container";
   fieldContainer.appendChild(dv.el("span", managedField.value || "", attrs));
   const spacer = fieldContainer.createEl("div", { cls: "spacer-1" });
   const cycleBtn = fieldContainer.createEl("button");
@@ -4222,7 +4221,6 @@ function displayValue8(managedField, container, onClicked = () => {
   return baseDisplayValue(managedField, container, onClicked);
 }
 function createDvField7(managedField, dv, p, fieldContainer, attrs = {}) {
-  attrs.cls = "value-container";
   const checkbox = dv.el("input", "", { ...attrs, "type": "checkbox" });
   checkbox.checked = managedField.value;
   fieldContainer.appendChild(checkbox);
@@ -21571,7 +21569,7 @@ var Note = class {
 ${"  ".repeat(indentationLevel + 1)}`;
         return `${indentation}${_rawValue.split("\n").join(indentation)}`;
       } else {
-        return (0, import_obsidian64.parseYaml)(_rawValue) === _rawValue ? (0, import_obsidian64.parseYaml)(_rawValue) : `"${_rawValue}"`;
+        return (0, import_obsidian64.parseYaml)(_rawValue) === _rawValue || (0, import_obsidian64.parseYaml)(_rawValue) === false || !isNaN(parseFloat(_rawValue)) ? (0, import_obsidian64.parseYaml)(_rawValue) : `"${_rawValue}"`;
       }
       ;
     } else {
@@ -24482,8 +24480,9 @@ function buildAndOpenModal(plugin, file, fieldName, attrs) {
     }
   }
 }
-function fieldModifier(plugin, dv, p, fieldName, attrs) {
+function fieldModifier(plugin, dv, p, fieldName, attrs = {}) {
   var _a;
+  attrs.cls = (attrs == null ? void 0 : attrs.cls) || {} + "value-container";
   const fieldContainer = dv.el("div", "");
   fieldContainer.setAttr("class", `metadata-menu-dv-field-container ${fieldName}`);
   const file = plugin.app.vault.getAbstractFileByPath(p.file.path);

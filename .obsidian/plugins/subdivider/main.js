@@ -9061,10 +9061,11 @@ async function processContentFromSelection(content3) {
   }
   return doc;
 }
-async function createOrModifyFile(app, rootPath, doc, recursive) {
+async function createOrModifyFile(app, rootPath, doc, autoOverride) {
   const file = app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
+  console.log(file, rootPath, doc.title, (0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
   if (file) {
-    if (await new OverrideModal(this.app, `${rootPath}/${doc.title}.md`, false).myOpen()) {
+    if (autoOverride || await new OverrideModal(this.app, `${rootPath}/${doc.title}.md`, false).myOpen()) {
       if (file instanceof import_obsidian.TFile) {
         await app.vault.modify(file, toMarkdown(doc.root, ToMarkdownExt));
       }
@@ -9082,7 +9083,7 @@ function processContent(content3, rootName, index2) {
   }
   const firstHeading = tree.children.findIndex((value2) => value2.type === "heading" && value2.depth === 1);
   const hasHeadings = tree.children.filter((value2) => value2.type === "heading").length > 0;
-  if (index2) {
+  if (index2 || firstHeading !== 0) {
     const node2 = {
       title: rootName,
       root: {
@@ -9092,7 +9093,7 @@ function processContent(content3, rootName, index2) {
         ]
       }
     };
-    if (hasHeadings) {
+    if (index2 && hasHeadings) {
       node2.root.children.push(
         { type: "heading", depth: 1, children: [{ type: "text", value: "TOC" }] },
         { type: "list", ordered: true, start: 1, spread: false, children: [] }
@@ -9136,9 +9137,9 @@ function processContent(content3, rootName, index2) {
   }
   return documents;
 }
-async function subdivide(app, rootPath, documents, recursive) {
+async function subdivide(app, rootPath, documents, autoOverride) {
   if (app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(rootPath))) {
-    if (await new OverrideModal(this.app, rootPath, true).myOpen()) {
+    if (autoOverride || await new OverrideModal(this.app, rootPath, true).myOpen()) {
       for (const doc of documents) {
         const file = app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
         if (file) {
@@ -9157,12 +9158,12 @@ async function subdivide(app, rootPath, documents, recursive) {
     }
   }
 }
-async function subdivideFile(plugin, file, depth, deleteOrigFile) {
+async function subdivideFile(plugin, file, depth, deleteOrigFile, autoOverride) {
   var _a, _b;
   const fileContent = await plugin.app.vault.cachedRead(file);
   const documents = processContent(fileContent, file.basename, plugin.settings.index);
   const rootPath = `${(_a = file.parent) == null ? void 0 : _a.path}/${file.basename}`;
-  await subdivide(plugin.app, rootPath, documents, plugin.settings.recursive);
+  await subdivide(plugin.app, rootPath, documents, autoOverride);
   if (deleteOrigFile) {
     await plugin.app.vault.delete(file);
   }
@@ -9175,7 +9176,7 @@ async function subdivideFile(plugin, file, depth, deleteOrigFile) {
       }
     }
     for (let f of children) {
-      await subdivideFile(plugin, f, depth + 1, true);
+      await subdivideFile(plugin, f, depth + 1, true, true);
     }
   }
 }
@@ -9192,14 +9193,14 @@ var SubdividerPlugin = class extends import_obsidian.Plugin {
             if (selectedText) {
               const doc = await processContentFromSelection(selectedText);
               const rootPath = (_e = (_d = (_c = this.app.workspace.activeEditor) == null ? void 0 : _c.file) == null ? void 0 : _d.parent) == null ? void 0 : _e.path;
-              await createOrModifyFile(this.app, rootPath, doc, this.settings.recursive);
+              await createOrModifyFile(this.app, rootPath, doc, false);
               if (this.settings.delete) {
                 (_g = (_f = this.app.workspace.activeEditor) == null ? void 0 : _f.editor) == null ? void 0 : _g.replaceSelection("");
               }
               if (this.settings.recursive && this.settings.recursionDepth > 1) {
                 const targetFile = this.app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
                 if (targetFile && targetFile instanceof import_obsidian.TFile) {
-                  await subdivideFile(this, targetFile, 2, true);
+                  await subdivideFile(this, targetFile, 2, true, false);
                 }
               }
             }
@@ -9214,7 +9215,7 @@ var SubdividerPlugin = class extends import_obsidian.Plugin {
           const addIconMenuItem = (item) => {
             item.setTitle("Subdivide the file");
             item.onClick(async () => {
-              await subdivideFile(this, file, 1, this.settings.delete);
+              await subdivideFile(this, file, 1, this.settings.delete, false);
             });
           };
           menu.addItem(addIconMenuItem);
