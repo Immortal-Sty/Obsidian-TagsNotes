@@ -28,7 +28,7 @@
     "inFileFloatingWindowLeft": "2.5em"
   },
   "semantic": {
-    "isEnabled": false,
+    "isEnabled": true,
     "serverType": "local"
   }
 }
