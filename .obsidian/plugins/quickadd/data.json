@@ -78,7 +78,7 @@
       },
       "format": {
         "enabled": true,
-        "format": "```dataview\ntable without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\" as \"<% tp.file.cursor(1) %>\",\n\t<% tp.file.cursor(2) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(3) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(4) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(5) %>\n```"
+        "format": "```dataview\ntable without id\n\tlink(file.path, aliases[<% tp.file.cursor(0) %>]) as \"<% tp.file.cursor(1) %>\",\n\t<% tp.file.cursor(2) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(3) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(4) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(5) %>\n```"
       },
       "insertAfter": {
         "enabled": false,
@@ -113,7 +113,7 @@
       },
       "format": {
         "enabled": true,
-        "format": "```dataview\nlist without id\n\t\"[\" + aliases[<% tp.file.cursor(0) %>] + \"](\" + file.path + \")\"<% tp.file.cursor(1) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(2) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(3) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(4) %>\n```"
+        "format": "```dataview\nlist without id\n\tlink(file.path, aliases[<% tp.file.cursor(0) %>])<% tp.file.cursor(1) %>\nwhere econtains(tags, this.tags[<% tp.file.cursor(2) %>] + \"/\" + regexreplace(this.aliases[<% tp.file.cursor(3) %>], \"\\s+\", \"\"))\nsort <% tp.file.cursor(4) %>\n```"
       },
       "insertAfter": {
         "enabled": false,
