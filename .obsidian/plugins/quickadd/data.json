@@ -132,13 +132,6 @@
       },
       "openFile": false,
       "openFileInMode": "default"
-    },
-    {
-      "id": "24df431e-5954-41b5-8306-16a9b9537616",
-      "name": "try",
-      "type": "Macro",
-      "command": true,
-      "macroId": "444e6f87-edef-46df-a6a9-7db99ef3e1a8"
     }
   ],
   "macros": [
@@ -247,31 +240,6 @@
           "settings": {
             "CSS 片段文件名": "标签页隐藏_外部"
           }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "try",
-      "id": "444e6f87-edef-46df-a6a9-7db99ef3e1a8",
-      "commands": [
-        {
-          "name": "新建笔记",
-          "type": "Obsidian",
-          "id": "56849b76-dc53-4699-84fb-b559124b6980",
-          "commandId": "file-explorer:new-file"
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "a095c755-ed71-4d3c-9a78-8f6808ee1728",
-          "time": 1000
-        },
-        {
-          "name": "将文件移动到其他文件夹",
-          "type": "Obsidian",
-          "id": "f98ce729-7446-46de-8835-46d72f18d951",
-          "commandId": "file-explorer:move-file"
         }
       ],
       "runOnStartup": false
