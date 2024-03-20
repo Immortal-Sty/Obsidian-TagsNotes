@@ -2,7 +2,6 @@
   "update-relative-links",
   "obsidian-better-command-palette",
   "better-fn",
-  "oz-clear-unused-images",
   "obsidian-icon-shortcodes",
   "quickadd",
   "tag-wrangler",
@@ -32,5 +31,6 @@
   "obsidian-style-settings",
   "obsidian-linter",
   "attachment-management",
-  "float-search"
+  "float-search",
+  "janitor"
 ]

@@ -1,0 +1,22 @@
+{
+  "runAtStartup": false,
+  "addRibbonIcon": true,
+  "promptUser": true,
+  "promptForBigFiles": false,
+  "attachmentsExtensions": ".jpg|.jpeg|.png|.gif|.svg|.pdf",
+  "defaultOperation": "trash",
+  "expiredAttribute": "expires",
+  "expiredDateFormat": "YYYY-MM-DD",
+  "sizeLimitKb": 1024,
+  "processOrphans": true,
+  "processEmpty": true,
+  "processExpired": false,
+  "processBig": false,
+  "honorObsidianExcludedFiles": true,
+  "excludedFilesFilters": [
+    "LATEX/",
+    "Template/",
+    "Others/",
+    "Notes/"
+  ]
+}

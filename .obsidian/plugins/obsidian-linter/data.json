@@ -272,7 +272,12 @@
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
-  "lintCommands": [],
+  "lintCommands": [
+    {
+      "id": "janitor:scan-files-with-prompt",
+      "name": "Janitor: Scan Files (with prompt)"
+    }
+  ],
   "customRegexes": [
     {
       "label": "相对路径修复",
