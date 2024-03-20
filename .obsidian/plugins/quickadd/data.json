@@ -134,11 +134,11 @@
       "openFileInMode": "default"
     },
     {
-      "id": "f491af7c-8659-4f6e-88ae-8d50f11813aa",
+      "id": "24df431e-5954-41b5-8306-16a9b9537616",
       "name": "try",
       "type": "Macro",
       "command": true,
-      "macroId": "976ae1ca-54dd-49d9-8e19-38b4006fa5eb"
+      "macroId": "444e6f87-edef-46df-a6a9-7db99ef3e1a8"
     }
   ],
   "macros": [
@@ -253,18 +253,24 @@
     },
     {
       "name": "try",
-      "id": "976ae1ca-54dd-49d9-8e19-38b4006fa5eb",
+      "id": "444e6f87-edef-46df-a6a9-7db99ef3e1a8",
       "commands": [
         {
           "name": "新建笔记",
           "type": "Obsidian",
-          "id": "82f015a2-fb65-48aa-8d19-628820c0ba30",
+          "id": "56849b76-dc53-4699-84fb-b559124b6980",
           "commandId": "file-explorer:new-file"
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "a095c755-ed71-4d3c-9a78-8f6808ee1728",
+          "time": 1000
         },
         {
           "name": "将文件移动到其他文件夹",
           "type": "Obsidian",
-          "id": "501e1740-3f44-4338-b4bc-86f4286a36b6",
+          "id": "f98ce729-7446-46de-8835-46d72f18d951",
           "commandId": "file-explorer:move-file"
         }
       ],
