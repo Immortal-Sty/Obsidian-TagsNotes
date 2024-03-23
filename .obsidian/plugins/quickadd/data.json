@@ -142,8 +142,8 @@
         {
           "name": "New Note",
           "type": "UserScript",
-          "id": "7a760db9-811c-4407-943e-2ca915328227",
-          "path": "Template/JavaScript/New Note.js",
+          "id": "edf9fcc5-8791-43d9-bf7d-40d1efddc96e",
+          "path": "Attachment/Quickadd/New Note.js",
           "settings": {}
         },
         {
@@ -203,8 +203,8 @@
         {
           "name": "Toggle Snippets",
           "type": "UserScript",
-          "id": "4bde6a05-ce1c-468f-8841-6bbc92ea835e",
-          "path": "Template/JavaScript/Toggle Snippets.js",
+          "id": "09f00ba9-88da-41f5-b6b2-1ebfa50c7f2c",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
           "settings": {
             "CSS 片段文件名": "状态栏自动隐藏_外部"
           }
@@ -219,8 +219,8 @@
         {
           "name": "Toggle Snippets",
           "type": "UserScript",
-          "id": "da980873-6bdf-49f1-936b-c778e4d7d636",
-          "path": "Template/JavaScript/Toggle Snippets.js",
+          "id": "492f7b14-ec1a-4529-af7c-8d6397dff3e1",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
           "settings": {
             "CSS 片段文件名": "标题栏自动隐藏_外部"
           }
@@ -235,8 +235,8 @@
         {
           "name": "Toggle Snippets",
           "type": "UserScript",
-          "id": "11a77c5b-2223-4b85-80c4-c131863375bb",
-          "path": "Template/JavaScript/Toggle Snippets.js",
+          "id": "51355894-4e1c-4683-b7c5-1067951d9d9a",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
           "settings": {
             "CSS 片段文件名": "标签页隐藏_外部"
           }

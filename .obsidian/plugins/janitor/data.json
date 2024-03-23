@@ -14,9 +14,8 @@
   "processBig": false,
   "honorObsidianExcludedFiles": true,
   "excludedFilesFilters": [
-    "LATEX/",
     "Template/",
     "Others/",
-    "Notes/"
+    "Attachment/"
   ]
 }
