@@ -27,10 +27,12 @@ nnoremap ]] :nextHeading
 " 上一个链接
 "exmap prevLink jsfile vimrc.js {jumpNextLink(false)}
 exmap prevLink jscommand { const editor = view.editor; let posToSearchFrom = editor.getCursor(); posToSearchFrom.line += -1; const cursorOffset = editor.posToOffset(posToSearchFrom); const lookupToUse = regexLastIndexOf; let headingOffset = lookupToUse(editor.getValue(), /\[\[/g, cursorOffset); if (headingOffset === -1) headingOffset = lookupToUse(editor.getValue(), /\[\[/g); const newPos = editor.offsetToPos(headingOffset+2); editor.setCursor(newPos); }
+nunmap ,
 nmap ,, :prevLink
 " 下一个链接
 "exmap nextLink jsfile vimrc.js {jumpNextLink(true)}
 exmap nextLink jscommand { const editor = view.editor; let posToSearchFrom = editor.getCursor(); posToSearchFrom.line += 0; const cursorOffset = editor.posToOffset(posToSearchFrom); const lookupToUse = regexIndexOf; let headingOffset = lookupToUse(editor.getValue(), /\[\[/g, cursorOffset); if (headingOffset === -1) headingOffset = lookupToUse(editor.getValue(), /\[\[/g); const newPos = editor.offsetToPos(headingOffset+2); editor.setCursor(newPos); }
+nunmap .
 nmap .. :nextLink
 " 打开链接在当前页面
 exmap openlink obcommand editor:follow-link
