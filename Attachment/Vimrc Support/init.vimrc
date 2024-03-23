@@ -21,10 +21,10 @@ nnoremap gw :openlink_windows
 " 回到上次更改的地方
 nnoremap g; u<C-r>
 " 下一个标题
-exmap nextHeading jsfile .vimrc.js {jumpHeading(true)}
+exmap nextHeading jsfile vimrc.js {jumpHeading(true)}
 nnoremap ]] :nextHeading
 " 上一个标题
-exmap prevHeading jsfile .vimrc.js {jumpHeading(false)}
+exmap prevHeading jsfile vimrc.js {jumpHeading(false)}
 nnoremap [[ :prevHeading
 
 " =============
