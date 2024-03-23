@@ -16,53 +16,21 @@ noremap ; :
 nnoremap g; u<C-r>
 
 " 上一个标题
-"exmap prevHeading jsfile .vimrc.js {jumpHeading(false)}
-exmap nextHeading jscommand {
-  let cursor = editor.getCursor();
-  let line = cursor.line;
-
-  do {
-    line += -1;
-    if (line < 0) {
-      line = editor.lineCount();
-    }
-
-    let lineString = editor.getLine(line);
-    if (/^#{1,6} /.test(lineString)) {
-      cursor.line = line;
-      editor.setCursor(cursor);
-      break;
-    }
-  } while (line != cursor.line);
-}
+"exmap prevHeading jsfile vimrc.js {jumpHeading(false)}
+exmap prevHeading jscommand {let cursor = editor.getCursor(); let line = cursor.line; do { line += -1; if (line < 0) { line = editor.lineCount(); } let lineString = editor.getLine(line); if (/^#{1,6} /.test(lineString)) { cursor.line = line; editor.setCursor(cursor); break; } } while (line != cursor.line); }
 nnoremap [[ :prevHeading
 " 下一个标题
-"exmap nextHeading jsfile .vimrc.js {jumpHeading(true)}
-exmap nextHeading jscommand {
-  let cursor = editor.getCursor();
-  let line = cursor.line;
-
-  do {
-    line += 1;
-    if (line >= editor.lineCount()) {
-      line = 0;
-    }
-
-    let lineString = editor.getLine(line);
-    if (/^#{1,6} /.test(lineString)) {
-      cursor.line = line;
-      editor.setCursor(cursor);
-      break;
-    }
-  } while (line != cursor.line);
-}
+"exmap nextHeading jsfile vimrc.js {jumpHeading(true)}
+exmap nextHeading jscommand { let cursor = editor.getCursor(); let line = cursor.line; do { line += 1; if (line >= editor.lineCount()) { line = 0; } let lineString = editor.getLine(line); if (/^#{1,6} /.test(lineString)) { cursor.line = line; editor.setCursor(cursor); break; } } while (line != cursor.line); }
 nnoremap ]] :nextHeading
 
 " 上一个链接
-exmap prevLink jsfile .vimrc.js {jumpNextLink(false)}
+"exmap prevLink jsfile vimrc.js {jumpNextLink(false)}
+exmap prevLink jscommand { const editor = view.editor; let posToSearchFrom = editor.getCursor(); posToSearchFrom.line += -1; const cursorOffset = editor.posToOffset(posToSearchFrom); const lookupToUse = regexLastIndexOf; let headingOffset = lookupToUse(editor.getValue(), /\[\[/g, cursorOffset); if (headingOffset === -1) headingOffset = lookupToUse(editor.getValue(), /\[\[/g); const newPos = editor.offsetToPos(headingOffset+2); editor.setCursor(newPos); }
 nmap ,, :prevLink
 " 下一个链接
-exmap nextLink jsfile .vimrc.js {jumpNextLink(true)}
+"exmap nextLink jsfile vimrc.js {jumpNextLink(true)}
+exmap nextLink jscommand { const editor = view.editor; let posToSearchFrom = editor.getCursor(); posToSearchFrom.line += 0; const cursorOffset = editor.posToOffset(posToSearchFrom); const lookupToUse = regexIndexOf; let headingOffset = lookupToUse(editor.getValue(), /\[\[/g, cursorOffset); if (headingOffset === -1) headingOffset = lookupToUse(editor.getValue(), /\[\[/g); const newPos = editor.offsetToPos(headingOffset+2); editor.setCursor(newPos); }
 nmap .. :nextLink
 " 打开链接在当前页面
 exmap openlink obcommand editor:follow-link
