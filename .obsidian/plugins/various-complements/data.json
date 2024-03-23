@@ -77,7 +77,7 @@
   "excludeCurrentVaultPathPrefixPatterns": "",
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
   "enableCustomDictionaryComplement": true,
-  "customDictionaryPaths": ".various-complements\\Callout.txt\n.various-complements\\CodeBlock.txt",
+  "customDictionaryPaths": "Attachment\\Various Complements\\Callout.txt\nAttachment\\Various Complements\\CodeBlock.txt",
   "columnDelimiter": "Tab",
   "customDictionaryWordRegexPattern": ".*",
   "delimiterToHideSuggestion": ">;;;>",
@@ -99,7 +99,7 @@
   "insertCommaAfterFrontMatterCompletion": false,
   "intelligentSuggestionPrioritization": {
     "enabled": true,
-    "historyFilePath": ".various-complements\\histories.json",
+    "historyFilePath": "Attachment\\Various Complements\\histories.json",
     "maxDaysToKeepHistory": 30,
     "maxNumberOfHistoryToKeep": 0
   },
