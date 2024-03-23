@@ -12,20 +12,64 @@ noremap ; :
 " === Go ===
 " ==========
 
+" 回到上次更改的地方
+nnoremap g; u<C-r>
+
+" 上一个标题
+"exmap prevHeading jsfile .vimrc.js {jumpHeading(false)}
+exmap nextHeading jscommand {
+  let cursor = editor.getCursor();
+  let line = cursor.line;
+
+  do {
+    line += -1;
+    if (line < 0) {
+      line = editor.lineCount();
+    }
+
+    let lineString = editor.getLine(line);
+    if (/^#{1,6} /.test(lineString)) {
+      cursor.line = line;
+      editor.setCursor(cursor);
+      break;
+    }
+  } while (line != cursor.line);
+}
+nnoremap [[ :prevHeading
+" 下一个标题
+"exmap nextHeading jsfile .vimrc.js {jumpHeading(true)}
+exmap nextHeading jscommand {
+  let cursor = editor.getCursor();
+  let line = cursor.line;
+
+  do {
+    line += 1;
+    if (line >= editor.lineCount()) {
+      line = 0;
+    }
+
+    let lineString = editor.getLine(line);
+    if (/^#{1,6} /.test(lineString)) {
+      cursor.line = line;
+      editor.setCursor(cursor);
+      break;
+    }
+  } while (line != cursor.line);
+}
+nnoremap ]] :nextHeading
+
+" 上一个链接
+exmap prevLink jsfile .vimrc.js {jumpNextLink(false)}
+nmap ,, :prevLink
+" 下一个链接
+exmap nextLink jsfile .vimrc.js {jumpNextLink(true)}
+nmap .. :nextLink
 " 打开链接在当前页面
 exmap openlink obcommand editor:follow-link
 nnoremap go :openlink
 " 打开链接在新窗口中
 exmap openlink_windows obcommand editor:open-link-in-new-window
 nnoremap gw :openlink_windows
-" 回到上次更改的地方
-nnoremap g; u<C-r>
-" 下一个标题
-exmap nextHeading jsfile vimrc.js {jumpHeading(true)}
-nnoremap ]] :nextHeading
-" 上一个标题
-exmap prevHeading jsfile vimrc.js {jumpHeading(false)}
-nnoremap [[ :prevHeading
 
 " =============
 " === Table ===
