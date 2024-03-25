@@ -265,10 +265,9 @@
   "displayLintOnFileChangeNotice": true,
   "settingsConvertedToConfigKeyValues": true,
   "foldersToIgnore": [
+    "Attachment",
     "Images",
-    "LATEX",
-    "Template",
-    "Template/JavaScript"
+    "Template"
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",

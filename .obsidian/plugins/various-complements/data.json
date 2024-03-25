@@ -86,7 +86,7 @@
   "displayedTextSuffix": "➡ …",
   "enableInternalLinkComplement": true,
   "suggestInternalLinkWithAlias": true,
-  "excludeInternalLinkPathPrefixPatterns": "Images/\nLATEX/\nTemplate/",
+  "excludeInternalLinkPathPrefixPatterns": "Attachment/\nImages/\nTemplate/",
   "updateInternalLinksOnSave": true,
   "insertAliasTransformedFromDisplayedInternalLink": {
     "enabled": false,

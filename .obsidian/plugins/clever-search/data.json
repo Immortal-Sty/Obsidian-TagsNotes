@@ -5,8 +5,11 @@
     ]
   },
   "followObsidianExcludedFiles": true,
-  "excludedPaths": [],
-  "logLevel": "info",
+  "excludedPaths": [
+    "Attachment",
+    "Template"
+  ],
+  "logLevel": "warn",
   "enableStopWordsEn": true,
   "enableChinesePatch": true,
   "enableStopWordsZh": true,

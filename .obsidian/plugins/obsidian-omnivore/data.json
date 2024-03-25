@@ -1,9 +1,9 @@
 {
   "dateHighlightedFormat": "yyyy-MM-ddTHH:mm:ss",
   "dateSavedFormat": "yyyy-MM-ddTHH:mm:ss",
-  "apiKey": "8b4550e4-0205-48a9-9a02-05d30d9ab727",
+  "apiKey": "1f73e3c9-27e5-4264-afec-dbbbcdb4df38",
   "filter": "ALL",
-  "syncAt": "2024-03-23T20:14:18",
+  "syncAt": "2024-03-23T21:53:05",
   "customQuery": "in:all",
   "template": "# {{{title}}}\n\n- [Read on Omnivore]({{{omnivoreUrl}}})；\n- [Read Original]({{{originalUrl}}})。\n\n{{{ content }}}",
   "highlightOrder": "LOCATION",
