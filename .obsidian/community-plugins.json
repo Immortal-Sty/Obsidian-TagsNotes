@@ -15,7 +15,6 @@
   "mysnippets-plugin",
   "obsidian-hover-editor",
   "clever-search",
-  "obsidian-quiet-outline",
   "obsidian-git",
   "obsidian-plugin-update-tracker",
   "obsidian-latex-suite",
@@ -30,5 +29,7 @@
   "obsidian-linter",
   "attachment-management",
   "float-search",
-  "janitor"
+  "janitor",
+  "floating-toc",
+  "persistent-links"
 ]
