@@ -15,6 +15,7 @@
   "honorObsidianExcludedFiles": true,
   "excludedFilesFilters": [
     "Template/",
-    "Attachment/"
+    "Attachment/",
+    "PDFs/"
   ]
 }
