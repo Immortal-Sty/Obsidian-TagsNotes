@@ -19,7 +19,6 @@
   "obsidian-plugin-update-tracker",
   "obsidian-latex-suite",
   "dataview",
-  "omnisearch",
   "cm-chs-patch",
   "various-complements",
   "obsidian-relative-line-numbers",
@@ -31,5 +30,6 @@
   "float-search",
   "janitor",
   "floating-toc",
-  "persistent-links"
+  "persistent-links",
+  "obsidian-another-quick-switcher"
 ]

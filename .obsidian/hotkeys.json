@@ -202,14 +202,6 @@
       "key": "2"
     }
   ],
-  "omnisearch:show-modal": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "O"
-    }
-  ],
   "editor:rename-heading": [
     {
       "modifiers": [
@@ -338,5 +330,14 @@
       ],
       "key": "S"
     }
-  ]
+  ],
+  "obsidian-another-quick-switcher:search-command_note-search": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "O"
+    }
+  ],
+  "global-search:open": []
 }
