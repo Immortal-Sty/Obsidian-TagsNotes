@@ -165,7 +165,7 @@
       "tabsize": 4
     },
     "empty-line-around-blockquotes": {
-      "enabled": true
+      "enabled": false
     },
     "empty-line-around-code-fences": {
       "enabled": false
@@ -174,7 +174,7 @@
       "enabled": false
     },
     "empty-line-around-tables": {
-      "enabled": true
+      "enabled": false
     },
     "heading-blank-lines": {
       "enabled": true,
@@ -188,7 +188,7 @@
       "enabled": false
     },
     "paragraph-blank-lines": {
-      "enabled": true
+      "enabled": false
     },
     "remove-empty-lines-between-list-markers-and-checklists": {
       "enabled": false
