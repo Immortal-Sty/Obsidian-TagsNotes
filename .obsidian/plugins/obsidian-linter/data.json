@@ -182,7 +182,7 @@
       "empty-line-after-yaml": true
     },
     "line-break-at-document-end": {
-      "enabled": false
+      "enabled": true
     },
     "move-math-block-indicators-to-their-own-line": {
       "enabled": false
@@ -272,6 +272,10 @@
   "linterLocale": "system-default",
   "logLevel": "ERROR",
   "lintCommands": [
+    {
+      "id": "attachment-management:attachment-management-rearrange-active-links",
+      "name": "Attachment Management: Rearrange linked attachments"
+    },
     {
       "id": "janitor:scan-files-with-prompt",
       "name": "Janitor: Scan Files (with prompt)"
