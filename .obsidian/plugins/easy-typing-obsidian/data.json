@@ -1,8 +1,8 @@
 {
   "Tabout": true,
   "SelectionEnhance": true,
-  "IntrinsicSymbolPairs": true,
-  "BaseObEditEnhance": true,
+  "IntrinsicSymbolPairs": false,
+  "BaseObEditEnhance": false,
   "FW2HWEnhance": false,
   "AutoFormat": true,
   "ExcludeFiles": "",
@@ -21,34 +21,78 @@
   "UserDefinedRegSwitch": true,
   "UserDefinedRegExp": "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
   "debug": true,
-  "userSelRepRuleTrigger": [
-    "-",
-    "#"
-  ],
-  "userSelRepRuleValue": [
-    {
-      "left": "~~",
-      "right": "~~"
-    },
-    {
-      "left": "#",
-      "right": " "
-    }
-  ],
+  "userSelRepRuleTrigger": [],
+  "userSelRepRuleValue": [],
   "userDeleteRulesStrList": [
     [
-      "demo|",
+      "(|)",
+      "|"
+    ],
+    [
+      "（|）",
+      "|"
+    ],
+    [
+      "<% | %>",
+      "<%|%>"
+    ],
+    [
+      "<%|%>",
+      "|"
+    ],
+    [
+      "```|\n```",
+      "`|`"
+    ],
+    [
+      "[|]",
+      "|"
+    ],
+    [
+      "{|}",
+      "|"
+    ],
+    [
+      "\"|\"",
+      "|"
+    ],
+    [
+      "'|'",
+      "|"
+    ],
+    [
+      "_|_",
+      "|"
+    ],
+    [
+      "**|**",
       "|"
     ]
   ],
   "userConvertRulesStrList": [
     [
-      ":)|",
-      "😀|"
+      "<%|",
+      "<%|%>"
     ],
     [
-      "$|",
-      "$|$"
+      "\"|",
+      "\"|\""
+    ],
+    [
+      "'|",
+      "'|'"
+    ],
+    [
+      "_|",
+      "_|_"
+    ],
+    [
+      "**|",
+      "**|**"
+    ],
+    [
+      "`|",
+      "`|`"
     ]
   ],
   "userSelRuleSettingsOpen": true,
