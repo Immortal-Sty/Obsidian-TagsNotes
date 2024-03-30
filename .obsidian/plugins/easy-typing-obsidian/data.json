@@ -7,7 +7,7 @@
   "AutoFormat": true,
   "ExcludeFiles": "",
   "ChineseEnglishSpace": true,
-  "ChineseNumberSpace": true,
+  "ChineseNumberSpace": false,
   "EnglishNumberSpace": false,
   "ChineseNoSpace": true,
   "PunctuationSpace": true,
@@ -19,7 +19,7 @@
   "InlineLinkSpaceMode": 0,
   "InlineLinkSmartSpace": true,
   "UserDefinedRegSwitch": true,
-  "UserDefinedRegExp": "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  "UserDefinedRegExp": "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(quicker:|file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
   "debug": true,
   "userSelRepRuleTrigger": [],
   "userSelRepRuleValue": [],
@@ -79,10 +79,6 @@
     [
       "$$\n|\n$$",
       "$|$"
-    ],
-    [
-      "~~|~~",
-      "|"
     ]
   ],
   "userConvertRulesStrList": [
@@ -124,7 +120,7 @@
     ]
   ],
   "userSelRuleSettingsOpen": false,
-  "userDelRuleSettingsOpen": true,
+  "userDelRuleSettingsOpen": false,
   "userCvtRuleSettingsOpen": false,
   "EnterTwice": false,
   "TryFixChineseIM": true,
