@@ -19,7 +19,7 @@
   "InlineLinkSpaceMode": 0,
   "InlineLinkSmartSpace": true,
   "UserDefinedRegSwitch": true,
-  "UserDefinedRegExp": "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(quicker:|file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  "UserDefinedRegExp": "{{.*?}}|--\n<.*?>|--\n^(> )+\\[\\!.*?\\][-+]?|-+\n(quicker:|file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|=+\n^#{1,6} .+$|--",
   "debug": true,
   "userSelRepRuleTrigger": [],
   "userSelRepRuleValue": [],
