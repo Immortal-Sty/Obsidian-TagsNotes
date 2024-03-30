@@ -122,3 +122,6 @@ vnoremap s{ :surround_curly_brackets
 " 尖括号
 exmap surround_sharp_brackets surround < >
 vnoremap s< :surround_sharp_brackets
+" 公式块
+exmap surround_latex surround $ $
+vnoremap s$ :surround_latex
