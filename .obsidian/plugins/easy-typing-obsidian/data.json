@@ -41,10 +41,6 @@
       "|"
     ],
     [
-      "```|\n```",
-      "`|`"
-    ],
-    [
       "[|]",
       "|"
     ],
@@ -66,6 +62,26 @@
     ],
     [
       "**|**",
+      "|"
+    ],
+    [
+      "`|`",
+      "|"
+    ],
+    [
+      "```|\n```",
+      "`|`"
+    ],
+    [
+      "$|$",
+      "|"
+    ],
+    [
+      "$$\n|\n$$",
+      "$|$"
+    ],
+    [
+      "~~|~~",
       "|"
     ]
   ],
@@ -93,11 +109,23 @@
     [
       "`|",
       "`|`"
+    ],
+    [
+      "$$|$",
+      "$$\n|\n$$"
+    ],
+    [
+      "$|",
+      "$|$"
+    ],
+    [
+      "~~|",
+      "~~|~~"
     ]
   ],
-  "userSelRuleSettingsOpen": true,
+  "userSelRuleSettingsOpen": false,
   "userDelRuleSettingsOpen": true,
-  "userCvtRuleSettingsOpen": true,
+  "userCvtRuleSettingsOpen": false,
   "EnterTwice": false,
   "TryFixChineseIM": true,
   "PuncRectify": false,
