@@ -39,12 +39,20 @@
     [
       "demo|",
       "|"
+    ],
+    [
+      "$|$",
+      "|"
     ]
   ],
   "userConvertRulesStrList": [
     [
       ":)|",
       "😀|"
+    ],
+    [
+      "$|",
+      "$|$"
     ]
   ],
   "userSelRuleSettingsOpen": true,

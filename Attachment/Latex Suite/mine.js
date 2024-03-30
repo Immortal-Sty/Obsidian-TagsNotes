@@ -3,6 +3,10 @@
     // === 开始 LATEX ===
     // =================
 
+    // LATEX 块符号配对
+    {trigger: "$", replacement: "$$0$", options: "tA"},
+    {trigger: /(\n|^)\$\$/, replacement: "\n$$\n$0\n$", options: "A"},
+
     // 希腊字符
     {trigger: "\\a ", replacement: "\\alpha ", options: "mA"},
     // {trigger: "\\A ", replacement: "\\alpha ", options: "mA"},
