@@ -1,0 +1,10 @@
+{
+  "attachmentsPaths": [
+    "Images"
+  ],
+  "trashFolderOverride": ".trash",
+  "ignorePatterns": [
+    "^(Attachment/|Notes/|Template/|PDFs/)"
+  ],
+  "alternativeAttachmentAlg": false
+}

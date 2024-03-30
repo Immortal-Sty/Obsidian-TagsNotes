@@ -25,12 +25,12 @@
   "metaedit",
   "obsidian-style-settings",
   "obsidian-linter",
-  "attachment-management",
   "float-search",
   "janitor",
   "floating-toc",
   "persistent-links",
   "obsidian-another-quick-switcher",
   "pdf-plus",
-  "easy-typing-obsidian"
+  "easy-typing-obsidian",
+  "attachment-management"
 ]
