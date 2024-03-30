@@ -1,0 +1,122 @@
+/* src/styles/theme.css */
+.theme-dark {
+  --lineage-accent: #55b1ae;
+  --background-container: #373d4c;
+  --background-active-node: var(--background-primary);
+  --background-active-parent: #5b637a;
+  --background-inactive-node: var(--background-container);
+}
+.theme-light {
+  --lineage-accent: #55b1ae;
+  --background-container: #899cb3;
+  --background-active-node: var(--background-primary);
+  --background-active-parent: #cedbeb;
+  --background-inactive-node: var(--background-container);
+}
+.active-node,
+.active-child {
+  background-color: var(--background-active-node);
+  color: var(--text-normal);
+}
+.active-node {
+  border-left: 5px var(--lineage-accent) solid;
+}
+.active-child:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.active-parent {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.8);
+}
+.active-sibling {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.8);
+}
+.inactive-node {
+  filter: opacity(0.2);
+  background-color: var(--background-inactive-node);
+}
+.inactive-node:hover {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.5);
+}
+.theme-light {
+  & .inactive-node {
+    filter: opacity(0.4);
+  }
+}
+.group {
+  background-color: var(--background-inactive-node);
+}
+.group-has-active-node {
+  background-color: var(--background-active-parent);
+}
+.group-has-active-parent {
+  background-color: var(--background-active-node);
+}
+
+/* src/styles/makdown/inline-editor.css */
+.lineage-inline-editor {
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  max-height: 80vh;
+  & .view-header,
+  & .inline-title,
+  & .embedded-backlinks,
+  & .cm-gutters {
+    display: none;
+  }
+  & .cm-editor .cm-scroller {
+    padding: 6px !important;
+    padding-left: 12px !important;
+  }
+  & .cm-contentContainer div {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* src/styles/makdown/makdown-preview.css */
+.inactive-node,
+.active-sibling,
+.active-parent,
+.active-child {
+  & mark {
+    filter: grayscale(1);
+  }
+}
+.lineage-card p {
+  margin: 0;
+}
+.lineage-card {
+  & .callout {
+    mix-blend-mode: initial;
+  }
+}
+
+/* src/styles/card/dnd.css */
+.lineage__drop-node-above {
+  box-shadow: inset 2px 51px 19px -28px var(--lineage-accent);
+}
+.lineage__drop-node-below {
+  box-shadow: inset 2px -51px 19px -28px var(--lineage-accent);
+}
+.lineage__drop-node-under {
+  box-shadow: inset -51px 2px 19px -28px var(--lineage-accent);
+}
+.inactive-node-hover {
+  filter: opacity(0.8);
+  background-color: var(--background-active-parent);
+}
+
+/* src/styles/card/card-buttons.css */
+.lineage-card:hover .lineage-floating-button {
+  opacity: 0.3;
+}
+
+/* src/styles/makdown/font.css */
+.lineage-main {
+  --font-text-size: 16px;
+}
+
+/* src/styles/styles.css */
