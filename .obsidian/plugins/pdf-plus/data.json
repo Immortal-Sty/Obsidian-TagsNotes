@@ -39,7 +39,7 @@
     },
     {
       "name": "Callout with Quote or Not",
-      "template": "> [!{{calloutType}}|{{color}}] {{linkWithDisplay}}\n>\n> > {{text}}\n"
+      "template": "\n> [!{{calloutType}}|{{color}}] {{linkWithDisplay}}\n>\n> > {{text}}\n"
     }
   ],
   "useAnotherCopyTemplateWhenNoSelection": true,
@@ -74,10 +74,10 @@
   "backlinkHoverColor": "Hover",
   "colors": {
     "Now": "#595959",
-    "Important": "#ffd000",
-    "Ununderstanding": "#ea5252",
-    "Default": "#2e9aff",
-    "Hover": "#24fff0"
+    "Important": "#fee36c",
+    "Ununderstanding": "#fe7171",
+    "Default": "#61b3ff",
+    "Hover": "#86fed6"
   },
   "defaultColor": "Default",
   "defaultColorPaletteItemIndex": 2,
@@ -148,7 +148,7 @@
   "clickOutlineItemWithModifierKey": true,
   "clickThumbnailWithModifierKey": true,
   "focusEditorAfterAutoPaste": false,
-  "respectCursorPositionWhenAutoPaste": false,
+  "respectCursorPositionWhenAutoPaste": true,
   "autoCopy": false,
   "autoFocus": false,
   "autoPaste": true,
@@ -192,7 +192,7 @@
   "newPDFLocation": "current",
   "newPDFFolderPath": "",
   "rectEmbedStaticImage": true,
-  "rectImageFormat": "file",
+  "rectImageFormat": "data-url",
   "rectImageExtension": "webp",
   "zoomToFitRect": false,
   "rectEmbedResolution": 100,
@@ -215,5 +215,63 @@
   "scrollModeOnLoad": 0,
   "spreadModeOnLoad": 0,
   "hoverableDropdownMenuInToolbar": true,
-  "zoomLevelInputBoxInToolbar": false
+  "zoomLevelInputBoxInToolbar": false,
+  "showContextMenuOnMouseUpIf": "mod",
+  "contextMenuConfig": [
+    {
+      "id": "action",
+      "visible": true
+    },
+    {
+      "id": "selection",
+      "visible": true
+    },
+    {
+      "id": "write-file",
+      "visible": true
+    },
+    {
+      "id": "annotation",
+      "visible": true
+    },
+    {
+      "id": "modify-annotation",
+      "visible": true
+    },
+    {
+      "id": "link",
+      "visible": true
+    },
+    {
+      "id": "text",
+      "visible": true
+    },
+    {
+      "id": "search",
+      "visible": true
+    },
+    {
+      "id": "settings",
+      "visible": false
+    }
+  ],
+  "selectionProductMenuConfig": [
+    "color",
+    "copy-format",
+    "display"
+  ],
+  "writeFileProductMenuConfig": [
+    "color",
+    "copy-format",
+    "display"
+  ],
+  "annotationProductMenuConfig": [
+    "copy-format",
+    "display"
+  ],
+  "popoverPreviewOnExternalLinkHover": false,
+  "actionOnCitationHover": "pdf-plus-bib-popover",
+  "enableBibInEmbed": false,
+  "enableBibInHoverPopover": false,
+  "enableBibInCanvas": true
 }
