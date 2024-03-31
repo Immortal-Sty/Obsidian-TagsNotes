@@ -5,7 +5,7 @@
   "BaseObEditEnhance": false,
   "FW2HWEnhance": false,
   "AutoFormat": true,
-  "ExcludeFiles": "",
+  "ExcludeFiles": "Attachment/\nImages/\nTemplate/",
   "ChineseEnglishSpace": true,
   "ChineseNumberSpace": false,
   "EnglishNumberSpace": false,
