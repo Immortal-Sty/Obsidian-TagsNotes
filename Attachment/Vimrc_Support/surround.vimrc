@@ -49,8 +49,8 @@ vnoremap s$ :surround_latex
 
 " 斜体
 exmap surround_italics surround _ _
-vnoremap s$ :surround_italics
+vnoremap s_ :surround_italics
 
 " 粗体
 exmap surround_bold surround ** **
-vnoremap s$ :surround_bold
+vnoremap s* :surround_bold
