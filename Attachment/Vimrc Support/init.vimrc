@@ -1,4 +1,5 @@
-source table.vimrc
+source 'Attachment/Vimrc Support/table.vimrc'
+
 " =================
 " === Vim Quick ===
 " =================
