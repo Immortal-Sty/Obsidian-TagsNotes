@@ -274,6 +274,12 @@
           "commandId": "obsidian-linter:lint-file"
         },
         {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "3e90c00c-6bc8-4abb-95a9-41b1c189f639",
+          "time": 100
+        },
+        {
           "name": "保存当前文件",
           "type": "Obsidian",
           "id": "0e8b528e-0749-4853-afe4-f62435963c88",
