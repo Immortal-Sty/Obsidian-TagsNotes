@@ -256,16 +256,22 @@
       "id": "e0db8676-b74c-4e84-9a8e-cbcbf587b774",
       "commands": [
         {
-          "name": "Linter: 格式化当前文件",
-          "type": "Obsidian",
-          "id": "1a6575df-e519-4475-9782-46a43746cb0f",
-          "commandId": "obsidian-linter:lint-file"
-        },
-        {
           "name": "Attachment Management: Rearrange linked attachments",
           "type": "Obsidian",
           "id": "77ff4eb4-33ca-4fef-8162-d8a869f73b82",
           "commandId": "attachment-management:attachment-management-rearrange-active-links"
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "7ec8d56a-d179-4169-9d33-d4ed1e39821a",
+          "time": 1000
+        },
+        {
+          "name": "Linter: 格式化当前文件",
+          "type": "Obsidian",
+          "id": "1a6575df-e519-4475-9782-46a43746cb0f",
+          "commandId": "obsidian-linter:lint-file"
         },
         {
           "name": "Janitor: Scan Files (with prompt)",
