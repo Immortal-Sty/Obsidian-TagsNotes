@@ -271,16 +271,7 @@
   ],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
-  "lintCommands": [
-    {
-      "id": "attachment-management:attachment-management-rearrange-active-links",
-      "name": "Attachment Management: Rearrange linked attachments"
-    },
-    {
-      "id": "janitor:scan-files-with-prompt",
-      "name": "Janitor: Scan Files (with prompt)"
-    }
-  ],
+  "lintCommands": [],
   "customRegexes": [
     {
       "label": "相对路径修复",

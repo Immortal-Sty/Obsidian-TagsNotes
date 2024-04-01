@@ -132,6 +132,13 @@
       },
       "openFile": false,
       "openFileInMode": "default"
+    },
+    {
+      "id": "875ccb15-29d6-46de-90d5-c63ee0d85bae",
+      "name": "Format and Save",
+      "type": "Macro",
+      "command": true,
+      "macroId": "e0db8676-b74c-4e84-9a8e-cbcbf587b774"
     }
   ],
   "macros": [
@@ -240,6 +247,31 @@
           "settings": {
             "CSS 片段文件名": "标签页隐藏_外部"
           }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Format and Save",
+      "id": "e0db8676-b74c-4e84-9a8e-cbcbf587b774",
+      "commands": [
+        {
+          "name": "Linter: 格式化当前文件",
+          "type": "Obsidian",
+          "id": "1a6575df-e519-4475-9782-46a43746cb0f",
+          "commandId": "obsidian-linter:lint-file"
+        },
+        {
+          "name": "Attachment Management: Rearrange linked attachments",
+          "type": "Obsidian",
+          "id": "77ff4eb4-33ca-4fef-8162-d8a869f73b82",
+          "commandId": "attachment-management:attachment-management-rearrange-active-links"
+        },
+        {
+          "name": "Janitor: Scan Files (with prompt)",
+          "type": "Obsidian",
+          "id": "02e98cd5-734c-4671-b85e-cf0e0bda12ad",
+          "commandId": "janitor:scan-files-with-prompt"
         }
       ],
       "runOnStartup": false
