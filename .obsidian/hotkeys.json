@@ -344,5 +344,13 @@
   "easy-typing-obsidian:easy-typing-format-article": [],
   "easy-typing-obsidian:easy-typing-format-selection": [],
   "easy-typing-obsidian:easy-typing-format-switch": [],
-  "easy-typing-obsidian:easy-typing-delete-blank-line": []
+  "easy-typing-obsidian:easy-typing-delete-blank-line": [],
+  "quickadd:choice:875ccb15-29d6-46de-90d5-c63ee0d85bae": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "S"
+    }
+  ]
 }

@@ -265,13 +265,19 @@
           "name": "Wait",
           "type": "Wait",
           "id": "7ec8d56a-d179-4169-9d33-d4ed1e39821a",
-          "time": 1000
+          "time": 500
         },
         {
           "name": "Linter: 格式化当前文件",
           "type": "Obsidian",
           "id": "1a6575df-e519-4475-9782-46a43746cb0f",
           "commandId": "obsidian-linter:lint-file"
+        },
+        {
+          "name": "保存当前文件",
+          "type": "Obsidian",
+          "id": "0e8b528e-0749-4853-afe4-f62435963c88",
+          "commandId": "editor:save-file"
         },
         {
           "name": "Janitor: Scan Files (with prompt)",
