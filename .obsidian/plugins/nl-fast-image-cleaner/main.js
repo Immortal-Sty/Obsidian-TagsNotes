@@ -65,23 +65,113 @@ __export(main_exports, {
   default: () => NathanImageCleaner
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian7 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
-// src/options/deleleAllAttachsInTheNote.ts
-var import_obsidian4 = require("obsidian");
+// src/config/addCommand-config.ts
+var addCommand = (myPlugin) => {
+};
 
-// src/util.ts
-var import_obsidian2 = require("obsidian");
+// src/settings.ts
+var import_obsidian = require("obsidian");
+var DEFAULT_SETTINGS = {
+  deleteOption: ".trash",
+  logsModal: true
+};
+var NathanImageCleanerSettingsTab = class extends import_obsidian.PluginSettingTab {
+  constructor(app2, plugin) {
+    super(app2, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    containerEl.createEl("h2", { text: "Fast Attachment Cleaner Settings" });
+    new import_obsidian.Setting(containerEl).setName("Deleted Attachment Destination").setDesc("Select where you want Attachments to be moved once they are deleted").addDropdown((dropdown) => {
+      dropdown.addOption("permanent", "Delete Permanently");
+      dropdown.addOption(".trash", "Move to Obsidian Trash");
+      dropdown.addOption("system-trash", "Move to System Trash");
+      dropdown.setValue(this.plugin.settings.deleteOption);
+      dropdown.onChange((option) => {
+        this.plugin.settings.deleteOption = option;
+        this.plugin.saveSettings();
+      });
+    });
+  }
+};
+
+// src/utils/util.ts
+var import_obsidian3 = require("obsidian");
 
 // src/modals.ts
-var import_obsidian = require("obsidian");
-var LogsModal = class extends import_obsidian.Modal {
-  constructor(currentMd, state, FileBaseName, textToView, app2) {
+var import_obsidian2 = require("obsidian");
+
+// src/utils/fileContentsProcess.ts
+var _processFunc, _delay;
+var fileContentsProcess = class {
+  constructor(callback, delay = 1e3) {
+    __privateAdd(this, _processFunc, void 0);
+    __privateAdd(this, _delay, 1e3);
+    __privateSet(this, _processFunc, callback);
+    __privateSet(this, _delay, delay);
+  }
+  process(params, plugin) {
+    return __async(this, null, function* () {
+      const activeFile = app.workspace.getActiveFile();
+      const fileContents = (yield app.vault.read(activeFile)).split("\n");
+      let newFileContents = [];
+      newFileContents = __privateGet(this, _processFunc).call(this, fileContents, plugin, params);
+      app.vault.adapter.write(activeFile.path, newFileContents.join("\n"));
+      setTimeout(() => {
+        return "OK";
+      }, __privateGet(this, _delay));
+    });
+  }
+};
+_processFunc = new WeakMap();
+_delay = new WeakMap();
+
+// src/utils/removeReferenceLink.ts
+var removeReferenceLink = new fileContentsProcess((lines, plugin, params) => {
+  var _a, _b;
+  let imgPath = params == null ? void 0 : params.imgPath;
+  const MDLinkRegex = new RegExp("!\\[.*?\\]\\((?<imgLinkPath>.*?)\\)", "g");
+  const WIKILinkRegex = new RegExp("!\\[\\[(?<imgLinkPath>[^\\|\\n\\[\\]]+)?.*?\\]\\]", "g");
+  for (const i in lines) {
+    if (lines[i].match(MDLinkRegex)) {
+      const allMatches = [...lines[i].matchAll(MDLinkRegex)];
+      for (const match of allMatches) {
+        let imgLinkPath = (_a = match.groups) == null ? void 0 : _a.imgLinkPath;
+        imgLinkPath = imgLinkPath.replace(/%20/g, " ");
+        if (imgLinkPath === imgPath) {
+          const targetRegex = new RegExp(`!\\[[^!\\[\\]
+]*?\\]\\(${escapeRegex(imgPath.replace(/ /g, "%20"))}\\)`, "g");
+          const replaced = lines[i].replace(targetRegex, "");
+          lines[i] = replaced;
+        }
+      }
+    } else if (lines[i].match(WIKILinkRegex)) {
+      const allMatches = [...lines[i].matchAll(WIKILinkRegex)];
+      for (const match of allMatches) {
+        let imgLinkPath = (_b = match.groups) == null ? void 0 : _b.imgLinkPath;
+        imgLinkPath = imgLinkPath.trim();
+        if (imgLinkPath === imgPath) {
+          const replaced = lines[i].replace(new RegExp(`!\\[\\[(?<imgLinkPath>${escapeRegex(imgPath)}).*?\\]\\]`, "g"), "");
+          lines[i] = replaced;
+        }
+      }
+    }
+  }
+  return lines;
+});
+
+// src/modals.ts
+var LogsModal = class extends import_obsidian2.Modal {
+  constructor(currentMd, state, imgPath, textToView, app2) {
     super(app2);
     this.textToView = textToView;
     this.currentMd = currentMd;
     this.state = state;
-    this.FileBaseName = FileBaseName;
+    this.imgPath = imgPath;
   }
   getLog() {
     const CurFirstMd = this.textToView.shift();
@@ -133,7 +223,7 @@ var LogsModal = class extends import_obsidian.Modal {
     removeLinkButton.setAttribute("aria-label", "Continue to remove the reference link to the current attachment in the current document");
     removeLinkButton.addClass("mod-warning");
     removeLinkButton.addEventListener("click", () => __async(this, null, function* () {
-      yield delImgRefLink.process({ FileBaseName: this.FileBaseName });
+      yield removeReferenceLink.process({ imgPath: this.imgPath });
       myModal.close();
     }));
   }
@@ -153,91 +243,12 @@ var LogsModal = class extends import_obsidian.Modal {
   }
 };
 
-// src/util.ts
+// src/utils/util.ts
 var SUCCESS_NOTICE_TIMEOUT = 1800;
-var _processFunc, _delay, _metaData, _line;
-var fileContentsProcess = class {
-  constructor(callback, metaData = {}, delay = 1e3) {
-    __privateAdd(this, _processFunc, void 0);
-    __privateAdd(this, _delay, 1e3);
-    __privateAdd(this, _metaData, void 0);
-    __privateAdd(this, _line, void 0);
-    __privateSet(this, _processFunc, callback);
-    __privateSet(this, _delay, delay);
-    __privateSet(this, _metaData, metaData);
-  }
-  process(params, plugin) {
-    return __async(this, null, function* () {
-      const activeFile = app.workspace.getActiveFile();
-      const fileContents = (yield app.vault.read(activeFile)).split("\n");
-      let newFileContents = [];
-      this.resetMetaData();
-      for (let index = 0; index < fileContents.length; index++) {
-        __privateSet(this, _line, fileContents[index]);
-        let result = yield __privateGet(this, _processFunc).call(this, __privateGet(this, _line), __privateGet(this, _metaData), plugin, params, index);
-        newFileContents.push(result);
-      }
-      newFileContents = newFileContents.filter((item) => item != "DELETE_LINE");
-      app.vault.adapter.write(activeFile.path, newFileContents.join("\n"));
-      setTimeout(() => {
-        return "";
-      }, __privateGet(this, _delay));
-    });
-  }
-  resetMetaData() {
-    for (const prop in __privateGet(this, _metaData)) {
-      if (__privateGet(this, _metaData)[prop].value instanceof Array) {
-        __privateGet(this, _metaData)[prop].value = __privateGet(this, _metaData)[prop].value.map((item) => {
-          if (typeof item === "number") {
-            return 0;
-          } else if (typeof item === "string") {
-            return "";
-          }
-          return item;
-        });
-      }
-      if (typeof __privateGet(this, _metaData)[prop].value === "number") {
-        __privateGet(this, _metaData)[prop].value = 0;
-      }
-      if (typeof __privateGet(this, _metaData)[prop].value === "string") {
-        __privateGet(this, _metaData)[prop].value = "0";
-      }
-      if (typeof __privateGet(this, _metaData)[prop].value === "boolean") {
-        __privateGet(this, _metaData)[prop].value = false;
-      }
-    }
-  }
-};
-_processFunc = new WeakMap();
-_delay = new WeakMap();
-_metaData = new WeakMap();
-_line = new WeakMap();
-var delImgRefLink = new fileContentsProcess((line, metaData, Plugin2, params) => __async(void 0, null, function* () {
-  let imgBasePath = params.FileBaseName;
-  const mdLinkRegex = new RegExp("!\\[.*?\\]\\((?<imgPath>.*?)\\.(?:[a-zA-Z0-9]+)\\)");
-  const wikiLinkRegex = /!\[\[.+\.(?:[a-zA-Z0-9]+)(?: *\| *.*?)*\]\]/;
-  if (mdLinkRegex.test(line)) {
-    let match = line.match(mdLinkRegex);
-    if (match[0].includes("%20")) {
-      if (line.replace(/%20/g, " ").includes(imgBasePath)) {
-        return "DELETE_LINE";
-      } else {
-        return line;
-      }
-    } else if (line.includes(imgBasePath)) {
-      return "DELETE_LINE";
-    } else {
-      return line;
-    }
-  } else if (line.includes(imgBasePath) && wikiLinkRegex.test(line)) {
-    return "DELETE_LINE";
-  }
-  return line;
-}));
-var isRemove = (FileBaseName) => {
+var determineRemove = (imgPath) => {
   const currentMd = app.workspace.getActiveFile();
   const resolvedLinks = app.metadataCache.resolvedLinks;
-  const deletedTargetFile = getFileByBaseName(currentMd, FileBaseName);
+  const deletedTargetFile = getFileByBaseName(currentMd, imgPath);
   let CurMDPath;
   let result = {
     state: 0,
@@ -268,19 +279,21 @@ var isRemove = (FileBaseName) => {
   }
   return result;
 };
-var getFileByBaseName = (currentMd, FileBaseName) => {
+var getFileByBaseName = (currentMd, imgPath) => {
+  var _a, _b;
   const resolvedLinks = app.metadataCache.resolvedLinks;
+  let imgBaseName = (_b = (_a = imgPath.match(new RegExp("(?<=\\/?)(?<imgBasename>[^\\n\\/]*)$", "m"))) == null ? void 0 : _a.groups) == null ? void 0 : _b.imgBasename;
   for (const [mdFile, links] of Object.entries(resolvedLinks)) {
     if (currentMd.path === mdFile) {
       for (const [filePath, nr] of Object.entries(links)) {
-        if (filePath.includes(FileBaseName)) {
+        if (filePath.includes(imgBaseName)) {
           try {
             const AttachFile = app.vault.getAbstractFileByPath(filePath);
-            if (AttachFile instanceof import_obsidian2.TFile) {
+            if (AttachFile instanceof import_obsidian3.TFile) {
               return AttachFile;
             }
           } catch (error) {
-            new import_obsidian2.Notice(` cannot get the image file`);
+            new import_obsidian3.Notice(` cannot get the image file`);
             console.error(error);
           }
         }
@@ -288,61 +301,61 @@ var getFileByBaseName = (currentMd, FileBaseName) => {
     }
   }
 };
-var ClearAttachment = (FileBaseName, plugin) => __async(void 0, null, function* () {
+var ClearAttachment = (imgPath, plugin) => __async(void 0, null, function* () {
   const deleteOption = plugin.settings.deleteOption;
   const currentMd = app.workspace.getActiveFile();
-  const file = getFileByBaseName(currentMd, FileBaseName);
-  yield delImgRefLink.process({ FileBaseName });
+  const file = getFileByBaseName(currentMd, imgPath);
+  yield removeReferenceLink.process({ imgPath });
   const delFileFolder = onlyOneFileExists(file);
   const fileFolder = getFileParentFolder(file);
   try {
     if (deleteOption === ".trash") {
       yield app.vault.trash(file, false);
-      new import_obsidian2.Notice("Image moved to Obsidian Trash !", SUCCESS_NOTICE_TIMEOUT);
+      new import_obsidian3.Notice("Image moved to Obsidian Trash !", SUCCESS_NOTICE_TIMEOUT);
       if (delFileFolder) {
-        yield app.vault.trash(fileFolder, false);
-        new import_obsidian2.Notice("Attachment folder have been deleted!", 3e3);
+        deleteFile(getTopFolderOnlyOneChild(fileFolder), plugin);
       }
     } else if (deleteOption === "system-trash") {
       yield app.vault.trash(file, true);
-      new import_obsidian2.Notice("Image moved to System Trash !", SUCCESS_NOTICE_TIMEOUT);
+      new import_obsidian3.Notice("Image moved to System Trash !", SUCCESS_NOTICE_TIMEOUT);
       if (delFileFolder) {
-        yield app.vault.trash(fileFolder, true);
-        new import_obsidian2.Notice("Attachment folder have been deleted!", 3e3);
+        deleteFile(getTopFolderOnlyOneChild(fileFolder), plugin);
       }
     } else if (deleteOption === "permanent") {
       yield app.vault.delete(file);
-      new import_obsidian2.Notice("Image deleted Permanently !", SUCCESS_NOTICE_TIMEOUT);
+      new import_obsidian3.Notice("Image deleted Permanently !", SUCCESS_NOTICE_TIMEOUT);
       if (delFileFolder) {
-        yield app.vault.delete(fileFolder, true);
-        new import_obsidian2.Notice("Attachment folder have been deleted!", 3e3);
+        deleteFile(getTopFolderOnlyOneChild(fileFolder), plugin);
       }
+    }
+    if (delFileFolder) {
+      new import_obsidian3.Notice("Attachment folder has been deleted!", 3e3);
     }
   } catch (error) {
     console.error(error);
-    new import_obsidian2.Notice("Faild to delelte the image !", SUCCESS_NOTICE_TIMEOUT);
+    new import_obsidian3.Notice("Faild to delelte the image !", SUCCESS_NOTICE_TIMEOUT);
   }
 });
-var handlerDelFile = (FileBaseName, currentMd, plugin) => {
+var handlerDelFile = (imgPath, currentMd, plugin) => {
   let logs;
   let modal;
-  const state = isRemove(FileBaseName).state;
+  const state = determineRemove(imgPath).state;
   switch (state) {
     case 0:
-      ClearAttachment(FileBaseName, plugin);
+      ClearAttachment(imgPath, plugin);
       break;
     case 1:
     case 2:
-      logs = isRemove(FileBaseName).mdPath;
-      modal = new LogsModal(currentMd, state, FileBaseName, logs, app);
+      logs = determineRemove(imgPath).mdPath;
+      modal = new LogsModal(currentMd, state, imgPath, logs, app);
       modal.open();
     default:
       break;
   }
 };
 var getFileParentFolder = (file) => {
-  if (file instanceof import_obsidian2.TFile) {
-    if (file.parent instanceof import_obsidian2.TFolder) {
+  if (file instanceof import_obsidian3.TFile) {
+    if (file.parent instanceof import_obsidian3.TFolder) {
       return file.parent;
     }
   }
@@ -352,10 +365,16 @@ var onlyOneFileExists = (file) => {
   const fileFolder = getFileParentFolder(file);
   return fileFolder.children.length === 1;
 };
-
-// src/utils/deleteFile.ts
-var import_obsidian3 = require("obsidian");
-var SUCCESS_NOTICE_TIMEOUT2 = 1800;
+var escapeRegex = (str) => {
+  return str.replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&");
+};
+var getTopFolderOnlyOneChild = (folder) => {
+  const parentFolder = folder.parent;
+  if (parentFolder instanceof import_obsidian3.TFolder && parentFolder.children.length === 1) {
+    return getTopFolderOnlyOneChild(parentFolder);
+  }
+  return folder;
+};
 var deleteFile = (file, plugin) => __async(void 0, null, function* () {
   const deleteOption = plugin.settings.deleteOption;
   try {
@@ -368,46 +387,77 @@ var deleteFile = (file, plugin) => __async(void 0, null, function* () {
     }
   } catch (error) {
     console.error(error);
-    new import_obsidian3.Notice("Faild to delete the file/folder !", SUCCESS_NOTICE_TIMEOUT2);
+    new import_obsidian3.Notice("Failed to delete the file/folder !", SUCCESS_NOTICE_TIMEOUT);
   }
 });
 
-// src/options/deleleAllAttachsInTheNote.ts
+// src/modals/deletionPrompt.ts
+var import_obsidian5 = require("obsidian");
+
+// src/utils/deleleAllAttachsInTheNote.ts
+var import_obsidian4 = require("obsidian");
 var deleteAllAttachs = (plugin) => __async(void 0, null, function* () {
   const activeMd = app.workspace.getActiveFile();
   const resolvedLinks = app.metadataCache.resolvedLinks;
-  const attachsPaths = [];
+  const attachInfoArr = [];
   for (const [mdFile, links] of Object.entries(resolvedLinks)) {
-    if ((activeMd == null ? void 0 : activeMd.path) === mdFile) {
-      let fileCount = 0;
-      let flag = false;
-      for (const [filePath, nr] of Object.entries(links)) {
-        if (filePath.match(/.*\.md$/m))
+    if ((activeMd == null ? void 0 : activeMd.path) !== mdFile)
+      continue;
+    if (Object.keys(links).length == 0)
+      break;
+    for (const [filePath, nr] of Object.entries(links)) {
+      if (filePath.match(/.*\.md$/m))
+        continue;
+      if (isReferencedByOtherNotes(filePath, activeMd))
+        continue;
+      try {
+        const AttachFile = app.vault.getAbstractFileByPath(filePath);
+        const parentFolder = getFileParentFolder(AttachFile);
+        if (!(AttachFile instanceof import_obsidian4.TFile))
           continue;
-        if (isReferencedByOtherNotes(filePath, activeMd))
-          continue;
-        attachsPaths.push(filePath);
-        try {
-          const AttachFile = app.vault.getAbstractFileByPath(filePath);
-          if (AttachFile instanceof import_obsidian4.TFile) {
-            deleteFile(AttachFile, plugin);
+        if (attachInfoArr.length !== 0 && attachInfoArr.some((item) => item.folder === parentFolder)) {
+          for (let i = 0; i < attachInfoArr.length; i++) {
+            const element = attachInfoArr[i];
+            if (element.folder === parentFolder) {
+              attachInfoArr[i].attachCount += 1;
+              attachInfoArr[i].attachFiles.push(AttachFile);
+            }
           }
-          const parentFolder = getFileParentFolder(AttachFile);
-          if (!flag) {
-            fileCount = parentFolder.children.length;
-            flag = !flag;
-          }
-          fileCount = fileCount - 1;
-          if (!fileCount) {
-            yield deleteFile(parentFolder, plugin);
-            new import_obsidian4.Notice("All attachments and its parent folder deleted!", 3e3);
-          }
-        } catch (error) {
-          console.warn(error);
+        } else {
+          attachInfoArr.push({
+            folder: parentFolder,
+            initialLength: parentFolder.children.length,
+            attachCount: 1,
+            attachFiles: [AttachFile]
+          });
         }
+      } catch (error) {
+        console.warn(error);
       }
     }
   }
+  const shouldDeleteAllAttachsAndFolder = attachInfoArr.every((item) => item.initialLength === item.attachCount);
+  if (shouldDeleteAllAttachsAndFolder) {
+    for (const item of attachInfoArr) {
+      const deletedFolder = getTopFolderOnlyOneChild(item.folder);
+      yield deleteFile(deletedFolder, plugin);
+    }
+  } else {
+    const deletedFolders = attachInfoArr.filter((item) => item.initialLength === item.attachCount);
+    const deletedAttachs = attachInfoArr.filter((item) => item.initialLength !== item.attachCount);
+    if (deletedFolders.length > 0) {
+      for (const item of deletedFolders) {
+        const deletedFolder = getTopFolderOnlyOneChild(item.folder);
+        yield deleteFile(deletedFolder, plugin);
+      }
+    }
+    for (const item of deletedAttachs) {
+      for (const attachFile of item.attachFiles) {
+        yield deleteFile(attachFile, plugin);
+      }
+    }
+  }
+  new import_obsidian4.Notice("All attachments and its parent folder have been deleted!", 3e3);
 });
 var isReferencedByOtherNotes = (attachPath, currentMd) => {
   const resolvedLinks = app.metadataCache.resolvedLinks;
@@ -426,70 +476,25 @@ var isReferencedByOtherNotes = (attachPath, currentMd) => {
 var getRefencedLinkCount = () => {
   const activeMd = app.workspace.getActiveFile();
   const resolvedLinks = app.metadataCache.resolvedLinks;
-  const attachsPaths = [];
+  let count = 0;
   for (const [mdFile, links] of Object.entries(resolvedLinks)) {
-    if ((activeMd == null ? void 0 : activeMd.path) === mdFile) {
-      for (const [filePath, nr] of Object.entries(links)) {
-        if (filePath.match(/.*\.md$/m))
-          continue;
-        if (isReferencedByOtherNotes(filePath, activeMd))
-          continue;
-        attachsPaths.push(filePath);
-      }
+    if ((activeMd == null ? void 0 : activeMd.path) !== mdFile)
+      continue;
+    if (Object.keys(links).length == 0)
+      break;
+    for (const [filePath, nr] of Object.entries(links)) {
+      if (filePath.match(/.*\.md$/m))
+        continue;
+      if (isReferencedByOtherNotes(filePath, activeMd))
+        continue;
+      count++;
     }
   }
-  return attachsPaths.length;
-};
-
-// src/config/addCommand-config.ts
-var addCommand = (myPlugin) => {
-  myPlugin.addCommand({
-    id: "clear-all-attachments-in-current-file",
-    name: "clear all attachments in current file",
-    callback: () => __async(void 0, null, function* () {
-      deleteAllAttachs(myPlugin);
-    })
-  });
-};
-
-// src/settings.ts
-var import_obsidian5 = require("obsidian");
-var DEFAULT_SETTINGS = {
-  deleteOption: ".trash",
-  logsModal: true
-};
-var NathanImageCleanerSettingsTab = class extends import_obsidian5.PluginSettingTab {
-  constructor(app2, plugin) {
-    super(app2, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    containerEl.createEl("h2", { text: "Fast Attachment Cleaner Settings" });
-    new import_obsidian5.Setting(containerEl).setName("Deleted Attachment Destination").setDesc("Select where you want Attachments to be moved once they are deleted").addDropdown((dropdown) => {
-      dropdown.addOption("permanent", "Delete Permanently");
-      dropdown.addOption(".trash", "Move to Obsidian Trash");
-      dropdown.addOption("system-trash", "Move to System Trash");
-      dropdown.setValue(this.plugin.settings.deleteOption);
-      dropdown.onChange((option) => {
-        this.plugin.settings.deleteOption = option;
-        this.plugin.saveSettings();
-      });
-    });
-  }
-};
-
-// src/utils/handlerEvent.ts
-var getMouseEventTarget = (event) => {
-  event.preventDefault();
-  const target = event.target;
-  return target;
+  return count;
 };
 
 // src/modals/deletionPrompt.ts
-var import_obsidian6 = require("obsidian");
-var DeleteAllLogsModal = class extends import_obsidian6.Modal {
+var DeleteAllLogsModal = class extends import_obsidian5.Modal {
   constructor(note, myPlugin) {
     super(app);
     this.note = note;
@@ -549,15 +554,15 @@ It will be moved to your ${this.myPlugin.settings.deleteOption}.`;
 };
 
 // src/main.ts
-var NathanImageCleaner = class extends import_obsidian7.Plugin {
+var NathanImageCleaner = class extends import_obsidian6.Plugin {
   constructor() {
     super(...arguments);
-    this.addMenu = (menu, FileBaseName, currentMd) => {
+    this.addMenu = (menu, imgPath, currentMd) => {
       menu.addItem((item) => item.setIcon("trash-2").setTitle("clear file and referenced link").onClick(() => __async(this, null, function* () {
         try {
-          handlerDelFile(FileBaseName, currentMd, this);
+          handlerDelFile(imgPath, currentMd, this);
         } catch (e) {
-          new import_obsidian7.Notice("Error, could not clear the file!");
+          new import_obsidian6.Notice("Error, could not clear the file!");
         }
       })));
     };
@@ -572,7 +577,7 @@ var NathanImageCleaner = class extends import_obsidian7.Plugin {
         this.registerDocument(window.document);
       });
       this.registerEvent(this.app.workspace.on("file-menu", (menu, file) => {
-        if (file instanceof import_obsidian7.TFile) {
+        if (file instanceof import_obsidian6.TFile) {
           const addMenuItem = (item) => {
             item.setTitle("Delete the file and its all attachments").setIcon("trash-2").setSection("danger");
             item.onClick(() => __async(this, null, function* () {
@@ -617,17 +622,16 @@ var NathanImageCleaner = class extends import_obsidian7.Plugin {
   }
   onClick(event) {
     var _a;
-    const target = getMouseEventTarget(event);
+    event.preventDefault();
+    const target = event.target;
     const nodeType = target.localName;
     const currentMd = app.workspace.getActiveFile();
-    const menu = new import_obsidian7.Menu();
-    const fileBasenameRegex = new RegExp(new RegExp("(?<=\\/)[^\\/]*\\.[\\w\\d]+$"));
+    const menu = new import_obsidian6.Menu();
     let imgPath = "";
     const delTargetType = ["img", "iframe", "video", "div", "audio"];
     if (delTargetType.includes(nodeType)) {
       imgPath = (_a = target.parentElement) == null ? void 0 : _a.getAttribute("src");
-      const fileBaseName = imgPath.match(fileBasenameRegex)[0];
-      this.addMenu(menu, fileBaseName, currentMd);
+      this.addMenu(menu, imgPath, currentMd);
     }
     this.registerEscapeButton(menu);
     menu.showAtPosition({ x: event.pageX, y: event.pageY - 40 });
