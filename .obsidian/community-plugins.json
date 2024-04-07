@@ -1,5 +1,4 @@
 [
-  "obsidian-memos",
   "cm-chs-patch",
   "obsidian-vimrc-support",
   "various-complements",
@@ -32,5 +31,6 @@
   "obsidian-better-command-palette",
   "attachment-management",
   "obsidian-another-quick-switcher",
-  "actions-uri"
+  "actions-uri",
+  "sheets"
 ]

@@ -357,7 +357,7 @@ var require_dist = __commonJS({
       var token;
       var key;
       var root;
-      var parse2 = function parse3(text, reviver) {
+      var parse3 = function parse4(text, reviver) {
         source = String(text);
         parseState = "start";
         stack = [];
@@ -1405,11 +1405,11 @@ var require_dist = __commonJS({
           return final;
         }
       };
-      var JSON52 = {
-        parse: parse2,
+      var JSON53 = {
+        parse: parse3,
         stringify
       };
-      var lib = JSON52;
+      var lib = JSON53;
       var es5 = lib;
       return es5;
     });
@@ -1479,11 +1479,14 @@ var SheetElement = class extends import_obsidian2.MarkdownRenderChild {
     this.domGrid = [];
   }
   async onload() {
-    this.initRegex();
+    this.metaRE = new RegExp(String.raw`^${META_DELIMETER}\s*?(?:~(.*?))?\s*?\n+`, "mg");
+    this.newLineRE = new RegExp(String.raw`\n`);
+    this.cellBorderRE = new RegExp(String.raw`(?<!\\)\|`);
+    this.headerRE = new RegExp(String.raw`^\s*?(:)?(?:${HEADER_DELIMETER})+?(:)?\s*?(?:(?<!\\)~(.*?))?$`);
     this.parseInputToGrid();
     this.validateInput();
     this.normalizeGrid();
-    this.table = this.el.createEl("table");
+    this.table = this.el;
     this.table.id = "obsidian-sheets-parsed";
     this.tableHead = this.table.createEl("thead");
     this.tableBody = this.table.createEl("tbody");
@@ -1492,12 +1495,6 @@ var SheetElement = class extends import_obsidian2.MarkdownRenderChild {
     this.buildDomTable();
   }
   onunload() {
-  }
-  initRegex() {
-    this.metaRE = new RegExp(String.raw`^${META_DELIMETER}\s*?(?:~(.*?))?\s*?\n+`, "mg");
-    this.newLineRE = new RegExp(String.raw`\n`);
-    this.cellBorderRE = new RegExp(String.raw`(?<!\\)\|`);
-    this.headerRE = new RegExp(String.raw`^\s*?(:)?(?:${HEADER_DELIMETER})+?(:)?\s*?(?:(?<!\\)~(.*?))?$`);
   }
   displayError(error) {
     this.el.createDiv({
@@ -1582,53 +1579,55 @@ Error: \`${error}\`
   getHeaderStyles() {
     if (this.headerRow !== -1)
       this.colStyles = this.contentGrid[this.headerRow].map((rowHead) => {
+        var _a, _b;
         let styles = {};
         const alignment = rowHead.match(this.headerRE);
         if (!alignment)
-          return styles;
+          return { classes: [], styles };
         else if (alignment[1] && alignment[2])
           styles["textAlign"] = "center";
         else if (alignment[1])
           styles["textAlign"] = "left";
         else if (alignment[2])
           styles["textAlign"] = "right";
-        if (alignment[3])
-          (alignment[3].match(/\.\S+/g) || []).forEach(
-            (cssClass) => {
-              var _a;
-              return styles = {
-                ...styles,
-                ...((_a = this.styles) == null ? void 0 : _a[cssClass.slice(1)]) || {}
-              };
-            }
-          );
-        return styles;
+        const classes = ((_b = (_a = alignment[3]) == null ? void 0 : _a.match(/\.\S+/g)) == null ? void 0 : _b.map(String)) || [];
+        classes.forEach(
+          (cssClass) => {
+            var _a2;
+            return styles = {
+              ...styles,
+              ...((_a2 = this.styles) == null ? void 0 : _a2[cssClass.slice(1)]) || {}
+            };
+          }
+        );
+        return { classes, styles };
       });
     if (this.headerCol !== -1)
       this.rowStyles = this.contentGrid[0].map(
         (_, i) => this.contentGrid.map((row) => row[i])
       )[this.headerCol].map((rowHead) => {
+        var _a, _b;
         let styles = {};
         const alignment = rowHead.match(this.headerRE);
         if (!alignment)
-          return styles;
+          return { classes: [], styles };
         else if (alignment[1] && alignment[2])
           styles["textAlign"] = "center";
         else if (alignment[1])
           styles["textAlign"] = "left";
         else if (alignment[2])
           styles["textAlign"] = "right";
-        if (alignment[3])
-          (alignment[3].match(/\.\S+/g) || []).forEach(
-            (cssClass) => {
-              var _a;
-              return styles = {
-                ...styles,
-                ...((_a = this.styles) == null ? void 0 : _a[cssClass.slice(1)]) || {}
-              };
-            }
-          );
-        return styles;
+        const classes = ((_b = (_a = alignment[3]) == null ? void 0 : _a.match(/\.\S+/g)) == null ? void 0 : _b.map(String)) || [];
+        classes.forEach(
+          (cssClass) => {
+            var _a2;
+            return styles = {
+              ...styles,
+              ...((_a2 = this.styles) == null ? void 0 : _a2[cssClass.slice(1)]) || {}
+            };
+          }
+        );
+        return { classes, styles };
       });
   }
   buildDomTable() {
@@ -1654,10 +1653,14 @@ Error: \`${error}\`
     ] = this.contentGrid[rowIndex][columnIndex].split(/(?<![\\~])~(?!~)/);
     let cls = [];
     let cellStyle = this.globalStyle;
-    if (this.rowStyles[rowIndex])
-      cellStyle = { ...cellStyle, ...this.rowStyles[rowIndex] };
-    if (this.colStyles[columnIndex])
-      cellStyle = { ...cellStyle, ...this.colStyles[columnIndex] };
+    if (this.rowStyles[rowIndex]) {
+      cellStyle = { ...cellStyle, ...this.rowStyles[rowIndex].styles };
+      cls.push(...this.rowStyles[rowIndex].classes);
+    }
+    if (this.colStyles[columnIndex]) {
+      cellStyle = { ...cellStyle, ...this.colStyles[columnIndex].styles };
+      cls.push(...this.colStyles[columnIndex].classes);
+    }
     if (cellStyles) {
       cls = cellStyles.match(/(?<=\.)\S+/g) || [];
       cls.forEach((cssClass) => {
@@ -1699,10 +1702,7 @@ Error: \`${error}\`
         "",
         this
       ).then(() => {
-        var _a2;
-        cell.children[0].childNodes[0].textContent = ((_a2 = cell.children[0].childNodes[0].textContent) == null ? void 0 : _a2.replace(/^\u200B/, "")) || "";
-        if (!this.plugin.settings.paragraphs)
-          cell.innerHTML = cell.children[0].innerHTML;
+        cell.innerHTML = cell.children[0].innerHTML.replace(/^\u200B /g, "");
       });
       Object.assign(cell.style, cellStyle);
     }
@@ -1711,6 +1711,7 @@ Error: \`${error}\`
 };
 
 // src/main.ts
+var JSON52 = __toESM(require_dist());
 var DEFAULT_SETTINGS = {
   nativeProcessing: true,
   paragraphs: true
@@ -1722,71 +1723,120 @@ var ObsidianSpreadsheet = class extends import_obsidian3.Plugin {
       "sheet",
       async (source, el, ctx) => {
         source = source.trim();
-        ctx.addChild(new SheetElement(
-          el,
-          new DOMParser().parseFromString(source, "text/html").documentElement.textContent || source,
-          ctx,
-          this.app,
-          this
-        ));
+        ctx.addChild(
+          new SheetElement(
+            el,
+            source,
+            ctx,
+            this.app,
+            this
+          )
+        );
       }
     );
     this.registerMarkdownPostProcessor(async (el, ctx) => {
-      var _a;
+      var _a, _b, _c, _d;
       if (!this.settings.nativeProcessing)
         return;
       if (((_a = ctx.frontmatter) == null ? void 0 : _a["disable-sheet"]) === true)
         return;
       const tableEls = el.querySelectorAll("table");
-      for (const tableEl of Array.from(tableEls)) {
-        if (!tableEl)
-          return;
-        if ((tableEl == null ? void 0 : tableEl.id) === "obsidian-sheets-parsed")
-          return;
-        const sec = ctx.getSectionInfo(tableEl);
-        let source = "";
-        if (!sec) {
-          tableEl.querySelectorAll(":scope td").forEach(({ childNodes }) => childNodes.forEach((node) => {
-            var _a2;
-            if (node.nodeType == 3)
-              node.textContent = ((_a2 = node.textContent) == null ? void 0 : _a2.replace(/[*_`[\]$()]|[~=]{2}/g, "\\$&")) || "";
-          }));
-          tableEl.querySelectorAll(":scope a.internal-link").forEach((link) => {
-            const parsedLink = document.createElement("span");
-            parsedLink.innerText = `[[${link.getAttr("href")}|${link.innerText}]]`;
-            link.replaceWith(parsedLink);
-          });
-          tableEl.querySelectorAll(":scope span.math").forEach(
-            (link) => {
+      if (tableEls.length) {
+        for (const tableEl2 of Array.from(tableEls)) {
+          if (!tableEl2)
+            return;
+          if ((tableEl2 == null ? void 0 : tableEl2.id) === "obsidian-sheets-parsed")
+            return;
+          const sec = ctx.getSectionInfo(tableEl2);
+          let source = "";
+          if (!sec) {
+            tableEl2.querySelectorAll(":scope td").forEach(({ childNodes }) => childNodes.forEach((node) => {
               var _a2;
-              return ((_a2 = link.textContent) == null ? void 0 : _a2.trim().length) ? link.textContent = `$${link.textContent || ""}$` : null;
-            }
-          );
-          source = (0, import_obsidian3.htmlToMarkdown)(tableEl).trim().replace(/\\\\/g, "$&$&");
-          if (!source)
-            return;
-        } else {
-          const { text, lineStart, lineEnd } = sec;
-          const textContent = text.split("\n").slice(lineStart, 1 + lineEnd).map((line) => line.replace(/^.*?(?=\|(?![^[]*]))/, ""));
-          if (!textContent.filter((row) => /(?<!\\)\|/.test(row)).map((row) => row.split(/(?<!\\)\|/).map((cell) => cell.trim())).every(
-            (row) => {
-              var _a2, _b;
-              return !((_a2 = row.pop()) == null ? void 0 : _a2.trim()) && !((_b = row.shift()) == null ? void 0 : _b.trim());
-            }
-          ))
-            return;
-          source = textContent.join("\n");
+              if (node.nodeType == 3)
+                node.textContent = ((_a2 = node.textContent) == null ? void 0 : _a2.replace(/[*_`[\]$()]|[~=]{2}/g, "\\$&")) || "";
+            }));
+            tableEl2.querySelectorAll(":scope a.internal-link").forEach((link) => {
+              const parsedLink = document.createElement("span");
+              parsedLink.innerText = `[[${link.getAttr("href")}|${link.innerText}]]`;
+              link.replaceWith(parsedLink);
+            });
+            tableEl2.querySelectorAll(":scope span.math").forEach(
+              (link) => {
+                var _a2;
+                return ((_a2 = link.textContent) == null ? void 0 : _a2.trim().length) ? link.textContent = `$${link.textContent || ""}$` : null;
+              }
+            );
+            source = (0, import_obsidian3.htmlToMarkdown)(tableEl2).trim().replace(/\\\\/g, "$&$&");
+            if (!source)
+              return;
+          } else {
+            const { text, lineStart, lineEnd } = sec;
+            let textContent = text.split("\n").slice(lineStart, 1 + lineEnd).map((line) => line.replace(/^.*?(?=\|(?![^[]*]))/, ""));
+            const endIndex = textContent.findIndex((line) => /^(?!\|)/.test(line));
+            if (textContent[0].startsWith("```"))
+              return;
+            if (endIndex !== -1)
+              textContent = textContent.slice(0, endIndex + 1);
+            if (!textContent.filter((row) => /(?<!\\)\|/.test(row)).map((row) => row.split(/(?<!\\)\|/).map((cell) => cell.trim())).every(
+              (row) => {
+                var _a2, _b2;
+                return !((_a2 = row.pop()) == null ? void 0 : _a2.trim()) && !((_b2 = row.shift()) == null ? void 0 : _b2.trim());
+              }
+            ))
+              return;
+            source = textContent.join("\n");
+          }
+          tableEl2.empty();
+          ctx.addChild(new SheetElement(tableEl2, source.trim(), ctx, this.app, this));
         }
-        tableEl.empty();
-        ctx.addChild(new SheetElement(tableEl, source.trim(), ctx, this.app, this));
+        return;
       }
+      const tableEl = el.closest("table");
+      if (!tableEl)
+        return;
+      if ((tableEl == null ? void 0 : tableEl.id) === "obsidian-sheets-parsed")
+        return;
+      const rawMarkdown = ((_b = ctx.getSectionInfo(tableEl)) == null ? void 0 : _b.text) || (0, import_obsidian3.htmlToMarkdown)(tableEl);
+      const rawMarkdownArray = rawMarkdown.replace(/\n\s*\|\s*-+.*?(?=\n)/g, "").replace(/^\||\|$/gm, "").split(/\||\n/g);
+      const toChange = rawMarkdownArray.reduce((cum, curr, i) => {
+        /(?<!~|\\)~(?!~)|^(-+|<|\^)\s*$/.test(curr) && cum.push(i);
+        return cum;
+      }, []);
+      const tableHead = Array.from(tableEl.querySelectorAll("th"));
+      const tableWidth = tableHead.length;
+      const DOMCellArray = [...tableHead, ...Array.from(tableEl.querySelectorAll("td"))];
+      for (const index of toChange) {
+        const column = index % tableWidth;
+        const row = Math.floor(index / tableWidth);
+        const cellContent = rawMarkdownArray[index];
+        if (/(?<!~|\\)~(?!~)/.test(cellContent)) {
+          const cellStyles = cellContent.split(/(?<![\\~])~(?!~)/)[1];
+          const classes = ((_c = cellStyles.match(/(?<=\.)\S+/g)) == null ? void 0 : _c.map((m) => m.toString())) || [];
+          let cellStyle = {};
+          const inlineStyle = ((_d = cellStyles.match(/\{.*\}/)) == null ? void 0 : _d[0]) || "{}";
+          try {
+            cellStyle = { ...cellStyle, ...JSON52.parse(inlineStyle) };
+          } catch (e) {
+            console.error(`Invalid cell style \`${inlineStyle}\``);
+          }
+          const DOMContent = DOMCellArray[index].querySelector(".table-cell-wrapper") || DOMCellArray[index];
+          Object.assign(DOMContent.style, cellStyle);
+          DOMContent.classList.add(...classes);
+          DOMContent.innerText = DOMContent.innerText.split(/(?<![\\~])~(?!~)/)[0];
+        }
+      }
+      return tableEl.id = "obsidian-sheets-parsed";
     });
     this.addSettingTab(new SheetSettingsTab(this.app, this));
   }
   onunload() {
   }
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      await this.loadData()
+    );
   }
   async saveSettings() {
     await this.saveData(this.settings);

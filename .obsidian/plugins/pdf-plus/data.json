@@ -120,6 +120,64 @@
   "pdfLinkColor": "#04a802",
   "pdfLinkBorder": false,
   "replaceContextMenu": true,
+  "showContextMenuOnMouseUpIf": "Mod",
+  "contextMenuConfig": [
+    {
+      "id": "action",
+      "visible": true
+    },
+    {
+      "id": "selection",
+      "visible": true
+    },
+    {
+      "id": "write-file",
+      "visible": true
+    },
+    {
+      "id": "annotation",
+      "visible": true
+    },
+    {
+      "id": "modify-annotation",
+      "visible": true
+    },
+    {
+      "id": "link",
+      "visible": true
+    },
+    {
+      "id": "text",
+      "visible": true
+    },
+    {
+      "id": "search",
+      "visible": true
+    },
+    {
+      "id": "page",
+      "visible": true
+    },
+    {
+      "id": "settings",
+      "visible": false
+    }
+  ],
+  "selectionProductMenuConfig": [
+    "color",
+    "copy-format",
+    "display"
+  ],
+  "writeFileProductMenuConfig": [
+    "color",
+    "copy-format",
+    "display"
+  ],
+  "annotationProductMenuConfig": [
+    "copy-format",
+    "display"
+  ],
+  "updateColorPaletteStateFromContextMenu": true,
   "executeBuiltinCommandForOutline": true,
   "executeBuiltinCommandForZoom": true,
   "executeFontSizeAdjusterCommand": true,
@@ -148,6 +206,7 @@
   "clickOutlineItemWithModifierKey": true,
   "clickThumbnailWithModifierKey": true,
   "focusEditorAfterAutoPaste": false,
+  "clearSelectionAfterAutoPaste": true,
   "respectCursorPositionWhenAutoPaste": true,
   "autoCopy": false,
   "autoFocus": false,
@@ -204,7 +263,6 @@
   "showBacklinkIconForRect": false,
   "showBoundingRectForBacklinkedAnnot": false,
   "hideReplyAnnotation": false,
-  "showCopyLinkToSearchInContextMenu": true,
   "searchLinkHighlightAll": "true",
   "searchLinkCaseSensitive": "true",
   "searchLinkMatchDiacritics": "default",
@@ -216,62 +274,11 @@
   "spreadModeOnLoad": 0,
   "hoverableDropdownMenuInToolbar": true,
   "zoomLevelInputBoxInToolbar": false,
-  "showContextMenuOnMouseUpIf": "mod",
-  "contextMenuConfig": [
-    {
-      "id": "action",
-      "visible": true
-    },
-    {
-      "id": "selection",
-      "visible": true
-    },
-    {
-      "id": "write-file",
-      "visible": true
-    },
-    {
-      "id": "annotation",
-      "visible": true
-    },
-    {
-      "id": "modify-annotation",
-      "visible": true
-    },
-    {
-      "id": "link",
-      "visible": true
-    },
-    {
-      "id": "text",
-      "visible": true
-    },
-    {
-      "id": "search",
-      "visible": true
-    },
-    {
-      "id": "settings",
-      "visible": false
-    }
-  ],
-  "selectionProductMenuConfig": [
-    "color",
-    "copy-format",
-    "display"
-  ],
-  "writeFileProductMenuConfig": [
-    "color",
-    "copy-format",
-    "display"
-  ],
-  "annotationProductMenuConfig": [
-    "copy-format",
-    "display"
-  ],
   "popoverPreviewOnExternalLinkHover": false,
   "actionOnCitationHover": "pdf-plus-bib-popover",
   "enableBibInEmbed": false,
   "enableBibInHoverPopover": false,
-  "enableBibInCanvas": true
+  "enableBibInCanvas": true,
+  "removeWhitespaceBetweenCJKChars": true,
+  "vim": true
 }

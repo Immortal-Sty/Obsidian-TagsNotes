@@ -5297,7 +5297,7 @@ var FolderSuggest = class extends TextInputSuggest {
   }
 };
 
-// src/fields/models/abstractModels/AbstractMedia.ts
+// src/types/mediaTypes.ts
 var extensionMediaTypes = {
   avif: "Image" /* Image */,
   bmp: "Image" /* Image */,
@@ -5310,6 +5310,8 @@ var extensionMediaTypes = {
   tiff: "Image" /* Image */,
   webp: "Image" /* Image */
 };
+
+// src/fields/models/abstractModels/AbstractMedia.ts
 var commonMediaTypeIcon = (display) => `<svg xmlns="http://www.w3.org/2000/svg" ${display === "card" ? 'width="164" height="164"' : 'width="40" height="40"'} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-question">
     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
     <polyline points="14 2 14 8 20 8"/>
@@ -5513,7 +5515,41 @@ function valueModal15(managedField, plugin) {
   };
 }
 function createDvField14(managedField, dv, p, fieldContainer, attrs = {}) {
-  return createDvField4(managedField, dv, p, fieldContainer, attrs);
+  var _a;
+  attrs.cls = "value-container";
+  const values = managedField.value;
+  const buildItem = (_value) => {
+    if (!_value)
+      return;
+    _value.embed = true;
+    fieldContainer.appendChild(dv.el("span", _value || "", attrs));
+  };
+  if (Array.isArray(values))
+    values.forEach((value) => buildItem(value));
+  else
+    buildItem(values);
+  const searchBtn = fieldContainer.createEl("button");
+  (0, import_obsidian18.setIcon)(searchBtn, getIcon(managedField.type));
+  const spacer = fieldContainer.createEl("div", { cls: "spacer-1" });
+  const file = managedField.plugin.app.vault.getAbstractFileByPath(p["file"]["path"]);
+  if (file instanceof import_obsidian18.TFile && file.extension == "md") {
+    searchBtn.onclick = () => managedField.openModal();
+  } else {
+    searchBtn.onclick = async () => {
+    };
+  }
+  if (!((_a = attrs == null ? void 0 : attrs.options) == null ? void 0 : _a.alwaysOn)) {
+    searchBtn.hide();
+    spacer.show();
+    fieldContainer.onmouseover = () => {
+      searchBtn.show();
+      spacer.hide();
+    };
+    fieldContainer.onmouseout = () => {
+      searchBtn.hide();
+      spacer.show();
+    };
+  }
 }
 function valueString15(managedField) {
   if (!isSingleTargeted(managedField))
@@ -5533,14 +5569,6 @@ function actions15(plugin, field2, file, location, indexedPath) {
 function getOptionsStr15(field2) {
   const options2 = field2.options;
   return `${options2.display} | ${options2.embed} | ${options2.size} | ${options2.folders.join(", ")}`;
-}
-function buildMediaLink(plugin, sourceFile, destPath, thumbnailSize) {
-  const destFile = plugin.app.vault.getAbstractFileByPath(destPath);
-  if (destFile instanceof import_obsidian18.TFile) {
-    const link = plugin.app.fileManager.generateMarkdownLink(destFile, sourceFile.path, void 0, thumbnailSize);
-    return link;
-  }
-  return "";
 }
 function getFiles2(managedField) {
   const folders = managedField.options.folders;
@@ -5579,11 +5607,7 @@ function valueModal16(managedField, plugin) {
     }
     async onChooseItem(item) {
       this.saved = true;
-      const embed = managedField.options.embed;
-      const alias = extensionMediaTypes[item.extension] === "Image" /* Image */ ? managedField.options.thumbnailSize : void 0;
-      const baseValue = buildMediaLink(plugin, item, item.path, embed ? alias : void 0);
-      const value = managedField.options.embed ? baseValue : baseValue.replace(/^\!/, "");
-      managedField.save(value);
+      managedField.save(item.name);
     }
   };
 }
@@ -5703,12 +5727,7 @@ function valueModal17(managedField, plugin) {
     }
     async save() {
       this.saved = true;
-      const embed = managedField.options.embed;
-      const result = this.selectedFiles.map((file) => {
-        const alias = extensionMediaTypes[file.extension] === "Image" /* Image */ ? managedField.options.thumbnailSize : void 0;
-        const value = buildMediaLink(plugin, file, file.path, embed ? alias : void 0);
-        return embed ? value : value.replace(/^\!/, "");
-      });
+      const result = this.selectedFiles.map((file) => file.name);
       managedField.save(result.join(", "));
     }
     async clearValues() {
@@ -15383,10 +15402,11 @@ var MetadataMenuSettingTab = class extends import_obsidian38.PluginSettingTab {
       cb.setValue(this.plugin.settings.showIndexingStatusInStatusBar);
       cb.onChange((value) => {
         this.plugin.settings.showIndexingStatusInStatusBar = value;
+        const indexStatusEl = document.querySelector(".status-bar-item.plugin-metadata-menu .index-status");
         if (!value) {
-          this.plugin.indexStatus.unload();
+          indexStatusEl == null ? void 0 : indexStatusEl.hide();
         } else {
-          this.plugin.indexStatus.load();
+          indexStatusEl == null ? void 0 : indexStatusEl.show();
         }
         this.plugin.saveSettings();
       });
@@ -21189,7 +21209,7 @@ var LineNode = class {
       return `${"  ".repeat(level + 1 + shift)}- ${value}`;
     };
     this.removeIndentedListItems = () => {
-      if (!this.field || !(this.field.type === "JSON" || this.field.type === "YAML" || this.field.type === "Lookup" || this.field.type === "Multi" || this.field.type === "MultiFile" || this.field.type === "Canvas" || this.field.type === "CanvasGroup" || this.field.type === "CanvasGroupLink"))
+      if (!this.field || !(this.field.type === "JSON" || this.field.type === "YAML" || this.field.type === "Lookup" || this.field.type === "Multi" || this.field.type === "MultiFile" || this.field.type === "MultiMedia" || this.field.type === "Canvas" || this.field.type === "CanvasGroup" || this.field.type === "CanvasGroupLink"))
         return;
       if (this.line.position === "inline" && this.field.type !== "Lookup")
         return;
@@ -21524,6 +21544,21 @@ var Line = class {
   }
 };
 
+// src/utils/mediaUtils.ts
+function renderMediaItem(location, filename, field2) {
+  const { embed, thumbnailSize } = field2.options;
+  const extension = filename.split(".").last();
+  if (!extension)
+    return "";
+  const alias = extensionMediaTypes[extension] === "Image" /* Image */ ? thumbnailSize : void 0;
+  switch (location) {
+    case "yaml":
+      return `[[${filename}]]`;
+    case "inline":
+      return `${embed ? "!" : ""}[[${filename}${alias ? "|" + alias : ""}]]`;
+  }
+}
+
 // src/note/note.ts
 var Note = class {
   constructor(plugin, file) {
@@ -21569,7 +21604,7 @@ var Note = class {
 ${"  ".repeat(indentationLevel + 1)}`;
         return `${indentation}${_rawValue.split("\n").join(indentation)}`;
       } else {
-        return (0, import_obsidian64.parseYaml)(_rawValue) === _rawValue || (0, import_obsidian64.parseYaml)(_rawValue) === false || !isNaN(parseFloat(_rawValue)) ? (0, import_obsidian64.parseYaml)(_rawValue) : `"${_rawValue}"`;
+        return [_rawValue, true, false].includes((0, import_obsidian64.parseYaml)(_rawValue)) || !isNaN(parseFloat(_rawValue)) ? (0, import_obsidian64.parseYaml)(_rawValue) : `"${_rawValue}"`;
       }
       ;
     } else {
@@ -21594,13 +21629,15 @@ ${"  ".repeat(indentationLevel + 1)}`;
               }
             }
             ;
+          case "Media":
+            return `"${renderMediaItem("yaml", rawValue, field2)}"`;
           case "Multi":
             return this.renderMultiFields(rawValue, (item) => this.renderValueString(item, type, indentationLevel));
           case "MultiFile":
             return this.renderMultiFilesFields(rawValue, (item) => `"${item}"`);
             ;
           case "MultiMedia":
-            return this.renderMultiFilesFields(rawValue, (item) => `"${item}"`);
+            return this.renderMultiFields(rawValue, (item) => `"${renderMediaItem("yaml", item, field2)}"`);
           case "Canvas":
             return this.renderMultiFilesFields(rawValue, (item) => item ? `"${item}"` : "");
           case "CanvasGroup":
@@ -21619,6 +21656,10 @@ ${"  ".repeat(indentationLevel + 1)}`;
         }
       case "inline":
         switch (type) {
+          case "Media":
+            return renderMediaItem("inline", rawValue, field2);
+          case "MultiMedia":
+            return rawValue.split(",").filter((v) => !!v).map((v) => v.trim()).map((v) => renderMediaItem("inline", v, field2)).join(", ");
           case "Lookup": {
             if (field2 && bulletListLookupTypes.includes(field2.options.outputType)) {
               return this.renderMultiFields(rawValue, (item) => item);
@@ -24398,7 +24439,9 @@ var IndexStatus = class extends import_obsidian74.Component {
   }
   onload() {
     const indexStatus = this.plugin.addStatusBarItem();
-    const container = indexStatus.createEl("div", { cls: "status-bar-item-segment" });
+    const container = indexStatus.createEl("div", { cls: "status-bar-item-segment index-status" });
+    if (!this.plugin.settings.showIndexingStatusInStatusBar)
+      container.hide();
     this.statusBtn = new import_obsidian74.ButtonComponent(container);
     this.statusBtn.setClass("status-item-btn");
     this.statusIcon = this.statusBtn.buttonEl.createEl("span", { cls: "status-bar-item-icon sync-status-icon" });
@@ -24424,11 +24467,6 @@ var IndexStatus = class extends import_obsidian74.Component {
       if (updatesToApply)
         this.plugin.fieldIndex.applyUpdates();
     });
-  }
-  onunload() {
-    const indexStatusEl = document.querySelector(".status-bar-item.plugin-metadata-menu");
-    if (indexStatusEl)
-      this.plugin.app.statusBar.containerEl.removeChild(indexStatusEl);
   }
   getdvQFieldsToUpdate() {
     if (this.file) {
@@ -25247,12 +25285,11 @@ ${renderedValue.map((v) => "  - " + v).join("\n")}` : `${fieldName}: ${renderedV
 
 // src/options/updateProps.ts
 var import_obsidian79 = require("obsidian");
-var updateProps = async (plugin, view) => {
-  if (!(view instanceof import_obsidian79.MarkdownView) || !(view.file instanceof import_obsidian79.TFile) || view.file === void 0)
-    return;
-  const file = view.file;
-  if (!plugin.app.vault.getAbstractFileByPath(file.path))
-    return;
+var import_promises6 = require("timers/promises");
+function isPropView(view) {
+  return view.file !== void 0;
+}
+var updateProps = async (plugin, view, file) => {
   const optionsList = new OptionsList(plugin, file, "ManageAtCursorCommand");
   const note = new Note(plugin, file);
   await note.build();
@@ -25270,24 +25307,22 @@ var updateProps = async (plugin, view) => {
       return;
     const buttonsContainers = item.containerEl.findAll(".field-btn-container");
     buttonsContainers.forEach((container) => item.containerEl.removeChild(container));
-    if (plugin.settings.enableProperties) {
-      const btnContainer = item.containerEl.createDiv({ cls: "field-btn-container" });
-      const btn = new import_obsidian79.ButtonComponent(btnContainer);
-      btn.setIcon(getIcon(pseudoField.type));
-      btn.setClass("property-metadata-menu");
-      btn.onClick(() => {
-        optionsList ? optionsList.createAndOpenNodeFieldModal(node) : null;
-      });
-      item.containerEl.insertBefore(btnContainer, item.valueEl);
-    }
+    const btnContainer = item.containerEl.createDiv({ cls: "field-btn-container" });
+    if (isPropView(view))
+      btnContainer.addClass("with-bottom-border");
+    const btn = new import_obsidian79.ButtonComponent(btnContainer);
+    btn.setIcon(getIcon(pseudoField.type));
+    btn.setClass("property-metadata-menu");
+    btn.onClick(() => {
+      optionsList ? optionsList.createAndOpenNodeFieldModal(node) : null;
+    });
+    item.containerEl.insertBefore(btnContainer, item.valueEl);
   });
   const actionContainer = view.metadataEditor.contentEl.find(".action-container") || view.metadataEditor.contentEl.createDiv({ cls: "action-container" });
   actionContainer.replaceChildren();
   actionContainer.appendChild(view.metadataEditor.addPropertyButtonEl);
   const fileClassButtonsContainer = view.metadataEditor.contentEl.find(".fileclass-btn-container") || view.metadataEditor.contentEl.createDiv({ cls: "fileclass-btn-container" });
   fileClassButtonsContainer.replaceChildren();
-  if (!plugin.settings.enableProperties)
-    return;
   const fileClasses = plugin.fieldIndex.filesFileClasses.get(file.path);
   fileClasses == null ? void 0 : fileClasses.forEach((fileClass) => {
     const addFieldButton = new import_obsidian79.ButtonComponent(fileClassButtonsContainer);
@@ -25301,7 +25336,13 @@ async function updatePropertiesSection(plugin) {
   var _a, _b, _c;
   const leaves = plugin.app.workspace.getLeavesOfType("markdown");
   for (const leaf of leaves) {
-    updateProps(plugin, leaf.view);
+    const view = leaf.view;
+    if (!(view instanceof import_obsidian79.MarkdownView) || !(view.file instanceof import_obsidian79.TFile) || view.file === void 0)
+      return;
+    const file = view.file;
+    if (!plugin.app.vault.getAbstractFileByPath(file.path))
+      continue;
+    updateProps(plugin, view, file);
   }
   const currentView = plugin.app.workspace.getActiveViewOfType(import_obsidian79.MarkdownView);
   if (currentView && currentView.file) {
@@ -25321,6 +25362,35 @@ async function updatePropertiesSection(plugin) {
         (_c = focusedElement.find("[class^=metadata-input]")) == null ? void 0 : _c.setText((eF == null ? void 0 : eF.value) || "");
       }
     }
+  }
+}
+function getPropView(plugin) {
+  var propView;
+  plugin.app.workspace.iterateAllLeaves((l) => {
+    var _a;
+    if (!propView && l.view.file && ((_a = l.view.plugin) == null ? void 0 : _a.id) === "properties") {
+      propView = l.view;
+    }
+  });
+  return propView;
+}
+async function updatePropertiesPane2(plugin) {
+  var _a;
+  var propView;
+  if (propView && propView.file.path == ((_a = plugin.app.workspace.getActiveFile()) == null ? void 0 : _a.path)) {
+    updateProps(plugin, propView, propView.file);
+  } else {
+    await (0, import_promises6.setTimeout)(300);
+    propView = getPropView(plugin);
+    if (propView) {
+      updateProps(plugin, propView, propView.file);
+    }
+  }
+}
+async function updatePropertiesCommands(plugin) {
+  if (plugin.settings.enableProperties) {
+    updatePropertiesSection(plugin);
+    updatePropertiesPane2(plugin);
   }
 }
 
@@ -25696,8 +25766,6 @@ Install and enable dataview and dataviewJS for extra Metadata Menu features
     await this.loadSettings();
     await migrateSettings(this);
     this.indexStatus = this.addChild(new IndexStatus(this));
-    if (this.settings.showIndexingStatusInStatusBar)
-      this.indexStatus.load();
     this.codeBlockListManager = this.addChild(new FileClassCodeBlockListManager(this));
     this.fieldIndex = this.addChild(new FieldIndex(this));
     this.contextMenu = this.addChild(new ContextMenu(this));
@@ -25727,11 +25795,12 @@ Install and enable dataview and dataviewJS for extra Metadata Menu features
       this.app.workspace.on("active-leaf-change", (leaf) => {
         if (leaf)
           this.indexStatus.checkForUpdate(leaf.view);
+        updatePropertiesCommands(this);
       })
     );
     this.registerEvent(
       this.app.workspace.on("file-open", (file) => {
-        updatePropertiesSection(this);
+        updatePropertiesCommands(this);
       })
     );
     this.registerEvent(
@@ -25740,7 +25809,7 @@ Install and enable dataview and dataviewJS for extra Metadata Menu features
         const currentView = this.app.workspace.getActiveViewOfType(import_obsidian85.MarkdownView);
         if (currentView)
           this.indexStatus.checkForUpdate(currentView);
-        updatePropertiesSection(this);
+        updatePropertiesCommands(this);
         FileClassViewManager.reloadViews(this);
       })
     );
