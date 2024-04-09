@@ -139,6 +139,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "e0db8676-b74c-4e84-9a8e-cbcbf587b774"
+    },
+    {
+      "id": "6c3fe175-e24b-40f0-a31e-d50dd36f7801",
+      "name": "FS and Close",
+      "type": "Macro",
+      "command": true,
+      "macroId": "1aadc963-170f-42b4-8e87-9d17267587bb"
     }
   ],
   "macros": [
@@ -290,6 +297,31 @@
           "type": "Obsidian",
           "id": "02e98cd5-734c-4671-b85e-cf0e0bda12ad",
           "commandId": "janitor:scan-files-with-prompt"
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "FS and Close",
+      "id": "1aadc963-170f-42b4-8e87-9d17267587bb",
+      "commands": [
+        {
+          "name": "Format and Save",
+          "type": "Choice",
+          "id": "721bd7b7-480f-4c0c-887b-fc5840ac1d0e",
+          "choiceId": "875ccb15-29d6-46de-90d5-c63ee0d85bae"
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "8d4031d8-ae33-47f1-b0a0-aa2686058d40",
+          "time": 700
+        },
+        {
+          "name": "关闭当前标签页",
+          "type": "Obsidian",
+          "id": "ca16fbf7-037e-4b80-a08f-47a1f82853e4",
+          "commandId": "workspace:close"
         }
       ],
       "runOnStartup": false
