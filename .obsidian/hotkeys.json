@@ -352,5 +352,14 @@
       ],
       "key": "S"
     }
+  ],
+  "workspace:close": [],
+  "quickadd:choice:6c3fe175-e24b-40f0-a31e-d50dd36f7801": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "W"
+    }
   ]
 }
