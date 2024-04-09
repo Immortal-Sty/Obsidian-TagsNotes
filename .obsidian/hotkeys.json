@@ -202,14 +202,6 @@
       "key": "2"
     }
   ],
-  "editor:rename-heading": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "F2"
-    }
-  ],
   "app:go-back": [
     {
       "modifiers": [
@@ -360,6 +352,13 @@
         "Mod"
       ],
       "key": "W"
+    }
+  ],
+  "workspace:edit-file-title": [],
+  "editor:rename-heading": [
+    {
+      "modifiers": [],
+      "key": "F2"
     }
   ]
 }
