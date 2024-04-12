@@ -1,0 +1,8 @@
+.cm-vim-panel>div>div>span{
+    display: flex;
+    flex-direction: row;
+}
+.cm-vim-panel input{
+    width: unset !important;
+    flex: 1;
+}
