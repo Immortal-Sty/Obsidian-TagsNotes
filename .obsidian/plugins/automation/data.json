@@ -1,0 +1,34 @@
+{
+  "actions": [
+    {
+      "id": "default-id",
+      "type": "event",
+      "enabled": true,
+      "commands": [],
+      "filters": [
+        {
+          "kind": "none",
+          "pattern": "",
+          "modeRegExp": true,
+          "modeCode": false
+        }
+      ],
+      "eventSetting": {
+        "type": "file-open"
+      },
+      "timerSetting": {
+        "type": "every day",
+        "when": [
+          {
+            "HM": ""
+          }
+        ]
+      },
+      "name": "demo"
+    }
+  ],
+  "debug": {
+    "console": false,
+    "writeLog": false
+  }
+}

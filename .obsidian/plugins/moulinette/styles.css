@@ -1,0 +1,232 @@
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+
+.asset {
+  display: flex;
+  position: relative;
+}
+
+.asset img {
+  width: 100px;
+  min-width: 100px;
+  height: 75px;
+  object-fit: scale-down;
+}
+
+.asset .title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.asset .pack {
+  font-size: small;
+}
+
+.asset .desc {
+  font-size: small;
+  font-style: italic;
+}
+
+.asset .info {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.asset .icon {
+  display: flex;
+  align-items: center;
+  --icon-size: var(--icon-l);
+}
+
+.meta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.meta .tag {
+  background-color: #e87209;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 4px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: small;
+  padding: 1px 5px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 3px;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #2c974b;
+}
+
+.button-3:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+.setting-warning {
+  display: none;
+  color: red;
+}
+
+.setting-warning.visible {
+  display: block;
+}
+
+.actions button {
+  margin: 3px;
+}
+
+.success {
+  color: green;
+}
+
+.duration {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  font-size: small;
+}
+
+.browser {
+  height: 80%;
+  max-height: 1200px;
+  width: 880px;
+}
+
+.browser .searchbar {
+  display: flex;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.browser .searchbar button {
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.browser .searchbar button.highlight {
+  border: 1px solid #e87209;
+  ;
+}
+
+.browser .searchbar button img {
+  width: 22px;
+}
+
+
+.browser select {
+  margin: 0px 8px;
+  max-width: 200px;
+}
+
+.browser .assets {
+  position: absolute;
+  top: 55px;
+  left: 15px;
+  bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow: scroll;
+}
+
+.browser .assets > * {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.browser .assets > *:hover {
+  cursor: pointer;
+  border: 1px dashed #e87209;
+  border-radius: 4px;
+  opacity: 75%;
+}
+
+.browser .assets img {
+  width: 100px;
+  height: 100px;
+  object-fit: scale-down;
+  border: none;
+  margin: 2px;
+}
+
+.browser .assets .md, .browser .assets .snd {
+  width: 100px;
+  height: 100px;
+  padding: 3px;
+}
+
+.browser .assets .snd .dur {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.browser .assets .md img, .browser .assets .snd img {
+  width: 24px;
+  height: 24px;
+}
+
+.browser .assets .md div, .browser .assets .snd div {
+  font-size: 12px;
+}
+
+.browser .footer {
+  display: flex;
+  position: absolute;
+  bottom: 6px;
+}
+
+.browser .footer span {
+  margin-left: 5px;
+}
+
+.progress {
+  min-height: 65px;
+  overflow: hidden;
+}
+
+.progress .message {
+  display: flex;
+}
+
+.progress .message div {
+  margin-right: 5px;
+}

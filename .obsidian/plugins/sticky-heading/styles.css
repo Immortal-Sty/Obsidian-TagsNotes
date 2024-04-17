@@ -1,0 +1,93 @@
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+
+/* https://github.com/mgmeyers/obsidian-style-settings */
+
+/* @settings
+
+name: sticky-heading
+id: sticky-heading
+settings:
+	-
+		id: sticky-heading-bg-color
+		title: container background color
+		description: background color of the sticky heading container
+		type: variable-text
+		default: var(--titlebar-background)
+	-
+		id: sticky-heading-shadow-level
+		title: shadow
+		type: variable-select
+		default: none
+		options:
+			-
+				label: medium
+				value: 0 16px 16px -16px gray
+			-
+				label: large
+				value: 0 16px 16px -10px gray
+			-
+				label: none
+				value: none
+	-
+		id: sticky-heading-show-level
+		title: show heading level prefix
+		type: variable-select
+		default: block
+		options:
+			-
+				label: show
+				value: block
+			-
+				label: hide
+				value: none
+
+*/
+
+body {
+	--sticky-heading-top-space: calc(-1 * var(--size-4-8));
+	--sticky-heading-bg-color: var(--titlebar-background);
+}
+
+.obsidian-sticky-heading {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.obsidian-sticky-heading_inner {
+	max-width: calc(var(--max-width) + 8px);
+	width: calc(var(--line-width, var(--file-line-width, 0px)) + 8px);
+	margin-inline: var(--content-margin, auto) !important;
+	background-color: var(--sticky-heading-bg-color);
+	padding: 0 8px;
+	box-shadow: var(--sticky-heading-shadow-level);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.obsidian-sticky-heading_inner > div:first-child {
+	margin-top: 6px;
+}
+
+.obsidian-sticky-heading_inner > div:last-child {
+	margin-bottom: 6px;
+}
+
+.obsidian-sticky-heading_level {
+	display: var(--sticky-heading-show-level);
+	position: absolute;
+	left: -30px;
+	text-align: right;
+	font-weight: normal;
+	color: var(--text-faint);
+	font-size: 14px;
+}
