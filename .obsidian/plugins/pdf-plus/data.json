@@ -86,6 +86,7 @@
   "colorPaletteInToolbar": true,
   "noColorButtonInColorPalette": false,
   "colorPaletteInEmbedToolbar": false,
+  "quietColorPaletteTooltip": false,
   "showStatusInToolbar": true,
   "highlightColorSpecifiedOnly": false,
   "doubleClickHighlightToOpenBacklink": true,
@@ -152,6 +153,10 @@
     },
     {
       "id": "search",
+      "visible": true
+    },
+    {
+      "id": "speech",
       "visible": true
     },
     {

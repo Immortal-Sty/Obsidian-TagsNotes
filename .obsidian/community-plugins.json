@@ -23,7 +23,6 @@
   "floating-toc",
   "float-search",
   "dataview",
-  "easy-typing-obsidian",
   "code-styler",
   "clever-search",
   "better-search-views",
@@ -34,5 +33,7 @@
   "actions-uri",
   "sheets",
   "sticky-heading",
-  "obsidian-version-history-diff"
+  "obsidian-version-history-diff",
+  "easy-typing-obsidian",
+  "obsidian-latex-suite"
 ]
