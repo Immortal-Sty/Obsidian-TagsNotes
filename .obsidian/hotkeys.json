@@ -360,5 +360,13 @@
       "modifiers": [],
       "key": "F2"
     }
+  ],
+  "tab-selector:open-tab-selector": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "I"
+    }
   ]
 }

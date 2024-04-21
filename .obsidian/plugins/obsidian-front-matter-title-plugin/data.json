@@ -33,7 +33,7 @@
       }
     },
     "explorer": {
-      "enabled": false,
+      "enabled": true,
       "sort": false,
       "templates": {
         "main": "",
@@ -62,7 +62,7 @@
       }
     },
     "bookmarks": {
-      "enabled": false,
+      "enabled": true,
       "templates": {
         "main": "",
         "fallback": ""
@@ -83,14 +83,14 @@
       }
     },
     "inlineTitle": {
-      "enabled": false,
+      "enabled": true,
       "templates": {
         "main": "",
         "fallback": ""
       }
     },
     "canvas": {
-      "enabled": false,
+      "enabled": true,
       "templates": {
         "main": "",
         "fallback": ""
