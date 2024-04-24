@@ -12,11 +12,12 @@
 /*}*/
 
 /*图片效果调整--阴影+圆角矩形*/
-.markdown-preview-view img {
+img {
 	max-width: 100%;
 	outline: none;
 	-webkit-filter: drop-shadow(10px 10px 10px rgba(0,0,0,.5));/*阴影效果*/
 	background-clip: content-box,padding-box;
 	border-radius: 20px;/*圆角矩形 左上角：20px；右上角和左下角：10px；右下角：40px*/
-
+	display: block;
+	margin: 16px auto; /* 图片上下的间距，并在页面中居中显示 */
 }
