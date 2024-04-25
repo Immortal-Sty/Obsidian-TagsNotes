@@ -1,24 +1,23 @@
 @media (hover: hover) {
-  .image-embed.is-loaded img,
   .markdown-preview-view .internal-embed:not(:has(> img)) img {
     line-height: 0;
     background-color: transparent;
   }
 
-  img:not(.callout-content img):not(.thumbnailImage):not(
+  .markdown-preview-view img:not(.callout-content img):not(.thumbnailImage):not(
       img .community-item-screenshot
     ) {
     max-width: 100%;
     cursor: zoom-in;
   }
 
-  body img:active:not(.callout-content img):not(.thumbnailImage) {
+  body .markdown-preview-view img:active:not(.callout-content img):not(.thumbnailImage) {
     background-color: var(--background-primary);
     padding: 10px;
     border: 0px;
   }
 
-  img:not(.callout-content img):not(.thumbnailImage):active {
+  .markdown-preview-view img:not(.callout-content img):not(.thumbnailImage):active {
     aspect-ratio: unset;
     cursor: zoom-out;
     display: block;
@@ -37,7 +36,7 @@
     bottom: 0;
   }
 
-  img:not(.callout-content img):not(.thumbnailImage):active::after {
+  .markdown-preview-view img:not(.callout-content img):not(.thumbnailImage):active::after {
     background-color: var(--background-primary);
     opacity: 1;
     content: " ";
@@ -49,7 +48,7 @@
     z-index: 0;
   }
 
-  img:not(.callout-content img):not(.thumbnailImage):active img {
+  .markdown-preview-view img:not(.callout-content img):not(.thumbnailImage):active img {
     aspect-ratio: unset;
     top: 50%;
     z-index: 99;
@@ -70,7 +69,7 @@
   }
 }
 
-img.community-item-screenshot,
-.canvas img {
+.markdown-preview-view img.community-item-screenshot,
+.markdown-preview-view .canvas img {
   pointer-events: none;
 }
