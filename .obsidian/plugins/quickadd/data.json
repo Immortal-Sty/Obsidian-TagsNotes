@@ -303,7 +303,7 @@
           "name": "Wait",
           "type": "Wait",
           "id": "8d4031d8-ae33-47f1-b0a0-aa2686058d40",
-          "time": 700
+          "time": 200
         },
         {
           "name": "关闭当前标签页",
