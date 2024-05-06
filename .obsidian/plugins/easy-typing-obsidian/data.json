@@ -4,6 +4,7 @@
   "IntrinsicSymbolPairs": false,
   "BaseObEditEnhance": false,
   "FW2HWEnhance": false,
+  "BetterCodeEdit": true,
   "AutoFormat": true,
   "ExcludeFiles": "Attachment/\nImages/\nTemplate/",
   "ChineseEnglishSpace": true,
@@ -20,7 +21,7 @@
   "InlineLinkSmartSpace": true,
   "UserDefinedRegSwitch": true,
   "UserDefinedRegExp": "{{.*?}}|--\n<.*?>|--\n^(> )+\\[\\!.*?\\][-+]?|-+\n(quicker:|file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s（）《》。,，！？;；：“”‘’\\)\\(\\[\\]\\{\\}']+|--\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|=+\n^#{1,6} .+$|--",
-  "debug": true,
+  "debug": false,
   "userSelRepRuleTrigger": [],
   "userSelRepRuleValue": [],
   "userDeleteRulesStrList": [
