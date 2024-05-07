@@ -15,7 +15,7 @@
   "delayMilliSeconds": 0,
   "disableSuggestionsDuringImeOn": false,
   "disableSuggestionsInMathBlock": false,
-  "insertAfterCompletion": false,
+  "insertSpaceAfterCompletion": false,
   "firstCharactersDisableSuggestions": ":/^",
   "patternsToSuppressTrigger": [
     "^~~~.*",
@@ -23,7 +23,7 @@
   ],
   "phrasePatternsToSuppressTrigger": [],
   "noAutoFocusUntilCycle": false,
-  "showMatchStrategy": false,
+  "showMatchStrategy": true,
   "showComplementAutomatically": false,
   "showIndexingStatus": false,
   "descriptionOnSuggestion": "Short",
@@ -71,11 +71,13 @@
   "enableCurrentFileComplement": false,
   "currentFileMinNumberOfCharacters": 0,
   "onlyComplementEnglishOnCurrentFileComplement": false,
+  "excludeCurrentFileWordPatterns": [],
   "enableCurrentVaultComplement": false,
   "currentVaultMinNumberOfCharacters": 0,
   "includeCurrentVaultPathPrefixPatterns": "",
   "excludeCurrentVaultPathPrefixPatterns": "",
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
+  "excludeCurrentVaultWordPatterns": [],
   "enableCustomDictionaryComplement": true,
   "customDictionaryPaths": "Attachment\\Various Complements\\Callout.txt\nAttachment\\Various Complements\\CodeBlock.txt",
   "columnDelimiter": "Tab",
@@ -105,5 +107,6 @@
   },
   "disableOnMobile": false,
   "showLogAboutPerformanceInConsole": false,
+  "insertAfterCompletion": false,
   "selectionHistoryTree": {}
 }

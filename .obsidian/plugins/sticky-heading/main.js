@@ -27,12 +27,13 @@ __export(main_exports, {
   default: () => StickyHeadingPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian2 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 
 // src/HeadingPlugin.ts
 var import_view = require("@codemirror/view");
 var import_language = require("@codemirror/language");
-var headingExp = /^header_header-(\d)$/;
+var import_obsidian = require("obsidian");
+var headingExp = /^HyperMD-header_HyperMD-header-(\d)$/;
 var OBSIDIAN_STICKY_HEADING_CLASS = "obsidian-sticky-heading";
 var CONTENT_CLASS = "cm-content";
 function getDistanceFromContentToScroller(view) {
@@ -49,15 +50,18 @@ function getDistanceFromContentToScroller(view) {
   }
   return distance;
 }
-function HeadingPlugin(settings) {
+function HeadingPlugin(settings, app) {
   return import_view.ViewPlugin.fromClass(
     class HeadingViewPlugin {
       constructor(view) {
         let dom = document.createElement("div");
         dom.classList.add(OBSIDIAN_STICKY_HEADING_CLASS);
-        this.settings = settings;
+        dom.classList.add("markdown-rendered");
         this.stickyDom = dom;
         this.view = view;
+        this.headings = [];
+        this.oldHeadings = [];
+        this.settings = settings;
         this.init(view);
       }
       init(view) {
@@ -90,7 +94,7 @@ function HeadingPlugin(settings) {
           headerContent.appendChild(levelDom);
           const textDom = document.createElement("div");
           textDom.classList.add(`${OBSIDIAN_STICKY_HEADING_CLASS}_text`);
-          textDom.textContent = text;
+          import_obsidian.MarkdownRenderer.render(app, text, textDom, "", new import_obsidian.Component());
           headerContent.appendChild(textDom);
           header.appendChild(headerContent);
           dom.appendChild(header);
@@ -103,9 +107,10 @@ function HeadingPlugin(settings) {
           let headerChanged = false;
           editorView.requestMeasure({
             read: () => {
-              const oldHeadings = JSON.stringify(this.headings);
+              this.oldHeadings = this.headings;
+              const oldHeadingsJsonStr = JSON.stringify(this.headings);
               this.findHeaders(editorView);
-              if (oldHeadings !== JSON.stringify(this.headings)) {
+              if (this.oldHeadings.length !== this.headings.length || oldHeadingsJsonStr !== JSON.stringify(this.headings)) {
                 headerChanged = true;
               }
             },
@@ -116,29 +121,36 @@ function HeadingPlugin(settings) {
         }
       }
       findHeaders(view) {
+        var _a, _b;
+        const headerOutViewList = [];
         let distance = getDistanceFromContentToScroller(view);
         const headings = [];
-        let stickyHeadingEl = view.dom.querySelector(`.${OBSIDIAN_STICKY_HEADING_CLASS}`);
-        const stickyHeadingContentHeight = (stickyHeadingEl == null ? void 0 : stickyHeadingEl.clientHeight) || 20;
-        let height = view.scrollDOM.scrollTop - distance + stickyHeadingContentHeight;
-        const firstElementBlockInfo = view.elementAtHeight(height);
-        let meetHeadersByDomQuery = false;
-        const headerOutViewList = [];
-        (0, import_language.syntaxTree)(view.state).iterate({
-          from: 0,
-          to: firstElementBlockInfo.from,
-          enter(node) {
-            if (meetHeadersByDomQuery) {
-              return;
-            }
-            let regExpExecArray = headingExp.exec(node.name);
-            if (regExpExecArray) {
-              const level = Number(regExpExecArray[1]);
-              const text = view.state.sliceDoc(node.from, node.to).trim();
-              headerOutViewList.unshift([level, text]);
-            }
+        let offset = -10;
+        if (this.oldHeadings.length !== 0) {
+          offset = 10;
+        }
+        if (settings.stickyType === "prevToH1") {
+          if ((_a = this.stickyDom) == null ? void 0 : _a.clientHeight) {
+            offset = ((_b = this.stickyDom) == null ? void 0 : _b.clientHeight) - 16;
           }
-        });
+        }
+        let height = view.scrollDOM.scrollTop - distance + offset;
+        if (height > 0) {
+          const firstElementBlockInfo = view.elementAtHeight(height);
+          (0, import_language.syntaxTree)(view.state).iterate({
+            from: 0,
+            // 经测试，即使 form=0 ，下面的 iterate() 也会遍历到第一个 header，因此特殊处理一下
+            to: firstElementBlockInfo.from,
+            enter(node) {
+              let regExpExecArray = headingExp.exec(node.name);
+              if (regExpExecArray) {
+                const level = Number(regExpExecArray[1]);
+                const text = view.state.sliceDoc(node.from, node.to).trim();
+                headerOutViewList.unshift([level, text]);
+              }
+            }
+          });
+        }
         const type = settings.stickyType;
         let biggestLevel = Number.MAX_SAFE_INTEGER;
         for (let i = 0; i < headerOutViewList.length; i++) {
@@ -162,11 +174,11 @@ function HeadingPlugin(settings) {
 }
 
 // src/settings.ts
-var import_obsidian = require("obsidian");
+var import_obsidian2 = require("obsidian");
 var DEFAULT_SETTINGS = {
   stickyType: "prev"
 };
-var StickyHeadingSettingTab = class extends import_obsidian.PluginSettingTab {
+var StickyHeadingSettingTab = class extends import_obsidian2.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -175,7 +187,7 @@ var StickyHeadingSettingTab = class extends import_obsidian.PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
     containerEl.createEl("h2", { text: "Plugin Settings" });
-    new import_obsidian.Setting(containerEl).setName("Sticky Type").setDesc("prev: show prev heading; prevToH1: show prev headings until h1;").addDropdown((dropdown) => {
+    new import_obsidian2.Setting(containerEl).setName("Sticky Type").setDesc("prev: show prev heading; prevToH1: show prev headings until h1;").addDropdown((dropdown) => {
       dropdown.addOption("prev", "prev");
       dropdown.addOption("prevToH1", "prevToH1");
       dropdown.setValue(this.plugin.settings.stickyType);
@@ -194,12 +206,12 @@ var StickyHeadingSettingTab = class extends import_obsidian.PluginSettingTab {
 };
 
 // main.ts
-var StickyHeadingPlugin = class extends import_obsidian2.Plugin {
+var StickyHeadingPlugin = class extends import_obsidian3.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new StickyHeadingSettingTab(this.app, this));
     this.app.workspace.trigger("parse-style-settings");
-    this.registerEditorExtension([HeadingPlugin(this.settings)]);
+    this.registerEditorExtension([HeadingPlugin(this.settings, this.app)]);
   }
   onunload() {
   }

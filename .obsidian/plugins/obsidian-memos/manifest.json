@@ -1,8 +1,8 @@
 {
   "id": "obsidian-memos",
   "name": "Thino",
-  "description": "Capturing ideas and save them into daily notes.",
-  "version": "2.4.28",
+  "description": "Capturing ideas and save them into daily notes. (Closed source)",
+  "version": "2.4.39",
   "author": "Boninall",
   "authorUrl": "https://github.com/Quorafind/",
   "isDesktopOnly": false,

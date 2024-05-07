@@ -368,5 +368,13 @@
       ],
       "key": "I"
     }
+  ],
+  "various-complements:fallback-linkify": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "K"
+    }
   ]
 }

@@ -284,6 +284,6 @@
   "enableBibInEmbed": false,
   "enableBibInHoverPopover": false,
   "enableBibInCanvas": true,
-  "removeWhitespaceBetweenCJKChars": true,
+  "removeWhitespaceBetweenCJChars": true,
   "vim": true
 }
