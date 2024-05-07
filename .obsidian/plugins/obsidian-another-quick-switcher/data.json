@@ -8,6 +8,7 @@
   "showDirectoryAtNewLine": true,
   "showFullPathOfDirectory": false,
   "showAliasesOnTop": true,
+  "displayAliaseAsTitle": true,
   "showExistingFilesOnly": true,
   "hideGutterIcons": false,
   "hideHotkeyGuides": true,

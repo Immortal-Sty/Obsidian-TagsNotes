@@ -25,7 +25,7 @@
     },
     "insert-yaml-attributes": {
       "enabled": false,
-      "text-to-insert": "aliases: \ntags: "
+      "text-to-insert": "title:\naliases: \ntags: "
     },
     "move-tags-to-yaml": {
       "enabled": true,
@@ -38,7 +38,7 @@
     },
     "yaml-key-sort": {
       "enabled": true,
-      "yaml-key-priority-sort-order": "tags\naliases\nmocs\nctime\nmtime",
+      "yaml-key-priority-sort-order": "tags\ntitle\naliases\nmocs\nctime\nmtime",
       "priority-keys-at-start-of-yaml": true,
       "yaml-sort-order-for-other-keys": "Ascending Alphabetical"
     },
@@ -60,7 +60,8 @@
       "enabled": true,
       "preserve-existing-alias-section-style": true,
       "keep-alias-that-matches-the-filename": false,
-      "use-yaml-key-to-keep-track-of-old-filename-or-heading": true
+      "use-yaml-key-to-keep-track-of-old-filename-or-heading": true,
+      "alias-helper-key": "title"
     },
     "capitalize-headings": {
       "enabled": false,
@@ -212,7 +213,9 @@
       "enabled": false
     },
     "space-between-chinese-japanese-or-korean-and-english-or-numbers": {
-      "enabled": false
+      "enabled": false,
+      "english-symbols-punctuation-before": "-+;:'\"°%$)]",
+      "english-symbols-punctuation-after": "-+'\"([¥$"
     },
     "trailing-spaces": {
       "enabled": true,

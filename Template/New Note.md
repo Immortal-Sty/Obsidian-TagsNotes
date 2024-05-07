@@ -1,11 +1,14 @@
 ---
 tags:
-{{VALUE:Tags}}
+  "{ VALUE:Tags }": 
 aliases:
-  - {{VALUE:Note}}
-ctime: {{VALUE:Time}}
-mtime: {{VALUE:Time}}
-linter-yaml-title-alias: {{VALUE:Note}}
+  - "{ VALUE:Note }": 
+ctime:
+  "{ VALUE:Time }": 
+mtime:
+  "{ VALUE:Time }": 
+title:
+  "{ VALUE:Note }":
 ---
 
 # {{VALUE:Note}}

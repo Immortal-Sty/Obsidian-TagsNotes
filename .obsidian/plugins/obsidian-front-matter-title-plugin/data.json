@@ -3,7 +3,7 @@
   "templates": {
     "common": {
       "main": "aliases",
-      "fallback": "linter-yaml-title-alias"
+      "fallback": "title"
     }
   },
   "rules": {
