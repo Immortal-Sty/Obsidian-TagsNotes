@@ -10,7 +10,6 @@
   "tag-wrangler",
   "quickadd",
   "obsidian-relative-line-numbers",
-  "pdf-plus",
   "persistent-links",
   "mysnippets-plugin",
   "metaedit",
@@ -39,5 +38,6 @@
   "obsidian-front-matter-title-plugin",
   "tab-selector",
   "obsidian42-brat",
-  "minimap"
+  "minimap",
+  "pdf-plus"
 ]
