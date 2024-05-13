@@ -1,6 +1,0 @@
-/* ! 当前tab加上显著边框 */
-.is-focused .mod-active .workspace-tab-header.is-active {
-  border-top: 3px solid var(--color-accent) !important;
-  border-left: 1px solid var(--color-accent) !important;
-  border-right: 1px solid var(--color-accent) !important;
-}
