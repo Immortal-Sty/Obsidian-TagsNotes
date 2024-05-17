@@ -13,7 +13,6 @@
   "persistent-links",
   "mysnippets-plugin",
   "metaedit",
-  "obsidian-linter",
   "janitor",
   "obsidian-hover-editor",
   "obsidian-icon-shortcodes",
@@ -39,5 +38,7 @@
   "tab-selector",
   "obsidian42-brat",
   "minimap",
-  "pdf-plus"
+  "pdf-plus",
+  "obsidian-annotator",
+  "obsidian-linter"
 ]

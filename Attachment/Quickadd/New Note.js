@@ -12,17 +12,17 @@ module.exports = async (params) => {
     if (tagList) {
         for (let i of tagList) {
             if (first) {
-                params.variables["Tags"] = "  - " + i;
+                params.variables["myTags"] = "  - " + i;
                 first = false;
             } else {
-                params.variables["Tags"] += "\n  - " + i;
+                params.variables["myTags"] += "\n  - " + i;
             }
         }
     } else {
-        params.variables["Tags"] = "  - <% tp.file.cursor(0) %>";
+        params.variables["myTags"] = "  - <% tp.file.cursor(0) %>";
     }
     // params.variables["Tags"] = await getPropertyValue("tags", app.workspace.getActiveFile());
-    params.variables["Note"] = await inputPrompt("📕 Note Name");
-    params.variables["Time"] = window.moment().format("Y-MM-DDTHH:mm:ss");
-    params.variables["Date"] = window.moment().format("YMMDDHHmmssSSS");
+    params.variables["myNote"] = await inputPrompt("📕 Note Name");
+    params.variables["myTime"] = window.moment().format("Y-MM-DDTHH:mm:ss");
+    params.variables["myDate"] = window.moment().format("YMMDDHHmmssSSS");
 };

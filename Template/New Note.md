@@ -1,16 +1,13 @@
 ---
 tags:
-  "{ VALUE:Tags }": 
+{{VALUE:myTags}}
+title: {{VALUE:myNote}}
 aliases:
-  - "{ VALUE:Note }": 
-ctime:
-  "{ VALUE:Time }": 
-mtime:
-  "{ VALUE:Time }": 
-title:
-  "{ VALUE:Note }":
+  - {{VALUE:myNote}}
+ctime: {{VALUE:myTime}}
+mtime: {{VALUE:myTime}}
 ---
 
-# {{VALUE:Note}}
+# {{VALUE:myNote}}
 
 <% tp.file.cursor(1) %>

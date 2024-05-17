@@ -178,7 +178,7 @@
             "templatePath": "Template/New Note.md",
             "fileNameFormat": {
               "enabled": true,
-              "format": "{{VALUE:Date}}"
+              "format": "{{VALUE:myDate}}"
             },
             "folder": {
               "enabled": true,
