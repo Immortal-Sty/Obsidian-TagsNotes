@@ -92,6 +92,10 @@
         {
           "id": "typewriter-mode",
           "name": "Typewriter Mode"
+        },
+        {
+          "id": "obsidian-vimrc-support",
+          "name": "Vimrc Support"
         }
       ],
       "groupIds": [],
@@ -183,10 +187,6 @@
         {
           "id": "obsidian-version-history-diff",
           "name": "Version History Diff"
-        },
-        {
-          "id": "obsidian-vimrc-support",
-          "name": "Vimrc Support"
         },
         {
           "id": "cm-chs-patch",

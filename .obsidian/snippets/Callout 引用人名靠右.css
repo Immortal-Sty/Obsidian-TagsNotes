@@ -1,0 +1,12 @@
+/* 引用（最后一行）靠右 */
+.callout[data-callout-metadata*="cite"]>.callout-content>p:last-of-type,
+.callout[data-callout-metadata*="quote"]>.callout-content>p:last-of-type {
+    margin-right: 30px;
+    text-align: right;
+}
+
+/* 并添加引用符号前缀 */
+.callout[data-callout-metadata*="cite"]>.callout-content>p:last-of-type::before,
+.callout[data-callout-metadata*="quote"]>.callout-content>p:last-of-type::before {
+    content: "― ";
+}

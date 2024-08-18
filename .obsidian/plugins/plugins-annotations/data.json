@@ -319,6 +319,18 @@
     "virt-folder": {
       "anno": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。",
       "name": "VirtFolder"
+    },
+    "obsidian-plugin-groups": {
+      "anno": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
+      "name": "Plugin Groups"
+    },
+    "show-whitespace-cm6": {
+      "anno": "显示文本中的空白字符。",
+      "name": "Show Whitespace"
+    },
+    "tabs": {
+      "anno": "用代码块实现多标签样式。",
+      "name": "Tabs"
     }
   },
   "plugins_annotations_uuid": "B265C5B2-A6AD-4194-9E4C-C1327DB1EA18",
