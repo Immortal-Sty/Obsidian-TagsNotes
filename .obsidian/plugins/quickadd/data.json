@@ -146,6 +146,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "1aadc963-170f-42b4-8e87-9d17267587bb"
+    },
+    {
+      "id": "589fae9b-a7be-4192-ac67-3936d974fce6",
+      "name": "Open File in Browser",
+      "type": "Macro",
+      "command": true,
+      "macroId": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba"
     }
   ],
   "macros": [
@@ -313,14 +320,29 @@
         }
       ],
       "runOnStartup": false
+    },
+    {
+      "name": "Open File in Browser",
+      "id": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba",
+      "commands": [
+        {
+          "name": "Open File in Browser",
+          "type": "UserScript",
+          "id": "4bfb88ca-0903-4ecd-ad09-465c783d9648",
+          "path": "Attachment/Quickadd/Open File in Browser.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
     }
   ],
   "inputPrompt": "single-line",
   "devMode": false,
   "templateFolderPath": "Template",
   "announceUpdates": true,
-  "version": "1.8.1",
+  "version": "1.11.0",
   "disableOnlineFeatures": true,
+  "enableRibbonIcon": false,
   "ai": {
     "defaultModel": "Ask me",
     "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",

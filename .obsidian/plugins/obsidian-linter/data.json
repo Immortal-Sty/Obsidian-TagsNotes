@@ -272,6 +272,7 @@
     "Images",
     "Template"
   ],
+  "filesToIgnore": [],
   "linterLocale": "system-default",
   "logLevel": "ERROR",
   "lintCommands": [],

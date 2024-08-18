@@ -361,20 +361,26 @@
       "key": "F2"
     }
   ],
-  "tab-selector:open-tab-selector": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "I"
-    }
-  ],
   "various-complements:fallback-linkify": [
     {
       "modifiers": [
         "Mod"
       ],
       "key": "K"
+    }
+  ],
+  "typewriter-mode:isDimUnfocusedParagraphsEnabled": [
+    {
+      "modifiers": [],
+      "key": "F8"
+    }
+  ],
+  "break-page:insert-break-page": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "M"
     }
   ]
 }

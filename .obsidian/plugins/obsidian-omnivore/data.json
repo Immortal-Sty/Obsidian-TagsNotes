@@ -3,7 +3,7 @@
   "dateSavedFormat": "yyyy-MM-ddTHH:mm:ss",
   "apiKey": "1f73e3c9-27e5-4264-afec-dbbbcdb4df38",
   "filter": "ALL",
-  "syncAt": "2024-03-23T21:53:05",
+  "syncAt": "2024-08-10T00:38:57",
   "customQuery": "in:all",
   "template": "# {{{title}}}\n\n- [Read on Omnivore]({{{omnivoreUrl}}})；\n- [Read Original]({{{originalUrl}}})。\n\n{{{ content }}}",
   "highlightOrder": "LOCATION",
@@ -14,11 +14,19 @@
   "filename": "{{{title}}}",
   "filenameDateFormat": "yyyyMMddHHmmss",
   "attachmentFolder": "Images",
-  "version": "1.9.4",
+  "version": "1.10.4",
   "isSingleFile": false,
   "frequency": 0,
   "intervalId": 0,
   "frontMatterVariables": [],
   "frontMatterTemplate": "id: {{{id}}}\nctime: {{{dateSaved}}}\nmtime: {{{dateSaved}}}",
-  "syncOnStart": true
+  "syncOnStart": true,
+  "enableHighlightColorRender": false,
+  "highlightManagerId": "omni",
+  "highlightColorMapping": {
+    "yellow": "#fff3a3",
+    "red": "#ff5582",
+    "blue": "#adccff",
+    "green": "#bbfabb"
+  }
 }

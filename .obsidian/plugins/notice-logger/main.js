@@ -29,7 +29,9 @@ __export(main_exports, {
 module.exports = __toCommonJS(main_exports);
 var import_obsidian = require("obsidian");
 var DEFAULT_SETTINGS = {
-  prefix: ""
+  enableLogging: true,
+  prefix: "",
+  timestamp: "YYYY-MM-DD HH:mm:ss"
 };
 var NoticeLoggerPlugin = class extends import_obsidian.Plugin {
   constructor(app, manifest) {
@@ -38,6 +40,20 @@ var NoticeLoggerPlugin = class extends import_obsidian.Plugin {
   }
   async onload() {
     await this.loadSettings();
+    this.addCommand({
+      id: "enable-notice-logging",
+      name: "Enable notice logging",
+      callback: async () => {
+        this.enableLogging();
+      }
+    });
+    this.addCommand({
+      id: "disable-notice-logging",
+      name: "Disable notice logging",
+      callback: async () => {
+        this.disableLogging();
+      }
+    });
     const startObserving = (domNode, classToLookFor, settings) => {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach(function(mutation) {
@@ -54,9 +70,17 @@ var NoticeLoggerPlugin = class extends import_obsidian.Plugin {
           );
           if (elementAdded) {
             mutation.addedNodes.forEach((notice) => {
-              console.log(
-                settings.prefix !== "" ? settings.prefix + " " + notice.textContent : "" + notice.textContent
-              );
+              if (settings.enableLogging) {
+                let noticeLogItem = "";
+                if (settings.prefix !== "") {
+                  noticeLogItem += settings.prefix + " ";
+                }
+                if (settings.timestamp !== "") {
+                  noticeLogItem += "[" + (0, import_obsidian.moment)().format(settings.timestamp) + "] ";
+                }
+                noticeLogItem += notice.textContent;
+                console.log(noticeLogItem);
+              }
             });
           }
         });
@@ -81,6 +105,16 @@ var NoticeLoggerPlugin = class extends import_obsidian.Plugin {
     });
     console.log("Notice logger plugin unloaded");
   }
+  async enableLogging() {
+    this.settings.enableLogging = true;
+    await this.saveSettings();
+    new import_obsidian.Notice("Notice logging enabled");
+  }
+  async disableLogging() {
+    this.settings.enableLogging = false;
+    await this.saveSettings();
+    new import_obsidian.Notice("Notice logging disabled");
+  }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
   }
@@ -96,8 +130,30 @@ var NoticeLoggerSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Prefix").setDesc("Prepend console log lines with this string. (i.e. \u2705)").addText((text) => text.setPlaceholder("Enter your prefix").setValue(this.plugin.settings.prefix).onChange(async (value) => {
+    new import_obsidian.Setting(containerEl).setName("Enable logging").setDesc("").addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.enableLogging).onChange(async (newValue) => {
+        this.plugin.settings.enableLogging = newValue;
+        await this.plugin.saveSettings();
+      });
+    });
+    new import_obsidian.Setting(containerEl).setName("Prefix").setDesc("Prepend console log lines with this string. Leave blank to disable. (e.g. \u2705)").addText((text) => text.setPlaceholder("Enter your prefix").setValue(this.plugin.settings.prefix).onChange(async (value) => {
       this.plugin.settings.prefix = value;
+      await this.plugin.saveSettings();
+    }));
+    let descMomentFormat = document.createDocumentFragment();
+    descMomentFormat.append(
+      "Prepend console log lines with [timestamp]. Leave blank to disable.",
+      descMomentFormat.createEl("br"),
+      "Learn about available formatting tokens in the ",
+      descMomentFormat.createEl("a", {
+        href: "https://momentjs.com/docs/#/displaying/format/",
+        text: "moment.js documentation",
+        attr: { "aria-label": "https://momentjs.com/docs/#/displaying/format/", "data-tooltip-position": "top", "tabindex": "0" }
+      }),
+      "."
+    );
+    new import_obsidian.Setting(containerEl).setName("Timestamp").setDesc(descMomentFormat).addText((text) => text.setPlaceholder("YYYY-MM-DD HH:mm:ss").setValue(this.plugin.settings.timestamp).onChange(async (value) => {
+      this.plugin.settings.timestamp = value;
       await this.plugin.saveSettings();
     }));
   }

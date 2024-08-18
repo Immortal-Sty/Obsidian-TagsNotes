@@ -1,0 +1,28 @@
+{
+  "documents": {
+    "Notes/20240301233434899.md": {
+      "documentFormat": "sections",
+      "viewType": "markdown",
+      "activeSection": "1"
+    }
+  },
+  "hotkeys": {
+    "customHotkeys": {}
+  },
+  "view": {
+    "fontSize": 16,
+    "theme": {},
+    "cardWidth": 550,
+    "scrolling": {
+      "horizontalOffset": 0,
+      "verticalOffset": 0,
+      "horizontalScrollingMode": "keep-active-card-at-center"
+    },
+    "limitPreviewHeight": true,
+    "zoomLevel": 1
+  },
+  "general": {
+    "defaultDocumentFormat": "sections"
+  },
+  "backup": {}
+}

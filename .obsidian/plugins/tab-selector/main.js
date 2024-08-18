@@ -27,13 +27,89 @@ __export(main_exports, {
   default: () => TabSelector
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian3 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // src/settings.ts
+var import_obsidian2 = require("obsidian");
+
+// src/util.ts
 var import_obsidian = require("obsidian");
+
+// src/error.ts
+var KeySettingsError = class extends Error {
+  constructor(message, params) {
+    super(message);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, KeySettingsError);
+    }
+    this.name = "KeySettingsError";
+    console.warn(params);
+  }
+};
 
 // src/util.ts
 var STYLES_ID = "tab-selector-styles";
+var INVALID_SETTING = {
+  notOnlyOneHotkey: "Not only one hotkey.",
+  mismatchMainModifierKey: "Mismatch main modifier key.",
+  mismatchActionKey: "Mismatch action key.",
+  mismatchSubModifierKey: "Mismatch sub modifier key.",
+  useDuplicateModifierKey: "Use duplicate modifier key.",
+  useDuplicateActionKey: "Use duplicate action key."
+};
+var isValidSettings = (app, settings, isThrowError = true) => {
+  var _a;
+  const customKeys = (_a = app.hotkeyManager) == null ? void 0 : _a.customKeys;
+  const toPrevHotkeys = customKeys && customKeys["tab-selector:go-to-previous-tab"] || [];
+  const toNextHotkeys = customKeys && customKeys["tab-selector:go-to-next-tab"] || [];
+  const details = { settings, toPrevHotkeys, toNextHotkeys };
+  if (!toPrevHotkeys[0] || !toNextHotkeys[0] || toPrevHotkeys.length > 1 || toNextHotkeys.length > 1) {
+    if (isThrowError) {
+      throw new KeySettingsError(`Invalid settings: ${INVALID_SETTING.notOnlyOneHotkey}`, details);
+    }
+    return false;
+  }
+  const toPrevHotkey = toPrevHotkeys[0];
+  const toNextHotkey = toNextHotkeys[0];
+  const { mainModifierKey, subModifierKey, actionKey, reverseActionKey, howToNextTab } = settings;
+  const useSubModifier = howToNextTab === HOW_TO_NEXT_TAB.useSubModifierKey;
+  let errCase = "";
+  if (convertModifierKey(toPrevHotkey.modifiers[0]) !== mainModifierKey) {
+    errCase = errCase || INVALID_SETTING.mismatchMainModifierKey;
+  }
+  if (useSubModifier) {
+    if (toPrevHotkey.key !== actionKey || toNextHotkey.key !== actionKey) {
+      errCase = errCase || INVALID_SETTING.mismatchActionKey;
+    }
+    if (toNextHotkey.modifiers.filter((modifier) => convertModifierKey(modifier) === subModifierKey).length !== 1) {
+      errCase = errCase || INVALID_SETTING.mismatchSubModifierKey;
+    }
+    if (mainModifierKey === subModifierKey) {
+      errCase = errCase || INVALID_SETTING.useDuplicateModifierKey;
+    }
+  } else {
+    if (toPrevHotkey.key !== actionKey || toNextHotkey.key !== reverseActionKey) {
+      errCase = errCase || INVALID_SETTING.useDuplicateActionKey;
+    }
+  }
+  if (errCase && isThrowError) {
+    throw new KeySettingsError(`Invalid settings: ${errCase}`, details);
+  }
+  return !errCase;
+};
+var convertModifierKey = (key) => {
+  switch (key) {
+    case "Mod":
+      return import_obsidian.Platform.isMacOS || import_obsidian.Platform.isIosApp ? MODIFIER_KEY.meta : MODIFIER_KEY.ctrl;
+    case "Ctrl":
+      return MODIFIER_KEY.ctrl;
+    case "Meta":
+    case "Shift":
+    case "Alt":
+    default:
+      return key;
+  }
+};
 var deleteStyles = () => {
   const styleElm = document.getElementById(STYLES_ID);
   if (styleElm) {
@@ -59,77 +135,329 @@ var addNewStyle = (selector, style, sheet) => {
 };
 
 // src/settings.ts
+var MODIFIER_KEY = {
+  ctrl: "Control",
+  alt: "Alt",
+  meta: "Meta",
+  shift: "Shift"
+};
+var IS_APPLE = import_obsidian2.Platform.isMacOS || import_obsidian2.Platform.isIosApp;
+var DISPLAY_MODIFIER_KEY = {
+  ctrl: IS_APPLE ? "^" : "Ctrl",
+  alt: IS_APPLE ? "\u2325" : "Alt",
+  meta: IS_APPLE ? "\u2318" : "Win",
+  shift: IS_APPLE ? "\u21E7" : "Shift"
+};
+var ACTION_KEY = {
+  tab: "Tab",
+  arrowUp: "ArrowUp",
+  arrowDown: "ArrowDown",
+  arrowLeft: "ArrowLeft",
+  arrowRight: "ArrowRight"
+};
+var DISPLAY_ACTION_KEY = {
+  tab: "Tab",
+  arrowUp: "\u2191",
+  arrowDown: "\u2193",
+  arrowLeft: "\u2190",
+  arrowRight: "\u2192"
+};
+var HOW_TO_NEXT_TAB = {
+  useSubModifierKey: "useSubModifierKey",
+  useReverseActionKey: "useReverseActionKey"
+};
+var DISPLAY_HOW_TO_NEXT_TAB = {
+  useSubModifierKey: "Sub modifier key",
+  useReverseActionKey: "Reverse action key"
+};
+var SETTING_TYPE = {
+  goToPreviousNextTab: "goToPreviousNextTab",
+  openTabSelector: "openTabSelector",
+  showTabShortcuts: "showTabShortcuts",
+  searchTab: "searchTab"
+};
 var DEFAULT_SETTINGS = {
-  showAliases: false,
-  replaceToAliases: false,
-  showPaths: false,
-  showPaginationButtons: true,
-  showLegends: true,
-  focusColor: "#00b4e0",
-  characters: "asdfghjkl;"
+  [SETTING_TYPE.goToPreviousNextTab]: {
+    focusColor: "#00b4e0",
+    mainModifierKey: MODIFIER_KEY.ctrl,
+    subModifierKey: MODIFIER_KEY.shift,
+    actionKey: ACTION_KEY.tab,
+    reverseActionKey: ACTION_KEY.arrowLeft,
+    howToNextTab: HOW_TO_NEXT_TAB.useSubModifierKey
+  },
+  [SETTING_TYPE.openTabSelector]: {
+    showAliases: false,
+    replaceToAliases: false,
+    showPaths: false,
+    showPaginationButtons: true,
+    showLegends: true,
+    focusColor: "#00b4e0",
+    characters: "asdfghjkl;",
+    enableClose: true
+  },
+  [SETTING_TYPE.showTabShortcuts]: {
+    characters: "asdfghjkl;qwertyuiopzxcvbnm,./"
+  },
+  [SETTING_TYPE.searchTab]: {
+    showAliases: false,
+    includeAliases: false,
+    showPaths: false,
+    includePaths: false,
+    showLegends: true,
+    focusColor: "#00b4e0"
+  }
 };
 var CHAR_LENGTH = {
   min: 4,
   max: 10
 };
-var SettingTab = class extends import_obsidian.PluginSettingTab {
+var SettingTab = class extends import_obsidian2.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
+    this.isOpen = {
+      firstDetails: false,
+      secondDetails: false,
+      thirdDetails: false,
+      fourthDetails: false
+    };
     this.plugin = plugin;
   }
   display() {
     const { containerEl } = this;
     containerEl.empty();
+    containerEl.addClass("ts-settings");
     containerEl.createEl("h2").setText("Tab Selector - Settings");
-    new import_obsidian.Setting(containerEl).setName(`Show aliases`).setDesc(`When enabled, show file's aliases on button.`).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.showAliases).onChange(async (value) => {
-        this.plugin.settings.showAliases = value;
-        this.plugin.settings.replaceToAliases = false;
+    {
+      const detailsEl = containerEl.createEl("details", "", (el) => {
+        el.createEl("summary", "", (summaryEl) => {
+          summaryEl.setText('For "Go to previous/next tab" command');
+        });
+      });
+      if (this.isOpen.firstDetails) {
+        detailsEl.setAttr("open", true);
+      }
+      detailsEl.addEventListener("toggle", () => this.isOpen.firstDetails = detailsEl.open);
+      this.setForGoToPrevNextTabCommands(detailsEl);
+    }
+    {
+      const detailsEl = containerEl.createEl("details", "", (el) => {
+        el.createEl("summary", "", (summaryEl) => {
+          summaryEl.setText('For "Open tab selector" command');
+        });
+      });
+      if (this.isOpen.secondDetails) {
+        detailsEl.setAttr("open", true);
+      }
+      detailsEl.addEventListener("toggle", () => this.isOpen.secondDetails = detailsEl.open);
+      this.setForOpenTabSelectorCommand(detailsEl);
+    }
+    if (import_obsidian2.Platform.isDesktop || import_obsidian2.Platform.isTablet) {
+      {
+        const detailsEl = containerEl.createEl("details", "", (el) => {
+          el.createEl("summary", "", (summaryEl) => {
+            summaryEl.setText('For "Show tab shortcuts" command');
+          });
+        });
+        if (this.isOpen.thirdDetails) {
+          detailsEl.setAttr("open", true);
+        }
+        detailsEl.addEventListener("toggle", () => this.isOpen.thirdDetails = detailsEl.open);
+        this.setForShowTabShortcutCommand(detailsEl);
+      }
+    }
+    {
+      const detailsEl = containerEl.createEl("details", "", (el) => {
+        el.createEl("summary", "", (summaryEl) => {
+          summaryEl.setText('For "Search tabs" command');
+        });
+      });
+      if (this.isOpen.fourthDetails) {
+        detailsEl.setAttr("open", true);
+      }
+      detailsEl.addEventListener("toggle", () => this.isOpen.fourthDetails = detailsEl.open);
+      this.setForSearchTabCommand(detailsEl);
+    }
+  }
+  updateStyleSheet(isTeardown = false) {
+    deleteStyles();
+    if (isTeardown) {
+      return;
+    }
+    const { goToPreviousNextTab, openTabSelector, searchTab } = this.plugin.settings;
+    const { showAliases, replaceToAliases, showPaths, focusColor, characters } = openTabSelector;
+    const { focusColor: thFocusColor } = goToPreviousNextTab;
+    const { focusColor: tseFocusColor } = searchTab;
+    const aliasesHeight = showAliases && !replaceToAliases ? showPaths ? 12 : 8 : 0;
+    const pathHeight = showPaths ? 8 : 0;
+    const buttonHeight = 32 + aliasesHeight + pathHeight;
+    createStyles([
+      // 8 is margin of between buttons.
+      { selector: ".ts-buttons-view", property: "min-height", value: `${buttonHeight * characters.length + 8 * (characters.length - 1)}px` },
+      { selector: ".ts-leaf-name-btn:focus", property: "outline", value: `2px solid ${focusColor}` },
+      { selector: ".th-leaf-name-btn.is-focus", property: "outline", value: `2px solid ${thFocusColor}` },
+      { selector: ".tab-search-modal .suggestion-item.is-selected", property: "outline", value: `2px solid ${tseFocusColor}` }
+    ]);
+  }
+  setForGoToPrevNextTabCommands(detailsEl) {
+    const settingType = SETTING_TYPE.goToPreviousNextTab;
+    const settings = this.plugin.settings[settingType];
+    new import_obsidian2.Setting(detailsEl).setName("Color of button frame on focus").setDesc("Choose your favorite color.").addColorPicker(
+      (colorPicker) => colorPicker.setValue(settings.focusColor).onChange(async (value) => {
+        settings.focusColor = value;
+        await this.plugin.saveData(this.plugin.settings);
+        this.updateStyleSheet();
+      })
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.focusColor = DEFAULT_SETTINGS[settingType].focusColor;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Main modifier key").setDesc("Holding this key down keeps the modal open. When this key is released, it switches to the focused tab.").addDropdown(
+      (item) => item.addOptions(Object.keys(MODIFIER_KEY).reduce((obj, key) => (obj[key] = DISPLAY_MODIFIER_KEY[key], obj), {})).setValue(this.convertToKey(settings.mainModifierKey, MODIFIER_KEY)).onChange(async (value) => {
+        settings.mainModifierKey = this.convertToSettingValue(value, MODIFIER_KEY, DISPLAY_MODIFIER_KEY);
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.mainModifierKey = DEFAULT_SETTINGS[settingType].mainModifierKey;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Action key").setDesc("Press this key while holding down the Main modifier key moves to the previous tab.").addDropdown(
+      (item) => item.addOptions(Object.keys(ACTION_KEY).reduce((obj, key) => (obj[key] = DISPLAY_ACTION_KEY[key], obj), {})).setValue(this.convertToKey(settings.actionKey, ACTION_KEY)).onChange(async (value) => {
+        settings.actionKey = this.convertToSettingValue(value, ACTION_KEY, DISPLAY_ACTION_KEY);
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.actionKey = DEFAULT_SETTINGS[settingType].actionKey;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Choose how to go to the next tab").setDesc(`
+				When go to the next tab, if you want to use the same key as the Action key, choose \u201CSub modifier key\u201D.
+				If you want to use a different key from the Action key, choose \u201CReverse action key".
+			`).addDropdown(
+      (item) => item.addOptions(Object.keys(HOW_TO_NEXT_TAB).reduce((obj, key) => (obj[key] = DISPLAY_HOW_TO_NEXT_TAB[key], obj), {})).setValue(this.convertToKey(settings.howToNextTab, HOW_TO_NEXT_TAB)).onChange(async (value) => {
+        settings.howToNextTab = value;
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.howToNextTab = DEFAULT_SETTINGS[settingType].howToNextTab;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Sub modifier key").setDesc("Pressing the Action key while holding this key down moves to the next tab.").addDropdown(
+      (item) => item.addOptions(Object.keys(MODIFIER_KEY).reduce((obj, key) => (obj[key] = DISPLAY_MODIFIER_KEY[key], obj), {})).setValue(this.convertToKey(settings.subModifierKey, MODIFIER_KEY)).onChange(async (value) => {
+        settings.subModifierKey = this.convertToSettingValue(value, MODIFIER_KEY, DISPLAY_MODIFIER_KEY);
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    ).setDisabled(settings.howToNextTab !== HOW_TO_NEXT_TAB.useSubModifierKey).then((settingEl) => {
+      if (settings.howToNextTab === HOW_TO_NEXT_TAB.useSubModifierKey) {
+        const setDefaultValue = () => settings.subModifierKey = DEFAULT_SETTINGS[settingType].subModifierKey;
+        this.addResetButton(settingEl, setDefaultValue);
+      }
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Reverse action key").setDesc("Press this key while holding down the Main modifier key moves to the next tab.").addDropdown(
+      (item) => item.addOptions(Object.keys(ACTION_KEY).reduce((obj, key) => (obj[key] = DISPLAY_ACTION_KEY[key], obj), {})).setValue(this.convertToKey(settings.reverseActionKey, ACTION_KEY)).onChange(async (value) => {
+        settings.reverseActionKey = this.convertToSettingValue(value, ACTION_KEY, DISPLAY_ACTION_KEY);
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    ).setDisabled(settings.howToNextTab !== HOW_TO_NEXT_TAB.useReverseActionKey).then((settingEl) => {
+      if (settings.howToNextTab === HOW_TO_NEXT_TAB.useSubModifierKey) {
+        const setDefaultValue = () => settings.reverseActionKey = DEFAULT_SETTINGS[settingType].reverseActionKey;
+        this.addResetButton(settingEl, setDefaultValue);
+      }
+    });
+    detailsEl.createDiv("th-how-to-use", (el) => {
+      el.createDiv("th-settings-description", (divEl) => {
+        divEl.createSpan("th-description-title").setText("How to use");
+        divEl.createSpan("").setText("1. Configure the above settings.");
+        divEl.createSpan("").setText("2. Set the hotkeys to match for the following commands.");
+      });
+      const { mainModifierKey, subModifierKey, actionKey, reverseActionKey, howToNextTab } = settings;
+      const mainModifier = this.convertToDisplayText(mainModifierKey, MODIFIER_KEY, DISPLAY_MODIFIER_KEY);
+      const subModifier = this.convertToDisplayText(subModifierKey, MODIFIER_KEY, DISPLAY_MODIFIER_KEY);
+      const action = this.convertToDisplayText(actionKey, ACTION_KEY, DISPLAY_ACTION_KEY);
+      const reverseAction = this.convertToDisplayText(reverseActionKey, ACTION_KEY, DISPLAY_ACTION_KEY);
+      const useSubModifier = howToNextTab === HOW_TO_NEXT_TAB.useSubModifierKey;
+      el.createDiv("th-hotkey-preview", (divEl) => {
+        divEl.createSpan("th-hotkey-preview-label").setText('"Tab Selector: Go to next tab": ');
+        divEl.createSpan("th-hotkey-preview-value").setText((useSubModifier ? [mainModifier, subModifier, action] : [mainModifier, reverseAction]).join(IS_APPLE ? "" : " + "));
+      });
+      el.createDiv("th-hotkey-preview", (divEl) => {
+        divEl.createSpan("th-hotkey-preview-label").setText('"Tab Selector: Go to previous tab": ');
+        divEl.createSpan("th-hotkey-preview-value").setText([mainModifier, action].join(IS_APPLE ? "" : " + "));
+      });
+      el.createDiv("th-match-state", (divEl) => {
+        const isMatchKeys = isValidSettings(this.app, settings, false);
+        divEl.addClass(isMatchKeys ? "is-match" : "is-mismatch");
+        divEl.createSpan("th-match-icon", (spanEl) => (0, import_obsidian2.setIcon)(spanEl, isMatchKeys ? "check" : "x"));
+        divEl.createSpan("").setText(`Currently hotkeys ${isMatchKeys ? "match" : "mismatch"} the above commands.`);
+      });
+      el.createDiv("th-settings-caution", (divEl) => {
+        divEl.createSpan("th-settings-caution-title").setText("Caution");
+        divEl.createSpan("").setText(`
+					Don't use shortcut keys reserved by the OS.
+					OS shortcut keys take precedence and don't work properly.
+				`);
+      });
+    });
+  }
+  setForOpenTabSelectorCommand(detailsEl) {
+    const settingType = SETTING_TYPE.openTabSelector;
+    const settings = this.plugin.settings[settingType];
+    new import_obsidian2.Setting(detailsEl).setName(`Show aliases`).setDesc(`When enabled, show file's aliases on button.`).addToggle(
+      (toggle) => toggle.setValue(settings.showAliases).onChange(async (value) => {
+        settings.showAliases = value;
+        settings.replaceToAliases = false;
         await this.plugin.saveData(this.plugin.settings);
         this.updateStyleSheet();
         this.display();
       })
     );
-    new import_obsidian.Setting(containerEl).setName(`Replace the filename to aliases`).setDesc(`When enabled, if aliases is set the file, replace the filename to aliases.`).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.replaceToAliases).onChange(async (value) => {
-        this.plugin.settings.replaceToAliases = value;
+    new import_obsidian2.Setting(detailsEl).setName(`Replace the filename to aliases`).setDesc(`When enabled, if aliases is set the file, replace the filename to aliases.`).addToggle(
+      (toggle) => toggle.setValue(settings.replaceToAliases).onChange(async (value) => {
+        settings.replaceToAliases = value;
         await this.plugin.saveData(this.plugin.settings);
         this.updateStyleSheet();
       })
-    ).setDisabled(!this.plugin.settings.showAliases);
-    new import_obsidian.Setting(containerEl).setName(`Show paths`).setDesc(`When enabled, show file's paths on button.`).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.showPaths).onChange(async (value) => {
-        this.plugin.settings.showPaths = value;
+    ).setDisabled(!settings.showAliases);
+    new import_obsidian2.Setting(detailsEl).setName(`Show paths`).setDesc(`When enabled, show file's paths on button.`).addToggle(
+      (toggle) => toggle.setValue(settings.showPaths).onChange(async (value) => {
+        settings.showPaths = value;
         await this.plugin.saveData(this.plugin.settings);
         this.updateStyleSheet();
       })
     );
-    new import_obsidian.Setting(containerEl).setName(`Show pagination buttons`).setDesc("When enabled, show pagination buttons on modal.").addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.showPaginationButtons).onChange(async (value) => {
-        this.plugin.settings.showPaginationButtons = value;
+    new import_obsidian2.Setting(detailsEl).setName(`Show pagination buttons`).setDesc("When enabled, show pagination buttons on modal.").addToggle(
+      (toggle) => toggle.setValue(settings.showPaginationButtons).onChange(async (value) => {
+        settings.showPaginationButtons = value;
         await this.plugin.saveData(this.plugin.settings);
       })
     );
-    new import_obsidian.Setting(containerEl).setName(`Show legends`).setDesc("When enabled, show legends on modal.").addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.showLegends).onChange(async (value) => {
-        this.plugin.settings.showLegends = value;
+    new import_obsidian2.Setting(detailsEl).setName(`Show legends`).setDesc("When enabled, show legends on modal.").addToggle(
+      (toggle) => toggle.setValue(settings.showLegends).onChange(async (value) => {
+        settings.showLegends = value;
         await this.plugin.saveData(this.plugin.settings);
       })
     );
-    new import_obsidian.Setting(containerEl).setName("Color of button frame on focus").setDesc("Choice your favorite color.").addColorPicker(
-      (colorPicker) => colorPicker.setValue(this.plugin.settings.focusColor).onChange(async (value) => {
-        this.plugin.settings.focusColor = value;
+    new import_obsidian2.Setting(detailsEl).setName("Color of button frame on focus").setDesc("Choice your favorite color.").addColorPicker(
+      (colorPicker) => colorPicker.setValue(settings.focusColor).onChange(async (value) => {
+        settings.focusColor = value;
         await this.plugin.saveData(this.plugin.settings);
         this.updateStyleSheet();
       })
-    ).then((settingEl) => this.addResetButton(settingEl, "focusColor"));
-    new import_obsidian.Setting(containerEl).setName("Characters used for button hints").setDesc(`Enter ${CHAR_LENGTH.min}~${CHAR_LENGTH.max} non-duplicate alphanumeric characters or symbols.`).addText((text) => {
-      let orgCharacters = this.plugin.settings.characters;
-      const textComponent = text.setPlaceholder("Enter characters").setValue(this.plugin.settings.characters).onChange(async (value) => {
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.focusColor = DEFAULT_SETTINGS[settingType].focusColor;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName("Characters used for button hints").setDesc(`Enter ${CHAR_LENGTH.min}~${CHAR_LENGTH.max} non-duplicate alphanumeric characters or symbols.`).addText((text) => {
+      let orgCharacters = settings.characters;
+      const textComponent = text.setPlaceholder("Enter characters").setValue(settings.characters).onChange(async (value) => {
         const { inputEl } = textComponent;
         if (!this.isDuplicateChars([...value]) && inputEl.validity.valid) {
           inputEl.removeClass("ts-setting-is-invalid");
-          this.plugin.settings.characters = value;
+          settings.characters = value;
           orgCharacters = value;
           await this.plugin.saveSettings();
         } else {
@@ -139,7 +467,7 @@ var SettingTab = class extends import_obsidian.PluginSettingTab {
       });
       textComponent.inputEl.addEventListener("blur", () => {
         if (this.isDuplicateChars([...textComponent.inputEl.value]) || !textComponent.inputEl.validity.valid) {
-          this.plugin.settings.characters = orgCharacters;
+          settings.characters = orgCharacters;
         }
       });
       textComponent.inputEl.setAttrs({
@@ -148,30 +476,112 @@ var SettingTab = class extends import_obsidian.PluginSettingTab {
         pattern: `[!-~]{${CHAR_LENGTH.min},${CHAR_LENGTH.max}}`
       });
       return textComponent;
-    }).then((settingEl) => this.addResetButton(settingEl, "characters"));
+    }).then((settingEl) => {
+      const setDefaultValue = () => settings.characters = DEFAULT_SETTINGS[settingType].characters;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+    new import_obsidian2.Setting(detailsEl).setName(`Enable tabs close`).setDesc("When enabled, the operation of closing tabs is enabled.").addToggle(
+      (toggle) => toggle.setValue(settings.enableClose).onChange(async (value) => {
+        settings.enableClose = value;
+        await this.plugin.saveData(this.plugin.settings);
+      })
+    );
   }
-  updateStyleSheet(isTeardown = false) {
-    deleteStyles();
-    if (isTeardown) {
-      return;
-    }
-    const { showAliases, replaceToAliases, showPaths, focusColor, characters } = this.plugin.settings;
-    const aliasesHeight = showAliases && !replaceToAliases ? showPaths ? 14 : 10 : 0;
-    const pathHeight = showPaths ? 10 : 0;
-    const buttonHeight = 32 + aliasesHeight + pathHeight;
-    createStyles([
-      // 8 is margin of between buttons.
-      { selector: ".ts-buttons-view", property: "min-height", value: `${buttonHeight * characters.length + 8 * (characters.length - 1)}px` },
-      { selector: ".ts-leaf-name-btn:focus", property: "outline", value: `2px solid ${focusColor}` }
-    ]);
+  setForShowTabShortcutCommand(detailsEl) {
+    const settingType = SETTING_TYPE.showTabShortcuts;
+    const settings = this.plugin.settings[settingType];
+    new import_obsidian2.Setting(detailsEl).setName("Characters used for shortcut hints").setDesc(`Enter non-duplicate alphanumeric characters or symbols.`).addText((text) => {
+      let orgCharacters = settings.characters;
+      const textComponent = text.setPlaceholder("Enter characters").setValue(settings.characters).onChange(async (value) => {
+        const { inputEl } = textComponent;
+        if (!this.isDuplicateChars([...value]) && inputEl.validity.valid) {
+          inputEl.removeClass("ts-setting-is-invalid");
+          settings.characters = value;
+          orgCharacters = value;
+          await this.plugin.saveSettings();
+        } else {
+          inputEl.addClass("ts-setting-is-invalid");
+        }
+        this.updateStyleSheet();
+      });
+      textComponent.inputEl.addEventListener("blur", () => {
+        if (this.isDuplicateChars([...textComponent.inputEl.value]) || !textComponent.inputEl.validity.valid) {
+          settings.characters = orgCharacters;
+        }
+      });
+      textComponent.inputEl.setAttrs({
+        required: true,
+        pattern: `[!-~]{1,}`
+      });
+      return textComponent;
+    }).then((settingEl) => {
+      const setDefaultValue = () => settings.characters = DEFAULT_SETTINGS[settingType].characters;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
+  }
+  setForSearchTabCommand(detailsEl) {
+    const settingType = SETTING_TYPE.searchTab;
+    const settings = this.plugin.settings[settingType];
+    new import_obsidian2.Setting(detailsEl).setName(`Show aliases`).setDesc(`When enabled, show file's aliases on list item.`).addToggle(
+      (toggle) => toggle.setValue(settings.showAliases).onChange(async (value) => {
+        settings.showAliases = value;
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    );
+    new import_obsidian2.Setting(detailsEl).setDisabled(!settings.showAliases).setName(`Include aliases in the search`).setDesc(`When enabled, include aliases in the search. This setting is valid when "Show aliases" is enabled.`).addToggle(
+      (toggle) => toggle.setValue(settings.includeAliases).onChange(async (value) => {
+        settings.includeAliases = value;
+        await this.plugin.saveData(this.plugin.settings);
+      })
+    );
+    new import_obsidian2.Setting(detailsEl).setName(`Show paths`).setDesc(`When enabled, show file's paths on list item.`).addToggle(
+      (toggle) => toggle.setValue(settings.showPaths).onChange(async (value) => {
+        settings.showPaths = value;
+        await this.plugin.saveData(this.plugin.settings);
+        this.display();
+      })
+    );
+    new import_obsidian2.Setting(detailsEl).setDisabled(!settings.showPaths).setName(`Include paths in the search`).setDesc(`When enabled, include paths in the search. This setting is valid when "Show paths" is enabled.`).addToggle(
+      (toggle) => toggle.setValue(settings.includePaths).onChange(async (value) => {
+        settings.includePaths = value;
+        await this.plugin.saveData(this.plugin.settings);
+      })
+    );
+    new import_obsidian2.Setting(detailsEl).setName(`Show legends`).setDesc("When enabled, show legends on modal.").addToggle(
+      (toggle) => toggle.setValue(settings.showLegends).onChange(async (value) => {
+        settings.showLegends = value;
+        await this.plugin.saveData(this.plugin.settings);
+      })
+    );
+    new import_obsidian2.Setting(detailsEl).setName("Color of button frame on focus").setDesc("Choice your favorite color.").addColorPicker(
+      (colorPicker) => colorPicker.setValue(settings.focusColor).onChange(async (value) => {
+        settings.focusColor = value;
+        await this.plugin.saveData(this.plugin.settings);
+        this.updateStyleSheet();
+      })
+    ).then((settingEl) => {
+      const setDefaultValue = () => settings.focusColor = DEFAULT_SETTINGS[settingType].focusColor;
+      this.addResetButton(settingEl, setDefaultValue);
+    });
   }
   isDuplicateChars(chars) {
     return chars.some((char, idx) => chars.slice(idx + 1).includes(char));
   }
-  addResetButton(settingEl, settingKey, refreshView = true) {
+  convertToKey(value, valueTexts) {
+    const modifier = Object.entries(valueTexts).find(([, val]) => val === value);
+    return modifier ? modifier[0] : "";
+  }
+  convertToSettingValue(value, valueTexts, displayTexts) {
+    const key = Object.keys(displayTexts).find((key2) => key2 === value);
+    return key ? valueTexts[key] : "";
+  }
+  convertToDisplayText(value, valueTexts, displayTexts) {
+    return displayTexts[this.convertToKey(value, valueTexts)];
+  }
+  addResetButton(settingEl, setDefaultValue, refreshView = true) {
     settingEl.addExtraButton((button) => button.setIcon("reset").setTooltip("Reset to default").onClick(async () => {
-      const settingValue = DEFAULT_SETTINGS[settingKey];
-      this.plugin.settings[settingKey] = settingValue;
+      setDefaultValue();
       await this.plugin.saveSettings();
       this.updateStyleSheet();
       if (refreshView) {
@@ -181,32 +591,50 @@ var SettingTab = class extends import_obsidian.PluginSettingTab {
   }
 };
 
-// src/modal.ts
-var import_obsidian2 = require("obsidian");
+// src/tab-selector-modal.ts
+var import_obsidian3 = require("obsidian");
 var UP_KEY = "ArrowUp";
 var DOWN_KEY = "ArrowDown";
 var LEFT_KEY = "ArrowLeft";
 var RIGHT_KEY = "ArrowRight";
+var BACKSPACE_KEY = "Backspace";
+var DELETE_KEY = "Delete";
 var FOOTER_ITEMS = [
-  { keys: "\u2191 / \u2193", description: "Move focus" },
-  { keys: "\u2190 / \u2192", description: "Switch pages" },
-  { keys: "Enter / Space", description: "Switch to focused tab" },
-  { keys: "", description: "Quick switch tab" }
+  { keys: "\u2191 | \u2193", description: "Move focus" },
+  { keys: "\u2190 | \u2192", description: "Switch pages" },
+  { keys: "Enter | Space", description: "Switch to focused tab" },
+  { keys: "BS | Delete", description: "Close focused tab" },
+  { keys: "", description: "Quickly switch tab" },
+  { keys: "", description: "Quickly close tab", modifier: true }
 ];
-var TabSelectorModal = class extends import_obsidian2.Modal {
+var TabSelectorModal = class extends import_obsidian3.Modal {
   constructor(app, settings, leaves) {
     super(app);
     this.leaves = [];
     this.chars = [];
-    this.buttonMap = /* @__PURE__ */ new Map();
+    this.leafButtonMap = /* @__PURE__ */ new Map();
+    this.closeButtonMap = /* @__PURE__ */ new Map();
     this.focusPosition = 0;
     this.pagePosition = 0;
     this.settings = settings;
-    this.leaves = leaves;
-    this.chars = [...this.settings.characters];
+    this.leaves = leaves.map((leaf) => {
+      var _a, _b;
+      leaf.name = leaf.getDisplayText();
+      const props = ((_b = (_a = leaf.view) == null ? void 0 : _a.metadataEditor) == null ? void 0 : _b.properties) || [];
+      leaf.aliases = props.filter((prop) => prop.key === "aliases").flatMap((prop) => prop.value).filter((value) => value != null);
+      const { file } = leaf.getViewState().state;
+      const fullPath = typeof file === "string" ? file.split(leaf.getDisplayText())[0] || "/" : "-";
+      const splitPaths = fullPath.split("/").map((path) => path.length > 20 ? `${path.slice(0, 20)}...` : path);
+      leaf.path = splitPaths.length > 3 ? `.../${splitPaths.at(-3)}/${splitPaths.at(-2)}/` : splitPaths.join("/");
+      return leaf;
+    });
+    this.chars = [...this.modalSettings.characters];
   }
   get currentLeaves() {
     return this.leaves.slice(0 + this.pagePosition * this.chars.length, this.chars.length + this.pagePosition * this.chars.length);
+  }
+  get modalSettings() {
+    return this.settings.openTabSelector;
   }
   onOpen() {
     this.modalEl.addClasses(["tab-selector-modal", "ts-modal"]);
@@ -238,34 +666,43 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
         const shortcutBtnEl = el.createEl("button", { text: this.chars.at(idx) });
         shortcutBtnEl.setAttr("tabIndex", -1);
         shortcutBtnEl.addClass("ts-shortcut-btn");
-        shortcutBtnEl.addEventListener("click", () => this.clickLeafButton(leaf));
+        shortcutBtnEl.addEventListener("click", () => this.clickLeafButton(leaf, shortcutBtnEl));
         const itemBtnEl = el.createEl("button");
         itemBtnEl.addClass("ts-leaf-name-btn");
-        itemBtnEl.addEventListener("click", () => this.clickLeafButton(leaf));
+        itemBtnEl.addEventListener("click", () => this.clickLeafButton(leaf, itemBtnEl));
         const itemNameEl = itemBtnEl.createSpan("ts-leaf-name");
-        itemNameEl.setText(leaf.getDisplayText());
+        itemNameEl.setText(leaf.name || "");
         this.reflectOptions(leaf, el, itemBtnEl, itemNameEl);
-        this.buttonMap.set(leaf.id || "", itemBtnEl);
+        this.leafButtonMap.set(leaf.id || "", itemBtnEl);
+        if (this.modalSettings.enableClose) {
+          const closeBtnEl = el.createEl("button");
+          (0, import_obsidian3.setIcon)(closeBtnEl, "x");
+          closeBtnEl.setAttr("tabIndex", -1);
+          closeBtnEl.addClass("ts-close-btn");
+          closeBtnEl.addEventListener("click", () => this.clickCloseLeafButton(leaf, el));
+          this.closeButtonMap.set(leaf.id || "", closeBtnEl);
+          el.addClass("ts-leaf-row-deletable");
+          if (leaf.deleted) {
+            el.addClass("deleted");
+          }
+        }
       });
     });
-    this.buttonMap.get(((_a = this.currentLeaves.at(0)) == null ? void 0 : _a.id) || "").focus();
+    this.leafButtonMap.get(((_a = this.currentLeaves.at(0)) == null ? void 0 : _a.id) || "").focus();
     this.updatePageCount();
   }
   reflectOptions(leaf, el, itemBtnEl, itemNameEl) {
-    var _a, _b;
-    if (this.settings.showAliases && !this.settings.replaceToAliases || this.settings.showPaths) {
+    if (this.modalSettings.showAliases && !this.modalSettings.replaceToAliases || this.modalSettings.showPaths) {
       el.addClass("ts-leaf-row-added-options");
     }
-    if (this.settings.showAliases) {
-      const props = ((_b = (_a = leaf.view) == null ? void 0 : _a.metadataEditor) == null ? void 0 : _b.properties) || [];
-      const aliases = props.filter((prop) => prop.key === "aliases").flatMap((prop) => prop.value).filter((value) => value != null);
-      if (this.settings.replaceToAliases) {
-        this.replaceLeafName(aliases, itemBtnEl, itemNameEl);
+    if (this.modalSettings.showAliases) {
+      if (this.modalSettings.replaceToAliases) {
+        this.replaceLeafName(leaf.aliases || [], itemBtnEl, itemNameEl);
       } else {
-        this.addAliasesEl(aliases, itemBtnEl);
+        this.addAliasesEl(leaf.aliases || [], itemBtnEl);
       }
     }
-    if (this.settings.showPaths) {
+    if (this.modalSettings.showPaths) {
       this.addPathEl(leaf, itemBtnEl);
     }
   }
@@ -273,27 +710,23 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
     if (aliases.length) {
       itemNameEl.detach();
       const wrapperEl = itemBtnEl.createDiv("ts-option-wrapper");
-      (0, import_obsidian2.setIcon)(wrapperEl, "corner-up-right");
+      (0, import_obsidian3.setIcon)(wrapperEl, "corner-up-right");
       wrapperEl.createSpan("ts-leaf-alias").setText(aliases.join(" | "));
     }
   }
   addAliasesEl(aliases, itemBtnEl) {
     const wrapperEl = itemBtnEl.createDiv("ts-option-wrapper");
-    (0, import_obsidian2.setIcon)(wrapperEl, "corner-up-right");
+    (0, import_obsidian3.setIcon)(wrapperEl, "corner-up-right");
     wrapperEl.createEl("small").setText(aliases.join(" | "));
   }
   addPathEl(leaf, itemBtnEl) {
     const wrapperEl = itemBtnEl.createDiv("ts-option-wrapper");
-    (0, import_obsidian2.setIcon)(wrapperEl, "folder-closed");
-    const { file } = leaf.getViewState().state;
-    const fullPath = typeof file === "string" ? file.split(leaf.getDisplayText())[0] || "/" : "-";
-    const splitPaths = fullPath.split("/").map((path) => path.length > 20 ? `${path.slice(0, 20)}...` : path);
-    const displayPath = splitPaths.length > 3 ? `.../${splitPaths.at(-3)}/${splitPaths.at(-2)}/` : splitPaths.join("/");
-    wrapperEl.createEl("small").setText(displayPath);
+    (0, import_obsidian3.setIcon)(wrapperEl, "folder-closed");
+    wrapperEl.createEl("small").setText(leaf.path || "");
   }
   generateFooter(contentEl) {
     contentEl.createDiv("ts-footer", (el) => {
-      if (this.settings.showPaginationButtons && this.leaves.length > this.chars.length) {
+      if (this.modalSettings.showPaginationButtons && this.leaves.length > this.chars.length) {
         el.createDiv("ts-page-nav", (navEl) => {
           const prevBtnEl = navEl.createEl("button", { text: "\u2190" });
           prevBtnEl.setAttr("tabIndex", -1);
@@ -305,10 +738,14 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
           nextBtnEl.addEventListener("click", () => this.keyupArrowKeys(RIGHT_KEY));
         });
       }
-      if (this.settings.showLegends) {
+      if (this.modalSettings.showLegends) {
         FOOTER_ITEMS.forEach((item) => {
+          if (item.modifier && !this.modalSettings.enableClose) {
+            return;
+          }
           el.createDiv("ts-legends", (el2) => {
-            el2.createSpan("ts-keys").setText(item.keys || `${this.chars.slice(0, 2).join(" / ")} / ... / ${this.chars.slice(-2).join(" / ")}`);
+            const text = item.keys || (item.modifier ? `Ctrl + ${this.chars.slice(0, 2).join(" | ")} | ... | ${this.chars.slice(-2).join(" | ")}` : `${this.chars.slice(0, 2).join(" | ")} | ... | ${this.chars.slice(-2).join(" | ")}`);
+            el2.createSpan("ts-keys").setText(text);
             el2.createSpan("ts-description").setText(item.description);
           });
         });
@@ -318,17 +755,36 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
   updatePageCount() {
     this.pageCounterEl.setText(`${this.pagePosition + 1}`);
   }
-  clickLeafButton(leaf) {
+  clickLeafButton(leaf, itemBtnEl) {
+    if (itemBtnEl.classList.contains("deleted")) {
+      return;
+    }
     this.close();
     this.app.workspace.setActiveLeaf(leaf);
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView);
     if (view) {
       view.editor.focus();
     }
   }
+  clickCloseLeafButton(leaf, divEl) {
+    if (leaf.deleted) {
+      return;
+    }
+    divEl.addClass("deleted");
+    leaf.deleted = true;
+    leaf.detach();
+    const idx = this.currentLeaves.findIndex(({ id }) => id === leaf.id);
+    this.focusPosition = idx >= 0 ? idx : 0;
+    this.leafButtonMap.get((leaf == null ? void 0 : leaf.id) || "").focus();
+  }
   handlingKeyupEvent(ev) {
     if (this.chars.includes(ev.key)) {
-      this.keyupShortcutKeys(ev.key);
+      this.keyupShortcutKeys(ev.key, ev.ctrlKey);
+      ev.preventDefault();
+      return;
+    }
+    if ([BACKSPACE_KEY, DELETE_KEY].includes(ev.key)) {
+      this.keyUpCloseKeys();
       ev.preventDefault();
       return;
     }
@@ -338,29 +794,41 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
       return;
     }
   }
-  keyupShortcutKeys(key) {
+  keyupShortcutKeys(key, isModifier) {
     var _a, _b;
     const idx = this.chars.indexOf(key);
-    (_b = this.buttonMap.get(((_a = this.currentLeaves.at(idx)) == null ? void 0 : _a.id) || "")) == null ? void 0 : _b.click();
+    if (isModifier) {
+      this.keyUpCloseKeys(idx);
+    } else {
+      (_b = this.leafButtonMap.get(((_a = this.currentLeaves.at(idx)) == null ? void 0 : _a.id) || "")) == null ? void 0 : _b.click();
+    }
+  }
+  keyUpCloseKeys(index) {
+    var _a, _b;
+    if (index == null && !this.leaves.some((leaf) => this.leafButtonMap.get(leaf.id || "") === document.activeElement)) {
+      return;
+    }
+    const idx = index != null ? index : this.focusPosition;
+    (_b = this.closeButtonMap.get(((_a = this.currentLeaves.at(idx)) == null ? void 0 : _a.id) || "")) == null ? void 0 : _b.click();
   }
   keyupArrowKeys(key) {
     var _a, _b;
     switch (key) {
       case UP_KEY:
         if (this.focusPosition === 0) {
-          this.buttonMap.get(((_a = this.currentLeaves.at(-1)) == null ? void 0 : _a.id) || "").focus();
+          this.leafButtonMap.get(((_a = this.currentLeaves.at(-1)) == null ? void 0 : _a.id) || "").focus();
           this.focusPosition = this.currentLeaves.length - 1;
         } else {
-          this.buttonMap.get(this.currentLeaves[this.focusPosition - 1].id || "").focus();
+          this.leafButtonMap.get(this.currentLeaves[this.focusPosition - 1].id || "").focus();
           this.focusPosition -= 1;
         }
         break;
       case DOWN_KEY:
         if (this.focusPosition === this.currentLeaves.length - 1) {
-          this.buttonMap.get(((_b = this.currentLeaves.at(0)) == null ? void 0 : _b.id) || "").focus();
+          this.leafButtonMap.get(((_b = this.currentLeaves.at(0)) == null ? void 0 : _b.id) || "").focus();
           this.focusPosition = 0;
         } else {
-          this.buttonMap.get(this.currentLeaves[this.focusPosition + 1].id || "").focus();
+          this.leafButtonMap.get(this.currentLeaves[this.focusPosition + 1].id || "").focus();
           this.focusPosition += 1;
         }
         break;
@@ -397,8 +865,378 @@ var TabSelectorModal = class extends import_obsidian2.Modal {
   }
 };
 
+// src/tab-history-modal.ts
+var import_obsidian4 = require("obsidian");
+var compareActiveTime = (a, b) => {
+  if (a.activeTime == null || b.activeTime == null) {
+    return 0;
+  }
+  return a.activeTime > b.activeTime ? -1 : 1;
+};
+var TabHistoryModal = class extends import_obsidian4.Modal {
+  constructor(app, settings, leaves, isPrevCommand) {
+    super(app);
+    this.leaves = [];
+    this.leafButtonMap = /* @__PURE__ */ new Map();
+    this.closeButtonMap = /* @__PURE__ */ new Map();
+    this.focusPosition = 0;
+    this.isEnabled = false;
+    this.isPrevCommand = true;
+    this.eventListenerFunc = {
+      keydown: () => {
+      },
+      keyup: () => {
+      }
+    };
+    this.settings = settings;
+    try {
+      this.isEnabled = isValidSettings(app, this.modalSettings);
+    } catch (e) {
+      console.error(e);
+    }
+    this.isPrevCommand = isPrevCommand;
+    this.leaves = leaves.map((leaf) => {
+      leaf.name = leaf.getDisplayText();
+      return leaf;
+    }).sort(compareActiveTime);
+    this.eventListenerFunc.keydown = this.keydown.bind(this);
+    window.addEventListener("keydown", this.eventListenerFunc.keydown);
+    this.eventListenerFunc.keyup = this.keyup.bind(this);
+    window.addEventListener("keyup", this.eventListenerFunc.keyup);
+  }
+  get modalSettings() {
+    return this.settings.goToPreviousNextTab;
+  }
+  onOpen() {
+    if (!this.isEnabled) {
+      new import_obsidian4.Notice('"Tab Selector" plugin has incorrect settings. Please review the [For "Go to previous/next tab" command] settings.', 0);
+      this.close();
+      return;
+    }
+    this.modalEl.addClasses(["tab-history-modal", "th-modal"]);
+    const buttonsViewEl = this.contentEl.createDiv("th-leaves");
+    this.generateButtons(buttonsViewEl, this.leaves);
+    this.isPrevCommand ? this.focusToPreviousTab() : this.focusToNextTab();
+  }
+  onClose() {
+    window.removeEventListener("keydown", this.eventListenerFunc.keydown);
+    window.removeEventListener("keyup", this.eventListenerFunc.keyup);
+    this.contentEl.empty();
+  }
+  generateButtons(contentEl, leaves) {
+    leaves.forEach((leaf) => {
+      contentEl.createDiv("th-leaf-row", (el) => {
+        const leafBtnEl = el.createEl("button");
+        leafBtnEl.addClass("th-leaf-name-btn");
+        leafBtnEl.addEventListener("mouseup", (ev) => (ev.preventDefault(), this.switchToFocusedTab(leaf)));
+        leafBtnEl.addEventListener("touchend", (ev) => (ev.preventDefault(), this.switchToFocusedTab(leaf)));
+        const itemNameEl = leafBtnEl.createSpan("th-leaf-name");
+        itemNameEl.setText(leaf.name || "");
+        this.leafButtonMap.set(leaf.id || "", leafBtnEl);
+        const closeBtnEl = leafBtnEl.createEl("button");
+        (0, import_obsidian4.setIcon)(closeBtnEl, "x");
+        closeBtnEl.setAttr("tabIndex", -1);
+        closeBtnEl.addClass("th-close-btn");
+        closeBtnEl.addEventListener("mouseup", (ev) => (ev.stopPropagation(), this.clickCloseLeafButton(leaf, el)));
+        closeBtnEl.addEventListener("touchend", (ev) => (ev.stopPropagation(), this.clickCloseLeafButton(leaf, el)));
+        this.closeButtonMap.set(leaf.id || "", closeBtnEl);
+      });
+    });
+  }
+  keydown(ev) {
+    this.moveFocus(ev);
+  }
+  keyup(ev) {
+    if (ev.key === this.modalSettings.mainModifierKey) {
+      const leaf = this.leaves[this.focusPosition];
+      this.switchToFocusedTab(leaf);
+    }
+  }
+  moveFocus(ev) {
+    if (this.modalSettings.howToNextTab === HOW_TO_NEXT_TAB.useSubModifierKey) {
+      if (ev.key === this.modalSettings.actionKey) {
+        if (this.isHoldDownSubModifierKey(ev, this.modalSettings.subModifierKey)) {
+          this.focusToNextTab();
+        } else {
+          this.focusToPreviousTab();
+        }
+      }
+    }
+    if (this.modalSettings.howToNextTab === HOW_TO_NEXT_TAB.useReverseActionKey) {
+      if (ev.key === this.modalSettings.reverseActionKey) {
+        this.focusToNextTab();
+      }
+      if (ev.key === this.modalSettings.actionKey) {
+        this.focusToPreviousTab();
+      }
+    }
+  }
+  isHoldDownSubModifierKey(ev, subModifierKey) {
+    switch (subModifierKey) {
+      case MODIFIER_KEY.ctrl:
+        return ev.ctrlKey;
+      case MODIFIER_KEY.alt:
+        return ev.altKey;
+      case MODIFIER_KEY.meta:
+        return ev.metaKey;
+      case MODIFIER_KEY.shift:
+        return ev.shiftKey;
+      default:
+        return false;
+    }
+  }
+  focusToNextTab() {
+    var _a;
+    if (this.focusPosition === 0) {
+      this.leafButtonMap.get(((_a = this.leaves.at(-1)) == null ? void 0 : _a.id) || "").focus();
+      this.focusPosition = this.leaves.length - 1;
+    } else {
+      this.leafButtonMap.get(this.leaves[this.focusPosition - 1].id || "").focus();
+      this.focusPosition -= 1;
+    }
+    this.addMarkOfFocus();
+  }
+  focusToPreviousTab() {
+    var _a;
+    if (this.focusPosition === this.leaves.length - 1) {
+      this.leafButtonMap.get(((_a = this.leaves.at(0)) == null ? void 0 : _a.id) || "").focus();
+      this.focusPosition = 0;
+    } else {
+      this.leafButtonMap.get(this.leaves[this.focusPosition + 1].id || "").focus();
+      this.focusPosition += 1;
+    }
+    this.addMarkOfFocus();
+  }
+  addMarkOfFocus() {
+    var _a;
+    this.leafButtonMap.forEach((leafButton) => leafButton.removeClass("is-focus"));
+    const focusLeafEl = this.leafButtonMap.get(((_a = this.leaves[this.focusPosition]) == null ? void 0 : _a.id) || "");
+    focusLeafEl.addClass("is-focus");
+  }
+  switchToFocusedTab(leaf) {
+    this.app.workspace.setActiveLeaf(leaf);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian4.MarkdownView);
+    if (view) {
+      view.editor.focus();
+    }
+    this.close();
+  }
+  clickCloseLeafButton(leaf, divEl) {
+    const idx = this.leaves.findIndex(({ id }) => id === leaf.id);
+    this.focusPosition = idx < this.focusPosition ? this.focusPosition - 1 : this.focusPosition;
+    this.leafButtonMap.delete(leaf.id || "");
+    this.leaves = this.leaves.filter(({ id }) => id !== leaf.id);
+    divEl.remove();
+    leaf.detach();
+    this.addMarkOfFocus();
+    if (!this.leaves.length) {
+      this.close();
+      return;
+    }
+    setTimeout(() => {
+      const focusLeaf = this.leaves[this.focusPosition];
+      this.leafButtonMap.get((focusLeaf == null ? void 0 : focusLeaf.id) || "").focus();
+    }, 1);
+  }
+};
+
+// src/tab-shortcuts-modal.ts
+var import_obsidian5 = require("obsidian");
+var TabShortcutsModal = class extends import_obsidian5.Modal {
+  constructor(app, settings, leaves) {
+    super(app);
+    this.leaves = [];
+    this.chars = [];
+    this.tabHeaderContainers = [];
+    this.eventListenerFunc = {
+      keyup: () => {
+      },
+      resize: () => {
+      }
+    };
+    this.settings = settings;
+    this.chars = [...this.modalSettings.characters];
+    this.leaves = leaves.map((leaf, idx) => {
+      leaf.name = idx < this.chars.length ? this.chars[idx] : "";
+      return leaf;
+    });
+  }
+  get modalSettings() {
+    return this.settings.showTabShortcuts;
+  }
+  onOpen() {
+    var _a;
+    this.modalEl.addClasses(["tab-shortcuts-modal", "tsh-modal"]);
+    this.labelsContainer = createDiv("tab-shortcuts-container");
+    (_a = this.modalEl.parentElement) == null ? void 0 : _a.append(this.labelsContainer);
+    const tabs = this.generateTabs(this.leaves);
+    this.showShortcutElements(tabs);
+    this.tabHeaderContainers.forEach((container) => container == null ? void 0 : container.addClass("tsh-header-container-inner"));
+    this.eventListenerFunc.keyup = this.handlingKeyupEvent.bind(this);
+    this.eventListenerFunc.resize = this.handlingResizeEvent.bind(this);
+    window.addEventListener("keyup", this.eventListenerFunc.keyup);
+    window.addEventListener("resize", this.eventListenerFunc.resize);
+  }
+  onClose() {
+    window.removeEventListener("keyup", this.eventListenerFunc.keyup);
+    window.removeEventListener("resize", this.eventListenerFunc.resize);
+    this.tabHeaderContainers.forEach((container) => container == null ? void 0 : container.removeClass("tsh-header-container-inner"));
+    this.contentEl.empty();
+    this.labelsContainer.remove();
+  }
+  generateTabs(leaves) {
+    return leaves.reduce((acc, cur) => {
+      var _a;
+      const tab = acc.find((tab2) => {
+        var _a2;
+        return tab2.id === ((_a2 = cur.parent) == null ? void 0 : _a2.id) || "";
+      });
+      if (tab) {
+        tab.leaves = [...tab.leaves, cur];
+        return acc;
+      } else {
+        return [...acc, { id: ((_a = cur.parent) == null ? void 0 : _a.id) || "", leaves: [cur] }];
+      }
+    }, []);
+  }
+  showShortcutElements(tabs) {
+    tabs.forEach((tab) => {
+      var _a, _b, _c;
+      const tabContainer = (_c = (_b = (_a = tab.leaves[0]) == null ? void 0 : _a.containerEl) == null ? void 0 : _b.parentElement) == null ? void 0 : _c.parentElement;
+      this.tabHeaderContainers.push(tabContainer == null ? void 0 : tabContainer.querySelector(".workspace-tab-header-container-inner"));
+      const headers = tabContainer == null ? void 0 : tabContainer.querySelectorAll(".workspace-tab-header-container-inner .workspace-tab-header");
+      if (!headers) {
+        return;
+      }
+      tab.leaves.forEach((leaf, idx) => {
+        if (!this.chars.length) {
+          return;
+        }
+        const pos = headers[idx].getBoundingClientRect();
+        createDiv("tsh-label", (el) => {
+          el.setText(leaf.name || "");
+          el.setCssProps({
+            top: `${pos.bottom}px`,
+            left: `calc(${pos.left}px + 0.5rem)`
+          });
+          this.labelsContainer.appendChild(el);
+        });
+      });
+    });
+  }
+  handlingKeyupEvent(ev) {
+    if (this.chars.includes(ev.key)) {
+      this.close();
+      const leaf = this.leaves.find((leaf2) => leaf2.name === ev.key);
+      if (leaf) {
+        this.app.workspace.setActiveLeaf(leaf);
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
+        if (view) {
+          view.editor.focus();
+        }
+      }
+      ev.preventDefault();
+      return;
+    }
+  }
+  handlingResizeEvent() {
+    this.close();
+  }
+};
+
+// src/tab-search-modal.ts
+var import_obsidian6 = require("obsidian");
+var FOOTER_ITEMS2 = [
+  { keys: "\u2191 | \u2193", description: "Move focus" },
+  { keys: "Enter", description: "Switch to focused tab" }
+];
+var TabSearchModal = class extends import_obsidian6.FuzzySuggestModal {
+  constructor(app, settings, leaves) {
+    super(app);
+    this.leaves = [];
+    this.settings = settings;
+    this.leaves = leaves.map((leaf) => {
+      var _a, _b;
+      leaf.name = leaf.getDisplayText();
+      const props = ((_b = (_a = leaf.view) == null ? void 0 : _a.metadataEditor) == null ? void 0 : _b.properties) || [];
+      leaf.aliases = props.filter((prop) => prop.key === "aliases").flatMap((prop) => prop.value).filter((value) => value != null);
+      const { file } = leaf.getViewState().state;
+      const fullPath = typeof file === "string" ? file.split(leaf.getDisplayText())[0] || "/" : "-";
+      leaf.path = fullPath;
+      return leaf;
+    });
+    this.setPlaceholder("Search tabs");
+    this.modalEl.addClasses(["tab-search-modal", "tse-modal"]);
+    if (this.modalSettings.showLegends) {
+      this.generateFooter(this.modalEl);
+    }
+  }
+  get modalSettings() {
+    return this.settings.searchTab;
+  }
+  getItems() {
+    return this.leaves;
+  }
+  getItemText(leaf) {
+    return leaf.name || "";
+  }
+  getSuggestions(query) {
+    return this.getItems().filter((item) => this.getReferenceStrings(item).some((refString) => (0, import_obsidian6.prepareFuzzySearch)(query)(refString))).map((item) => ({ item, match: { score: 0, matches: [] } }));
+  }
+  onChooseItem(leaf) {
+    this.app.workspace.setActiveLeaf(leaf);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian6.MarkdownView);
+    if (view) {
+      view.editor.focus();
+    }
+  }
+  renderSuggestion(item, suggestionItemEl) {
+    suggestionItemEl.createDiv("tse-item-row", (el) => {
+      el.setText(item.item.name || "");
+    });
+    if (this.modalSettings.showAliases) {
+      suggestionItemEl.createDiv("tse-item-row", (el) => {
+        var _a;
+        (0, import_obsidian6.setIcon)(el, "corner-up-right");
+        el.createEl("small").setText(((_a = item.item.aliases) == null ? void 0 : _a.join(" | ")) || "");
+      });
+    }
+    if (this.modalSettings.showPaths) {
+      suggestionItemEl.createDiv("tse-item-row", (el) => {
+        (0, import_obsidian6.setIcon)(el, "folder-closed");
+        el.createEl("small").setText(item.item.path || "");
+      });
+    }
+    return suggestionItemEl;
+  }
+  getReferenceStrings(item) {
+    var _a;
+    const name = item.name || "";
+    const { showAliases, includeAliases, showPaths, includePaths } = this.modalSettings;
+    const aliases = showAliases && includeAliases ? ((_a = item.aliases) == null ? void 0 : _a.join(" ")) || "" : "";
+    const path = showPaths && includePaths ? item.path : "";
+    const case1 = `${name} ${aliases} ${path}`;
+    const case2 = `${name} ${path} ${aliases}`;
+    const case3 = `${aliases} ${name} ${path}`;
+    const case4 = `${aliases} ${path} ${name}`;
+    const case5 = `${path} ${name} ${aliases}`;
+    const case6 = `${path} ${aliases} ${name}`;
+    return [case1, case2, case3, case4, case5, case6];
+  }
+  generateFooter(contentEl) {
+    contentEl.createDiv("tse-footer", (el) => {
+      FOOTER_ITEMS2.forEach((item) => {
+        el.createDiv("tse-legends", (el2) => {
+          el2.createSpan("tse-keys").setText(item.keys);
+          el2.createSpan("tse-description").setText(item.description);
+        });
+      });
+    });
+  }
+};
+
 // src/main.ts
-var TabSelector = class extends import_obsidian3.Plugin {
+var TabSelector = class extends import_obsidian7.Plugin {
   async onload() {
     await this.loadSettings();
     this.addRibbonIcon("file-check-2", "Open tab selector", () => this.openTabSelectorModal());
@@ -406,6 +1244,28 @@ var TabSelector = class extends import_obsidian3.Plugin {
       id: "open-tab-selector",
       name: "Open tab selector",
       callback: () => this.openTabSelectorModal()
+    });
+    this.addCommand({
+      id: "go-to-previous-tab",
+      name: "Go to previous tab",
+      callback: () => this.openTabHistoryModal(true)
+    });
+    this.addCommand({
+      id: "go-to-next-tab",
+      name: "Go to next tab",
+      callback: () => this.openTabHistoryModal(false)
+    });
+    if (import_obsidian7.Platform.isDesktop || import_obsidian7.Platform.isTablet) {
+      this.addCommand({
+        id: "show-tab-shortcuts",
+        name: "Show tab shortcuts",
+        callback: () => this.showTabShortcutsModal()
+      });
+    }
+    this.addCommand({
+      id: "search-tabs",
+      name: "Search tabs",
+      callback: () => this.openTabSearchModal()
     });
     this.settingTab = new SettingTab(this.app, this);
     this.addSettingTab(this.settingTab);
@@ -416,15 +1276,32 @@ var TabSelector = class extends import_obsidian3.Plugin {
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.migrateSettingValues();
   }
   async saveSettings() {
     await this.saveData(this.settings);
   }
   openTabSelectorModal() {
+    const leaves = this.generateLeaves();
+    new TabSelectorModal(this.app, this.settings, leaves).open();
+  }
+  openTabHistoryModal(isPrevCommand) {
+    const leaves = this.generateLeaves();
+    new TabHistoryModal(this.app, this.settings, leaves, isPrevCommand).open();
+  }
+  showTabShortcutsModal() {
+    const leaves = this.generateLeaves();
+    new TabShortcutsModal(this.app, this.settings, leaves).open();
+  }
+  openTabSearchModal() {
+    const leaves = this.generateLeaves();
+    new TabSearchModal(this.app, this.settings, leaves).open();
+  }
+  generateLeaves() {
     var _a;
     const rootLeafIds = [];
     this.app.workspace.iterateRootLeaves((leaf) => {
-      rootLeafIds.push(leaf.id);
+      rootLeafIds.push((leaf == null ? void 0 : leaf.id) || "");
     });
     const targetLeaves = [];
     const { id: rootId, type: rootType } = (_a = this.app.workspace.getMostRecentLeaf()) == null ? void 0 : _a.getRoot();
@@ -432,10 +1309,97 @@ var TabSelector = class extends import_obsidian3.Plugin {
       if (rootId !== leaf.getRoot().id) {
         return;
       }
-      if (rootLeafIds.includes(leaf.id) || rootType === "floating") {
+      if (leaf.id && rootLeafIds.includes(leaf.id) || rootType === "floating") {
         targetLeaves.push(leaf);
       }
     });
-    new TabSelectorModal(this.app, this.settings, targetLeaves).open();
+    return targetLeaves;
+  }
+  async migrateSettingValues() {
+    const oldSettings = this.settings;
+    {
+      const settings = this.settings.openTabSelector;
+      if (typeof oldSettings.showAliases === "boolean") {
+        settings.showAliases = oldSettings.showAliases;
+        delete oldSettings.showAliases;
+      }
+      if (typeof oldSettings.replaceToAliases === "boolean") {
+        settings.replaceToAliases = oldSettings.replaceToAliases;
+        delete oldSettings.replaceToAliases;
+      }
+      if (typeof oldSettings.showPaths === "boolean") {
+        settings.showPaths = oldSettings.showPaths;
+        delete oldSettings.showPaths;
+      }
+      if (typeof oldSettings.showPaginationButtons === "boolean") {
+        settings.showPaginationButtons = oldSettings.showPaginationButtons;
+        delete oldSettings.showPaginationButtons;
+      }
+      if (typeof oldSettings.showLegends === "boolean") {
+        settings.showLegends = oldSettings.showLegends;
+        delete oldSettings.showLegends;
+      }
+      if (typeof oldSettings.focusColor === "string") {
+        settings.focusColor = oldSettings.focusColor;
+        delete oldSettings.focusColor;
+      }
+      if (typeof oldSettings.characters === "string") {
+        settings.characters = oldSettings.characters;
+        delete oldSettings.characters;
+      }
+      if (typeof oldSettings.enableClose === "boolean") {
+        settings.enableClose = oldSettings.enableClose;
+        delete oldSettings.enableClose;
+      }
+    }
+    {
+      const settings = this.settings.goToPreviousNextTab;
+      if (typeof oldSettings.thFocusColor === "string") {
+        settings.focusColor = oldSettings.thFocusColor;
+        delete oldSettings.thFocusColor;
+      }
+      if (typeof oldSettings.mainModifierKey === "string") {
+        settings.mainModifierKey = oldSettings.mainModifierKey;
+        delete oldSettings.mainModifierKey;
+      }
+      if (typeof oldSettings.subModifierKey === "string") {
+        settings.subModifierKey = oldSettings.subModifierKey;
+        delete oldSettings.subModifierKey;
+      }
+      if (typeof oldSettings.actionKey === "string") {
+        settings.actionKey = oldSettings.actionKey;
+        delete oldSettings.actionKey;
+      }
+      if (typeof oldSettings.howToNextTab === "string") {
+        settings.howToNextTab = oldSettings.howToNextTab;
+        delete oldSettings.howToNextTab;
+      }
+      if (typeof oldSettings.reverseActionKey === "string") {
+        settings.reverseActionKey = oldSettings.reverseActionKey;
+        delete oldSettings.reverseActionKey;
+      }
+    }
+    {
+      const settings = this.settings.showTabShortcuts;
+      if (typeof oldSettings.tshCharacters === "string") {
+        settings.characters = oldSettings.tshCharacters;
+        delete oldSettings.tshCharacters;
+      }
+    }
+    {
+      if (typeof oldSettings.backActionKey === "string") {
+        delete oldSettings.backActionKey;
+      }
+      if (typeof oldSettings.howToPreviousTab === "string") {
+        delete oldSettings.howToPreviousTab;
+      }
+      if (typeof oldSettings.showPaginationButton === "boolean") {
+        delete oldSettings.showPaginationButton;
+      }
+      if (typeof oldSettings.showLegend === "boolean") {
+        delete oldSettings.showLegend;
+      }
+    }
+    await this.saveSettings();
   }
 };

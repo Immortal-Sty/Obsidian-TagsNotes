@@ -1,0 +1,13 @@
+/* custom-folder-icons.css */
+
+/* 为文件夹添加图标 */
+.nav-folder-title-content::before {
+    content: '🗀 '; /* 你可以更改为你喜欢的图标 */
+    margin-right: 5px;
+}
+
+/* 为文件添加图标 */
+.nav-file-title-content::before {
+    content: '🗎 '; /* 你可以更改为你喜欢的图标 */
+    margin-right: 5px;
+}

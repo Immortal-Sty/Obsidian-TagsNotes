@@ -4,32 +4,37 @@
     "saveAttE": "inFolderBelow",
     "attachmentPath": "",
     "attachFormat": "${notename}-${date}-${originalname}",
-    "type": "GLOBAL"
+    "type": "GLOBAL",
+    "extensionOverride": []
   },
   "dateFormat": "YYYYMMDDHHmmssSSS",
   "excludeExtensionPattern": "",
   "autoRenameAttachment": true,
-  "excludedPaths": "Template\nLATEX",
+  "excludedPaths": "Attachment\nTemplate",
   "excludePathsArray": [
-    "Template\nLATEX"
+    "Attachment\nTemplate"
   ],
   "excludeSubpaths": true,
   "originalNameStorage": [
     {
-      "n": "Pasted image 20240223185647",
-      "md5": "EB4301968C48A83488EEFA45F7F18F06"
-    },
-    {
-      "n": "Pasted image 20240420233828",
-      "md5": "539DEE821FBE8566DC036ECA5AE46350"
+      "n": "Pasted image 20240424193046",
+      "md5": "C087F147761B0BE23EB91AC586FDD5EA"
     },
     {
       "n": "Pasted image 20240424192955",
       "md5": "3A593C35C6810EC4A3861BB0224D34B2"
     },
     {
-      "n": "Pasted image 20240424193046",
-      "md5": "C087F147761B0BE23EB91AC586FDD5EA"
+      "n": "Pasted image 20240420233828",
+      "md5": "539DEE821FBE8566DC036ECA5AE46350"
+    },
+    {
+      "n": "Pasted image 20240223185647",
+      "md5": "EB4301968C48A83488EEFA45F7F18F06"
+    },
+    {
+      "n": "D32(kp)",
+      "md5": "897C6A894384AAD67CF57BF6DAAC461B"
     }
   ],
   "overridePath": {},

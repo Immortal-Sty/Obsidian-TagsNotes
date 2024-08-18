@@ -1,0 +1,222 @@
+/* src/styles/theme.css */
+.lineage-main {
+  --lineage-accent: #55b1ae;
+  --lineage-color-selection: #418cff;
+}
+.theme-dark {
+  --background-container: #373d4c;
+  --background-active-node: var(--background-primary);
+  --background-active-parent: #5b637a;
+  --background-inactive-node: var(--background-container);
+  --lineage-accent-faint: #628c8c;
+  --lineage-color-selection-faint: #567aab;
+}
+.theme-light {
+  --background-container: #899cb3;
+  --background-active-node: var(--background-primary);
+  --background-active-parent: #cedbeb;
+  --background-inactive-node: var(--background-container);
+  --lineage-accent-faint: #adccca;
+  --lineage-color-selection-faint: #8eaedf;
+}
+.active-node,
+.active-child {
+  background-color: var(--background-active-node);
+  color: var(--text-normal);
+}
+.active-child:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.active-parent {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.8);
+}
+.active-sibling {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.8);
+  --scrollbar-thumb-bg: var(--text-muted) !important;
+  --scrollbar-active-thumb-bg: var(--text-normal) !important;
+}
+.inactive-node {
+  filter: opacity(0.2);
+  background-color: var(--background-inactive-node);
+}
+.inactive-node:hover {
+  background-color: var(--background-active-parent);
+  filter: opacity(0.5);
+}
+.theme-light {
+  & .inactive-node {
+    filter: opacity(0.4);
+  }
+}
+.group {
+  background-color: var(--background-inactive-node);
+}
+.group-has-active-node {
+  background-color: var(--background-active-parent);
+}
+.group-has-active-parent {
+  background-color: var(--background-active-node);
+}
+.theme-light {
+  --custom-hotkey-bg: #a0c6dd ;
+}
+.theme-dark {
+  --custom-hotkey-bg: #5f7f93 ;
+}
+
+/* src/styles/makdown/inline-editor.css */
+.lineage-inline-editor {
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  & .view-header,
+  & .inline-title,
+  & .embedded-backlinks,
+  & .cm-gutters {
+    display: none !important;
+  }
+  & .cm-editor .cm-scroller {
+    padding: 6px !important;
+    padding-left: 12px !important;
+  }
+  & .cm-contentContainer div {
+    padding-bottom: 0 !important;
+  }
+  --file-line-width: 100%;
+}
+
+/* src/styles/makdown/makdown-preview.css */
+.inactive-node,
+.active-sibling,
+.active-parent,
+.active-child {
+  & mark {
+    filter: grayscale(1);
+  }
+}
+.lineage-card p {
+  margin: 0;
+}
+.lineage-card {
+  --p-spacing: 0px;
+  & .callout {
+    mix-blend-mode: initial;
+  }
+  & button.copy-code-button {
+    display: none;
+  }
+  & .cm-blockid {
+    display: inline-block;
+    font-size: 12px;
+    vertical-align: text-top;
+    margin-top: -0.2em;
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+  & .is-unresolved {
+    color: var(--link-unresolved-color);
+    opacity: var(--link-unresolved-opacity);
+    filter: var(--link-unresolved-filter);
+  }
+  & ul,
+  ol {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+}
+
+/* src/styles/card/dnd.css */
+.lineage__drop-node-above {
+  box-shadow: inset 2px 51px 19px -28px var(--lineage-accent);
+}
+.lineage__drop-node-below {
+  box-shadow: inset 2px -51px 19px -28px var(--lineage-accent);
+}
+.lineage__drop-node-under {
+  box-shadow: inset -51px 2px 19px -28px var(--lineage-accent);
+}
+.inactive-node-hover {
+  filter: opacity(0.8);
+  background-color: var(--background-active-parent);
+}
+
+/* src/styles/card/card-buttons.css */
+.lineage-card:hover .lineage-floating-button {
+  opacity: 0.3;
+}
+
+/* src/styles/view/buttons.css */
+.lineage-view-button {
+  width: 34px !important;
+  height: 34px !important;
+  padding: 8px !important;
+  font-size: inherit;
+  color: var(--text-muted) !important;
+  background-color: var(--interactive-normal);
+  --icon-size: var(--icon-s);
+  --icon-stroke: var(--icon-s-stroke-width);
+  cursor: pointer;
+  border-radius: 0;
+  border: none;
+  box-shadow: none !important;
+}
+.lineage-view-button:disabled {
+  cursor: not-allowed;
+}
+.lineage-view-button:hover {
+  background-color: var(--interactive-hover);
+}
+.lineage-view-button:disabled {
+  cursor: not-allowed;
+  color: var(--color-base-40) !important;
+}
+.theme-dark {
+  & .lineage-view-button[data-active=true] {
+    background-color: var(--color-base-40);
+  }
+}
+.theme-light {
+  & .lineage-view-button[data-active=true] {
+    background-color: var(--color-base-25);
+  }
+}
+.buttons-group {
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  box-shadow: var(--input-shadow);
+  display: flex;
+  background-color: var(--interactive-normal);
+}
+.buttons-group--vertical {
+  flex-direction: column;
+}
+
+/* src/styles/view/modal.css */
+.lineage-modal {
+  width: fit-content;
+  background-color: var(--background-primary);
+  position: absolute;
+  right: 50px;
+  top: var(--size-4-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
+  z-index: 10;
+  min-width: 165px;
+  padding: var(--size-4-2);
+  --scrollbar-bg: initial !important;
+}
+@media (max-width: 720px) {
+  .lineage-modal {
+    max-width: 70vw;
+  }
+}
+
+/* src/styles/helpers.css */
+.lineage__hidden-element {
+  display: none;
+}
+
+/* src/styles/styles.css */

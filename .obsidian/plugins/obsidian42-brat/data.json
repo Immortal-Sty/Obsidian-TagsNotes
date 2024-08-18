@@ -1,5 +1,7 @@
 {
   "pluginList": [
+    "gr0grig/obsidian-virt-folder",
+    "xhuajin/obsidian-immersive-translate",
     "Quorafind/Obsidian-Note-Minimap",
     "yan42685/obsidian-clever-search"
   ],

@@ -1,0 +1,25 @@
+.vf_search_parents
+{
+    color: var(--text-muted);
+}
+
+.vf_serach_link
+{
+    background-color: var(--background-secondary-alt);
+    color: var(--text-normal);
+    padding: 2px 4px;
+    margin-right: 4px;
+    line-height:2em;
+}
+
+.suggestion-item.is-selected .vf_serach_link
+{
+    background-color: var(--background-secondary);
+}
+
+
+.vf_serach_div
+{
+    padding-bottom: 1px;
+    padding-top: 1px;
+}

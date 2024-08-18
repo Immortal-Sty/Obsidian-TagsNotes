@@ -3,8 +3,8 @@
   "propertiesInDocument": "source",
   "showLineNumber": true,
   "spellcheck": false,
-  "autoPairBrackets": false,
-  "autoPairMarkdown": false,
+  "autoPairBrackets": true,
+  "autoPairMarkdown": true,
   "vimMode": true,
   "trashOption": "local",
   "promptDelete": false,
@@ -26,5 +26,8 @@
     "margin": "0",
     "downscalePercent": 100
   },
-  "showIndentGuide": true
+  "showIndentGuide": true,
+  "showRibbon": true,
+  "useTab": true,
+  "tabSize": 4
 }

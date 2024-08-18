@@ -34,3 +34,11 @@ nnoremap go :openlink
 " 打开链接在新窗口中
 exmap openlink_windows obcommand editor:open-link-in-new-window
 nnoremap gw :openlink_windows
+
+" =============
+" === 标签页 ===
+" =============
+
+" 选择标签页跳转
+"exmap tabSeletor obcommand tab-selector:open-tab-selector
+"nnoremap <Tab> :tabSeletor

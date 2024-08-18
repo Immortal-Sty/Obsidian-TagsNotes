@@ -20,6 +20,7 @@ vnoremap sf :surround_single_quotes_cn
 " 反引号
 exmap surround_backticks surround ` `
 vnoremap s` :surround_backticks
+vnoremap sq :surround_backticks
 
 " 圆括号
 exmap surround_brackets_en surround ( )
@@ -48,9 +49,16 @@ exmap surround_latex surround $ $
 vnoremap s$ :surround_latex
 
 " 斜体
-exmap surround_italics surround _ _
+exmap surround_italics surround * *
 vnoremap s_ :surround_italics
+vnoremap si :surround_italics
 
 " 粗体
 exmap surround_bold surround ** **
 vnoremap s* :surround_bold
+vnoremap sb :surround_bold
+
+" 高亮
+exmap surround_highlight surround == ==
+vnoremap s= :surround_highlight
+vnoremap sh :surround_highlight

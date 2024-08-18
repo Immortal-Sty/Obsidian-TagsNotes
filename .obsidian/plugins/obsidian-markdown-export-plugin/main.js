@@ -275,15 +275,20 @@ var import_obsidian3 = require("obsidian");
 var path3 = __toESM(require("path"));
 
 // src/config.ts
-var ATTACHMENT_URL_REGEXP = /!\[\[((.*?)\.(\w+))(?:\s*\|\s*(\d+)\s*(?:\*\s*(\d+))?)?\]\]/g;
+var ATTACHMENT_URL_REGEXP = /!\[\[((.*?)\.(\w+))(?:\s*\|\s*(?<width>\d+)\s*(?:[*|x]\s*(?<height>\d+))?)?\]\]/g;
 var MARKDOWN_ATTACHMENT_URL_REGEXP = /!\[(.*?)\]\(((.*?)\.(\w+))\)/g;
 var EMBED_URL_REGEXP = /!\[\[(.*?)\]\]/g;
 var GFM_IMAGE_FORMAT = "![]({0})";
+var OUTGOING_LINK_REGEXP = /(?<!!)\[\[(.*?)\]\]/g;
 var DEFAULT_SETTINGS = {
   output: "output",
   attachment: "attachment",
+  displayImageAsHtml: false,
   GFM: true,
-  fileNameEncode: true
+  fileNameEncode: true,
+  removeOutgoingLinkBrackets: false,
+  includeFileName: false,
+  customFileName: ""
 };
 
 // src/utils.ts
@@ -419,7 +424,7 @@ async function tryCreate(plugin, p, data) {
     }
   }
 }
-async function tryCopyImage(plugin, contentPath) {
+async function tryCopyImage(plugin, filename, contentPath) {
   try {
     await plugin.app.vault.adapter.read(contentPath).then(async (content) => {
       const imageLinks = await getImageLinks(content);
@@ -437,7 +442,11 @@ async function tryCopyImage(plugin, contentPath) {
         if (urlEncodedImageLink.startsWith("http")) {
           continue;
         }
-        const targetPath = path2.join(plugin.settings.output, plugin.settings.attachment, imageLinkMd5.concat(imageExt)).replace(/\\/g, "/");
+        let dir = "";
+        if (plugin.settings.includeFileName == true) {
+          dir = filename.replace(".md", "");
+        }
+        const targetPath = path2.join(plugin.settings.output, dir, plugin.settings.attachment, imageLinkMd5.concat(imageExt)).replace(/\\/g, "/");
         try {
           if (!fileExists(targetPath)) {
             if (plugin.settings.output.startsWith("/") || path2.win32.isAbsolute(plugin.settings.output)) {
@@ -475,6 +484,7 @@ async function getEmbedMap(plugin, content, path4) {
 async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath = "." }) {
   try {
     await plugin.app.vault.adapter.read(file.path).then(async (content) => {
+      var _a;
       const imageLinks = await getImageLinks(content);
       for (const index in imageLinks) {
         const rawImageLink = imageLinks[index][0];
@@ -491,11 +501,18 @@ async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath
         if (urlEncodedImageLink.startsWith("http")) {
           continue;
         }
-        if (plugin.settings.GFM) {
+        if (plugin.settings.displayImageAsHtml) {
+          const { width = null, height = null } = ((_a = imageLinks[index]) == null ? void 0 : _a.groups) || {};
+          const style = width && height ? ` style='width: {${width}}px; height: ${height}px;'` : width ? ` style='width: ${width}px;'` : height ? ` style='height: ${height}px;'` : "";
+          content = content.replace(rawImageLink, `<img src="${hashLink}"${style} />`);
+        } else if (plugin.settings.GFM) {
           content = content.replace(rawImageLink, GFM_IMAGE_FORMAT.format(hashLink));
         } else {
           content = content.replace(urlEncodedImageLink, hashLink);
         }
+      }
+      if (plugin.settings.removeOutgoingLinkBrackets) {
+        content = content.replaceAll(OUTGOING_LINK_REGEXP, "$1");
       }
       const cfile = plugin.app.workspace.getActiveFile();
       if (cfile != void 0) {
@@ -506,18 +523,34 @@ async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath
           content = content.replace(embeds[index][0], embedMap.get(url));
         }
       }
-      await tryCopyImage(plugin, file.path);
-      const outDir = path2.join(plugin.settings.output, outputSubPath);
+      let dir = "";
+      if (plugin.settings.includeFileName == true) {
+        dir = file.name.replace(".md", "");
+      }
+      await tryCopyImage(plugin, file.name, file.path);
+      const outDir = path2.join(plugin.settings.output, dir, outputSubPath);
       await tryCreateFolder(plugin, outDir);
       switch (outputFormat) {
         case "HTML": {
-          const targetFile = path2.join(outDir, file.name.replace(".md", ".html"));
+          let filename;
+          if (plugin.settings.customFileName) {
+            filename = plugin.settings.customFileName + ".md";
+          } else {
+            filename = file.name;
+          }
+          const targetFile = path2.join(outDir, filename.replace(".md", ".html"));
           const { html } = await markdownToHTML(plugin, file.path, content);
           await tryCreate(plugin, targetFile, html);
           break;
         }
         case "markdown": {
-          const targetFile = path2.join(outDir, file.name);
+          let filename;
+          if (plugin.settings.customFileName) {
+            filename = plugin.settings.customFileName + ".md";
+          } else {
+            filename = file.name;
+          }
+          const targetFile = path2.join(outDir, filename);
           await tryCreate(plugin, targetFile, content);
           break;
         }
@@ -565,9 +598,13 @@ var MarkdownExportPlugin = class extends import_obsidian3.Plugin {
     }
   }
   async createFolderAndRun(file, outputFormat) {
-    await tryCreateFolder(this, path3.join(this.settings.output, this.settings.attachment));
+    let dir = "";
+    if (this.settings.includeFileName == true) {
+      dir = file.name.replace(".md", "");
+    }
+    await tryCreateFolder(this, path3.join(this.settings.output, dir, this.settings.attachment));
     await tryRun(this, file, outputFormat);
-    new import_obsidian3.Notice(`Exporting ${file.path} to ${path3.join(this.settings.output, file.name)}`);
+    new import_obsidian3.Notice(`Exporting ${file.path} to ${path3.join(this.settings.output, dir, file.name)}`);
   }
   onunload() {
   }
@@ -599,8 +636,24 @@ var MarkdownExportSettingTab = class extends import_obsidian3.PluginSettingTab {
       this.plugin.settings.GFM = value;
       await this.plugin.saveSettings();
     }));
+    new import_obsidian3.Setting(containerEl).setName("Use Html tag <img /> to display image").setDesc("false default, <img /> tag will use the size specified in obsidian.").addToggle((toggle) => toggle.setValue(this.plugin.settings.displayImageAsHtml).onChange(async (value) => {
+      this.plugin.settings.displayImageAsHtml = value;
+      await this.plugin.saveSettings();
+    }));
     new import_obsidian3.Setting(containerEl).setName("Encode file name").setDesc("true default, if you want to keep the original file name, set this to false").addToggle((toggle) => toggle.setValue(this.plugin.settings.fileNameEncode).onChange(async (value) => {
       this.plugin.settings.fileNameEncode = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Remove brackets for outgoing links").setDesc("false default, if you want to remove the brackets in links, set this to true").addToggle((toggle) => toggle.setValue(this.plugin.settings.removeOutgoingLinkBrackets).onChange(async (value) => {
+      this.plugin.settings.removeOutgoingLinkBrackets = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Include filename in output path").setDesc("false default, if you want to include the filename (without extension) in the output path set this to true").addToggle((toggle) => toggle.setValue(this.plugin.settings.includeFileName).onChange(async (value) => {
+      this.plugin.settings.includeFileName = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Custom filename").setDesc("update if you want a custom filename, leave off extension").addText((text) => text.setPlaceholder("Enter custom filename").setValue(this.plugin.settings.customFileName).onChange(async (value) => {
+      this.plugin.settings.customFileName = value;
       await this.plugin.saveSettings();
     }));
   }

@@ -1,0 +1,206 @@
+{
+  "groups": [
+    {
+      "loadAtStartup": false,
+      "disableOnStartup": false,
+      "delay": 0,
+      "id": "pgnormal",
+      "name": "Normal",
+      "plugins": [],
+      "groupIds": [
+        "pgdelay",
+        "pgfast"
+      ],
+      "generateCommands": false,
+      "assignedDevices": []
+    },
+    {
+      "loadAtStartup": true,
+      "disableOnStartup": false,
+      "delay": 0,
+      "id": "pgfast",
+      "name": "Fast",
+      "plugins": [
+        {
+          "id": "better-search-views",
+          "name": "Better Search Views"
+        },
+        {
+          "id": "code-styler",
+          "name": "Code Styler"
+        },
+        {
+          "id": "dataview",
+          "name": "Dataview"
+        },
+        {
+          "id": "floating-toc",
+          "name": "floating toc"
+        },
+        {
+          "id": "obsidian-front-matter-title-plugin",
+          "name": "Front Matter Title"
+        },
+        {
+          "id": "obsidian-git",
+          "name": "Git"
+        },
+        {
+          "id": "obsidian-hover-editor",
+          "name": "Hover Editor"
+        },
+        {
+          "id": "metaedit",
+          "name": "MetaEdit"
+        },
+        {
+          "id": "mysnippets-plugin",
+          "name": "MySnippets"
+        },
+        {
+          "id": "pdf-plus",
+          "name": "PDF++"
+        },
+        {
+          "id": "quickadd",
+          "name": "QuickAdd"
+        },
+        {
+          "id": "obsidian-relative-line-numbers",
+          "name": "Relative Line Numbers"
+        },
+        {
+          "id": "sheets",
+          "name": "Sheets Extended"
+        },
+        {
+          "id": "sticky-heading",
+          "name": "Sticky Headings"
+        },
+        {
+          "id": "obsidian-tagfolder",
+          "name": "TagFolder"
+        },
+        {
+          "id": "templater-obsidian",
+          "name": "Templater"
+        },
+        {
+          "id": "obsidian-trash-explorer",
+          "name": "Trash Explorer"
+        },
+        {
+          "id": "typewriter-mode",
+          "name": "Typewriter Mode"
+        }
+      ],
+      "groupIds": [],
+      "generateCommands": false
+    },
+    {
+      "loadAtStartup": true,
+      "disableOnStartup": false,
+      "delay": 1,
+      "id": "pgdelay",
+      "name": "Delay",
+      "plugins": [
+        {
+          "id": "obsidian-another-quick-switcher",
+          "name": "Another Quick Switcher"
+        },
+        {
+          "id": "attachment-management",
+          "name": "Attachment Management"
+        },
+        {
+          "id": "obsidian-better-command-palette",
+          "name": "Better Command Palette"
+        },
+        {
+          "id": "obsidian42-brat",
+          "name": "BRAT"
+        },
+        {
+          "id": "clever-search",
+          "name": "Clever Search"
+        },
+        {
+          "id": "easy-typing-obsidian",
+          "name": "Easy Typing"
+        },
+        {
+          "id": "obsidian-file-cooker",
+          "name": "File Cooker"
+        },
+        {
+          "id": "float-search",
+          "name": "Floating Search"
+        },
+        {
+          "id": "obsidian-footnotes",
+          "name": "Footnote Shortcut"
+        },
+        {
+          "id": "obsidian-icon-shortcodes",
+          "name": "Icon Shortcodes"
+        },
+        {
+          "id": "janitor",
+          "name": "Janitor"
+        },
+        {
+          "id": "obsidian-latex-suite",
+          "name": "Latex Suite"
+        },
+        {
+          "id": "obsidian-linter",
+          "name": "Linter"
+        },
+        {
+          "id": "persistent-links",
+          "name": "Persistent Links"
+        },
+        {
+          "id": "plugins-annotations",
+          "name": "Plugins Annotations"
+        },
+        {
+          "id": "restore-tab-key",
+          "name": "Restore Tab Key"
+        },
+        {
+          "id": "tag-wrangler",
+          "name": "Tag Wrangler"
+        },
+        {
+          "id": "update-relative-links",
+          "name": "Update Relative Links"
+        },
+        {
+          "id": "various-complements",
+          "name": "Various Complements"
+        },
+        {
+          "id": "obsidian-version-history-diff",
+          "name": "Version History Diff"
+        },
+        {
+          "id": "obsidian-vimrc-support",
+          "name": "Vimrc Support"
+        },
+        {
+          "id": "cm-chs-patch",
+          "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode"
+        }
+      ],
+      "groupIds": [],
+      "generateCommands": false
+    }
+  ],
+  "generateCommands": true,
+  "showNoticeOnGroupLoad": "short",
+  "devLogs": false,
+  "devices": [],
+  "doLoadSynchronously": true,
+  "showStatusbarIcon": "Icon"
+}
