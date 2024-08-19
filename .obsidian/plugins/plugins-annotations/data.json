@@ -331,6 +331,18 @@
     "tabs": {
       "anno": "用代码块实现多标签样式。",
       "name": "Tabs"
+    },
+    "floating-settings": {
+      "anno": "将设置界面变成悬浮窗口，方便进行某些设置。",
+      "name": "Floating Settings"
+    },
+    "break-page": {
+      "anno": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。",
+      "name": "PDF break page"
+    },
+    "virtual-linker": {
+      "anno": "将可以作为链接的文本作为虚拟链接显示。",
+      "name": "Virtual Linker / Glossary"
     }
   },
   "plugins_annotations_uuid": "B265C5B2-A6AD-4194-9E4C-C1327DB1EA18",

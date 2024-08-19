@@ -374,13 +374,5 @@
       "modifiers": [],
       "key": "F8"
     }
-  ],
-  "break-page:insert-break-page": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "M"
-    }
   ]
 }

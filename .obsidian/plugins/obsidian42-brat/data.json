@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "wish5115/obsidian-floating-settings",
     "gr0grig/obsidian-virt-folder",
     "xhuajin/obsidian-immersive-translate",
     "Quorafind/Obsidian-Note-Minimap",

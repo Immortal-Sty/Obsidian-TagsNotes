@@ -96,6 +96,10 @@
         {
           "id": "obsidian-vimrc-support",
           "name": "Vimrc Support"
+        },
+        {
+          "id": "floating-settings",
+          "name": "Floating Settings"
         }
       ],
       "groupIds": [],

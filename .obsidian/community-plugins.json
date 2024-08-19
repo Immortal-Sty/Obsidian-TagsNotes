@@ -1,4 +1,7 @@
 [
   "obsidian-plugin-groups",
-  "quick-open"
+  "quick-open",
+  "floating-settings",
+  "break-page",
+  "vim-yank-highlight"
 ]
