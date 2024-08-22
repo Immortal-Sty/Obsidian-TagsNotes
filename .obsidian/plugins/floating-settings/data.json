@@ -5,7 +5,7 @@
   "maxWaitTime": 10,
   "isHoverEditorNotice": true,
   "isFloatMarket": true,
-  "isMarketMultiIns": true,
+  "isMarketMultiIns": false,
   "isAutoScroll": true,
   "isAllowShowHide": true
 }

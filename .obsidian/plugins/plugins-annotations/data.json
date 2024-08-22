@@ -343,6 +343,10 @@
     "virtual-linker": {
       "anno": "将可以作为链接的文本作为虚拟链接显示。",
       "name": "Virtual Linker / Glossary"
+    },
+    "note-synchronizer": {
+      "anno": "用于将笔记同步到 Anki 中进行制卡。",
+      "name": "Note Synchronizer"
     }
   },
   "plugins_annotations_uuid": "B265C5B2-A6AD-4194-9E4C-C1327DB1EA18",
