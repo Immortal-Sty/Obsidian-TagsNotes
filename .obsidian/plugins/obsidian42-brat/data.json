@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "blacksmithgu/datacore",
     "wish5115/obsidian-floating-settings",
     "gr0grig/obsidian-virt-folder",
     "xhuajin/obsidian-immersive-translate",

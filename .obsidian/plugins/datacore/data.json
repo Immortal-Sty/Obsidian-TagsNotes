@@ -1,0 +1,13 @@
+{
+  "importerNumThreads": 2,
+  "importerUtilization": 0.75,
+  "enableJs": false,
+  "defaultPagingEnabled": true,
+  "defaultPageSize": 25,
+  "scrollOnPageChange": true,
+  "maxRecursiveRenderDepth": 5,
+  "defaultDateFormat": "yyyy-MM-dd",
+  "defaultDateTimeFormat": "yyyy-MM-dd\\TTT",
+  "renderNullAs": "-",
+  "indexInlineFields": true
+}

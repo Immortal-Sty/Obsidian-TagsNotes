@@ -3,5 +3,6 @@
   "quick-open",
   "floating-settings",
   "break-page",
-  "vim-yank-highlight"
+  "vim-yank-highlight",
+  "datacore"
 ]
