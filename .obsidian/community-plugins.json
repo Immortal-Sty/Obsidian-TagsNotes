@@ -4,5 +4,6 @@
   "floating-settings",
   "break-page",
   "vim-yank-highlight",
-  "datacore"
+  "datacore",
+  "dataview"
 ]
