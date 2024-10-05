@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "likemuuxi/obsidian-diagrams-net",
     "blacksmithgu/datacore",
     "wish5115/obsidian-floating-settings",
     "gr0grig/obsidian-virt-folder",
