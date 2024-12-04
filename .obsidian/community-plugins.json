@@ -6,5 +6,6 @@
   "vim-yank-highlight",
   "datacore",
   "dataview",
-  "obsidian-linter"
+  "obsidian-linter",
+  "remotely-save"
 ]
