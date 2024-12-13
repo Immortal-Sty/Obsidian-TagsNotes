@@ -3,7 +3,7 @@
   "isAnnounceUpdatesEnabled": true,
   "isPluginActivated": true,
   "isDisableInCanvasEnabled": true,
-  "isTypewriterScrollEnabled": false,
+  "isTypewriterScrollEnabled": true,
   "isOnlyActivateAfterFirstInteractionEnabled": false,
   "isOnlyMaintainTypewriterOffsetWhenReachedEnabled": false,
   "isTypewriterOnlyUseCommandsEnabled": false,
