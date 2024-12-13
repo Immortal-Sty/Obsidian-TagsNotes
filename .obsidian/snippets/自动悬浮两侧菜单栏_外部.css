@@ -1,0 +1,103 @@
+body {
+	--all-transition-delay: 0.1s;
+	--tab-top-height: 80px;
+	--tab-right-length: 0px;
+	--left-tab-opacity: 0.95;
+	--right-tab-opacity: 0.95;
+	--tab-bottom-height: 25px;
+	--tab-hight: calc(100% - var(--tab-top-height) - var(--tab-bottom-height));
+}
+/* 悬浮设置参考：[Obsidian 样式 - 实现 TiddlyWiki 故事河]( https://pkmer.cn/show/20230904215512 )
+ */
+/* !左侧菜单栏 */
+.workspace-split.mod-horizontal.mod-left-split {
+	position: fixed;
+	display: flex;
+	width: 280px;
+	top: var(--tab-top-height);
+	height: var(--tab-hight);
+	margin: 0;
+	transform: translateX(calc(-100% + var(--tab-right-length))) translateZ(0px);
+	transition: transform .6s;
+	transition-delay: var(--all-transition-delay);
+	opacity: var(--left-tab-opacity);
+	z-index: 2;
+}
+
+.workspace-split.mod-left-split>.workspace-leaf-resize-handle {
+	border-right-style: unset;
+	border-right-width: unset;
+}
+
+.workspace-split.mod-horizontal.mod-left-split:hover,
+.workspace-split.mod-horizontal.mod-left-split:focus-within,
+.is-grabbing .workspace-split.mod-horizontal.mod-left-split {
+	overflow: visible;
+	transform: translateX(var(--tab-right-length)) translateZ(0px);
+	transition: transform .6s;
+}
+
+/* 添加元素 */
+.workspace-split.mod-horizontal.mod-left-split::before {
+	content: "";
+	text-align: end !important;
+	background-color: var(--divider-color);
+	position: absolute;
+	display: flex;
+	width: 12px;
+	height: calc(var(--tab-hight) / 2);
+	top: calc((var(--tab-hight) / 4 + var(--tab-top-height)));
+	right: -12px;
+	border-top-right-radius: var(--input-radius);
+	border-bottom-right-radius: var(--input-radius);
+	box-shadow: var(--shadow-s);
+	opacity: 0.9;
+}
+
+/* !右侧侧边栏 */
+.workspace-split.mod-horizontal.mod-right-split {
+	position: fixed;
+	display: flex;
+	top: var(--tab-top-height);
+	right: 1px;
+	height: var(--tab-hight);
+	margin: 0;
+	opacity: var(--right-tab-opacity);
+	transform: translateX(100%) translateZ(0px);
+	transition: transform .6s;
+	transition-delay: var(--all-transition-delay);
+	opacity: var(--right-tab-opacity);
+	z-index: 2;
+}
+
+.workspace-split.mod-right-split>.workspace-leaf-resize-handle {
+	border-right-style: unset;
+	border-right-width: unset;
+}
+
+/* 拖拽悬浮展开设置参考：[Obsidian 样式 - 隐藏右侧标签页标题]( https://pkmer.cn/show/20240323141728 )
+ */
+.workspace-split.mod-horizontal.mod-right-split:hover,
+.workspace-split.mod-horizontal.mod-right-split:focus-within,
+.is-grabbing .workspace-split.mod-horizontal.mod-right-split {
+	overflow: visible;
+	transform: translateX(0px) translateZ(0px) !important;
+	transition: transform .6s;
+}
+
+/* 添加元素 */
+.workspace-split.mod-horizontal.mod-right-split::before {
+	content: "";
+	text-align: end !important;
+	background-color: var(--divider-color);
+	position: absolute;
+	display: flex;
+	width: 12px;
+	height: calc(var(--tab-hight) / 2);
+	top: calc((var(--tab-hight) / 4 + var(--tab-top-height)));
+	left: -12px;
+	border-top-left-radius: var(--input-radius);
+	border-bottom-left-radius: var(--input-radius);
+	box-shadow: var(--shadow-s);
+	opacity: 0.9;
+}

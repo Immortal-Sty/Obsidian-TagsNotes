@@ -24,5 +24,7 @@
   "anuppuccin-theme-settings@@anp-bg-fix": false,
   "anuppuccin-theme-settings@@anp-hide-borders": false,
   "【界面-Tab】自动悬浮两侧菜单栏@@left-tab-opacity": 0.95,
-  "【界面-Tab】自动悬浮两侧菜单栏@@tab-right-length": "0px"
+  "【界面-Tab】自动悬浮两侧菜单栏@@tab-right-length": "0px",
+  "【界面-Tab】自动悬浮两侧菜单栏@@right-tab-opacity": 0.95,
+  "【界面-熊猫】自动悬浮两侧菜单栏@@tab-right-length": "44px"
 }
