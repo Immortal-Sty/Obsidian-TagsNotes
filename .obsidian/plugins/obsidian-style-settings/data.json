@@ -22,5 +22,7 @@
   "anuppuccin-theme-settings@@anp-card-layout-filebrowser": true,
   "anuppuccin-theme-settings@@anp-status-bar-select": "none",
   "anuppuccin-theme-settings@@anp-bg-fix": false,
-  "anuppuccin-theme-settings@@anp-hide-borders": false
+  "anuppuccin-theme-settings@@anp-hide-borders": false,
+  "【界面-Tab】自动悬浮两侧菜单栏@@left-tab-opacity": 0.95,
+  "【界面-Tab】自动悬浮两侧菜单栏@@tab-right-length": "0px"
 }

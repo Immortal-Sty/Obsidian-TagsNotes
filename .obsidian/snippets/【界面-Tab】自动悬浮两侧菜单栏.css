@@ -1,0 +1,202 @@
+/* @settings
+name: 【界面-Tab】自动悬浮两侧菜单栏
+id: 【界面-Tab】自动悬浮两侧菜单栏
+settings:
+-
+	id: 左侧菜单栏设置
+	title: 左侧菜单栏设置
+	type: heading
+	level: 2
+	collapsed: true
+-
+	id: left-tab-float-choice
+	title: 左侧菜单栏悬浮开关
+	type: class-toggle
+	addCommand: true
+	default: true
+-
+	id: tab-right-length
+	title: 调整左侧菜单距离
+	type: variable-text
+	default: 0px
+-
+	id: left-tab-opacity
+	title: 左侧菜单栏的不透明度
+	type: variable-number-slider
+	default: 0.95
+	format:
+	min: 0.2
+	max: 1
+	step: 0.01
+-
+	id: 右侧菜单栏设置
+	title: 右侧菜单栏设置
+	type: heading
+	level: 2
+	collapsed: true
+-
+	id: right-tab-float-choice
+	title: 右侧菜单栏悬浮开关
+	type: class-toggle
+	addCommand: true
+	default: true
+-
+	id: right-tab-opacity
+	title: 右侧菜单栏的不透明度
+	type: variable-number-slider
+	default: 0.95
+	format:
+	min: 0.2
+	max: 1
+	step: 0.01
+-
+	id: 悬浮菜单栏设置
+	title: 悬浮菜单栏设置
+	type: heading
+	level: 2
+	collapsed: true
+-
+	id: tab-top-height
+	title: 菜单栏距离顶部高度
+	type: variable-text
+	default: 80px
+-
+	id: tab-bottom-height
+	title: 菜单栏距离顶部底部
+	type: variable-text
+	default: 25px
+
+*/
+
+body {
+	--tab-top-height: 80px;
+	--tab-right-length: 44px;
+	--left-tab-opacity: 1;
+	--right-tab-opacity: 1;
+	--tab-bottom-height: 25px;
+	--tab-hight: calc(100% - var(--tab-top-height) - var(--tab-bottom-height));
+}
+/* 悬浮设置参考：[Obsidian 样式 - 实现 TiddlyWiki 故事河]( https://pkmer.cn/show/20230904215512 )
+ */
+/* !左侧菜单栏 */
+.left-tab-float-choice .workspace-split.mod-horizontal.mod-left-split {
+	position: fixed;
+	display: flex;
+	width: 280px;
+	top: var(--tab-top-height);
+	height: var(--tab-hight);
+	margin: 0;
+	transform: translateX(calc(-100% + var(--tab-right-length))) translateZ(0px);
+	transition: transform .6s;
+	transition-delay: 0.8s;
+	opacity: var(--left-tab-opacity);
+	z-index: 2;
+}
+
+.left-tab-float-choice .workspace-split.mod-left-split>.workspace-leaf-resize-handle {
+	border-right-style: unset;
+	border-right-width: unset;
+}
+
+.left-tab-float-choice .workspace-split.mod-horizontal.mod-left-split:hover,
+.left-tab-float-choice .workspace-split.mod-horizontal.mod-left-split:focus-within,
+body.is-grabbing:is(.left-tab-float-choice) .workspace-split.mod-horizontal.mod-left-split {
+	overflow: visible;
+	transform: translateX(var(--tab-right-length)) translateZ(0px);
+	transition: transform .6s;
+}
+
+/* 添加元素 */
+.left-tab-float-choice .workspace-split.mod-horizontal.mod-left-split::before {
+	content: "";
+	text-align: end !important;
+	background-color: var(--divider-color);
+	position: absolute;
+	display: flex;
+	width: 12px;
+	height: calc(var(--tab-hight) / 2);
+	top: calc((var(--tab-hight) / 4 + var(--tab-top-height)));
+	right: -12px;
+	border-top-right-radius: var(--input-radius);
+	border-bottom-right-radius: var(--input-radius);
+	box-shadow: var(--shadow-s);
+	opacity: 0.9;
+}
+
+/* !右侧侧边栏 */
+.right-tab-float-choice .workspace-split.mod-horizontal.mod-right-split {
+	position: fixed;
+	display: flex;
+	top: var(--tab-top-height);
+	right: 1px;
+	height: var(--tab-hight);
+	margin: 0;
+	opacity: var(--right-tab-opacity);
+	transform: translateX(100%) translateZ(0px);
+	transition: transform .6s;
+	transition-delay: 0.8s;
+	opacity: var(--right-tab-opacity);
+	z-index: 2;
+}
+
+.right-tab-float-choice .workspace-split.mod-right-split>.workspace-leaf-resize-handle {
+	border-right-style: unset;
+	border-right-width: unset;
+}
+
+/* 拖拽悬浮展开设置参考：[Obsidian 样式 - 隐藏右侧标签页标题]( https://pkmer.cn/show/20240323141728 )
+ */
+.right-tab-float-choice .workspace-split.mod-horizontal.mod-right-split:hover,
+.right-tab-float-choice .workspace-split.mod-horizontal.mod-right-split:focus-within,
+body.is-grabbing:is(.right-tab-float-choice) .workspace-split.mod-horizontal.mod-right-split {
+	overflow: visible;
+	transform: translateX(0px) translateZ(0px) !important;
+	transition: transform .6s;
+}
+
+/* 添加元素 */
+.right-tab-float-choice .workspace-split.mod-horizontal.mod-right-split::before {
+	content: "";
+	text-align: end !important;
+	background-color: var(--divider-color);
+	position: absolute;
+	display: flex;
+	width: 12px;
+	height: calc(var(--tab-hight) / 2);
+	top: calc((var(--tab-hight) / 4 + var(--tab-top-height)));
+	left: -12px;
+	border-top-left-radius: var(--input-radius);
+	border-bottom-left-radius: var(--input-radius);
+	box-shadow: var(--shadow-s);
+	opacity: 0.9;
+}
+
+
+/* ! 直接隐藏掉关闭和最小化按钮 */
+
+/* 不显示最大最小化后，使那块区域可以双击及拖动 */
+.mod-windows .titlebar-button,
+.is-hidden-frameless:not(.is-fullscreen) .workspace-tabs.mod-top-right-space .workspace-tab-header-container:after {
+	display: none;
+}
+
+/* 折叠触发按钮调整 */
+.sidebar-toggle-button {
+	display: block;
+	position: absolute;
+	right: 10px !important;
+	z-index: 10;
+}
+
+/* 下拉菜单调整 */
+.workspace-tab-header-tab-list {
+	display: block;
+	position: absolute;
+	right: 50px !important;
+	z-index: 10;
+}
+
+.mod-left-split .workspace-tab-header-tab-list,
+.mod-right-split .workspace-tab-header-tab-list{
+	display: none;
+}
