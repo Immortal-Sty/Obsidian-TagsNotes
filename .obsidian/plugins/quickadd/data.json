@@ -29,6 +29,13 @@
       "macroId": "e716715d-b07c-41c9-9572-32f42649730d"
     },
     {
+      "id": "1de98e3d-0fc6-40e0-b9a7-61031fdf84c2",
+      "name": "Auto Hide Sidebar",
+      "type": "Macro",
+      "command": true,
+      "macroId": "794852aa-5260-4b37-800d-b293920e0a4b"
+    },
+    {
       "id": "2763e489-04f4-4451-a0d9-3f416fa66f3b",
       "name": "Temp Note",
       "type": "Capture",
@@ -331,6 +338,22 @@
           "id": "4bfb88ca-0903-4ecd-ad09-465c783d9648",
           "path": "Attachment/Quickadd/Open File in Browser.js",
           "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Auto Hide Sidebar",
+      "id": "794852aa-5260-4b37-800d-b293920e0a4b",
+      "commands": [
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "62f1c040-bbbe-4f1f-b14a-6f2e19a381ba",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
+          }
         }
       ],
       "runOnStartup": false

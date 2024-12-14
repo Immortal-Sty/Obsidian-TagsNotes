@@ -374,5 +374,15 @@
       "modifiers": [],
       "key": "F8"
     }
+  ],
+  "quickadd:choice:1de98e3d-0fc6-40e0-b9a7-61031fdf84c2": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "4"
+    }
   ]
 }
