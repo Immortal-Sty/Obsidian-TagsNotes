@@ -28,56 +28,364 @@ __export(main_exports, {
   default: () => ImageToBase64Plugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian3 = require("obsidian");
-
-// src/utils.ts
-function arrayBufferToBase64(buffer) {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return window.btoa(binary);
-}
-async function fileToBase64(file, vault) {
-  const arrayBuffer = await vault.readBinary(file);
-  return arrayBufferToBase64(arrayBuffer);
-}
-async function fetchRemoteImageToBase64(url) {
-  const response = await fetch(url);
-  const arrayBuffer = await response.arrayBuffer();
-  return arrayBufferToBase64(arrayBuffer);
-}
+var import_obsidian7 = require("obsidian");
 
 // src/settings.ts
-var import_obsidian = require("obsidian");
-var DEFAULT_SETTINGS = {
-  convertOnPaste: false,
-  convertOnDrop: false
-};
-var ImageToBase64SettingTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Convert images on paste").setDesc("Automatically convert pasted images to base64 strings.").addToggle((toggle) => toggle.setValue(this.plugin.settings.convertOnPaste).onChange(async (value) => {
-      this.plugin.settings.convertOnPaste = value;
-      await this.plugin.saveSettings();
-    }));
-    new import_obsidian.Setting(containerEl).setName("Convert images on drop").setDesc("Automatically convert dropped images to base64 strings.").addToggle((toggle) => toggle.setValue(this.plugin.settings.convertOnDrop).onChange(async (value) => {
-      this.plugin.settings.convertOnDrop = value;
-      await this.plugin.saveSettings();
-    }));
-  }
-};
+var import_obsidian6 = require("obsidian");
 
-// src/modal/convertAllModal.ts
+// src/coms/__init__.ts
+var import_obsidian5 = require("obsidian");
+
+// src/utils/editor.ts
 var import_obsidian2 = require("obsidian");
-var ConvertAllModal = class extends import_obsidian2.Modal {
+
+// src/utils/base64.ts
+var import_buffer2 = require("buffer");
+var import_obsidian = require("obsidian");
+
+// src/utils/resizeSize.ts
+var import_buffer = require("buffer");
+async function resizeImageByPercentage(imageBuffer, percentage) {
+  const image = new Image();
+  image.src = "data:image/png;base64," + imageBuffer.toString("base64");
+  return new Promise((resolve, reject) => {
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        return reject(new Error("Unable to get canvas context"));
+      }
+      const newWidth = Math.round(image.width * (percentage / 100));
+      const newHeight = Math.round(image.height * (percentage / 100));
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+      ctx.drawImage(image, 0, 0, newWidth, newHeight);
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          return reject(
+            new Error("Unable to convert canvas to Blob")
+          );
+        }
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(import_buffer.Buffer.from(reader.result));
+        };
+        reader.readAsArrayBuffer(blob);
+      }, "image/png");
+    };
+    image.onerror = (err) => {
+      reject(new Error("Unable to load image"));
+    };
+  });
+}
+async function resizingRulesCheck(buf, plugin) {
+  if (!plugin.settings.enableResizing) {
+    return 100;
+  }
+  const image = new Image();
+  image.src = "data:image/png;base64," + buf.toString("base64");
+  return new Promise((resolve, reject) => {
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      const filesize = buf.length;
+      if (!width || !height) {
+        return reject(
+          new Error("Unable to determine image dimensions")
+        );
+      }
+      let minpercentage = 100;
+      for (const [string, percentage] of plugin.settings.resizingRules) {
+        if (!string) {
+          continue;
+        }
+        try {
+          if (string.includes("x")) {
+            const [ruleWidth, ruleHeight] = string.split("x").map(Number);
+            if (width >= ruleWidth && height >= ruleHeight) {
+              minpercentage = Math.min(minpercentage, percentage);
+            }
+          } else {
+            const size = Number(string);
+            if (filesize >= size) {
+              minpercentage = Math.min(minpercentage, percentage);
+            }
+          }
+        } catch (e) {
+          console.error("Error parsing resizing rules:", e);
+        }
+      }
+      resolve(minpercentage);
+    };
+    image.onerror = (err) => {
+      reject(new Error("Unable to load image"));
+    };
+  });
+}
+function getImageSizeAndFileSize(buf) {
+  return new Promise((resolve, reject) => {
+    if (!buf || buf.length === 0) {
+      return reject(new Error("Invalid buffer"));
+    }
+    const image = new Image();
+    image.src = "data:image/png;base64," + buf.toString("base64");
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      const filesize = buf.length / 1024;
+      if (!width || !height) {
+        return reject(new Error("Unable to determine image dimensions"));
+      }
+      resolve({ width, height, filesize });
+    };
+    image.onerror = () => {
+      reject(new Error("Unable to load image"));
+    };
+  });
+}
+async function checkThreshold(buf, plugin) {
+  if (buf.length === 0) {
+    return false;
+  }
+  if (!plugin.settings.convertBase64ByThresholdToggle) {
+    return false;
+  }
+  const { filesize } = await getImageSizeAndFileSize(buf);
+  const res = plugin.settings.convertBase64ByThreshold >= filesize == plugin.settings.convertBase64ByThresholdStrategy;
+  if (res) {
+    console.log("paste to base64 is ignored for this image");
+  }
+  return res;
+}
+
+// src/utils/base64.ts
+async function toBase64(input, plugin) {
+  let imageBuffer;
+  if (typeof input === "string" && input.startsWith("http")) {
+    const response = await fetch(input);
+    const arrayBuffer = await response.arrayBuffer();
+    imageBuffer = import_buffer2.Buffer.from(arrayBuffer);
+  } else if (typeof input === "string") {
+    imageBuffer = import_buffer2.Buffer.from(input);
+  } else if (input instanceof import_obsidian.TFile) {
+    const arrayBuffer = await input.vault.readBinary(input);
+    imageBuffer = import_buffer2.Buffer.from(arrayBuffer);
+  } else if (input instanceof ArrayBuffer) {
+    imageBuffer = import_buffer2.Buffer.from(input);
+  } else if (input instanceof Blob) {
+    const arrayBuffer = await input.arrayBuffer();
+    imageBuffer = import_buffer2.Buffer.from(arrayBuffer);
+  } else {
+    throw new Error("Unsupported input type");
+  }
+  const resizePercentage = await resizingRulesCheck(imageBuffer, plugin);
+  console.log(`Resizing image by ${resizePercentage}% for ${input}`);
+  const image = await resizeImageByPercentage(imageBuffer, resizePercentage);
+  return image.toString("base64");
+}
+var globalCounter = 0;
+function formatMarkdownBase64(base64String, altText) {
+  if (!altText) {
+    altText = "image" + globalCounter++;
+  }
+  if (!base64String.startsWith("data:image/")) {
+    base64String = `data:image/png;base64,${base64String}`;
+  }
+  return `![${altText}](${base64String})`;
+}
+
+// src/utils/editor.ts
+async function gatherClipboardItems(editor) {
+  try {
+    const items = await navigator.clipboard.read();
+    return filterClipboardItems(items);
+  } catch (err) {
+    console.error("Failed to read clipboard contents: ", err);
+    new import_obsidian2.Notice("Error accessing clipboard.");
+    return [];
+  }
+}
+async function filterClipboardItems(items) {
+  let filteredItems = [];
+  for (const clipboardItem of items) {
+    for (const type of clipboardItem.types) {
+      if (!type.startsWith("image")) {
+        continue;
+      }
+      const blob = await clipboardItem.getType(type);
+      filteredItems.push(blob);
+    }
+  }
+  return filteredItems;
+}
+async function editorProcessItems(editor, items, plugin) {
+  for (const item of items) {
+    const base64 = await toBase64(item, plugin);
+    const imgMarkdown = formatMarkdownBase64(base64, "") + "\n";
+    const cursor = editor.getCursor();
+    editor.replaceRange(imgMarkdown, cursor);
+    const newCursorPos = {
+      line: cursor.line + 1,
+      ch: 0
+    };
+    editor.setCursor(newCursorPos);
+  }
+}
+
+// src/coms/clipboard.ts
+async function registerPaletteCommand(plugin) {
+  plugin.addCommand({
+    id: "paste-image-as-base64",
+    name: "Paste image as Base64",
+    editorCallback: async (editor) => {
+      const items = await gatherClipboardItems(editor);
+      if (items.length === 0) {
+        return;
+      }
+      await editorProcessItems(editor, items, plugin);
+    }
+  });
+}
+async function registerOnPaste(plugin) {
+  plugin.registerEvent(
+    plugin.app.workspace.on(
+      "editor-paste",
+      async (evt, editor) => {
+        var _a;
+        if ((_a = evt.clipboardData) == null ? void 0 : _a.getData("_flagged")) {
+          return;
+        }
+        if (!plugin.settings.convertOnPaste || !evt.clipboardData) {
+          return;
+        }
+        const items = Array.from(
+          evt.clipboardData.items
+        );
+        if (!items.every((item) => item.type.startsWith("image/"))) {
+          return;
+        }
+        evt.preventDefault();
+        items.forEach(async (item) => {
+          var _a2, _b, _c;
+          const file = item instanceof File ? item : item.getAsFile();
+          if (!file) {
+            new Error("No file found");
+            return;
+          }
+          if (await checkThreshold(Buffer.from(await file.arrayBuffer()), plugin)) {
+            let newClipboardEvent = new ClipboardEvent("paste", {
+              bubbles: true,
+              cancelable: true,
+              clipboardData: new DataTransfer()
+            });
+            (_a2 = newClipboardEvent.clipboardData) == null ? void 0 : _a2.items.add(file);
+            (_b = newClipboardEvent.clipboardData) == null ? void 0 : _b.setData("_flagged", "true");
+            (_c = evt.target) == null ? void 0 : _c.dispatchEvent(newClipboardEvent);
+            return;
+          }
+          const base64 = await toBase64(file, plugin);
+          const filename = file.name || ``;
+          const imgMarkdown = formatMarkdownBase64(base64, filename) + "\n";
+          const cursor = editor.getCursor();
+          editor.replaceRange(imgMarkdown, cursor);
+          const newCursorPos = {
+            line: cursor.line + 1,
+            ch: 0
+          };
+          editor.setCursor(newCursorPos);
+        });
+      }
+    )
+  );
+}
+
+// src/coms/cursor.ts
+var import_obsidian3 = require("obsidian");
+function registerCursorListener(plugin) {
+  plugin.registerInterval(
+    window.setInterval(() => {
+      if (!plugin.settings.autoAvoidExpansion) {
+        return;
+      }
+      const activeView = plugin.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView);
+      if (activeView && activeView.getViewType() === "markdown") {
+        const editor = activeView.editor;
+        if (editor) {
+          checkCursorPosition(editor);
+        }
+      }
+    }, 100)
+  );
+}
+function checkCursorPosition(editor) {
+  const cursor = editor.getCursor();
+  if (cursor.ch < 300) {
+    return;
+  }
+  const line = editor.getLine(cursor.line);
+  if (!(line.startsWith("![") && line.includes("(data:image/"))) {
+    return;
+  }
+  editor.setCursor({ line: cursor.line + 1, ch: 0 });
+}
+
+// src/coms/drag.ts
+async function registerDrag(plugin) {
+  plugin.registerDomEvent(
+    document,
+    "drop",
+    async (event) => {
+      var _a, _b;
+      if (((_a = event.dataTransfer) == null ? void 0 : _a.getData("_flagged")) === "true") {
+        return;
+      }
+      if (!plugin.settings.convertOnDrop) {
+        return;
+      }
+      const editor = (_b = this.app.workspace.activeEditor) == null ? void 0 : _b.editor;
+      if (!editor) {
+        console.log("No editor found");
+        return;
+      }
+      if (!event.dataTransfer || event.dataTransfer.files.length == 0) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      const itemsCopy = Array.from(event.dataTransfer.files);
+      let cursor = editor.getCursor();
+      itemsCopy.forEach(async (file, index) => {
+        var _a2, _b2, _c, _d;
+        console.log(
+          `Processing file ${index + 1}/${(_a2 = event.dataTransfer) == null ? void 0 : _a2.files.length}: ${file.name} (${file.type})`
+        );
+        const arrayBuffer = await file.arrayBuffer();
+        if (!file.type.startsWith("image") || await checkThreshold(Buffer.from(arrayBuffer), plugin)) {
+          console.log("Redispatching default drop event for file: ", file.name);
+          const newDropEvent = new DragEvent("drop", {
+            bubbles: true,
+            cancelable: true,
+            dataTransfer: new DataTransfer()
+          });
+          (_b2 = newDropEvent.dataTransfer) == null ? void 0 : _b2.items.add(file);
+          (_c = newDropEvent.dataTransfer) == null ? void 0 : _c.setData("_flagged", "true");
+          (_d = event.target) == null ? void 0 : _d.dispatchEvent(newDropEvent);
+          return;
+        }
+        const base64 = await toBase64(arrayBuffer, plugin);
+        const imgMarkdown = formatMarkdownBase64(base64) + "\n";
+        editor.replaceRange(imgMarkdown, cursor);
+        cursor = { line: cursor.line + 1, ch: 0 };
+        editor.setCursor(cursor);
+      });
+    },
+    true
+  );
+}
+
+// src/modals/convertAll.ts
+var import_obsidian4 = require("obsidian");
+var ConvertAllModal = class extends import_obsidian4.Modal {
   constructor(app, onConfirm) {
     super(app);
     this.skipInternalLinks = false;
@@ -92,29 +400,29 @@ var ConvertAllModal = class extends import_obsidian2.Modal {
     contentEl.createEl("p", {
       text: "Do you want to convert all images to base64? You can also add filter schemes to skip certain images."
     });
-    new import_obsidian2.Setting(contentEl).setName("Skip links starting with ![[xxx]]").addToggle(
+    new import_obsidian4.Setting(contentEl).setName("Skip links starting with ![[xxx]]").addToggle(
       (toggle) => toggle.setValue(this.skipInternalLinks).onChange((value) => {
         this.skipInternalLinks = value;
       })
     );
-    new import_obsidian2.Setting(contentEl).setName("Skip remote image links").addToggle(
+    new import_obsidian4.Setting(contentEl).setName("Skip remote image links").addToggle(
       (toggle) => toggle.setValue(this.skipRemoteLinks).onChange((value) => {
         this.skipRemoteLinks = value;
       })
     );
-    new import_obsidian2.Setting(contentEl).setName("Filter Schemes").setDesc(
+    new import_obsidian4.Setting(contentEl).setName("Filter Schemes").setDesc(
       "Comma-separated list of keywords to skip (e.g., http, data)"
     ).addText(
       (text) => text.setPlaceholder("Enter filter schemes").onChange((value) => {
         this.customFilters = value.split(",").map((filter) => filter.trim());
       })
     );
-    new import_obsidian2.Setting(contentEl).setName("For all files (Dangerous)").addToggle(
+    new import_obsidian4.Setting(contentEl).setName("For all files (Dangerous)").addToggle(
       (toggle) => toggle.setValue(this.forAllFiles).onChange((value) => {
         this.forAllFiles = value;
       })
     );
-    new import_obsidian2.Setting(contentEl).addButton(
+    new import_obsidian4.Setting(contentEl).addButton(
       (button) => button.setButtonText("Convert").setCta().onClick(() => {
         this.onConfirm({
           skipInternalLinks: this.skipInternalLinks,
@@ -135,217 +443,204 @@ var ConvertAllModal = class extends import_obsidian2.Modal {
     contentEl.empty();
   }
 };
-function shouldSkipImage(link, imagePath, filters) {
-  if (filters.skipInternalLinks && link.startsWith("![[")) {
-    return true;
+
+// src/coms/__init__.ts
+async function registerDeprecatedCommands(plugin) {
+  if (!plugin.settings.enableDeprecatedMethods) {
+    return;
   }
-  if (filters.skipRemoteLinks && imagePath.startsWith("http")) {
-    return true;
-  }
-  for (const filter of filters.customFilters) {
-    if (filter.includes("*")) {
-      const regex = new RegExp(filter.replace("*", ".*"));
-      if (regex.test(imagePath)) {
-        return true;
-      }
+  new import_obsidian5.Notice(
+    "Deprecated commands will be removed at a later major version.\n	convert-all-images-to-base64\n"
+  );
+  plugin.addCommand({
+    id: "convert-all-images-to-base64",
+    name: "Convert all image attachments to inline base64",
+    editorCallback: async (editor) => {
+      new ConvertAllModal(
+        this.app,
+        async (filters) => {
+          let targetFiles;
+          if (filters.forAllFiles) {
+            targetFiles = this.app.vault.getFiles().filter(
+              (file) => file.extension === "md"
+            );
+            console.log("Converting " + targetFiles.length + " files");
+          } else {
+            const afile = this.app.workspace.getActiveFile();
+            if (!afile)
+              return;
+            targetFiles = [afile];
+          }
+          for (const file of targetFiles) {
+            console.log("Converting file " + file.path);
+            const content = await this.app.vault.read(file);
+            const updatedContent = await this.convertAllImagesToBase64(
+              content,
+              file,
+              filters
+            );
+            await this.app.vault.modify(file, updatedContent);
+          }
+          new import_obsidian5.Notice(
+            "All image attachments have been converted to inline base64."
+          );
+        }
+      ).open();
     }
-    if (link.includes(filter)) {
-      return true;
-    }
-  }
-  return false;
+  });
+}
+async function registerAllCommands(plugin) {
+  await registerPaletteCommand(plugin);
+  await registerOnPaste(plugin);
+  await registerDrag(plugin);
+  await registerCursorListener(plugin);
+  await registerDeprecatedCommands(plugin);
 }
 
+// src/settings.ts
+var currentDeprecatedMethodsFlag = false;
+var DEFAULT_SETTINGS = {
+  convertOnPaste: true,
+  convertOnDrop: true,
+  autoAvoidExpansion: false,
+  convertBase64ByThresholdToggle: false,
+  convertBase64ByThresholdStrategy: false,
+  convertBase64ByThreshold: 0,
+  enableResizing: false,
+  resizingRules: [
+    ["6000", 80],
+    ["12000", 60]
+  ],
+  enableDeprecatedMethods: false
+};
+var ImageToBase64SettingTab = class extends import_obsidian6.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    new import_obsidian6.Setting(containerEl).setName("Convert on paste").setDesc("Convert images pasted into the editor to base64").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.convertOnPaste).onChange(async (value) => {
+        this.plugin.settings.convertOnPaste = value;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName("Convert on drop").setDesc("Convert images dropped into the editor to base64").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.convertOnDrop).onChange(async (value) => {
+        this.plugin.settings.convertOnDrop = value;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName("Prevent link expansion").setDesc(
+      "Automatically prevent the expansion of base64 image links.                Currently only works with single images."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.autoAvoidExpansion).onChange(async (value) => {
+        this.plugin.settings.autoAvoidExpansion = value;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName("Convert base64 by threshold").setDesc("Flip the toggle to enable this feature, does not work for batches").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.convertBase64ByThresholdToggle).onChange(async (value) => {
+        this.plugin.settings.convertBase64ByThresholdToggle = value;
+        await this.plugin.saveSettings();
+        thresholdValue.settingEl.style.display = value ? "block" : "none";
+        thresholdDirection.settingEl.style.display = value ? "block" : "none";
+      })
+    );
+    const thresholdDirection = new import_obsidian6.Setting(containerEl).setName("How is it handled?").setDesc("Choose whether to trigger if its larger or smaller than the threshold").addDropdown(
+      (dropdown) => dropdown.addOption("larger", "Larger than threshold").addOption("smaller", "Smaller than threshold").setValue(this.plugin.settings.convertBase64ByThresholdStrategy ? "larger" : "smaller").onChange(async (value) => {
+        this.plugin.settings.convertBase64ByThresholdStrategy = value === "larger";
+        await this.plugin.saveSettings();
+      })
+    );
+    const thresholdValue = new import_obsidian6.Setting(containerEl).setName("Threshold (KB)").setDesc("Convert images larger than this size (in KB) to base64").addText(
+      (text) => text.setPlaceholder("Enter threshold in KB").setValue(String(this.plugin.settings.convertBase64ByThreshold || DEFAULT_SETTINGS.convertBase64ByThreshold)).onChange(async (value) => {
+        const numValue = Number(value);
+        if (!isNaN(numValue)) {
+          this.plugin.settings.convertBase64ByThreshold = numValue;
+          await this.plugin.saveSettings();
+        }
+      })
+    );
+    thresholdValue.settingEl.style.display = this.plugin.settings.convertBase64ByThresholdToggle ? "block" : "none";
+    thresholdDirection.settingEl.style.display = this.plugin.settings.convertBase64ByThresholdToggle ? "block" : "none";
+    let resizingRulesList = [];
+    new import_obsidian6.Setting(containerEl).setName("Enable resizing").setDesc("Enable resizing of base64 image links").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.enableResizing).onChange(async (value) => {
+        this.plugin.settings.enableResizing = value;
+        await this.plugin.saveSettings();
+        resizingRulesAddButton.settingEl.style.display = value ? "block" : "none";
+        resizingRulesList.forEach((rule) => {
+          rule.settingEl.style.display = value ? "block" : "none";
+        });
+        this.display();
+      })
+    );
+    let resizingRulesAddButton = new import_obsidian6.Setting(containerEl).setName("Resizing rules").setDesc("Rules for resizing base64 image links").addButton((button) => {
+      button.setButtonText("Add Rule").onClick(() => {
+        const rule = ["", 0];
+        this.plugin.settings.resizingRules.push(rule);
+        this.plugin.saveSettings();
+        this.display();
+      });
+    });
+    this.plugin.settings.resizingRules.forEach((rule, index) => {
+      const ruleType = rule[0].includes("x") ? "X x Y" : "Size";
+      const ruleTypeColor = ruleType === "X x Y" ? "red" : "green";
+      const ruleSetting = new import_obsidian6.Setting(containerEl);
+      resizingRulesList.push(ruleSetting);
+      const ruleLabel = ruleSetting.settingEl.createEl("span", {
+        text: ruleType,
+        attr: {
+          style: `color: ${ruleTypeColor}; margin-right: 10px; float: left;`
+        }
+      });
+      ruleSetting.settingEl.insertBefore(ruleLabel, ruleSetting.settingEl.firstChild);
+      ruleSetting.addText(
+        (text) => text.setPlaceholder("Dimension/Size").setValue(rule[0]).onChange(async (value) => {
+          rule[0] = value;
+          await this.plugin.saveSettings();
+          ruleLabel.textContent = rule[0].includes("x") ? "X x Y" : "Size";
+        })
+      ).addText(
+        (text) => text.setPlaceholder("Resize%").setValue(rule[1].toString()).onChange(async (value) => {
+          rule[1] = Number(value);
+          await this.plugin.saveSettings();
+        })
+      ).addButton((button) => {
+        button.setButtonText("Remove").onClick(async () => {
+          this.plugin.settings.resizingRules.splice(index, 1);
+          await this.plugin.saveSettings();
+          this.display();
+        });
+      });
+    });
+    resizingRulesAddButton.settingEl.style.display = this.plugin.settings.enableResizing ? "block" : "none";
+    resizingRulesList.forEach((rule) => {
+      rule.settingEl.style.display = this.plugin.settings.enableResizing ? "block" : "none";
+    });
+    let deprecatedToggle = new import_obsidian6.Setting(containerEl);
+    deprecatedToggle.setName("Enable deprecated methods").setDesc("Enables deprecated methods if not already loaded. More flips will take effect on next restart.").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.enableDeprecatedMethods).onChange(async (value) => {
+        this.plugin.settings.enableDeprecatedMethods = value;
+        await this.plugin.saveSettings();
+        if (value && !currentDeprecatedMethodsFlag) {
+          registerDeprecatedCommands(this.plugin);
+          currentDeprecatedMethodsFlag = true;
+        }
+      })
+    );
+  }
+};
+
 // src/main.ts
-var ImageToBase64Plugin = class extends import_obsidian3.Plugin {
+var ImageToBase64Plugin = class extends import_obsidian7.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new ImageToBase64SettingTab(this.app, this));
-    this.addCommand({
-      id: "toggle-convert-on-paste",
-      name: "Enable/disable convert to base64 on paste",
-      callback: () => {
-        this.settings.convertOnPaste = !this.settings.convertOnPaste;
-        this.saveSettings();
-        new import_obsidian3.Notice(
-          `Convert on paste is now ${this.settings.convertOnPaste ? "enabled" : "disabled"}`
-        );
-      }
-    });
-    this.addCommand({
-      id: "paste-image-as-base64",
-      name: "Paste image as Base64",
-      editorCallback: async (editor) => {
-        navigator.clipboard.read().then(async (items) => {
-          for (const clipboardItem of items) {
-            for (const type of clipboardItem.types) {
-              if (!(type.indexOf("image") === 0)) {
-                continue;
-              }
-              const blob = await clipboardItem.getType(type);
-              const arrayBuffer = await new Response(
-                blob
-              ).arrayBuffer();
-              const base64 = arrayBufferToBase64(arrayBuffer);
-              const cursor = editor.getCursor();
-              const imgMarkdown = `![](data:image/jpeg;base64,${base64})
-`;
-              editor.replaceRange(imgMarkdown, cursor);
-              const newCursorPos = {
-                line: cursor.line,
-                ch: imgMarkdown.length
-              };
-              editor.setCursor(newCursorPos);
-            }
-          }
-        }).catch((err) => {
-          console.error(
-            "Failed to read clipboard contents: ",
-            err
-          );
-          new import_obsidian3.Notice("Error accessing clipboard.");
-        });
-      }
-    });
-    this.addCommand({
-      id: "convert-all-images-to-base64",
-      name: "Convert all image attachments to inline base64",
-      editorCallback: async (editor) => {
-        new ConvertAllModal(
-          this.app,
-          async (filters) => {
-            if (filters.forAllFiles) {
-              var targetFiles = this.app.vault.getFiles().filter(
-                (file) => file.extension === "md"
-              );
-              console.log("Converting " + targetFiles.length + " files");
-            } else {
-              const afile = this.app.workspace.getActiveFile();
-              if (!afile)
-                return;
-              var targetFiles = [afile];
-            }
-            for (const file of targetFiles) {
-              console.log("Converting file " + file.path);
-              const content = await this.app.vault.read(file);
-              const updatedContent = await this.convertAllImagesToBase64(
-                content,
-                file,
-                filters
-              );
-              await this.app.vault.modify(file, updatedContent);
-            }
-            new import_obsidian3.Notice(
-              "All image attachments have been converted to inline base64."
-            );
-          }
-        ).open();
-      }
-    });
-    this.registerEvent(
-      this.app.workspace.on(
-        "editor-paste",
-        async (evt, editor) => {
-          if (!(this.settings.convertOnPaste && evt.clipboardData)) {
-            return;
-          }
-          const items = Array.from(evt.clipboardData.items);
-          if (!items.some((item) => item.type.startsWith("image"))) {
-            return;
-          }
-          evt.preventDefault();
-          let cursor = editor.getCursor();
-          items.forEach(async (item) => {
-            if (item.type.startsWith("image")) {
-              console.log("Detected " + item.type + " kind " + item.kind);
-              const file = item.getAsFile();
-              console.log("Converting file " + (file == null ? void 0 : file.name) + " to base64");
-              if (file) {
-                try {
-                  const base64String = arrayBufferToBase64(
-                    await (0, import_obsidian3.getBlobArrayBuffer)(file)
-                  );
-                  const imgMarkdown = `![](data:image/png;base64,${base64String})
-`;
-                  editor.replaceRange(imgMarkdown, cursor);
-                  cursor = { line: cursor.line + 1, ch: 0 };
-                  editor.setCursor(cursor);
-                } catch (error) {
-                  console.error("Error converting image to base64:", error);
-                }
-              }
-            }
-          });
-        }
-      )
-    );
-    this.registerDomEvent(document, "drop", async (event) => {
-      var _a;
-      if (!this.settings.convertOnDrop) {
-        return;
-      }
-      const editor = (_a = this.app.workspace.activeEditor) == null ? void 0 : _a.editor;
-      if (!editor) {
-        console.log("No active editor found.");
-        return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-        let cursor = editor.getCursor();
-        console.log(`Initial cursor position: ${cursor.line}, ${cursor.ch}`);
-        Array.from(event.dataTransfer.files).forEach(async (file, index) => {
-          var _a2;
-          console.log(`Processing file ${index + 1}/${(_a2 = event.dataTransfer) == null ? void 0 : _a2.files.length}: ${file.name} (${file.type})`);
-          if (file.type.startsWith("image")) {
-            const arrayBuffer = await file.arrayBuffer();
-            const base64 = arrayBufferToBase64(arrayBuffer);
-            const imgMarkdown = `![](data:image/${file.type.split("/")[1]};base64,${base64})
-`;
-            editor.replaceRange(imgMarkdown, cursor);
-            cursor = { line: cursor.line + 1, ch: 0 };
-            console.log(`New cursor position: ${cursor.line}, ${cursor.ch}`);
-            editor.setCursor(cursor);
-          }
-        });
-      }
-    }, true);
-  }
-  async convertAllImagesToBase64(content, file, filters) {
-    const imageLinks = content.match(
-      /!\[.*?\]\(((?!data:).*?)\)|!\[\[([^\]]+?)\]\]/g
-    );
-    if (!imageLinks)
-      return content;
-    for (const link of imageLinks) {
-      let match = link.match(/!\[.*?\]\((.*?)\)/) || link.match(/!\[\[([^\]]+?)\]\]/);
-      if (!match)
-        continue;
-      const imagePath = match[1] || match[2];
-      if (shouldSkipImage(link, imagePath, filters)) {
-        continue;
-      }
-      let base64;
-      if (imagePath.startsWith("http")) {
-        try {
-          base64 = await fetchRemoteImageToBase64(imagePath);
-        } catch (error) {
-          console.error("Error fetching remote image:", error);
-          continue;
-        }
-      } else {
-        const imageFile = this.app.metadataCache.getFirstLinkpathDest(
-          imagePath,
-          file.path
-        );
-        if (!imageFile)
-          continue;
-        base64 = await fileToBase64(imageFile, this.app.vault);
-      }
-      const dataUrl = `data:image/png;base64,${base64}`;
-      content = content.replace(link, `![](${dataUrl})`);
-    }
-    return content;
+    await registerAllCommands(this);
   }
   async loadSettings() {
     this.settings = Object.assign(
@@ -358,3 +653,5 @@ var ImageToBase64Plugin = class extends import_obsidian3.Plugin {
     await this.saveData(this.settings);
   }
 };
+
+/* nosourcemap */
