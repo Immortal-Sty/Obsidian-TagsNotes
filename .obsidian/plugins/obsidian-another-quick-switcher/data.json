@@ -211,6 +211,32 @@
           "hideHotkeyGuide": false
         }
       ],
+      "close if opened": [],
+      "dismiss": [
+        {
+          "modifiers": [],
+          "key": "Escape"
+        }
+      ]
+    },
+    "folder": {
+      "up": [
+        {
+          "modifiers": [
+            "Mod"
+          ],
+          "key": "p"
+        }
+      ],
+      "down": [
+        {
+          "modifiers": [
+            "Mod"
+          ],
+          "key": "n"
+        }
+      ],
+      "open in default app": [],
       "dismiss": [
         {
           "modifiers": [],
@@ -721,6 +747,11 @@
       "expand": false
     }
   ],
+  "searchesAutoAliasTransform": {
+    "enabled": false,
+    "aliasPattern": "",
+    "aliasFormat": ""
+  },
   "autoPreviewInFloatingHeaderSearch": true,
   "backlinkExcludePrefixPathPatterns": [],
   "inFileContextLines": 2,

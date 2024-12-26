@@ -61,14 +61,6 @@
       "key": "ArrowRight"
     }
   ],
-  "markdown:toggle-preview": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "/"
-    }
-  ],
   "editor:toggle-italics": [],
   "editor:delete-paragraph": [],
   "editor:open-search": [],
@@ -138,14 +130,6 @@
     }
   ],
   "editor:toggle-checklist-status": [],
-  "editor:toggle-source": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "/"
-    }
-  ],
   "workspace:new-tab": [],
   "app:reload": [
     {
@@ -165,14 +149,6 @@
     {
       "modifiers": [],
       "key": "F8"
-    }
-  ],
-  "editor:focus": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "E"
     }
   ],
   "editor:toggle-comments": [],
@@ -383,6 +359,24 @@
         "Shift"
       ],
       "key": "4"
+    }
+  ],
+  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [],
+  "editor:focus": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ],
+  "editor:toggle-source": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "E"
     }
   ]
 }

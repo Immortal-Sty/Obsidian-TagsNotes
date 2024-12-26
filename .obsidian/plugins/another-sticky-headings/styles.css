@@ -4,76 +4,47 @@ name: Sticky Headings
 id: sticky-headings
 settings:
     -
-        id: indent-width
+        id: sticky-header-indent-width
         title: Indent width
         description: The indentation width in em units
         type: variable-number
         default: 1
         format: rem
 
+    -
+        id: sticky-header-verticle-offset
+        title: verticle offset
+        description: The verticle offset in px units
+        type: variable-number
+        default: 0
+        format: px
+
+    -
+        id: sticky-header-float-background-color
+        title: float theme background color
+        description: The float theme background color
+        type: variable-color
+        opacity: true
+        default: #000
+        format: rgb
+    -
+        id: sticky-header-float-text-color
+        title: float theme text color
+        description: The float theme text color
+        type: variable-color
+        opacity: true
+        default: #fff
+        format: rgb
+
 */
 
 :root {
-	--indent-width: 1em;
+  --sticky-header-indent-width: 1em;
+  --sticky-header-verticle-offset: 0px;
+  --sticky-header-float-background-color: #000;
+  --sticky-header-float-text-color: #fff;
 }
 
 .view-content {
-	position: relative;
-}
-
-.sticky-headings-root {
-	height: fit-content;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	padding: 0 var(--file-margins);
-	z-index: 1;
-}
-
-.sticky-headings-container {
-	font-size: 12px;
-	margin: 0 auto;
-	max-width: var(--file-line-width);
-}
-
-.sticky-headings-item {
-	line-height: 18px;
-	display: flex;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	/* height: 18px; */
-	cursor: var(--cursor-link);
-}
-
-.sticky-headings-item svg {
-	width: 16px;
-	height: 16px;
-	margin-right: 8px;
-	color: var(--link-color);
-}
-
-.sticky-headings-item[data-indent-level="1"] {
-	padding-left: var(--indent-width);
-}
-
-.sticky-headings-item[data-indent-level="2"] {
-	padding-left: calc(var(--indent-width) * 2);
-}
-
-.sticky-headings-item[data-indent-level="3"] {
-	padding-left: calc(var(--indent-width) * 3);
-}
-
-.sticky-headings-item[data-indent-level="4"] {
-	padding-left: calc(var(--indent-width) * 4);
-}
-
-.sticky-headings-item[data-indent-level="5"] {
-	padding-left: calc(var(--indent-width) * 5);
-}
-
-.sticky-headings-item:last-of-type {
-	padding-bottom: 5px;
+  position: relative;
 }
