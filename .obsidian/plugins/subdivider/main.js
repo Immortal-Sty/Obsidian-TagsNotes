@@ -135,12 +135,63 @@ var require_format = __commonJS({
 // src/main.ts
 var main_exports = {};
 __export(main_exports, {
-  FilenameModal: () => FilenameModal,
-  OverrideModal: () => OverrideModal,
   default: () => SubdividerPlugin
 });
 module.exports = __toCommonJS(main_exports);
+var import_obsidian4 = require("obsidian");
+
+// src/settings.ts
 var import_obsidian = require("obsidian");
+var DEFAULT_SETTINGS = {
+  recursive: true,
+  recursionDepth: 1,
+  delete: false,
+  index: true,
+  compact: false
+};
+var SubdividerSettingTab = class extends import_obsidian.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    new import_obsidian.Setting(containerEl).setName("Recursive").setDesc("Turn all subheadings to folders recursively.").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.recursive).onChange(async (value2) => {
+        this.plugin.settings.recursive = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian.Setting(containerEl).setName("Recursion Depth").setDesc("The maximum depth of recursion.").addText(
+      (text5) => text5.setValue(this.plugin.settings.recursionDepth.toString()).onChange(async (value2) => {
+        this.plugin.settings.recursionDepth = Number(value2);
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian.Setting(containerEl).setName("Delete original file or selection").setDesc("Delete original file or selection after subdivision.").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.delete).onChange(async (value2) => {
+        this.plugin.settings.delete = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian.Setting(containerEl).setName("Create index file for folders").setDesc("Create index file for folders after subdivision.").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.index).onChange(async (value2) => {
+        this.plugin.settings.index = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian.Setting(containerEl).setName("Maintain original line breaks").setDesc("If enabled, no new line breaks will be added between blocks.").addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.compact).onChange(async (value2) => {
+        this.plugin.settings.compact = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+  }
+};
+
+// src/handles.ts
+var import_obsidian3 = require("obsidian");
 
 // node_modules/mdast-util-to-string/lib/index.js
 var emptyOptions = {};
@@ -207,8 +258,7 @@ function splice(list4, start, remove, items) {
     parameters.unshift(start, remove);
     list4.splice(...parameters);
   } else {
-    if (remove)
-      list4.splice(start, remove);
+    if (remove) list4.splice(start, remove);
     while (chunkStart < items.length) {
       parameters = items.slice(chunkStart, chunkStart + 1e4);
       parameters.unshift(start, 0);
@@ -245,8 +295,7 @@ function syntaxExtension(all2, extension2) {
     let code3;
     if (right) {
       for (code3 in right) {
-        if (!hasOwnProperty.call(left, code3))
-          left[code3] = [];
+        if (!hasOwnProperty.call(left, code3)) left[code3] = [];
         const value2 = right[code3];
         constructs(
           // @ts-expect-error Looks like a list.
@@ -478,8 +527,7 @@ function initializeDocument(effects) {
     )(code3);
   }
   function thereIsANewContainer(code3) {
-    if (childFlow)
-      closeFlow();
+    if (childFlow) closeFlow();
     exitContainers(continued);
     return documentContinued(code3);
   }
@@ -503,8 +551,7 @@ function initializeDocument(effects) {
   }
   function flowStart(code3) {
     if (code3 === null) {
-      if (childFlow)
-        closeFlow();
+      if (childFlow) closeFlow();
       exitContainers(0);
       effects.consume(code3);
       return;
@@ -536,11 +583,9 @@ function initializeDocument(effects) {
   }
   function writeToChild(token, eof) {
     const stream = self.sliceStream(token);
-    if (eof)
-      stream.push(null);
+    if (eof) stream.push(null);
     token.previous = childToken;
-    if (childToken)
-      childToken.next = token;
+    if (childToken) childToken.next = token;
     childToken = token;
     childFlow.defineSkip(token.start);
     childFlow.write(stream);
@@ -687,37 +732,14 @@ function resolveAllAttention(events, context) {
           events[index2][1].start = Object.assign({}, closingSequence.end);
           nextEvents = [];
           if (events[open][1].end.offset - events[open][1].start.offset) {
-            nextEvents = push(nextEvents, [
-              ["enter", events[open][1], context],
-              ["exit", events[open][1], context]
-            ]);
+            nextEvents = push(nextEvents, [["enter", events[open][1], context], ["exit", events[open][1], context]]);
           }
-          nextEvents = push(nextEvents, [
-            ["enter", group, context],
-            ["enter", openingSequence, context],
-            ["exit", openingSequence, context],
-            ["enter", text5, context]
-          ]);
-          nextEvents = push(
-            nextEvents,
-            resolveAll(
-              context.parser.constructs.insideSpan.null,
-              events.slice(open + 1, index2),
-              context
-            )
-          );
-          nextEvents = push(nextEvents, [
-            ["exit", text5, context],
-            ["enter", closingSequence, context],
-            ["exit", closingSequence, context],
-            ["exit", group, context]
-          ]);
+          nextEvents = push(nextEvents, [["enter", group, context], ["enter", openingSequence, context], ["exit", openingSequence, context], ["enter", text5, context]]);
+          nextEvents = push(nextEvents, resolveAll(context.parser.constructs.insideSpan.null, events.slice(open + 1, index2), context));
+          nextEvents = push(nextEvents, [["exit", text5, context], ["enter", closingSequence, context], ["exit", closingSequence, context], ["exit", group, context]]);
           if (events[index2][1].end.offset - events[index2][1].start.offset) {
             offset = 2;
-            nextEvents = push(nextEvents, [
-              ["enter", events[index2][1], context],
-              ["exit", events[index2][1], context]
-            ]);
+            nextEvents = push(nextEvents, [["enter", events[index2][1], context], ["exit", events[index2][1], context]]);
           } else {
             offset = 0;
           }
@@ -787,6 +809,9 @@ function tokenizeAutolink(effects, ok3, nok) {
     if (asciiAlpha(code3)) {
       effects.consume(code3);
       return schemeOrEmailAtext;
+    }
+    if (code3 === 64) {
+      return nok(code3);
     }
     return emailAtext(code3);
   }
@@ -926,12 +951,7 @@ function tokenizeBlockQuoteContinuation(effects, ok3, nok) {
   return contStart;
   function contStart(code3) {
     if (markdownSpace(code3)) {
-      return factorySpace(
-        effects,
-        contBefore,
-        "linePrefix",
-        self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4
-      )(code3);
+      return factorySpace(effects, contBefore, "linePrefix", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4)(code3);
     }
     return contBefore(code3);
   }
@@ -1138,12 +1158,7 @@ function tokenizeCodeFenced(effects, ok3, nok) {
     return contentStart;
   }
   function contentStart(code3) {
-    return initialPrefix > 0 && markdownSpace(code3) ? factorySpace(
-      effects,
-      beforeContentChunk,
-      "linePrefix",
-      initialPrefix + 1
-    )(code3) : beforeContentChunk(code3);
+    return initialPrefix > 0 && markdownSpace(code3) ? factorySpace(effects, beforeContentChunk, "linePrefix", initialPrefix + 1)(code3) : beforeContentChunk(code3);
   }
   function beforeContentChunk(code3) {
     if (code3 === null || markdownLineEnding(code3)) {
@@ -1175,12 +1190,7 @@ function tokenizeCodeFenced(effects, ok3, nok) {
     }
     function start2(code3) {
       effects2.enter("codeFencedFence");
-      return markdownSpace(code3) ? factorySpace(
-        effects2,
-        beforeSequenceClose,
-        "linePrefix",
-        self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4
-      )(code3) : beforeSequenceClose(code3);
+      return markdownSpace(code3) ? factorySpace(effects2, beforeSequenceClose, "linePrefix", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4)(code3) : beforeSequenceClose(code3);
     }
     function beforeSequenceClose(code3) {
       if (code3 === marker) {
@@ -1406,8 +1416,201 @@ function tokenizeCodeText(effects, ok3, nok) {
   }
 }
 
+// node_modules/micromark-util-subtokenize/lib/splice-buffer.js
+var SpliceBuffer = class {
+  /**
+   * @param {ReadonlyArray<T> | null | undefined} [initial]
+   *   Initial items (optional).
+   * @returns
+   *   Splice buffer.
+   */
+  constructor(initial) {
+    this.left = initial ? [...initial] : [];
+    this.right = [];
+  }
+  /**
+   * Array access;
+   * does not move the cursor.
+   *
+   * @param {number} index
+   *   Index.
+   * @return {T}
+   *   Item.
+   */
+  get(index2) {
+    if (index2 < 0 || index2 >= this.left.length + this.right.length) {
+      throw new RangeError("Cannot access index `" + index2 + "` in a splice buffer of size `" + (this.left.length + this.right.length) + "`");
+    }
+    if (index2 < this.left.length) return this.left[index2];
+    return this.right[this.right.length - index2 + this.left.length - 1];
+  }
+  /**
+   * The length of the splice buffer, one greater than the largest index in the
+   * array.
+   */
+  get length() {
+    return this.left.length + this.right.length;
+  }
+  /**
+   * Remove and return `list[0]`;
+   * moves the cursor to `0`.
+   *
+   * @returns {T | undefined}
+   *   Item, optional.
+   */
+  shift() {
+    this.setCursor(0);
+    return this.right.pop();
+  }
+  /**
+   * Slice the buffer to get an array;
+   * does not move the cursor.
+   *
+   * @param {number} start
+   *   Start.
+   * @param {number | null | undefined} [end]
+   *   End (optional).
+   * @returns {Array<T>}
+   *   Array of items.
+   */
+  slice(start, end) {
+    const stop = end === null || end === void 0 ? Number.POSITIVE_INFINITY : end;
+    if (stop < this.left.length) {
+      return this.left.slice(start, stop);
+    }
+    if (start > this.left.length) {
+      return this.right.slice(this.right.length - stop + this.left.length, this.right.length - start + this.left.length).reverse();
+    }
+    return this.left.slice(start).concat(this.right.slice(this.right.length - stop + this.left.length).reverse());
+  }
+  /**
+   * Mimics the behavior of Array.prototype.splice() except for the change of
+   * interface necessary to avoid segfaults when patching in very large arrays.
+   *
+   * This operation moves cursor is moved to `start` and results in the cursor
+   * placed after any inserted items.
+   *
+   * @param {number} start
+   *   Start;
+   *   zero-based index at which to start changing the array;
+   *   negative numbers count backwards from the end of the array and values
+   *   that are out-of bounds are clamped to the appropriate end of the array.
+   * @param {number | null | undefined} [deleteCount=0]
+   *   Delete count (default: `0`);
+   *   maximum number of elements to delete, starting from start.
+   * @param {Array<T> | null | undefined} [items=[]]
+   *   Items to include in place of the deleted items (default: `[]`).
+   * @return {Array<T>}
+   *   Any removed items.
+   */
+  splice(start, deleteCount, items) {
+    const count = deleteCount || 0;
+    this.setCursor(Math.trunc(start));
+    const removed = this.right.splice(this.right.length - count, Number.POSITIVE_INFINITY);
+    if (items) chunkedPush(this.left, items);
+    return removed.reverse();
+  }
+  /**
+   * Remove and return the highest-numbered item in the array, so
+   * `list[list.length - 1]`;
+   * Moves the cursor to `length`.
+   *
+   * @returns {T | undefined}
+   *   Item, optional.
+   */
+  pop() {
+    this.setCursor(Number.POSITIVE_INFINITY);
+    return this.left.pop();
+  }
+  /**
+   * Inserts a single item to the high-numbered side of the array;
+   * moves the cursor to `length`.
+   *
+   * @param {T} item
+   *   Item.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  push(item) {
+    this.setCursor(Number.POSITIVE_INFINITY);
+    this.left.push(item);
+  }
+  /**
+   * Inserts many items to the high-numbered side of the array.
+   * Moves the cursor to `length`.
+   *
+   * @param {Array<T>} items
+   *   Items.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  pushMany(items) {
+    this.setCursor(Number.POSITIVE_INFINITY);
+    chunkedPush(this.left, items);
+  }
+  /**
+   * Inserts a single item to the low-numbered side of the array;
+   * Moves the cursor to `0`.
+   *
+   * @param {T} item
+   *   Item.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  unshift(item) {
+    this.setCursor(0);
+    this.right.push(item);
+  }
+  /**
+   * Inserts many items to the low-numbered side of the array;
+   * moves the cursor to `0`.
+   *
+   * @param {Array<T>} items
+   *   Items.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  unshiftMany(items) {
+    this.setCursor(0);
+    chunkedPush(this.right, items.reverse());
+  }
+  /**
+   * Move the cursor to a specific position in the array. Requires
+   * time proportional to the distance moved.
+   *
+   * If `n < 0`, the cursor will end up at the beginning.
+   * If `n > length`, the cursor will end up at the end.
+   *
+   * @param {number} n
+   *   Position.
+   * @return {undefined}
+   *   Nothing.
+   */
+  setCursor(n) {
+    if (n === this.left.length || n > this.left.length && this.right.length === 0 || n < 0 && this.left.length === 0) return;
+    if (n < this.left.length) {
+      const removed = this.left.splice(n, Number.POSITIVE_INFINITY);
+      chunkedPush(this.right, removed.reverse());
+    } else {
+      const removed = this.right.splice(this.left.length + this.right.length - n, Number.POSITIVE_INFINITY);
+      chunkedPush(this.left, removed.reverse());
+    }
+  }
+};
+function chunkedPush(list4, right) {
+  let chunkStart = 0;
+  if (right.length < 1e4) {
+    list4.push(...right);
+  } else {
+    while (chunkStart < right.length) {
+      list4.push(...right.slice(chunkStart, chunkStart + 1e4));
+      chunkStart += 1e4;
+    }
+  }
+}
+
 // node_modules/micromark-util-subtokenize/index.js
-function subtokenize(events) {
+function subtokenize(eventsArray) {
   const jumps = {};
   let index2 = -1;
   let event;
@@ -1417,12 +1620,13 @@ function subtokenize(events) {
   let parameters;
   let subevents;
   let more;
+  const events = new SpliceBuffer(eventsArray);
   while (++index2 < events.length) {
     while (index2 in jumps) {
       index2 = jumps[index2];
     }
-    event = events[index2];
-    if (index2 && event[1].type === "chunkFlow" && events[index2 - 1][1].type === "listItemPrefix") {
+    event = events.get(index2);
+    if (index2 && event[1].type === "chunkFlow" && events.get(index2 - 1)[1].type === "listItemPrefix") {
       subevents = event[1]._tokenizer.events;
       otherIndex = 0;
       if (otherIndex < subevents.length && subevents[otherIndex][1].type === "lineEndingBlank") {
@@ -1450,11 +1654,11 @@ function subtokenize(events) {
       otherIndex = index2;
       lineIndex = void 0;
       while (otherIndex--) {
-        otherEvent = events[otherIndex];
+        otherEvent = events.get(otherIndex);
         if (otherEvent[1].type === "lineEnding" || otherEvent[1].type === "lineEndingBlank") {
           if (otherEvent[0] === "enter") {
             if (lineIndex) {
-              events[lineIndex][1].type = "lineEndingBlank";
+              events.get(lineIndex)[1].type = "lineEndingBlank";
             }
             otherEvent[1].type = "lineEnding";
             lineIndex = otherIndex;
@@ -1464,18 +1668,19 @@ function subtokenize(events) {
         }
       }
       if (lineIndex) {
-        event[1].end = Object.assign({}, events[lineIndex][1].start);
+        event[1].end = Object.assign({}, events.get(lineIndex)[1].start);
         parameters = events.slice(lineIndex, index2);
         parameters.unshift(event);
-        splice(events, lineIndex, index2 - lineIndex + 1, parameters);
+        events.splice(lineIndex, index2 - lineIndex + 1, parameters);
       }
     }
   }
+  splice(eventsArray, 0, Number.POSITIVE_INFINITY, events.slice(0));
   return !more;
 }
 function subcontent(events, eventIndex) {
-  const token = events[eventIndex][1];
-  const context = events[eventIndex][2];
+  const token = events.get(eventIndex)[1];
+  const context = events.get(eventIndex)[2];
   let startPosition = eventIndex - 1;
   const startPositions = [];
   const tokenizer = token._tokenizer || context.parser[token.contentType](token.start);
@@ -1490,7 +1695,7 @@ function subcontent(events, eventIndex) {
   let start = 0;
   const breaks = [start];
   while (current) {
-    while (events[++startPosition][1] !== current) {
+    while (events.get(++startPosition)[1] !== current) {
     }
     startPositions.push(startPosition);
     if (!current._tokenizer) {
@@ -1536,9 +1741,10 @@ function subcontent(events, eventIndex) {
   while (index2--) {
     const slice = childEvents.slice(breaks[index2], breaks[index2 + 1]);
     const start2 = startPositions.pop();
-    jumps.unshift([start2, start2 + slice.length - 1]);
-    splice(events, start2, 2, slice);
+    jumps.push([start2, start2 + slice.length - 1]);
+    events.splice(start2, 2, slice);
   }
+  jumps.reverse();
   index2 = -1;
   while (++index2 < jumps.length) {
     gaps[adjust + jumps[index2][0]] = adjust + jumps[index2][1];
@@ -1575,11 +1781,7 @@ function tokenizeContent(effects, ok3) {
       return contentEnd(code3);
     }
     if (markdownLineEnding(code3)) {
-      return effects.check(
-        continuationConstruct,
-        contentContinue,
-        contentEnd
-      )(code3);
+      return effects.check(continuationConstruct, contentContinue, contentEnd)(code3);
     }
     effects.consume(code3);
     return chunkInside;
@@ -1762,8 +1964,7 @@ function factoryLabel(effects, ok3, nok, type, markerType, stringType) {
       return atBreak(code3);
     }
     effects.consume(code3);
-    if (!seen)
-      seen = !markdownSpace(code3);
+    if (!seen) seen = !markdownSpace(code3);
     return code3 === 92 ? labelEscape : labelInside;
   }
   function labelEscape(code3) {
@@ -1891,9 +2092,7 @@ function tokenizeDefinition(effects, ok3, nok) {
     )(code3);
   }
   function labelAfter(code3) {
-    identifier = normalizeIdentifier(
-      self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
-    );
+    identifier = normalizeIdentifier(self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1));
     if (code3 === 58) {
       effects.enter("definitionMarker");
       effects.consume(code3);
@@ -1939,14 +2138,7 @@ function tokenizeTitleBefore(effects, ok3, nok) {
     return markdownLineEndingOrSpace(code3) ? factoryWhitespace(effects, beforeMarker)(code3) : nok(code3);
   }
   function beforeMarker(code3) {
-    return factoryTitle(
-      effects,
-      titleAfter,
-      nok,
-      "definitionTitle",
-      "definitionTitleMarker",
-      "definitionTitleString"
-    )(code3);
+    return factoryTitle(effects, titleAfter, nok, "definitionTitle", "definitionTitleMarker", "definitionTitleString")(code3);
   }
   function titleAfter(code3) {
     return markdownSpace(code3) ? factorySpace(effects, titleAfterOptionalWhitespace, "whitespace")(code3) : titleAfterOptionalWhitespace(code3);
@@ -2009,12 +2201,7 @@ function resolveHeadingAtx(events, context) {
       end: events[contentEnd][1].end,
       contentType: "text"
     };
-    splice(events, contentStart, contentEnd - contentStart + 1, [
-      ["enter", content3, context],
-      ["enter", text5, context],
-      ["exit", text5, context],
-      ["exit", content3, context]
-    ]);
+    splice(events, contentStart, contentEnd - contentStart + 1, [["enter", content3, context], ["enter", text5, context], ["exit", text5, context], ["exit", content3, context]]);
   }
   return events;
 }
@@ -2406,11 +2593,7 @@ function tokenizeHtmlFlow(effects, ok3, nok) {
     }
     if (markdownLineEnding(code3) && (marker === 6 || marker === 7)) {
       effects.exit("htmlFlowData");
-      return effects.check(
-        blankLineBefore,
-        continuationAfter,
-        continuationStart
-      )(code3);
+      return effects.check(blankLineBefore, continuationAfter, continuationStart)(code3);
     }
     if (code3 === null || markdownLineEnding(code3)) {
       effects.exit("htmlFlowData");
@@ -2420,11 +2603,7 @@ function tokenizeHtmlFlow(effects, ok3, nok) {
     return continuation;
   }
   function continuationStart(code3) {
-    return effects.check(
-      nonLazyContinuationStart,
-      continuationStartNonLazy,
-      continuationAfter
-    )(code3);
+    return effects.check(nonLazyContinuationStart, continuationStartNonLazy, continuationAfter)(code3);
   }
   function continuationStartNonLazy(code3) {
     effects.enter("lineEnding");
@@ -2825,12 +3004,7 @@ function tokenizeHtmlText(effects, ok3, nok) {
     return lineEndingAfter;
   }
   function lineEndingAfter(code3) {
-    return markdownSpace(code3) ? factorySpace(
-      effects,
-      lineEndingAfterPrefix,
-      "linePrefix",
-      self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4
-    )(code3) : lineEndingAfterPrefix(code3);
+    return markdownSpace(code3) ? factorySpace(effects, lineEndingAfterPrefix, "linePrefix", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4)(code3) : lineEndingAfterPrefix(code3);
   }
   function lineEndingAfterPrefix(code3) {
     effects.enter("htmlTextData");
@@ -2909,26 +3083,11 @@ function resolveToLabelEnd(events, context) {
     start: Object.assign({}, events[open + offset + 2][1].end),
     end: Object.assign({}, events[close2 - 2][1].start)
   };
-  media = [
-    ["enter", group, context],
-    ["enter", label, context]
-  ];
+  media = [["enter", group, context], ["enter", label, context]];
   media = push(media, events.slice(open + 1, open + offset + 3));
   media = push(media, [["enter", text5, context]]);
-  media = push(
-    media,
-    resolveAll(
-      context.parser.constructs.insideSpan.null,
-      events.slice(open + offset + 4, close2 - 3),
-      context
-    )
-  );
-  media = push(media, [
-    ["exit", text5, context],
-    events[close2 - 2],
-    events[close2 - 1],
-    ["exit", label, context]
-  ]);
+  media = push(media, resolveAll(context.parser.constructs.insideSpan.null, events.slice(open + offset + 4, close2 - 3), context));
+  media = push(media, [["exit", text5, context], events[close2 - 2], events[close2 - 1], ["exit", label, context]]);
   media = push(media, events.slice(close2 + 1));
   media = push(media, [["exit", group, context]]);
   splice(events, open, events.length, media);
@@ -2953,14 +3112,10 @@ function tokenizeLabelEnd(effects, ok3, nok) {
     if (labelStart._inactive) {
       return labelEndNok(code3);
     }
-    defined = self.parser.defined.includes(
-      normalizeIdentifier(
-        self.sliceSerialize({
-          start: labelStart.end,
-          end: self.now()
-        })
-      )
-    );
+    defined = self.parser.defined.includes(normalizeIdentifier(self.sliceSerialize({
+      start: labelStart.end,
+      end: self.now()
+    })));
     effects.enter("labelEnd");
     effects.enter("labelMarker");
     effects.consume(code3);
@@ -2970,27 +3125,15 @@ function tokenizeLabelEnd(effects, ok3, nok) {
   }
   function after(code3) {
     if (code3 === 40) {
-      return effects.attempt(
-        resourceConstruct,
-        labelEndOk,
-        defined ? labelEndOk : labelEndNok
-      )(code3);
+      return effects.attempt(resourceConstruct, labelEndOk, defined ? labelEndOk : labelEndNok)(code3);
     }
     if (code3 === 91) {
-      return effects.attempt(
-        referenceFullConstruct,
-        labelEndOk,
-        defined ? referenceNotFull : labelEndNok
-      )(code3);
+      return effects.attempt(referenceFullConstruct, labelEndOk, defined ? referenceNotFull : labelEndNok)(code3);
     }
     return defined ? labelEndOk(code3) : labelEndNok(code3);
   }
   function referenceNotFull(code3) {
-    return effects.attempt(
-      referenceCollapsedConstruct,
-      labelEndOk,
-      labelEndNok
-    )(code3);
+    return effects.attempt(referenceCollapsedConstruct, labelEndOk, labelEndNok)(code3);
   }
   function labelEndOk(code3) {
     return ok3(code3);
@@ -3016,17 +3159,7 @@ function tokenizeResource(effects, ok3, nok) {
     if (code3 === 41) {
       return resourceEnd(code3);
     }
-    return factoryDestination(
-      effects,
-      resourceDestinationAfter,
-      resourceDestinationMissing,
-      "resourceDestination",
-      "resourceDestinationLiteral",
-      "resourceDestinationLiteralMarker",
-      "resourceDestinationRaw",
-      "resourceDestinationString",
-      32
-    )(code3);
+    return factoryDestination(effects, resourceDestinationAfter, resourceDestinationMissing, "resourceDestination", "resourceDestinationLiteral", "resourceDestinationLiteralMarker", "resourceDestinationRaw", "resourceDestinationString", 32)(code3);
   }
   function resourceDestinationAfter(code3) {
     return markdownLineEndingOrSpace(code3) ? factoryWhitespace(effects, resourceBetween)(code3) : resourceEnd(code3);
@@ -3036,14 +3169,7 @@ function tokenizeResource(effects, ok3, nok) {
   }
   function resourceBetween(code3) {
     if (code3 === 34 || code3 === 39 || code3 === 40) {
-      return factoryTitle(
-        effects,
-        resourceTitleAfter,
-        nok,
-        "resourceTitle",
-        "resourceTitleMarker",
-        "resourceTitleString"
-      )(code3);
+      return factoryTitle(effects, resourceTitleAfter, nok, "resourceTitle", "resourceTitleMarker", "resourceTitleString")(code3);
     }
     return resourceEnd(code3);
   }
@@ -3065,22 +3191,10 @@ function tokenizeReferenceFull(effects, ok3, nok) {
   const self = this;
   return referenceFull;
   function referenceFull(code3) {
-    return factoryLabel.call(
-      self,
-      effects,
-      referenceFullAfter,
-      referenceFullMissing,
-      "reference",
-      "referenceMarker",
-      "referenceString"
-    )(code3);
+    return factoryLabel.call(self, effects, referenceFullAfter, referenceFullMissing, "reference", "referenceMarker", "referenceString")(code3);
   }
   function referenceFullAfter(code3) {
-    return self.parser.defined.includes(
-      normalizeIdentifier(
-        self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
-      )
-    ) ? ok3(code3) : nok(code3);
+    return self.parser.defined.includes(normalizeIdentifier(self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1))) ? ok3(code3) : nok(code3);
   }
   function referenceFullMissing(code3) {
     return nok(code3);
@@ -3278,11 +3392,7 @@ function tokenizeListStart(effects, ok3, nok) {
       blankLine,
       // Can’t be empty when interrupting.
       self.interrupt ? nok : onBlank,
-      effects.attempt(
-        listItemPrefixWhitespaceConstruct,
-        endOfPrefix,
-        otherPrefix
-      )
+      effects.attempt(listItemPrefixWhitespaceConstruct, endOfPrefix, otherPrefix)
     );
   }
   function onBlank(code3) {
@@ -3310,12 +3420,7 @@ function tokenizeListContinuation(effects, ok3, nok) {
   return effects.check(blankLine, onBlank, notBlank);
   function onBlank(code3) {
     self.containerState.furtherBlankLines = self.containerState.furtherBlankLines || self.containerState.initialBlankLine;
-    return factorySpace(
-      effects,
-      ok3,
-      "listItemIndent",
-      self.containerState.size + 1
-    )(code3);
+    return factorySpace(effects, ok3, "listItemIndent", self.containerState.size + 1)(code3);
   }
   function notBlank(code3) {
     if (self.containerState.furtherBlankLines || !markdownSpace(code3)) {
@@ -3330,22 +3435,12 @@ function tokenizeListContinuation(effects, ok3, nok) {
   function notInCurrentItem(code3) {
     self.containerState._closeFlow = true;
     self.interrupt = void 0;
-    return factorySpace(
-      effects,
-      effects.attempt(list, ok3, nok),
-      "linePrefix",
-      self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4
-    )(code3);
+    return factorySpace(effects, effects.attempt(list, ok3, nok), "linePrefix", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4)(code3);
   }
 }
 function tokenizeIndent(effects, ok3, nok) {
   const self = this;
-  return factorySpace(
-    effects,
-    afterPrefix,
-    "listItemIndent",
-    self.containerState.size + 1
-  );
+  return factorySpace(effects, afterPrefix, "listItemIndent", self.containerState.size + 1);
   function afterPrefix(code3) {
     const tail = self.events[self.events.length - 1];
     return tail && tail[1].type === "listItemIndent" && tail[2].sliceSerialize(tail[1], true).length === self.containerState.size ? ok3(code3) : nok(code3);
@@ -3356,12 +3451,7 @@ function tokenizeListEnd(effects) {
 }
 function tokenizeListItemPrefixWhitespace(effects, ok3, nok) {
   const self = this;
-  return factorySpace(
-    effects,
-    afterPrefix,
-    "listItemPrefixWhitespace",
-    self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4 + 1
-  );
+  return factorySpace(effects, afterPrefix, "listItemPrefixWhitespace", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4 + 1);
   function afterPrefix(code3) {
     const tail = self.events[self.events.length - 1];
     return !markdownSpace(code3) && tail && tail[1].type === "listItemPrefixWhitespace" ? ok3(code3) : nok(code3);
@@ -3601,8 +3691,7 @@ function resolveAllLineSuffixes(events, context) {
             size++;
             bufferIndex--;
           }
-          if (bufferIndex)
-            break;
+          if (bufferIndex) break;
           bufferIndex = -1;
         } else if (chunk === -2) {
           tabs = true;
@@ -3948,8 +4037,7 @@ function serializeChunks(chunks, expandTabs) {
           break;
         }
         case -1: {
-          if (!expandTabs && atTab)
-            continue;
+          if (!expandTabs && atTab) continue;
           value2 = " ";
           break;
         }
@@ -4125,8 +4213,7 @@ function preprocess() {
           case 9: {
             next = Math.ceil(column / 4) * 4;
             chunks.push(-2);
-            while (column++ < next)
-              chunks.push(-1);
+            while (column++ < next) chunks.push(-1);
             break;
           }
           case 10: {
@@ -4143,10 +4230,8 @@ function preprocess() {
       startPosition = endPosition + 1;
     }
     if (end) {
-      if (atCarriageReturn)
-        chunks.push(-5);
-      if (buffer)
-        chunks.push(buffer);
+      if (atCarriageReturn) chunks.push(-5);
+      if (buffer) chunks.push(buffer);
       chunks.push(null);
     }
     return chunks;
@@ -4204,11 +4289,7 @@ function fromMarkdown(value2, encoding, options) {
     options = encoding;
     encoding = void 0;
   }
-  return compiler(options)(
-    postprocess(
-      parse(options).document().write(preprocess()(value2, encoding, true))
-    )
-  );
+  return compiler(options)(postprocess(parse(options).document().write(preprocess()(value2, encoding, true))));
 }
 function compiler(options) {
   const config = {
@@ -4268,6 +4349,7 @@ function compiler(options) {
       characterReferenceMarkerHexadecimal: onexitcharacterreferencemarker,
       characterReferenceMarkerNumeric: onexitcharacterreferencemarker,
       characterReferenceValue: onexitcharacterreferencevalue,
+      characterReference: onexitcharacterreference,
       codeFenced: closer(onexitcodefenced),
       codeFencedFence: onexitcodefencedfence,
       codeFencedFenceInfo: onexitcodefencedfenceinfo,
@@ -4342,15 +4424,9 @@ function compiler(options) {
     while (++index2 < events.length) {
       const handler2 = config[events[index2][0]];
       if (own.call(handler2, events[index2][1].type)) {
-        handler2[events[index2][1].type].call(
-          Object.assign(
-            {
-              sliceSerialize: events[index2][2].sliceSerialize
-            },
-            context
-          ),
-          events[index2][1]
-        );
+        handler2[events[index2][1].type].call(Object.assign({
+          sliceSerialize: events[index2][2].sliceSerialize
+        }, context), events[index2][1]);
       }
     }
     if (context.tokenStack.length > 0) {
@@ -4359,20 +4435,16 @@ function compiler(options) {
       handler2.call(context, void 0, tail[0]);
     }
     tree.position = {
-      start: point2(
-        events.length > 0 ? events[0][1].start : {
-          line: 1,
-          column: 1,
-          offset: 0
-        }
-      ),
-      end: point2(
-        events.length > 0 ? events[events.length - 2][1].end : {
-          line: 1,
-          column: 1,
-          offset: 0
-        }
-      )
+      start: point2(events.length > 0 ? events[0][1].start : {
+        line: 1,
+        column: 1,
+        offset: 0
+      }),
+      end: point2(events.length > 0 ? events[events.length - 2][1].end : {
+        line: 1,
+        column: 1,
+        offset: 0
+      })
     };
     index2 = -1;
     while (++index2 < config.transforms.length) {
@@ -4429,8 +4501,7 @@ function compiler(options) {
           while (tailIndex--) {
             const tailEvent = events[tailIndex];
             if (tailEvent[1].type === "lineEnding" || tailEvent[1].type === "lineEndingBlank") {
-              if (tailEvent[0] === "exit")
-                continue;
+              if (tailEvent[0] === "exit") continue;
               if (lineIndex) {
                 events[lineIndex][1].type = "lineEndingBlank";
                 listSpread = true;
@@ -4445,10 +4516,7 @@ function compiler(options) {
           if (firstBlankLineIndex && (!lineIndex || firstBlankLineIndex < lineIndex)) {
             listItem3._spread = true;
           }
-          listItem3.end = Object.assign(
-            {},
-            lineIndex ? events[lineIndex][1].start : event[1].end
-          );
+          listItem3.end = Object.assign({}, lineIndex ? events[lineIndex][1].start : event[1].end);
           events.splice(lineIndex || index2, 0, ["exit", listItem3, event[2]]);
           index2++;
           length++;
@@ -4477,8 +4545,7 @@ function compiler(options) {
     return open;
     function open(token) {
       enter.call(this, create2(token), token);
-      if (and)
-        and.call(this, token);
+      if (and) and.call(this, token);
     }
   }
   function buffer() {
@@ -4502,8 +4569,7 @@ function compiler(options) {
   function closer(and) {
     return close2;
     function close2(token) {
-      if (and)
-        and.call(this, token);
+      if (and) and.call(this, token);
       exit3.call(this, token);
     }
   }
@@ -4511,12 +4577,10 @@ function compiler(options) {
     const node2 = this.stack.pop();
     const open = this.tokenStack.pop();
     if (!open) {
-      throw new Error(
-        "Cannot close `" + token.type + "` (" + stringifyPosition({
-          start: token.start,
-          end: token.end
-        }) + "): it\u2019s not open"
-      );
+      throw new Error("Cannot close `" + token.type + "` (" + stringifyPosition({
+        start: token.start,
+        end: token.end
+      }) + "): it\u2019s not open");
     } else if (open[0].type !== token.type) {
       if (onExitError) {
         onExitError.call(this, token, open[0]);
@@ -4551,8 +4615,7 @@ function compiler(options) {
     node2.meta = data2;
   }
   function onexitcodefencedfence() {
-    if (this.data.flowCodeInside)
-      return;
+    if (this.data.flowCodeInside) return;
     this.buffer();
     this.data.flowCodeInside = true;
   }
@@ -4571,9 +4634,7 @@ function compiler(options) {
     const label = this.resume();
     const node2 = this.stack[this.stack.length - 1];
     node2.label = label;
-    node2.identifier = normalizeIdentifier(
-      this.sliceSerialize(token)
-    ).toLowerCase();
+    node2.identifier = normalizeIdentifier(this.sliceSerialize(token)).toLowerCase();
   }
   function onexitdefinitiontitlestring() {
     const data2 = this.resume();
@@ -4719,9 +4780,7 @@ function compiler(options) {
     const label = this.resume();
     const node2 = this.stack[this.stack.length - 1];
     node2.label = label;
-    node2.identifier = normalizeIdentifier(
-      this.sliceSerialize(token)
-    ).toLowerCase();
+    node2.identifier = normalizeIdentifier(this.sliceSerialize(token)).toLowerCase();
     this.data.referenceType = "full";
   }
   function onexitcharacterreferencemarker(token) {
@@ -4732,17 +4791,17 @@ function compiler(options) {
     const type = this.data.characterReferenceType;
     let value2;
     if (type) {
-      value2 = decodeNumericCharacterReference(
-        data2,
-        type === "characterReferenceMarkerNumeric" ? 10 : 16
-      );
+      value2 = decodeNumericCharacterReference(data2, type === "characterReferenceMarkerNumeric" ? 10 : 16);
       this.data.characterReferenceType = void 0;
     } else {
       const result = decodeNamedCharacterReference(data2);
       value2 = result;
     }
-    const tail = this.stack.pop();
+    const tail = this.stack[this.stack.length - 1];
     tail.value += value2;
+  }
+  function onexitcharacterreference(token) {
+    const tail = this.stack.pop();
     tail.position.end = point2(token.end);
   }
   function onexitautolinkprotocol(token) {
@@ -4917,22 +4976,18 @@ function extension(combined, extension2) {
 }
 function defaultOnError(left, right) {
   if (left) {
-    throw new Error(
-      "Cannot close `" + left.type + "` (" + stringifyPosition({
-        start: left.start,
-        end: left.end
-      }) + "): a different token (`" + right.type + "`, " + stringifyPosition({
-        start: right.start,
-        end: right.end
-      }) + ") is open"
-    );
+    throw new Error("Cannot close `" + left.type + "` (" + stringifyPosition({
+      start: left.start,
+      end: left.end
+    }) + "): a different token (`" + right.type + "`, " + stringifyPosition({
+      start: right.start,
+      end: right.end
+    }) + ") is open");
   } else {
-    throw new Error(
-      "Cannot close document, a token (`" + right.type + "`, " + stringifyPosition({
-        start: right.start,
-        end: right.end
-      }) + ") is still open"
-    );
+    throw new Error("Cannot close document, a token (`" + right.type + "`, " + stringifyPosition({
+      start: right.start,
+      end: right.end
+    }) + ") is still open");
   }
 }
 
@@ -5291,8 +5346,7 @@ function anyFactory(tests) {
   function any(...parameters) {
     let index3 = -1;
     while (++index3 < checks.length) {
-      if (checks[index3].apply(this, parameters))
-        return true;
+      if (checks[index3].apply(this, parameters)) return true;
     }
     return false;
   }
@@ -5311,8 +5365,7 @@ function propsFactory(check) {
     );
     let key;
     for (key in check) {
-      if (nodeAsRecord[key] !== checkAsRecord[key])
-        return false;
+      if (nodeAsRecord[key] !== checkAsRecord[key]) return false;
     }
     return true;
   }
@@ -5624,8 +5677,7 @@ function inlineCode(node2, _, state) {
     const pattern = state.unsafe[index2];
     const expression = state.compilePattern(pattern);
     let match;
-    if (!pattern.atBreak)
-      continue;
+    if (!pattern.atBreak) continue;
     while (match = expression.exec(value2)) {
       let position2 = match.index;
       if (value2.charCodeAt(position2) === 10 && value2.charCodeAt(position2 - 1) === 13) {
@@ -6218,8 +6270,7 @@ function containerPhrasing(parent, state, info) {
     indexStack[indexStack.length - 1] = index2;
     if (index2 + 1 < children.length) {
       let handle2 = state.handle.handlers[children[index2 + 1].type];
-      if (handle2 && handle2.peek)
-        handle2 = handle2.peek;
+      if (handle2 && handle2.peek) handle2 = handle2.peek;
       after = handle2 ? handle2(children[index2 + 1], parent, state, {
         before: "",
         after: "",
@@ -6846,14 +6897,17 @@ var emailDomainDotTrail = {
   partial: true
 };
 var wwwAutolink = {
+  name: "wwwAutolink",
   tokenize: tokenizeWwwAutolink,
   previous: previousWww
 };
 var protocolAutolink = {
+  name: "protocolAutolink",
   tokenize: tokenizeProtocolAutolink,
   previous: previousProtocol
 };
 var emailAutolink = {
+  name: "emailAutolink",
   tokenize: tokenizeEmailAutolink,
   previous: previousEmail
 };
@@ -6867,10 +6921,8 @@ var code2 = 48;
 while (code2 < 123) {
   text4[code2] = emailAutolink;
   code2++;
-  if (code2 === 58)
-    code2 = 65;
-  else if (code2 === 91)
-    code2 = 97;
+  if (code2 === 58) code2 = 65;
+  else if (code2 === 91) code2 = 97;
 }
 text4[43] = emailAutolink;
 text4[45] = emailAutolink;
@@ -6906,11 +6958,7 @@ function tokenizeEmailAutolink(effects, ok3, nok) {
   }
   function emailDomain(code3) {
     if (code3 === 46) {
-      return effects.check(
-        emailDomainDotTrail,
-        emailDomainAfter,
-        emailDomainDot
-      )(code3);
+      return effects.check(emailDomainDotTrail, emailDomainAfter, emailDomainDot)(code3);
     }
     if (code3 === 45 || code3 === 95 || asciiAlphanumeric(code3)) {
       data = true;
@@ -6942,11 +6990,7 @@ function tokenizeWwwAutolink(effects, ok3, nok) {
     }
     effects.enter("literalAutolink");
     effects.enter("literalAutolinkWww");
-    return effects.check(
-      wwwPrefix,
-      effects.attempt(domain, effects.attempt(path, wwwAfter), nok),
-      nok
-    )(code3);
+    return effects.check(wwwPrefix, effects.attempt(domain, effects.attempt(path, wwwAfter), nok), nok)(code3);
   }
   function wwwAfter(code3) {
     effects.exit("literalAutolinkWww");
@@ -7095,7 +7139,7 @@ function tokenizeTrail(effects, ok3, nok) {
     }
     if (code3 === 38) {
       effects.consume(code3);
-      return trailCharRefStart;
+      return trailCharacterReferenceStart;
     }
     if (code3 === 93) {
       effects.consume(code3);
@@ -7116,17 +7160,17 @@ function tokenizeTrail(effects, ok3, nok) {
     }
     return trail2(code3);
   }
-  function trailCharRefStart(code3) {
-    return asciiAlpha(code3) ? trailCharRefInside(code3) : nok(code3);
+  function trailCharacterReferenceStart(code3) {
+    return asciiAlpha(code3) ? trailCharacterReferenceInside(code3) : nok(code3);
   }
-  function trailCharRefInside(code3) {
+  function trailCharacterReferenceInside(code3) {
     if (code3 === 59) {
       effects.consume(code3);
       return trail2;
     }
     if (asciiAlpha(code3)) {
       effects.consume(code3);
-      return trailCharRefInside;
+      return trailCharacterReferenceInside;
     }
     return nok(code3);
   }
@@ -7182,6 +7226,7 @@ function gfmFootnote() {
   return {
     document: {
       [91]: {
+        name: "gfmFootnoteDefinition",
         tokenize: tokenizeDefinitionStart,
         continuation: {
           tokenize: tokenizeDefinitionContinuation
@@ -7191,9 +7236,11 @@ function gfmFootnote() {
     },
     text: {
       [91]: {
+        name: "gfmFootnoteCall",
         tokenize: tokenizeGfmFootnoteCall
       },
       [93]: {
+        name: "gfmPotentialFootnoteCall",
         add: "after",
         tokenize: tokenizePotentialGfmFootnoteCall,
         resolveTo: resolveToPotentialGfmFootnoteCall
@@ -7221,12 +7268,10 @@ function tokenizePotentialGfmFootnoteCall(effects, ok3, nok) {
     if (!labelStart || !labelStart._balanced) {
       return nok(code3);
     }
-    const id = normalizeIdentifier(
-      self.sliceSerialize({
-        start: labelStart.end,
-        end: self.now()
-      })
-    );
+    const id = normalizeIdentifier(self.sliceSerialize({
+      start: labelStart.end,
+      end: self.now()
+    }));
     if (id.codePointAt(0) !== 94 || !defined.includes(id.slice(1))) {
       return nok(code3);
     }
@@ -7309,8 +7354,7 @@ function tokenizeGfmFootnoteCall(effects, ok3, nok) {
     return callStart;
   }
   function callStart(code3) {
-    if (code3 !== 94)
-      return nok(code3);
+    if (code3 !== 94) return nok(code3);
     effects.enter("gfmFootnoteCallMarker");
     effects.consume(code3);
     effects.exit("gfmFootnoteCallMarker");
@@ -7425,11 +7469,7 @@ function tokenizeDefinitionStart(effects, ok3, nok) {
       if (!defined.includes(identifier)) {
         defined.push(identifier);
       }
-      return factorySpace(
-        effects,
-        whitespaceAfter,
-        "gfmFootnoteDefinitionWhitespace"
-      );
+      return factorySpace(effects, whitespaceAfter, "gfmFootnoteDefinitionWhitespace");
     }
     return nok(code3);
   }
@@ -7445,12 +7485,7 @@ function gfmFootnoteDefinitionEnd(effects) {
 }
 function tokenizeIndent2(effects, ok3, nok) {
   const self = this;
-  return factorySpace(
-    effects,
-    afterPrefix,
-    "gfmFootnoteDefinitionIndent",
-    4 + 1
-  );
+  return factorySpace(effects, afterPrefix, "gfmFootnoteDefinitionIndent", 4 + 1);
   function afterPrefix(code3) {
     const tail = self.events[self.events.length - 1];
     return tail && tail[1].type === "gfmFootnoteDefinitionIndent" && tail[2].sliceSerialize(tail[1], true).length === 4 ? ok3(code3) : nok(code3);
@@ -7462,6 +7497,7 @@ function gfmStrikethrough(options) {
   const options_ = options || {};
   let single = options_.singleTilde;
   const tokenizer = {
+    name: "strikethrough",
     tokenize: tokenizeStrikethrough,
     resolveAll: resolveAllStrikethrough
   };
@@ -7499,27 +7535,12 @@ function gfmStrikethrough(options) {
               start: Object.assign({}, events[open][1].end),
               end: Object.assign({}, events[index2][1].start)
             };
-            const nextEvents = [
-              ["enter", strikethrough, context],
-              ["enter", events[open][1], context],
-              ["exit", events[open][1], context],
-              ["enter", text5, context]
-            ];
+            const nextEvents = [["enter", strikethrough, context], ["enter", events[open][1], context], ["exit", events[open][1], context], ["enter", text5, context]];
             const insideSpan2 = context.parser.constructs.insideSpan.null;
             if (insideSpan2) {
-              splice(
-                nextEvents,
-                nextEvents.length,
-                0,
-                resolveAll(insideSpan2, events.slice(open + 1, index2), context)
-              );
+              splice(nextEvents, nextEvents.length, 0, resolveAll(insideSpan2, events.slice(open + 1, index2), context));
             }
-            splice(nextEvents, nextEvents.length, 0, [
-              ["exit", text5, context],
-              ["enter", events[index2][1], context],
-              ["exit", events[index2][1], context],
-              ["exit", strikethrough, context]
-            ]);
+            splice(nextEvents, nextEvents.length, 0, [["exit", text5, context], ["enter", events[index2][1], context], ["exit", events[index2][1], context], ["exit", strikethrough, context]]);
             splice(events, open - 1, index2 - open + 3, nextEvents);
             index2 = open + nextEvents.length - 2;
             break;
@@ -7550,14 +7571,12 @@ function gfmStrikethrough(options) {
     function more(code3) {
       const before = classifyCharacter(previous3);
       if (code3 === 126) {
-        if (size > 1)
-          return nok(code3);
+        if (size > 1) return nok(code3);
         effects.consume(code3);
         size++;
         return more;
       }
-      if (size < 2 && !single)
-        return nok(code3);
+      if (size < 2 && !single) return nok(code3);
       const token = effects.exit("strikethroughSequenceTemporary");
       const after = classifyCharacter(code3);
       token._open = !after || after === 2 && Boolean(before);
@@ -7584,7 +7603,7 @@ var EditMap = class {
    * @returns {undefined}
    */
   add(index2, remove, add) {
-    addImpl(this, index2, remove, add);
+    addImplementation(this, index2, remove, add);
   }
   // To do: add this when moving to `micromark`.
   // /**
@@ -7596,7 +7615,7 @@ var EditMap = class {
   //  * @returns {undefined}
   //  */
   // addBefore(index, remove, add) {
-  //   addImpl(this, index, remove, add, true)
+  //   addImplementation(this, index, remove, add, true)
   // }
   /**
    * Done, change the events.
@@ -7615,10 +7634,7 @@ var EditMap = class {
     const vecs = [];
     while (index2 > 0) {
       index2 -= 1;
-      vecs.push(
-        events.slice(this.map[index2][0] + this.map[index2][1]),
-        this.map[index2][2]
-      );
+      vecs.push(events.slice(this.map[index2][0] + this.map[index2][1]), this.map[index2][2]);
       events.length = this.map[index2][0];
     }
     vecs.push([...events]);
@@ -7631,7 +7647,7 @@ var EditMap = class {
     this.map.length = 0;
   }
 };
-function addImpl(editMap, at, remove, add) {
+function addImplementation(editMap, at, remove, add) {
   let index2 = 0;
   if (remove === 0 && add.length === 0) {
     return;
@@ -7656,9 +7672,7 @@ function gfmTableAlign(events, index2) {
     if (inDelimiterRow) {
       if (event[0] === "enter") {
         if (event[1].type === "tableContent") {
-          align.push(
-            events[index2 + 1][1].type === "tableDelimiterMarker" ? "left" : "none"
-          );
+          align.push(events[index2 + 1][1].type === "tableDelimiterMarker" ? "left" : "none");
         }
       } else if (event[1].type === "tableContent") {
         if (events[index2 - 1][1].type === "tableDelimiterMarker") {
@@ -7681,6 +7695,7 @@ function gfmTable() {
   return {
     flow: {
       null: {
+        name: "table",
         tokenize: tokenizeTable,
         resolveAll: resolveTable
       }
@@ -7698,10 +7713,8 @@ function tokenizeTable(effects, ok3, nok) {
     while (index2 > -1) {
       const type = self.events[index2][1].type;
       if (type === "lineEnding" || // Note: markdown-rs uses `whitespace` instead of `linePrefix`
-      type === "linePrefix")
-        index2--;
-      else
-        break;
+      type === "linePrefix") index2--;
+      else break;
     }
     const tail = index2 > -1 ? self.events[index2][1].type : null;
     const next = tail === "tableHead" || tail === "tableRow" ? bodyRowStart : headRowBefore;
@@ -7780,12 +7793,7 @@ function tokenizeTable(effects, ok3, nok) {
     effects.enter("tableDelimiterRow");
     seen = false;
     if (markdownSpace(code3)) {
-      return factorySpace(
-        effects,
-        headDelimiterBefore,
-        "linePrefix",
-        self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4
-      )(code3);
+      return factorySpace(effects, headDelimiterBefore, "linePrefix", self.parser.constructs.disable.null.includes("codeIndented") ? void 0 : 4)(code3);
     }
     return headDelimiterBefore(code3);
   }
@@ -7960,14 +7968,7 @@ function resolveTable(events, context) {
         if (cell[2] === 0) {
           if (lastCell[1] !== 0) {
             cell[0] = cell[1];
-            currentCell = flushCell(
-              map5,
-              context,
-              lastCell,
-              rowKind,
-              void 0,
-              currentCell
-            );
+            currentCell = flushCell(map5, context, lastCell, rowKind, void 0, currentCell);
             lastCell = [0, 0, 0, 0];
           }
           cell[2] = index2;
@@ -7978,14 +7979,7 @@ function resolveTable(events, context) {
         } else {
           if (lastCell[1] !== 0) {
             cell[0] = cell[1];
-            currentCell = flushCell(
-              map5,
-              context,
-              lastCell,
-              rowKind,
-              void 0,
-              currentCell
-            );
+            currentCell = flushCell(map5, context, lastCell, rowKind, void 0, currentCell);
           }
           lastCell = cell;
           cell = [lastCell[1], index2, 0, 0];
@@ -7998,14 +7992,7 @@ function resolveTable(events, context) {
       lastTableEnd = index2;
       if (lastCell[1] !== 0) {
         cell[0] = cell[1];
-        currentCell = flushCell(
-          map5,
-          context,
-          lastCell,
-          rowKind,
-          index2,
-          currentCell
-        );
+        currentCell = flushCell(map5, context, lastCell, rowKind, index2, currentCell);
       } else if (cell[1] !== 0) {
         currentCell = flushCell(map5, context, cell, rowKind, index2, currentCell);
       }
@@ -8091,6 +8078,7 @@ function getPoint(events, index2) {
 
 // node_modules/micromark-extension-gfm-task-list-item/lib/syntax.js
 var tasklistCheck = {
+  name: "tasklistCheck",
   tokenize: tokenizeTasklistCheck
 };
 function gfmTaskListItem() {
@@ -8148,13 +8136,9 @@ function tokenizeTasklistCheck(effects, ok3, nok) {
       return ok3(code3);
     }
     if (markdownSpace(code3)) {
-      return effects.check(
-        {
-          tokenize: spaceThenNonSpace
-        },
-        ok3,
-        nok
-      )(code3);
+      return effects.check({
+        tokenize: spaceThenNonSpace
+      }, ok3, nok)(code3);
     }
     return nok(code3);
   }
@@ -8389,8 +8373,7 @@ function findUrl(_, protocol, domain2, path2, match) {
     return false;
   }
   const parts = splitUrl(domain2 + path2);
-  if (!parts[0])
-    return false;
+  if (!parts[0]) return false;
   const result = {
     type: "link",
     title: null,
@@ -9001,84 +8984,166 @@ function gfmToMarkdown(options) {
   };
 }
 
-// src/main.ts
-var DEFAULT_SETTINGS = {
-  recursive: true,
-  recursionDepth: 1,
-  delete: false,
-  index: true
-};
-var FromMarkdownExt = {
+// src/parser.ts
+var FromMarkdownOptions = {
   extensions: [frontmatter(["yaml", "toml"]), gfm()],
   mdastExtensions: [frontmatterFromMarkdown(["yaml", "toml"]), gfmFromMarkdown()]
 };
-var ToMarkdownExt = { extensions: [frontmatterToMarkdown(["yaml", "toml"]), gfmToMarkdown()] };
-function getTitleOfDocument(nodes) {
-  let subStrings = [];
-  function getStr(node2, acc) {
-    if (node2.type === "text") {
-      acc.push(node2.value);
+function textHandler(node2, _, context) {
+  const exit3 = context.enter("text");
+  exit3();
+  return node2.value;
+}
+function customJoin(left, right, parent, state) {
+  return 0;
+}
+var ToMarkdownOptions = {
+  extensions: [frontmatterToMarkdown(["yaml", "toml"]), gfmToMarkdown()],
+  handlers: {
+    text: textHandler
+  }
+};
+function fromMd(input) {
+  return fromMarkdown(input, FromMarkdownOptions);
+}
+function toMd(input, compact = false) {
+  if (compact) {
+    ToMarkdownOptions.join = [customJoin];
+  } else {
+    delete ToMarkdownOptions.join;
+  }
+  return toMarkdown(input, ToMarkdownOptions);
+}
+
+// src/modal.ts
+var import_obsidian2 = require("obsidian");
+var FilenameModal = class extends import_obsidian2.Modal {
+  constructor(app) {
+    super(app);
+    this.resolve = null;
+  }
+  myOpen() {
+    this.open();
+    return new Promise((resolve) => {
+      this.resolve = resolve;
+    });
+  }
+  onOpen() {
+    const { contentEl, titleEl } = this;
+    titleEl.setText("Pick a name:");
+    new import_obsidian2.Setting(contentEl).setName("Name").addText((text5) => text5.onChange((value2) => {
+      this.filename = value2;
+    }));
+    new import_obsidian2.Setting(contentEl).addButton((btn) => btn.setButtonText("Confirm").setCta().onClick(() => {
+      if (this.resolve) this.resolve(this.filename);
+      this.close();
+    }));
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+var OverrideModal = class extends import_obsidian2.Modal {
+  constructor(app, name, isFolder) {
+    super(app);
+    this.name = name;
+    this.isFolder = isFolder;
+    this.resolve = null;
+  }
+  myOpen() {
+    this.open();
+    return new Promise((resolve) => {
+      this.resolve = resolve;
+    });
+  }
+  onOpen() {
+    const { contentEl, titleEl } = this;
+    if (this.isFolder) {
+      titleEl.setText("Override folder");
+      contentEl.createEl("p").setText(
+        `The folder ${this.name} already exists. Do you want to override it?`
+      );
     } else {
-      if (node2.hasOwnProperty("children")) {
-        for (const child of node2.children) {
-          getStr(child, acc);
-        }
-      }
-      return;
+      titleEl.setText("Override file");
+      contentEl.createEl("p").setText(
+        `The file ${this.name} already exists. Do you want to override it?`
+      );
     }
+    const div = contentEl.createDiv({ cls: "modal-button-container" });
+    const discard = div.createEl("button", {
+      cls: "mod-warning",
+      text: "Override"
+    });
+    discard.addEventListener("click", async () => {
+      if (this.resolve) this.resolve(true);
+      this.close();
+    });
+    discard.addEventListener("keypress", async () => {
+      if (this.resolve) this.resolve(true);
+      this.close();
+    });
+    const close2 = div.createEl("button", {
+      text: "Cancel"
+    });
+    close2.addEventListener("click", () => {
+      if (this.resolve) this.resolve(false);
+      return this.close();
+    });
+    close2.addEventListener("keypress", () => {
+      if (this.resolve) this.resolve(false);
+      return this.close();
+    });
   }
-  for (const node2 of nodes) {
-    getStr(node2, subStrings);
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
   }
-  return subStrings.join("");
+};
+
+// src/handles.ts
+function hostname() {
+  const platform = window.navigator.platform;
+  const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
+  const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
+  let os = null;
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = "macOS";
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = "Windows";
+  } else if (!os && /Linux/.test(platform)) {
+    os = "Linux";
+  }
+  return os;
 }
-async function processContentFromSelection(content3) {
-  var _a, _b, _c;
-  const tree = fromMarkdown(content3, FromMarkdownExt);
-  const doc = {
-    title: "",
-    root: {
-      type: "root",
-      children: []
-    }
-  };
-  if (((_a = tree.children.at(0)) == null ? void 0 : _a.type) !== "heading" || ((_b = tree.children.at(0)) == null ? void 0 : _b.depth) !== 1) {
-    doc.title = await new FilenameModal(this.app).myOpen();
-    for (const obj of tree.children) {
-      if (obj.type === "heading") {
-        obj.depth -= 1;
-      }
-      doc.root.children.push(obj);
-    }
-  } else {
-    doc.title = getTitleOfDocument((_c = tree.children.at(0)) == null ? void 0 : _c.children);
-    for (const obj of tree.children.slice(1)) {
-      if (obj.type === "heading") {
-        obj.depth -= 1;
-      }
-      doc.root.children.push(obj);
-    }
+function handleTitle(title) {
+  const cleanTitle = title.replace(/[/\\]/g, "_");
+  if (hostname() === "Windows" && (title.endsWith(".") || title.endsWith(" "))) {
+    return cleanTitle + "_";
   }
-  return doc;
+  return cleanTitle;
 }
-async function createOrModifyFile(app, rootPath, doc, autoOverride) {
-  const file = app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
-  console.log(file, rootPath, doc.title, (0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
-  if (file) {
-    if (autoOverride || await new OverrideModal(this.app, `${rootPath}/${doc.title}.md`, false).myOpen()) {
-      if (file instanceof import_obsidian.TFile) {
-        await app.vault.modify(file, toMarkdown(doc.root, ToMarkdownExt));
+function getTitleOfDocument(nodes) {
+  return toMd({
+    type: "root",
+    children: [
+      {
+        type: "heading",
+        depth: 1,
+        children: nodes
       }
-    }
-  } else {
-    await app.vault.create((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`), toMarkdown(doc.root, ToMarkdownExt));
-  }
+    ]
+  }).slice(2).trim();
 }
 function processContent(content3, rootName, index2) {
   var _a, _b;
-  const tree = fromMarkdown(content3, FromMarkdownExt);
+  const tree = fromMd(content3);
   const documents = [];
   if (tree.children.length === 0) {
+    return documents;
+  }
+  const numberOfHeadings = tree.children.filter((value2) => value2.type === "heading" && value2.depth === 1).length;
+  if (numberOfHeadings === 0) {
     return documents;
   }
   const firstHeading = tree.children.findIndex((value2) => value2.type === "heading" && value2.depth === 1);
@@ -9123,7 +9188,7 @@ function processContent(content3, rootName, index2) {
               children: [
                 { type: "text", value: title }
               ],
-              url: (0, import_obsidian.normalizePath)(title)
+              url: (0, import_obsidian3.normalizePath)(title)
             }]
           }]
         });
@@ -9137,50 +9202,79 @@ function processContent(content3, rootName, index2) {
   }
   return documents;
 }
-async function subdivide(app, rootPath, documents, autoOverride) {
-  if (app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(rootPath))) {
-    if (autoOverride || await new OverrideModal(this.app, rootPath, true).myOpen()) {
+async function createOrModifyFile(app, rootPath, title, content3, autoOverride) {
+  const file = app.vault.getAbstractFileByPath((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`));
+  if (file) {
+    if (autoOverride || await new OverrideModal(app, `${rootPath}/${title}.md`, false).myOpen()) {
+      if (file instanceof import_obsidian3.TFile) {
+        await app.vault.modify(file, content3);
+      }
+    }
+  } else {
+    await app.vault.create((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`), content3);
+  }
+}
+async function subdivide(app, rootPath, documents, autoOverride, compact) {
+  if (app.vault.getAbstractFileByPath((0, import_obsidian3.normalizePath)(rootPath))) {
+    if (autoOverride || await new OverrideModal(app, rootPath, true).myOpen()) {
       for (const doc of documents) {
-        const file = app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
+        const title = handleTitle(doc.title);
+        const file = app.vault.getAbstractFileByPath((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`));
         if (file) {
-          if (file instanceof import_obsidian.TFile) {
-            await app.vault.modify(file, toMarkdown(doc.root, ToMarkdownExt));
+          if (file instanceof import_obsidian3.TFile) {
+            await app.vault.modify(file, toMd(doc.root, compact));
           }
         } else {
-          await app.vault.create((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`), toMarkdown(doc.root, ToMarkdownExt));
+          await app.vault.create((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`), toMd(doc.root, compact));
         }
       }
     }
   } else {
-    await app.vault.createFolder((0, import_obsidian.normalizePath)(rootPath));
+    await app.vault.createFolder((0, import_obsidian3.normalizePath)(rootPath));
     for (const doc of documents) {
-      await app.vault.create((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`), toMarkdown(doc.root, ToMarkdownExt));
+      const title = handleTitle(doc.title);
+      await app.vault.create((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`), toMd(doc.root, compact));
     }
   }
 }
-async function subdivideFile(plugin, file, depth, deleteOrigFile, autoOverride) {
+async function handle_file(plugin, file, depth, deleteOrigFile, autoOverride) {
   var _a, _b;
   const fileContent = await plugin.app.vault.cachedRead(file);
   const documents = processContent(fileContent, file.basename, plugin.settings.index);
+  if (documents.length === 0) {
+    return;
+  }
   const rootPath = `${(_a = file.parent) == null ? void 0 : _a.path}/${file.basename}`;
-  await subdivide(plugin.app, rootPath, documents, autoOverride);
+  await subdivide(plugin.app, rootPath, documents, autoOverride, plugin.settings.compact);
   if (deleteOrigFile) {
     await plugin.app.vault.delete(file);
   }
   if (plugin.settings.recursive && depth < plugin.settings.recursionDepth) {
-    const folder = plugin.app.vault.getFolderByPath((0, import_obsidian.normalizePath)(rootPath));
-    let children = [];
-    for (let f of (_b = folder == null ? void 0 : folder.children) != null ? _b : []) {
-      if (f instanceof import_obsidian.TFile && f.basename !== file.basename) {
+    const folder = plugin.app.vault.getFolderByPath((0, import_obsidian3.normalizePath)(rootPath));
+    const children = [];
+    for (const f of (_b = folder == null ? void 0 : folder.children) != null ? _b : []) {
+      if (f instanceof import_obsidian3.TFile && f.basename !== file.basename) {
         children.push(f);
       }
     }
-    for (let f of children) {
-      await subdivideFile(plugin, f, depth + 1, true, true);
+    for (const f of children) {
+      await handle_file(plugin, f, depth + 1, true, true);
     }
   }
 }
-var SubdividerPlugin = class extends import_obsidian.Plugin {
+async function handle_selection(plugin, selectedText) {
+  var _a, _b, _c, _d, _e;
+  const title = handleTitle(await new FilenameModal(plugin.app).myOpen() || "Untitled");
+  const rootPath = (_c = (_b = (_a = plugin.app.workspace.activeEditor) == null ? void 0 : _a.file) == null ? void 0 : _b.parent) == null ? void 0 : _c.path;
+  await createOrModifyFile(plugin.app, rootPath, title, selectedText, false);
+  if (plugin.settings.delete) {
+    (_e = (_d = plugin.app.workspace.activeEditor) == null ? void 0 : _d.editor) == null ? void 0 : _e.replaceSelection("");
+  }
+  handle_file(plugin, plugin.app.vault.getAbstractFileByPath((0, import_obsidian3.normalizePath)(`${rootPath}/${title}.md`)), 1, true, false);
+}
+
+// src/main.ts
+var SubdividerPlugin = class extends import_obsidian4.Plugin {
   async onload() {
     await this.loadSettings();
     this.registerEvent(
@@ -9188,21 +9282,10 @@ var SubdividerPlugin = class extends import_obsidian.Plugin {
         menu.addSeparator();
         menu.addItem((item) => {
           item.setTitle("Subdivide the selection").setIcon("blocks").onClick(async () => {
-            var _a, _b, _c, _d, _e, _f, _g;
+            var _a, _b;
             const selectedText = (_b = (_a = this.app.workspace.activeEditor) == null ? void 0 : _a.editor) == null ? void 0 : _b.getSelection();
             if (selectedText) {
-              const doc = await processContentFromSelection(selectedText);
-              const rootPath = (_e = (_d = (_c = this.app.workspace.activeEditor) == null ? void 0 : _c.file) == null ? void 0 : _d.parent) == null ? void 0 : _e.path;
-              await createOrModifyFile(this.app, rootPath, doc, false);
-              if (this.settings.delete) {
-                (_g = (_f = this.app.workspace.activeEditor) == null ? void 0 : _f.editor) == null ? void 0 : _g.replaceSelection("");
-              }
-              if (this.settings.recursive && this.settings.recursionDepth > 1) {
-                const targetFile = this.app.vault.getAbstractFileByPath((0, import_obsidian.normalizePath)(`${rootPath}/${doc.title}.md`));
-                if (targetFile && targetFile instanceof import_obsidian.TFile) {
-                  await subdivideFile(this, targetFile, 2, true, false);
-                }
-              }
+              await handle_selection(this, selectedText);
             }
           });
         });
@@ -9215,7 +9298,7 @@ var SubdividerPlugin = class extends import_obsidian.Plugin {
           const addIconMenuItem = (item) => {
             item.setTitle("Subdivide the file");
             item.onClick(async () => {
-              await subdivideFile(this, file, 1, this.settings.delete, false);
+              await handle_file(this, file, 1, this.settings.delete, false);
             });
           };
           menu.addItem(addIconMenuItem);
@@ -9233,125 +9316,5 @@ var SubdividerPlugin = class extends import_obsidian.Plugin {
     await this.saveData(this.settings);
   }
 };
-var FilenameModal = class extends import_obsidian.Modal {
-  constructor(app) {
-    super(app);
-    this.resolve = null;
-  }
-  myOpen() {
-    this.open();
-    return new Promise((resolve) => {
-      this.resolve = resolve;
-    });
-  }
-  onOpen() {
-    const { contentEl, titleEl } = this;
-    titleEl.setText("Pick a name:");
-    new import_obsidian.Setting(contentEl).setName("Name").addText((text5) => text5.onChange((value2) => {
-      this.filename = value2;
-    }));
-    new import_obsidian.Setting(contentEl).addButton((btn) => btn.setButtonText("Confirm").setCta().onClick(() => {
-      if (this.resolve)
-        this.resolve(this.filename);
-      this.close();
-    }));
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-var OverrideModal = class extends import_obsidian.Modal {
-  constructor(app, name, isFolder) {
-    super(app);
-    this.name = name;
-    this.isFolder = isFolder;
-    this.resolve = null;
-  }
-  myOpen() {
-    this.open();
-    return new Promise((resolve) => {
-      this.resolve = resolve;
-    });
-  }
-  onOpen() {
-    const { contentEl, titleEl } = this;
-    if (this.isFolder) {
-      titleEl.setText("Override folder");
-      contentEl.createEl("p").setText(
-        `The folder ${this.name} already exists. Do you want to override it?`
-      );
-    } else {
-      titleEl.setText("Override file");
-      contentEl.createEl("p").setText(
-        `The file ${this.name} already exists. Do you want to override it?`
-      );
-    }
-    const div = contentEl.createDiv({ cls: "modal-button-container" });
-    const discard = div.createEl("button", {
-      cls: "mod-warning",
-      text: "Override"
-    });
-    discard.addEventListener("click", async () => {
-      if (this.resolve)
-        this.resolve(true);
-      this.close();
-    });
-    discard.addEventListener("keypress", async () => {
-      if (this.resolve)
-        this.resolve(true);
-      this.close();
-    });
-    const close2 = div.createEl("button", {
-      text: "Cancel"
-    });
-    close2.addEventListener("click", () => {
-      if (this.resolve)
-        this.resolve(false);
-      return this.close();
-    });
-    close2.addEventListener("keypress", () => {
-      if (this.resolve)
-        this.resolve(false);
-      return this.close();
-    });
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-var SubdividerSettingTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Recursive").setDesc("Turn all subheadings to folders recursively.").addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.recursive).onChange(async (value2) => {
-        this.plugin.settings.recursive = value2;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian.Setting(containerEl).setName("Recursion Depth").setDesc("XXX").addText(
-      (text5) => text5.setValue(this.plugin.settings.recursionDepth.toString()).onChange(async (value2) => {
-        this.plugin.settings.recursionDepth = Number(value2);
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian.Setting(containerEl).setName("Delete original file or selection").setDesc("Delete original file or selection after subdivision.").addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.delete).onChange(async (value2) => {
-        this.plugin.settings.delete = value2;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian.Setting(containerEl).setName("Create index file for folders").setDesc("Create index file for folders after subdivision.").addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.index).onChange(async (value2) => {
-        this.plugin.settings.index = value2;
-        await this.plugin.saveSettings();
-      })
-    );
-  }
-};
+
+/* nosourcemap */

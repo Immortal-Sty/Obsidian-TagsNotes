@@ -363,7 +363,7 @@
   "devMode": false,
   "templateFolderPath": "Template",
   "announceUpdates": true,
-  "version": "1.11.0",
+  "version": "1.11.5",
   "disableOnlineFeatures": true,
   "enableRibbonIcon": false,
   "ai": {

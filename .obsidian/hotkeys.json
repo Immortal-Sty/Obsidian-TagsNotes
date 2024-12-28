@@ -282,8 +282,6 @@
       "key": "H"
     }
   ],
-  "typewriter-mode:move-typewriter-down": [],
-  "typewriter-mode:move-typewriter-up": [],
   "typewriter-mode:isTypewriterScrollEnabled": [
     {
       "modifiers": [],
@@ -377,6 +375,20 @@
         "Alt"
       ],
       "key": "E"
+    }
+  ],
+  "typewriter-mode:move-typewriter-down": [],
+  "typewriter-mode:move-typewriter-up": [],
+  "typewriter-mode:dimming-toggle": [
+    {
+      "modifiers": [],
+      "key": "F8"
+    }
+  ],
+  "typewriter-mode:typewriter-toggle": [
+    {
+      "modifiers": [],
+      "key": "F9"
     }
   ]
 }
