@@ -84,11 +84,12 @@ var UpdateRelativeLinksPlugin = class extends import_obsidian.Plugin {
   async onload() {
     const { app } = this;
     const { metadataCache, vault } = app;
+    const message = "This command will modify all links in the entire vault (not just the current file) to relative paths, and this action cannot be undone. It is recommended that you back up the vault in advance. Please confirm whether you want to execute the command.";
     this.addCommand({
       id: "update-all-relative-links",
       name: "Update all relative links",
       callback() {
-        new ConfirmModal(app, "Are you sure you want to convert all relative links?", () => {
+        new ConfirmModal(app, message, () => {
           const promises = vault.getMarkdownFiles().map((file) => replace(file, false));
           Promise.all(promises).then((linkCounts) => {
             const updatedLinkCounts = linkCounts.filter((count) => count > 0);
@@ -170,3 +171,5 @@ var UpdateRelativeLinksPlugin = class extends import_obsidian.Plugin {
     }
   }
 };
+
+/* nosourcemap */

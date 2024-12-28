@@ -1,9 +1,9 @@
 {
 	"id": "lineage",
 	"name": "Lineage",
-	"version": "0.3.2-dev",
+	"version": "0.7.1-beta",
 	"minAppVersion": "0.15.0",
-	"description": "Gingko-like writing experience.",
+	"description": "Edit Markdown in a keyboard-centric Miller columns interface. Inspired by Gingko Writer.",
 	"author": "ycnmhd",
-	"isDesktopOnly": true
+	"isDesktopOnly": false
 }
