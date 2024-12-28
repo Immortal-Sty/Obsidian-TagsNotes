@@ -291,8 +291,17 @@
   "enableBibInEmbed": false,
   "enableBibInHoverPopover": false,
   "enableBibInCanvas": true,
+  "citationIdPatterns": "^cite.\n^bib\\d+$",
   "copyAsSingleLine": true,
   "removeWhitespaceBetweenCJChars": true,
+  "dummyFileFolderPath": "",
+  "externalURIPatterns": [
+    ".*\\.pdf$",
+    "https://arxiv.org/pdf/.*"
+  ],
+  "modifierToDropExternalPDFToCreateDummy": [
+    "Shift"
+  ],
   "vim": true,
   "vimrcPath": "Attachment/PDF++/obsidian.vimrc",
   "vimVisualMotion": true,

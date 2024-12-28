@@ -467,6 +467,10 @@ body.pdf-plus-backlink-selection-underline {
     }
 }
 
+.pdf-plus-restore-default-modal {
+    user-select: text;
+}
+
 .pdf-content-container {
     --sidebar-width: var(--pdf-plus-sidebar-width, 140px);
 }
@@ -529,6 +533,11 @@ body {
     .pdf-plus-bib {
         padding: var(--size-4-3);
         font-size: var(--font-ui-medium);
+
+        /* Make text inside citation hover selectable (https://github.com/RyotaUshio/obsidian-pdf-plus/issues/252) */
+        -moz-user-select: text;
+        -webkit-user-select: text;
+        user-select: text;
 
         .bib-title {
             font-weight: bold;

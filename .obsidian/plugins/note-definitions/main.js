@@ -7,6 +7,9 @@ var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -20,6 +23,363 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// node_modules/pluralize/pluralize.js
+var require_pluralize = __commonJS({
+  "node_modules/pluralize/pluralize.js"(exports, module2) {
+    (function(root, pluralize2) {
+      if (typeof require === "function" && typeof exports === "object" && typeof module2 === "object") {
+        module2.exports = pluralize2();
+      } else if (typeof define === "function" && define.amd) {
+        define(function() {
+          return pluralize2();
+        });
+      } else {
+        root.pluralize = pluralize2();
+      }
+    })(exports, function() {
+      var pluralRules = [];
+      var singularRules = [];
+      var uncountables = {};
+      var irregularPlurals = {};
+      var irregularSingles = {};
+      function sanitizeRule(rule) {
+        if (typeof rule === "string") {
+          return new RegExp("^" + rule + "$", "i");
+        }
+        return rule;
+      }
+      function restoreCase(word, token) {
+        if (word === token)
+          return token;
+        if (word === word.toLowerCase())
+          return token.toLowerCase();
+        if (word === word.toUpperCase())
+          return token.toUpperCase();
+        if (word[0] === word[0].toUpperCase()) {
+          return token.charAt(0).toUpperCase() + token.substr(1).toLowerCase();
+        }
+        return token.toLowerCase();
+      }
+      function interpolate(str, args) {
+        return str.replace(/\$(\d{1,2})/g, function(match, index) {
+          return args[index] || "";
+        });
+      }
+      function replace(word, rule) {
+        return word.replace(rule[0], function(match, index) {
+          var result = interpolate(rule[1], arguments);
+          if (match === "") {
+            return restoreCase(word[index - 1], result);
+          }
+          return restoreCase(match, result);
+        });
+      }
+      function sanitizeWord(token, word, rules) {
+        if (!token.length || uncountables.hasOwnProperty(token)) {
+          return word;
+        }
+        var len = rules.length;
+        while (len--) {
+          var rule = rules[len];
+          if (rule[0].test(word))
+            return replace(word, rule);
+        }
+        return word;
+      }
+      function replaceWord(replaceMap, keepMap, rules) {
+        return function(word) {
+          var token = word.toLowerCase();
+          if (keepMap.hasOwnProperty(token)) {
+            return restoreCase(word, token);
+          }
+          if (replaceMap.hasOwnProperty(token)) {
+            return restoreCase(word, replaceMap[token]);
+          }
+          return sanitizeWord(token, word, rules);
+        };
+      }
+      function checkWord(replaceMap, keepMap, rules, bool) {
+        return function(word) {
+          var token = word.toLowerCase();
+          if (keepMap.hasOwnProperty(token))
+            return true;
+          if (replaceMap.hasOwnProperty(token))
+            return false;
+          return sanitizeWord(token, token, rules) === token;
+        };
+      }
+      function pluralize2(word, count, inclusive) {
+        var pluralized = count === 1 ? pluralize2.singular(word) : pluralize2.plural(word);
+        return (inclusive ? count + " " : "") + pluralized;
+      }
+      pluralize2.plural = replaceWord(
+        irregularSingles,
+        irregularPlurals,
+        pluralRules
+      );
+      pluralize2.isPlural = checkWord(
+        irregularSingles,
+        irregularPlurals,
+        pluralRules
+      );
+      pluralize2.singular = replaceWord(
+        irregularPlurals,
+        irregularSingles,
+        singularRules
+      );
+      pluralize2.isSingular = checkWord(
+        irregularPlurals,
+        irregularSingles,
+        singularRules
+      );
+      pluralize2.addPluralRule = function(rule, replacement) {
+        pluralRules.push([sanitizeRule(rule), replacement]);
+      };
+      pluralize2.addSingularRule = function(rule, replacement) {
+        singularRules.push([sanitizeRule(rule), replacement]);
+      };
+      pluralize2.addUncountableRule = function(word) {
+        if (typeof word === "string") {
+          uncountables[word.toLowerCase()] = true;
+          return;
+        }
+        pluralize2.addPluralRule(word, "$0");
+        pluralize2.addSingularRule(word, "$0");
+      };
+      pluralize2.addIrregularRule = function(single, plural) {
+        plural = plural.toLowerCase();
+        single = single.toLowerCase();
+        irregularSingles[single] = plural;
+        irregularPlurals[plural] = single;
+      };
+      [
+        // Pronouns.
+        ["I", "we"],
+        ["me", "us"],
+        ["he", "they"],
+        ["she", "they"],
+        ["them", "them"],
+        ["myself", "ourselves"],
+        ["yourself", "yourselves"],
+        ["itself", "themselves"],
+        ["herself", "themselves"],
+        ["himself", "themselves"],
+        ["themself", "themselves"],
+        ["is", "are"],
+        ["was", "were"],
+        ["has", "have"],
+        ["this", "these"],
+        ["that", "those"],
+        // Words ending in with a consonant and `o`.
+        ["echo", "echoes"],
+        ["dingo", "dingoes"],
+        ["volcano", "volcanoes"],
+        ["tornado", "tornadoes"],
+        ["torpedo", "torpedoes"],
+        // Ends with `us`.
+        ["genus", "genera"],
+        ["viscus", "viscera"],
+        // Ends with `ma`.
+        ["stigma", "stigmata"],
+        ["stoma", "stomata"],
+        ["dogma", "dogmata"],
+        ["lemma", "lemmata"],
+        ["schema", "schemata"],
+        ["anathema", "anathemata"],
+        // Other irregular rules.
+        ["ox", "oxen"],
+        ["axe", "axes"],
+        ["die", "dice"],
+        ["yes", "yeses"],
+        ["foot", "feet"],
+        ["eave", "eaves"],
+        ["goose", "geese"],
+        ["tooth", "teeth"],
+        ["quiz", "quizzes"],
+        ["human", "humans"],
+        ["proof", "proofs"],
+        ["carve", "carves"],
+        ["valve", "valves"],
+        ["looey", "looies"],
+        ["thief", "thieves"],
+        ["groove", "grooves"],
+        ["pickaxe", "pickaxes"],
+        ["passerby", "passersby"]
+      ].forEach(function(rule) {
+        return pluralize2.addIrregularRule(rule[0], rule[1]);
+      });
+      [
+        [/s?$/i, "s"],
+        [/[^\u0000-\u007F]$/i, "$0"],
+        [/([^aeiou]ese)$/i, "$1"],
+        [/(ax|test)is$/i, "$1es"],
+        [/(alias|[^aou]us|t[lm]as|gas|ris)$/i, "$1es"],
+        [/(e[mn]u)s?$/i, "$1s"],
+        [/([^l]ias|[aeiou]las|[ejzr]as|[iu]am)$/i, "$1"],
+        [/(alumn|syllab|vir|radi|nucle|fung|cact|stimul|termin|bacill|foc|uter|loc|strat)(?:us|i)$/i, "$1i"],
+        [/(alumn|alg|vertebr)(?:a|ae)$/i, "$1ae"],
+        [/(seraph|cherub)(?:im)?$/i, "$1im"],
+        [/(her|at|gr)o$/i, "$1oes"],
+        [/(agend|addend|millenni|dat|extrem|bacteri|desiderat|strat|candelabr|errat|ov|symposi|curricul|automat|quor)(?:a|um)$/i, "$1a"],
+        [/(apheli|hyperbat|periheli|asyndet|noumen|phenomen|criteri|organ|prolegomen|hedr|automat)(?:a|on)$/i, "$1a"],
+        [/sis$/i, "ses"],
+        [/(?:(kni|wi|li)fe|(ar|l|ea|eo|oa|hoo)f)$/i, "$1$2ves"],
+        [/([^aeiouy]|qu)y$/i, "$1ies"],
+        [/([^ch][ieo][ln])ey$/i, "$1ies"],
+        [/(x|ch|ss|sh|zz)$/i, "$1es"],
+        [/(matr|cod|mur|sil|vert|ind|append)(?:ix|ex)$/i, "$1ices"],
+        [/\b((?:tit)?m|l)(?:ice|ouse)$/i, "$1ice"],
+        [/(pe)(?:rson|ople)$/i, "$1ople"],
+        [/(child)(?:ren)?$/i, "$1ren"],
+        [/eaux$/i, "$0"],
+        [/m[ae]n$/i, "men"],
+        ["thou", "you"]
+      ].forEach(function(rule) {
+        return pluralize2.addPluralRule(rule[0], rule[1]);
+      });
+      [
+        [/s$/i, ""],
+        [/(ss)$/i, "$1"],
+        [/(wi|kni|(?:after|half|high|low|mid|non|night|[^\w]|^)li)ves$/i, "$1fe"],
+        [/(ar|(?:wo|[ae])l|[eo][ao])ves$/i, "$1f"],
+        [/ies$/i, "y"],
+        [/\b([pl]|zomb|(?:neck|cross)?t|coll|faer|food|gen|goon|group|lass|talk|goal|cut)ies$/i, "$1ie"],
+        [/\b(mon|smil)ies$/i, "$1ey"],
+        [/\b((?:tit)?m|l)ice$/i, "$1ouse"],
+        [/(seraph|cherub)im$/i, "$1"],
+        [/(x|ch|ss|sh|zz|tto|go|cho|alias|[^aou]us|t[lm]as|gas|(?:her|at|gr)o|[aeiou]ris)(?:es)?$/i, "$1"],
+        [/(analy|diagno|parenthe|progno|synop|the|empha|cri|ne)(?:sis|ses)$/i, "$1sis"],
+        [/(movie|twelve|abuse|e[mn]u)s$/i, "$1"],
+        [/(test)(?:is|es)$/i, "$1is"],
+        [/(alumn|syllab|vir|radi|nucle|fung|cact|stimul|termin|bacill|foc|uter|loc|strat)(?:us|i)$/i, "$1us"],
+        [/(agend|addend|millenni|dat|extrem|bacteri|desiderat|strat|candelabr|errat|ov|symposi|curricul|quor)a$/i, "$1um"],
+        [/(apheli|hyperbat|periheli|asyndet|noumen|phenomen|criteri|organ|prolegomen|hedr|automat)a$/i, "$1on"],
+        [/(alumn|alg|vertebr)ae$/i, "$1a"],
+        [/(cod|mur|sil|vert|ind)ices$/i, "$1ex"],
+        [/(matr|append)ices$/i, "$1ix"],
+        [/(pe)(rson|ople)$/i, "$1rson"],
+        [/(child)ren$/i, "$1"],
+        [/(eau)x?$/i, "$1"],
+        [/men$/i, "man"]
+      ].forEach(function(rule) {
+        return pluralize2.addSingularRule(rule[0], rule[1]);
+      });
+      [
+        // Singular words with no plurals.
+        "adulthood",
+        "advice",
+        "agenda",
+        "aid",
+        "aircraft",
+        "alcohol",
+        "ammo",
+        "analytics",
+        "anime",
+        "athletics",
+        "audio",
+        "bison",
+        "blood",
+        "bream",
+        "buffalo",
+        "butter",
+        "carp",
+        "cash",
+        "chassis",
+        "chess",
+        "clothing",
+        "cod",
+        "commerce",
+        "cooperation",
+        "corps",
+        "debris",
+        "diabetes",
+        "digestion",
+        "elk",
+        "energy",
+        "equipment",
+        "excretion",
+        "expertise",
+        "firmware",
+        "flounder",
+        "fun",
+        "gallows",
+        "garbage",
+        "graffiti",
+        "hardware",
+        "headquarters",
+        "health",
+        "herpes",
+        "highjinks",
+        "homework",
+        "housework",
+        "information",
+        "jeans",
+        "justice",
+        "kudos",
+        "labour",
+        "literature",
+        "machinery",
+        "mackerel",
+        "mail",
+        "media",
+        "mews",
+        "moose",
+        "music",
+        "mud",
+        "manga",
+        "news",
+        "only",
+        "personnel",
+        "pike",
+        "plankton",
+        "pliers",
+        "police",
+        "pollution",
+        "premises",
+        "rain",
+        "research",
+        "rice",
+        "salmon",
+        "scissors",
+        "series",
+        "sewage",
+        "shambles",
+        "shrimp",
+        "software",
+        "species",
+        "staff",
+        "swine",
+        "tennis",
+        "traffic",
+        "transportation",
+        "trout",
+        "tuna",
+        "wealth",
+        "welfare",
+        "whiting",
+        "wildebeest",
+        "wildlife",
+        "you",
+        /pok[eé]mon$/i,
+        // Regexes.
+        /[^aeiou]ese$/i,
+        // "chinese", "japanese"
+        /deer$/i,
+        // "deer", "reindeer"
+        /fish$/i,
+        // "fish", "blowfish", "angelfish"
+        /measles$/i,
+        /o[iu]s$/i,
+        // "carnivorous"
+        /pox$/i,
+        // "chickpox", "smallpox"
+        /sheep$/i
+      ].forEach(pluralize2.addUncountableRule);
+      return pluralize2;
+    });
+  }
+});
 
 // src/main.ts
 var main_exports = {};
@@ -42,6 +402,9 @@ var PTreeNode = class {
     this.wordEnd = false;
   }
   add(word, ptr) {
+    if (ptr === void 0) {
+      ptr = 0;
+    }
     if (ptr === word.length) {
       this.wordEnd = true;
       return;
@@ -82,220 +445,18 @@ var PTreeTraverser = class {
 
 // src/settings.ts
 var import_obsidian = require("obsidian");
-
-// src/core/atomic-def-parser.ts
-var AtomicDefParser = class {
-  constructor(app, file) {
-    this.app = app;
-    this.file = file;
-  }
-  async parseFile(fileContent) {
-    if (!fileContent) {
-      fileContent = await this.app.vault.cachedRead(this.file);
-    }
-    const fileMetadata = this.app.metadataCache.getFileCache(this.file);
-    let aliases = [];
-    const fmData = fileMetadata == null ? void 0 : fileMetadata.frontmatter;
-    if (fmData) {
-      const fmAlias = fmData["aliases"];
-      if (Array.isArray(fmAlias)) {
-        aliases = fmAlias;
-      }
-    }
-    const fmPos = fileMetadata == null ? void 0 : fileMetadata.frontmatterPosition;
-    if (fmPos) {
-      fileContent = fileContent.slice(fmPos.end.offset + 1);
-    }
-    const def = {
-      key: this.file.basename.toLowerCase(),
-      word: this.file.basename,
-      aliases,
-      definition: fileContent,
-      file: this.file,
-      linkText: `${this.file.path}`,
-      fileType: "atomic" /* Atomic */
-    };
-    return [def];
-  }
-};
-
-// src/core/consolidated-def-parser.ts
-var ConsolidatedDefParser = class {
-  constructor(app, file) {
-    this.app = app;
-    this.file = file;
-    this.defBuffer = {};
-    this.inDefinition = false;
-    this.definitions = [];
-  }
-  async parseFile(fileContent) {
-    if (!fileContent) {
-      fileContent = await this.app.vault.cachedRead(this.file);
-    }
-    const fileMetadata = this.app.metadataCache.getFileCache(this.file);
-    const fmPos = fileMetadata == null ? void 0 : fileMetadata.frontmatterPosition;
-    if (fmPos) {
-      fileContent = fileContent.slice(fmPos.end.offset + 1);
-    }
-    const lines = fileContent.split("\n");
-    this.currLine = -1;
-    for (const line of lines) {
-      this.currLine++;
-      if (this.isEndOfBlock(line)) {
-        if (this.bufferValid()) {
-          this.commitDefBuffer();
-        }
-        this.startNewBlock();
-        continue;
-      }
-      if (this.inDefinition) {
-        this.defBuffer.definition += line + "\n";
-        continue;
-      }
-      if (line == "") {
-        continue;
-      }
-      if (this.isWordDeclaration(line)) {
-        let from = this.currLine;
-        this.defBuffer.filePosition = {
-          from
-        };
-        this.defBuffer.word = this.extractWordDeclaration(line);
-        continue;
-      }
-      if (this.isAliasDeclaration(line)) {
-        this.defBuffer.aliases = this.extractAliases(line);
-        continue;
-      }
-      this.inDefinition = true;
-      this.defBuffer.definition = line + "\n";
-    }
-    this.currLine++;
-    if (this.bufferValid()) {
-      this.commitDefBuffer();
-    }
-    return this.definitions;
-  }
-  commitDefBuffer() {
-    var _a, _b, _c, _d, _e, _f, _g;
-    this.definitions.push({
-      key: (_b = (_a = this.defBuffer.word) == null ? void 0 : _a.toLowerCase()) != null ? _b : "",
-      word: (_c = this.defBuffer.word) != null ? _c : "",
-      aliases: (_d = this.defBuffer.aliases) != null ? _d : [],
-      definition: (_e = this.defBuffer.definition) != null ? _e : "",
-      file: this.file,
-      linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
-      fileType: "consolidated" /* Consolidated */,
-      position: {
-        from: (_g = (_f = this.defBuffer.filePosition) == null ? void 0 : _f.from) != null ? _g : 0,
-        to: this.currLine - 1
-      }
-    });
-    if (this.defBuffer.aliases && this.defBuffer.aliases.length > 0) {
-      this.defBuffer.aliases.forEach((alias) => {
-        var _a2, _b2, _c2, _d2, _e2;
-        this.definitions.push({
-          key: alias.toLowerCase(),
-          word: (_a2 = this.defBuffer.word) != null ? _a2 : "",
-          aliases: (_b2 = this.defBuffer.aliases) != null ? _b2 : [],
-          definition: (_c2 = this.defBuffer.definition) != null ? _c2 : "",
-          file: this.file,
-          linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
-          fileType: "consolidated" /* Consolidated */,
-          position: {
-            from: (_e2 = (_d2 = this.defBuffer.filePosition) == null ? void 0 : _d2.from) != null ? _e2 : 0,
-            to: this.currLine - 1
-          }
-        });
-      });
-    }
-    this.defBuffer = {};
-  }
-  bufferValid() {
-    return !!this.defBuffer.word;
-  }
-  isEndOfBlock(line) {
-    const parseSettings = this.getParseSettings();
-    if (parseSettings.divider.dash && line.startsWith("---")) {
-      return true;
-    }
-    return parseSettings.divider.underscore && line.startsWith("___");
-  }
-  isAliasDeclaration(line) {
-    line = line.trimEnd();
-    return !!this.defBuffer.word && line.startsWith("*") && line.endsWith("*");
-  }
-  extractAliases(line) {
-    {
-      line = line.trimEnd().replace(/\*+/g, "");
-      const aliases = line.split(/[,|]/);
-      return aliases.map((alias) => alias.trim());
-    }
-  }
-  isWordDeclaration(line) {
-    return line.startsWith("# ");
-  }
-  extractWordDeclaration(line) {
-    const sepLine = line.split(" ");
-    if (sepLine.length <= 1) {
-      return "";
-    }
-    return sepLine.slice(1).join(" ");
-  }
-  startNewBlock() {
-    this.inDefinition = false;
-  }
-  getParseSettings() {
-    return getSettings().defFileParseConfig;
-  }
-};
-
-// src/core/file-parser.ts
-var DEF_TYPE_FM = "def-type";
-var FileParser = class {
-  constructor(app, file) {
-    this.app = app;
-    this.file = file;
-  }
-  // Optional argument used when file cache may not be updated
-  // and we know the new contents of the file
-  async parseFile(fileContent) {
-    const defFileType = this.getDefFileType();
-    switch (defFileType) {
-      case "consolidated" /* Consolidated */:
-        const defParser = new ConsolidatedDefParser(this.app, this.file);
-        return defParser.parseFile(fileContent);
-      case "atomic" /* Atomic */:
-        const atomicParser = new AtomicDefParser(this.app, this.file);
-        return atomicParser.parseFile(fileContent);
-    }
-  }
-  getDefFileType() {
-    var _a;
-    const fileCache = this.app.metadataCache.getFileCache(this.file);
-    const fmFileType = (_a = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a[DEF_TYPE_FM];
-    if (fmFileType && (fmFileType === "consolidated" /* Consolidated */ || fmFileType === "atomic" /* Atomic */)) {
-      return fmFileType;
-    }
-    const parserSettings = getSettings().defFileParseConfig;
-    if (parserSettings.defaultFileType) {
-      return parserSettings.defaultFileType;
-    }
-    return "consolidated" /* Consolidated */;
-  }
-};
-
-// src/settings.ts
 var DEFAULT_DEF_FOLDER = "definitions";
 var DEFAULT_SETTINGS = {
   enableInReadingView: true,
+  enableSpellcheck: true,
   popoverEvent: "hover" /* Hover */,
   defFileParseConfig: {
     defaultFileType: "consolidated" /* Consolidated */,
     divider: {
       dash: true,
       underscore: false
-    }
+    },
+    autoPlurals: false
   },
   defPopoverConfig: {
     displayAliases: true,
@@ -308,10 +469,11 @@ var DEFAULT_SETTINGS = {
   }
 };
 var SettingsTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
+  constructor(app, plugin, saveCallback) {
     super(app, plugin);
     this.plugin = plugin;
     this.settings = window.NoteDefinition.settings;
+    this.saveCallback = saveCallback;
   }
   display() {
     let { containerEl } = this;
@@ -320,7 +482,14 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       component.setValue(this.settings.enableInReadingView);
       component.onChange(async (val) => {
         this.settings.enableInReadingView = val;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
+      });
+    });
+    new import_obsidian.Setting(containerEl).setName("Enable spellcheck for defined words").setDesc("Allow defined words and phrases to be spellchecked").addToggle((component) => {
+      component.setValue(this.settings.enableSpellcheck);
+      component.onChange(async (val) => {
+        this.settings.enableSpellcheck = val;
+        await this.saveCallback();
       });
     });
     new import_obsidian.Setting(containerEl).setName("Definitions folder").setDesc("Files within this folder will be parsed to register definitions").addText((component) => {
@@ -349,7 +518,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
               return;
             }
             this.settings.defFileParseConfig.divider.dash = value;
-            await this.plugin.saveSettings();
+            await this.saveCallback();
           });
         });
         new import_obsidian.Setting(modal.contentEl).setName("Underscore").setDesc("Use triple underscore (___) as divider").addToggle((component2) => {
@@ -361,7 +530,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
               return;
             }
             this.settings.defFileParseConfig.divider.underscore = value;
-            await this.plugin.saveSettings();
+            await this.saveCallback();
           });
         });
         modal.open();
@@ -374,7 +543,14 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       component.setValue((_a = this.settings.defFileParseConfig.defaultFileType) != null ? _a : "consolidated" /* Consolidated */);
       component.onChange(async (val) => {
         this.settings.defFileParseConfig.defaultFileType = val;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
+      });
+    });
+    new import_obsidian.Setting(containerEl).setName("Automatically detect plurals -- English only").setDesc("Attempt to automatically generate aliases for words using English pluralisation rules").addToggle((component) => {
+      component.setValue(this.settings.defFileParseConfig.autoPlurals);
+      component.onChange(async (val) => {
+        this.settings.defFileParseConfig.autoPlurals = val;
+        await this.saveCallback();
       });
     });
     new import_obsidian.Setting(containerEl).setHeading().setName("Definition Popover Settings");
@@ -389,7 +565,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
         if (this.settings.popoverEvent === "click" /* Click */) {
           this.settings.defPopoverConfig.popoverDismissEvent = "click" /* Click */;
         }
-        await this.plugin.saveSettings();
+        await this.saveCallback();
         this.display();
       });
     });
@@ -399,14 +575,14 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
         component.addOption("mouse_exit" /* MouseExit */, "Mouse exit");
         if (!this.settings.defPopoverConfig.popoverDismissEvent) {
           this.settings.defPopoverConfig.popoverDismissEvent = "click" /* Click */;
-          this.plugin.saveSettings();
+          this.saveCallback();
         }
         component.setValue(this.settings.defPopoverConfig.popoverDismissEvent);
         component.onChange(async (value) => {
           if (value === "mouse_exit" /* MouseExit */ || value === "click" /* Click */) {
             this.settings.defPopoverConfig.popoverDismissEvent = value;
           }
-          await this.plugin.saveSettings();
+          await this.saveCallback();
         });
       });
     }
@@ -414,21 +590,21 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       component.setValue(this.settings.defPopoverConfig.displayAliases);
       component.onChange(async (value) => {
         this.settings.defPopoverConfig.displayAliases = value;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
       });
     });
     new import_obsidian.Setting(containerEl).setName("Display definition source file").setDesc("Display the title of the definition's source file").addToggle((component) => {
       component.setValue(this.settings.defPopoverConfig.displayDefFileName);
       component.onChange(async (value) => {
         this.settings.defPopoverConfig.displayDefFileName = value;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
       });
     });
     new import_obsidian.Setting(containerEl).setName("Custom popover size").setDesc("Customise the maximum popover size. This is not recommended as it prevents dynamic sizing of the popover based on your viewport.").addToggle((component) => {
       component.setValue(this.settings.defPopoverConfig.enableCustomSize);
       component.onChange(async (value) => {
         this.settings.defPopoverConfig.enableCustomSize = value;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
         this.display();
       });
     });
@@ -439,7 +615,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
         component.setDynamicTooltip();
         component.onChange(async (val) => {
           this.settings.defPopoverConfig.maxWidth = val;
-          await this.plugin.saveSettings();
+          await this.saveCallback();
         });
       });
       new import_obsidian.Setting(containerEl).setName("Popover height (px)").setDesc("Maximum height of the definition popover").addSlider((component) => {
@@ -448,7 +624,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
         component.setDynamicTooltip();
         component.onChange(async (val) => {
           this.settings.defPopoverConfig.maxHeight = val;
-          await this.plugin.saveSettings();
+          await this.saveCallback();
         });
       });
     }
@@ -456,7 +632,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       component.setValue(this.settings.defPopoverConfig.enableDefinitionLink);
       component.onChange(async (val) => {
         this.settings.defPopoverConfig.enableDefinitionLink = val;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
       });
     });
     new import_obsidian.Setting(containerEl).setName("Background colour").setDesc("Customise the background colour of the definition popover").addExtraButton((component) => {
@@ -464,7 +640,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       component.setTooltip("Reset to default colour set by theme");
       component.onClick(async () => {
         this.settings.defPopoverConfig.backgroundColour = void 0;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
         this.display();
       });
     }).addColorPicker((component) => {
@@ -473,7 +649,7 @@ var SettingsTab = class extends import_obsidian.PluginSettingTab {
       }
       component.onChange(async (val) => {
         this.settings.defPopoverConfig.backgroundColour = val;
-        await this.plugin.saveSettings();
+        await this.saveCallback();
       });
     });
   }
@@ -512,7 +688,7 @@ function logError(msg) {
 
 // src/editor/common.ts
 var import_obsidian2 = require("obsidian");
-var triggerFunc = "event.stopPropagation();window.NoteDefinition.triggerDefPreview(this);";
+var triggerFunc = "event.stopPropagation();activeWindow.NoteDefinition.triggerDefPreview(this);";
 var DEF_DECORATION_CLS = "def-decoration";
 function getDecorationAttrs(phrase) {
   let attributes = {
@@ -528,23 +704,26 @@ function getDecorationAttrs(phrase) {
   } else {
     attributes.onmouseenter = triggerFunc;
   }
+  if (!settings.enableSpellcheck) {
+    attributes.spellcheck = "false";
+  }
   return attributes;
 }
 
 // src/editor/definition-search.ts
 var LineScanner = class {
-  constructor() {
+  constructor(pTree) {
     this.cnLangRegex = /\p{Script=Han}/u;
     this.terminatingCharRegex = /[!@#$%^&*()\+={}[\]:;"'<>,.?\/|\\\r\n （）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､　、〃〈〉《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟—‘’‛“”„‟…‧﹏﹑﹔·。]/;
+    this.prefixTree = pTree ? pTree : getDefFileManager().getPrefixTree();
   }
   scanLine(line, offset) {
     let traversers = [];
-    const defManager = getDefFileManager();
     const phraseInfos = [];
     for (let i = 0; i < line.length; i++) {
       const c = line.charAt(i).toLowerCase();
       if (this.isValidStart(line, i)) {
-        traversers.push(new PTreeTraverser(defManager.getPrefixTree()));
+        traversers.push(new PTreeTraverser(this.prefixTree));
       }
       traversers.forEach((traverser) => {
         traverser.gotoNext(c);
@@ -614,7 +793,7 @@ var DefinitionMarker = class {
     const phraseInfos = [];
     for (let { from, to } of view.visibleRanges) {
       const text = view.state.sliceDoc(from, to);
-      phraseInfos.push(...this.scanText(text, from));
+      phraseInfos.push(...scanText(text, from));
     }
     phraseInfos.forEach((wordPos) => {
       const attributes = getDecorationAttrs(wordPos.phrase);
@@ -626,31 +805,30 @@ var DefinitionMarker = class {
     markedPhrases = phraseInfos;
     return builder.finish();
   }
-  // Scan text and return phrases and their positions that require decoration
-  scanText(text, offset) {
-    let phraseInfos = [];
-    const lines = text.split("\n");
-    let internalOffset = offset;
-    const lineScanner = new LineScanner();
-    lines.forEach((line) => {
-      phraseInfos.push(...lineScanner.scanLine(line, internalOffset));
-      internalOffset += line.length + 1;
-    });
-    phraseInfos.sort((a, b) => b.to - a.to);
-    phraseInfos.sort((a, b) => a.from - b.from);
-    return this.removeSubsetsAndIntersects(phraseInfos);
-  }
-  removeSubsetsAndIntersects(phraseInfos) {
-    let cursor = 0;
-    return phraseInfos.filter((phraseInfo) => {
-      if (phraseInfo.from >= cursor) {
-        cursor = phraseInfo.to;
-        return true;
-      }
-      return false;
-    });
-  }
 };
+function scanText(text, offset, pTree) {
+  let phraseInfos = [];
+  const lines = text.split("\n");
+  let internalOffset = offset;
+  const lineScanner = new LineScanner(pTree);
+  lines.forEach((line) => {
+    phraseInfos.push(...lineScanner.scanLine(line, internalOffset));
+    internalOffset += line.length + 1;
+  });
+  phraseInfos.sort((a, b) => b.to - a.to);
+  phraseInfos.sort((a, b) => a.from - b.from);
+  return removeSubsetsAndIntersects(phraseInfos);
+}
+function removeSubsetsAndIntersects(phraseInfos) {
+  let cursor = 0;
+  return phraseInfos.filter((phraseInfo) => {
+    if (phraseInfo.from >= cursor) {
+      cursor = phraseInfo.to;
+      return true;
+    }
+    return false;
+  });
+}
 var pluginSpec = {
   decorations: (value) => value.decorations
 };
@@ -714,6 +892,239 @@ function useRetry(retryCount) {
   };
 }
 
+// src/core/base-def-parser.ts
+var pluralize = require_pluralize();
+var BaseDefParser = class {
+  constructor(parseSettings) {
+    this.parseSettings = parseSettings ? parseSettings : this.getParseSettings();
+  }
+  calculatePlurals(aliases) {
+    let plurals = [];
+    if (this.parseSettings.autoPlurals) {
+      aliases.forEach((alias) => {
+        let pl = pluralize(alias);
+        if (pl !== alias) {
+          plurals.push(pl);
+        }
+      });
+    }
+    return plurals;
+  }
+  getParseSettings() {
+    return getSettings().defFileParseConfig;
+  }
+};
+
+// src/core/atomic-def-parser.ts
+var AtomicDefParser = class extends BaseDefParser {
+  constructor(app, file) {
+    super();
+    this.app = app;
+    this.file = file;
+  }
+  async parseFile(fileContent) {
+    if (!fileContent) {
+      fileContent = await this.app.vault.cachedRead(this.file);
+    }
+    const fileMetadata = this.app.metadataCache.getFileCache(this.file);
+    let aliases = [];
+    const fmData = fileMetadata == null ? void 0 : fileMetadata.frontmatter;
+    if (fmData) {
+      const fmAlias = fmData["aliases"];
+      if (Array.isArray(fmAlias)) {
+        aliases = fmAlias;
+      }
+    }
+    const fmPos = fileMetadata == null ? void 0 : fileMetadata.frontmatterPosition;
+    if (fmPos) {
+      fileContent = fileContent.slice(fmPos.end.offset + 1);
+    }
+    aliases = aliases.concat(this.calculatePlurals([this.file.basename].concat(aliases)));
+    const def = {
+      key: this.file.basename.toLowerCase(),
+      word: this.file.basename,
+      aliases,
+      definition: fileContent,
+      file: this.file,
+      linkText: `${this.file.path}`,
+      fileType: "atomic" /* Atomic */
+    };
+    return [def];
+  }
+};
+
+// src/core/consolidated-def-parser.ts
+var ConsolidatedDefParser = class extends BaseDefParser {
+  constructor(app, file, parseSettings) {
+    super(parseSettings);
+    this.app = app;
+    this.file = file;
+    this.parseSettings = parseSettings ? parseSettings : this.getParseSettings();
+    this.defBuffer = {};
+    this.inDefinition = false;
+    this.definitions = [];
+  }
+  async parseFile(fileContent) {
+    if (!fileContent) {
+      fileContent = await this.app.vault.cachedRead(this.file);
+    }
+    const fileMetadata = this.app.metadataCache.getFileCache(this.file);
+    const fmPos = fileMetadata == null ? void 0 : fileMetadata.frontmatterPosition;
+    if (fmPos) {
+      fileContent = fileContent.slice(fmPos.end.offset + 1);
+    }
+    return this.directParseFile(fileContent);
+  }
+  // Parse from string, no dependency on App
+  // For ease of testing
+  directParseFile(fileContent) {
+    const lines = fileContent.split("\n");
+    this.currLine = -1;
+    for (const line of lines) {
+      this.currLine++;
+      if (this.isEndOfBlock(line)) {
+        if (this.bufferValid()) {
+          this.commitDefBuffer();
+        }
+        this.startNewBlock();
+        continue;
+      }
+      if (this.inDefinition) {
+        this.defBuffer.definition += line + "\n";
+        continue;
+      }
+      if (line == "") {
+        continue;
+      }
+      if (this.isWordDeclaration(line)) {
+        let from = this.currLine;
+        this.defBuffer.filePosition = {
+          from
+        };
+        this.defBuffer.word = this.extractWordDeclaration(line);
+        continue;
+      }
+      if (this.isAliasDeclaration(line)) {
+        this.defBuffer.aliases = this.extractAliases(line);
+        continue;
+      }
+      this.inDefinition = true;
+      this.defBuffer.definition = line + "\n";
+    }
+    this.currLine++;
+    if (this.bufferValid()) {
+      this.commitDefBuffer();
+    }
+    return this.definitions;
+  }
+  commitDefBuffer() {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i;
+    const aliases = (_a = this.defBuffer.aliases) != null ? _a : [];
+    this.defBuffer.aliases = aliases.concat(this.calculatePlurals([(_b = this.defBuffer.word) != null ? _b : ""].concat(aliases)));
+    const definition = ((_c = this.defBuffer.definition) != null ? _c : "").trim();
+    this.definitions.push({
+      key: (_e = (_d = this.defBuffer.word) == null ? void 0 : _d.toLowerCase()) != null ? _e : "",
+      word: (_f = this.defBuffer.word) != null ? _f : "",
+      aliases: (_g = this.defBuffer.aliases) != null ? _g : [],
+      definition,
+      file: this.file,
+      linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
+      fileType: "consolidated" /* Consolidated */,
+      position: {
+        from: (_i = (_h = this.defBuffer.filePosition) == null ? void 0 : _h.from) != null ? _i : 0,
+        to: this.currLine - 1
+      }
+    });
+    if (this.defBuffer.aliases && this.defBuffer.aliases.length > 0) {
+      this.defBuffer.aliases.forEach((alias) => {
+        var _a2, _b2, _c2, _d2;
+        this.definitions.push({
+          key: alias.toLowerCase(),
+          word: (_a2 = this.defBuffer.word) != null ? _a2 : "",
+          aliases: (_b2 = this.defBuffer.aliases) != null ? _b2 : [],
+          definition,
+          file: this.file,
+          linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
+          fileType: "consolidated" /* Consolidated */,
+          position: {
+            from: (_d2 = (_c2 = this.defBuffer.filePosition) == null ? void 0 : _c2.from) != null ? _d2 : 0,
+            to: this.currLine - 1
+          }
+        });
+      });
+    }
+    this.defBuffer = {};
+  }
+  bufferValid() {
+    return !!this.defBuffer.word;
+  }
+  isEndOfBlock(line) {
+    if (this.parseSettings.divider.dash && line.startsWith("---")) {
+      return true;
+    }
+    return this.parseSettings.divider.underscore && line.startsWith("___");
+  }
+  isAliasDeclaration(line) {
+    line = line.trimEnd();
+    return !!this.defBuffer.word && line.startsWith("*") && line.endsWith("*");
+  }
+  extractAliases(line) {
+    {
+      line = line.trimEnd().replace(/\*+/g, "");
+      const aliases = line.split(/[,|]/);
+      return aliases.map((alias) => alias.trim());
+    }
+  }
+  isWordDeclaration(line) {
+    return line.startsWith("# ");
+  }
+  extractWordDeclaration(line) {
+    const sepLine = line.split(" ");
+    if (sepLine.length <= 1) {
+      return "";
+    }
+    return sepLine.slice(1).join(" ");
+  }
+  startNewBlock() {
+    this.inDefinition = false;
+  }
+};
+
+// src/core/file-parser.ts
+var DEF_TYPE_FM = "def-type";
+var FileParser = class {
+  constructor(app, file) {
+    this.app = app;
+    this.file = file;
+  }
+  // Optional argument used when file cache may not be updated
+  // and we know the new contents of the file
+  async parseFile(fileContent) {
+    this.defFileType = this.getDefFileType();
+    switch (this.defFileType) {
+      case "consolidated" /* Consolidated */:
+        const defParser = new ConsolidatedDefParser(this.app, this.file);
+        return defParser.parseFile(fileContent);
+      case "atomic" /* Atomic */:
+        const atomicParser = new AtomicDefParser(this.app, this.file);
+        return atomicParser.parseFile(fileContent);
+    }
+  }
+  getDefFileType() {
+    var _a;
+    const fileCache = this.app.metadataCache.getFileCache(this.file);
+    const fmFileType = (_a = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a[DEF_TYPE_FM];
+    if (fmFileType && (fmFileType === "consolidated" /* Consolidated */ || fmFileType === "atomic" /* Atomic */)) {
+      return fmFileType;
+    }
+    const parserSettings = getSettings().defFileParseConfig;
+    if (parserSettings.defaultFileType) {
+      return parserSettings.defaultFileType;
+    }
+    return "consolidated" /* Consolidated */;
+  }
+};
+
 // src/core/def-file-manager.ts
 var defFileManager;
 var DEF_CTX_FM_KEY = "def-context";
@@ -728,7 +1139,7 @@ var DefManager = class {
     this.resetLocalConfigs();
     this.lastUpdate = 0;
     this.markedDirty = [];
-    window.NoteDefinition.definitions.global = this.globalDefs;
+    activeWindow.NoteDefinition.definitions.global = this.globalDefs;
     this.loadDefinitions();
   }
   addDefFile(file) {
@@ -929,7 +1340,7 @@ var DefManager = class {
     this.globalDefFiles.set(file.path, file);
     let parser = new FileParser(this.app, file);
     const def = await parser.parseFile();
-    if (def.length > 0 && def[0].fileType === "consolidated" /* Consolidated */) {
+    if (parser.defFileType === "consolidated" /* Consolidated */) {
       this.consolidatedDefFiles.set(file.path, file);
     }
     return def;
@@ -1192,8 +1603,9 @@ var DefinitionPopover = class extends import_obsidian4.Component {
     return (_b = editor == null ? void 0 : editor.cm) == null ? void 0 : _b.coordsAtPos(editor == null ? void 0 : editor.posToOffset(editor == null ? void 0 : editor.getCursor()), -1);
   }
   registerClosePopoverListeners() {
-    this.app.workspace.containerEl.addEventListener("keypress", this.close);
-    this.app.workspace.containerEl.addEventListener("click", this.clickClose);
+    var _a, _b;
+    (_a = this.getActiveView()) == null ? void 0 : _a.containerEl.addEventListener("keypress", this.close);
+    (_b = this.getActiveView()) == null ? void 0 : _b.containerEl.addEventListener("click", this.clickClose);
     if (this.mountedPopover) {
       this.mountedPopover.addEventListener("mouseleave", () => {
         const popoverSettings = getSettings().defPopoverConfig;
@@ -1211,8 +1623,9 @@ var DefinitionPopover = class extends import_obsidian4.Component {
     }
   }
   unregisterClosePopoverListeners() {
-    this.app.workspace.containerEl.removeEventListener("keypress", this.close);
-    this.app.workspace.containerEl.removeEventListener("click", this.clickClose);
+    var _a, _b;
+    (_a = this.getActiveView()) == null ? void 0 : _a.containerEl.removeEventListener("keypress", this.close);
+    (_b = this.getActiveView()) == null ? void 0 : _b.containerEl.removeEventListener("click", this.clickClose);
     if (this.cmEditor) {
       this.cmEditor.off("vim-keypress", this.close);
     }
@@ -1229,6 +1642,9 @@ var DefinitionPopover = class extends import_obsidian4.Component {
   }
   getPopoverElement() {
     return document.getElementById("definition-popover");
+  }
+  getActiveView() {
+    return this.app.workspace.getActiveViewOfType(import_obsidian4.MarkdownView);
   }
 };
 function initDefinitionPopover(plugin) {
@@ -1251,7 +1667,7 @@ var DefinitionModal = class extends import_obsidian5.Component {
     this.modal = new import_obsidian5.Modal(app);
   }
   open(definition) {
-    var _a, _b;
+    var _a;
     this.modal.contentEl.empty();
     this.modal.contentEl.createEl("h1", {
       text: definition.word
@@ -1268,7 +1684,7 @@ var DefinitionModal = class extends import_obsidian5.Component {
       this.app,
       definition.definition,
       defContent,
-      (_b = (_a = this.app.workspace.getActiveFile()) == null ? void 0 : _a.path) != null ? _b : "",
+      (_a = (0, import_obsidian5.normalizePath)(definition.file.path)) != null ? _a : "",
       this
     );
     this.modal.open();
@@ -1283,11 +1699,11 @@ function getDefinitionModal() {
 }
 
 // src/globals.ts
-function injectGlobals(settings, app) {
+function injectGlobals(settings, app, targetWindow) {
   var _a;
-  window.NoteDefinition = {
+  targetWindow.NoteDefinition = {
     app,
-    LOG_LEVEL: ((_a = window.NoteDefinition) == null ? void 0 : _a.LOG_LEVEL) || 1 /* Error */,
+    LOG_LEVEL: ((_a = activeWindow.NoteDefinition) == null ? void 0 : _a.LOG_LEVEL) || 1 /* Error */,
     definitions: {
       global: new DefinitionRepo()
     },
@@ -1855,7 +2271,10 @@ var NoteDefinition = class extends import_obsidian11.Plugin {
   }
   async onload() {
     const settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-    injectGlobals(settings, this.app);
+    injectGlobals(settings, this.app, window);
+    this.registerEvent(this.app.workspace.on("window-open", (win, newWindow) => {
+      injectGlobals(settings, this.app, newWindow);
+    }));
     logDebug("Load note definition plugin");
     initDefinitionPopover(this);
     initDefinitionModal(this.app);
@@ -1865,7 +2284,7 @@ var NoteDefinition = class extends import_obsidian11.Plugin {
     this.updateEditorExts();
     this.registerCommands();
     this.registerEvents();
-    this.addSettingTab(new SettingsTab(this.app, this));
+    this.addSettingTab(new SettingsTab(this.app, this, this.saveSettings));
     this.registerMarkdownPostProcessor(postProcessor);
     this.fileExplorerDeco.run();
   }
@@ -2046,3 +2465,5 @@ var NoteDefinition = class extends import_obsidian11.Plugin {
     getDefinitionPopover().cleanUp();
   }
 };
+
+/* nosourcemap */

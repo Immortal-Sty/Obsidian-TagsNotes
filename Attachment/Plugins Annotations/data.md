@@ -367,13 +367,6 @@ PDF 注释插件，简单易用，但功能不多。
 内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。
 <!-- END ANNOTATION -->
 
-# Omnivore
-
-<!-- id: obsidian-omnivore -->
-<!-- BEGIN ANNOTATION -->
-Omnivore 的 Obsidian 插件，可用于将网页剪藏保存到 Obsidian 中。
-<!-- END ANNOTATION -->
-
 # PDF break page
 
 <!-- id: break-page -->

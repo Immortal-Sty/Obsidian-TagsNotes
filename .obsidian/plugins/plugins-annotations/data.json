@@ -2,359 +2,1543 @@
   "annotations": {
     "actions-uri": {
       "name": "Actions URI",
-      "anno": "用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。"
+      "desc": "用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。"
     },
     "obsidian-admonition": {
       "name": "Admonition",
-      "anno": "更多关于 Callout 样式的操作。"
+      "desc": "更多关于 Callout 样式的操作。"
     },
     "obsidian-advanced-uri": {
       "name": "Advanced URI",
-      "anno": "用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。"
+      "desc": "用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。"
     },
     "obsidian-annotator": {
       "name": "Annotator",
-      "anno": "PDF 注释插件，简单易用，但功能不多。"
+      "desc": "PDF 注释插件，简单易用，但功能不多。"
     },
     "obsidian-another-quick-switcher": {
       "name": "Another Quick Switcher",
-      "anno": "强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。"
-    },
-    "attachment-management": {
-      "name": "Attachment Management",
-      "anno": "附件管理插件，支持针对不同后缀使用不同方案。"
-    },
-    "automation": {
-      "name": "Automation",
-      "anno": "可监控文件打开和焦点变化来自动运行命令。"
-    },
-    "obsidian-better-command-palette": {
-      "name": "Better Command Palette",
-      "anno": "更好的命令面板，支持置顶上次的命令。"
-    },
-    "better-search-views": {
-      "name": "Better Search Views",
-      "anno": "渲染搜索、出入链面板等界面的 Markdown 语法。"
-    },
-    "obsidian42-brat": {
-      "name": "BRAT",
-      "anno": "用于安装、管理未在插件市场上架的插件和主题。"
-    },
-    "oz-clear-unused-images": {
-      "name": "Clear Unused Images",
-      "anno": "自动清理没有被嵌入或链接的附件和图像文件，有概率误删。"
-    },
-    "clever-search": {
-      "name": "Clever Search",
-      "anno": "强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。"
-    },
-    "close-similar-tabs": {
-      "name": "Close Similar Tabs",
-      "anno": "关闭相同文件的多余标签页。"
-    },
-    "code-styler": {
-      "name": "Code Styler",
-      "anno": "为代码块添加各种样式。"
-    },
-    "command-block-list": {
-      "name": "Command Block List",
-      "anno": "在命令面板中隐藏一些命令。"
-    },
-    "obsidian-completr": {
-      "name": "Completr",
-      "anno": "提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。"
-    },
-    "control-characters": {
-      "name": "Control Characters",
-      "anno": "在编辑模式下，显示空白字符。"
-    },
-    "dataview": {
-      "name": "Dataview",
-      "anno": "使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。"
-    },
-    "easy-typing-obsidian": {
-      "name": "Easy Typing",
-      "anno": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
-    },
-    "nl-fast-image-cleaner": {
-      "name": "Fast Image Cleaner",
-      "anno": "提供右键删除图片和图片文件的功能。"
-    },
-    "obsidian-file-cooker": {
-      "name": "File Cooker",
-      "anno": "提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。"
-    },
-    "fit": {
-      "name": "Fit",
-      "anno": "用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。"
-    },
-    "float-search": {
-      "name": "Floating Search",
-      "anno": "将 Obsidian 原生的搜索以悬浮面板的方式呈现。"
-    },
-    "floating-toc": {
-      "name": "floating toc",
-      "anno": "在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。"
-    },
-    "obsidian-footnotes": {
-      "name": "Footnote Shortcut",
-      "anno": "用快捷键快速新增、编辑脚注。"
-    },
-    "obsidian-front-matter-title-plugin": {
-      "name": "Front Matter Title",
-      "anno": "用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。"
-    },
-    "obsidian-git": {
-      "name": "Git",
-      "anno": "用 Git 管理笔记，功能丰富强大。"
-    },
-    "homepage": {
-      "name": "Homepage",
-      "anno": "设置某个页面为笔记库主页。"
-    },
-    "obsidian-hover-editor": {
-      "name": "Hover Editor",
-      "anno": "增强悬浮小窗的功能，使其能进行编辑、拖动等操作。"
-    },
-    "html-server": {
-      "name": "Html Server",
-      "anno": "本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。"
-    },
-    "obsidian-icon-shortcodes": {
-      "name": "Icon Shortcodes",
-      "anno": "通过输入 `:` 快速搜索输入 Emoji。"
-    },
-    "obsidian-image-auto-upload-plugin": {
-      "name": "Image auto upload Plugin",
-      "anno": "自动将图片上传图床。"
-    },
-    "image-inline": {
-      "name": "Image Inline",
-      "anno": "用 base64 代替图片嵌入，免去附件管理问题。"
-    },
-    "immersive-translate": {
-      "name": "Immersive Translate",
-      "anno": "沉浸式翻译，可用于翻译插件的设置页面。"
-    },
-    "janitor": {
-      "name": "Janitor",
-      "anno": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。"
-    },
-    "obsidian-latex-suite": {
-      "name": "Latex Suite",
-      "anno": "提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。"
-    },
-    "lineage": {
-      "name": "Lineage",
-      "anno": "提供类似 Gingko 的编辑界面，分块树形编辑。"
-    },
-    "obsidian-linter": {
-      "name": "Linter",
-      "anno": "格式化笔记，功能非常强。"
-    },
-    "obsidian-local-images-plus": {
-      "name": "Local Images Plus",
-      "anno": "下载网络附件并在本地进行管理，支持自动转格式。"
-    },
-    "obsidian-markdown-export-plugin": {
-      "name": "markdown export",
-      "anno": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
-    },
-    "minimap": {
-      "name": "Minimap",
-      "anno": "用整体小地图代替滚动条，非常不完善。"
-    },
-    "mousewheel-image-zoom": {
-      "name": "Mousewheel Image zoom",
-      "anno": "用鼠标滚轮来更改图片嵌入大小。"
-    },
-    "mysnippets-plugin": {
-      "name": "MySnippets",
-      "anno": "快速方便地新增、编辑、开关 CSS 片段。"
-    },
-    "note-definitions": {
-      "name": "Note Definitions",
-      "anno": "在笔记中直接突出显示有可能成为链接的文本，并提供虚拟链接功能。"
-    },
-    "nuke-orphans": {
-      "name": "Nuke Orphans",
-      "anno": "自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。"
-    },
-    "omnisearch": {
-      "name": "Omnisearch",
-      "anno": "内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。"
-    },
-    "obsidian-omnivore": {
-      "name": "Omnivore",
-      "anno": "Omnivore 的 Obsidian 插件，可用于将网页剪藏保存到 Obsidian 中。"
-    },
-    "pdf-plus": {
-      "name": "PDF++",
-      "anno": "提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。"
-    },
-    "persistent-links": {
-      "name": "Persistent Links",
-      "anno": "大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。"
-    },
-    "pkmer": {
-      "name": "PKMer",
-      "anno": "PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。"
-    },
-    "plugins-annotations": {
-      "name": "Plugins Annotations",
-      "anno": "提供给插件加个人注释的功能，即本段文字。"
-    },
-    "qatt": {
-      "name": "Query all the things",
-      "anno": "增强 Query 语法的功能。"
-    },
-    "quickadd": {
-      "name": "QuickAdd",
-      "anno": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
-    },
-    "obsidian-relative-line-numbers": {
-      "name": "Relative Line Numbers",
-      "anno": "使行号变成相对行号。"
-    },
-    "remotely-save": {
-      "name": "Remotely Save",
-      "anno": "同步插件，可用各大网盘、WebDav、S3 进行同步。"
-    },
-    "restore-tab-key": {
-      "name": "Restore Tab Key",
-      "anno": "Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。"
-    },
-    "settings-search": {
-      "name": "Settings Search",
-      "anno": "提供搜索 Obsidian 设置功能。"
-    },
-    "sheets": {
-      "name": "Sheets Extended",
-      "anno": "提供合并表格单元格功能和语法。"
-    },
-    "obsidian-sortable": {
-      "name": "Sortable",
-      "anno": "通过点击表头，更改表格内容的排序。"
-    },
-    "sticky-heading": {
-      "name": "Sticky Headings",
-      "anno": "markdown:\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：保持标题样式。\n- 缺点：阅读模式不可用，不可跳转。"
-    },
-    "obsidian-style-settings": {
-      "name": "Style Settings",
-      "anno": "为 CSS 和主题提供设置与快捷键功能与语法。"
-    },
-    "tab-selector": {
-      "name": "Tab Selector",
-      "anno": "通过标签页选择页面，快速通过两三个键切换到目标标签页。"
-    },
-    "tag-wrangler": {
-      "name": "Tag Wrangler",
-      "anno": "在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。"
-    },
-    "obsidian-tagfolder": {
-      "name": "TagFolder",
-      "anno": "用文件目录的形式显示标签及文件，可用于把标签当文件夹用。"
-    },
-    "templater-obsidian": {
-      "name": "Templater",
-      "anno": "增强模版功能，可运行 JavaScript 代码。"
-    },
-    "obsidian-trash-explorer": {
-      "name": "Trash Explorer",
-      "anno": "提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。"
-    },
-    "typewriter-mode": {
-      "name": "Typewriter Mode",
-      "anno": "提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。"
-    },
-    "cm-typewriter-scroll-obsidian": {
-      "name": "Typewriter Scroll",
-      "anno": "提供打字机模式和聚焦模式，但未适配新版，有 Bug。"
-    },
-    "update-relative-links": {
-      "name": "Update Relative Links",
-      "anno": "A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。"
-    },
-    "various-complements": {
-      "name": "Various Complements",
-      "anno": "提供下拉补全功能，自带链接、属性等补全功能，也可自定义。"
-    },
-    "obsidian-version-history-diff": {
-      "name": "Version History Diff",
-      "anno": "提供历史版本对比功能，可用于 Git 等功能。"
-    },
-    "obsidian-vimrc-support": {
-      "name": "Vimrc Support",
-      "anno": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。"
-    },
-    "cm-chs-patch": {
-      "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
-      "anno": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
-    },
-    "dataview-serializer": {
-      "name": "Dataview Serializer",
-      "anno": "使用 Dataview 语法，将查询结果直接以文本形式插入。"
-    },
-    "notice-logger": {
-      "name": "Notice logger",
-      "anno": "将所有通知日志记录到开发者控制台，并附有可选的前缀和时间戳。"
-    },
-    "note-refactor-obsidian": {
-      "name": "Note Refactor",
-      "anno": "提取笔记内容到新的笔记和分裂笔记。"
+      "desc": "强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。"
     },
     "another-sticky-headings": {
       "name": "Another Sticky Headings",
-      "anno": "markdown:\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。"
+      "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。"
+    },
+    "attachment-management": {
+      "name": "Attachment Management",
+      "desc": "附件管理插件，支持针对不同后缀使用不同方案。"
+    },
+    "automation": {
+      "name": "Automation",
+      "desc": "可监控文件打开和焦点变化来自动运行命令。"
+    },
+    "obsidian-better-command-palette": {
+      "name": "Better Command Palette",
+      "desc": "更好的命令面板，支持置顶上次的命令。"
+    },
+    "better-search-views": {
+      "name": "Better Search Views",
+      "desc": "渲染搜索、出入链面板等界面的 Markdown 语法。"
+    },
+    "obsidian42-brat": {
+      "name": "BRAT",
+      "desc": "用于安装、管理未在插件市场上架的插件和主题。"
+    },
+    "oz-clear-unused-images": {
+      "name": "Clear Unused Images",
+      "desc": "自动清理没有被嵌入或链接的附件和图像文件，有概率误删。"
+    },
+    "clever-search": {
+      "name": "Clever Search",
+      "desc": "强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。"
+    },
+    "close-similar-tabs": {
+      "name": "Close Similar Tabs",
+      "desc": "关闭相同文件的多余标签页。"
+    },
+    "code-styler": {
+      "name": "Code Styler",
+      "desc": "为代码块添加各种样式。"
+    },
+    "command-block-list": {
+      "name": "Command Block List",
+      "desc": "在命令面板中隐藏一些命令。"
+    },
+    "obsidian-completr": {
+      "name": "Completr",
+      "desc": "提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。"
+    },
+    "control-characters": {
+      "name": "Control Characters",
+      "desc": "在编辑模式下，显示空白字符。"
+    },
+    "dataview": {
+      "name": "Dataview",
+      "desc": "使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。"
+    },
+    "dataview-serializer": {
+      "name": "Dataview Serializer",
+      "desc": "使用 Dataview 语法，将查询结果直接以文本形式插入。"
+    },
+    "easy-typing-obsidian": {
+      "name": "Easy Typing",
+      "desc": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
+    },
+    "nl-fast-image-cleaner": {
+      "name": "Fast Image Cleaner",
+      "desc": "提供右键删除图片和图片文件的功能。"
+    },
+    "obsidian-file-cooker": {
+      "name": "File Cooker",
+      "desc": "提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。"
+    },
+    "fit": {
+      "name": "Fit",
+      "desc": "用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。"
+    },
+    "float-search": {
+      "name": "Floating Search",
+      "desc": "将 Obsidian 原生的搜索以悬浮面板的方式呈现。"
+    },
+    "floating-settings": {
+      "name": "Floating Settings",
+      "desc": "将设置界面变成悬浮窗口，方便进行某些设置。"
+    },
+    "floating-toc": {
+      "name": "floating toc",
+      "desc": "在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。"
+    },
+    "obsidian-footnotes": {
+      "name": "Footnote Shortcut",
+      "desc": "用快捷键快速新增、编辑脚注。"
+    },
+    "obsidian-front-matter-title-plugin": {
+      "name": "Front Matter Title",
+      "desc": "用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。"
+    },
+    "obsidian-git": {
+      "name": "Git",
+      "desc": "用 Git 管理笔记，功能丰富强大。"
+    },
+    "homepage": {
+      "name": "Homepage",
+      "desc": "设置某个页面为笔记库主页。"
+    },
+    "obsidian-hover-editor": {
+      "name": "Hover Editor",
+      "desc": "增强悬浮小窗的功能，使其能进行编辑、拖动等操作。"
+    },
+    "html-server": {
+      "name": "Html Server",
+      "desc": "本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。"
+    },
+    "obsidian-icon-shortcodes": {
+      "name": "Icon Shortcodes",
+      "desc": "通过输入 `:` 快速搜索输入 Emoji。"
+    },
+    "obsidian-image-auto-upload-plugin": {
+      "name": "Image auto upload Plugin",
+      "desc": "自动将图片上传图床。"
+    },
+    "image-inline": {
+      "name": "Image Inline",
+      "desc": "用 base64 代替图片嵌入，免去附件管理问题。"
+    },
+    "immersive-translate": {
+      "name": "Immersive Translate",
+      "desc": "沉浸式翻译，可用于翻译插件的设置页面。"
+    },
+    "janitor": {
+      "name": "Janitor",
+      "desc": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。"
+    },
+    "obsidian-latex-suite": {
+      "name": "Latex Suite",
+      "desc": "提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。"
+    },
+    "lineage": {
+      "name": "Lineage",
+      "desc": "提供类似 Gingko 的编辑界面，分块树形编辑。"
+    },
+    "obsidian-linter": {
+      "name": "Linter",
+      "desc": "格式化笔记，功能非常强。"
+    },
+    "obsidian-local-images-plus": {
+      "name": "Local Images Plus",
+      "desc": "下载网络附件并在本地进行管理，支持自动转格式。"
+    },
+    "obsidian-markdown-export-plugin": {
+      "name": "markdown export",
+      "desc": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
+    },
+    "minimap": {
+      "name": "Minimap",
+      "desc": "用整体小地图代替滚动条，非常不完善。"
+    },
+    "mousewheel-image-zoom": {
+      "name": "Mousewheel Image zoom",
+      "desc": "用鼠标滚轮来更改图片嵌入大小。"
+    },
+    "mysnippets-plugin": {
+      "name": "MySnippets",
+      "desc": "快速方便地新增、编辑、开关 CSS 片段。"
+    },
+    "note-definitions": {
+      "name": "Note Definitions",
+      "desc": "在笔记中直接突出显示有可能成为链接的文本，并提供虚拟链接功能。"
+    },
+    "note-refactor-obsidian": {
+      "name": "Note Refactor",
+      "desc": "提取笔记内容到新的笔记和分裂笔记。"
+    },
+    "note-synchronizer": {
+      "name": "Note Synchronizer",
+      "desc": "用于将笔记同步到 Anki 中进行制卡。"
+    },
+    "notice-logger": {
+      "name": "Notice logger",
+      "desc": "将所有通知日志记录到开发者控制台，并附有可选的前缀和时间戳。"
+    },
+    "nuke-orphans": {
+      "name": "Nuke Orphans",
+      "desc": "自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。"
+    },
+    "omnisearch": {
+      "name": "Omnisearch",
+      "desc": "内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。"
+    },
+    "break-page": {
+      "name": "PDF break page",
+      "desc": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。"
+    },
+    "pdf-plus": {
+      "name": "PDF++",
+      "desc": "提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。"
+    },
+    "persistent-links": {
+      "name": "Persistent Links",
+      "desc": "大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。"
+    },
+    "pkmer": {
+      "name": "PKMer",
+      "desc": "PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。"
+    },
+    "obsidian-plugin-groups": {
+      "name": "Plugin Groups",
+      "desc": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。"
+    },
+    "plugins-annotations": {
+      "name": "Plugins Annotations",
+      "desc": "提供给插件加个人注释的功能，即本段文字。"
+    },
+    "qatt": {
+      "name": "Query all the things",
+      "desc": "增强 Query 语法的功能。"
+    },
+    "quickadd": {
+      "name": "QuickAdd",
+      "desc": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
+    },
+    "obsidian-relative-line-numbers": {
+      "name": "Relative Line Numbers",
+      "desc": "使行号变成相对行号。"
+    },
+    "remotely-save": {
+      "name": "Remotely Save",
+      "desc": "同步插件，可用各大网盘、WebDav、S3 进行同步。"
+    },
+    "restore-tab-key": {
+      "name": "Restore Tab Key",
+      "desc": "Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。"
+    },
+    "settings-search": {
+      "name": "Settings Search",
+      "desc": "提供搜索 Obsidian 设置功能。"
+    },
+    "share-my-plugin-list": {
+      "name": "Share my plugin list",
+      "desc": "将插件导出为列表或表格。"
+    },
+    "sheets": {
+      "name": "Sheets Extended",
+      "desc": "提供合并表格单元格功能和语法。"
+    },
+    "show-whitespace-cm6": {
+      "name": "Show Whitespace",
+      "desc": "显示文本中的空白字符。"
+    },
+    "obsidian-sortable": {
+      "name": "Sortable",
+      "desc": "通过点击表头，更改表格内容的排序。"
     },
     "spoilers": {
       "name": "Spoilers",
-      "anno": "markdown:\n用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
+      "desc": "用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
     },
-    "share-my-plugin-list": {
-      "anno": "将插件导出为列表或表格。",
-      "name": "Share my plugin list"
+    "sticky-heading": {
+      "name": "Sticky Headings",
+      "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：保持标题样式。\n- 缺点：阅读模式不可用，不可跳转。"
     },
-    "virt-folder": {
-      "anno": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。",
-      "name": "VirtFolder"
+    "obsidian-style-settings": {
+      "name": "Style Settings",
+      "desc": "为 CSS 和主题提供设置与快捷键功能与语法。"
     },
-    "obsidian-plugin-groups": {
-      "anno": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
-      "name": "Plugin Groups"
-    },
-    "show-whitespace-cm6": {
-      "anno": "显示文本中的空白字符。",
-      "name": "Show Whitespace"
+    "tab-selector": {
+      "name": "Tab Selector",
+      "desc": "通过标签页选择页面，快速通过两三个键切换到目标标签页。"
     },
     "tabs": {
-      "anno": "用代码块实现多标签样式。",
-      "name": "Tabs"
+      "name": "Tabs",
+      "desc": "用代码块实现多标签样式。"
     },
-    "floating-settings": {
-      "anno": "将设置界面变成悬浮窗口，方便进行某些设置。",
-      "name": "Floating Settings"
+    "tag-wrangler": {
+      "name": "Tag Wrangler",
+      "desc": "在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。"
     },
-    "break-page": {
-      "anno": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。",
-      "name": "PDF break page"
+    "obsidian-tagfolder": {
+      "name": "TagFolder",
+      "desc": "用文件目录的形式显示标签及文件，可用于把标签当文件夹用。"
+    },
+    "templater-obsidian": {
+      "name": "Templater",
+      "desc": "增强模版功能，可运行 JavaScript 代码。"
+    },
+    "obsidian-trash-explorer": {
+      "name": "Trash Explorer",
+      "desc": "提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。"
+    },
+    "typewriter-mode": {
+      "name": "Typewriter Mode",
+      "desc": "提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。"
+    },
+    "cm-typewriter-scroll-obsidian": {
+      "name": "Typewriter Scroll",
+      "desc": "提供打字机模式和聚焦模式，但未适配新版，有 Bug。"
+    },
+    "update-relative-links": {
+      "name": "Update Relative Links",
+      "desc": "A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。"
+    },
+    "various-complements": {
+      "name": "Various Complements",
+      "desc": "提供下拉补全功能，自带链接、属性等补全功能，也可自定义。"
+    },
+    "obsidian-version-history-diff": {
+      "name": "Version History Diff",
+      "desc": "提供历史版本对比功能，可用于 Git 等功能。"
+    },
+    "obsidian-vimrc-support": {
+      "name": "Vimrc Support",
+      "desc": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。"
+    },
+    "virt-folder": {
+      "name": "VirtFolder",
+      "desc": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。"
     },
     "virtual-linker": {
-      "anno": "将可以作为链接的文本作为虚拟链接显示。",
-      "name": "Virtual Linker / Glossary"
+      "name": "Virtual Linker / Glossary",
+      "desc": "将可以作为链接的文本作为虚拟链接显示。"
     },
-    "note-synchronizer": {
-      "anno": "用于将笔记同步到 Anki 中进行制卡。",
-      "name": "Note Synchronizer"
+    "cm-chs-patch": {
+      "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
+      "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
     }
   },
-  "plugins_annotations_uuid": "B265C5B2-A6AD-4194-9E4C-C1327DB1EA18",
+  "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
   "hide_placeholders": true,
   "delete_placeholder_string_on_insertion": true,
   "label_mobile": "<b>Annotation:&nbsp;</b>",
   "label_desktop": "<b>个人注释：</b>",
   "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
   "editable": false,
-  "automatic_remove": true
+  "automatic_remove": true,
+  "markdown_file_path": "Attachment/Plugins Annotations/data.md",
+  "show_github_icons": true,
+  "backups": [
+    {
+      "name": "Settings before upgrade from 1.5 to 1.6",
+      "date": "2024-12-28T00:00:03.288Z",
+      "settings": {
+        "annotations": {
+          "actions-uri": {
+            "name": "Actions URI",
+            "desc": "用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。"
+          },
+          "obsidian-admonition": {
+            "name": "Admonition",
+            "desc": "更多关于 Callout 样式的操作。"
+          },
+          "obsidian-advanced-uri": {
+            "name": "Advanced URI",
+            "desc": "用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。"
+          },
+          "obsidian-annotator": {
+            "name": "Annotator",
+            "desc": "PDF 注释插件，简单易用，但功能不多。"
+          },
+          "obsidian-another-quick-switcher": {
+            "name": "Another Quick Switcher",
+            "desc": "强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。"
+          },
+          "attachment-management": {
+            "name": "Attachment Management",
+            "desc": "附件管理插件，支持针对不同后缀使用不同方案。"
+          },
+          "automation": {
+            "name": "Automation",
+            "desc": "可监控文件打开和焦点变化来自动运行命令。"
+          },
+          "obsidian-better-command-palette": {
+            "name": "Better Command Palette",
+            "desc": "更好的命令面板，支持置顶上次的命令。"
+          },
+          "better-search-views": {
+            "name": "Better Search Views",
+            "desc": "渲染搜索、出入链面板等界面的 Markdown 语法。"
+          },
+          "obsidian42-brat": {
+            "name": "BRAT",
+            "desc": "用于安装、管理未在插件市场上架的插件和主题。"
+          },
+          "oz-clear-unused-images": {
+            "name": "Clear Unused Images",
+            "desc": "自动清理没有被嵌入或链接的附件和图像文件，有概率误删。"
+          },
+          "clever-search": {
+            "name": "Clever Search",
+            "desc": "强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。"
+          },
+          "close-similar-tabs": {
+            "name": "Close Similar Tabs",
+            "desc": "关闭相同文件的多余标签页。"
+          },
+          "code-styler": {
+            "name": "Code Styler",
+            "desc": "为代码块添加各种样式。"
+          },
+          "command-block-list": {
+            "name": "Command Block List",
+            "desc": "在命令面板中隐藏一些命令。"
+          },
+          "obsidian-completr": {
+            "name": "Completr",
+            "desc": "提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。"
+          },
+          "control-characters": {
+            "name": "Control Characters",
+            "desc": "在编辑模式下，显示空白字符。"
+          },
+          "dataview": {
+            "name": "Dataview",
+            "desc": "使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。"
+          },
+          "easy-typing-obsidian": {
+            "name": "Easy Typing",
+            "desc": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
+          },
+          "nl-fast-image-cleaner": {
+            "name": "Fast Image Cleaner",
+            "desc": "提供右键删除图片和图片文件的功能。"
+          },
+          "obsidian-file-cooker": {
+            "name": "File Cooker",
+            "desc": "提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。"
+          },
+          "fit": {
+            "name": "Fit",
+            "desc": "用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。"
+          },
+          "float-search": {
+            "name": "Floating Search",
+            "desc": "将 Obsidian 原生的搜索以悬浮面板的方式呈现。"
+          },
+          "floating-toc": {
+            "name": "floating toc",
+            "desc": "在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。"
+          },
+          "obsidian-footnotes": {
+            "name": "Footnote Shortcut",
+            "desc": "用快捷键快速新增、编辑脚注。"
+          },
+          "obsidian-front-matter-title-plugin": {
+            "name": "Front Matter Title",
+            "desc": "用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。"
+          },
+          "obsidian-git": {
+            "name": "Git",
+            "desc": "用 Git 管理笔记，功能丰富强大。"
+          },
+          "homepage": {
+            "name": "Homepage",
+            "desc": "设置某个页面为笔记库主页。"
+          },
+          "obsidian-hover-editor": {
+            "name": "Hover Editor",
+            "desc": "增强悬浮小窗的功能，使其能进行编辑、拖动等操作。"
+          },
+          "html-server": {
+            "name": "Html Server",
+            "desc": "本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。"
+          },
+          "obsidian-icon-shortcodes": {
+            "name": "Icon Shortcodes",
+            "desc": "通过输入 `:` 快速搜索输入 Emoji。"
+          },
+          "obsidian-image-auto-upload-plugin": {
+            "name": "Image auto upload Plugin",
+            "desc": "自动将图片上传图床。"
+          },
+          "image-inline": {
+            "name": "Image Inline",
+            "desc": "用 base64 代替图片嵌入，免去附件管理问题。"
+          },
+          "immersive-translate": {
+            "name": "Immersive Translate",
+            "desc": "沉浸式翻译，可用于翻译插件的设置页面。"
+          },
+          "janitor": {
+            "name": "Janitor",
+            "desc": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。"
+          },
+          "obsidian-latex-suite": {
+            "name": "Latex Suite",
+            "desc": "提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。"
+          },
+          "lineage": {
+            "name": "Lineage",
+            "desc": "提供类似 Gingko 的编辑界面，分块树形编辑。"
+          },
+          "obsidian-linter": {
+            "name": "Linter",
+            "desc": "格式化笔记，功能非常强。"
+          },
+          "obsidian-local-images-plus": {
+            "name": "Local Images Plus",
+            "desc": "下载网络附件并在本地进行管理，支持自动转格式。"
+          },
+          "obsidian-markdown-export-plugin": {
+            "name": "markdown export",
+            "desc": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
+          },
+          "minimap": {
+            "name": "Minimap",
+            "desc": "用整体小地图代替滚动条，非常不完善。"
+          },
+          "mousewheel-image-zoom": {
+            "name": "Mousewheel Image zoom",
+            "desc": "用鼠标滚轮来更改图片嵌入大小。"
+          },
+          "mysnippets-plugin": {
+            "name": "MySnippets",
+            "desc": "快速方便地新增、编辑、开关 CSS 片段。"
+          },
+          "note-definitions": {
+            "name": "Note Definitions",
+            "desc": "在笔记中直接突出显示有可能成为链接的文本，并提供虚拟链接功能。"
+          },
+          "nuke-orphans": {
+            "name": "Nuke Orphans",
+            "desc": "自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。"
+          },
+          "omnisearch": {
+            "name": "Omnisearch",
+            "desc": "内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。"
+          },
+          "obsidian-omnivore": {
+            "name": "Omnivore",
+            "desc": "Omnivore 的 Obsidian 插件，可用于将网页剪藏保存到 Obsidian 中。"
+          },
+          "pdf-plus": {
+            "name": "PDF++",
+            "desc": "提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。"
+          },
+          "persistent-links": {
+            "name": "Persistent Links",
+            "desc": "大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。"
+          },
+          "pkmer": {
+            "name": "PKMer",
+            "desc": "PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。"
+          },
+          "plugins-annotations": {
+            "name": "Plugins Annotations",
+            "desc": "提供给插件加个人注释的功能，即本段文字。"
+          },
+          "qatt": {
+            "name": "Query all the things",
+            "desc": "增强 Query 语法的功能。"
+          },
+          "quickadd": {
+            "name": "QuickAdd",
+            "desc": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
+          },
+          "obsidian-relative-line-numbers": {
+            "name": "Relative Line Numbers",
+            "desc": "使行号变成相对行号。"
+          },
+          "remotely-save": {
+            "name": "Remotely Save",
+            "desc": "同步插件，可用各大网盘、WebDav、S3 进行同步。"
+          },
+          "restore-tab-key": {
+            "name": "Restore Tab Key",
+            "desc": "Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。"
+          },
+          "settings-search": {
+            "name": "Settings Search",
+            "desc": "提供搜索 Obsidian 设置功能。"
+          },
+          "sheets": {
+            "name": "Sheets Extended",
+            "desc": "提供合并表格单元格功能和语法。"
+          },
+          "obsidian-sortable": {
+            "name": "Sortable",
+            "desc": "通过点击表头，更改表格内容的排序。"
+          },
+          "sticky-heading": {
+            "name": "Sticky Headings",
+            "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：保持标题样式。\n- 缺点：阅读模式不可用，不可跳转。"
+          },
+          "obsidian-style-settings": {
+            "name": "Style Settings",
+            "desc": "为 CSS 和主题提供设置与快捷键功能与语法。"
+          },
+          "tab-selector": {
+            "name": "Tab Selector",
+            "desc": "通过标签页选择页面，快速通过两三个键切换到目标标签页。"
+          },
+          "tag-wrangler": {
+            "name": "Tag Wrangler",
+            "desc": "在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。"
+          },
+          "obsidian-tagfolder": {
+            "name": "TagFolder",
+            "desc": "用文件目录的形式显示标签及文件，可用于把标签当文件夹用。"
+          },
+          "templater-obsidian": {
+            "name": "Templater",
+            "desc": "增强模版功能，可运行 JavaScript 代码。"
+          },
+          "obsidian-trash-explorer": {
+            "name": "Trash Explorer",
+            "desc": "提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。"
+          },
+          "typewriter-mode": {
+            "name": "Typewriter Mode",
+            "desc": "提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。"
+          },
+          "cm-typewriter-scroll-obsidian": {
+            "name": "Typewriter Scroll",
+            "desc": "提供打字机模式和聚焦模式，但未适配新版，有 Bug。"
+          },
+          "update-relative-links": {
+            "name": "Update Relative Links",
+            "desc": "A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。"
+          },
+          "various-complements": {
+            "name": "Various Complements",
+            "desc": "提供下拉补全功能，自带链接、属性等补全功能，也可自定义。"
+          },
+          "obsidian-version-history-diff": {
+            "name": "Version History Diff",
+            "desc": "提供历史版本对比功能，可用于 Git 等功能。"
+          },
+          "obsidian-vimrc-support": {
+            "name": "Vimrc Support",
+            "desc": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。"
+          },
+          "cm-chs-patch": {
+            "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
+            "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
+          },
+          "dataview-serializer": {
+            "name": "Dataview Serializer",
+            "desc": "使用 Dataview 语法，将查询结果直接以文本形式插入。"
+          },
+          "notice-logger": {
+            "name": "Notice logger",
+            "desc": "将所有通知日志记录到开发者控制台，并附有可选的前缀和时间戳。"
+          },
+          "note-refactor-obsidian": {
+            "name": "Note Refactor",
+            "desc": "提取笔记内容到新的笔记和分裂笔记。"
+          },
+          "another-sticky-headings": {
+            "name": "Another Sticky Headings",
+            "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。"
+          },
+          "spoilers": {
+            "name": "Spoilers",
+            "desc": "用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
+          },
+          "share-my-plugin-list": {
+            "name": "Share my plugin list",
+            "desc": "将插件导出为列表或表格。"
+          },
+          "virt-folder": {
+            "name": "VirtFolder",
+            "desc": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。"
+          },
+          "obsidian-plugin-groups": {
+            "name": "Plugin Groups",
+            "desc": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。"
+          },
+          "show-whitespace-cm6": {
+            "name": "Show Whitespace",
+            "desc": "显示文本中的空白字符。"
+          },
+          "tabs": {
+            "name": "Tabs",
+            "desc": "用代码块实现多标签样式。"
+          },
+          "floating-settings": {
+            "name": "Floating Settings",
+            "desc": "将设置界面变成悬浮窗口，方便进行某些设置。"
+          },
+          "break-page": {
+            "name": "PDF break page",
+            "desc": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。"
+          },
+          "virtual-linker": {
+            "name": "Virtual Linker / Glossary",
+            "desc": "将可以作为链接的文本作为虚拟链接显示。"
+          },
+          "note-synchronizer": {
+            "name": "Note Synchronizer",
+            "desc": "用于将笔记同步到 Anki 中进行制卡。"
+          }
+        },
+        "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
+        "hide_placeholders": true,
+        "delete_placeholder_string_on_insertion": true,
+        "label_mobile": "<b>Annotation:&nbsp;</b>",
+        "label_desktop": "<b>个人注释：</b>",
+        "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
+        "editable": false,
+        "automatic_remove": true,
+        "compatibility": "1.6.0",
+        "markdown_file_path": ""
+      }
+    },
+    {
+      "name": "Settings before upgrade from 1.5 to 1.6",
+      "date": "2024-12-28T00:00:03.277Z",
+      "settings": {
+        "annotations": {
+          "actions-uri": {
+            "name": "Actions URI",
+            "desc": "用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。",
+            "type": "text"
+          },
+          "obsidian-admonition": {
+            "name": "Admonition",
+            "desc": "更多关于 Callout 样式的操作。",
+            "type": "text"
+          },
+          "obsidian-advanced-uri": {
+            "name": "Advanced URI",
+            "desc": "用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。",
+            "type": "text"
+          },
+          "obsidian-annotator": {
+            "name": "Annotator",
+            "desc": "PDF 注释插件，简单易用，但功能不多。",
+            "type": "text"
+          },
+          "obsidian-another-quick-switcher": {
+            "name": "Another Quick Switcher",
+            "desc": "强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。",
+            "type": "text"
+          },
+          "attachment-management": {
+            "name": "Attachment Management",
+            "desc": "附件管理插件，支持针对不同后缀使用不同方案。",
+            "type": "text"
+          },
+          "automation": {
+            "name": "Automation",
+            "desc": "可监控文件打开和焦点变化来自动运行命令。",
+            "type": "text"
+          },
+          "obsidian-better-command-palette": {
+            "name": "Better Command Palette",
+            "desc": "更好的命令面板，支持置顶上次的命令。",
+            "type": "text"
+          },
+          "better-search-views": {
+            "name": "Better Search Views",
+            "desc": "渲染搜索、出入链面板等界面的 Markdown 语法。",
+            "type": "text"
+          },
+          "obsidian42-brat": {
+            "name": "BRAT",
+            "desc": "用于安装、管理未在插件市场上架的插件和主题。",
+            "type": "text"
+          },
+          "oz-clear-unused-images": {
+            "name": "Clear Unused Images",
+            "desc": "自动清理没有被嵌入或链接的附件和图像文件，有概率误删。",
+            "type": "text"
+          },
+          "clever-search": {
+            "name": "Clever Search",
+            "desc": "强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。",
+            "type": "text"
+          },
+          "close-similar-tabs": {
+            "name": "Close Similar Tabs",
+            "desc": "关闭相同文件的多余标签页。",
+            "type": "text"
+          },
+          "code-styler": {
+            "name": "Code Styler",
+            "desc": "为代码块添加各种样式。",
+            "type": "text"
+          },
+          "command-block-list": {
+            "name": "Command Block List",
+            "desc": "在命令面板中隐藏一些命令。",
+            "type": "text"
+          },
+          "obsidian-completr": {
+            "name": "Completr",
+            "desc": "提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。",
+            "type": "text"
+          },
+          "control-characters": {
+            "name": "Control Characters",
+            "desc": "在编辑模式下，显示空白字符。",
+            "type": "text"
+          },
+          "dataview": {
+            "name": "Dataview",
+            "desc": "使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。",
+            "type": "text"
+          },
+          "easy-typing-obsidian": {
+            "name": "Easy Typing",
+            "desc": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。",
+            "type": "text"
+          },
+          "nl-fast-image-cleaner": {
+            "name": "Fast Image Cleaner",
+            "desc": "提供右键删除图片和图片文件的功能。",
+            "type": "text"
+          },
+          "obsidian-file-cooker": {
+            "name": "File Cooker",
+            "desc": "提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。",
+            "type": "text"
+          },
+          "fit": {
+            "name": "Fit",
+            "desc": "用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。",
+            "type": "text"
+          },
+          "float-search": {
+            "name": "Floating Search",
+            "desc": "将 Obsidian 原生的搜索以悬浮面板的方式呈现。",
+            "type": "text"
+          },
+          "floating-toc": {
+            "name": "floating toc",
+            "desc": "在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。",
+            "type": "text"
+          },
+          "obsidian-footnotes": {
+            "name": "Footnote Shortcut",
+            "desc": "用快捷键快速新增、编辑脚注。",
+            "type": "text"
+          },
+          "obsidian-front-matter-title-plugin": {
+            "name": "Front Matter Title",
+            "desc": "用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。",
+            "type": "text"
+          },
+          "obsidian-git": {
+            "name": "Git",
+            "desc": "用 Git 管理笔记，功能丰富强大。",
+            "type": "text"
+          },
+          "homepage": {
+            "name": "Homepage",
+            "desc": "设置某个页面为笔记库主页。",
+            "type": "text"
+          },
+          "obsidian-hover-editor": {
+            "name": "Hover Editor",
+            "desc": "增强悬浮小窗的功能，使其能进行编辑、拖动等操作。",
+            "type": "text"
+          },
+          "html-server": {
+            "name": "Html Server",
+            "desc": "本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。",
+            "type": "text"
+          },
+          "obsidian-icon-shortcodes": {
+            "name": "Icon Shortcodes",
+            "desc": "通过输入 `:` 快速搜索输入 Emoji。",
+            "type": "text"
+          },
+          "obsidian-image-auto-upload-plugin": {
+            "name": "Image auto upload Plugin",
+            "desc": "自动将图片上传图床。",
+            "type": "text"
+          },
+          "image-inline": {
+            "name": "Image Inline",
+            "desc": "用 base64 代替图片嵌入，免去附件管理问题。",
+            "type": "text"
+          },
+          "immersive-translate": {
+            "name": "Immersive Translate",
+            "desc": "沉浸式翻译，可用于翻译插件的设置页面。",
+            "type": "text"
+          },
+          "janitor": {
+            "name": "Janitor",
+            "desc": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。",
+            "type": "text"
+          },
+          "obsidian-latex-suite": {
+            "name": "Latex Suite",
+            "desc": "提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。",
+            "type": "text"
+          },
+          "lineage": {
+            "name": "Lineage",
+            "desc": "提供类似 Gingko 的编辑界面，分块树形编辑。",
+            "type": "text"
+          },
+          "obsidian-linter": {
+            "name": "Linter",
+            "desc": "格式化笔记，功能非常强。",
+            "type": "text"
+          },
+          "obsidian-local-images-plus": {
+            "name": "Local Images Plus",
+            "desc": "下载网络附件并在本地进行管理，支持自动转格式。",
+            "type": "text"
+          },
+          "obsidian-markdown-export-plugin": {
+            "name": "markdown export",
+            "desc": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。",
+            "type": "text"
+          },
+          "minimap": {
+            "name": "Minimap",
+            "desc": "用整体小地图代替滚动条，非常不完善。",
+            "type": "text"
+          },
+          "mousewheel-image-zoom": {
+            "name": "Mousewheel Image zoom",
+            "desc": "用鼠标滚轮来更改图片嵌入大小。",
+            "type": "text"
+          },
+          "mysnippets-plugin": {
+            "name": "MySnippets",
+            "desc": "快速方便地新增、编辑、开关 CSS 片段。",
+            "type": "text"
+          },
+          "note-definitions": {
+            "name": "Note Definitions",
+            "desc": "在笔记中直接突出显示有可能成为链接的文本，并提供虚拟链接功能。",
+            "type": "text"
+          },
+          "nuke-orphans": {
+            "name": "Nuke Orphans",
+            "desc": "自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。",
+            "type": "text"
+          },
+          "omnisearch": {
+            "name": "Omnisearch",
+            "desc": "内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。",
+            "type": "text"
+          },
+          "obsidian-omnivore": {
+            "name": "Omnivore",
+            "desc": "Omnivore 的 Obsidian 插件，可用于将网页剪藏保存到 Obsidian 中。",
+            "type": "text"
+          },
+          "pdf-plus": {
+            "name": "PDF++",
+            "desc": "提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。",
+            "type": "text"
+          },
+          "persistent-links": {
+            "name": "Persistent Links",
+            "desc": "大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。",
+            "type": "text"
+          },
+          "pkmer": {
+            "name": "PKMer",
+            "desc": "PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。",
+            "type": "text"
+          },
+          "plugins-annotations": {
+            "name": "Plugins Annotations",
+            "desc": "提供给插件加个人注释的功能，即本段文字。",
+            "type": "text"
+          },
+          "qatt": {
+            "name": "Query all the things",
+            "desc": "增强 Query 语法的功能。",
+            "type": "text"
+          },
+          "quickadd": {
+            "name": "QuickAdd",
+            "desc": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。",
+            "type": "text"
+          },
+          "obsidian-relative-line-numbers": {
+            "name": "Relative Line Numbers",
+            "desc": "使行号变成相对行号。",
+            "type": "text"
+          },
+          "remotely-save": {
+            "name": "Remotely Save",
+            "desc": "同步插件，可用各大网盘、WebDav、S3 进行同步。",
+            "type": "text"
+          },
+          "restore-tab-key": {
+            "name": "Restore Tab Key",
+            "desc": "Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。",
+            "type": "text"
+          },
+          "settings-search": {
+            "name": "Settings Search",
+            "desc": "提供搜索 Obsidian 设置功能。",
+            "type": "text"
+          },
+          "sheets": {
+            "name": "Sheets Extended",
+            "desc": "提供合并表格单元格功能和语法。",
+            "type": "text"
+          },
+          "obsidian-sortable": {
+            "name": "Sortable",
+            "desc": "通过点击表头，更改表格内容的排序。",
+            "type": "text"
+          },
+          "sticky-heading": {
+            "name": "Sticky Headings",
+            "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：保持标题样式。\n- 缺点：阅读模式不可用，不可跳转。",
+            "type": "markdown"
+          },
+          "obsidian-style-settings": {
+            "name": "Style Settings",
+            "desc": "为 CSS 和主题提供设置与快捷键功能与语法。",
+            "type": "text"
+          },
+          "tab-selector": {
+            "name": "Tab Selector",
+            "desc": "通过标签页选择页面，快速通过两三个键切换到目标标签页。",
+            "type": "text"
+          },
+          "tag-wrangler": {
+            "name": "Tag Wrangler",
+            "desc": "在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。",
+            "type": "text"
+          },
+          "obsidian-tagfolder": {
+            "name": "TagFolder",
+            "desc": "用文件目录的形式显示标签及文件，可用于把标签当文件夹用。",
+            "type": "text"
+          },
+          "templater-obsidian": {
+            "name": "Templater",
+            "desc": "增强模版功能，可运行 JavaScript 代码。",
+            "type": "text"
+          },
+          "obsidian-trash-explorer": {
+            "name": "Trash Explorer",
+            "desc": "提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。",
+            "type": "text"
+          },
+          "typewriter-mode": {
+            "name": "Typewriter Mode",
+            "desc": "提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。",
+            "type": "text"
+          },
+          "cm-typewriter-scroll-obsidian": {
+            "name": "Typewriter Scroll",
+            "desc": "提供打字机模式和聚焦模式，但未适配新版，有 Bug。",
+            "type": "text"
+          },
+          "update-relative-links": {
+            "name": "Update Relative Links",
+            "desc": "A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。",
+            "type": "text"
+          },
+          "various-complements": {
+            "name": "Various Complements",
+            "desc": "提供下拉补全功能，自带链接、属性等补全功能，也可自定义。",
+            "type": "text"
+          },
+          "obsidian-version-history-diff": {
+            "name": "Version History Diff",
+            "desc": "提供历史版本对比功能，可用于 Git 等功能。",
+            "type": "text"
+          },
+          "obsidian-vimrc-support": {
+            "name": "Vimrc Support",
+            "desc": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。",
+            "type": "text"
+          },
+          "cm-chs-patch": {
+            "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
+            "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。",
+            "type": "text"
+          },
+          "dataview-serializer": {
+            "name": "Dataview Serializer",
+            "desc": "使用 Dataview 语法，将查询结果直接以文本形式插入。",
+            "type": "text"
+          },
+          "notice-logger": {
+            "name": "Notice logger",
+            "desc": "将所有通知日志记录到开发者控制台，并附有可选的前缀和时间戳。",
+            "type": "text"
+          },
+          "note-refactor-obsidian": {
+            "name": "Note Refactor",
+            "desc": "提取笔记内容到新的笔记和分裂笔记。",
+            "type": "text"
+          },
+          "another-sticky-headings": {
+            "name": "Another Sticky Headings",
+            "desc": "使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。",
+            "type": "markdown"
+          },
+          "spoilers": {
+            "name": "Spoilers",
+            "desc": "用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。",
+            "type": "markdown"
+          },
+          "share-my-plugin-list": {
+            "name": "Share my plugin list",
+            "desc": "将插件导出为列表或表格。",
+            "type": "text"
+          },
+          "virt-folder": {
+            "name": "VirtFolder",
+            "desc": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。",
+            "type": "text"
+          },
+          "obsidian-plugin-groups": {
+            "name": "Plugin Groups",
+            "desc": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
+            "type": "text"
+          },
+          "show-whitespace-cm6": {
+            "name": "Show Whitespace",
+            "desc": "显示文本中的空白字符。",
+            "type": "text"
+          },
+          "tabs": {
+            "name": "Tabs",
+            "desc": "用代码块实现多标签样式。",
+            "type": "text"
+          },
+          "floating-settings": {
+            "name": "Floating Settings",
+            "desc": "将设置界面变成悬浮窗口，方便进行某些设置。",
+            "type": "text"
+          },
+          "break-page": {
+            "name": "PDF break page",
+            "desc": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。",
+            "type": "text"
+          },
+          "virtual-linker": {
+            "name": "Virtual Linker / Glossary",
+            "desc": "将可以作为链接的文本作为虚拟链接显示。",
+            "type": "text"
+          },
+          "note-synchronizer": {
+            "name": "Note Synchronizer",
+            "desc": "用于将笔记同步到 Anki 中进行制卡。",
+            "type": "text"
+          }
+        },
+        "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
+        "hide_placeholders": true,
+        "delete_placeholder_string_on_insertion": true,
+        "label_mobile": "<b>Annotation:&nbsp;</b>",
+        "label_desktop": "<b>个人注释：</b>",
+        "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
+        "editable": false,
+        "automatic_remove": true,
+        "compatibility": "1.5.0",
+        "markdown_file_path": ""
+      }
+    },
+    {
+      "name": "Settings before upgrade from 1.4 to 1.5",
+      "date": "2024-12-28T00:00:03.146Z",
+      "settings": {
+        "annotations": {
+          "actions-uri": {
+            "name": "Actions URI",
+            "anno": "用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。"
+          },
+          "obsidian-admonition": {
+            "name": "Admonition",
+            "anno": "更多关于 Callout 样式的操作。"
+          },
+          "obsidian-advanced-uri": {
+            "name": "Advanced URI",
+            "anno": "用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。"
+          },
+          "obsidian-annotator": {
+            "name": "Annotator",
+            "anno": "PDF 注释插件，简单易用，但功能不多。"
+          },
+          "obsidian-another-quick-switcher": {
+            "name": "Another Quick Switcher",
+            "anno": "强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。"
+          },
+          "attachment-management": {
+            "name": "Attachment Management",
+            "anno": "附件管理插件，支持针对不同后缀使用不同方案。"
+          },
+          "automation": {
+            "name": "Automation",
+            "anno": "可监控文件打开和焦点变化来自动运行命令。"
+          },
+          "obsidian-better-command-palette": {
+            "name": "Better Command Palette",
+            "anno": "更好的命令面板，支持置顶上次的命令。"
+          },
+          "better-search-views": {
+            "name": "Better Search Views",
+            "anno": "渲染搜索、出入链面板等界面的 Markdown 语法。"
+          },
+          "obsidian42-brat": {
+            "name": "BRAT",
+            "anno": "用于安装、管理未在插件市场上架的插件和主题。"
+          },
+          "oz-clear-unused-images": {
+            "name": "Clear Unused Images",
+            "anno": "自动清理没有被嵌入或链接的附件和图像文件，有概率误删。"
+          },
+          "clever-search": {
+            "name": "Clever Search",
+            "anno": "强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。"
+          },
+          "close-similar-tabs": {
+            "name": "Close Similar Tabs",
+            "anno": "关闭相同文件的多余标签页。"
+          },
+          "code-styler": {
+            "name": "Code Styler",
+            "anno": "为代码块添加各种样式。"
+          },
+          "command-block-list": {
+            "name": "Command Block List",
+            "anno": "在命令面板中隐藏一些命令。"
+          },
+          "obsidian-completr": {
+            "name": "Completr",
+            "anno": "提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。"
+          },
+          "control-characters": {
+            "name": "Control Characters",
+            "anno": "在编辑模式下，显示空白字符。"
+          },
+          "dataview": {
+            "name": "Dataview",
+            "anno": "使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。"
+          },
+          "easy-typing-obsidian": {
+            "name": "Easy Typing",
+            "anno": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
+          },
+          "nl-fast-image-cleaner": {
+            "name": "Fast Image Cleaner",
+            "anno": "提供右键删除图片和图片文件的功能。"
+          },
+          "obsidian-file-cooker": {
+            "name": "File Cooker",
+            "anno": "提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。"
+          },
+          "fit": {
+            "name": "Fit",
+            "anno": "用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。"
+          },
+          "float-search": {
+            "name": "Floating Search",
+            "anno": "将 Obsidian 原生的搜索以悬浮面板的方式呈现。"
+          },
+          "floating-toc": {
+            "name": "floating toc",
+            "anno": "在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。"
+          },
+          "obsidian-footnotes": {
+            "name": "Footnote Shortcut",
+            "anno": "用快捷键快速新增、编辑脚注。"
+          },
+          "obsidian-front-matter-title-plugin": {
+            "name": "Front Matter Title",
+            "anno": "用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。"
+          },
+          "obsidian-git": {
+            "name": "Git",
+            "anno": "用 Git 管理笔记，功能丰富强大。"
+          },
+          "homepage": {
+            "name": "Homepage",
+            "anno": "设置某个页面为笔记库主页。"
+          },
+          "obsidian-hover-editor": {
+            "name": "Hover Editor",
+            "anno": "增强悬浮小窗的功能，使其能进行编辑、拖动等操作。"
+          },
+          "html-server": {
+            "name": "Html Server",
+            "anno": "本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。"
+          },
+          "obsidian-icon-shortcodes": {
+            "name": "Icon Shortcodes",
+            "anno": "通过输入 `:` 快速搜索输入 Emoji。"
+          },
+          "obsidian-image-auto-upload-plugin": {
+            "name": "Image auto upload Plugin",
+            "anno": "自动将图片上传图床。"
+          },
+          "image-inline": {
+            "name": "Image Inline",
+            "anno": "用 base64 代替图片嵌入，免去附件管理问题。"
+          },
+          "immersive-translate": {
+            "name": "Immersive Translate",
+            "anno": "沉浸式翻译，可用于翻译插件的设置页面。"
+          },
+          "janitor": {
+            "name": "Janitor",
+            "anno": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。"
+          },
+          "obsidian-latex-suite": {
+            "name": "Latex Suite",
+            "anno": "提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。"
+          },
+          "lineage": {
+            "name": "Lineage",
+            "anno": "提供类似 Gingko 的编辑界面，分块树形编辑。"
+          },
+          "obsidian-linter": {
+            "name": "Linter",
+            "anno": "格式化笔记，功能非常强。"
+          },
+          "obsidian-local-images-plus": {
+            "name": "Local Images Plus",
+            "anno": "下载网络附件并在本地进行管理，支持自动转格式。"
+          },
+          "obsidian-markdown-export-plugin": {
+            "name": "markdown export",
+            "anno": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
+          },
+          "minimap": {
+            "name": "Minimap",
+            "anno": "用整体小地图代替滚动条，非常不完善。"
+          },
+          "mousewheel-image-zoom": {
+            "name": "Mousewheel Image zoom",
+            "anno": "用鼠标滚轮来更改图片嵌入大小。"
+          },
+          "mysnippets-plugin": {
+            "name": "MySnippets",
+            "anno": "快速方便地新增、编辑、开关 CSS 片段。"
+          },
+          "note-definitions": {
+            "name": "Note Definitions",
+            "anno": "在笔记中直接突出显示有可能成为链接的文本，并提供虚拟链接功能。"
+          },
+          "nuke-orphans": {
+            "name": "Nuke Orphans",
+            "anno": "自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。"
+          },
+          "omnisearch": {
+            "name": "Omnisearch",
+            "anno": "内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。"
+          },
+          "obsidian-omnivore": {
+            "name": "Omnivore",
+            "anno": "Omnivore 的 Obsidian 插件，可用于将网页剪藏保存到 Obsidian 中。"
+          },
+          "pdf-plus": {
+            "name": "PDF++",
+            "anno": "提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。"
+          },
+          "persistent-links": {
+            "name": "Persistent Links",
+            "anno": "大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。"
+          },
+          "pkmer": {
+            "name": "PKMer",
+            "anno": "PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。"
+          },
+          "plugins-annotations": {
+            "name": "Plugins Annotations",
+            "anno": "提供给插件加个人注释的功能，即本段文字。"
+          },
+          "qatt": {
+            "name": "Query all the things",
+            "anno": "增强 Query 语法的功能。"
+          },
+          "quickadd": {
+            "name": "QuickAdd",
+            "anno": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
+          },
+          "obsidian-relative-line-numbers": {
+            "name": "Relative Line Numbers",
+            "anno": "使行号变成相对行号。"
+          },
+          "remotely-save": {
+            "name": "Remotely Save",
+            "anno": "同步插件，可用各大网盘、WebDav、S3 进行同步。"
+          },
+          "restore-tab-key": {
+            "name": "Restore Tab Key",
+            "anno": "Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。"
+          },
+          "settings-search": {
+            "name": "Settings Search",
+            "anno": "提供搜索 Obsidian 设置功能。"
+          },
+          "sheets": {
+            "name": "Sheets Extended",
+            "anno": "提供合并表格单元格功能和语法。"
+          },
+          "obsidian-sortable": {
+            "name": "Sortable",
+            "anno": "通过点击表头，更改表格内容的排序。"
+          },
+          "sticky-heading": {
+            "name": "Sticky Headings",
+            "anno": "markdown:\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：保持标题样式。\n- 缺点：阅读模式不可用，不可跳转。"
+          },
+          "obsidian-style-settings": {
+            "name": "Style Settings",
+            "anno": "为 CSS 和主题提供设置与快捷键功能与语法。"
+          },
+          "tab-selector": {
+            "name": "Tab Selector",
+            "anno": "通过标签页选择页面，快速通过两三个键切换到目标标签页。"
+          },
+          "tag-wrangler": {
+            "name": "Tag Wrangler",
+            "anno": "在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。"
+          },
+          "obsidian-tagfolder": {
+            "name": "TagFolder",
+            "anno": "用文件目录的形式显示标签及文件，可用于把标签当文件夹用。"
+          },
+          "templater-obsidian": {
+            "name": "Templater",
+            "anno": "增强模版功能，可运行 JavaScript 代码。"
+          },
+          "obsidian-trash-explorer": {
+            "name": "Trash Explorer",
+            "anno": "提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。"
+          },
+          "typewriter-mode": {
+            "name": "Typewriter Mode",
+            "anno": "提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。"
+          },
+          "cm-typewriter-scroll-obsidian": {
+            "name": "Typewriter Scroll",
+            "anno": "提供打字机模式和聚焦模式，但未适配新版，有 Bug。"
+          },
+          "update-relative-links": {
+            "name": "Update Relative Links",
+            "anno": "A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。"
+          },
+          "various-complements": {
+            "name": "Various Complements",
+            "anno": "提供下拉补全功能，自带链接、属性等补全功能，也可自定义。"
+          },
+          "obsidian-version-history-diff": {
+            "name": "Version History Diff",
+            "anno": "提供历史版本对比功能，可用于 Git 等功能。"
+          },
+          "obsidian-vimrc-support": {
+            "name": "Vimrc Support",
+            "anno": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。"
+          },
+          "cm-chs-patch": {
+            "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
+            "anno": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
+          },
+          "dataview-serializer": {
+            "name": "Dataview Serializer",
+            "anno": "使用 Dataview 语法，将查询结果直接以文本形式插入。"
+          },
+          "notice-logger": {
+            "name": "Notice logger",
+            "anno": "将所有通知日志记录到开发者控制台，并附有可选的前缀和时间戳。"
+          },
+          "note-refactor-obsidian": {
+            "name": "Note Refactor",
+            "anno": "提取笔记内容到新的笔记和分裂笔记。"
+          },
+          "another-sticky-headings": {
+            "name": "Another Sticky Headings",
+            "anno": "markdown:\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。"
+          },
+          "spoilers": {
+            "name": "Spoilers",
+            "anno": "markdown:\n用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
+          },
+          "share-my-plugin-list": {
+            "anno": "将插件导出为列表或表格。",
+            "name": "Share my plugin list"
+          },
+          "virt-folder": {
+            "anno": "将文件以树的形式显示（像 Notion 一样），而且支持一文件对应多位置（通过 yaml 实现）。",
+            "name": "VirtFolder"
+          },
+          "obsidian-plugin-groups": {
+            "anno": "分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
+            "name": "Plugin Groups"
+          },
+          "show-whitespace-cm6": {
+            "anno": "显示文本中的空白字符。",
+            "name": "Show Whitespace"
+          },
+          "tabs": {
+            "anno": "用代码块实现多标签样式。",
+            "name": "Tabs"
+          },
+          "floating-settings": {
+            "anno": "将设置界面变成悬浮窗口，方便进行某些设置。",
+            "name": "Floating Settings"
+          },
+          "break-page": {
+            "anno": "使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。",
+            "name": "PDF break page"
+          },
+          "virtual-linker": {
+            "anno": "将可以作为链接的文本作为虚拟链接显示。",
+            "name": "Virtual Linker / Glossary"
+          },
+          "note-synchronizer": {
+            "anno": "用于将笔记同步到 Anki 中进行制卡。",
+            "name": "Note Synchronizer"
+          }
+        },
+        "plugins_annotations_uuid": "B265C5B2-A6AD-4194-9E4C-C1327DB1EA18",
+        "hide_placeholders": true,
+        "delete_placeholder_string_on_insertion": true,
+        "label_mobile": "<b>Annotation:&nbsp;</b>",
+        "label_desktop": "<b>个人注释：</b>",
+        "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
+        "editable": false,
+        "automatic_remove": true
+      }
+    }
+  ],
+  "compatibility": "1.7.0"
 }

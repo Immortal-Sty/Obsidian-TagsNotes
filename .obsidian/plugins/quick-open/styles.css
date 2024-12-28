@@ -1,36 +1,85 @@
-.quick-open-modal-active .prompt-results {
-    counter-reset: suggestion-counter;
+.suggestion-item {
+	display: flex;
+	justify-content: start;
+	align-items: center;
 }
 
-.quick-open-modal-active .suggestion-item {
-    display: flex;
-    justify-content: start;
+.suggestion-item .suggestion-highlight {
+	line-height: 100%;
 }
 
-.quick-open-modal-active .suggestion-item:nth-child(-n+9) {
-    counter-increment: suggestion-counter;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+.suggestion-item:nth-child(-n+9 of :not(.mod-group)) {
+	counter-increment: suggestion-counter;
 }
 
-.quick-open-modal-active .suggestion-item .suggestion-content {
-    width: 100%;
+.suggestion-item .suggestion-content {
+	width: 100%;
 }
 
-.quick-open-modal-active .suggestion-item:nth-child(-n+9)::after {
-    content: counter(suggestion-counter);
-    color: var(--text-muted);
-    font-size: 0.8em;
-    padding-left: 10px;
-    margin-left: auto;
+.suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	content: counter(suggestion-counter);
+	color: var(--text-muted);
+	font-size: 0.8em;
+	padding: 4px 8px;
+	margin-left: auto;
+	align-self: center;
+	position: absolute;
+	right: var(--size-4-5);
+	background-color: var(--background-primary-alt);
+	border-radius: 4px;
+	opacity: 0;
 }
 
-.quick-open-modal-active .suggestion-item:nth-child(n+10)::after {
-    content: none;
+.suggestion-container .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	right: var(--size-4-2);
 }
 
-.quick-open-modal-active .suggestion-item>div.callout {
-    width: 100%;
-    mix-blend-mode: normal;
+/* None */
+.quick-select-mod-key-active .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	opacity: 1;
+}
+
+/* Permanent */
+.quick-select-transition-permanent .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	position: relative;
+	opacity: 1;
+	right: 0;
+	margin-left: var(--size-4-2);
+	padding: 0;
+	background-color: transparent;
+}
+
+/* Slide */
+.quick-select-transition-slide .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	right: -50px;
+	transition: all 100ms ease-out;
+}
+
+.quick-select-transition-slide.quick-select-mod-key-active .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	transition: all 200ms ease-in;
+	right: var(--size-4-5);
+}
+
+.quick-select-transition-slide.quick-select-mod-key-active .suggestion-container .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	right: var(--size-4-2);
+}
+
+/* Fade */
+.quick-select-transition-fade .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	opacity: 0;
+	right: var(--size-4-5);
+}
+
+.quick-select-transition-fade .suggestion-container .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	right: var(--size-4-2);
+}
+
+.quick-select-transition-fade.quick-select-mod-key-active .suggestion-item:nth-child(-n+9 of :not(.mod-group))::after {
+	transition: all 200ms ease-in;
+	opacity: 1;
+}
+
+.suggestion-item>div.callout {
+	width: 100%;
+	mix-blend-mode: normal;
 }
