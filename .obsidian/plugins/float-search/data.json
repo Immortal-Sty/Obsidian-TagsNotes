@@ -4,7 +4,7 @@
     "explainSearch": false,
     "extraContext": false,
     "matchingCase": false,
-    "query": "",
+    "query": "\"\\\\begin{cases}\\\\vec{a}  \\\\\\\\  \\\\vec{b}\\\\end{cases}\"",
     "sortOrder": "alphabetical"
   },
   "showFilePath": false,
