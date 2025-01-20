@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "isAnnounceUpdatesEnabled": true,
   "isPluginActivated": true,
   "isTypewriterScrollEnabled": false,
@@ -32,6 +32,7 @@
   "doesWritingFocusShowVignette": true,
   "isWritingFocusFullscreen": true,
   "writingFocusVignetteStyle": "box",
+  "isRestoreCursorPositionEnabled": true,
   "isDisableInCanvasEnabled": true,
   "isDimUnfocusedParagraphsEnabled": false,
   "dimmedParagraphsOpacity": 0.5,
