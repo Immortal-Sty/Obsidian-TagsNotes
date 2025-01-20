@@ -96,10 +96,6 @@
         {
           "id": "obsidian-vimrc-support",
           "name": "Vimrc Support"
-        },
-        {
-          "id": "floating-settings",
-          "name": "Floating Settings"
         }
       ],
       "groupIds": [],
@@ -108,7 +104,7 @@
     {
       "loadAtStartup": true,
       "disableOnStartup": false,
-      "delay": 1,
+      "delay": 3,
       "id": "pgdelay",
       "name": "Delay",
       "plugins": [
