@@ -1,0 +1,1868 @@
+/* 只针对评论插件内容移除内边距 */
+.workspace-leaf-content[data-type="comment-view"] .view-content {
+    padding: 0 !important;
+}
+
+.highlight-empty-state {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 32px 16px;
+    font-size: 13px;
+}
+
+/* 搜索区域样式 */
+.highlight-search-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.highlight-search-input {
+    flex: 1;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    font-size: 13px;
+}
+
+.highlight-search-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 1px var(--interactive-accent);
+}
+
+.highlight-search-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.highlight-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    background: none;
+    color: var(--icon-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.highlight-icon-button:hover {
+    color: var(--text-normal);
+    background-color: var(--background-modifier-hover);
+}
+
+.highlight-list {
+    column-count: auto;
+    column-width: 250px;
+    column-gap: 12px;
+}
+
+.highlight-card {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    background-color: var(--background-primary);
+    transition: all 0.2s ease;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 8px;
+    display: inline-block;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.highlight-card:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.highlight-card.selected {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 1px var(--interactive-accent);
+}
+
+.highlight-content {
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.highlight-text-container {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    position: relative;
+    min-height: 0;
+}
+
+.highlight-text {
+    position: relative;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-size: 12px;
+    flex-grow: 1;
+    padding: 2px 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.highlight-text-decorator {
+    width: 3px;
+    background-color: var(--text-highlight-bg);
+    border-radius: 1.5px;
+    flex-shrink: 0;
+}
+
+.highlight-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0px 4px 2px 4px;
+}
+
+.highlight-action-buttons-left,
+.highlight-action-buttons-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.highlight-card.selected .highlight-action-buttons {
+    opacity: 1;
+    height: auto;
+    margin-top: 4px;
+    visibility: visible;
+}
+
+.highlight-action-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.highlight-comment {
+    padding: 8px;
+    background-color: var(--background-primary);
+    border-radius: 4px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.highlight-comment-content {
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    cursor: text;
+    transition: background-color 0.2s ease;
+    padding: 2px;
+    white-space: pre-wrap;       /* 保留空格和换行符 */
+    word-wrap: break-word;       /* 允许在单词内换行 */
+    word-break: break-word;      /* 在需要时在单词内换行 */
+}
+
+.highlight-comment-content:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.highlight-comment-content::after {
+    content: '双击编辑';
+    display: none;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+.highlight-comment-content:hover::after {
+    display: inline;
+}
+
+.highlight-comment-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 0px;
+}
+
+.highlight-comment-time {
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-right: auto;
+    margin-top: 4px;
+}
+
+.highlight-comment-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.highlight-comment:hover .highlight-comment-actions {
+    opacity: 1;
+}
+
+.highlight-comment-actions button:not(.clickable-icon) {
+    background: none;
+    border: none;
+    padding: 4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.highlight-comment-actions button:not(.clickable-icon):hover {
+    color: var(--text-error);
+    background: none;
+    box-shadow: none;
+}
+
+.highlight-comment-input {
+    padding: 8px;
+    background-color: var(--background-primary);
+    border-radius: 6px;
+    margin: 0 0 4px 0;
+    width: 100%;
+}
+
+.highlight-comment-input textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    margin: 0;
+    transition: border-color 0.2s ease;
+}
+
+.highlight-comment-input textarea:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+.highlight-comment-input textarea::placeholder {
+    color: var(--text-faint);
+}
+
+.highlight-comment-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 0 0 0;
+    margin-top: 2px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.highlight-btn {
+    /* 基础样式 */
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    
+    /* 布局相关 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    
+    /* 动画效果 */
+    transition: all 0.2s ease;
+    
+    /* 颜色相关 */
+    background: none;
+    color: var(--text-muted);
+}
+
+.highlight-btn:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.highlight-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes highlight-fade {
+    0% {
+        background-color: var(--text-accent);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.highlight-comments-section {
+    background-color: var(--background-secondary);
+    padding: 8px;
+    border-bottom-right-radius: 8px; /* 右下角圆角 */
+    border-bottom-left-radius: 8px; /* 左下角圆角 */
+}
+
+.highlight-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.highlight-search-container {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 12px;
+    background-color: var(--background-primary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    backdrop-filter: blur(10px);
+}
+
+.highlight-search-input {
+    width: 100%;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+}
+
+.highlight-search-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.highlight-container {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.highlight-comment-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    padding: 0px 4px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.2s ease;
+    height: 22px;
+    z-index: 1;
+}
+
+.highlight-comment-button-hidden {
+    opacity: 0;
+}
+
+.cm-line:hover .highlight-comment-button-hidden {
+    opacity: 1;
+}
+
+.highlight-comment-icon-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: var(--text-muted);
+}
+
+.highlight-comment-count {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: 1px;
+}
+
+.highlight-comment-tooltip {
+    position: fixed;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    min-width: 240px;
+    max-width: 360px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 99999;
+    pointer-events: auto;
+}
+
+.highlight-comment-tooltip-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.highlight-comment-tooltip-item {
+    padding: 1px 0;
+}
+
+.highlight-comment-tooltip-content {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-normal);
+    word-break: break-word;
+    padding: 2px 0;
+}
+
+.highlight-comment-tooltip-time {
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 0px;
+}
+
+.highlight-comment-tooltip-more {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 4px;
+    border-top: 1px solid var(--background-modifier-border);
+    margin-top: 4px;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 修改编辑器容器样式确保有足够空间显示按钮 */
+.markdown-source-view {
+    padding-right: 40px !important;
+}
+
+/* 确保编辑器有足够的右侧空间 */
+.markdown-source-view.mod-cm6 .cm-content {
+    padding-right: 50px !important;
+}
+
+/* 悬停效果 */
+.highlight-comment-button:hover {
+    background-color: var(--background-modifier-hover);
+    opacity: 1;
+}
+
+/* 编辑状态的评论样式 */
+.highlight-comment-editing {
+    background-color: var(--background-primary);
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.highlight-comment-editing textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    margin-bottom: 8px;
+}
+
+.highlight-comment-editing textarea:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+/* 编辑区域样式 */
+.highlight-comment-edit-area {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.highlight-comment-edit-area textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px 12px;
+    margin: 0 0 8px 0;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.highlight-comment-edit-area textarea:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+/* 模板选择器样式 */
+.highlight-template-selector {
+    padding: 0 0 16px 0;
+    position: relative;  /* 添加相对定位 */
+    z-index: 1;         /* 确保选择器在按钮上方 */
+}
+
+.highlight-template-select {
+    width: 100%;
+    padding: 8px 32px 8px 8px;  /* 右侧留出箭头的空间 */
+    border-radius: 4px;
+    background-color: var(--background-modifier-form-field);
+    border: 1px solid var(--background-modifier-border);
+    height: 36px;  /* 设置固定高度 */
+    line-height: 1.4;  /* 添加行高 */
+    font-size: 14px;
+    color: var(--text-normal);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.highlight-template-select:hover {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.highlight-template-select:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--interactive-accent-hover);
+}
+
+/* 导出预览弹窗样式 */
+.highlight-export-modal {
+    max-width: 800px;
+    min-height: 400px;  /* 设置最小高度 */
+    max-height: 90vh;   /* 设置最大高度 */
+    height: auto;       /* 自适应内容高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+.highlight-export-main-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: auto;     /* 改为 auto，允许容超出时滚动 */
+    padding: 12px 4px 4px 4px;      /* 添加内边距 */
+}
+
+.highlight-export-preview-container {
+    padding: 20px;
+    margin: 16px 0;
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.highlight-export-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px;
+    margin: 0 -16px -16px -16px;  /* 抵消 Modal 的 padding */
+    border-top: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);  /* 添加背景色 */
+}
+
+/* 导出容器样式 */
+.highlight-export-container {
+    padding: 20px;
+    margin: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    width: 480px;
+}
+
+/* 预览容器样式 */
+.highlight-export-preview {
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 4px;
+}
+
+.highlight-export-card {
+    transition: all 0.3s ease;
+}
+
+/* 悬停效果 */
+.highlight-export-card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* 深色模式适配 */
+.theme-dark .highlight-export-card-modern {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.theme-dark .highlight-export-card-modern:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* 亮色模式适配 */
+.theme-light .highlight-export-card-modern {
+    background: linear-gradient(to bottom right,
+        var(--background-primary) 0%,
+        var(--background-primary-alt) 100%);
+}
+
+/* 设置页面样式 */
+.prompt-settings-container {
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.new-prompt-section {
+    background-color: var(--background-primary);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 12px 0px;
+}
+
+.prompt-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column; /* 元素垂直排列 */
+    gap: 8px; /* 设置元素之间的间距 */
+}
+
+.prompt-item {
+    background-color: var(--background-primary);
+    border-radius: 6px;
+    padding: 12px;
+    position: relative;
+}
+
+.prompt-name-input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+.prompt-content-input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.prompt-add-btn {
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.prompt-display-mode {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.prompt-info {
+    flex: 1;
+    margin-right: 16px;
+}
+
+.prompt-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.prompt-content-preview {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    line-height: 1.4;
+    max-height: 2.8em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    text-overflow: ellipsis;
+}
+
+.prompt-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.prompt-edit-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+}
+
+.prompt-settings-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+/* 当在视图中时，移鼠标悬停效果和相关提示 */
+.highlight-card.in-main-view {
+    cursor: default;
+}
+
+.highlight-card.in-main-view:hover {
+    background-color: var(--background-secondary);
+}
+
+.highlight-card.in-main-view .highlight-text-content {
+    cursor: default;
+}
+
+/* 隐藏主视图中的点击提示 */
+.highlight-card.in-main-view .highlight-text-content::after {
+    display: none;
+}
+
+/* 文件名显示样式 */
+.highlight-card-filename {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--background-modifier-border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: grab;
+}
+
+.highlight-card-filename.dragging {
+    cursor: grabbing;
+    opacity: 0.7;
+}
+
+.highlight-card-filename-icon {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+}
+
+.highlight-card-filename-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.highlight-card-filename-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 调整提示文本样式 */
+.highlight-comment-hint {
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-right: auto;
+}
+
+/* 主容布局 */
+.highlight-main-container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 文件表容器样式优化 */
+.highlight-file-list-container {
+    width: 240px;
+    border-right: 1px solid var(--background-modifier-border);
+    display: none;
+    overflow: hidden;
+    background-color: var(--background-primary);
+    padding: 0;
+}
+
+.highlight-file-list {
+    padding: 8px;
+    overflow-y: auto;
+    height: calc(100% - 50px); /* 减去标题高度 */
+}
+
+/* 主内容区域样式 */
+.highlight-content-container {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 文件表标题样式优化 - 调整高度与索容器一致 */
+.highlight-file-list-header {
+    padding: 13.25px 16px;  /* 与搜索容器保持一致 */
+    background-color: var(--background-primary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;  /* 垂直居中 */
+}
+
+.highlight-file-list-title {
+    margin: 4px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 件列表样式优化 */
+.highlight-file-list {
+    padding: 8px;
+}
+
+/* 文件项样式优化 */
+.highlight-file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    margin: 2px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    min-height: 32px;
+    width: 100%;
+}
+
+.highlight-file-item:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.highlight-file-item.is-active {
+    background-color: var(--nav-item-background-active);
+}
+
+/* "全部"选项特殊样式优化 */
+.highlight-file-item-all {
+    font-weight: 500;
+    color: var(--text-normal);
+    background-color: var(--background-primary);
+    margin: 4px 0 8px;
+}
+
+.highlight-file-item-all:hover {
+    background-color: var(--background-modifier-hover);
+    transform: translateY(-1px);
+}
+
+.highlight-file-item-all.is-active {
+    background-color: var(--nav-item-background-active);
+    color: var(--text-accent);
+    transform: none;
+}
+
+/* 文件列表分隔线优化 */
+.highlight-file-list-separator {
+    height: 1px;
+    background-color: var(--background-modifier-border);
+    margin: 8px 0;
+    opacity: 0.6;
+}
+
+/* 高亮数量标签样式优化 */
+.highlight-file-item-count {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-faint);
+    background-color: var(--background-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+    min-width: 24px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+/* 文件项左侧容器样式优化 */
+.highlight-file-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    margin-right: 8px;
+}
+
+/* 文件名样式优化 */
+.highlight-file-item-name {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.highlight-file-item:hover .highlight-file-item-name {
+    color: var(--text-normal);
+}
+
+.highlight-file-item.is-active .highlight-file-item-name {
+    color: var(--text-accent);
+    font-weight: 500;
+}
+
+/* 文件图标样式优化 */
+.highlight-file-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.highlight-file-item:hover .highlight-file-item-icon {
+    opacity: 0.9;
+}
+
+.highlight-file-item.is-active .highlight-file-item-icon {
+    opacity: 1;
+    color: var(--text-accent);
+}
+
+/* 添加浮动按钮样式 */
+.highlight-floating-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--interactive-accent);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.highlight-floating-button:hover {
+    transform: scale(1.1);
+    background-color: var(--interactive-accent-hover);
+}
+
+.highlight-floating-button svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-on-accent);
+}
+
+/* 浮动按钮隐藏状态 */
+.highlight-floating-button-hidden {
+    display: none !important;
+}
+
+/* 聊天窗口基础样式 */
+.highlight-chat-window {
+    position: fixed !important;
+    min-height: 300px;
+    min-width: 300px;
+    width: 350px;
+    height: 60vh;
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    background-color: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden;
+    z-index: 9999 !important;
+    resize: both !important;
+    right: 30px;
+    bottom: 42px;
+}
+
+/* 聊天窗口组件样式 */
+.highlight-chat-header {
+    padding: 14px 16px;
+    background: var(--background-primary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 关闭按钮样式 */
+.highlight-chat-close {
+    padding: 2px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.highlight-chat-close:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.highlight-chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--background-primary);
+    position: relative;
+}
+
+/* 聊天输入框样式 */
+.highlight-chat-input-container .highlight-comment-input {
+    padding: 4px;
+    background: none;
+    border: none;
+}
+
+.highlight-chat-input-container .highlight-comment-input textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    background-color: var(--background-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    overflow-y: auto;
+    transition: all 0.2s ease;
+}
+
+.highlight-chat-input-container .highlight-comment-buttons {
+    display: none;
+}
+
+/* 聊天消息样式 */
+.highlight-chat-message {
+    max-width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    animation: fade-slide-up 0.2s ease;
+}
+
+.highlight-chat-message-user {
+    align-self: flex-end;
+}
+
+.highlight-chat-message-assistant {
+    align-self: flex-start;
+}
+
+.highlight-chat-message-content {
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.highlight-chat-message-user .highlight-chat-message-content {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-bottom-right-radius: 4px;
+}
+
+.highlight-chat-message-assistant .highlight-chat-message-content {
+    background-color: var(--background-secondary);
+    color: var(--text-normal);
+    border-bottom-left-radius: 4px;
+    white-space: pre-wrap;
+}
+
+/* 打字机效果相关样式 */
+.highlight-chat-message-assistant.typing .highlight-chat-message-content {
+    user-select: none;
+}
+
+.highlight-chat-message-assistant:not(.typing) .highlight-chat-message-content {
+    user-select: text;
+}
+
+.highlight-chat-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: currentColor;
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.7s infinite;
+}
+
+/* 动画定 */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fade-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 聊天历史记录区域 */
+.highlight-chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--background-primary);
+    position: relative;
+}
+
+.highlight-chat-history.drag-over::before {
+    content: '';
+    position: absolute;
+    top: var(--drag-guide-top);
+    left: var(--drag-guide-left);
+    right: var(--drag-guide-right);
+    height: var(--drag-guide-height);  /* 使用计算出的高度而不是bottom */
+    border: 2px dashed var(--interactive-accent);
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+/* 拖拽状态下的消息透明度 */
+.highlight-chat-history.drag-over .highlight-chat-message {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+/* 拖拽动画 */
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% { opacity: 0.3; }
+}
+
+/* 拖拽预览容器 */
+.highlight-chat-previews {
+    padding: 12px;
+    background-color: var(--background-primary);
+    border-radius: 8px;
+    border: 1px solid var(--background-modifier-border);
+}
+
+/* 预览标题 */
+.highlight-chat-preview-header {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* 预览卡片容器 */
+.highlight-chat-preview-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* 增加卡片间距 */
+    padding: 4px 0;
+}
+
+/* 预览卡片 */
+.highlight-chat-preview-card {
+    position: relative;
+    padding: 8px 12px;
+    background-color: var(--background-secondary);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    min-height: 40px; /* 最小高度 */
+    max-height: 80px; /* 最大高度 */
+    margin-bottom: 8px;
+}
+
+.highlight-chat-preview-card:last-child {
+    margin-bottom: 0;
+}
+
+/* 预览内容 */
+.highlight-chat-preview-content {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-normal);
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-line-clamp: 3; /* 最多显示3行 */
+    -moz-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1; /* 让内容填充剩余空间 */
+}
+
+/* 兼容性回退 */
+@supports not ((display: -webkit-box) or (display: -moz-box) or (display: box)) {
+    .highlight-chat-preview-content {
+        max-height: 4.5em; /* 3行文本的大致高度 */
+        overflow: hidden;
+        position: relative;
+    }
+}
+
+/* 删除按钮 */
+.highlight-chat-preview-delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.highlight-chat-preview-card:hover .highlight-chat-preview-delete {
+    opacity: 1;
+    background-color: var(--background-secondary);
+}
+
+.highlight-chat-preview-delete:hover {
+    color: var(--text-error);
+}
+
+/* 简化的计数标签 */
+.highlight-chat-preview-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* 预览消息样式 */
+.highlight-chat-message-preview {
+    align-self: stretch;
+    max-width: 100%;
+    margin: 8px 0;
+    animation: fade-slide-up 0.2s ease;
+}
+
+/* 预览容器 */
+.highlight-chat-previews {
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 预览卡片 */
+.highlight-chat-preview-card {
+    position: relative;
+    padding: 8px 12px;
+    background-color: var(--background-primary);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    min-height: 40px;
+    max-height: 80px;
+    margin-bottom: 8px;
+}
+
+.highlight-chat-preview-card:last-child {
+    margin-bottom: 0;
+}
+
+/* 拖拽目标区域的反馈 */
+.highlight-chat-history.drag-over {
+    position: relative;
+}
+
+/* 拖拽过程中的光标样式 */
+.highlight-text-content {
+    cursor: grab;
+}
+
+.highlight-text-content:active {
+    cursor: grabbing;
+}
+
+/* 拖拽中的预览样式 */
+.highlight-dragging {
+    position: fixed;
+    pointer-events: none;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    width: 250px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    opacity: 0.95;
+    transform: scale(0.95);
+    color: var(--text-normal);
+}
+
+.highlight-dragging::before {
+    margin-right: 8px;
+    color: var(--interactive-accent);
+    font-size: 14px;
+}
+
+.highlight-dragging-content {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.highlight-chat-input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid var(--background-modifier-border);
+    background: var(--background-primary);
+}
+
+.highlight-chat-input {
+    flex: 1;
+    min-height: 36px;
+    max-height: 150px;
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    background: var(--background-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    overflow-y: auto;
+}
+
+.highlight-chat-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb), 0.2);
+}
+
+.highlight-chat-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.highlight-chat-clear,
+.highlight-chat-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.highlight-chat-clear:hover,
+.highlight-chat-close:hover {
+    color: var(--text-normal);
+    background-color: var(--background-modifier-hover);
+}
+
+/* 聊天窗口标题栏样式 */
+.highlight-chat-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.highlight-chat-model {
+    color: var(--text-faint);
+    font-size: 12px;
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.highlight-chat-model:hover {
+    color: var(--text-muted);
+    background-color: var(--background-modifier-hover);
+}
+
+/* AI 下拉菜单显示/隐藏状态 */
+.highlight-dropdown-hidden {
+    display: none !important;
+}
+
+/* 控制按钮容器 */
+.highlight-controls {
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    margin-bottom: 8px;
+}
+
+.highlight-toggle-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.highlight-toggle-all-btn:hover {
+    color: var(--text-normal);
+    background-color: var(--background-modifier-hover);
+    border-color: var(--text-muted);
+}
+
+.highlight-toggle-all-icon {
+    transition: transform 0.3s ease;
+}
+
+/* 删除编辑器容器的右侧 padding */
+.markdown-source-view,
+.markdown-source-view.mod-cm6 .cm-content {
+    padding-right: initial !important;
+}
+
+/* 修改评论按钮容器的样式 */
+.highlight-comment-widget {
+    position: absolute;
+    right: -32px;
+    top: 0;
+    transform: translateY(10%);
+    isolation: isolate;
+    z-index: 999;
+    height: 22px;
+    display: flex;
+    align-items: center;
+}
+
+/* AI 按钮和下拉菜单样式 */
+.highlight-ai-container {
+    position: relative;
+    z-index: 1000;
+}
+
+.highlight-ai-btn {
+    order: -1;
+}
+
+.highlight-ai-btn svg {
+    stroke: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.highlight-ai-btn:hover svg {
+    stroke: var(--text-accent);
+    transform: scale(1.1);
+}
+
+.highlight-ai-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    padding: 4px 0;
+    min-width: 160px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+.highlight-ai-dropdown.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.highlight-ai-dropdown-item {
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.highlight-ai-dropdown-item:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-accent);
+}
+
+/* AI 按钮内容容器 */
+.highlight-ai-btn-content {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* AI 图标基础样式 */
+.highlight-ai-icon,
+.highlight-ai-icon-loading {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.2s ease;
+}
+
+/* 加载图标动画 */
+.highlight-ai-icon-loading svg {
+    animation: ai-loading-spin 1s linear infinite;
+}
+
+@keyframes ai-loading-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* AI 服务设置区域样式 */
+.ai-service-settings {
+    background-color: var(--background-secondary);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+/* 设置项容器样式 */
+.ai-service-settings .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75em 0;
+}
+
+/* 设置项控制区域样式 */
+.ai-service-settings .setting-item-control {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 200px;
+}
+
+/* AI 服务设置区域样式 */
+.ai-service-settings {
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.ai-service-settings h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+/* 分隔线样式 */
+hr {
+    margin: 8px 0;
+    border: none;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* 添加新的操作提示区域样式 */
+.highlight-comment-actions-hint {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* 删除链接样式 */
+.highlight-comment-delete-link {
+    border: none;
+    font-size: 12px;
+    padding: 4px 6px;
+    background-color: none;
+    box-shadow: none !important;
+}
+
+.highlight-comment-delete-link:hover {
+    color: var(--text-error);
+}
+
+/* 调整提示文本样式 */
+.highlight-comment-hint {
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-right: auto;
+}
+
+/* 特定样式 */
+.highlight-export-card {
+    transition: all 0.3s ease;
+}
+
+/* 学术模板 */
+.highlight-export-card-academic {
+    padding: 12px 24px 24px 24px;
+    background-color: var(--background-primary);
+    border: 2px solid var(--background-modifier-border);
+    font-family: "Times New Roman", Times, serif;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.highlight-export-card-academic .highlight-export-quote {
+    font-size: 1em;
+    line-height: 1.8;
+    font-style: italic;
+    color: var(--text-normal);
+    margin: 20px 0;
+}
+
+/* 交媒体模板 */
+.highlight-export-card-social {
+    padding: 20px;
+    background-color: var(--background-primary);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-export-card-social .highlight-export-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.highlight-export-card-social .highlight-export-logo {
+    margin-right: 10px;
+}
+
+.highlight-export-card-social .highlight-export-app-name {
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+.highlight-export-card-social .highlight-export-quote {
+    font-size: 1em;
+    line-height: 1.6;
+    color: var(--text-normal);
+    margin: 20px 0;
+}
+
+/* 默认模板（现代风格）样式优化 */
+.highlight-export-card-modern {
+    padding: 24px;
+    background-color: var(--background-primary);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 背景装饰 */
+.highlight-export-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to bottom right,
+        var(--interactive-accent) 0%,
+        var(--interactive-accent-hover) 100%);
+}
+
+/* 引号装饰 */
+.highlight-export-card-modern .highlight-export-quote-decoration {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    opacity: 0.06;
+    transform: scale(2);
+}
+
+/* 引用内容区域 */
+.highlight-export-card-modern .highlight-export-quote-section {
+    position: relative;
+    padding: 24px 0;
+}
+
+.highlight-export-card-modern .highlight-export-quote {
+    font-size: 1em;
+    line-height: 1.7;
+    color: var(--text-normal);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* 底部信息样式 */
+.highlight-export-card-modern .highlight-export-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--background-modifier-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.highlight-export-card-modern .highlight-export-source {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+/* AI 下拉菜单显示/隐藏状态 */
+.highlight-dropdown-hidden {
+    display: none !important;
+}
+
+/* 虚拟高亮的样式  */
+.virtual-highlight {
+    font-style: italic;
+    color: var(--text-muted);
+    background-color: var(--background-secondary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.highlight-card .virtual-highlight::before {
+    content: "📝";  /* 使用笔记图标 */
+    margin-right: 6px;
+}
+
+/* 虚拟高亮卡片样式 */
+.virtual-highlight-card .highlight-content {
+    display: none;  /* 隐藏整个高亮内容区域 */
+}
+
+.virtual-highlight-card {
+    padding-top: 0;  /* 移除顶部内边距 */
+}
+
+.virtual-highlight-card .highlight-comments-section {
+    margin-top: 0;  /* 移除评论区域的顶部边距 */
+    border-radius: 8px;
+}
