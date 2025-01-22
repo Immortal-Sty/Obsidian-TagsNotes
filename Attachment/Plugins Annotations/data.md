@@ -472,6 +472,13 @@ Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Ta
 显示文本中的空白字符。
 <!-- END ANNOTATION -->
 
+# Smart Connections
+
+<!-- id: smart-connections -->
+<!-- BEGIN ANNOTATION -->
+AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。
+<!-- END ANNOTATION -->
+
 # Sortable
 
 <!-- id: obsidian-sortable -->
@@ -541,6 +548,13 @@ Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Ta
 <!-- id: templater-obsidian -->
 <!-- BEGIN ANNOTATION -->
 增强模版功能，可运行 JavaScript 代码。
+<!-- END ANNOTATION -->
+
+# Text Generator
+
+<!-- id: obsidian-textgenerator-plugin -->
+<!-- BEGIN ANNOTATION -->
+AI 插件，自动续写。
 <!-- END ANNOTATION -->
 
 # Trash Explorer

@@ -343,6 +343,14 @@
     "cm-chs-patch": {
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
+    },
+    "smart-connections": {
+      "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。",
+      "name": "Smart Connections"
+    },
+    "obsidian-textgenerator-plugin": {
+      "desc": "AI 插件，自动续写。",
+      "name": "Text Generator"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
