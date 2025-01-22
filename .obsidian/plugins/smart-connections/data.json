@@ -1,7 +1,7 @@
 {
   "new_user": false,
   "legacy_transformers": false,
-  "enable_mobile": true,
+  "enable_mobile": false,
   "actions": {
     "lookup": true
   },

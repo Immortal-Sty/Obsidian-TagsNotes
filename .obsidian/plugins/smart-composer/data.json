@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "openAIApiKey": "",
+  "anthropicApiKey": "",
+  "geminiApiKey": "",
+  "groqApiKey": "",
+  "chatModelId": "openai-compatible",
+  "ollamaChatModel": {
+    "baseUrl": "http://localhost:11434",
+    "model": "bge-m3:latest"
+  },
+  "openAICompatibleChatModel": {
+    "baseUrl": "https://api.deepseek.com",
+    "apiKey": "sk-0cdabadb1e314f1191301d8588761300",
+    "model": "deepseek-chat"
+  },
+  "applyModelId": "openai-compatible",
+  "ollamaApplyModel": {
+    "baseUrl": "http://localhost:11434",
+    "model": "bge-m3:latest"
+  },
+  "openAICompatibleApplyModel": {
+    "baseUrl": "https://api.deepseek.com",
+    "apiKey": "sk-0cdabadb1e314f1191301d8588761300",
+    "model": "deepseek-chat"
+  },
+  "embeddingModelId": "ollama/bge-m3",
+  "ollamaEmbeddingModel": {
+    "baseUrl": "http://localhost:11434",
+    "model": ""
+  },
+  "systemPrompt": "",
+  "ragOptions": {
+    "chunkSize": 1000,
+    "thresholdTokens": 8192,
+    "minSimilarity": 0,
+    "limit": 10,
+    "excludePatterns": [],
+    "includePatterns": [
+      "Notes/*"
+    ]
+  }
+}
