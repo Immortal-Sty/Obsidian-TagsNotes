@@ -1,6 +1,6 @@
 {
   "accentColor": "#598cf3",
-  "theme": "moonstone",
+  "theme": "system",
   "cssTheme": "",
   "interfaceFontFamily": "霞鹜文楷 GB 屏幕阅读版 R,JetBrainsMono Nerd Font Mono",
   "textFontFamily": "霞鹜文楷 GB 屏幕阅读版 R,JetBrainsMono Nerd Font Mono",
@@ -44,8 +44,9 @@
     "右侧栏按钮隐藏_外部",
     "长笔记名滚动_外部",
     "Callout 扩展_全部",
-    "Callout 引用人名靠右",
     "Dataview长度限制_全部",
-    "Prism Callout_全部"
+    "Prism Callout_全部",
+    "Clever 美化_外部",
+    "Callout 引用人名靠右_全部"
   ]
 }
