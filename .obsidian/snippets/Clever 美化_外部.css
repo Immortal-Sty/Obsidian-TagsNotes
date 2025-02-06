@@ -1,0 +1,67 @@
+/*********************/
+/* Clever Search 外观 */
+/*********************/
+
+.theme-light /* 亮色模式 */ {
+    --background-center: #FFFFFF; /* 按钮主体背景色 */
+    --background-others: #F6F6F6; /* 整体背景色 */
+    --background-select: #EFF4FF; /* 被选中时的背景色 */
+}
+.theme-dark /* 暗色模式 */ {
+    --background-center: #1E1E1E; /* 按钮主体背景色 */
+    --background-others: #262626; /* 整体背景色 */
+    --background-select: #1E222E; /* 被选中时的背景色 */
+}
+
+/* 设置整体背景色 */
+.cs-modal,
+.cs-floating-window-container {
+    background-color: var(--background-others) !important;
+}
+
+/* 设置搜索框背景色 */
+.cs-modal .search-bar input {
+    background-color: var(--background-center) !important;
+}
+
+/* 当按钮没有被选中时 */
+/* 设置按钮背景色 */
+.cs-modal button {
+    background-color: var(--background-center) !important;
+}
+/* 设置关键词高亮样式 */
+.search-container mark {
+    padding-left: 0;
+    padding-right: 0;
+
+    background-color: transparent !important;
+    color: var(--text-accent) !important;
+
+    font-weight: bold !important;
+}
+
+
+/* 当按钮被选中时 */
+/* 设置按钮背景色，并加粗字体 */
+.cs-modal button.selected {
+    background-color: var(--background-select) !important;
+    font-weight: bold !important;
+}
+/* 设置关键词高亮样式 */
+.search-container button.selected mark {
+    padding-left: 0;
+    padding-right: 0;
+
+    background-color: transparent !important;
+    color: var(--text-accent) !important;
+
+    font-weight: bolder !important;
+}
+
+/* 取消其它背景色 */
+.cs-modal .right-pane {
+    background-color: unset !important;
+}
+.cs-modal .right-pane .preview-container ul button.file-sub-item {
+    background-color: unset;
+}
