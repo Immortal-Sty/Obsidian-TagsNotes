@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "RavenHogWarts/obsidian-ravenhogwarts-toolkit",
     "CatMuse/HiNote",
     "Canna71/obsidian-janitor",
     "likemuuxi/obsidian-diagrams-net",

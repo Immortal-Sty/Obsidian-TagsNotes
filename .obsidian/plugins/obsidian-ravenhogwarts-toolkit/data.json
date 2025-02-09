@@ -1,0 +1,137 @@
+{
+  "config": {
+    "version": "1.0.0",
+    "logger": {
+      "level": 1,
+      "showTimestamp": true,
+      "showLevel": true,
+      "console": true,
+      "showNotifications": true,
+      "noticeTimeout": 5000
+    },
+    "developer": {
+      "enabled": false,
+      "enableCount": 0
+    },
+    "menu": {
+      "useSubMenu": true
+    },
+    "updater": {
+      "autoUpdate": false,
+      "checkBeta": false,
+      "proxySource": [
+        {
+          "url": "https://github.com/",
+          "name": "Direct",
+          "timeout": 5000,
+          "enabled": true
+        },
+        {
+          "url": "https://ghproxy.cn/https://github.com/",
+          "name": "GHProxy-CN",
+          "timeout": 5000,
+          "enabled": true
+        },
+        {
+          "url": "https://hub.gitmirror.com/https://github.com/",
+          "name": "GitMirror",
+          "timeout": 5000,
+          "enabled": true
+        },
+        {
+          "url": "https://slink.ltd/https://github.com/",
+          "name": "Slink",
+          "timeout": 5000,
+          "enabled": true
+        },
+        {
+          "url": "https://gh-proxy.ygxz.in/https://github.com/",
+          "name": "GHProxy-YGXZ",
+          "timeout": 5000,
+          "enabled": true
+        },
+        {
+          "url": "https://down.sciproxy.com/github.com//https://github.com/",
+          "name": "SciProxy",
+          "timeout": 5000,
+          "enabled": true
+        }
+      ]
+    }
+  },
+  "toolkit": {
+    "tableEnhancements": {
+      "config": {
+        "enabled": true
+      },
+      "data": {
+        "lastModified": "2025-02-09T15:19:09Z"
+      }
+    },
+    "frontmatterSorter": {
+      "config": {
+        "enabled": true,
+        "sortOnSave": false,
+        "ignoreFolders": [],
+        "ignoreFiles": [],
+        "rules": {
+          "priority": [],
+          "ignoreKeys": [],
+          "arraySort": false,
+          "caseSensitive": false
+        }
+      },
+      "data": {
+        "lastModified": "2025-02-09T15:19:09Z"
+      }
+    },
+    "quickPath": {
+      "config": {
+        "enabled": true,
+        "useAbsolutePath": false,
+        "pathSeparator": "\n",
+        "addEditorMenu": true,
+        "addFileMenu": true
+      },
+      "data": {
+        "lastModified": "2025-02-09T15:19:09Z"
+      }
+    },
+    "readingProgress": {
+      "config": {
+        "enabled": true,
+        "showTOC": true,
+        "tocAlwaysExpanded": false,
+        "useHeadingNumber": false,
+        "skipH1": true,
+        "progressStyle": "both",
+        "showToolbar": true,
+        "position": "right",
+        "offset": 12,
+        "tocWidth": 240
+      },
+      "data": {
+        "lastModified": "2025-02-09T07:25:47.870Z"
+      }
+    },
+    "codeEditor": {
+      "config": {
+        "supportExtensions": [
+          "js"
+        ],
+        "enabled": true,
+        "theme": "auto",
+        "lineNumbers": true,
+        "minimap": true,
+        "fontSize": 14,
+        "fontFamily": "Consolas, 'Courier New', monospace",
+        "tabSize": 4,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "data": {
+        "lastModified": "2025-02-09T15:19:09Z"
+      }
+    }
+  }
+}
