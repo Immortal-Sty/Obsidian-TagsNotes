@@ -13,6 +13,9 @@
     "Template"
   ],
   "logLevel": "warn",
+  "isCaseSensitive": false,
+  "isPrefixMatch": true,
+  "isFuzzy": true,
   "enableStopWordsEn": true,
   "enableChinesePatch": true,
   "enableStopWordsZh": true,
