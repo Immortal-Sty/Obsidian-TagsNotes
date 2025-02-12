@@ -268,6 +268,10 @@
       "name": "Show Whitespace",
       "desc": "显示文本中的空白字符。"
     },
+    "smart-connections": {
+      "name": "Smart Connections",
+      "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。"
+    },
     "obsidian-sortable": {
       "name": "Sortable",
       "desc": "通过点击表头，更改表格内容的排序。"
@@ -303,6 +307,10 @@
     "templater-obsidian": {
       "name": "Templater",
       "desc": "增强模版功能，可运行 JavaScript 代码。"
+    },
+    "obsidian-textgenerator-plugin": {
+      "name": "Text Generator",
+      "desc": "AI 插件，自动续写。"
     },
     "obsidian-trash-explorer": {
       "name": "Trash Explorer",
@@ -344,13 +352,13 @@
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
     },
-    "smart-connections": {
-      "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。",
-      "name": "Smart Connections"
+    "obsidian-ravenhogwarts-toolkit": {
+      "desc": "有多项功能：\n\n\n- 代码编辑器\n- 文档属性排序\n- 快速复制路径\n- 目录导航\n- 表格计算",
+      "name": "RavenHogwarts's Toolkit"
     },
-    "obsidian-textgenerator-plugin": {
-      "desc": "AI 插件，自动续写。",
-      "name": "Text Generator"
+    "dynamic-outline": {
+      "desc": "提供当前文件的悬浮大纲。",
+      "name": "Dynamic Outline"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",

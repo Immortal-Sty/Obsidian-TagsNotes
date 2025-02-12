@@ -143,6 +143,13 @@ PDF 注释插件，简单易用，但功能不多。
 使用 Dataview 语法，将查询结果直接以文本形式插入。
 <!-- END ANNOTATION -->
 
+# Dynamic Outline
+
+<!-- id: dynamic-outline -->
+<!-- BEGIN ANNOTATION -->
+提供当前文件的悬浮大纲。
+<!-- END ANNOTATION -->
+
 # Easy Typing
 
 <!-- id: easy-typing-obsidian -->
@@ -421,6 +428,20 @@ PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供�
 <!-- id: quickadd -->
 <!-- BEGIN ANNOTATION -->
 提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。
+<!-- END ANNOTATION -->
+
+# RavenHogwarts's Toolkit
+
+<!-- id: obsidian-ravenhogwarts-toolkit -->
+<!-- BEGIN ANNOTATION -->
+有多项功能：
+
+
+- 代码编辑器
+- 文档属性排序
+- 快速复制路径
+- 目录导航
+- 表格计算
 <!-- END ANNOTATION -->
 
 # Relative Line Numbers
