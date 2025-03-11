@@ -7,11 +7,11 @@ nnoremap g; u<C-r>
 
 " 上一个标题
 exmap prevHeading jsfile Attachment/Vimrc_Support/vimrc.js {jumpHeading(false)}
-nnoremap [[ :prevHeading<Enter>
+nnoremap [[ :prevHeading<CR>
 
 " 下一个标题
 exmap nextHeading jsfile Attachment/Vimrc_Support/vimrc.js {jumpHeading(true)}
-nnoremap ]] :nextHeading<Enter>
+nnoremap ]] :nextHeading<CR>
 
 " ===========
 " === 链接 ===
