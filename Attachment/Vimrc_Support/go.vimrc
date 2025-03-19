@@ -20,20 +20,20 @@ nnoremap ]] :nextHeading<CR>
 " 上一个链接
 exmap prevLink jsfile Attachment/Vimrc_Support/vimrc.js {jumpNextLink(false)}
 nunmap ,
-nmap ,, :prevLink
+nmap ,, :prevLink<CR>
 
 " 下一个链接
 exmap nextLink jsfile Attachment/Vimrc_Support/vimrc.js {jumpNextLink(true)}
 nunmap .
-nmap .. :nextLink
+nmap .. :nextLink<CR>
 
 " 打开链接在当前页面
 exmap openlink obcommand editor:follow-link
-nnoremap go :openlink
+nnoremap go :openlink<CR>
 
 " 打开链接在新窗口中
 exmap openlink_windows obcommand editor:open-link-in-new-window
-nnoremap gw :openlink_windows
+nnoremap gw :openlink_windows<CR>
 
 " =============
 " === 标签页 ===
@@ -41,4 +41,4 @@ nnoremap gw :openlink_windows
 
 " 选择标签页跳转
 "exmap tabSeletor obcommand tab-selector:open-tab-selector
-"nnoremap <Tab> :tabSeletor
+"nnoremap <Tab> :tabSeletor<CR>
