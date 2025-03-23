@@ -8,3 +8,6 @@
 
 # Ignore Smart Environment folder
 .smart-env
+
+# Android ignore
+*.bak

@@ -25,6 +25,6 @@ mtime: 2023-12-14T16:17:38
 - 用 TagFolder 插件代替文件夹视图；
 - 因为是标签，所以文件夹中不能有空格和特殊标点，空格可以用 `_` 代替；
 - 为了避免笔记重名，改用时间命名文件，用第一个一级标题和别名代替笔记名称；
-- 用 Quickadd、Templater、MetaEdit 和 Linter 插件，实现新建文件时自动命名文件、笔记；
+- 用 Quickadd、Templater、MetaEdit 和 Linter 插件，用来实现新建文件时自动命名文件、笔记；
 - 因为看不到文件夹，所以用 Attachment Management 来自动命名移动附件，用户可以在 Fast Image Cleaner 和 Clear Unused Images 两个插件中选一个，用来管理文件中的图片；
 - 用 Better Command Palette 插件代替命令和搜索，因为它支持很方便的标签和别名搜索。
