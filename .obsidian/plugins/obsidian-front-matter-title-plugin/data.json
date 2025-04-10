@@ -1,5 +1,5 @@
 {
-  "version": "3.9.0",
+  "version": "3.13.1",
   "templates": {
     "common": {
       "main": "aliases",
@@ -20,7 +20,8 @@
   },
   "debug": false,
   "boot": {
-    "delay": 1000
+    "delay": 1000,
+    "background": true
   },
   "features": {
     "alias": {
@@ -62,7 +63,7 @@
       }
     },
     "bookmarks": {
-      "enabled": true,
+      "enabled": false,
       "templates": {
         "main": "",
         "fallback": ""
