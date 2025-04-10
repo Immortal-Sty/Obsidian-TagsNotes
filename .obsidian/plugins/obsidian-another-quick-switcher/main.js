@@ -4956,6 +4956,10 @@ var AppHelper = class {
     const editor = activeMarkdownView.editor;
     editor.replaceSelection(str);
   }
+  /**
+   * Insert a link to the active file.
+   * @param file The file to be linked.
+   */
   insertLinkToActiveFileBy(file, opts) {
     var _a;
     const activeMarkdownView = this.unsafeApp.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
@@ -4992,9 +4996,10 @@ var AppHelper = class {
         );
       }
       linkText = text === dispTxt ? `[[${text}]]` : `[[${text}|${dispTxt}]]`;
-    }
-    if (opts == null ? void 0 : opts.phantom) {
-      linkText = linkText.replace(/\[\[.*\/([^\]]+)]]/, "[[$1]]");
+      if (opts == null ? void 0 : opts.phantom) {
+        const phantomLinkText = linkText.replace("[[", "").replace("]]", "").split("|").map((x) => x.replace(/.*\/([^\]]+)/, "$1")).unique().join("|");
+        linkText = `[[${phantomLinkText}]]`;
+      }
     }
     const editor = activeMarkdownView.editor;
     editor.replaceSelection(
@@ -6004,7 +6009,6 @@ var createPreSettingSearchCommands = () => [
     excludePrefixPathPatterns: [],
     expand: false
   },
-  createDefaultLinkSearchCommand(),
   createDefault2HopLinkSearchCommand()
 ];
 var DEFAULT_SETTINGS = {
@@ -7687,10 +7691,22 @@ var AnotherQuickSwitcherModal = class _AnotherQuickSwitcherModal extends import_
         aliasTranformer: saat.enabled ? { pattern: saat.aliasPattern, format: saat.aliasFormat } : void 0
       });
     };
+    const insertPhantomLinkToActiveMarkdownFile = (text) => {
+      const saat = this.settings.searchesAutoAliasTransform;
+      this.appHelper.insertLinkToActiveFileBy(
+        this.appHelper.createPhantomFile(text),
+        {
+          phantom: true,
+          aliasTranformer: saat.enabled ? { pattern: saat.aliasPattern, format: saat.aliasFormat } : void 0
+        }
+      );
+    };
     this.registerKeys("insert to editor", async () => {
       var _a;
       const item = (_a = this.chooser.values) == null ? void 0 : _a[this.chooser.selectedItem];
       if (!item) {
+        insertPhantomLinkToActiveMarkdownFile(this.searchQuery);
+        await this.safeClose();
         return;
       }
       const file = item.file;

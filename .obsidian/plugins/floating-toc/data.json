@@ -7,5 +7,9 @@
   "isDefaultPin": false,
   "isTooltip": true,
   "defaultCollapsedLevel": 6,
-  "expandAllSubheadings": false
+  "expandAllSubheadings": false,
+  "isDefaultHide": false,
+  "enableHeadingNowrap": true,
+  "barStyle": "enable-edge-style",
+  "enableBarHeadingText": true
 }
