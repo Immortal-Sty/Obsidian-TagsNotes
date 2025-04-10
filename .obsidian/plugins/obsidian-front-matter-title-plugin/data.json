@@ -20,8 +20,8 @@
   },
   "debug": false,
   "boot": {
-    "delay": 1000,
-    "background": true
+    "delay": 0,
+    "background": false
   },
   "features": {
     "alias": {
