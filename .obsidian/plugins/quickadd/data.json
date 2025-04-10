@@ -160,6 +160,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba"
+    },
+    {
+      "id": "d5ae4239-8486-4906-9e09-7b3e22e717ad",
+      "name": "All Hide",
+      "type": "Macro",
+      "command": false,
+      "macroId": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83"
     }
   ],
   "macros": [
@@ -357,13 +364,56 @@
         }
       ],
       "runOnStartup": false
+    },
+    {
+      "name": "All Hide",
+      "id": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83",
+      "commands": [
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "d4c845e6-3ed4-42dd-a7a2-50fe6a12386d",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "状态栏自动隐藏_外部"
+          }
+        },
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "0f581a33-6750-49b2-b5c7-7b0268c9a34b",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "标题栏自动隐藏_外部"
+          }
+        },
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "24ed2f74-39a8-457d-963c-7e05428a6d54",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "标签页隐藏_外部"
+          }
+        },
+        {
+          "name": "Toggle Snippets",
+          "type": "UserScript",
+          "id": "d9323c5f-cec3-4289-a48c-7220cfbe8a98",
+          "path": "Attachment/Quickadd/Toggle Snippets.js",
+          "settings": {
+            "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
+          }
+        }
+      ],
+      "runOnStartup": false
     }
   ],
   "inputPrompt": "single-line",
   "devMode": false,
   "templateFolderPath": "Template",
   "announceUpdates": true,
-  "version": "1.11.5",
+  "version": "1.13.2",
   "disableOnlineFeatures": true,
   "enableRibbonIcon": false,
   "ai": {
