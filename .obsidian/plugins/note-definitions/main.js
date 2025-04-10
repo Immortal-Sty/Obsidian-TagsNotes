@@ -775,6 +775,7 @@ function getMarkedPhrases() {
 }
 var DefinitionMarker = class {
   constructor(view) {
+    this.editorView = view;
     this.decorations = this.buildDecorations(view);
   }
   update(update) {
@@ -785,6 +786,13 @@ var DefinitionMarker = class {
       logDebug(`Marked definitions in ${end - start}ms`);
       return;
     }
+  }
+  forceUpdate() {
+    const start = performance.now();
+    this.decorations = this.buildDecorations(this.editorView);
+    const end = performance.now();
+    logDebug(`Marked definitions in ${end - start}ms`);
+    return;
   }
   destroy() {
   }
@@ -808,7 +816,7 @@ var DefinitionMarker = class {
 };
 function scanText(text, offset, pTree) {
   let phraseInfos = [];
-  const lines = text.split("\n");
+  const lines = text.split(/\r?\n/);
   let internalOffset = offset;
   const lineScanner = new LineScanner(pTree);
   lines.forEach((line) => {
@@ -978,7 +986,7 @@ var ConsolidatedDefParser = class extends BaseDefParser {
   // Parse from string, no dependency on App
   // For ease of testing
   directParseFile(fileContent) {
-    const lines = fileContent.split("\n");
+    const lines = fileContent.split(/\r?\n/);
     this.currLine = -1;
     for (const line of lines) {
       this.currLine++;
@@ -1136,6 +1144,7 @@ var DefManager = class {
     this.globalDefFolders = /* @__PURE__ */ new Map();
     this.globalPrefixTree = new PTreeNode();
     this.consolidatedDefFiles = /* @__PURE__ */ new Map();
+    this.localDefs = new DefinitionRepo();
     this.resetLocalConfigs();
     this.lastUpdate = 0;
     this.markedDirty = [];
@@ -1147,7 +1156,7 @@ var DefManager = class {
   }
   // Get the appropriate prefix tree to use for current active file
   getPrefixTree() {
-    if (this.shouldUseLocalPTree) {
+    if (this.shouldUseLocal) {
       return this.localPrefixTree;
     }
     return this.globalPrefixTree;
@@ -1167,19 +1176,24 @@ var DefManager = class {
         return;
       }
       if (!Array.isArray(paths)) {
-        logWarn("Unrecognised type for 'def-source' frontmatter");
+        logWarn(`Unrecognised type for '${DEF_CTX_FM_KEY}' frontmatter`);
         return;
       }
       const flattenedPaths = this.flattenPathList(paths);
       this.buildLocalPrefixTree(flattenedPaths);
-      this.shouldUseLocalPTree = true;
+      this.buildLocalDefRepo(flattenedPaths);
+      this.shouldUseLocal = true;
     }
   }
   // For manually updating definition sources, as metadata cache may not be the latest updated version
   updateDefSources(defSource) {
     this.resetLocalConfigs();
+    if (!defSource || defSource.length === 0) {
+      return;
+    }
     this.buildLocalPrefixTree(defSource);
-    this.shouldUseLocalPTree = true;
+    this.buildLocalDefRepo(defSource);
+    this.shouldUseLocal = true;
   }
   markDirty(file) {
     this.markedDirty.push(file);
@@ -1236,6 +1250,15 @@ var DefManager = class {
     });
     this.localPrefixTree = root;
   }
+  // Expects an array of file paths (not directories)
+  buildLocalDefRepo(filePaths) {
+    filePaths.forEach((filePath) => {
+      const defMap = this.globalDefs.getMapForFile(filePath);
+      if (defMap) {
+        this.localDefs.fileDefMap.set(filePath, defMap);
+      }
+    });
+  }
   isDefFile(file) {
     return file.path.startsWith(this.getGlobalDefFolder());
   }
@@ -1249,10 +1272,13 @@ var DefManager = class {
   // Expensive operation so use sparingly
   loadDefinitions() {
     this.reset();
-    this.loadGlobals();
+    this.loadGlobals().then(this.updateActiveFile.bind(this));
+  }
+  getDefRepo() {
+    return this.shouldUseLocal ? this.localDefs : this.globalDefs;
   }
   get(key) {
-    return this.globalDefs.get(normaliseWord(key));
+    return this.getDefRepo().get(normaliseWord(key));
   }
   set(def) {
     this.globalDefs.set(def);
@@ -1293,7 +1319,8 @@ var DefManager = class {
   // Global configs should always be used by default
   resetLocalConfigs() {
     this.localPrefixTree = new PTreeNode();
-    this.shouldUseLocalPTree = false;
+    this.shouldUseLocal = false;
+    this.localDefs.clear();
   }
   async loadGlobals() {
     const retry = useRetry();
@@ -1948,7 +1975,7 @@ var DefFileUpdater = class {
     const fileContent = await this.app.vault.read(file);
     const fileParser = new FileParser(this.app, file);
     const defs = await fileParser.parseFile(fileContent);
-    const lines = fileContent.split("\n");
+    const lines = fileContent.split(/\r?\n/);
     const fileDef = defs.find((fileDef2) => fileDef2.key === def.key);
     if (!fileDef) {
       logError("File definition not found, cannot edit");
@@ -2003,7 +2030,7 @@ var DefFileUpdater = class {
       return;
     }
     const fileContent = await this.app.vault.read(file);
-    let lines = fileContent.split("\n");
+    let lines = fileContent.split(/\r?\n/);
     lines = this.removeTrailingBlankNewlines(lines);
     if (!this.checkEndedWithSeparator(lines)) {
       this.addSeparator(lines);
@@ -2232,15 +2259,12 @@ var FMSuggestModal = class extends import_obsidian10.FuzzySuggestModal {
     this.app.fileManager.processFrontMatter(this.file, (fm) => {
       let currDefSource = fm[DEF_CTX_FM_KEY];
       if (!currDefSource || !Array.isArray(currDefSource)) {
-        fm[DEF_CTX_FM_KEY] = [path];
-        return;
-      }
-      if (currDefSource.includes(path)) {
+        currDefSource = [];
+      } else if (currDefSource.includes(path)) {
         new import_obsidian10.Notice("Definition file source is already included for this file");
         return;
       }
       fm[DEF_CTX_FM_KEY] = [...currDefSource, path];
-      getDefFileManager().updateDefSources([...currDefSource, path]);
     }).catch((e) => {
       logError(`Error writing to frontmatter of file: ${e}`);
     });
@@ -2284,7 +2308,7 @@ var NoteDefinition = class extends import_obsidian11.Plugin {
     this.updateEditorExts();
     this.registerCommands();
     this.registerEvents();
-    this.addSettingTab(new SettingsTab(this.app, this, this.saveSettings));
+    this.addSettingTab(new SettingsTab(this.app, this, this.saveSettings.bind(this)));
     this.registerMarkdownPostProcessor(postProcessor);
     this.fileExplorerDeco.run();
   }
@@ -2425,6 +2449,20 @@ var NoteDefinition = class extends import_obsidian11.Plugin {
       if (file.path.startsWith(settings.defFolder)) {
         this.fileExplorerDeco.run();
         this.refreshDefinitions();
+      }
+    }));
+    this.registerEvent(this.app.metadataCache.on("changed", (file) => {
+      const currFile = this.app.workspace.getActiveFile();
+      if (currFile && currFile.path === file.path) {
+        this.defManager.updateActiveFile();
+        let activeView = this.app.workspace.getActiveViewOfType(import_obsidian11.MarkdownView);
+        if (activeView) {
+          const view = activeView.editor.cm;
+          const plugin = view.plugin(definitionMarker);
+          if (plugin) {
+            plugin.forceUpdate();
+          }
+        }
       }
     }));
   }

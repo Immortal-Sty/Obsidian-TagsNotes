@@ -297,13 +297,6 @@ PDF 注释插件，简单易用，但功能不多。
 格式化笔记，功能非常强。
 <!-- END ANNOTATION -->
 
-# Local Images Plus
-
-<!-- id: obsidian-local-images-plus -->
-<!-- BEGIN ANNOTATION -->
-下载网络附件并在本地进行管理，支持自动转格式。
-<!-- END ANNOTATION -->
-
 # markdown export
 
 <!-- id: obsidian-markdown-export-plugin -->

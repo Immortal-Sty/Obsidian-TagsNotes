@@ -80,6 +80,10 @@
       "name": "Dataview Serializer",
       "desc": "使用 Dataview 语法，将查询结果直接以文本形式插入。"
     },
+    "dynamic-outline": {
+      "name": "Dynamic Outline",
+      "desc": "提供当前文件的悬浮大纲。"
+    },
     "easy-typing-obsidian": {
       "name": "Easy Typing",
       "desc": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
@@ -164,10 +168,6 @@
       "name": "Linter",
       "desc": "格式化笔记，功能非常强。"
     },
-    "obsidian-local-images-plus": {
-      "name": "Local Images Plus",
-      "desc": "下载网络附件并在本地进行管理，支持自动转格式。"
-    },
     "obsidian-markdown-export-plugin": {
       "name": "markdown export",
       "desc": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
@@ -239,6 +239,10 @@
     "quickadd": {
       "name": "QuickAdd",
       "desc": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
+    },
+    "obsidian-ravenhogwarts-toolkit": {
+      "name": "RavenHogwarts's Toolkit",
+      "desc": "有多项功能：\n\n\n- 代码编辑器\n- 文档属性排序\n- 快速复制路径\n- 目录导航\n- 表格计算"
     },
     "obsidian-relative-line-numbers": {
       "name": "Relative Line Numbers",
@@ -351,14 +355,6 @@
     "cm-chs-patch": {
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
-    },
-    "obsidian-ravenhogwarts-toolkit": {
-      "desc": "有多项功能：\n\n\n- 代码编辑器\n- 文档属性排序\n- 快速复制路径\n- 目录导航\n- 表格计算",
-      "name": "RavenHogwarts's Toolkit"
-    },
-    "dynamic-outline": {
-      "desc": "提供当前文件的悬浮大纲。",
-      "name": "Dynamic Outline"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",

@@ -444,6 +444,47 @@ var ConvertAllModal = class extends import_obsidian4.Modal {
   }
 };
 
+// src/coms/antiLinkExpand.ts
+var import_view = require("@codemirror/view");
+var ImageWidget = class extends import_view.WidgetType {
+  constructor(imageName) {
+    super();
+    this.imageName = imageName;
+  }
+  toDOM() {
+    const span = document.createElement("span");
+    span.textContent = `...`;
+    return span;
+  }
+};
+var linkDecorations = import_view.ViewPlugin.fromClass(class {
+  constructor(view) {
+    this.decorations = this.buildDecorations(view);
+  }
+  update(update) {
+    if (update.docChanged || update.viewportChanged) {
+      this.decorations = this.buildDecorations(update.view);
+    }
+  }
+  buildDecorations(view) {
+    const decorations = [];
+    const text = view.state.doc.toString();
+    const regex = /data:image\/[^;]+;base64,[^)]+/g;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      decorations.push(import_view.Decoration.replace({
+        widget: new ImageWidget(match[0]),
+        inclusive: true
+      }).range(start, end));
+    }
+    return import_view.Decoration.set(decorations, true);
+  }
+}, {
+  decorations: (v) => v.decorations
+});
+
 // src/coms/__init__.ts
 async function registerDeprecatedCommands(plugin) {
   if (!plugin.settings.enableDeprecatedMethods) {
@@ -467,8 +508,7 @@ async function registerDeprecatedCommands(plugin) {
             console.log("Converting " + targetFiles.length + " files");
           } else {
             const afile = this.app.workspace.getActiveFile();
-            if (!afile)
-              return;
+            if (!afile) return;
             targetFiles = [afile];
           }
           for (const file of targetFiles) {
@@ -495,6 +535,7 @@ async function registerAllCommands(plugin) {
   await registerDrag(plugin);
   await registerCursorListener(plugin);
   await registerDeprecatedCommands(plugin);
+  await plugin.registerEditorExtension(linkDecorations);
 }
 
 // src/settings.ts
