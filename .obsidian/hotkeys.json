@@ -390,5 +390,13 @@
       "modifiers": [],
       "key": "F9"
     }
+  ],
+  "webviewer:focus-address-bar": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "L"
+    }
   ]
 }

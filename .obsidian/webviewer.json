@@ -1,0 +1,7 @@
+{
+  "openExternalURLs": true,
+  "enableAdblocking": true,
+  "homepage": "https://www.bilibili.com/",
+  "customSearchEngine": "https://www.ecosia.org/search?method=index&q=%s",
+  "searchEngine": "custom"
+}
