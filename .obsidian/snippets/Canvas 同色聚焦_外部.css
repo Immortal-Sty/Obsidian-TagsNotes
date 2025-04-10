@@ -1,0 +1,70 @@
+ /*
+  * @Author: boninall  Modified by Cuman
+  * @Source: Pkmer.cn
+  */
+
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-1) .canvas-edges>:not(.mod-canvas-color-1),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-2) .canvas-edges>:not(.mod-canvas-color-2),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-3) .canvas-edges>:not(.mod-canvas-color-3),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-4) .canvas-edges>:not(.mod-canvas-color-4),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-5) .canvas-edges>:not(.mod-canvas-color-5),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-6) .canvas-edges>:not(.mod-canvas-color-6),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-edges>:not(.mod-canvas-color-custom),
+ /* .canvas:has(.is-focused:not(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom)) .canvas-node:not(.is-focused):is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom),  */
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-1) .canvas-node.is-themed:not(:is(.mod-canvas-color-1)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-2) .canvas-node.is-themed:not(:is(.mod-canvas-color-2)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-3) .canvas-node.is-themed:not(:is(.mod-canvas-color-3)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-4) .canvas-node.is-themed:not(:is(.mod-canvas-color-4)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-5) .canvas-node.is-themed:not(:is(.mod-canvas-color-5)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-6) .canvas-node.is-themed:not(:is(.mod-canvas-color-6)),
+ .theme-dark .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-node.is-themed:not(.mod-canvas-color-custom) {
+	 filter: brightness(0.8) grayscale(0.9);
+ }
+
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-1) .canvas-edges>:not(.mod-canvas-color-1),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-2) .canvas-edges>:not(.mod-canvas-color-2),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-3) .canvas-edges>:not(.mod-canvas-color-3),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-4) .canvas-edges>:not(.mod-canvas-color-4),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-5) .canvas-edges>:not(.mod-canvas-color-5),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-6) .canvas-edges>:not(.mod-canvas-color-6),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-edges>:not(.mod-canvas-color-custom),
+ /* .canvas:has(.is-focused:not(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom)) .canvas-node:not(.is-focused):is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom),  */
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-1) .canvas-node.is-themed:not(:is(.mod-canvas-color-1)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-2) .canvas-node.is-themed:not(:is(.mod-canvas-color-2)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-3) .canvas-node.is-themed:not(:is(.mod-canvas-color-3)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-4) .canvas-node.is-themed:not(:is(.mod-canvas-color-4)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-5) .canvas-node.is-themed:not(:is(.mod-canvas-color-5)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-6) .canvas-node.is-themed:not(:is(.mod-canvas-color-6)),
+ .theme-light .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-node.is-themed:not(.mod-canvas-color-custom) {
+	 filter:grayscale(0.9);
+ }
+
+ /* .canvas:has(.is-focused:not(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom)) .canvas-node:not(.is-focused):is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6, .mod-canvas-color-custom),  */
+ .canvas:has(.is-focused.mod-canvas-color-1) .canvas-node.is-themed:is(.mod-canvas-color-1),
+ .canvas:has(.is-focused.mod-canvas-color-3) .canvas-node.is-themed:is(.mod-canvas-color-3),
+ .canvas:has(.is-focused.mod-canvas-color-2) .canvas-node.is-themed:is(.mod-canvas-color-2),
+ .canvas:has(.is-focused.mod-canvas-color-4) .canvas-node.is-themed:is(.mod-canvas-color-4),
+ .canvas:has(.is-focused.mod-canvas-color-5) .canvas-node.is-themed:is(.mod-canvas-color-5),
+ .canvas:has(.is-focused.mod-canvas-color-6) .canvas-node.is-themed:is(.mod-canvas-color-6),
+ .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-node.is-themed.mod-canvas-color-custom {
+	 box-shadow:
+	 0 0px 8px -7px rgba(var(--canvas-color), 0.8),
+	 0 0px 8px -7px rgba(var(--canvas-color), 0.8),
+	 0px 0 8px -1px   rgba(var(--canvas-color), 0.4),
+	 0px 0 8px -1px   rgba(var(--canvas-color), 0.4);
+ }
+
+ .canvas:has(.is-focused.mod-canvas-color-1) .canvas-edges>.mod-canvas-color-1 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-2) .canvas-edges>.mod-canvas-color-2 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-3) .canvas-edges>.mod-canvas-color-3 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-4) .canvas-edges>.mod-canvas-color-4 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-5) .canvas-edges>.mod-canvas-color-5 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-6) .canvas-edges>.mod-canvas-color-6 path.canvas-interaction-path,
+ .canvas:has(.is-focused.mod-canvas-color-custom) .canvas-edges>.mod-canvas-color-custom path.canvas-interaction-path {
+	 stroke: rgba(var(--canvas-color), 0.1);
+	 stroke-width: calc(12 * var(--zoom-multiplier));
+ }
+
+ .canvas-node-content.markdown-embed table {
+	 text-align: start;
+ }
