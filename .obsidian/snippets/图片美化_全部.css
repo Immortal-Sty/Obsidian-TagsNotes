@@ -19,5 +19,5 @@ img {
 	background-clip: content-box,padding-box;
 	border-radius: 20px;/*圆角矩形 左上角：20px；右上角和左下角：10px；右下角：40px*/
 	display: block;
-	margin: 16px auto; /* 图片上下的间距，并在页面中居中显示 */
+	/*margin: 16px auto; /* 图片上下的间距，并在页面中居中显示 */
 }

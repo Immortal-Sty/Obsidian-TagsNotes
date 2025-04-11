@@ -2,8 +2,14 @@
   "Notes/20231227175836027.md": {
     "8a78b8bf802e77183da6ec8c43997e32": {
       "position": "left",
-      "width": "345px",
-      "height": "258px",
+      "width": "370px",
+      "height": "385px",
+      "wrap": false
+    },
+    "774ad64b93c0005af835d4f9f73fa22a": {
+      "position": "center",
+      "width": "",
+      "height": "",
       "wrap": false
     }
   }
