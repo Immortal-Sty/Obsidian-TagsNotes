@@ -164,6 +164,20 @@ DataviewJS 的升级。
 提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。
 <!-- END ANNOTATION -->
 
+# Extended File Support
+
+<!-- id: extended-file-support -->
+<!-- BEGIN ANNOTATION -->
+嵌入图片支持更多格式。
+<!-- END ANNOTATION -->
+
+# Extended Markdown Syntax
+
+<!-- id: extended-markdown-syntax -->
+<!-- BEGIN ANNOTATION -->
+扩展了 Markdown 语法，提供了上/下标待额外语法。
+<!-- END ANNOTATION -->
+
 # Fast Image Cleaner
 
 <!-- id: nl-fast-image-cleaner -->
@@ -358,6 +372,13 @@ DataviewJS 的升级。
 <!-- id: mysnippets-plugin -->
 <!-- BEGIN ANNOTATION -->
 快速方便地新增、编辑、开关 CSS 片段。
+<!-- END ANNOTATION -->
+
+# Note Annotations
+
+<!-- id: note-annotations -->
+<!-- BEGIN ANNOTATION -->
+划选高亮笔记，有添加评论的功能。
 <!-- END ANNOTATION -->
 
 # Note Definitions

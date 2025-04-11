@@ -1,0 +1,93 @@
+{
+  "insertion": 0,
+  "spoiler": 0,
+  "superscript": 3,
+  "subscript": 3,
+  "customHighlight": 0,
+  "customSpan": 0,
+  "fencedDiv": 0,
+  "tidyFormatting": false,
+  "openTagMenuAfterFormat": true,
+  "noStyledDivInSourceMode": true,
+  "hlTagDisplayBehaviour": 2,
+  "spanTagDisplayBehaviour": 2,
+  "showHlTagInPreviewMode": false,
+  "showSpanTagInPreviewMode": false,
+  "alwaysShowFencedDivTag": 0,
+  "colorButton": true,
+  "showAccentColor": true,
+  "showDefaultColor": true,
+  "showRemoveColor": true,
+  "lightModeHlOpacity": 0.4,
+  "darkModeHlOpacity": 0.5,
+  "colorConfigs": [
+    {
+      "tag": "red",
+      "name": "Red",
+      "color": "#fb464c",
+      "showInMenu": true
+    },
+    {
+      "tag": "orange",
+      "name": "Orange",
+      "color": "#e9973f",
+      "showInMenu": true
+    },
+    {
+      "tag": "yellow",
+      "name": "Yellow",
+      "color": "#e0de71",
+      "showInMenu": true
+    },
+    {
+      "tag": "green",
+      "name": "Green",
+      "color": "#44cf6e",
+      "showInMenu": true
+    },
+    {
+      "tag": "cyan",
+      "name": "Cyan",
+      "color": "#53dfdd",
+      "showInMenu": true
+    },
+    {
+      "tag": "blue",
+      "name": "Blue",
+      "color": "#027aff",
+      "showInMenu": true
+    },
+    {
+      "tag": "purple",
+      "name": "Purple",
+      "color": "#a882ff",
+      "showInMenu": true
+    },
+    {
+      "tag": "pink",
+      "name": "Pink",
+      "color": "#fa99cd",
+      "showInMenu": true
+    }
+  ],
+  "showDefaultSpanTag": true,
+  "showRemoveSpanTag": true,
+  "predefinedSpanTag": [
+    {
+      "name": "",
+      "tag": "",
+      "showInMenu": true
+    }
+  ],
+  "showDefaultDivTag": true,
+  "showRemoveDivTag": true,
+  "predefinedDivTag": [
+    {
+      "name": "",
+      "tag": "",
+      "showInMenu": true
+    }
+  ],
+  "editorEscape": false,
+  "decoratePDF": true
+}

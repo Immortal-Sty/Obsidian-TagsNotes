@@ -1,0 +1,10 @@
+.extended-file-loading {
+	background-color: var(--background-secondary);
+	border-radius: 5px;
+	padding: 10px;
+	text-align: center;
+}
+
+.full-width {
+	width: 100%;
+}

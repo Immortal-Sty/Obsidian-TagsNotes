@@ -387,6 +387,18 @@
     "manual-sorting": {
       "desc": "通过直接拖动，自定义调整文件夹顺序。",
       "name": "Manual Sorting"
+    },
+    "extended-markdown-syntax": {
+      "desc": "扩展了 Markdown 语法，提供了上/下标待额外语法。",
+      "name": "Extended Markdown Syntax"
+    },
+    "extended-file-support": {
+      "desc": "嵌入图片支持更多格式。",
+      "name": "Extended File Support"
+    },
+    "note-annotations": {
+      "desc": "划选高亮笔记，有添加评论的功能。",
+      "name": "Note Annotations"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
