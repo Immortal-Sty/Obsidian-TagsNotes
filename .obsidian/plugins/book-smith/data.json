@@ -1,0 +1,105 @@
+{
+  "defaultAuthor": "槑头脑",
+  "defaultBookPath": "Books",
+  "lastBookId": "",
+  "templates": {
+    "default": "default",
+    "custom": {
+      "default": {
+        "name": "默认模板",
+        "description": "包含前言、大纲、正文卷章和后记的标准结构",
+        "structure": {
+          "tree": [
+            {
+              "id": "preface",
+              "title": "前言",
+              "type": "file",
+              "path": "前言.md",
+              "order": 0,
+              "default_status": "draft",
+              "created_at": "2025-04-11T13:34:27.191Z",
+              "last_modified": "2025-04-11T13:34:27.191Z"
+            },
+            {
+              "id": "outline",
+              "title": "大纲",
+              "type": "file",
+              "path": "大纲.md",
+              "order": 1,
+              "default_status": "draft",
+              "created_at": "2025-04-11T13:34:27.191Z",
+              "last_modified": "2025-04-11T13:34:27.191Z"
+            },
+            {
+              "id": "volume1",
+              "title": "第一卷",
+              "type": "group",
+              "path": "第一卷",
+              "order": 2,
+              "default_status": "draft",
+              "is_expanded": true,
+              "created_at": "2025-04-11T13:34:27.191Z",
+              "last_modified": "2025-04-11T13:34:27.191Z",
+              "children": [
+                {
+                  "id": "chapter1",
+                  "title": "第一章",
+                  "type": "file",
+                  "path": "第一卷/第一章.md",
+                  "order": 0,
+                  "default_status": "draft",
+                  "created_at": "2025-04-11T13:34:27.191Z",
+                  "last_modified": "2025-04-11T13:34:27.191Z"
+                },
+                {
+                  "id": "chapter2",
+                  "title": "第二章",
+                  "type": "file",
+                  "path": "第一卷/第二章.md",
+                  "order": 1,
+                  "default_status": "draft",
+                  "created_at": "2025-04-11T13:34:27.191Z",
+                  "last_modified": "2025-04-11T13:34:27.191Z"
+                }
+              ]
+            },
+            {
+              "id": "reference",
+              "title": "引用书目",
+              "type": "file",
+              "path": "引用书目.md",
+              "order": 3,
+              "default_status": "draft",
+              "created_at": "2025-04-11T13:34:27.191Z",
+              "last_modified": "2025-04-11T13:34:27.191Z"
+            },
+            {
+              "id": "afterword",
+              "title": "后记",
+              "type": "file",
+              "path": "后记.md",
+              "order": 4,
+              "default_status": "draft",
+              "created_at": "2025-04-11T13:34:27.191Z",
+              "last_modified": "2025-04-11T13:34:27.191Z"
+            }
+          ]
+        },
+        "isBuiltin": true
+      }
+    }
+  },
+  "tools": {
+    "assistant": true,
+    "export": true,
+    "community": true
+  },
+  "focus": {
+    "workDuration": 25,
+    "breakDuration": 5,
+    "wordGoal": 500,
+    "stats": {
+      "dailyStats": {}
+    }
+  }
+}

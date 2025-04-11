@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "Yeban8090/book-smith",
     "RavenHogWarts/obsidian-ravenhogwarts-toolkit",
     "CatMuse/HiNote",
     "Canna71/obsidian-janitor",
@@ -11,7 +12,12 @@
     "Quorafind/Obsidian-Note-Minimap",
     "yan42685/obsidian-clever-search"
   ],
-  "pluginSubListFrozenVersion": [],
+  "pluginSubListFrozenVersion": [
+    {
+      "repo": "Yeban8090/book-smith",
+      "version": "latest"
+    }
+  ],
   "themesList": [],
   "updateAtStartup": false,
   "updateThemesAtStartup": false,
