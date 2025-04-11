@@ -1,0 +1,118 @@
+{
+  "customFileOrder": {
+    "/": [
+      "Attachment",
+      "Books",
+      "Images",
+      "Notes",
+      "Omnivore",
+      "Others",
+      "Output",
+      "PDFs",
+      "Template",
+      "未命名.canvas",
+      "README.md"
+    ],
+    "Attachment": [
+      "Attachment/Latex Suite",
+      "Attachment/PDF++",
+      "Attachment/Plugins Annotations",
+      "Attachment/Quickadd",
+      "Attachment/Various Complements",
+      "Attachment/Vimrc_Support"
+    ],
+    "Attachment/Latex Suite": [
+      "Attachment/Latex Suite/default.js",
+      "Attachment/Latex Suite/mine.js"
+    ],
+    "Attachment/PDF++": [
+      "Attachment/PDF++/obsidian.vimrc"
+    ],
+    "Attachment/Plugins Annotations": [
+      "Attachment/Plugins Annotations/data.md"
+    ],
+    "Attachment/Quickadd": [
+      "Attachment/Quickadd/New Note.js",
+      "Attachment/Quickadd/Open File in Browser.js",
+      "Attachment/Quickadd/Toggle Snippets.js",
+      "Attachment/Quickadd/Toggle Theme.js"
+    ],
+    "Attachment/Various Complements": [
+      "Attachment/Various Complements/Callout.txt",
+      "Attachment/Various Complements/CodeBlock.txt",
+      "Attachment/Various Complements/histories.json"
+    ],
+    "Attachment/Vimrc_Support": [
+      "Attachment/Vimrc_Support/go.vimrc",
+      "Attachment/Vimrc_Support/keymaps.vimrc",
+      "Attachment/Vimrc_Support/obsidian.vimrc",
+      "Attachment/Vimrc_Support/paste.vimrc",
+      "Attachment/Vimrc_Support/surround.vimrc",
+      "Attachment/Vimrc_Support/table.vimrc",
+      "Attachment/Vimrc_Support/vimrc.js"
+    ],
+    "Books": [
+      "Books/测试"
+    ],
+    "Books/测试": [
+      "Books/测试/第一卷",
+      "Books/测试/asdf",
+      "Books/测试/大纲.md",
+      "Books/测试/后记.md",
+      "Books/测试/前言.md",
+      "Books/测试/引用书目.md",
+      "Books/测试/book-config.json"
+    ],
+    "Books/测试/第一卷": [
+      "Books/测试/第一卷/第二章.md",
+      "Books/测试/第一卷/第一章.md"
+    ],
+    "Books/测试/asdf": [],
+    "Images": [
+      "Images/9f4fb0db48aed4e2f909d9c3a7efde51_MD5.png",
+      "Images/20240101095959935-20240121125920863-Pasted image 20240121125920.png",
+      "Images/20240101095959935-20240717160538292-Pasted image 20240223185647.png",
+      "Images/20240417124509514-20240717160537945-Pasted image 20240424192955.png",
+      "Images/20240417124509514-20240717160538532-Pasted image 20240424193046.png",
+      "Images/未命名-20241209154302614-Pasted image 20241209154300.png",
+      "Images/aa288f338bc1072295c4c5bd08436c7d_MD5.png",
+      "Images/ab58bfc9254389adfb063a798d3e0927_MD5.png",
+      "Images/cb179bf03f32635365d277ae1f0b0a2d_MD5.png",
+      "Images/ebb7f7d0055a7943e94bbb05795e943d_MD5.png"
+    ],
+    "Notes": [
+      "Notes/20231227175836027.md",
+      "Notes/20231227175913426.md",
+      "Notes/20240101095959935.md",
+      "Notes/20240111222346304.md",
+      "Notes/20240301233405561.md",
+      "Notes/20240301233434899.md",
+      "Notes/20240305142900160.md",
+      "Notes/20240323185428447.md",
+      "Notes/20240331193043610.md",
+      "Notes/20240417124509514.md",
+      "Notes/20240517203453008.md",
+      "Notes/20240707190215655.md",
+      "Notes/20240713144053291.md",
+      "Notes/20240713145441589.md",
+      "Notes/20240713145821834.md",
+      "Notes/20240713152045715.md",
+      "Notes/20240713152124366.md"
+    ],
+    "Omnivore": [
+      "Omnivore/释放图谱的力量——KG笔记法.md"
+    ],
+    "Others": [
+      "Others/Home.md",
+      "Others/Temp.md"
+    ],
+    "Output": [],
+    "PDFs": [
+      "PDFs/克苏鲁的呼唤第七版守秘人规则书 Version2002.md",
+      "PDFs/克苏鲁的呼唤第七版守秘人规则书 Version2002.pdf"
+    ],
+    "Template": [
+      "Template/New Note.md"
+    ]
+  }
+}

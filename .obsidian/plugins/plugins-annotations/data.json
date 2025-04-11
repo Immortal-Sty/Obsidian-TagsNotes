@@ -36,6 +36,10 @@
       "name": "Better Search Views",
       "desc": "渲染搜索、出入链面板等界面的 Markdown 语法。"
     },
+    "book-smith": {
+      "name": "Book Smith",
+      "desc": "写书管理插件。"
+    },
     "obsidian42-brat": {
       "name": "BRAT",
       "desc": "用于安装、管理未在插件市场上架的插件和主题。"
@@ -67,6 +71,10 @@
     "control-characters": {
       "name": "Control Characters",
       "desc": "在编辑模式下，显示空白字符。"
+    },
+    "datacore": {
+      "name": "Datacore",
+      "desc": "DataviewJS 的升级。"
     },
     "dataview": {
       "name": "Dataview",
@@ -120,6 +128,10 @@
       "name": "Git",
       "desc": "用 Git 管理笔记，功能丰富强大。"
     },
+    "hi-note": {
+      "name": "HiNote",
+      "desc": "如果笔记中有 HTML 高亮部分，可为其添加评价。"
+    },
     "homepage": {
       "name": "Homepage",
       "desc": "设置某个页面为笔记库主页。"
@@ -148,9 +160,17 @@
       "name": "Immersive Translate",
       "desc": "沉浸式翻译，可用于翻译插件的设置页面。"
     },
+    "inline-code-copy": {
+      "name": "Inline Code Copy",
+      "desc": "点击行内代码块文本，直接复制。"
+    },
     "janitor": {
       "name": "Janitor",
       "desc": "自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。"
+    },
+    "journaling": {
+      "name": "Journaling",
+      "desc": "像 Logseq 一样，将每日笔记显示在一个页面上。"
     },
     "obsidian-latex-suite": {
       "name": "Latex Suite",
@@ -232,6 +252,10 @@
       "name": "Query all the things",
       "desc": "增强 Query 语法的功能。"
     },
+    "quick-open": {
+      "name": "Quick Select",
+      "desc": "在所有可选列表中，使用 `Alt+数字` 来快速选择。"
+    },
     "quickadd": {
       "name": "QuickAdd",
       "desc": "提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。"
@@ -268,6 +292,10 @@
       "name": "Show Whitespace",
       "desc": "显示文本中的空白字符。"
     },
+    "smart-composer": {
+      "name": "Smart Composer",
+      "desc": "AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。"
+    },
     "smart-connections": {
       "name": "Smart Connections",
       "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。"
@@ -283,6 +311,10 @@
     "obsidian-style-settings": {
       "name": "Style Settings",
       "desc": "为 CSS 和主题提供设置与快捷键功能与语法。"
+    },
+    "tab-group-arrangement": {
+      "name": "Tab Group Arrangement",
+      "desc": "根据焦点，自动调整各个拆分窗口的大小，可自动将焦点所在拆分窗口调至适合编辑的最大，其它全部调小。"
     },
     "tab-selector": {
       "name": "Tab Selector",
@@ -332,6 +364,10 @@
       "name": "Version History Diff",
       "desc": "提供历史版本对比功能，可用于 Git 等功能。"
     },
+    "vim-yank-highlight": {
+      "name": "Vim Yank Highlight",
+      "desc": "在使用 Vim 命令复制时，高亮复制的文本。"
+    },
     "obsidian-vimrc-support": {
       "name": "Vimrc Support",
       "desc": "增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。"
@@ -348,41 +384,9 @@
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
     },
-    "datacore": {
-      "desc": "DataviewJS 的升级。",
-      "name": "Datacore"
-    },
-    "book-smith": {
-      "desc": "写书管理插件。",
-      "name": "Book Smith"
-    },
-    "hi-note": {
-      "desc": "如果笔记中有 HTML 高亮部分，可为其添加评价。",
-      "name": "HiNote"
-    },
-    "journaling": {
-      "desc": "像 Logseq 一样，将每日笔记显示在一个页面上。",
-      "name": "Journaling"
-    },
-    "quick-open": {
-      "desc": "在所有可选列表中，使用 `Alt+数字` 来快速选择。",
-      "name": "Quick Select"
-    },
-    "smart-composer": {
-      "desc": "AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。",
-      "name": "Smart Composer"
-    },
-    "tab-group-arrangement": {
-      "desc": "根据焦点，自动调整各个拆分窗口的大小，可自动将焦点所在拆分窗口调至适合编辑的最大，其它全部调小。",
-      "name": "Tab Group Arrangement"
-    },
-    "vim-yank-highlight": {
-      "desc": "在使用 Vim 命令复制时，高亮复制的文本。",
-      "name": "Vim Yank Highlight"
-    },
-    "inline-code-copy": {
-      "desc": "点击行内代码块文本，直接复制。",
-      "name": "Inline Code Copy"
+    "manual-sorting": {
+      "desc": "通过直接拖动，自定义调整文件夹顺序。",
+      "name": "Manual Sorting"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",

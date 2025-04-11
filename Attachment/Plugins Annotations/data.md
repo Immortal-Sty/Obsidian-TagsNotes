@@ -325,6 +325,13 @@ DataviewJS 的升级。
 格式化笔记，功能非常强。
 <!-- END ANNOTATION -->
 
+# Manual Sorting
+
+<!-- id: manual-sorting -->
+<!-- BEGIN ANNOTATION -->
+通过直接拖动，自定义调整文件夹顺序。
+<!-- END ANNOTATION -->
+
 # markdown export
 
 <!-- id: obsidian-markdown-export-plugin -->
