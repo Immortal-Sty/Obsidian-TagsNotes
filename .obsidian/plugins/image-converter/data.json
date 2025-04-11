@@ -29,7 +29,7 @@
     },
     {
       "name": "NoteName-ImageSha256-Random",
-      "customTemplate": "{notename}-{sha256:image:8}-{randomHex:8}",
+      "customTemplate": "{notename}-{imagename}-{sha256:image:8}",
       "skipRenamePatterns": "",
       "conflictResolution": "increment"
     }
@@ -242,6 +242,23 @@
   "dropPasteCursorLocation": "back",
   "neverProcessFilenames": "",
   "modalBehavior": "never",
+  "singleImageModalSettings": {
+    "conversionPresetName": "Webp Full",
+    "outputFormat": "NONE",
+    "quality": 100,
+    "colorDepth": 1,
+    "resizeMode": "None",
+    "desiredWidth": 800,
+    "desiredHeight": 600,
+    "desiredLongestEdge": 1000,
+    "enlargeOrReduce": "Auto",
+    "allowLargerFiles": false,
+    "pngquantExecutablePath": "",
+    "pngquantQuality": "65-80",
+    "ffmpegExecutablePath": "",
+    "ffmpegCrf": 23,
+    "ffmpegPreset": "medium"
+  },
   "ProcessCurrentNoteconvertTo": "webp",
   "ProcessCurrentNotequality": 0.75,
   "ProcessCurrentNoteResizeModalresizeMode": "None",
@@ -252,7 +269,7 @@
   "ProcessCurrentNoteEnlargeOrReduce": "Always",
   "ProcessCurrentNoteSkipFormats": "tif,tiff,heic",
   "ProcessAllVaultconvertTo": "disabled",
-  "ProcessAllVaultquality": 0.75,
+  "ProcessAllVaultquality": 1,
   "ProcessAllVaultResizeModalresizeMode": "None",
   "ProcessAllVaultResizeModaldesiredWidth": 500,
   "ProcessAllVaultResizeModaldesiredHeight": 500,
