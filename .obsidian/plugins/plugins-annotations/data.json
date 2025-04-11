@@ -32,10 +32,6 @@
       "name": "Automation",
       "desc": "可监控文件打开和焦点变化来自动运行命令。"
     },
-    "obsidian-better-command-palette": {
-      "name": "Better Command Palette",
-      "desc": "更好的命令面板，支持置顶上次的命令。"
-    },
     "better-search-views": {
       "name": "Better Search Views",
       "desc": "渲染搜索、出入链面板等界面的 Markdown 语法。"
@@ -276,10 +272,6 @@
       "name": "Smart Connections",
       "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。"
     },
-    "obsidian-sortable": {
-      "name": "Sortable",
-      "desc": "通过点击表头，更改表格内容的排序。"
-    },
     "spoilers": {
       "name": "Spoilers",
       "desc": "用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
@@ -355,6 +347,42 @@
     "cm-chs-patch": {
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
+    },
+    "datacore": {
+      "desc": "DataviewJS 的升级。",
+      "name": "Datacore"
+    },
+    "book-smith": {
+      "desc": "写书管理插件。",
+      "name": "Book Smith"
+    },
+    "hi-note": {
+      "desc": "如果笔记中有 HTML 高亮部分，可为其添加评价。",
+      "name": "HiNote"
+    },
+    "journaling": {
+      "desc": "像 Logseq 一样，将每日笔记显示在一个页面上。",
+      "name": "Journaling"
+    },
+    "quick-open": {
+      "desc": "在所有可选列表中，使用 `Alt+数字` 来快速选择。",
+      "name": "Quick Select"
+    },
+    "smart-composer": {
+      "desc": "AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。",
+      "name": "Smart Composer"
+    },
+    "tab-group-arrangement": {
+      "desc": "根据焦点，自动调整各个拆分窗口的大小，可自动将焦点所在拆分窗口调至适合编辑的最大，其它全部调小。",
+      "name": "Tab Group Arrangement"
+    },
+    "vim-yank-highlight": {
+      "desc": "在使用 Vim 命令复制时，高亮复制的文本。",
+      "name": "Vim Yank Highlight"
+    },
+    "inline-code-copy": {
+      "desc": "点击行内代码块文本，直接复制。",
+      "name": "Inline Code Copy"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
@@ -363,7 +391,7 @@
   "label_mobile": "<b>Annotation:&nbsp;</b>",
   "label_desktop": "<b>个人注释：</b>",
   "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
-  "editable": false,
+  "editable": true,
   "automatic_remove": true,
   "markdown_file_path": "Attachment/Plugins Annotations/data.md",
   "show_github_icons": true,

@@ -1,0 +1,10 @@
+{
+	"id": "inline-code-copy",
+	"name": "Inline Code Copy",
+	"version": "1.0.1",
+	"minAppVersion": "0.15.0",
+	"description": "Copy inline code on click in reading view.",
+	"author": "Hongchen Lin",
+	"authorUrl": "https://github.com/lhinxue",
+	"isDesktopOnly": false
+}

@@ -59,18 +59,18 @@ PDF 注释插件，简单易用，但功能不多。
 可监控文件打开和焦点变化来自动运行命令。
 <!-- END ANNOTATION -->
 
-# Better Command Palette
-
-<!-- id: obsidian-better-command-palette -->
-<!-- BEGIN ANNOTATION -->
-更好的命令面板，支持置顶上次的命令。
-<!-- END ANNOTATION -->
-
 # Better Search Views
 
 <!-- id: better-search-views -->
 <!-- BEGIN ANNOTATION -->
 渲染搜索、出入链面板等界面的 Markdown 语法。
+<!-- END ANNOTATION -->
+
+# Book Smith
+
+<!-- id: book-smith -->
+<!-- BEGIN ANNOTATION -->
+写书管理插件。
 <!-- END ANNOTATION -->
 
 # BRAT
@@ -127,6 +127,13 @@ PDF 注释插件，简单易用，但功能不多。
 <!-- id: control-characters -->
 <!-- BEGIN ANNOTATION -->
 在编辑模式下，显示空白字符。
+<!-- END ANNOTATION -->
+
+# Datacore
+
+<!-- id: datacore -->
+<!-- BEGIN ANNOTATION -->
+DataviewJS 的升级。
 <!-- END ANNOTATION -->
 
 # Dataview
@@ -220,6 +227,13 @@ PDF 注释插件，简单易用，但功能不多。
 用 Git 管理笔记，功能丰富强大。
 <!-- END ANNOTATION -->
 
+# HiNote
+
+<!-- id: hi-note -->
+<!-- BEGIN ANNOTATION -->
+如果笔记中有 HTML 高亮部分，可为其添加评价。
+<!-- END ANNOTATION -->
+
 # Homepage
 
 <!-- id: homepage -->
@@ -269,11 +283,25 @@ PDF 注释插件，简单易用，但功能不多。
 沉浸式翻译，可用于翻译插件的设置页面。
 <!-- END ANNOTATION -->
 
+# Inline Code Copy
+
+<!-- id: inline-code-copy -->
+<!-- BEGIN ANNOTATION -->
+点击行内代码块文本，直接复制。
+<!-- END ANNOTATION -->
+
 # Janitor
 
 <!-- id: janitor -->
 <!-- BEGIN ANNOTATION -->
 自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。
+<!-- END ANNOTATION -->
+
+# Journaling
+
+<!-- id: journaling -->
+<!-- BEGIN ANNOTATION -->
+像 Logseq 一样，将每日笔记显示在一个页面上。
 <!-- END ANNOTATION -->
 
 # Latex Suite
@@ -416,6 +444,13 @@ PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供�
 增强 Query 语法的功能。
 <!-- END ANNOTATION -->
 
+# Quick Select
+
+<!-- id: quick-open -->
+<!-- BEGIN ANNOTATION -->
+在所有可选列表中，使用 `Alt+数字` 来快速选择。
+<!-- END ANNOTATION -->
+
 # QuickAdd
 
 <!-- id: quickadd -->
@@ -486,18 +521,18 @@ Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Ta
 显示文本中的空白字符。
 <!-- END ANNOTATION -->
 
+# Smart Composer
+
+<!-- id: smart-composer -->
+<!-- BEGIN ANNOTATION -->
+AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。
+<!-- END ANNOTATION -->
+
 # Smart Connections
 
 <!-- id: smart-connections -->
 <!-- BEGIN ANNOTATION -->
 AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。
-<!-- END ANNOTATION -->
-
-# Sortable
-
-<!-- id: obsidian-sortable -->
-<!-- BEGIN ANNOTATION -->
-通过点击表头，更改表格内容的排序。
 <!-- END ANNOTATION -->
 
 # Spoilers
@@ -527,6 +562,13 @@ AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。
 <!-- id: obsidian-style-settings -->
 <!-- BEGIN ANNOTATION -->
 为 CSS 和主题提供设置与快捷键功能与语法。
+<!-- END ANNOTATION -->
+
+# Tab Group Arrangement
+
+<!-- id: tab-group-arrangement -->
+<!-- BEGIN ANNOTATION -->
+根据焦点，自动调整各个拆分窗口的大小，可自动将焦点所在拆分窗口调至适合编辑的最大，其它全部调小。
 <!-- END ANNOTATION -->
 
 # Tab Selector
@@ -611,6 +653,13 @@ A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新
 <!-- id: obsidian-version-history-diff -->
 <!-- BEGIN ANNOTATION -->
 提供历史版本对比功能，可用于 Git 等功能。
+<!-- END ANNOTATION -->
+
+# Vim Yank Highlight
+
+<!-- id: vim-yank-highlight -->
+<!-- BEGIN ANNOTATION -->
+在使用 Vim 命令复制时，高亮复制的文本。
 <!-- END ANNOTATION -->
 
 # Vimrc Support
