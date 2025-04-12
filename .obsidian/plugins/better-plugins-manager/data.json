@@ -8,22 +8,102 @@
   "ITEM_STYLE": "alwaysExpand",
   "GROUP_STYLE": "a",
   "TAG_STYLE": "b",
-  "DELAY": false,
+  "DELAY": true,
   "FADE_OUT_DISABLED_PLUGINS": true,
   "COMMAND_ITEM": false,
   "COMMAND_GROUP": false,
   "GROUPS": [
     {
-      "id": "default",
-      "name": "默认组",
-      "color": "#A079FF"
+      "id": "file",
+      "name": "文件",
+      "color": "#db4343"
+    },
+    {
+      "id": "searching",
+      "name": "搜索",
+      "color": "#d553bd"
+    },
+    {
+      "id": "style",
+      "name": "样式",
+      "color": "#7561db"
+    },
+    {
+      "id": "editing",
+      "name": "编辑",
+      "color": "#438bfe"
+    },
+    {
+      "id": "synchrony",
+      "name": "同步",
+      "color": "#2cc4e2"
+    },
+    {
+      "id": "grammar",
+      "name": "语法",
+      "color": "#32ec95"
+    },
+    {
+      "id": "pdf",
+      "name": "PDF",
+      "color": "#4dc50d"
+    },
+    {
+      "id": "outline",
+      "name": "大纲",
+      "color": "#a2cd2d"
+    },
+    {
+      "id": "plugin",
+      "name": "插件",
+      "color": "#e3be3b"
     }
   ],
   "TAGS": [
     {
-      "id": "default",
-      "name": "默认标签",
-      "color": "#A079FF"
+      "id": "attachment",
+      "name": "附件",
+      "color": "#db4343"
+    },
+    {
+      "id": "searching",
+      "name": "搜索",
+      "color": "#d553bd"
+    },
+    {
+      "id": "style",
+      "name": "样式",
+      "color": "#7561db"
+    },
+    {
+      "id": "editing",
+      "name": "编辑",
+      "color": "#438bf3"
+    },
+    {
+      "id": "synchrony",
+      "name": "同步",
+      "color": "#2cc4e2"
+    },
+    {
+      "id": "grammar",
+      "name": "语法",
+      "color": "#32ec95"
+    },
+    {
+      "id": "pdf",
+      "name": "PDF",
+      "color": "#4dc50d"
+    },
+    {
+      "id": "outline",
+      "name": "大纲",
+      "color": "#a2cd2d"
+    },
+    {
+      "id": "plugin",
+      "name": "插件",
+      "color": "#e3be3b"
     }
   ],
   "DELAYS": [
@@ -700,7 +780,7 @@
       "desc": "Manage your Plugins through groups: Enable and disable multiple plugins through a single command, or delay the startup of plugins to speed up your Obsidian start up time. 分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
       "group": "",
       "tags": [],
-      "enabled": false,
+      "enabled": true,
       "delay": "",
       "note": ""
     },
@@ -740,7 +820,7 @@
       "desc": "Show tags as folder. 用文件目录的形式显示标签及文件，可用于把标签当文件夹用。",
       "group": "",
       "tags": [],
-      "enabled": false,
+      "enabled": true,
       "delay": "",
       "note": ""
     },

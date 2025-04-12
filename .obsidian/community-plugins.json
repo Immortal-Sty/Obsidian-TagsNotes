@@ -1,25 +1,3 @@
 [
-  "quick-open",
-  "break-page",
-  "vim-yank-highlight",
-  "datacore",
-  "dataview",
-  "obsidian-linter",
-  "quickadd",
-  "janitor",
-  "obsidian-style-settings",
-  "sticky-heading",
-  "better-search-views",
-  "settings-search",
-  "smart-composer",
-  "obsidian-latex-suite",
-  "obsidian42-brat",
-  "floating-toc",
-  "hi-note",
-  "inline-code-copy",
-  "manual-sorting",
-  "scroll-with-jk",
-  "better-plugins-manager",
-  "obsidian-tagfolder",
-  "obsidian-plugin-groups"
+  "better-plugins-manager"
 ]
