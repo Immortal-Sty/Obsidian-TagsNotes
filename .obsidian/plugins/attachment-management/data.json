@@ -3,7 +3,7 @@
     "attachmentRoot": "Images",
     "saveAttE": "inFolderBelow",
     "attachmentPath": "",
-    "attachFormat": "${notename}-${date}-${originalname}",
+    "attachFormat": "${notename}-${date}-${originalname}-${md5}",
     "type": "GLOBAL",
     "extensionOverride": []
   },

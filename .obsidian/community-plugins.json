@@ -1,5 +1,4 @@
 [
-  "obsidian-plugin-groups",
   "quick-open",
   "break-page",
   "vim-yank-highlight",
@@ -20,5 +19,7 @@
   "inline-code-copy",
   "manual-sorting",
   "scroll-with-jk",
-  "image-converter"
+  "better-plugins-manager",
+  "obsidian-tagfolder",
+  "obsidian-plugin-groups"
 ]

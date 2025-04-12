@@ -283,11 +283,25 @@ DataviewJS 的升级。
 自动将图片上传图床。
 <!-- END ANNOTATION -->
 
+# Image Converter
+
+<!-- id: image-converter -->
+<!-- BEGIN ANNOTATION -->
+功能超强的图片管理插件。
+<!-- END ANNOTATION -->
+
 # Image Inline
 
 <!-- id: image-inline -->
 <!-- BEGIN ANNOTATION -->
 用 base64 代替图片嵌入，免去附件管理问题。
+<!-- END ANNOTATION -->
+
+# Image Toolkit
+
+<!-- id: obsidian-image-toolkit -->
+<!-- BEGIN ANNOTATION -->
+图片放大查看插件。
 <!-- END ANNOTATION -->
 
 # Immersive Translate

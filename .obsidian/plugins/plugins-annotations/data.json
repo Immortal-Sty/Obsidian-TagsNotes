@@ -92,6 +92,14 @@
       "name": "Easy Typing",
       "desc": "提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。"
     },
+    "extended-file-support": {
+      "name": "Extended File Support",
+      "desc": "嵌入图片支持更多格式。"
+    },
+    "extended-markdown-syntax": {
+      "name": "Extended Markdown Syntax",
+      "desc": "扩展了 Markdown 语法，提供了上/下标待额外语法。"
+    },
     "nl-fast-image-cleaner": {
       "name": "Fast Image Cleaner",
       "desc": "提供右键删除图片和图片文件的功能。"
@@ -184,6 +192,10 @@
       "name": "Linter",
       "desc": "格式化笔记，功能非常强。"
     },
+    "manual-sorting": {
+      "name": "Manual Sorting",
+      "desc": "通过直接拖动，自定义调整文件夹顺序。"
+    },
     "obsidian-markdown-export-plugin": {
       "name": "markdown export",
       "desc": "提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。"
@@ -199,6 +211,10 @@
     "mysnippets-plugin": {
       "name": "MySnippets",
       "desc": "快速方便地新增、编辑、开关 CSS 片段。"
+    },
+    "note-annotations": {
+      "name": "Note Annotations",
+      "desc": "划选高亮笔记，有添加评论的功能。"
     },
     "note-definitions": {
       "name": "Note Definitions",
@@ -384,21 +400,13 @@
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
     },
-    "manual-sorting": {
-      "desc": "通过直接拖动，自定义调整文件夹顺序。",
-      "name": "Manual Sorting"
+    "image-converter": {
+      "desc": "功能超强的图片管理插件。",
+      "name": "Image Converter"
     },
-    "extended-markdown-syntax": {
-      "desc": "扩展了 Markdown 语法，提供了上/下标待额外语法。",
-      "name": "Extended Markdown Syntax"
-    },
-    "extended-file-support": {
-      "desc": "嵌入图片支持更多格式。",
-      "name": "Extended File Support"
-    },
-    "note-annotations": {
-      "desc": "划选高亮笔记，有添加评论的功能。",
-      "name": "Note Annotations"
+    "obsidian-image-toolkit": {
+      "desc": "图片放大查看插件。",
+      "name": "Image Toolkit"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",
@@ -407,7 +415,7 @@
   "label_mobile": "<b>Annotation:&nbsp;</b>",
   "label_desktop": "<b>个人注释：</b>",
   "label_placeholder": "<em>请在此为 <strong>${plugin_name}</strong> 插件添加个人注释……</em>",
-  "editable": true,
+  "editable": false,
   "automatic_remove": true,
   "markdown_file_path": "Attachment/Plugins Annotations/data.md",
   "show_github_icons": true,
