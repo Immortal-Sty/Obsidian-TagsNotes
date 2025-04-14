@@ -45,11 +45,6 @@
       "color": "#32ec95"
     },
     {
-      "id": "pdf",
-      "name": "PDF",
-      "color": "#4dc50d"
-    },
-    {
       "id": "outline",
       "name": "大纲",
       "color": "#a2cd2d"
@@ -58,6 +53,26 @@
       "id": "plugin",
       "name": "插件",
       "color": "#e3be3b"
+    },
+    {
+      "id": "transfer",
+      "name": "调用",
+      "color": "#000000"
+    },
+    {
+      "id": "comment",
+      "name": "评论",
+      "color": "#000000"
+    },
+    {
+      "id": "Script",
+      "name": "脚本",
+      "color": "#000000"
+    },
+    {
+      "id": "ai",
+      "name": "AI",
+      "color": "#000000"
     }
   ],
   "DELAYS": [
@@ -78,7 +93,9 @@
       "name": "Actions URI",
       "desc": "Adds additional `x-callback-url` endpoints to the app for common actions — it's a clean, super-charged addition to Obsidian URI.用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "transfer"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -88,7 +105,9 @@
       "name": "Another Sticky Headings",
       "desc": "Display headings tree during editing and preview to indicate the current position. 使当前内容上方最近的一个标题始终悬浮在笔记页面上方。1. 优点：阅读模式可用，可点击跳转。2. 缺点：标题样式丢失。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "outline"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -98,7 +117,9 @@
       "name": "Attachment Management",
       "desc": "Customize your attachment path of notes independently with variables and auto rename it on change. 附件管理插件，支持针对不同后缀使用不同方案。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -108,7 +129,9 @@
       "name": "Automation",
       "desc": "Execute commands on specific events. 可监控文件打开和焦点变化来自动运行命令。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "Script"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -118,7 +141,10 @@
       "name": "Better Search Views",
       "desc": "Outliner-like breadcrumb trees for search, backlinks and embedded queries. 渲染搜索、出入链面板等界面的 Markdown 语法。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching",
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -138,7 +164,10 @@
       "name": "PDF break page",
       "desc": "Add shortkey and command to insert a break page formating for pdf exports. 使用命令添加特殊标识符后，导出为 PDF 时会自动在标识符处分页。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "style"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -148,7 +177,9 @@
       "name": "Clever Search",
       "desc": "Helping you quickly locate the notes in your mind in the easiest way, without the need for complex search syntax to find relevant content. 强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -168,7 +199,9 @@
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "A patch for Obsidian's built-in CodeMirror Editor to support Simplified Chinese word splitting. 为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -178,7 +211,9 @@
       "name": "Typewriter Scroll",
       "desc": "Typewriter-style scrolling which keeps the view centered in the editor. 提供打字机模式和聚焦模式，但未适配新版，有 Bug。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -188,7 +223,10 @@
       "name": "Code Styler",
       "desc": "Style and customize codeblocks and inline code in both editing mode and reading mode. 为代码块添加各种样式。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style",
+        "grammar"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -208,7 +246,10 @@
       "name": "Datacore",
       "desc": "Reactive data engine for Obsidian.md. DataviewJS 的进阶版本，性能更高。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching",
+        "grammar"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -218,7 +259,10 @@
       "name": "Dataview",
       "desc": "Complex data views for the data-obsessed. 使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching",
+        "grammar"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -228,7 +272,9 @@
       "name": "Dataview Serializer",
       "desc": "Serialize Dataview queries to Markdown, and keep the Markdown representation up to date. 使用 Dataview 语法，将查询结果直接以文本形式插入。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -238,7 +284,9 @@
       "name": "Dynamic Outline",
       "desc": "Adds a customizable GitHub-like floating table of contents. 提供了悬浮大纲视图。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "outline"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -248,7 +296,9 @@
       "name": "Easy Typing",
       "desc": "This plugin aims to enhance and optimize the editing experience in Obsidian. 提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -258,7 +308,9 @@
       "name": "Extended File Support",
       "desc": "Adds file support for various file types. Allows viewing and embedding these filetypes. Includes: .kra, .psd, .obj, .glb, .gltf, and more. 扩展了 Obsidian 支持的图片格式。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -268,7 +320,9 @@
       "name": "Extended Markdown Syntax",
       "desc": "Extend your Markdown syntax using delimiters instead of HTML tags, such as underlining, superscript, subscript, highlighting, and spoiler. 扩展了更多 Markdown 语法，如上/下标等。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -278,7 +332,10 @@
       "name": "Fit",
       "desc": "Minimalist File gIT (FIT) to sync your files across mobile and desktop devices using GitHub. 用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "synchrony"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -288,7 +345,10 @@
       "name": "Floating Search",
       "desc": "You can use search view in modal/leaf/popout window now. 将 Obsidian 原生的搜索以悬浮面板的方式呈现。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching",
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -298,7 +358,9 @@
       "name": "Floating Settings",
       "desc": "Open the Floating Settings panel or replace the default settings modal with a floating panel. Depends on the Hover Editor. 将设置界面变成悬浮窗口，方便进行某些设置。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -308,7 +370,9 @@
       "name": "floating toc",
       "desc": "This is a floating Toc plugin that  hovers a table of content  containing a header level on the notes sidebar. 在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "outline"
+      ],
       "enabled": true,
       "delay": "immediately",
       "note": ""
@@ -318,7 +382,9 @@
       "name": "HiNote",
       "desc": "Add comments to highlighted notes, use AI for thinking, and flashcards for memory. 当笔记中存在 HTML 标签高亮时，可为其添加评论。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "comment"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -338,7 +404,9 @@
       "name": "Html Server",
       "desc": "This plugin lets you spin up a local http server to access your vault via a web browser from any device in your network. 本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "transfer"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -348,7 +416,10 @@
       "name": "Image Converter",
       "desc": "Convert, compress, resize, annotate, markup, draw, crop, rotate, flip, align images directly in Obsidian. Drag-resize, rename with variables, batch process. WEBP, JPG, PNG, HEIC, TIF. 强大的图片管理工具。支持：图片移动、重命名、转换格式/大小、滚轮/拖动调整显示大小等功能。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -358,7 +429,9 @@
       "name": "Image Inline",
       "desc": "Paste your image without attachment files. 用 base64 代替图片嵌入，免去附件管理问题。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -378,7 +451,9 @@
       "name": "Janitor",
       "desc": "Performs cleanup tasks on the Obsidian vault. 自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -398,7 +473,10 @@
       "name": "Lineage",
       "desc": "Edit Markdown in a keyboard-centric Miller columns interface. Inspired by Gingko Writer. 提供类似 Gingko 的编辑界面，分块树形编辑。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style",
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -408,7 +486,9 @@
       "name": "Manual Sorting",
       "desc": "Drag'n'Drop file sorting. 通过直接拖动文件夹，对文件夹排序。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -418,7 +498,9 @@
       "name": "Metadata Menu",
       "desc": "For data quality enthusiasts (and dataview users): manage the metadata of your notes.",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -428,7 +510,9 @@
       "name": "MetaEdit",
       "desc": "MetaEdit helps you manage your metadata.",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -458,7 +542,10 @@
       "name": "Mousewheel Image zoom",
       "desc": "This plugin enables you to increase/decrease the size of an image by scrolling. 用鼠标滚轮来更改图片嵌入大小。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style",
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -468,7 +555,9 @@
       "name": "MySnippets",
       "desc": "MySnippets is a plugin that adds a status bar menu allowing the user to quickly toggle their snippets on and off 🖌. 快速方便地新增、编辑、开关 CSS 片段。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -478,7 +567,9 @@
       "name": "Fast Image Cleaner",
       "desc": "This plugin allows you to quickly remove image attachment and referenced link from your documents in both LIVE , READ mode by right-click menu. 提供右键删除图片和图片文件的功能。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -488,7 +579,10 @@
       "name": "Note Annotations",
       "desc": "Add multi-colored highlights and comments to your notes. 给文本加上高亮，支持添加评论。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing",
+        "comment"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -508,7 +602,10 @@
       "name": "Note Refactor",
       "desc": "Extract note content into new notes and split notes. 提取笔记内容到新的笔记和分裂笔记。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -538,7 +635,9 @@
       "name": "Nuke Orphans",
       "desc": "Plugin that trashes orphaned files and attachments. 自动删除没有被嵌入或链接的附件和图片文件，删除时有提示，可选择删或不删。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -548,7 +647,9 @@
       "name": "Admonition",
       "desc": "Enhanced callouts for Obsidian.md. 更多关于 Callout 样式的操作。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -558,7 +659,9 @@
       "name": "Advanced URI",
       "desc": "Advanced modes for Obsidian URI. 用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "transfer"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -568,7 +671,10 @@
       "name": "Annotator",
       "desc": "This is a sample plugin for Obsidian. It allows you to open and annotate PDF and EPUB files. PDF 注释插件，简单易用，但功能不多。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "comment"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -578,7 +684,9 @@
       "name": "Another Quick Switcher",
       "desc": "This is an Obsidian plugin which is another choice of Quick switcher. 强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -588,7 +696,9 @@
       "name": "Completr",
       "desc": "This plugin provides advanced auto-completion functionality for LaTeX, Frontmatter and standard writing. 提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -598,7 +708,9 @@
       "name": "Diagrams.net",
       "desc": "Enable diagrams.net (previously draw.io) type diagrams, with the diagrams.net embedded editor. Draw.io 的新名字。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -608,7 +720,10 @@
       "name": "File Cooker",
       "desc": "Deal multi notes from Search results、current file、Dataview query string... 提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "searching"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -618,7 +733,9 @@
       "name": "Footnote Shortcut",
       "desc": "Insert and write footnotes faster. 用快捷键快速新增、编辑脚注。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -628,7 +745,9 @@
       "name": "Front Matter Title",
       "desc": "Lets you define a title in frontmatter to be displayed as the filename for explorer, graph, search and etc. 用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -638,7 +757,10 @@
       "name": "Git",
       "desc": "Integrate Git version control with automatic backup and other advanced features. 用 Git 管理笔记，功能丰富强大。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "synchrony"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -658,7 +780,9 @@
       "name": "Icon Shortcodes",
       "desc": "Insert emoji and custom icons with shortcodes. 通过输入 `:` 快速搜索输入 Emoji。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -668,7 +792,9 @@
       "name": "Image auto upload",
       "desc": "This plugin uploads images from your clipboard by PicGo. 自动将图片上传图床。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -678,7 +804,9 @@
       "name": "Latex Suite",
       "desc": "Make typesetting LaTeX math as fast as handwriting through snippets, text expansion, and editor enhancements. 提供自动补全功能，可区分 Latex、代码块和正常文本，支持正则，支持读文件配置。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -688,7 +816,9 @@
       "name": "Linter",
       "desc": "Formats and styles your notes. It can be used to format YAML tags, aliases, arrays, and metadata; footnotes; headings; spacing; math blocks; regular markdown contents like list, italics, and bold styles; and more with the use of custom rule options as well. 格式化笔记，功能非常强。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -698,7 +828,9 @@
       "name": "markdown export",
       "desc": "This is a markdown export plugin for Obsidian. 提取 Markdown 文件及其中附件，用于分享部分笔记，而非整个库。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -708,7 +840,10 @@
       "name": "Thino",
       "desc": "Capturing ideas and save them into daily notes. (Closed source)",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style",
+        "editing"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -718,7 +853,9 @@
       "name": "PKMer",
       "desc": "A marketplace of third-party plugins and themes developed by Obsidian enthusiasts in China to enhance the experience of using Obsidian in China. PKMer 市场，可代替 Obsidian 官方市场，为网络不好的用户提供了第三方解决方案。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "plugin"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -728,7 +865,9 @@
       "name": "Plugin Groups",
       "desc": "Manage your Plugins through groups: Enable and disable multiple plugins through a single command, or delay the startup of plugins to speed up your Obsidian start up time. 分组管理插件，可以快速开启/关闭一组插件，也可设置延时启动插件。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "plugin"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -748,7 +887,9 @@
       "name": "Relative Line Numbers",
       "desc": "Enables relative line numbers in editor mode. 使行号变成相对行号。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -758,7 +899,9 @@
       "name": "Style Settings",
       "desc": "Offers controls for adjusting theme, plugin, and snippet CSS variables. 为 CSS 和主题提供设置与快捷键功能与语法。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -778,7 +921,9 @@
       "name": "Text Generator",
       "desc": "Text generation using AI",
       "group": "",
-      "tags": [],
+      "tags": [
+        "ai"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -788,7 +933,9 @@
       "name": "Trash Explorer",
       "desc": "Restore and delete files from the Obsidian .trash folder. 提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": true,
       "delay": "immediately",
       "note": ""
@@ -798,7 +945,9 @@
       "name": "Version History Diff",
       "desc": "Diff the version history of the core Sync and File Recovery plugins and Git. Adds a command to open the core Sync version history as well. 提供历史版本对比功能，可用于 Git 等功能。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -808,7 +957,9 @@
       "name": "Vimrc Support",
       "desc": "Auto-load a startup file with Obsidian Vim commands. 增强 Obsidian 中的 Vim 功能，可以通过 Vimrc 文件进行配置，支持 JavaScript 代码。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -818,7 +969,9 @@
       "name": "BRAT",
       "desc": "Easily install a beta version of a plugin for testing. 用于安装、管理未在插件市场上架的插件和主题。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "plugin"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -828,7 +981,9 @@
       "name": "Omnisearch",
       "desc": "A search engine that just works. 内容搜索插件，中文兼容性不太好，能搜索 PDF 文件。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -838,7 +993,9 @@
       "name": "Clear Unused Images",
       "desc": "Clear the images that you are not using anymore in your markdown notes to save space. 自动清理没有被嵌入或链接的附件和图像文件，有概率误删。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -848,7 +1005,10 @@
       "name": "PDF++",
       "desc": "The most Obsidian-native PDF annotation tool ever. 提供 PDF 标记功能，支持 PDF 编辑模式和 Obsidian 反链模式，功能强大且复杂。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "comment"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -858,7 +1018,9 @@
       "name": "Persistent Links",
       "desc": "Automatically repair internal links to blocks and headings. 大大增强标题链接和块链接，当剪贴到其它文件时也会自动同步链接。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -868,7 +1030,9 @@
       "name": "Plugins Annotations",
       "desc": "Allows adding personal comments to each installed plugin. 提供给插件加个人注释的功能，即本段文字。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "plugin"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -878,7 +1042,10 @@
       "name": "Query all the things",
       "desc": "Execute SQL base queries against your data in Obsidian and render it how you want using templates. 增强 Query 语法的功能。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching",
+        "grammar"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -898,7 +1065,12 @@
       "name": "QuickAdd",
       "desc": "Quickly add new pages or content to your vault. 提供插入文本、用模板生成新文件、运行 JavaScript 代码、组合多个操作。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing",
+        "transfer",
+        "Script",
+        "ai"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -908,7 +1080,9 @@
       "name": "Restore Tab Key",
       "desc": "Restore tab key behaviour: tab key inserts a tab character, the way it should be. Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Tab 字符。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -928,7 +1102,9 @@
       "name": "Settings Search",
       "desc": "Globally search settings in Obsidian.md. 提供搜索 Obsidian 设置功能。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "searching"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -938,7 +1114,9 @@
       "name": "Share my plugin list",
       "desc": "Share the enabled plugins in list/table format. 将插件导出为列表或表格。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "plugin"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -948,7 +1126,9 @@
       "name": "Sheets Extended",
       "desc": "Vertical headers, merged cells, and custom css tables with advanced table compatibility. 提供合并表格单元格功能和语法。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -958,7 +1138,9 @@
       "name": "Show Whitespace",
       "desc": "CSS styles and CM6 extensions to highlight whitespace in Source and Live Preview modes. 显示文本中的空白字符。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -968,7 +1150,9 @@
       "name": "Smart Composer",
       "desc": "AI chat with note context, smart writing assistance, and one-click edits for your vault. AI 插件，支持根据文档提问、直接问答。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "ai"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -978,7 +1162,9 @@
       "name": "Spoilers",
       "desc": "Hide and reveal blocks of information. 用代码块实现块内容隐藏。1. `spoiler` 纯文本。2. `spoiler-markdown` Markdown 语法。3. `spoiler-env` 多可复制值，以表格形式显示。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -988,7 +1174,9 @@
       "name": "Sticky Headings",
       "desc": "Sticky Headings and Shows the heading level. 使当前内容上方最近的一个标题始终悬浮在笔记页面上方。1. 优点：保持标题样式。2. 缺点：阅读模式不可用，不可跳转。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "outline"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -1028,7 +1216,9 @@
       "name": "Tabs",
       "desc": "Create tabs in your notes. 用代码块实现多标签样式。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "grammar"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
@@ -1038,7 +1228,9 @@
       "name": "Tag Wrangler",
       "desc": "Rename, merge, toggle, and search tags from the tags view. 在标签面板上提供右键批量编辑标签的功能，也可为标签新建页面。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1048,7 +1240,11 @@
       "name": "Templater",
       "desc": "Create and use templates. 增强模版功能，可运行 JavaScript 代码。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing",
+        "grammar",
+        "Script"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1058,7 +1254,9 @@
       "name": "Typewriter Mode",
       "desc": "Typewriter scroll, highlight current line, dim unfocused paragraphs and sentences, writing focus, restore cursor position and more. 提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1068,7 +1266,9 @@
       "name": "Update Relative Links",
       "desc": "Update relative links. A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1078,7 +1278,9 @@
       "name": "Various Complements",
       "desc": "This plugin enables you to complete words like the auto-completion of IDE. 提供下拉补全功能，自带链接、属性等补全功能，也可自定义。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "editing"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1088,7 +1290,9 @@
       "name": "Vim Yank Highlight",
       "desc": "Highlight yanked text in Vim mode. Enjoy that subtle animation you've missed so much. 当使用 Vim 键位进行复制时，高亮一下被复制文本。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style"
+      ],
       "enabled": true,
       "delay": "delay",
       "note": ""
@@ -1118,7 +1322,10 @@
       "name": "Image Toolkit",
       "desc": "This plugin provides some image viewing toolkit. 强大的图片查看插件，可悬浮图片。",
       "group": "",
-      "tags": [],
+      "tags": [
+        "file",
+        "style"
+      ],
       "enabled": false,
       "delay": "",
       "note": ""
