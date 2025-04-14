@@ -160,9 +160,17 @@
       "name": "Image auto upload Plugin",
       "desc": "自动将图片上传图床。"
     },
+    "image-converter": {
+      "name": "Image Converter",
+      "desc": "功能超强的图片管理插件。"
+    },
     "image-inline": {
       "name": "Image Inline",
       "desc": "用 base64 代替图片嵌入，免去附件管理问题。"
+    },
+    "obsidian-image-toolkit": {
+      "name": "Image Toolkit",
+      "desc": "图片放大查看插件。"
     },
     "immersive-translate": {
       "name": "Immersive Translate",
@@ -312,10 +320,6 @@
       "name": "Smart Composer",
       "desc": "AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。"
     },
-    "smart-connections": {
-      "name": "Smart Connections",
-      "desc": "AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。"
-    },
     "spoilers": {
       "name": "Spoilers",
       "desc": "用代码块实现块内容隐藏。\n\n\n- `spoiler` 纯文本。\n- `spoiler-markdown` Markdown 语法。\n- `spoiler-env` 多可复制值，以表格形式显示。"
@@ -399,14 +403,6 @@
     "cm-chs-patch": {
       "name": "Word Splitting for Simplified Chinese in Edit Mode and Vim Mode",
       "desc": "为 Obsidian 提供中文分词功能，可用于双击选词和 Vim 模式的 `w` 键。"
-    },
-    "image-converter": {
-      "desc": "功能超强的图片管理插件。",
-      "name": "Image Converter"
-    },
-    "obsidian-image-toolkit": {
-      "desc": "图片放大查看插件。",
-      "name": "Image Toolkit"
     }
   },
   "plugins_annotations_uuid": "BC56AB7B-A46F-4ACF-9BA1-3A4461F74C79",

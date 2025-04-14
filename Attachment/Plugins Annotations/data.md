@@ -570,13 +570,6 @@ Obsidian 中 Tab 键强制设为了缩进功能，该插件重新设为输入 Ta
 AI 插件，可根据文档提问，在窗口中直接与 AI 聊天等。
 <!-- END ANNOTATION -->
 
-# Smart Connections
-
-<!-- id: smart-connections -->
-<!-- BEGIN ANNOTATION -->
-AI 插件，笔记内容侧栏对话，语义搜索推荐笔记。
-<!-- END ANNOTATION -->
-
 # Spoilers
 
 <!-- id: spoilers -->
