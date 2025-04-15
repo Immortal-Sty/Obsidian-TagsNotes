@@ -20452,7 +20452,8 @@ var require_react_dom = __commonJS({
 __export(exports, {
   default: () => DiagramsNet
 });
-var import_obsidian2 = __toModule(require("obsidian"));
+var import_obsidian5 = __toModule(require("obsidian"));
+var import_obsidian6 = __toModule(require("obsidian"));
 
 // src/constants.tsx
 var DIAGRAM_VIEW_TYPE = "diagrams-net";
@@ -20477,7 +20478,7 @@ xmlns:svg="http://www.w3.org/2000/svg">
 </svg>`;
 
 // src/diagrams-view.tsx
-var import_obsidian = __toModule(require("obsidian"));
+var import_obsidian3 = __toModule(require("obsidian"));
 var React3 = __toModule(require_react());
 var ReactDOM2 = __toModule(require_react_dom());
 
@@ -20637,8 +20638,165 @@ var DiagramsApp = (props) => {
   });
 };
 
+// src/rename.ts
+var import_obsidian2 = __toModule(require("obsidian"));
+
+// src/lang/helpers.ts
+var import_obsidian = __toModule(require("obsidian"));
+
+// src/lang/locale/ar.ts
+var ar_default = {};
+
+// src/lang/locale/cz.ts
+var cz_default = {};
+
+// src/lang/locale/da.ts
+var da_default = {};
+
+// src/lang/locale/de.ts
+var de_default = {};
+
+// src/lang/locale/en.ts
+var en_default = {
+  DEFAULT_LOCATION: "Default location for saving",
+  CURRENT_FOLDER: "Current folder",
+  DEFAULT_FOLDER: "Default folder",
+  CUSTOM_PATH: "Custom path",
+  CREATE_AND_RENAME: "Save the new file and rename it",
+  RENAME: "Rename",
+  CANCEL: "Cancel"
+};
+
+// src/lang/locale/en-gb.ts
+var en_gb_default = {};
+
+// src/lang/locale/es.ts
+var es_default = {};
+
+// src/lang/locale/fr.ts
+var fr_default = {};
+
+// src/lang/locale/hi.ts
+var hi_default = {};
+
+// src/lang/locale/id.ts
+var id_default = {};
+
+// src/lang/locale/it.ts
+var it_default = {};
+
+// src/lang/locale/ja.ts
+var ja_default = {};
+
+// src/lang/locale/ko.ts
+var ko_default = {};
+
+// src/lang/locale/nl.ts
+var nl_default = {};
+
+// src/lang/locale/no.ts
+var no_default = {};
+
+// src/lang/locale/pl.ts
+var pl_default = {};
+
+// src/lang/locale/pt.ts
+var pt_default = {};
+
+// src/lang/locale/pt-br.ts
+var pt_br_default = {};
+
+// src/lang/locale/ro.ts
+var ro_default = {};
+
+// src/lang/locale/ru.ts
+var ru_default = {};
+
+// src/lang/locale/tr.ts
+var tr_default = {};
+
+// src/lang/locale/zh-cn.ts
+var zh_cn_default = {
+  DEFAULT_LOCATION: "\u9ED8\u8BA4\u4FDD\u5B58\u4F4D\u7F6E",
+  CURRENT_FOLDER: "\u5F53\u524D\u6587\u4EF6\u5939",
+  DEFAULT_FOLDER: "\u9644\u4EF6\u6587\u4EF6\u5939",
+  CUSTOM_PATH: "\u81EA\u5B9A\u4E49",
+  CREATE_AND_RENAME: "\u65B0\u5EFA\u6587\u4EF6\u4FDD\u5B58\u540E\u91CD\u547D\u540D",
+  RENAME: "\u91CD\u547D\u540D",
+  CANCEL: "\u53D6\u6D88"
+};
+
+// src/lang/locale/zh-tw.ts
+var zh_tw_default = {};
+
+// src/lang/helpers.ts
+var localeMap = {
+  ar: ar_default,
+  cs: cz_default,
+  da: da_default,
+  de: de_default,
+  en: en_default,
+  "en-gb": en_gb_default,
+  es: es_default,
+  fr: fr_default,
+  hi: hi_default,
+  id: id_default,
+  it: it_default,
+  ja: ja_default,
+  ko: ko_default,
+  nl: nl_default,
+  nn: no_default,
+  pl: pl_default,
+  pt: pt_default,
+  "pt-br": pt_br_default,
+  ro: ro_default,
+  ru: ru_default,
+  tr: tr_default,
+  "zh-cn": zh_cn_default,
+  "zh-tw": zh_tw_default
+};
+var locale = localeMap[import_obsidian.moment.locale()];
+function t(str) {
+  return locale && locale[str] || en_default[str];
+}
+
+// src/rename.ts
+var RenameModal = class extends import_obsidian2.Modal {
+  constructor(app, defaultName, onSubmit) {
+    super(app);
+    this.defaultName = defaultName;
+    this.onSubmit = onSubmit;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.addClass("rename-diagrams-modal");
+    const inputEl = contentEl.createEl("input", { type: "text", value: this.defaultName });
+    inputEl.classList.add("rename-input");
+    const submitButton = contentEl.createEl("button", { text: t("RENAME") });
+    submitButton.classList.add("rename-button");
+    submitButton.onclick = () => {
+      this.onSubmit(inputEl.value);
+      this.close();
+    };
+    const cancelButton = contentEl.createEl("button", { text: t("CANCEL") });
+    cancelButton.classList.add("cancel-button");
+    cancelButton.onclick = () => {
+      this.close();
+    };
+    inputEl.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        this.onSubmit(inputEl.value);
+        this.close();
+      }
+    });
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
+
 // src/diagrams-view.tsx
-var DiagramsView = class extends import_obsidian.Modal {
+var DiagramsView = class extends import_obsidian3.Modal {
   getDisplayText() {
     var _a;
     return (_a = this.displayText) != null ? _a : "Diagram";
@@ -20646,7 +20804,7 @@ var DiagramsView = class extends import_obsidian.Modal {
   getViewType() {
     return DIAGRAM_VIEW_TYPE;
   }
-  constructor(app, hostView, initialFileInfo, ui) {
+  constructor(app, hostView, initialFileInfo, ui, settings) {
     super(app);
     this.filePath = initialFileInfo.path;
     this.fileName = initialFileInfo.basename;
@@ -20657,63 +20815,118 @@ var DiagramsView = class extends import_obsidian.Modal {
     this.workspace = this.app.workspace;
     this.hostView = hostView;
     this.ui = ui;
+    this.settings = settings;
   }
   onOpen() {
     return __async(this, null, function* () {
+      const modalBgElement = document.querySelector(".modal-bg");
+      if (modalBgElement) {
+        modalBgElement.addEventListener("click", (event) => __async(this, null, function* () {
+          if (event.target === modalBgElement) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+          }
+        }), true);
+      }
       const handleExit = () => __async(this, null, function* () {
         close();
       });
       const handleSaveAndExit = (msg) => __async(this, null, function* () {
         if (this.diagramExists) {
           saveData(msg);
-          refreshMarkdownViews();
-          close();
+          yield refreshMarkdownViews();
         } else {
           saveData(msg);
-          insertDiagram();
-          close();
+          if (!this.settings.createAndRename) {
+            insertDiagram();
+          }
         }
+        close();
       });
       const close = () => {
         this.workspace.detachLeavesOfType(DIAGRAM_VIEW_TYPE);
         this.close();
       };
-      const saveData = (msg) => {
+      const saveData = (msg, onCreate) => __async(this, null, function* () {
         const svgData = msg.svgMsg.data;
         const svgBuffer = Buffer.from(svgData.replace("data:image/svg+xml;base64,", ""), "base64");
         if (this.diagramExists) {
           const svgFile = this.vault.getAbstractFileByPath(this.svgPath);
           const xmlFile = this.vault.getAbstractFileByPath(this.xmlPath);
-          if (!(svgFile instanceof import_obsidian.TFile && xmlFile instanceof import_obsidian.TFile)) {
+          if (!(svgFile instanceof import_obsidian3.TFile && xmlFile instanceof import_obsidian3.TFile)) {
             return;
           }
-          this.vault.modifyBinary(svgFile, svgBuffer);
-          this.vault.modify(xmlFile, msg.svgMsg.xml);
+          yield this.vault.modifyBinary(svgFile, svgBuffer);
+          yield this.vault.modify(xmlFile, msg.svgMsg.xml);
         } else {
-          this.vault.createBinary(this.svgPath, svgBuffer);
-          this.vault.create(this.xmlPath, msg.svgMsg.xml);
-        }
-      };
-      const refreshMarkdownViews = () => __async(this, null, function* () {
-        const editor = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView).editor;
-        const cursor = editor.getCursor();
-        const line = editor.getLine(cursor.line);
-        const match = line.match(/\[\[.*?\]\]/);
-        if (!match)
-          return;
-        const modifiedLine = line.replace(/\!\[\[/, "[[");
-        editor.replaceRange(modifiedLine, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: line.length });
-        setTimeout(() => {
-          const finalLine = modifiedLine.replace(/\[\[/, "![[");
-          editor.replaceRange(finalLine, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: modifiedLine.length });
-        }, 200);
-        setTimeout(() => {
-          const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
-          if ((view == null ? void 0 : view.getMode()) === "preview") {
-            view.previewMode.rerender(true);
+          const svgFile = yield this.vault.createBinary(this.svgPath, svgBuffer);
+          const xmlFile = yield this.vault.create(this.xmlPath, msg.svgMsg.xml);
+          if (svgFile instanceof import_obsidian3.TFile && xmlFile instanceof import_obsidian3.TFile && this.settings.createAndRename) {
+            yield renameFiles(svgFile.path, xmlFile.path);
           }
-        }, 200);
+        }
       });
+      const renameFiles = (svgPath, xmlPath) => __async(this, null, function* () {
+        var _a;
+        const newName = yield promptForNewName(this.fileName);
+        if (!newName)
+          return;
+        const basePath = (_a = this.vault.getAbstractFileByPath(svgPath)) == null ? void 0 : _a.parent.path;
+        let newSvgPath, newXmlPath;
+        if (basePath == "/") {
+          newSvgPath = `${newName}.svg`;
+          newXmlPath = `${newName}.xml`;
+        } else {
+          newSvgPath = `${basePath}/${newName}.svg`;
+          newXmlPath = `${basePath}/${newName}.xml`;
+        }
+        const svgFile = this.vault.getAbstractFileByPath(svgPath);
+        const xmlFile = this.vault.getAbstractFileByPath(xmlPath);
+        if (svgFile && xmlFile) {
+          yield this.vault.rename(svgFile, newSvgPath);
+          this.svgPath = newSvgPath;
+          this.xmlPath = newXmlPath;
+          this.fileName = newName;
+          insertDiagram();
+        }
+      });
+      const refreshMarkdownViews = () => __async(this, null, function* () {
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView);
+        if (!view)
+          return;
+        let scrollPosition;
+        if (view.getMode() === "preview") {
+          scrollPosition = view.previewMode.getScroll();
+          setTimeout(() => {
+            view.previewMode.rerender(true);
+          }, 100);
+        } else if (view.getMode() === "source") {
+          const editor = this.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView).editor;
+          const cursor = editor.getCursor();
+          const line = editor.getLine(cursor.line);
+          const match = line.match(/\[\[.*?\]\]/);
+          if (!match)
+            return;
+          const modifiedLine = line.replace(/\!\[\[/, "[[");
+          editor.replaceRange(modifiedLine, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: line.length });
+          setTimeout(() => {
+            const finalLine = modifiedLine.replace(/\[\[/, "![[");
+            editor.replaceRange(finalLine, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: modifiedLine.length });
+          }, 100);
+        }
+        setTimeout(() => {
+          const editView = view.currentMode;
+          editView.applyScroll(scrollPosition);
+        }, 500);
+      });
+      const promptForNewName = (defaultName) => {
+        return new Promise((resolve) => {
+          const modal = new RenameModal(this.app, defaultName, (newName) => {
+            resolve(newName);
+          });
+          modal.open();
+        });
+      };
       const insertDiagram = () => {
         const cursor = this.hostView.editor.getCursor();
         this.hostView.editor.replaceRange(`![[${this.svgPath}]]`, cursor);
@@ -20737,34 +20950,109 @@ var DiagramsView = class extends import_obsidian.Modal {
   }
 };
 
+// src/settings.ts
+var import_obsidian4 = __toModule(require("obsidian"));
+var DEFAULT_SETTINGS = {
+  defaultLocation: "default",
+  customPath: "",
+  createAndRename: true
+};
+var DiagramsSettingsTab = class extends import_obsidian4.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    let textComponent;
+    new import_obsidian4.Setting(containerEl).setName(t("DEFAULT_LOCATION")).addDropdown((dropdown) => __async(this, null, function* () {
+      dropdown.addOption("default", t("DEFAULT_FOLDER"));
+      dropdown.addOption("current", t("CURRENT_FOLDER"));
+      dropdown.addOption("custom", t("CUSTOM_PATH"));
+      dropdown.setValue(this.plugin.settings.defaultLocation || "default");
+      dropdown.onChange((value) => __async(this, null, function* () {
+        this.plugin.settings.defaultLocation = value;
+        textComponent.inputEl.style.display = value === "custom" ? "block" : "none";
+        yield this.plugin.saveSettings();
+      }));
+    })).addText((text) => {
+      textComponent = text.setPlaceholder("folder/subfolder").setValue(this.plugin.settings.customPath || "").onChange((value) => __async(this, null, function* () {
+        this.plugin.settings.customPath = value;
+        yield this.plugin.saveSettings();
+      }));
+      textComponent.inputEl.style.display = this.plugin.settings.defaultLocation === "custom" ? "block" : "none";
+      return textComponent;
+    });
+    new import_obsidian4.Setting(containerEl).setName(t("CREATE_AND_RENAME")).addToggle((toggle) => toggle.setValue(this.plugin.settings.createAndRename).onChange((value) => __async(this, null, function* () {
+      this.plugin.settings.createAndRename = value;
+      yield this.plugin.saveSettings();
+      yield this.reloadPlugin();
+    })));
+  }
+  reloadPlugin() {
+    return __async(this, null, function* () {
+      yield this.plugin.saveSettings();
+      const app = this.plugin.app;
+      yield app.plugins.disablePlugin("obsidian-diagrams-net");
+      yield app.plugins.enablePlugin("obsidian-diagrams-net");
+      app.setting.openTabById("obsidian-diagrams-net").display();
+    });
+  }
+};
+
 // src/main.tsx
-var DiagramsNet = class extends import_obsidian2.Plugin {
+var DiagramsNet = class extends import_obsidian5.Plugin {
   onload() {
     return __async(this, null, function* () {
       this.vault = this.app.vault;
       this.workspace = this.app.workspace;
+      yield this.loadSettings();
+      this.addSettingTab(new DiagramsSettingsTab(this.app, this));
       this.registerEvent(this.app.workspace.on("css-change", () => {
         this.handleThemeChange();
       }));
       this.handleThemeChange();
       this.registerDomEvent(document, "dblclick", (evt) => {
-        const target = evt.target;
-        if (target.tagName.toLowerCase() === "img") {
-          const altText = target.getAttribute("alt");
-          if (altText && altText.endsWith(".svg")) {
-            const file = this.app.metadataCache.getFirstLinkpathDest(altText, "");
-            if (file instanceof import_obsidian2.TFile) {
+        var _a;
+        let target = evt.target;
+        if (target.tagName === "IMG" && ((_a = target.parentElement) == null ? void 0 : _a.classList.contains("internal-embed"))) {
+          target = target.parentElement;
+        }
+        if (target.classList.contains("internal-embed")) {
+          const src = target.getAttribute("src");
+          if (src && src.endsWith(".svg")) {
+            const file = this.app.metadataCache.getFirstLinkpathDest(src, "");
+            if (file instanceof import_obsidian5.TFile) {
               this.attemptEditDiagram(file);
             }
           }
         }
       });
-      (0, import_obsidian2.addIcon)("diagram", ICON);
+      this.registerDomEvent(document, "click", (evt) => {
+        var _a;
+        if (!evt.altKey)
+          return;
+        let target = evt.target;
+        if (target.tagName === "IMG" && ((_a = target.parentElement) == null ? void 0 : _a.classList.contains("internal-embed"))) {
+          target = target.parentElement;
+        }
+        if (target.classList.contains("internal-embed")) {
+          const src = target.getAttribute("src");
+          if (src && src.endsWith(".svg")) {
+            const file = this.app.metadataCache.getFirstLinkpathDest(src, "");
+            if (file instanceof import_obsidian5.TFile) {
+              this.attemptEditDiagram(file);
+            }
+          }
+        }
+      });
+      (0, import_obsidian5.addIcon)("diagram", ICON);
       this.addCommand({
         id: "app:diagrams-net-new-diagram",
         name: "New diagram",
         checkCallback: (checking) => {
-          const view = this.app.workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
+          const view = this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
           if (view) {
             if (!checking) {
               this.attemptNewDiagram();
@@ -20775,6 +21063,7 @@ var DiagramsNet = class extends import_obsidian2.Plugin {
         },
         hotkeys: []
       });
+      this.addRibbonIcon("diagram", "Insert new diagram", () => this.attemptNewDiagram());
       this.registerEvent(this.app.workspace.on("file-menu", this.handleFileMenu, this));
       this.registerEvent(this.app.workspace.on("editor-menu", this.handleEditorMenu, this));
       this.registerEvent(this.app.vault.on("rename", (file, oldname) => this.handleRenameFile(file, oldname)));
@@ -20787,50 +21076,113 @@ var DiagramsNet = class extends import_obsidian2.Plugin {
   }
   isFileValidDiagram(file) {
     let itIs = false;
-    if (file instanceof import_obsidian2.TFile && file.extension === "svg") {
+    if (file instanceof import_obsidian5.TFile && file.extension === "svg") {
       const xmlFile = this.app.vault.getAbstractFileByPath(this.getXmlPath(file.path));
-      if (xmlFile && xmlFile instanceof import_obsidian2.TFile && xmlFile.extension === "xml") {
+      if (xmlFile && xmlFile instanceof import_obsidian5.TFile && xmlFile.extension === "xml") {
         itIs = true;
       }
     }
     return itIs;
   }
   getXmlPath(path) {
-    return path + ".xml";
+    let xmlPath;
+    if (path.endsWith(".svg")) {
+      xmlPath = path.includes("/") ? path.slice(0, -4) + ".xml" : path.slice(0, -4) + ".svg.xml";
+    }
+    console.log(xmlPath);
+    return xmlPath;
   }
   activeLeafPath(workspace) {
-    const view = workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
+    const view = workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
     return view == null ? void 0 : view.getState().file;
   }
   activeLeafName(workspace) {
     var _a;
-    return (_a = workspace.getActiveViewOfType(import_obsidian2.MarkdownView)) == null ? void 0 : _a.getDisplayText();
+    return (_a = workspace.getActiveViewOfType(import_obsidian5.MarkdownView)) == null ? void 0 : _a.getDisplayText();
   }
   availablePath() {
     return __async(this, null, function* () {
-      const base = yield this.vault.getAvailablePathForAttachments("Diagram", "svg", this.workspace.getActiveFile());
+      let basePath;
+      switch (this.settings.defaultLocation) {
+        case "default":
+          basePath = yield this.vault.getAvailablePathForAttachments("Diagram", "svg", this.workspace.getActiveFile());
+          break;
+        case "current":
+          const activeFile = this.workspace.getActiveFile();
+          if (activeFile) {
+            const folderPath2 = activeFile.parent.path;
+            basePath = yield this.getAvailablePath("Diagram", "svg", folderPath2);
+          } else {
+            new import_obsidian5.Notice("No active file found for the current location setting.");
+          }
+          break;
+        case "custom":
+          const customPath = this.settings.customPath || "";
+          if (!customPath.trim()) {
+            new import_obsidian5.Notice("Custom path setting is empty. Please specify a valid path.");
+            return;
+          }
+          const folderPath = (0, import_obsidian6.normalizePath)(customPath);
+          let folder = this.app.vault.getFolderByPath(folderPath);
+          if (customPath == "/") {
+            folder = this.vault.getRoot();
+          }
+          if (!folder) {
+            basePath = "";
+            new import_obsidian5.Notice(`The specified custom path does not exist: ${folderPath}`);
+          } else {
+            basePath = yield this.getAvailablePath("Diagram", "svg", folderPath);
+          }
+          break;
+        default:
+          new import_obsidian5.Notice("Invalid default location setting.");
+      }
       return {
-        svgPath: base,
-        xmlPath: this.getXmlPath(base)
+        svgPath: basePath,
+        xmlPath: this.getXmlPath(basePath)
       };
+    });
+  }
+  getAvailablePath(filename, extension, folderPath) {
+    return __async(this, null, function* () {
+      const path = folderPath ? folderPath : this.vault.configDir;
+      let basePath;
+      if (path == "/") {
+        basePath = `${filename}.${extension}`;
+      } else {
+        basePath = `${path}/${filename}.${extension}`;
+      }
+      let counter = 1;
+      while (yield this.vault.adapter.exists(basePath)) {
+        if (path == "/") {
+          basePath = `${filename} (${counter}).${extension}`;
+        } else {
+          basePath = `${path}/${filename} (${counter}).${extension}`;
+        }
+        counter++;
+      }
+      return basePath;
     });
   }
   attemptNewDiagram() {
     return __async(this, null, function* () {
       const { svgPath, xmlPath } = yield this.availablePath();
+      if (!svgPath) {
+        return;
+      }
       const fileInfo = {
         path: this.activeLeafPath(this.workspace),
         basename: this.activeLeafName(this.workspace),
-        diagramExists: false,
         svgPath,
-        xmlPath
+        xmlPath,
+        diagramExists: false
       };
       this.initView(fileInfo);
     });
   }
   attemptEditDiagram(svgFile) {
     if (!this.isFileValidDiagram(svgFile)) {
-      new import_obsidian2.Notice("Diagram is not valid. (Missing .xml data)");
+      new import_obsidian5.Notice("Diagram is not valid. (Missing .xml data)");
     } else {
       const fileInfo = {
         path: this.activeLeafPath(this.workspace),
@@ -20844,8 +21196,8 @@ var DiagramsNet = class extends import_obsidian2.Plugin {
   }
   initView(fileInfo) {
     return __async(this, null, function* () {
-      const hostView = this.workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
-      new DiagramsView(this.app, hostView, fileInfo, this.ui).open();
+      const hostView = this.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
+      new DiagramsView(this.app, hostView, fileInfo, this.ui, this.settings).open();
     });
   }
   handleDeleteFile(file) {
@@ -20855,15 +21207,15 @@ var DiagramsNet = class extends import_obsidian2.Plugin {
     }
   }
   handleRenameFile(file, oldname) {
-    if (file instanceof import_obsidian2.TFile && file.extension === "svg") {
+    if (file instanceof import_obsidian5.TFile && file.extension === "svg") {
       const xmlFile = this.app.vault.getAbstractFileByPath(this.getXmlPath(oldname));
-      if (xmlFile && xmlFile instanceof import_obsidian2.TFile && xmlFile.extension === "xml") {
+      if (xmlFile && xmlFile instanceof import_obsidian5.TFile && xmlFile.extension === "xml") {
         this.vault.rename(xmlFile, this.getXmlPath(file.path));
       }
     }
   }
   handleFileMenu(menu, file) {
-    if (file instanceof import_obsidian2.TFile && file.extension === "svg") {
+    if (file instanceof import_obsidian5.TFile && file.extension === "svg") {
       menu.addItem((item) => {
         item.setTitle("Edit diagram").setIcon("diagram").onClick(() => __async(this, null, function* () {
           this.attemptEditDiagram(file);
@@ -20880,6 +21232,16 @@ var DiagramsNet = class extends import_obsidian2.Plugin {
   }
   onunload() {
     return __async(this, null, function* () {
+    });
+  }
+  loadSettings() {
+    return __async(this, null, function* () {
+      this.settings = Object.assign({}, DEFAULT_SETTINGS, yield this.loadData());
+    });
+  }
+  saveSettings() {
+    return __async(this, null, function* () {
+      yield this.saveData(this.settings);
     });
   }
 };

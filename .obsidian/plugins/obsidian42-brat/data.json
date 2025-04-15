@@ -1,18 +1,48 @@
 {
   "pluginList": [
+    "open-spaced-repetition/obsidian-spaced-repetition-recall",
     "Yeban8090/book-smith",
-    "RavenHogWarts/obsidian-ravenhogwarts-toolkit",
-    "CatMuse/HiNote",
     "Canna71/obsidian-janitor",
     "likemuuxi/obsidian-diagrams-net",
     "blacksmithgu/datacore",
     "wish5115/obsidian-floating-settings",
-    "gr0grig/obsidian-virt-folder",
     "xhuajin/obsidian-immersive-translate",
     "Quorafind/Obsidian-Note-Minimap",
     "yan42685/obsidian-clever-search"
   ],
   "pluginSubListFrozenVersion": [
+    {
+      "repo": "open-spaced-repetition/obsidian-spaced-repetition-recall",
+      "version": "1.12.5.14"
+    },
+    {
+      "repo": "yan42685/obsidian-clever-search",
+      "version": "latest"
+    },
+    {
+      "repo": "Quorafind/Obsidian-Note-Minimap",
+      "version": "latest"
+    },
+    {
+      "repo": "xhuajin/obsidian-immersive-translate",
+      "version": "latest"
+    },
+    {
+      "repo": "wish5115/obsidian-floating-settings",
+      "version": "latest"
+    },
+    {
+      "repo": "blacksmithgu/datacore",
+      "version": "latest"
+    },
+    {
+      "repo": "likemuuxi/obsidian-diagrams-net",
+      "version": "latest"
+    },
+    {
+      "repo": "Canna71/obsidian-janitor",
+      "version": "1.1.0"
+    },
     {
       "repo": "Yeban8090/book-smith",
       "version": "latest"
