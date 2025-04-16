@@ -1339,6 +1339,18 @@
       "enabled": true,
       "delay": "",
       "note": ""
+    },
+    {
+      "id": "any-block",
+      "name": "AnyBlock",
+      "desc": "You can flexibility to create a 'Block' by some means. It also provides some useful features, like `list to table`. 提供了强大的语法，支持各种视图，污染小，语法简单。",
+      "group": "",
+      "tags": [
+        "grammar"
+      ],
+      "enabled": true,
+      "delay": "delay",
+      "note": ""
     }
   ]
 }
