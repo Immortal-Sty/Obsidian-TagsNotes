@@ -1,11 +1,3 @@
 [
-  "better-plugins-manager",
-  "janitor",
-  "obsidian-diagrams-net",
-  "datacore",
-  "floating-settings",
-  "immersive-translate",
-  "clever-search",
-  "obsidian-spaced-repetition-recall",
-  "any-block"
+  "better-plugins-manager"
 ]
