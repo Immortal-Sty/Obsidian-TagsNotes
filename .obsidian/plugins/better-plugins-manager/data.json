@@ -518,16 +518,6 @@
       "note": ""
     },
     {
-      "id": "minimap",
-      "name": "Minimap",
-      "desc": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API. 用整体小地图代替滚动条，非常不完善。",
-      "group": "",
-      "tags": [],
-      "enabled": false,
-      "delay": "",
-      "note": ""
-    },
-    {
       "id": "moulinette",
       "name": "Moulinette Search for TTRPG",
       "desc": "Search, browse and download TTRPG (tabletop role-playing game) content from Moulinette Cloud.",
