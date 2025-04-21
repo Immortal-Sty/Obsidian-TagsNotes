@@ -1,11 +1,11 @@
 module.exports = async (params) => {
     const {
         quickAddApi: {
-			inputPrompt,
-			suggester
-		},
+            inputPrompt,
+            suggester
+        },
         app,
-		variables
+        variables
     } = params;
     const {
         getPropertyValue

@@ -125,10 +125,7 @@
     },
     "previousRelease": "1.12.5.14"
   },
-  "buryDate": "2025-04-17",
-  "buryList": [
-    "8f8ed146747ba",
-    "1036c0fd6ee924"
-  ],
+  "buryDate": "2025-04-21",
+  "buryList": [],
   "historyDeck": null
 }

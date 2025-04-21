@@ -1,0 +1,134 @@
+{
+  "settings": {
+    "CUSTOM_REGEXPS": {
+      "KaTeX and Markdown Basic (Color)": "",
+      "KaTeX and Markdown Cloze (Color)": "",
+      "KaTeX and Markdown Cloze + Show Cloze (Color)": "",
+      "图片遮盖": "",
+      "填空题": "",
+      "问答题": "",
+      "问答题（可选附翻转卡片）": "",
+      "问答题（输入答案）": "",
+      "问答题（附翻转卡片）": ""
+    },
+    "FILE_LINK_FIELDS": {
+      "KaTeX and Markdown Basic (Color)": "Front",
+      "KaTeX and Markdown Cloze (Color)": "Text",
+      "KaTeX and Markdown Cloze + Show Cloze (Color)": "Text",
+      "图片遮盖": "遮盖",
+      "填空题": "文字",
+      "问答题": "正面",
+      "问答题（可选附翻转卡片）": "正面",
+      "问答题（输入答案）": "正面",
+      "问答题（附翻转卡片）": "正面"
+    },
+    "CONTEXT_FIELDS": {},
+    "FOLDER_DECKS": {
+      "Attachment": "",
+      "Books": "",
+      "Notes": "",
+      "Images": "",
+      "Omnivore": "",
+      "Others": "",
+      "PDFs": "",
+      "Template": "",
+      "Attachment/PDF++": "",
+      "Attachment/Plugins Annotations": "",
+      "Attachment/Quickadd": "",
+      "Attachment/Spaced Repetition": "",
+      "Attachment/Various Complements": "",
+      "Attachment/Latex Suite": "",
+      "Attachment/Vimrc_Support": "",
+      "Books/测试": "",
+      "Books/测试/第一卷": ""
+    },
+    "FOLDER_TAGS": {
+      "Attachment": "",
+      "Books": "",
+      "Notes": "",
+      "Images": "",
+      "Omnivore": "",
+      "Others": "",
+      "PDFs": "",
+      "Template": "",
+      "Attachment/PDF++": "",
+      "Attachment/Plugins Annotations": "",
+      "Attachment/Quickadd": "",
+      "Attachment/Spaced Repetition": "",
+      "Attachment/Various Complements": "",
+      "Attachment/Latex Suite": "",
+      "Attachment/Vimrc_Support": "",
+      "Books/测试": "",
+      "Books/测试/第一卷": ""
+    },
+    "Syntax": {
+      "Begin Note": "START",
+      "End Note": "END",
+      "Begin Inline Note": "STARTI",
+      "End Inline Note": "ENDI",
+      "Target Deck Line": "TARGET DECK",
+      "File Tags Line": "FILE TAGS",
+      "Delete Note Line": "DELETE",
+      "Frozen Fields Line": "FROZEN"
+    },
+    "Defaults": {
+      "Scan Directory": "",
+      "Tag": "Obsidian_to_Anki",
+      "Deck": "Default",
+      "Scheduling Interval": 0,
+      "Add File Link": false,
+      "Add Context": false,
+      "CurlyCloze": false,
+      "CurlyCloze - Highlights to Clozes": false,
+      "ID Comments": true,
+      "Add Obsidian Tags": false
+    },
+    "IGNORED_FILE_GLOBS": [
+      "**/*.excalidraw.md"
+    ]
+  },
+  "Added Media": [],
+  "File Hashes": {},
+  "fields_dict": {
+    "KaTeX and Markdown Basic (Color)": [
+      "Front",
+      "Back"
+    ],
+    "KaTeX and Markdown Cloze (Color)": [
+      "Text",
+      "Back Extra"
+    ],
+    "KaTeX and Markdown Cloze + Show Cloze (Color)": [
+      "Text",
+      "Back Extra"
+    ],
+    "图片遮盖": [
+      "遮盖",
+      "图片",
+      "标题",
+      "背面额外",
+      "注释"
+    ],
+    "填空题": [
+      "文字",
+      "背面额外"
+    ],
+    "问答题": [
+      "正面",
+      "背面"
+    ],
+    "问答题（可选附翻转卡片）": [
+      "正面",
+      "背面",
+      "增加翻转的卡片"
+    ],
+    "问答题（输入答案）": [
+      "正面",
+      "背面"
+    ],
+    "问答题（附翻转卡片）": [
+      "正面",
+      "背面"
+    ]
+  }
+}
