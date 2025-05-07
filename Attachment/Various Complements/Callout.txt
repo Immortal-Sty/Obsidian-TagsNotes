@@ -1,27 +1,30 @@
-:!Note;>>>;::: note\n\n<CURSOR>\n\n:::	笔记	Callous
-:!Abstract;>>>;::: abstract\n\n<CURSOR>\n\n:::	摘要	Callous
-:!Summary;>>>;::: summary\n\n<CURSOR>\n\n:::	摘要	Callous
-:!TLDR;>>>;::: tldr\n\n<CURSOR>\n\n:::	摘要	Callous
-:!Info;>>>;::: info\n\n<CURSOR>\n\n:::	信息	Callous
-:!Todo;>>>;::: todo\n\n<CURSOR>\n\n:::	待办,Callous
-:!Tip;>>>;::: tip\n\n<CURSOR>\n\n:::	提示,Callous
-:!Hint;>>>;::: hint\n\n<CURSOR>\n\n:::	提示,Callous
-:!Important;>>>;::: important\n\n<CURSOR>\n\n:::	提示,Callous
-:!Success;>>>;::: success\n\n<CURSOR>\n\n:::	完成,Callous
-:!Check;>>>;::: check\n\n<CURSOR>\n\n:::	完成,Callous
-:!Done;>>>;::: done\n\n<CURSOR>\n\n:::	完成,Callous
-:!Question;>>>;::: question\n\n<CURSOR>\n\n:::	帮助,Callous
-:!Help;>>>;::: help\n\n<CURSOR>\n\n:::	帮助,Callous
-:!FAQ;>>>;::: faq\n\n<CURSOR>\n\n:::	帮助,Callous
-:!Warning;>>>;::: warning\n\n<CURSOR>\n\n:::	警告,Callous
-:!Caution;>>>;::: caution\n\n<CURSOR>\n\n:::	警告,Callous
-:!Attention;>>>;::: attention\n\n<CURSOR>\n\n:::	警告,Callous
-:!Failure;>>>;::: failure\n\n<CURSOR>\n\n:::	失败,Callous
-:!Fail;>>>;::: fail\n\n<CURSOR>\n\n:::	失败,Callous
-:!Missing;>>>;::: missing\n\n<CURSOR>\n\n:::	失败,Callous
-:!Danger;>>>;::: danger\n\n<CURSOR>\n\n:::	错误,Callous
-:!Error;>>>;::: error\n\n<CURSOR>\n\n:::	错误,Callous
-:!Bug;>>>;::: bug\n\n<CURSOR>\n\n:::	漏洞,Callous
-:!Example;>>>;::: example\n\n<CURSOR>\n\n:::	举例,Callous
-:!Quote;>>>;::: quote\n\n<CURSOR>\n\n:::	引用,Callous
-:!Cite;>>>;::: cite|cite\n\n<CURSOR>\n\n:::	引用,Callous
+:!Note;>>>;::: note<CURSOR>\n\n:::	笔记	Callous
+:!Abstract;>>>;::: abstract<CURSOR>\n\n:::	摘要	Callous
+:!Summary;>>>;::: summary<CURSOR>\n\n:::	摘要	Callous
+:!TLDR;>>>;::: tldr<CURSOR>\n\n:::	摘要	Callous
+:!Info;>>>;::: info<CURSOR>\n\n:::	信息	Callous
+:!Todo;>>>;::: todo<CURSOR>\n\n:::	待办,Callous
+:!Tip;>>>;::: tip<CURSOR>\n\n:::	提示,Callous
+:!Hint;>>>;::: hint<CURSOR>\n\n:::	提示,Callous
+:!Important;>>>;::: important<CURSOR>\n\n:::	提示,Callous
+:!Success;>>>;::: success<CURSOR>\n\n:::	完成,Callous
+:!Check;>>>;::: check<CURSOR>\n\n:::	完成,Callous
+:!Done;>>>;::: done<CURSOR>\n\n:::	完成,Callous
+:!Question;>>>;::: question<CURSOR>\n\n:::	帮助,Callous
+:!Help;>>>;::: help<CURSOR>\n\n:::	帮助,Callous
+:!FAQ;>>>;::: faq<CURSOR>\n\n:::	帮助,Callous
+:!Warning;>>>;::: warning<CURSOR>\n\n:::	警告,Callous
+:!Caution;>>>;::: caution<CURSOR>\n\n:::	警告,Callous
+:!Attention;>>>;::: attention<CURSOR>\n\n:::	警告,Callous
+:!Failure;>>>;::: failure<CURSOR>\n\n:::	失败,Callous
+:!Fail;>>>;::: fail<CURSOR>\n\n:::	失败,Callous
+:!Missing;>>>;::: missing<CURSOR>\n\n:::	失败,Callous
+:!Danger;>>>;::: danger<CURSOR>\n\n:::	错误,Callous
+:!Error;>>>;::: error<CURSOR>\n\n:::	错误,Callous
+:!Bug;>>>;::: bug<CURSOR>\n\n:::	漏洞,Callous
+:!Example;>>>;::: example<CURSOR>\n\n:::	举例,Callous
+:!Quote;>>>;::: quote<CURSOR>\n\n:::	引用,Callous
+:!Cite;>>>;::: cite|cite<CURSOR>\n\n:::	引用,Callous
+
+tips
+important|question|help|faq|failure|fail|missing|bug
