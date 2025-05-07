@@ -22,7 +22,6 @@
   "datacore",
   "dataview",
   "clever-search",
-  "easy-typing-obsidian",
   "float-search",
   "floating-toc",
   "janitor",
@@ -38,5 +37,7 @@
   "obsidian-git",
   "obsidian-trash-explorer",
   "typewriter-mode",
-  "various-complements"
+  "various-complements",
+  "easy-typing-obsidian",
+  "better-plugins-manager"
 ]

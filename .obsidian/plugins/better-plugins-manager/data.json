@@ -354,18 +354,6 @@
       "note": ""
     },
     {
-      "id": "floating-settings",
-      "name": "Floating Settings",
-      "desc": "Open the Floating Settings panel or replace the default settings modal with a floating panel. Depends on the Hover Editor. 将设置界面变成悬浮窗口，方便进行某些设置。",
-      "group": "",
-      "tags": [
-        "searching"
-      ],
-      "enabled": false,
-      "delay": "",
-      "note": ""
-    },
-    {
       "id": "floating-toc",
       "name": "floating toc",
       "desc": "This is a floating Toc plugin that  hovers a table of content  containing a header level on the notes sidebar. 在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。",
@@ -787,7 +775,7 @@
       "tags": [
         "editing"
       ],
-      "enabled": false,
+      "enabled": true,
       "delay": "delay",
       "note": ""
     },
@@ -799,7 +787,7 @@
       "tags": [
         "editing"
       ],
-      "enabled": false,
+      "enabled": true,
       "delay": "delay",
       "note": ""
     },
@@ -1099,7 +1087,7 @@
       "tags": [
         "grammar"
       ],
-      "enabled": true,
+      "enabled": false,
       "delay": "delay",
       "note": ""
     },
@@ -1316,7 +1304,7 @@
       "desc": "Fight the forgetting curve by reviewing flashcards & entire notes.",
       "group": "",
       "tags": [],
-      "enabled": true,
+      "enabled": false,
       "delay": "",
       "note": ""
     },
