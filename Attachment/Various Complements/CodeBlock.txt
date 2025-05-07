@@ -1,27 +1,27 @@
 `C;>>>;```c\n<CURSOR>\n``	CodeBlock
-`C++;>>>;```cpp\n<CURSOR>\n``	CodeBlock
-`Cpp;>>>;```cpp\n<CURSOR>\n``	CodeBlock
+`CPP;>>>;```cpp\n<CURSOR>\n``	CodeBlock
 `C#;>>>;```c#\n<CURSOR>\n``	CodeBlock
 `Python;>>>;```python\n<CURSOR>\n``	CodeBlock
 `PowerShell;>>>;```powershell\n<CURSOR>\n``	CodeBlock
 `MatLab;>>>;```matlab\n<CURSOR>\n``	CodeBlock
 `Java;>>>;```java\n<CURSOR>\n``	CodeBlock
+`HTML;>>>;```html\n<CURSOR>\n``	CodeBlock
 `CSS;>>>;```css\n<CURSOR>\n``	CodeBlock
 `Dataview;>>>;```dataview\n<CURSOR>\n``	CodeBlock
 `DataviewJS;>>>;```dataviewjs\n<CURSOR>\n``	CodeBlock
 `Json;>>>;```json\n<CURSOR>\n``	CodeBlock
 `JavaScript;>>>;```javascript\n<CURSOR>\n``	CodeBlock
 
-`C;>>>;`{c} <CURSOR>	InlineCode
-`C++;>>>;`{cpp} <CURSOR>	InlineCode
-`CPP;>>>;`{cpp} <CURSOR>	InlineCode
-`C#;>>>;`{c#} <CURSOR>	InlineCode
-`Python;>>>;`{python} <CURSOR>	InlineCode
-`PowerShell;>>>;`{powershell} <CURSOR>	InlineCode
-`MatLab;>>>;`{matlab} <CURSOR>	InlineCode
-`Java;>>>;`{java} <CURSOR>	InlineCode
-`CSS;>>>;`{css} <CURSOR>	InlineCode
-`DV;>>>;`{dv} <CURSOR>	InlineCode
-`DVJS;>>>;`{dvjs} <CURSOR>	InlineCode
-`Json;>>>;`{json} <CURSOR>	InlineCode
-`JavaScript;>>>;`{javascript} <CURSOR>	InlineCode
+`c;>>>;`{c} <CURSOR>	InlineCode
+`cpp;>>>;`{cpp} <CURSOR>	InlineCode
+`c#;>>>;`{c#} <CURSOR>	InlineCode
+`py;>>>;`{python} <CURSOR>	InlineCode
+`pwsh;>>>;`{powershell} <CURSOR>	InlineCode
+`matlab;>>>;`{matlab} <CURSOR>	InlineCode
+`java;>>>;`{java} <CURSOR>	InlineCode
+`html;>>>;`{html} <CURSOR>	InlineCode
+`css;>>>;`{css} <CURSOR>	InlineCode
+`dv;>>>;`{dv} <CURSOR>	InlineCode
+`dvjs;>>>;`{dvjs} <CURSOR>	InlineCode
+`json;>>>;`{json} <CURSOR>	InlineCode
+`js;>>>;`{javascript} <CURSOR>	InlineCode
