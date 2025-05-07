@@ -16,7 +16,7 @@
   "disableSuggestionsDuringImeOn": false,
   "disableSuggestionsInMathBlock": false,
   "insertSpaceAfterCompletion": false,
-  "firstCharactersDisableSuggestions": ":/^",
+  "firstCharactersDisableSuggestions": "/^",
   "patternsToSuppressTrigger": [
     "^~~~.*",
     "^```.*"

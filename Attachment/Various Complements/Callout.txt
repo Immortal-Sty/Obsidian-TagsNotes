@@ -1,29 +1,27 @@
->!Note;>>>;> [!note]	笔记	Callous
->!Abstract;>>>;> [!abstract]	摘要	Callous
->!Summary;>>>;> [!summary]	摘要	Callous
->!TLDR;>>>;> [!tldr]	摘要	Callous
->!Info;>>>;> [!info]	信息	Callous
->!Todo;>>>;> [!todo]	待办,Callous
->!Tip;>>>;> [!tip]	提示,Callous
->!Hint;>>>;> [!hint]	提示,Callous
->!Important;>>>;> [!important]	提示,Callous
->!Success;>>>;> [!success]	完成,Callous
->!Check;>>>;> [!check]	完成,Callous
->!Done;>>>;> [!done]	完成,Callous
->!Question;>>>;> [!question]	帮助,Callous
->!Help;>>>;> [!help]	帮助,Callous
->!FAQ;>>>;> [!faq]	帮助,Callous
->!Warning;>>>;> [!warning]	警告,Callous
->!Caution;>>>;> [!caution]	警告,Callous
->!Attention;>>>;> [!attention]	警告,Callous
->!Failure;>>>;> [!failure]	失败,Callous
->!Fail;>>>;> [!fail]	失败,Callous
->!Missing;>>>;> [!missing]	失败,Callous
->!Danger;>>>;> [!danger]	错误,Callous
->!Error;>>>;> [!error]	错误,Callous
->!Bug;>>>;> [!bug]	漏洞,Callous
->!Example;>>>;> [!example]	举例,Callous
->!Quote;>>>;> [!quote]	引用,Callous
->!Cite;>>>;> [!cite|cite]	引用,Callous
->!MultiColumn;>>>;> [!multi-column]\n>\n> > [!blank]\n> >\n> > 	多列,Callous
->!Blank;>>>;> [!blank]\n> >\n> > 	无,Callous
+:!Note;>>>;::: !note\n\n<CURSOR>\n\n:::	笔记	Callous
+:!Abstract;>>>;::: !abstract\n\n<CURSOR>\n\n:::	摘要	Callous
+:!Summary;>>>;::: !summary\n\n<CURSOR>\n\n:::	摘要	Callous
+:!TLDR;>>>;::: !tldr\n\n<CURSOR>\n\n:::	摘要	Callous
+:!Info;>>>;::: !info\n\n<CURSOR>\n\n:::	信息	Callous
+:!Todo;>>>;::: !todo\n\n<CURSOR>\n\n:::	待办,Callous
+:!Tip;>>>;::: !tip\n\n<CURSOR>\n\n:::	提示,Callous
+:!Hint;>>>;::: !hint\n\n<CURSOR>\n\n:::	提示,Callous
+:!Important;>>>;::: !important\n\n<CURSOR>\n\n:::	提示,Callous
+:!Success;>>>;::: !success\n\n<CURSOR>\n\n:::	完成,Callous
+:!Check;>>>;::: !check\n\n<CURSOR>\n\n:::	完成,Callous
+:!Done;>>>;::: !done\n\n<CURSOR>\n\n:::	完成,Callous
+:!Question;>>>;::: !question\n\n<CURSOR>\n\n:::	帮助,Callous
+:!Help;>>>;::: !help\n\n<CURSOR>\n\n:::	帮助,Callous
+:!FAQ;>>>;::: !faq\n\n<CURSOR>\n\n:::	帮助,Callous
+:!Warning;>>>;::: !warning\n\n<CURSOR>\n\n:::	警告,Callous
+:!Caution;>>>;::: !caution\n\n<CURSOR>\n\n:::	警告,Callous
+:!Attention;>>>;::: !attention\n\n<CURSOR>\n\n:::	警告,Callous
+:!Failure;>>>;::: !failure\n\n<CURSOR>\n\n:::	失败,Callous
+:!Fail;>>>;::: !fail\n\n<CURSOR>\n\n:::	失败,Callous
+:!Missing;>>>;::: !missing\n\n<CURSOR>\n\n:::	失败,Callous
+:!Danger;>>>;::: !danger\n\n<CURSOR>\n\n:::	错误,Callous
+:!Error;>>>;::: !error\n\n<CURSOR>\n\n:::	错误,Callous
+:!Bug;>>>;::: !bug\n\n<CURSOR>\n\n:::	漏洞,Callous
+:!Example;>>>;::: !example\n\n<CURSOR>\n\n:::	举例,Callous
+:!Quote;>>>;::: !quote\n\n<CURSOR>\n\n:::	引用,Callous
+:!Cite;>>>;::: !cite|cite\n\n<CURSOR>\n\n:::	引用,Callous
