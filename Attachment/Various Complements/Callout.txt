@@ -25,6 +25,3 @@
 :!Example;>>>;::: example<CURSOR>\n\n:::	举例,Callous
 :!Quote;>>>;::: quote<CURSOR>\n\n:::	引用,Callous
 :!Cite;>>>;::: cite|cite<CURSOR>\n\n:::	引用,Callous
-
-tips
-important|question|help|faq|failure|fail|missing|bug
