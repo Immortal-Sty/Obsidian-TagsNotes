@@ -4,7 +4,7 @@
   "showLineNumber": true,
   "spellcheck": false,
   "autoPairBrackets": true,
-  "autoPairMarkdown": true,
+  "autoPairMarkdown": false,
   "vimMode": true,
   "trashOption": "local",
   "promptDelete": false,
