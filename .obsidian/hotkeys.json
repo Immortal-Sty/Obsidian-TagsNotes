@@ -226,9 +226,6 @@
       "key": "3"
     }
   ],
-  "various-complements:add-word-custom-dictionary": [],
-  "various-complements:reload-custom-dictionaries": [],
-  "various-complements:show-suggestions": [],
   "float-search:search-obsidian-globally-state": [
     {
       "modifiers": [
@@ -335,14 +332,6 @@
       "key": "F2"
     }
   ],
-  "various-complements:fallback-linkify": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "K"
-    }
-  ],
   "typewriter-mode:isDimUnfocusedParagraphsEnabled": [
     {
       "modifiers": [],
@@ -398,5 +387,8 @@
       ],
       "key": "L"
     }
-  ]
+  ],
+  "various-complements:add-word-custom-dictionary": [],
+  "various-complements:reload-custom-dictionaries": [],
+  "various-complements:show-suggestions": []
 }
