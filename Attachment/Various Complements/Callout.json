@@ -1,0 +1,150 @@
+{
+    "careSymbol": "<CURSOR>",
+    "ignoreSpaceAfterCompletion": true,
+    "words": [
+        {
+            "value": "> [!note]",
+            "description": "笔记 Callout",
+            "aliases": [
+                ">!note",
+                ">!biji",
+                ">!bj"
+            ],
+            "displayed": ">!笔记"
+        },
+        {
+            "value": "> [!abstract]",
+            "description": "摘要 Callout",
+            "aliases": [
+                ">!abstract",
+                ">!summary",
+                ">!tldr",
+                ">!zhaiyao",
+                ">!zy"
+            ],
+            "displayed": ">!摘要"
+        },
+        {
+            "value": "> [!info]",
+            "description": "信息 Callout",
+            "aliases": [
+                ">!info",
+                ">!xinxi",
+                ">!xx"
+            ],
+            "displayed": ">!信息"
+        },
+        {
+            "value": "> [!todo]",
+            "description": "待办 Callout",
+            "aliases": [
+                ">!todo",
+                ">!daiban",
+                ">!db"
+            ],
+            "displayed": ">!待办"
+        },
+        {
+            "value": "> [!tip]",
+            "description": "提示 Callout",
+            "aliases": [
+                ">!tip",
+                ">!hint",
+                ">!important",
+                ">!tishi",
+                ">!ts"
+            ],
+            "displayed": ">!提示"
+        },
+        {
+            "value": "> [!done]",
+            "description": "完成 Callout",
+            "aliases": [
+                ">!done",
+                ">!success",
+                ">!check",
+                ">!wancheng",
+                ">!wc"
+            ],
+            "displayed": ">!完成"
+        },
+        {
+            "value": "> [!faq]",
+            "description": "帮助 Callout",
+            "aliases": [
+                ">!faq",
+                ">!question",
+                ">!help",
+                ">!bangzhu",
+                ">!bz"
+            ],
+            "displayed": ">!帮助"
+        },
+        {
+            "value": "> [!warning]",
+            "description": "警告 Callout",
+            "aliases": [
+                ">!warning",
+                ">!caution",
+                ">!attention",
+                ">!jinggao",
+                ">!jg"
+            ],
+            "displayed": ">!警告"
+        },
+        {
+            "value": "> [!failure]",
+            "description": "失败 Callout",
+            "aliases": [
+                ">!failure",
+                ">!fail",
+                ">!missing",
+                ">!shibai",
+                ">!sb"
+            ],
+            "displayed": ">!失败"
+        },
+        {
+            "value": "> [!error]",
+            "description": "错误 Callout",
+            "aliases": [
+                ">!error",
+                ">!danger",
+                ">!cuowu",
+                ">!cw"
+            ],
+            "displayed": ">!错误"
+        },
+        {
+            "value": "> [!bug]",
+            "description": "漏洞 Callout",
+            "aliases": [
+                ">!bug",
+                ">!loudong",
+                ">!ld"
+            ],
+            "displayed": ">!漏洞"
+        },
+        {
+            "value": "> [!example]",
+            "description": "举例 Callout",
+            "aliases": [
+                ">!example",
+                ">!juli",
+                ">!jl"
+            ],
+            "displayed": ">!举例"
+        },
+        {
+            "value": "> [!quote<CURSOR>]",
+            "description": "引用 Callout",
+            "aliases": [
+                ">!quote",
+                ">!cite",
+                ">!yingyong",
+                ">!yy"
+            ],
+            "displayed": ">!引用"
+        }
+    ]
+}

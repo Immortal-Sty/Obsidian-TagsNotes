@@ -22,17 +22,15 @@
     "^```.*"
   ],
   "phrasePatternsToSuppressTrigger": [],
-  "noAutoFocusUntilCycle": false,
-  "showMatchStrategy": true,
+  "noAutoFocusUntilCycle": true,
+  "showMatchStrategy": false,
   "showComplementAutomatically": false,
   "showIndexingStatus": false,
-  "descriptionOnSuggestion": "Short",
+  "descriptionOnSuggestion": "Full",
   "hotkeys": {
     "select": [
       {
-        "modifiers": [
-          "Alt"
-        ],
+        "modifiers": [],
         "key": "Enter",
         "hideHotkeyGuide": false
       }
@@ -41,16 +39,18 @@
     "up": [
       {
         "modifiers": [
-          "Shift"
+          "Mod"
         ],
-        "key": "Tab",
+        "key": "k",
         "hideHotkeyGuide": false
       }
     ],
     "down": [
       {
-        "modifiers": [],
-        "key": "Tab",
+        "modifiers": [
+          "Mod"
+        ],
+        "key": "j",
         "hideHotkeyGuide": false
       }
     ],
@@ -79,7 +79,7 @@
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
   "excludeCurrentVaultWordPatterns": [],
   "enableCustomDictionaryComplement": true,
-  "customDictionaryPaths": "Attachment\\Various Complements\\Callout.txt\nAttachment\\Various Complements\\CodeBlock.txt",
+  "customDictionaryPaths": "Attachment\\Various Complements\\Anyblock.json\nAttachment\\Various Complements\\Callout.json\nAttachment\\Various Complements\\CodeBlock.json",
   "columnDelimiter": "Tab",
   "customDictionaryWordRegexPattern": ".*",
   "delimiterToHideSuggestion": ">;;;>",

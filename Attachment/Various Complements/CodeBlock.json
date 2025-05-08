@@ -1,0 +1,31 @@
+{
+    "careSymbol": "<CURSOR>",
+    "ignoreSpaceAfterCompletion": true,
+    "words": [
+        { "value": "```c\n<CURSOR>\n```",           "description": "C 代码块",                                      "displayed": "``c" },
+        { "value": "```cpp\n<CURSOR>\n```",         "description": "C++ 代码块",            "aliases": ["``cpp"],   "displayed": "``c++" },
+        { "value": "```c#\n<CURSOR>\n```",          "description": "C# 代码块",             "aliases": ["``cc"],    "displayed": "``c#" },
+        { "value": "```python\n<CURSOR>\n```",      "description": "Python 代码块",                                 "displayed": "``python" },
+        { "value": "```powershell\n<CURSOR>\n```",  "description": "PowerShell 代码块",     "aliases": ["``pwsh"],  "displayed": "``powershell" },
+        { "value": "```matlab\n<CURSOR>\n```",      "description": "MatLab 代码块",         "aliases": ["``ml"],    "displayed": "``matlab" },
+        { "value": "```java\n<CURSOR>\n```",        "description": "Java 代码块",                                   "displayed": "``java" },
+        { "value": "```css\n<CURSOR>\n```",         "description": "CSS 代码块",                                    "displayed": "``css" },
+        { "value": "```dataview\n<CURSOR>\n```",    "description": "Dataview 代码块",       "aliases": ["``dv"],    "displayed": "``dataview" },
+        { "value": "```dataviewjs\n<CURSOR>\n```",  "description": "DataviewJS 代码块",     "aliases": ["``dvjs"],  "displayed": "``dataviewjs" },
+        { "value": "```json\n<CURSOR>\n```",        "description": "Json 代码块",                                   "displayed": "``json" },
+        { "value": "```javascript\n<CURSOR>\n```",  "description": "JavaScript 代码块",     "aliases": ["``js"],    "displayed": "``javascript" },
+
+        { "value": "`{c} ",                         "description": "C 行内代码块",                                  "displayed": "`c" },
+        { "value": "`{cpp} ",                       "description": "C++ 行内代码块",        "aliases": ["`cpp"],    "displayed": "`c++" },
+        { "value": "`{c#} ",                        "description": "C# 行内代码块",         "aliases": ["`cc"],     "displayed": "`c#" },
+        { "value": "`{python} ",                    "description": "Python 行内代码块",                             "displayed": "`python" },
+        { "value": "`{powershell} ",                "description": "PowerShell 行内代码块", "aliases": ["`pwsh"],   "displayed": "`powershell" },
+        { "value": "`{matlab} ",                    "description": "MatLab 行内代码块",     "aliases": ["`ml"],     "displayed": "`matlab" },
+        { "value": "`{java} ",                      "description": "Java 行内代码块",                               "displayed": "`java" },
+        { "value": "`{css} ",                       "description": "CSS 行内代码块",                                "displayed": "`css" },
+        { "value": "`{dataview} ",                  "description": "Dataview 行内代码块",   "aliases": ["`dv"],     "displayed": "`dataview" },
+        { "value": "`{dataviewjs} ",                "description": "DataviewJS 行内代码块", "aliases": ["`dvjs"],   "displayed": "`dataviewjs" },
+        { "value": "`{json} ",                      "description": "Json 行内代码块",                               "displayed": "`json" },
+        { "value": "`{javascript} ",                "description": "JavaScript 行内代码块", "aliases": ["`js"],     "displayed": "`javascript" }
+    ]
+}

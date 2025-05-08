@@ -1,0 +1,160 @@
+{
+    "careSymbol": "<CURSOR>",
+    "ignoreSpaceAfterCompletion": true,
+    "words": [
+        {
+            "value": "::: note<CURSOR>\n\n:::",
+            "description": "笔记 Callout Anyblock",
+            "aliases": [
+                ";;note",
+                ";;biji",
+                ";;bj"
+            ],
+            "displayed": ";;笔记"
+        },
+        {
+            "value": "::: abstract<CURSOR>\n\n:::",
+            "description": "摘要 Callout Anyblock",
+            "aliases": [
+                ";;abstract",
+                ";;summary",
+                ";;tldr",
+                ";;zhaiyao",
+                ";;zy"
+            ],
+            "displayed": ";;摘要"
+        },
+        {
+            "value": "::: info<CURSOR>\n\n:::",
+            "description": "信息 Callout Anyblock",
+            "aliases": [
+                ";;info",
+                ";;xinxi",
+                ";;xx"
+            ],
+            "displayed": ";;信息"
+        },
+        {
+            "value": "::: todo<CURSOR>\n\n:::",
+            "description": "待办 Callout Anyblock",
+            "aliases": [
+                ";;todo",
+                ";;daiban",
+                ";;db"
+            ],
+            "displayed": ";;待办"
+        },
+        {
+            "value": "::: tip<CURSOR>\n\n:::",
+            "description": "提示 Callout Anyblock",
+            "aliases": [
+                ";;tip",
+                ";;hint",
+                ";;important",
+                ";;tishi",
+                ";;ts"
+            ],
+            "displayed": ";;提示"
+        },
+        {
+            "value": "::: done<CURSOR>\n\n:::",
+            "description": "完成 Callout Anyblock",
+            "aliases": [
+                ";;done",
+                ";;success",
+                ";;check",
+                ";;wancheng",
+                ";;wc"
+            ],
+            "displayed": ";;完成"
+        },
+        {
+            "value": "::: faq<CURSOR>\n\n:::",
+            "description": "帮助 Callout Anyblock",
+            "aliases": [
+                ";;faq",
+                ";;question",
+                ";;help",
+                ";;bangzhu",
+                ";;bz"
+            ],
+            "displayed": ";;帮助"
+        },
+        {
+            "value": "::: warning<CURSOR>\n\n:::",
+            "description": "警告 Callout Anyblock",
+            "aliases": [
+                ";;warning",
+                ";;caution",
+                ";;attention",
+                ";;jinggao",
+                ";;jg"
+            ],
+            "displayed": ";;警告"
+        },
+        {
+            "value": "::: failure<CURSOR>\n\n:::",
+            "description": "失败 Callout Anyblock",
+            "aliases": [
+                ";;failure",
+                ";;fail",
+                ";;missing",
+                ";;shibai",
+                ";;sb"
+            ],
+            "displayed": ";;失败"
+        },
+        {
+            "value": "::: error<CURSOR>\n\n:::",
+            "description": "错误 Callout Anyblock",
+            "aliases": [
+                ";;error",
+                ";;danger",
+                ";;cuowu",
+                ";;cw"
+            ],
+            "displayed": ";;错误"
+        },
+        {
+            "value": "::: bug<CURSOR>\n\n:::",
+            "description": "漏洞 Callout Anyblock",
+            "aliases": [
+                ";;bug",
+                ";;loudong",
+                ";;ld"
+            ],
+            "displayed": ";;漏洞"
+        },
+        {
+            "value": "::: example<CURSOR>\n\n:::",
+            "description": "举例 Callout Anyblock",
+            "aliases": [
+                ";;example",
+                ";;juli",
+                ";;jl"
+            ],
+            "displayed": ";;举例"
+        },
+        {
+            "value": "::: quote<CURSOR>\n\n:::",
+            "description": "引用 Callout Anyblock",
+            "aliases": [
+                ";;quote",
+                ";;cite",
+                ";;yingyong",
+                ";;yy"
+            ],
+            "displayed": ";;引用"
+        },
+        {
+            "value": ":::: col<CURSOR>\n\n::::",
+            "description": "多列 Anyblock",
+            "aliases": [
+                ";;col",
+                ";;duolie",
+                ";;dl"
+            ],
+            "displayed": ";;多列"
+        }
+    ]
+}
