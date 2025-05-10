@@ -158,3 +158,5 @@ var NoticeLoggerSettingTab = class extends import_obsidian.PluginSettingTab {
     }));
   }
 };
+
+/* nosourcemap */

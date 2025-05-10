@@ -1,5 +1,5 @@
 /* src/styles/theme/theme.css */
-.lineage-main {
+.lineage-view {
   --lineage-accent: #55b1ae;
   --lineage-color-selection: #418cff;
 }
@@ -206,14 +206,28 @@
 }
 
 /* src/styles/card/dnd.css */
+.lineage-view {
+  --lng-box-shadow-dnd-above: inset 2px 51px 19px -28px var(--lineage-accent);
+  --lng-box-shadow-dnd-below: inset 2px -51px 19px -28px var(--lineage-accent);
+  --lng-box-shadow-dnd-under: inset -51px 2px 19px -28px var(--lineage-accent) ;
+}
 .lineage__drop-node-above {
-  box-shadow: inset 2px 51px 19px -28px var(--lineage-accent) !important;
+  box-shadow: var(--lng-box-shadow-dnd-above) !important;
+  & .card-background-style {
+    box-shadow: var(--lng-box-shadow-dnd-above) !important;
+  }
 }
 .lineage__drop-node-below {
-  box-shadow: inset 2px -51px 19px -28px var(--lineage-accent) !important;
+  box-shadow: var(--lng-box-shadow-dnd-below) !important;
+  & .card-background-style {
+    box-shadow: var(--lng-box-shadow-dnd-below) !important;
+  }
 }
 .lineage__drop-node-under {
-  box-shadow: inset -51px 2px 19px -28px var(--lineage-accent) !important;
+  box-shadow: var(--lng-box-shadow-dnd-under) !important;
+  & .card-background-style {
+    box-shadow: var(--lng-box-shadow-dnd-under) !important;
+  }
 }
 .inactive-node-hover {
   opacity: 0.8 !important;
@@ -227,6 +241,7 @@
   left: -5px;
   height: 100%;
   top: 0;
+  z-index: 1;
 }
 .card-background-style {
   position: absolute;
@@ -454,17 +469,10 @@ span[data-section] {
   line-height: var(--line-height-tight);
   opacity: 0.7;
   position: absolute;
-  left: 0;
-  top: 0;
-  line-height: var(--line-height-tight);
-  padding-top: calc(var(--font-text-size)/3);
   cursor: pointer;
   &:hover {
     opacity: 1;
   }
-}
-.markdown-source-view span[data-section] {
-  transform: translateX(calc(-100% - 50px));
 }
 span[data-section]::before {
   content: attr(data-section);
@@ -472,6 +480,18 @@ span[data-section]::before {
   background-color: var(--color-base-30);
   padding: 3px 6px;
   border-radius: 6px;
+}
+.markdown-source-view span[data-section] {
+  left: 0;
+  top: 0;
+  padding-top: calc(var(--font-text-size)/3);
+  transform: translateX(calc(-100% - 50px));
+}
+.markdown-reading-view span[data-section] {
+  transform: translateX(calc(-100% - 20px));
+}
+.markdown-embed span[data-section] {
+  display: none;
 }
 
 /* src/styles/overrides.css */
@@ -515,7 +535,7 @@ span[data-section]::before {
   padding: 6px;
 }
 .group-has-active-child {
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 .group-has-active-child:last-child {
   margin-bottom: 0;
@@ -619,6 +639,10 @@ span[data-section]::before {
     .lineage-floating-button:not(.collapse-button) {
       display: none;
     }
+  }
+  .inactive-node:not(.inactive-node-hover) {
+    opacity: var(--inactive-card-opacity) !important;
+    cursor: none !important;
   }
 }
 

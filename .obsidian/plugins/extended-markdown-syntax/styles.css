@@ -14,8 +14,9 @@
 	padding-inline: 2px;
 	border-radius: 2px;
 	background-color: rgba(var(--text-highlight-bg-rgb), var(--hl-opacity));
-	& span.cm-highlight {
+	.cm-s-obsidian & span.cm-highlight {
 		background-color: transparent;
+		color: var(--text-normal);
 	}
 }
 
@@ -29,6 +30,10 @@
 mark {
 	padding-inline: 2px;
 	border-radius: 2px;
+}
+
+.markdown-rendered mark.custom-highlight:not([style]) {
+	color: var(--text-normal);
 }
 
 .cm-highlight-color-btn {

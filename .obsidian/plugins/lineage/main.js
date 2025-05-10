@@ -123,10 +123,10 @@ __export(main_exports, {
   default: () => Lineage
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian45 = require("obsidian");
+var import_obsidian41 = require("obsidian");
 
 // src/view/view.ts
-var import_obsidian37 = require("obsidian");
+var import_obsidian34 = require("obsidian");
 
 // node_modules/svelte/src/runtime/internal/utils.js
 function noop() {
@@ -666,7 +666,7 @@ function outro_and_destroy_block(block, lookup) {
     lookup.delete(block.key);
   });
 }
-function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block18, next, get_context) {
+function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block22, next, get_context) {
   let o = old_blocks.length;
   let n = list.length;
   let i = o;
@@ -683,7 +683,7 @@ function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, looku
     const key = get_key(child_ctx);
     let block = lookup.get(key);
     if (!block) {
-      block = create_each_block18(key, child_ctx);
+      block = create_each_block22(key, child_ctx);
       block.c();
     } else if (dynamic) {
       updates.push(() => block.p(child_ctx, dirty));
@@ -842,7 +842,7 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
 }
-function init(component, options, instance111, create_fragment114, not_equal, props, append_styles2 = null, dirty = [-1]) {
+function init(component, options, instance123, create_fragment125, not_equal, props, append_styles2 = null, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
@@ -868,7 +868,7 @@ function init(component, options, instance111, create_fragment114, not_equal, pr
   };
   append_styles2 && append_styles2($$.root);
   let ready = false;
-  $$.ctx = instance111 ? instance111(component, options.props || {}, (i, ret, ...rest) => {
+  $$.ctx = instance123 ? instance123(component, options.props || {}, (i, ret, ...rest) => {
     const value = rest.length ? rest[0] : ret;
     if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
       if (!$$.skip_bound && $$.bound[i])
@@ -881,7 +881,7 @@ function init(component, options, instance111, create_fragment114, not_equal, pr
   $$.update();
   ready = true;
   run_all($$.before_update);
-  $$.fragment = create_fragment114 ? create_fragment114($$.ctx) : false;
+  $$.fragment = create_fragment125 ? create_fragment125($$.ctx) : false;
   if (options.target) {
     if (options.hydrate) {
       start_hydrating();
@@ -1173,85 +1173,101 @@ var lang = {
   cmd_create_new_document: "Create new document",
   ocm_new_document: "New document",
   ocm_import_from_gingko: "Import from Gingko",
-  // add cards
-  hk_add_below_and_split: "Add card below and split at cursor",
-  card_btn_add_card_below: "Add card below",
-  hk_add_above_and_split: "Add card above and split at cursor",
-  card_btn_add_card_above: "Add card above",
-  hk_add_child_and_split: "Add child card and split at cursor",
-  card_btn_add_child_card: "Add child card",
-  hkg_create_cards: "Create cards",
-  modals_snapshots_created_card: "Created card ",
+  // add sections
+  hk_add_below_and_split: "Add section after and split at cursor",
+  card_btn_add_node_below: "Add section after",
+  hk_add_above_and_split: "Add section before and split at cursor",
+  card_btn_add_node_above: "Add section before",
+  hk_add_parent_sibling: "Add section after parent",
+  hk_add_child_and_split: "Add subsection and split at cursor",
+  card_btn_add_child_node: "Add subsection",
+  hkg_create_nodes: "Create",
+  modals_snapshots_created_node: "Created section ",
   // edit
-  settings_general_maintain_edit_mode: "Maintain edit mode",
-  settings_general_maintain_edit_mode_desc: "Keeps edit mode active when switching to a different card using the mouse or keyboard",
+  settings_general_maintain_edit_mode: "Maintain editing mode",
+  settings_general_maintain_edit_mode_desc: "Maintain editing mode when switching to a different card using the mouse or keyboard",
   card_btn_edit: "Edit",
-  hk_enable_edit_mode: "Edit card",
-  hk_enable_edit_mode_and_place_cursor_at_start: "Edit card and place cursor at the start",
-  hk_enable_edit_mode_and_place_cursor_at_end: "Edit card and place cursor at the end",
-  hkg_edit_cards: "Edit cards",
-  modals_snapshots_updated_card: "Updated card ",
+  hk_enable_edit_mode: "Edit section",
+  hk_enable_edit_mode_and_place_cursor_at_start: "Edit section and place cursor at the start",
+  hk_enable_edit_mode_and_place_cursor_at_end: "Edit section and place cursor at the end",
+  hkg_edit_nodes: "Edit",
+  modals_snapshots_updated_node: "Updated section ",
   modal_hk_editor_state_on: "Enable only when the editor is active",
   modal_hk_editor_state_off: "Enable only when the editor is inactive",
-  modal_hk_editor_state_both: "Enable regardless of the editor's state",
+  modal_hk_editor_state_both: "Enable regardless of the editor state",
   // save
   card_btn_save: "Save",
-  hk_save_changes: "Save changes and exit card",
+  hk_save_changes: "Save changes and exit editor",
   hk_disable_edit_mode: "Cancel changes",
   // delete
   card_btn_delete: "Delete",
-  hk_delete_card: "Delete card",
-  error_delete_last_node: "Cannot delete this card",
-  hkg_delete_cards: "Delete cards",
-  modals_snapshots_deleted_card: "Deleted card ",
-  // copy
+  hk_delete_section: "Delete section",
+  error_delete_last_node: "Cannot delete this section",
+  hkg_delete_nodes: "Delete",
+  modals_snapshots_deleted_section: "Deleted section ",
+  // clipboard
   cm_copy: "Copy",
   cm_copy_branches: "Copy branches",
   cm_copy_branch: "Copy branch",
-  cm_copy_branches_wo_formatting: "Copy branches without formatting",
-  cm_copy_branch_wo_formatting: "Copy branch without formatting",
-  cm_copy_section_wo_subitems: "Copy sections without sub-items",
-  cm_copy_sections_wo_subitems: "Copy section without sub-items",
+  cm_copy_branches_wo_formatting: "Copy branches as plain text",
+  cm_copy_branch_wo_formatting: "Copy branch as plain text",
+  cm_copy_node_wo_subitems: "Copy sections",
+  cm_copy_nodes_wo_subitems: "Copy section",
   hk_copy_node: "Copy branch",
-  hk_copy_node_unformatted: "Copy branch without formatting",
-  hk_copy_node_without_subitems: "Copy without subitems",
+  hk_copy_node_unformatted: "Copy branch as plain text",
+  hk_copy_node_without_subitems: "Copy section",
   cm_copy_link_to_block: "Copy link to block",
+  toolbar_copy_search_results: "Copy search results",
+  toolbar_copy_search_results_wo_subitems: "Copy search results without sub-items",
+  toolbar_cut_search_results: "Cut search results",
   hkg_clipboard: "Clipboard",
-  hk_notice_copy: (size, formatted, type) => {
-    if (size === 0)
-      return null;
-    return type === "branch" ? size === 1 ? formatted ? null : "Unformatted branch copied to clipboard" : formatted ? `${size} branches copied to clipboard` : `${size} unformatted branches copied to clipboard` : size === 1 ? null : size + " sections copied to clipboard";
-  },
-  // cut paste
-  cm_cut: "Cut branch",
+  modals_snapshots_cut_section: "Cut section ",
+  cm_cut: "Cut",
   hk_cut_node: "Cut branch",
   cm_paste: "Paste",
   hk_paste_node: "Paste branch",
-  modals_snapshots_cut_card: "Cut card ",
-  modals_snapshots_pasted_card: "Pasted card ",
+  modals_snapshots_pasted_section: "Pasted section ",
   error_cant_paste: "Paste command failed. Try pasting directly into a card",
+  /*hk_notice_copy: (
+      size: number,
+      formatted: boolean,
+      type: 'branch' | 'section',
+  ) => {
+      if (size === 0) return null;
+      return type === 'branch'
+          ? size === 1
+              ? formatted
+                  ? null
+                  : 'Unformatted branch copied to clipboard'
+              : formatted
+                ? `${size} branches copied to clipboard`
+                : `${size} unformatted branches copied to clipboard`
+          : size === 1
+            ? null
+            : size + ' sections copied to clipboard';
+  },*/
   // merge
   cm_merge_above: "Merge with branch above",
   cm_merge_below: "Merge with branch below",
   hk_merge_with_node_above: "Merge with branch above",
   hk_merge_with_node_below: "Merge with branch below",
-  error_hk_cant_merge_multiple_nodes: "Cannot merge multiple cards",
-  hkg_merge_cards: "Merge cards",
-  modals_snapshots_merged_card: "Merged card ",
+  error_hk_cant_merge_multiple_nodes: "Cannot merge multiple branches",
+  hkg_merge_nodes: "Merge",
+  modals_snapshots_merged_node: "Merged section ",
   // move
   hk_move_node_up: "Move branch up",
   hk_move_node_down: "Move branch down",
   hk_move_node_right: "Move branch right",
   hk_move_node_left: "Move branch left",
-  hkg_move_cards: "Move cards",
-  modals_snapshots_moved_card: "Moved branch ",
+  hkg_move_nodes: "Move",
+  modals_snapshots_moved_node: "Moved section ",
   // dnd
-  modals_snapshots_dropped_card: "Dropped card ",
+  modals_snapshots_dropped_node: "Dropped section ",
   // split
-  cm_split_card: "Split card",
-  error_cm_cant_split_card_that_has_children: "Cannot split a card that has children",
-  error_cm_cant_split_card_identical: "The result is the same as the input",
-  modals_snapshots_split_card: "Split card ",
+  cm_split_node: "Split section",
+  error_cm_cant_split_node_that_has_children: "Cannot split a section that has sub-items",
+  error_cm_cant_split_node_identical: "The result is the same as the input",
+  modals_snapshots_split_node: "Split section ",
   // undo
   controls_history: "History",
   controls_history_undo: "Undo",
@@ -1263,13 +1279,20 @@ var lang = {
   // extract
   cmd_extract_branch: "Extract branch to a new document",
   cm_extract_branch: "Extract branch",
-  modals_snapshots_extracted_card: "Extracted card ",
+  cm_extract_section: "Extract section",
+  modals_snapshots_extracted_node: "Extracted section ",
   // export
   cm_export_document: "Export document",
-  cm_export_column: "Export column",
+  cm_eject_document: "Eject document",
+  cm_export_selection: "Export",
+  cm_export_section: "Export section",
+  cm_export_branch_with_subitems: "Export branch",
+  cm_export_branch_wo_subitems: "Export section",
+  cmd_export_branches_with_subitems: "Export branches",
+  cmd_export_nodes_wo_subitems: "Export sections",
   // document format
   settings_general_default_format: "Default format",
-  settings_general_default_format_desc: "Applies to new documents",
+  cm_document_format: "Document format",
   settings_format_html_elements: "HTML elements (experimental)",
   settings_format_html_comments: "HTML comments",
   settings_format_outline: "Outline",
@@ -1281,7 +1304,7 @@ var lang = {
   modals_snapshots_formatted_headings: "Formatted headings",
   // search
   tlb_search_toggle: "Toggle search input",
-  tlb_search_show_all_cards: "Show all cards",
+  tlb_search_show_all_nodes: "Show all sections",
   tlb_search_fuzzy_search: "Fuzzy search",
   tlb_search_previous_result: "Previous result",
   tlb_search_next_result: "Next result",
@@ -1295,10 +1318,11 @@ var lang = {
   hk_extend_select_to_end_of_group: "Extend selection to end of group",
   hk_extend_select_to_start_of_column: "Extend selection to start of column",
   hk_extend_select_to_end_of_column: "Extend selection to end of column",
-  hkg_selection: "Selection",
+  hkg_selection: "Select",
+  hk_select_all: "Select all sections",
   // navigate spatially
-  hk_navigate_to_next_node: "Select next card",
-  hk_navigate_to_previous_node: "Select previous card",
+  hk_navigate_to_next_node: "Select next section",
+  hk_navigate_to_previous_node: "Select previous section",
   hk_go_up: "Go up",
   hk_go_down: "Go down",
   hk_go_right: "Go right",
@@ -1307,8 +1331,8 @@ var lang = {
   hk_go_to_end_of_group: "Go to end of group",
   hk_go_to_beginning_of_column: "Go to start of column",
   hk_go_to_end_of_column: "Go to end of column",
-  hk_select_parent: "Select parent card",
-  hkg_navigation: "Navigation",
+  hk_select_parent: "Select parent section",
+  hkg_navigation: "Navigate",
   hk_select_previous_sibling: "Select previous sibling",
   hk_select_next_sibling: "Select next sibling",
   // navigate node history
@@ -1320,7 +1344,7 @@ var lang = {
   controls_zoom_in: "Zoom in",
   controls_zoom_out: "Zoom out",
   controls_zoom_reset: "Reset (hold shift to undo)",
-  controls_zoom_presets: "",
+  controls_zoom_presets: "Zoom menu",
   hk_zoom_in: "Zoom in",
   hk_zoom_out: "Zoom out",
   hk_zoom_reset: "Reset zoom",
@@ -1330,18 +1354,19 @@ var lang = {
   hk_scroll_right: "Scroll right",
   hk_scroll_up: "Scroll up",
   hk_scroll_down: "Scroll down",
-  hk_align_branch: "Align active branch",
+  hk_align_branch: "Center active branch",
   controls_toggle_scrolling_mode_horizontal: "Always center active card horizontally",
   controls_toggle_scrolling_mode_vertical: "Always center active card vertically",
   cmd_toggle_horizontal_scrolling_mode: `Toggle 'always center active card horizontally'`,
   cmd_toggle_vertical_scrolling_mode: `Toggle 'always center active card vertically'`,
-  card_btn_scroll_to_reveal: "Scroll to reveal",
-  hkg_scrolling: "Align branch",
+  card_btn_scroll_to_reveal: "Reveal",
+  hkg_scrolling: "Scroll",
   // theme
   settings_theme_bg: "Background color",
   settings_theme_active_branch_bg: "Active branch background color",
   settings_theme_active_branch_color: "Active branch text color",
   settings_appearance_font_size: "Font size",
+  settings_appearance_headings_font_size: "Headings font size (em)",
   settings_appearance_inactive_node_opacity: "Inactive cards opacity",
   // layout
   settings_layout_card_width: "Card width",
@@ -1350,45 +1375,61 @@ var lang = {
   settings_always_show_card_buttons_desc: "Show card buttons on all cards, not just the active one",
   // outline
   settings_layout_indentation_width: "Card indentation",
-  settings_layout_indentation_width_desc: "Applicable in 'outline mode'",
   controls_single_column: "Outline mode",
   hk_toggle_outline_mode: `Toggle outline mode`,
-  card_btn_collapse_card: "Collapse",
-  card_btn_expand_card: "Expand",
-  hk_outline_toggle_collapse: "Collapse/expand card",
-  hk_outline_toggle_collapse_all: "Collapse/expand all cards",
+  card_btn_collapse_node: "Collapse",
+  card_btn_expand_node: "Expand",
+  hk_outline_toggle_collapse: "Collapse/expand section",
+  hk_outline_toggle_collapse_all: "Collapse/expand all sections",
   hkg_outline: "Outline",
+  // toolbar
+  settings_vertical_toolbar_icons: "Vertical toolbar buttons",
+  settings_vertical_toolbar_icons_desc: "Configure what buttons appear in the vertical toolbar",
   // space between cards
   controls_gap_between_cards: "Space between cards",
   cmd_space_between_cards: `Toggle 'space between cards'`,
   settings_layout_space_between_cards: "Space between cards",
-  settings_layout_space_between_cards_desc: "Applicable when spaces are enabled",
   // sidebar
   toolbar_toggle_left_sidebar: "Left sidebar",
   controls_toggle_minimap: "Document minimap",
   cmd_toggle_minimap: "Toggle document minimap",
   cmd_toggle_left_sidebar: "Toggle left sidebar",
-  // recent cards
-  sidebar_tab_recent_cards: "Recent cards",
-  sidebar_no_recent_cards: "No recent cards",
-  // pin cards
+  // recent sections
+  sidebar_tab_recent_nodes: "Recently selected sections",
+  sidebar_no_recent_nodes: "No recent sections",
+  // pin sections
   cm_unpin_from_left_sidebar: "Unpin from left sidebar",
   cm_pin_in_left_sidebar: "Pin in left sidebar",
-  cmd_toggle_pin_in_left_sidebar: `Toggle 'pin card in left sidebar'`,
-  sidebar_tab_pinned_cards: "Pinned cards",
-  sidebar_no_pinned_cards: "No pinned cards",
+  cmd_toggle_pin_in_left_sidebar: `Toggle 'pin section in left sidebar'`,
+  sidebar_tab_pinned_nodes: "Pinned sections",
+  sidebar_no_pinned_nodes: "No pinned sections",
   // rules
-  modals_rules_add_rule: "Add rule",
+  modals_rules_add_rule: "New rule",
   modals_rules_no_rules: "No rules",
-  controls_rules: "Rule-based styles",
+  controls_rules: "Card style rules",
   modals_rules_matches: "Number of matches",
   modals_rules_drag_handle: "Change priority",
+  modals_rules_tab_global_rules: "Global rules",
+  modals_rules_tab_document_rules: "Document rules",
+  modals_rules_rule_cm_move_to_document: "Move to document rules",
+  modals_rules_rule_cm_move_to_global: "Move to global rules",
+  // sort
+  cmd_sort_child_nodes_asc: "Sort subsections: ascending order",
+  cmd_sort_child_nodes_desc: "Sort subsections: descending order",
+  cm_sort_child: "Sort subsections",
+  cm_sort_child_nodes_asc: "Ascending order",
+  cm_sort_child_nodes_desc: "Descending order",
+  modals_snapshots_sorted_child_nodes: "Sorted subsections of section ",
   // settings
   controls_settings: "Settings",
   controls_toggle_bar: "Toggle controls bar",
   settings_appearance: "Appearance",
   settings_layout: "Layout",
   settings_reset: "Reset",
+  // general settings
+  settings_general_link_split: "Open in new split",
+  settings_general_link_tab: "Open in new tab",
+  settings_general_link_behavior: "Default link behavior",
   // hotkeys
   modals_hk_input_placeholder: "Filter",
   modals_hk_editor_cancel: "Cancel",
@@ -1764,7 +1805,7 @@ var Icon = class extends SvelteComponent {
 };
 var Icon_default = Icon;
 
-// node_modules/lucide-svelte/dist/icons/arrow-left.svelte
+// node_modules/lucide-svelte/dist/icons/arrow-down-wide-narrow.svelte
 function create_default_slot(ctx) {
   let current;
   const default_slot_template = (
@@ -1834,7 +1875,7 @@ function create_fragment2(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "arrow-left" },
+    { name: "arrow-down-wide-narrow" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -1896,7 +1937,13 @@ function create_fragment2(ctx) {
 }
 function instance2($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "m12 19-7-7 7-7" }], ["path", { "d": "M19 12H5" }]];
+  const iconNode = [
+    ["path", { "d": "m3 16 4 4 4-4" }],
+    ["path", { "d": "M7 20V4" }],
+    ["path", { "d": "M11 4h10" }],
+    ["path", { "d": "M11 8h7" }],
+    ["path", { "d": "M11 12h4" }]
+  ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -1905,15 +1952,15 @@ function instance2($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Arrow_left = class extends SvelteComponent {
+var Arrow_down_wide_narrow = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance2, create_fragment2, safe_not_equal, {});
   }
 };
-var arrow_left_default = Arrow_left;
+var arrow_down_wide_narrow_default = Arrow_down_wide_narrow;
 
-// node_modules/lucide-svelte/dist/icons/arrow-right.svelte
+// node_modules/lucide-svelte/dist/icons/arrow-left.svelte
 function create_default_slot2(ctx) {
   let current;
   const default_slot_template = (
@@ -1983,7 +2030,7 @@ function create_fragment3(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "arrow-right" },
+    { name: "arrow-left" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2045,7 +2092,7 @@ function create_fragment3(ctx) {
 }
 function instance3($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "M5 12h14" }], ["path", { "d": "m12 5 7 7-7 7" }]];
+  const iconNode = [["path", { "d": "m12 19-7-7 7-7" }], ["path", { "d": "M19 12H5" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2054,15 +2101,15 @@ function instance3($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Arrow_right = class extends SvelteComponent {
+var Arrow_left = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance3, create_fragment3, safe_not_equal, {});
   }
 };
-var arrow_right_default = Arrow_right;
+var arrow_left_default = Arrow_left;
 
-// node_modules/lucide-svelte/dist/icons/chevron-down.svelte
+// node_modules/lucide-svelte/dist/icons/arrow-right.svelte
 function create_default_slot3(ctx) {
   let current;
   const default_slot_template = (
@@ -2132,7 +2179,7 @@ function create_fragment4(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "chevron-down" },
+    { name: "arrow-right" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2194,7 +2241,7 @@ function create_fragment4(ctx) {
 }
 function instance4($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "m6 9 6 6 6-6" }]];
+  const iconNode = [["path", { "d": "M5 12h14" }], ["path", { "d": "m12 5 7 7-7 7" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2203,15 +2250,15 @@ function instance4($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Chevron_down = class extends SvelteComponent {
+var Arrow_right = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance4, create_fragment4, safe_not_equal, {});
   }
 };
-var chevron_down_default = Chevron_down;
+var arrow_right_default = Arrow_right;
 
-// node_modules/lucide-svelte/dist/icons/chevron-right.svelte
+// node_modules/lucide-svelte/dist/icons/arrow-up-narrow-wide.svelte
 function create_default_slot4(ctx) {
   let current;
   const default_slot_template = (
@@ -2281,7 +2328,7 @@ function create_fragment5(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "chevron-right" },
+    { name: "arrow-up-narrow-wide" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2343,7 +2390,13 @@ function create_fragment5(ctx) {
 }
 function instance5($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "m9 18 6-6-6-6" }]];
+  const iconNode = [
+    ["path", { "d": "m3 8 4-4 4 4" }],
+    ["path", { "d": "M7 4v16" }],
+    ["path", { "d": "M11 12h4" }],
+    ["path", { "d": "M11 16h7" }],
+    ["path", { "d": "M11 20h10" }]
+  ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2352,15 +2405,15 @@ function instance5($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Chevron_right = class extends SvelteComponent {
+var Arrow_up_narrow_wide = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance5, create_fragment5, safe_not_equal, {});
   }
 };
-var chevron_right_default = Chevron_right;
+var arrow_up_narrow_wide_default = Arrow_up_narrow_wide;
 
-// node_modules/lucide-svelte/dist/icons/chevron-up.svelte
+// node_modules/lucide-svelte/dist/icons/chevron-down.svelte
 function create_default_slot5(ctx) {
   let current;
   const default_slot_template = (
@@ -2430,7 +2483,7 @@ function create_fragment6(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "chevron-up" },
+    { name: "chevron-down" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2492,7 +2545,7 @@ function create_fragment6(ctx) {
 }
 function instance6($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "m18 15-6-6-6 6" }]];
+  const iconNode = [["path", { "d": "m6 9 6 6 6-6" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2501,15 +2554,15 @@ function instance6($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Chevron_up = class extends SvelteComponent {
+var Chevron_down = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance6, create_fragment6, safe_not_equal, {});
   }
 };
-var chevron_up_default = Chevron_up;
+var chevron_down_default = Chevron_down;
 
-// node_modules/lucide-svelte/dist/icons/clipboard-paste.svelte
+// node_modules/lucide-svelte/dist/icons/chevron-right.svelte
 function create_default_slot6(ctx) {
   let current;
   const default_slot_template = (
@@ -2579,7 +2632,7 @@ function create_fragment7(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "clipboard-paste" },
+    { name: "chevron-right" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2641,21 +2694,7 @@ function create_fragment7(ctx) {
 }
 function instance7($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [
-    [
-      "path",
-      {
-        "d": "M15 2H9a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h6c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1Z"
-      }
-    ],
-    [
-      "path",
-      {
-        "d": "M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M16 4h2a2 2 0 0 1 2 2v2M11 14h10"
-      }
-    ],
-    ["path", { "d": "m17 10 4 4-4 4" }]
-  ];
+  const iconNode = [["path", { "d": "m9 18 6-6-6-6" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2664,15 +2703,15 @@ function instance7($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Clipboard_paste = class extends SvelteComponent {
+var Chevron_right = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance7, create_fragment7, safe_not_equal, {});
   }
 };
-var clipboard_paste_default = Clipboard_paste;
+var chevron_right_default = Chevron_right;
 
-// node_modules/lucide-svelte/dist/icons/clock.svelte
+// node_modules/lucide-svelte/dist/icons/chevron-up.svelte
 function create_default_slot7(ctx) {
   let current;
   const default_slot_template = (
@@ -2742,7 +2781,7 @@ function create_fragment8(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "clock" },
+    { name: "chevron-up" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2804,10 +2843,7 @@ function create_fragment8(ctx) {
 }
 function instance8($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [
-    ["circle", { "cx": "12", "cy": "12", "r": "10" }],
-    ["polyline", { "points": "12 6 12 12 16 14" }]
-  ];
+  const iconNode = [["path", { "d": "m18 15-6-6-6 6" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -2816,15 +2852,15 @@ function instance8($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Clock = class extends SvelteComponent {
+var Chevron_up = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance8, create_fragment8, safe_not_equal, {});
   }
 };
-var clock_default = Clock;
+var chevron_up_default = Chevron_up;
 
-// node_modules/lucide-svelte/dist/icons/eye.svelte
+// node_modules/lucide-svelte/dist/icons/clipboard-paste.svelte
 function create_default_slot8(ctx) {
   let current;
   const default_slot_template = (
@@ -2894,7 +2930,7 @@ function create_fragment9(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "eye" },
+    { name: "clipboard-paste" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -2960,10 +2996,16 @@ function instance9($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+        "d": "M15 2H9a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h6c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1Z"
       }
     ],
-    ["circle", { "cx": "12", "cy": "12", "r": "3" }]
+    [
+      "path",
+      {
+        "d": "M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M16 4h2a2 2 0 0 1 2 2v2M11 14h10"
+      }
+    ],
+    ["path", { "d": "m17 10 4 4-4 4" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -2973,15 +3015,15 @@ function instance9($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Eye = class extends SvelteComponent {
+var Clipboard_paste = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance9, create_fragment9, safe_not_equal, {});
   }
 };
-var eye_default = Eye;
+var clipboard_paste_default = Clipboard_paste;
 
-// node_modules/lucide-svelte/dist/icons/file-minus.svelte
+// node_modules/lucide-svelte/dist/icons/clock.svelte
 function create_default_slot9(ctx) {
   let current;
   const default_slot_template = (
@@ -3051,7 +3093,7 @@ function create_fragment10(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-minus" },
+    { name: "clock" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3114,14 +3156,8 @@ function create_fragment10(ctx) {
 function instance10($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    [
-      "path",
-      {
-        "d": "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
-      }
-    ],
-    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
-    ["path", { "d": "M9 15h6" }]
+    ["circle", { "cx": "12", "cy": "12", "r": "10" }],
+    ["polyline", { "points": "12 6 12 12 16 14" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3131,15 +3167,15 @@ function instance10($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_minus = class extends SvelteComponent {
+var Clock = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance10, create_fragment10, safe_not_equal, {});
   }
 };
-var file_minus_default = File_minus;
+var clock_default = Clock;
 
-// node_modules/lucide-svelte/dist/icons/file-output.svelte
+// node_modules/lucide-svelte/dist/icons/copy.svelte
 function create_default_slot10(ctx) {
   let current;
   const default_slot_template = (
@@ -3209,7 +3245,7 @@ function create_fragment11(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-output" },
+    { name: "copy" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3272,21 +3308,23 @@ function create_fragment11(ctx) {
 function instance11($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
     [
-      "path",
+      "rect",
       {
-        "d": "M4 7V4a2 2 0 0 1 2-2 2 2 0 0 0-2 2"
+        "width": "14",
+        "height": "14",
+        "x": "8",
+        "y": "8",
+        "rx": "2",
+        "ry": "2"
       }
     ],
     [
       "path",
       {
-        "d": "M4.063 20.999a2 2 0 0 0 2 1L18 22a2 2 0 0 0 2-2V7l-5-5H6"
+        "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
       }
-    ],
-    ["path", { "d": "m5 11-3 3" }],
-    ["path", { "d": "m5 17-3-3h10" }]
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3296,15 +3334,15 @@ function instance11($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_output = class extends SvelteComponent {
+var Copy = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance11, create_fragment11, safe_not_equal, {});
   }
 };
-var file_output_default = File_output;
+var copy_default = Copy;
 
-// node_modules/lucide-svelte/dist/icons/file-pen.svelte
+// node_modules/lucide-svelte/dist/icons/eye.svelte
 function create_default_slot11(ctx) {
   let current;
   const default_slot_template = (
@@ -3374,7 +3412,7 @@ function create_fragment12(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-pen" },
+    { name: "eye" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3440,16 +3478,10 @@ function instance12($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"
+        "d": "M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
       }
     ],
-    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
-    [
-      "path",
-      {
-        "d": "M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"
-      }
-    ]
+    ["circle", { "cx": "12", "cy": "12", "r": "3" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3459,15 +3491,15 @@ function instance12($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_pen = class extends SvelteComponent {
+var Eye = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance12, create_fragment12, safe_not_equal, {});
   }
 };
-var file_pen_default = File_pen;
+var eye_default = Eye;
 
-// node_modules/lucide-svelte/dist/icons/file-plus.svelte
+// node_modules/lucide-svelte/dist/icons/file-minus.svelte
 function create_default_slot12(ctx) {
   let current;
   const default_slot_template = (
@@ -3537,7 +3569,7 @@ function create_fragment13(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-plus" },
+    { name: "file-minus" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3607,8 +3639,7 @@ function instance13($$self, $$props, $$invalidate) {
       }
     ],
     ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
-    ["path", { "d": "M9 15h6" }],
-    ["path", { "d": "M12 18v-6" }]
+    ["path", { "d": "M9 15h6" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3618,15 +3649,15 @@ function instance13($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_plus = class extends SvelteComponent {
+var File_minus = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance13, create_fragment13, safe_not_equal, {});
   }
 };
-var file_plus_default = File_plus;
+var file_minus_default = File_minus;
 
-// node_modules/lucide-svelte/dist/icons/file-symlink.svelte
+// node_modules/lucide-svelte/dist/icons/file-output.svelte
 function create_default_slot13(ctx) {
   let current;
   const default_slot_template = (
@@ -3696,7 +3727,7 @@ function create_fragment14(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-symlink" },
+    { name: "file-output" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3759,14 +3790,21 @@ function create_fragment14(ctx) {
 function instance14($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "m10 18 3-3-3-3" }],
     ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
     [
       "path",
       {
-        "d": "M4 11V4a2 2 0 0 1 2-2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h7"
+        "d": "M4 7V4a2 2 0 0 1 2-2 2 2 0 0 0-2 2"
       }
-    ]
+    ],
+    [
+      "path",
+      {
+        "d": "M4.063 20.999a2 2 0 0 0 2 1L18 22a2 2 0 0 0 2-2V7l-5-5H6"
+      }
+    ],
+    ["path", { "d": "m5 11-3 3" }],
+    ["path", { "d": "m5 17-3-3h10" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3776,15 +3814,15 @@ function instance14($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_symlink = class extends SvelteComponent {
+var File_output = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance14, create_fragment14, safe_not_equal, {});
   }
 };
-var file_symlink_default = File_symlink;
+var file_output_default = File_output;
 
-// node_modules/lucide-svelte/dist/icons/file-up.svelte
+// node_modules/lucide-svelte/dist/icons/file-pen.svelte
 function create_default_slot14(ctx) {
   let current;
   const default_slot_template = (
@@ -3854,7 +3892,7 @@ function create_fragment15(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "file-up" },
+    { name: "file-pen" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -3920,12 +3958,16 @@ function instance15($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+        "d": "M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"
       }
     ],
     ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
-    ["path", { "d": "M12 12v6" }],
-    ["path", { "d": "m15 15-3-3-3 3" }]
+    [
+      "path",
+      {
+        "d": "M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"
+      }
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -3935,15 +3977,15 @@ function instance15($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var File_up = class extends SvelteComponent {
+var File_pen = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance15, create_fragment15, safe_not_equal, {});
   }
 };
-var file_up_default = File_up;
+var file_pen_default = File_pen;
 
-// node_modules/lucide-svelte/dist/icons/focus.svelte
+// node_modules/lucide-svelte/dist/icons/file-plus.svelte
 function create_default_slot15(ctx) {
   let current;
   const default_slot_template = (
@@ -4013,7 +4055,7 @@ function create_fragment16(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "focus" },
+    { name: "file-plus" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4076,11 +4118,15 @@ function create_fragment16(ctx) {
 function instance16($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "12", "cy": "12", "r": "3" }],
-    ["path", { "d": "M3 7V5a2 2 0 0 1 2-2h2" }],
-    ["path", { "d": "M17 3h2a2 2 0 0 1 2 2v2" }],
-    ["path", { "d": "M21 17v2a2 2 0 0 1-2 2h-2" }],
-    ["path", { "d": "M7 21H5a2 2 0 0 1-2-2v-2" }]
+    [
+      "path",
+      {
+        "d": "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+      }
+    ],
+    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
+    ["path", { "d": "M9 15h6" }],
+    ["path", { "d": "M12 18v-6" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4090,15 +4136,15 @@ function instance16($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Focus = class extends SvelteComponent {
+var File_plus = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance16, create_fragment16, safe_not_equal, {});
   }
 };
-var focus_default = Focus;
+var file_plus_default = File_plus;
 
-// node_modules/lucide-svelte/dist/icons/grip-vertical.svelte
+// node_modules/lucide-svelte/dist/icons/file-symlink.svelte
 function create_default_slot16(ctx) {
   let current;
   const default_slot_template = (
@@ -4168,7 +4214,7 @@ function create_fragment17(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "grip-vertical" },
+    { name: "file-symlink" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4231,12 +4277,14 @@ function create_fragment17(ctx) {
 function instance17($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "9", "cy": "12", "r": "1" }],
-    ["circle", { "cx": "9", "cy": "5", "r": "1" }],
-    ["circle", { "cx": "9", "cy": "19", "r": "1" }],
-    ["circle", { "cx": "15", "cy": "12", "r": "1" }],
-    ["circle", { "cx": "15", "cy": "5", "r": "1" }],
-    ["circle", { "cx": "15", "cy": "19", "r": "1" }]
+    ["path", { "d": "m10 18 3-3-3-3" }],
+    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
+    [
+      "path",
+      {
+        "d": "M4 11V4a2 2 0 0 1 2-2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h7"
+      }
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4246,15 +4294,15 @@ function instance17($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Grip_vertical = class extends SvelteComponent {
+var File_symlink = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance17, create_fragment17, safe_not_equal, {});
   }
 };
-var grip_vertical_default = Grip_vertical;
+var file_symlink_default = File_symlink;
 
-// node_modules/lucide-svelte/dist/icons/heading-1.svelte
+// node_modules/lucide-svelte/dist/icons/file-text.svelte
 function create_default_slot17(ctx) {
   let current;
   const default_slot_template = (
@@ -4324,7 +4372,7 @@ function create_fragment18(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "heading-1" },
+    { name: "file-text" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4387,10 +4435,16 @@ function create_fragment18(ctx) {
 function instance18($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M4 12h8" }],
-    ["path", { "d": "M4 18V6" }],
-    ["path", { "d": "M12 18V6" }],
-    ["path", { "d": "m17 12 3-2v8" }]
+    [
+      "path",
+      {
+        "d": "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+      }
+    ],
+    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
+    ["path", { "d": "M10 9H8" }],
+    ["path", { "d": "M16 13H8" }],
+    ["path", { "d": "M16 17H8" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4400,15 +4454,15 @@ function instance18($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Heading_1 = class extends SvelteComponent {
+var File_text = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance18, create_fragment18, safe_not_equal, {});
   }
 };
-var heading_1_default = Heading_1;
+var file_text_default = File_text;
 
-// node_modules/lucide-svelte/dist/icons/history.svelte
+// node_modules/lucide-svelte/dist/icons/file-up.svelte
 function create_default_slot18(ctx) {
   let current;
   const default_slot_template = (
@@ -4478,7 +4532,7 @@ function create_fragment19(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "history" },
+    { name: "file-up" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4544,11 +4598,12 @@ function instance19($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        "d": "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
       }
     ],
-    ["path", { "d": "M3 3v5h5" }],
-    ["path", { "d": "M12 7v5l4 2" }]
+    ["path", { "d": "M14 2v4a2 2 0 0 0 2 2h4" }],
+    ["path", { "d": "M12 12v6" }],
+    ["path", { "d": "m15 15-3-3-3 3" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4558,15 +4613,15 @@ function instance19($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var History = class extends SvelteComponent {
+var File_up = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance19, create_fragment19, safe_not_equal, {});
   }
 };
-var history_default = History;
+var file_up_default = File_up;
 
-// node_modules/lucide-svelte/dist/icons/info.svelte
+// node_modules/lucide-svelte/dist/icons/focus.svelte
 function create_default_slot19(ctx) {
   let current;
   const default_slot_template = (
@@ -4636,7 +4691,7 @@ function create_fragment20(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "info" },
+    { name: "focus" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4699,9 +4754,11 @@ function create_fragment20(ctx) {
 function instance20($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "12", "cy": "12", "r": "10" }],
-    ["path", { "d": "M12 16v-4" }],
-    ["path", { "d": "M12 8h.01" }]
+    ["circle", { "cx": "12", "cy": "12", "r": "3" }],
+    ["path", { "d": "M3 7V5a2 2 0 0 1 2-2h2" }],
+    ["path", { "d": "M17 3h2a2 2 0 0 1 2 2v2" }],
+    ["path", { "d": "M21 17v2a2 2 0 0 1-2 2h-2" }],
+    ["path", { "d": "M7 21H5a2 2 0 0 1-2-2v-2" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4711,15 +4768,15 @@ function instance20($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Info = class extends SvelteComponent {
+var Focus = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance20, create_fragment20, safe_not_equal, {});
   }
 };
-var info_default = Info;
+var focus_default = Focus;
 
-// node_modules/lucide-svelte/dist/icons/keyboard.svelte
+// node_modules/lucide-svelte/dist/icons/globe.svelte
 function create_default_slot20(ctx) {
   let current;
   const default_slot_template = (
@@ -4789,7 +4846,7 @@ function create_fragment21(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "keyboard" },
+    { name: "globe" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -4852,24 +4909,14 @@ function create_fragment21(ctx) {
 function instance21($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M10 8h.01" }],
-    ["path", { "d": "M12 12h.01" }],
-    ["path", { "d": "M14 8h.01" }],
-    ["path", { "d": "M16 12h.01" }],
-    ["path", { "d": "M18 8h.01" }],
-    ["path", { "d": "M6 8h.01" }],
-    ["path", { "d": "M7 16h10" }],
-    ["path", { "d": "M8 12h.01" }],
+    ["circle", { "cx": "12", "cy": "12", "r": "10" }],
     [
-      "rect",
+      "path",
       {
-        "x": "2",
-        "y": "4",
-        "width": "20",
-        "height": "16",
-        "rx": "2"
+        "d": "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
       }
-    ]
+    ],
+    ["path", { "d": "M2 12h20" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -4879,15 +4926,15 @@ function instance21($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Keyboard = class extends SvelteComponent {
+var Globe = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance21, create_fragment21, safe_not_equal, {});
   }
 };
-var keyboard_default = Keyboard;
+var globe_default = Globe;
 
-// node_modules/lucide-svelte/dist/icons/merge.svelte
+// node_modules/lucide-svelte/dist/icons/grip-vertical.svelte
 function create_default_slot21(ctx) {
   let current;
   const default_slot_template = (
@@ -4957,7 +5004,7 @@ function create_fragment22(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "merge" },
+    { name: "grip-vertical" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5020,14 +5067,12 @@ function create_fragment22(ctx) {
 function instance22($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "m8 6 4-4 4 4" }],
-    [
-      "path",
-      {
-        "d": "M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"
-      }
-    ],
-    ["path", { "d": "m20 22-5-5" }]
+    ["circle", { "cx": "9", "cy": "12", "r": "1" }],
+    ["circle", { "cx": "9", "cy": "5", "r": "1" }],
+    ["circle", { "cx": "9", "cy": "19", "r": "1" }],
+    ["circle", { "cx": "15", "cy": "12", "r": "1" }],
+    ["circle", { "cx": "15", "cy": "5", "r": "1" }],
+    ["circle", { "cx": "15", "cy": "19", "r": "1" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -5037,15 +5082,15 @@ function instance22($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Merge = class extends SvelteComponent {
+var Grip_vertical = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance22, create_fragment22, safe_not_equal, {});
   }
 };
-var merge_default = Merge;
+var grip_vertical_default = Grip_vertical;
 
-// node_modules/lucide-svelte/dist/icons/minus.svelte
+// node_modules/lucide-svelte/dist/icons/heading-1.svelte
 function create_default_slot22(ctx) {
   let current;
   const default_slot_template = (
@@ -5115,7 +5160,7 @@ function create_fragment23(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "minus" },
+    { name: "heading-1" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5177,7 +5222,12 @@ function create_fragment23(ctx) {
 }
 function instance23($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "M5 12h14" }]];
+  const iconNode = [
+    ["path", { "d": "M4 12h8" }],
+    ["path", { "d": "M4 18V6" }],
+    ["path", { "d": "M12 18V6" }],
+    ["path", { "d": "m17 12 3-2v8" }]
+  ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -5186,15 +5236,15 @@ function instance23($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Minus = class extends SvelteComponent {
+var Heading_1 = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance23, create_fragment23, safe_not_equal, {});
   }
 };
-var minus_default = Minus;
+var heading_1_default = Heading_1;
 
-// node_modules/lucide-svelte/dist/icons/more-vertical.svelte
+// node_modules/lucide-svelte/dist/icons/history.svelte
 function create_default_slot23(ctx) {
   let current;
   const default_slot_template = (
@@ -5264,7 +5314,7 @@ function create_fragment24(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "more-vertical" },
+    { name: "history" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5327,9 +5377,14 @@ function create_fragment24(ctx) {
 function instance24($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "12", "cy": "12", "r": "1" }],
-    ["circle", { "cx": "12", "cy": "5", "r": "1" }],
-    ["circle", { "cx": "12", "cy": "19", "r": "1" }]
+    [
+      "path",
+      {
+        "d": "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+      }
+    ],
+    ["path", { "d": "M3 3v5h5" }],
+    ["path", { "d": "M12 7v5l4 2" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -5339,15 +5394,15 @@ function instance24($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var More_vertical = class extends SvelteComponent {
+var History = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance24, create_fragment24, safe_not_equal, {});
   }
 };
-var more_vertical_default = More_vertical;
+var history_default = History;
 
-// node_modules/lucide-svelte/dist/icons/palette.svelte
+// node_modules/lucide-svelte/dist/icons/info.svelte
 function create_default_slot24(ctx) {
   let current;
   const default_slot_template = (
@@ -5417,7 +5472,7 @@ function create_fragment25(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "palette" },
+    { name: "info" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5480,48 +5535,9 @@ function create_fragment25(ctx) {
 function instance25($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    [
-      "circle",
-      {
-        "cx": "13.5",
-        "cy": "6.5",
-        "r": ".5",
-        "fill": "currentColor"
-      }
-    ],
-    [
-      "circle",
-      {
-        "cx": "17.5",
-        "cy": "10.5",
-        "r": ".5",
-        "fill": "currentColor"
-      }
-    ],
-    [
-      "circle",
-      {
-        "cx": "8.5",
-        "cy": "7.5",
-        "r": ".5",
-        "fill": "currentColor"
-      }
-    ],
-    [
-      "circle",
-      {
-        "cx": "6.5",
-        "cy": "12.5",
-        "r": ".5",
-        "fill": "currentColor"
-      }
-    ],
-    [
-      "path",
-      {
-        "d": "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"
-      }
-    ]
+    ["circle", { "cx": "12", "cy": "12", "r": "10" }],
+    ["path", { "d": "M12 16v-4" }],
+    ["path", { "d": "M12 8h.01" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -5531,15 +5547,15 @@ function instance25($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Palette = class extends SvelteComponent {
+var Info = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance25, create_fragment25, safe_not_equal, {});
   }
 };
-var palette_default = Palette;
+var info_default = Info;
 
-// node_modules/lucide-svelte/dist/icons/panel-left-dashed.svelte
+// node_modules/lucide-svelte/dist/icons/keyboard.svelte
 function create_default_slot25(ctx) {
   let current;
   const default_slot_template = (
@@ -5609,7 +5625,7 @@ function create_fragment26(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "panel-left-dashed" },
+    { name: "keyboard" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5672,20 +5688,24 @@ function create_fragment26(ctx) {
 function instance26($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
+    ["path", { "d": "M10 8h.01" }],
+    ["path", { "d": "M12 12h.01" }],
+    ["path", { "d": "M14 8h.01" }],
+    ["path", { "d": "M16 12h.01" }],
+    ["path", { "d": "M18 8h.01" }],
+    ["path", { "d": "M6 8h.01" }],
+    ["path", { "d": "M7 16h10" }],
+    ["path", { "d": "M8 12h.01" }],
     [
       "rect",
       {
-        "width": "18",
-        "height": "18",
-        "x": "3",
-        "y": "3",
+        "x": "2",
+        "y": "4",
+        "width": "20",
+        "height": "16",
         "rx": "2"
       }
-    ],
-    ["path", { "d": "M9 14v1" }],
-    ["path", { "d": "M9 19v2" }],
-    ["path", { "d": "M9 3v2" }],
-    ["path", { "d": "M9 9v1" }]
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -5695,15 +5715,15 @@ function instance26($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Panel_left_dashed = class extends SvelteComponent {
+var Keyboard = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance26, create_fragment26, safe_not_equal, {});
   }
 };
-var panel_left_dashed_default = Panel_left_dashed;
+var keyboard_default = Keyboard;
 
-// node_modules/lucide-svelte/dist/icons/panel-right-dashed.svelte
+// node_modules/lucide-svelte/dist/icons/merge.svelte
 function create_default_slot26(ctx) {
   let current;
   const default_slot_template = (
@@ -5773,7 +5793,7 @@ function create_fragment27(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "panel-right-dashed" },
+    { name: "merge" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5836,20 +5856,14 @@ function create_fragment27(ctx) {
 function instance27($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
+    ["path", { "d": "m8 6 4-4 4 4" }],
     [
-      "rect",
+      "path",
       {
-        "width": "18",
-        "height": "18",
-        "x": "3",
-        "y": "3",
-        "rx": "2"
+        "d": "M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"
       }
     ],
-    ["path", { "d": "M15 14v1" }],
-    ["path", { "d": "M15 19v2" }],
-    ["path", { "d": "M15 3v2" }],
-    ["path", { "d": "M15 9v1" }]
+    ["path", { "d": "m20 22-5-5" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -5859,15 +5873,15 @@ function instance27($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Panel_right_dashed = class extends SvelteComponent {
+var Merge = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance27, create_fragment27, safe_not_equal, {});
   }
 };
-var panel_right_dashed_default = Panel_right_dashed;
+var merge_default = Merge;
 
-// node_modules/lucide-svelte/dist/icons/pen.svelte
+// node_modules/lucide-svelte/dist/icons/minus.svelte
 function create_default_slot27(ctx) {
   let current;
   const default_slot_template = (
@@ -5937,7 +5951,7 @@ function create_fragment28(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "pen" },
+    { name: "minus" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -5999,14 +6013,7 @@ function create_fragment28(ctx) {
 }
 function instance28($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [
-    [
-      "path",
-      {
-        "d": "M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
-      }
-    ]
-  ];
+  const iconNode = [["path", { "d": "M5 12h14" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -6015,15 +6022,15 @@ function instance28($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Pen = class extends SvelteComponent {
+var Minus = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance28, create_fragment28, safe_not_equal, {});
   }
 };
-var pen_default = Pen;
+var minus_default = Minus;
 
-// node_modules/lucide-svelte/dist/icons/pencil.svelte
+// node_modules/lucide-svelte/dist/icons/more-vertical.svelte
 function create_default_slot28(ctx) {
   let current;
   const default_slot_template = (
@@ -6093,7 +6100,7 @@ function create_fragment29(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "pencil" },
+    { name: "more-vertical" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6156,13 +6163,9 @@ function create_fragment29(ctx) {
 function instance29($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    [
-      "path",
-      {
-        "d": "M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
-      }
-    ],
-    ["path", { "d": "m15 5 4 4" }]
+    ["circle", { "cx": "12", "cy": "12", "r": "1" }],
+    ["circle", { "cx": "12", "cy": "5", "r": "1" }],
+    ["circle", { "cx": "12", "cy": "19", "r": "1" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -6172,15 +6175,15 @@ function instance29($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Pencil = class extends SvelteComponent {
+var More_vertical = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance29, create_fragment29, safe_not_equal, {});
   }
 };
-var pencil_default = Pencil;
+var more_vertical_default = More_vertical;
 
-// node_modules/lucide-svelte/dist/icons/pin.svelte
+// node_modules/lucide-svelte/dist/icons/palette.svelte
 function create_default_slot29(ctx) {
   let current;
   const default_slot_template = (
@@ -6250,7 +6253,7 @@ function create_fragment30(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "pin" },
+    { name: "palette" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6314,18 +6317,45 @@ function instance30($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
     [
-      "line",
+      "circle",
       {
-        "x1": "12",
-        "x2": "12",
-        "y1": "17",
-        "y2": "22"
+        "cx": "13.5",
+        "cy": "6.5",
+        "r": ".5",
+        "fill": "currentColor"
+      }
+    ],
+    [
+      "circle",
+      {
+        "cx": "17.5",
+        "cy": "10.5",
+        "r": ".5",
+        "fill": "currentColor"
+      }
+    ],
+    [
+      "circle",
+      {
+        "cx": "8.5",
+        "cy": "7.5",
+        "r": ".5",
+        "fill": "currentColor"
+      }
+    ],
+    [
+      "circle",
+      {
+        "cx": "6.5",
+        "cy": "12.5",
+        "r": ".5",
+        "fill": "currentColor"
       }
     ],
     [
       "path",
       {
-        "d": "M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"
+        "d": "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"
       }
     ]
   ];
@@ -6337,15 +6367,15 @@ function instance30($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Pin = class extends SvelteComponent {
+var Palette = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance30, create_fragment30, safe_not_equal, {});
   }
 };
-var pin_default = Pin;
+var palette_default = Palette;
 
-// node_modules/lucide-svelte/dist/icons/plus.svelte
+// node_modules/lucide-svelte/dist/icons/panel-left-dashed.svelte
 function create_default_slot30(ctx) {
   let current;
   const default_slot_template = (
@@ -6415,7 +6445,7 @@ function create_fragment31(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "plus" },
+    { name: "panel-left-dashed" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6477,7 +6507,22 @@ function create_fragment31(ctx) {
 }
 function instance31($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [["path", { "d": "M5 12h14" }], ["path", { "d": "M12 5v14" }]];
+  const iconNode = [
+    [
+      "rect",
+      {
+        "width": "18",
+        "height": "18",
+        "x": "3",
+        "y": "3",
+        "rx": "2"
+      }
+    ],
+    ["path", { "d": "M9 14v1" }],
+    ["path", { "d": "M9 19v2" }],
+    ["path", { "d": "M9 3v2" }],
+    ["path", { "d": "M9 9v1" }]
+  ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -6486,15 +6531,15 @@ function instance31($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Plus = class extends SvelteComponent {
+var Panel_left_dashed = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance31, create_fragment31, safe_not_equal, {});
   }
 };
-var plus_default = Plus;
+var panel_left_dashed_default = Panel_left_dashed;
 
-// node_modules/lucide-svelte/dist/icons/redo-2.svelte
+// node_modules/lucide-svelte/dist/icons/panel-right-dashed.svelte
 function create_default_slot31(ctx) {
   let current;
   const default_slot_template = (
@@ -6564,7 +6609,7 @@ function create_fragment32(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "redo-2" },
+    { name: "panel-right-dashed" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6627,13 +6672,20 @@ function create_fragment32(ctx) {
 function instance32($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "m15 14 5-5-5-5" }],
     [
-      "path",
+      "rect",
       {
-        "d": "M20 9H9.5A5.5 5.5 0 0 0 4 14.5v0A5.5 5.5 0 0 0 9.5 20H13"
+        "width": "18",
+        "height": "18",
+        "x": "3",
+        "y": "3",
+        "rx": "2"
       }
-    ]
+    ],
+    ["path", { "d": "M15 14v1" }],
+    ["path", { "d": "M15 19v2" }],
+    ["path", { "d": "M15 3v2" }],
+    ["path", { "d": "M15 9v1" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -6643,15 +6695,15 @@ function instance32($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Redo_2 = class extends SvelteComponent {
+var Panel_right_dashed = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance32, create_fragment32, safe_not_equal, {});
   }
 };
-var redo_2_default = Redo_2;
+var panel_right_dashed_default = Panel_right_dashed;
 
-// node_modules/lucide-svelte/dist/icons/rotate-ccw.svelte
+// node_modules/lucide-svelte/dist/icons/pen.svelte
 function create_default_slot32(ctx) {
   let current;
   const default_slot_template = (
@@ -6721,7 +6773,7 @@ function create_fragment33(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "rotate-ccw" },
+    { name: "pen" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6787,10 +6839,9 @@ function instance33($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        "d": "M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
       }
-    ],
-    ["path", { "d": "M3 3v5h5" }]
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -6800,15 +6851,15 @@ function instance33($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Rotate_ccw = class extends SvelteComponent {
+var Pen = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance33, create_fragment33, safe_not_equal, {});
   }
 };
-var rotate_ccw_default = Rotate_ccw;
+var pen_default = Pen;
 
-// node_modules/lucide-svelte/dist/icons/rotate-cw.svelte
+// node_modules/lucide-svelte/dist/icons/pencil.svelte
 function create_default_slot33(ctx) {
   let current;
   const default_slot_template = (
@@ -6878,7 +6929,7 @@ function create_fragment34(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "rotate-cw" },
+    { name: "pencil" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -6944,10 +6995,10 @@ function instance34($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"
+        "d": "M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
       }
     ],
-    ["path", { "d": "M21 3v5h-5" }]
+    ["path", { "d": "m15 5 4 4" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -6957,15 +7008,15 @@ function instance34($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Rotate_cw = class extends SvelteComponent {
+var Pencil = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance34, create_fragment34, safe_not_equal, {});
   }
 };
-var rotate_cw_default = Rotate_cw;
+var pencil_default = Pencil;
 
-// node_modules/lucide-svelte/dist/icons/save.svelte
+// node_modules/lucide-svelte/dist/icons/pin.svelte
 function create_default_slot34(ctx) {
   let current;
   const default_slot_template = (
@@ -7035,7 +7086,7 @@ function create_fragment35(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "save" },
+    { name: "pin" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7099,13 +7150,20 @@ function instance35($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
     [
-      "path",
+      "line",
       {
-        "d": "M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+        "x1": "12",
+        "x2": "12",
+        "y1": "17",
+        "y2": "22"
       }
     ],
-    ["polyline", { "points": "17 21 17 13 7 13 7 21" }],
-    ["polyline", { "points": "7 3 7 8 15 8" }]
+    [
+      "path",
+      {
+        "d": "M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"
+      }
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -7115,15 +7173,15 @@ function instance35($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Save = class extends SvelteComponent {
+var Pin = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance35, create_fragment35, safe_not_equal, {});
   }
 };
-var save_default = Save;
+var pin_default = Pin;
 
-// node_modules/lucide-svelte/dist/icons/scan-search.svelte
+// node_modules/lucide-svelte/dist/icons/plus.svelte
 function create_default_slot35(ctx) {
   let current;
   const default_slot_template = (
@@ -7193,7 +7251,7 @@ function create_fragment36(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "scan-search" },
+    { name: "plus" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7255,14 +7313,7 @@ function create_fragment36(ctx) {
 }
 function instance36($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
-  const iconNode = [
-    ["path", { "d": "M3 7V5a2 2 0 0 1 2-2h2" }],
-    ["path", { "d": "M17 3h2a2 2 0 0 1 2 2v2" }],
-    ["path", { "d": "M21 17v2a2 2 0 0 1-2 2h-2" }],
-    ["path", { "d": "M7 21H5a2 2 0 0 1-2-2v-2" }],
-    ["circle", { "cx": "12", "cy": "12", "r": "3" }],
-    ["path", { "d": "m16 16-1.9-1.9" }]
-  ];
+  const iconNode = [["path", { "d": "M5 12h14" }], ["path", { "d": "M12 5v14" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     if ("$$scope" in $$new_props)
@@ -7271,15 +7322,15 @@ function instance36($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Scan_search = class extends SvelteComponent {
+var Plus = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance36, create_fragment36, safe_not_equal, {});
   }
 };
-var scan_search_default = Scan_search;
+var plus_default = Plus;
 
-// node_modules/lucide-svelte/dist/icons/scissors.svelte
+// node_modules/lucide-svelte/dist/icons/redo-2.svelte
 function create_default_slot36(ctx) {
   let current;
   const default_slot_template = (
@@ -7349,7 +7400,7 @@ function create_fragment37(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "scissors" },
+    { name: "redo-2" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7412,11 +7463,13 @@ function create_fragment37(ctx) {
 function instance37($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "6", "cy": "6", "r": "3" }],
-    ["path", { "d": "M8.12 8.12 12 12" }],
-    ["path", { "d": "M20 4 8.12 15.88" }],
-    ["circle", { "cx": "6", "cy": "18", "r": "3" }],
-    ["path", { "d": "M14.8 14.8 20 20" }]
+    ["path", { "d": "m15 14 5-5-5-5" }],
+    [
+      "path",
+      {
+        "d": "M20 9H9.5A5.5 5.5 0 0 0 4 14.5v0A5.5 5.5 0 0 0 9.5 20H13"
+      }
+    ]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -7426,15 +7479,15 @@ function instance37($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Scissors = class extends SvelteComponent {
+var Redo_2 = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance37, create_fragment37, safe_not_equal, {});
   }
 };
-var scissors_default = Scissors;
+var redo_2_default = Redo_2;
 
-// node_modules/lucide-svelte/dist/icons/search.svelte
+// node_modules/lucide-svelte/dist/icons/rotate-ccw.svelte
 function create_default_slot37(ctx) {
   let current;
   const default_slot_template = (
@@ -7504,7 +7557,7 @@ function create_fragment38(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "search" },
+    { name: "rotate-ccw" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7567,8 +7620,13 @@ function create_fragment38(ctx) {
 function instance38($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["circle", { "cx": "11", "cy": "11", "r": "8" }],
-    ["path", { "d": "m21 21-4.3-4.3" }]
+    [
+      "path",
+      {
+        "d": "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+      }
+    ],
+    ["path", { "d": "M3 3v5h5" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -7578,15 +7636,15 @@ function instance38($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Search = class extends SvelteComponent {
+var Rotate_ccw = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance38, create_fragment38, safe_not_equal, {});
   }
 };
-var search_default = Search;
+var rotate_ccw_default = Rotate_ccw;
 
-// node_modules/lucide-svelte/dist/icons/settings.svelte
+// node_modules/lucide-svelte/dist/icons/rotate-cw.svelte
 function create_default_slot38(ctx) {
   let current;
   const default_slot_template = (
@@ -7656,7 +7714,7 @@ function create_fragment39(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "settings" },
+    { name: "rotate-cw" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7722,10 +7780,10 @@ function instance39($$self, $$props, $$invalidate) {
     [
       "path",
       {
-        "d": "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+        "d": "M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"
       }
     ],
-    ["circle", { "cx": "12", "cy": "12", "r": "3" }]
+    ["path", { "d": "M21 3v5h-5" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -7735,15 +7793,15 @@ function instance39($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Settings = class extends SvelteComponent {
+var Rotate_cw = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance39, create_fragment39, safe_not_equal, {});
   }
 };
-var settings_default = Settings;
+var rotate_cw_default = Rotate_cw;
 
-// node_modules/lucide-svelte/dist/icons/split.svelte
+// node_modules/lucide-svelte/dist/icons/save.svelte
 function create_default_slot39(ctx) {
   let current;
   const default_slot_template = (
@@ -7813,7 +7871,7 @@ function create_fragment40(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "split" },
+    { name: "save" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -7876,15 +7934,14 @@ function create_fragment40(ctx) {
 function instance40($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M16 3h5v5" }],
-    ["path", { "d": "M8 3H3v5" }],
     [
       "path",
       {
-        "d": "M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"
+        "d": "M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
       }
     ],
-    ["path", { "d": "m15 9 6-6" }]
+    ["polyline", { "points": "17 21 17 13 7 13 7 21" }],
+    ["polyline", { "points": "7 3 7 8 15 8" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -7894,15 +7951,15 @@ function instance40($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Split = class extends SvelteComponent {
+var Save = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance40, create_fragment40, safe_not_equal, {});
   }
 };
-var split_default = Split;
+var save_default = Save;
 
-// node_modules/lucide-svelte/dist/icons/text.svelte
+// node_modules/lucide-svelte/dist/icons/scan-search.svelte
 function create_default_slot40(ctx) {
   let current;
   const default_slot_template = (
@@ -7972,7 +8029,7 @@ function create_fragment41(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "text" },
+    { name: "scan-search" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -8035,9 +8092,12 @@ function create_fragment41(ctx) {
 function instance41($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M17 6.1H3" }],
-    ["path", { "d": "M21 12.1H3" }],
-    ["path", { "d": "M15.1 18H3" }]
+    ["path", { "d": "M3 7V5a2 2 0 0 1 2-2h2" }],
+    ["path", { "d": "M17 3h2a2 2 0 0 1 2 2v2" }],
+    ["path", { "d": "M21 17v2a2 2 0 0 1-2 2h-2" }],
+    ["path", { "d": "M7 21H5a2 2 0 0 1-2-2v-2" }],
+    ["circle", { "cx": "12", "cy": "12", "r": "3" }],
+    ["path", { "d": "m16 16-1.9-1.9" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -8047,15 +8107,15 @@ function instance41($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Text = class extends SvelteComponent {
+var Scan_search = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance41, create_fragment41, safe_not_equal, {});
   }
 };
-var text_default = Text;
+var scan_search_default = Scan_search;
 
-// node_modules/lucide-svelte/dist/icons/trash.svelte
+// node_modules/lucide-svelte/dist/icons/scissors.svelte
 function create_default_slot41(ctx) {
   let current;
   const default_slot_template = (
@@ -8125,7 +8185,7 @@ function create_fragment42(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "trash" },
+    { name: "scissors" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -8188,19 +8248,11 @@ function create_fragment42(ctx) {
 function instance42($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M3 6h18" }],
-    [
-      "path",
-      {
-        "d": "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
-      }
-    ],
-    [
-      "path",
-      {
-        "d": "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
-      }
-    ]
+    ["circle", { "cx": "6", "cy": "6", "r": "3" }],
+    ["path", { "d": "M8.12 8.12 12 12" }],
+    ["path", { "d": "M20 4 8.12 15.88" }],
+    ["circle", { "cx": "6", "cy": "18", "r": "3" }],
+    ["path", { "d": "M14.8 14.8 20 20" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -8210,15 +8262,15 @@ function instance42($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Trash = class extends SvelteComponent {
+var Scissors = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance42, create_fragment42, safe_not_equal, {});
   }
 };
-var trash_default = Trash;
+var scissors_default = Scissors;
 
-// node_modules/lucide-svelte/dist/icons/undo-2.svelte
+// node_modules/lucide-svelte/dist/icons/search.svelte
 function create_default_slot42(ctx) {
   let current;
   const default_slot_template = (
@@ -8288,7 +8340,7 @@ function create_fragment43(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "undo-2" },
+    { name: "search" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -8351,13 +8403,8 @@ function create_fragment43(ctx) {
 function instance43($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [
-    ["path", { "d": "M9 14 4 9l5-5" }],
-    [
-      "path",
-      {
-        "d": "M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"
-      }
-    ]
+    ["circle", { "cx": "11", "cy": "11", "r": "8" }],
+    ["path", { "d": "m21 21-4.3-4.3" }]
   ];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -8367,15 +8414,15 @@ function instance43($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [iconNode, $$props, slots, $$scope];
 }
-var Undo_2 = class extends SvelteComponent {
+var Search = class extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance43, create_fragment43, safe_not_equal, {});
   }
 };
-var undo_2_default = Undo_2;
+var search_default = Search;
 
-// node_modules/lucide-svelte/dist/icons/x.svelte
+// node_modules/lucide-svelte/dist/icons/settings.svelte
 function create_default_slot43(ctx) {
   let current;
   const default_slot_template = (
@@ -8445,7 +8492,7 @@ function create_fragment44(ctx) {
   let icon;
   let current;
   const icon_spread_levels = [
-    { name: "x" },
+    { name: "settings" },
     /*$$props*/
     ctx[1],
     { iconNode: (
@@ -8507,6 +8554,795 @@ function create_fragment44(ctx) {
 }
 function instance44($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
+  const iconNode = [
+    [
+      "path",
+      {
+        "d": "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+      }
+    ],
+    ["circle", { "cx": "12", "cy": "12", "r": "3" }]
+  ];
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("$$scope" in $$new_props)
+      $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$props = exclude_internal_props($$props);
+  return [iconNode, $$props, slots, $$scope];
+}
+var Settings = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance44, create_fragment44, safe_not_equal, {});
+  }
+};
+var settings_default = Settings;
+
+// node_modules/lucide-svelte/dist/icons/split.svelte
+function create_default_slot44(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  return {
+    c() {
+      if (default_slot)
+        default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function create_fragment45(ctx) {
+  let icon;
+  let current;
+  const icon_spread_levels = [
+    { name: "split" },
+    /*$$props*/
+    ctx[1],
+    { iconNode: (
+      /*iconNode*/
+      ctx[0]
+    ) }
+  ];
+  let icon_props = {
+    $$slots: { default: [create_default_slot44] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < icon_spread_levels.length; i += 1) {
+    icon_props = assign(icon_props, icon_spread_levels[i]);
+  }
+  icon = new Icon_default({ props: icon_props });
+  return {
+    c() {
+      create_component(icon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(icon, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const icon_changes = dirty & /*$$props, iconNode*/
+      3 ? get_spread_update(icon_spread_levels, [
+        icon_spread_levels[0],
+        dirty & /*$$props*/
+        2 && get_spread_object(
+          /*$$props*/
+          ctx2[1]
+        ),
+        dirty & /*iconNode*/
+        1 && { iconNode: (
+          /*iconNode*/
+          ctx2[0]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope*/
+      8) {
+        icon_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      icon.$set(icon_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(icon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(icon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(icon, detaching);
+    }
+  };
+}
+function instance45($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  const iconNode = [
+    ["path", { "d": "M16 3h5v5" }],
+    ["path", { "d": "M8 3H3v5" }],
+    [
+      "path",
+      {
+        "d": "M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"
+      }
+    ],
+    ["path", { "d": "m15 9 6-6" }]
+  ];
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("$$scope" in $$new_props)
+      $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$props = exclude_internal_props($$props);
+  return [iconNode, $$props, slots, $$scope];
+}
+var Split = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance45, create_fragment45, safe_not_equal, {});
+  }
+};
+var split_default = Split;
+
+// node_modules/lucide-svelte/dist/icons/text.svelte
+function create_default_slot45(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  return {
+    c() {
+      if (default_slot)
+        default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function create_fragment46(ctx) {
+  let icon;
+  let current;
+  const icon_spread_levels = [
+    { name: "text" },
+    /*$$props*/
+    ctx[1],
+    { iconNode: (
+      /*iconNode*/
+      ctx[0]
+    ) }
+  ];
+  let icon_props = {
+    $$slots: { default: [create_default_slot45] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < icon_spread_levels.length; i += 1) {
+    icon_props = assign(icon_props, icon_spread_levels[i]);
+  }
+  icon = new Icon_default({ props: icon_props });
+  return {
+    c() {
+      create_component(icon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(icon, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const icon_changes = dirty & /*$$props, iconNode*/
+      3 ? get_spread_update(icon_spread_levels, [
+        icon_spread_levels[0],
+        dirty & /*$$props*/
+        2 && get_spread_object(
+          /*$$props*/
+          ctx2[1]
+        ),
+        dirty & /*iconNode*/
+        1 && { iconNode: (
+          /*iconNode*/
+          ctx2[0]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope*/
+      8) {
+        icon_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      icon.$set(icon_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(icon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(icon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(icon, detaching);
+    }
+  };
+}
+function instance46($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  const iconNode = [
+    ["path", { "d": "M17 6.1H3" }],
+    ["path", { "d": "M21 12.1H3" }],
+    ["path", { "d": "M15.1 18H3" }]
+  ];
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("$$scope" in $$new_props)
+      $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$props = exclude_internal_props($$props);
+  return [iconNode, $$props, slots, $$scope];
+}
+var Text = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance46, create_fragment46, safe_not_equal, {});
+  }
+};
+var text_default = Text;
+
+// node_modules/lucide-svelte/dist/icons/trash.svelte
+function create_default_slot46(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  return {
+    c() {
+      if (default_slot)
+        default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function create_fragment47(ctx) {
+  let icon;
+  let current;
+  const icon_spread_levels = [
+    { name: "trash" },
+    /*$$props*/
+    ctx[1],
+    { iconNode: (
+      /*iconNode*/
+      ctx[0]
+    ) }
+  ];
+  let icon_props = {
+    $$slots: { default: [create_default_slot46] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < icon_spread_levels.length; i += 1) {
+    icon_props = assign(icon_props, icon_spread_levels[i]);
+  }
+  icon = new Icon_default({ props: icon_props });
+  return {
+    c() {
+      create_component(icon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(icon, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const icon_changes = dirty & /*$$props, iconNode*/
+      3 ? get_spread_update(icon_spread_levels, [
+        icon_spread_levels[0],
+        dirty & /*$$props*/
+        2 && get_spread_object(
+          /*$$props*/
+          ctx2[1]
+        ),
+        dirty & /*iconNode*/
+        1 && { iconNode: (
+          /*iconNode*/
+          ctx2[0]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope*/
+      8) {
+        icon_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      icon.$set(icon_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(icon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(icon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(icon, detaching);
+    }
+  };
+}
+function instance47($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  const iconNode = [
+    ["path", { "d": "M3 6h18" }],
+    [
+      "path",
+      {
+        "d": "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+      }
+    ],
+    [
+      "path",
+      {
+        "d": "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
+      }
+    ]
+  ];
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("$$scope" in $$new_props)
+      $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$props = exclude_internal_props($$props);
+  return [iconNode, $$props, slots, $$scope];
+}
+var Trash = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance47, create_fragment47, safe_not_equal, {});
+  }
+};
+var trash_default = Trash;
+
+// node_modules/lucide-svelte/dist/icons/undo-2.svelte
+function create_default_slot47(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  return {
+    c() {
+      if (default_slot)
+        default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function create_fragment48(ctx) {
+  let icon;
+  let current;
+  const icon_spread_levels = [
+    { name: "undo-2" },
+    /*$$props*/
+    ctx[1],
+    { iconNode: (
+      /*iconNode*/
+      ctx[0]
+    ) }
+  ];
+  let icon_props = {
+    $$slots: { default: [create_default_slot47] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < icon_spread_levels.length; i += 1) {
+    icon_props = assign(icon_props, icon_spread_levels[i]);
+  }
+  icon = new Icon_default({ props: icon_props });
+  return {
+    c() {
+      create_component(icon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(icon, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const icon_changes = dirty & /*$$props, iconNode*/
+      3 ? get_spread_update(icon_spread_levels, [
+        icon_spread_levels[0],
+        dirty & /*$$props*/
+        2 && get_spread_object(
+          /*$$props*/
+          ctx2[1]
+        ),
+        dirty & /*iconNode*/
+        1 && { iconNode: (
+          /*iconNode*/
+          ctx2[0]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope*/
+      8) {
+        icon_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      icon.$set(icon_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(icon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(icon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(icon, detaching);
+    }
+  };
+}
+function instance48($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  const iconNode = [
+    ["path", { "d": "M9 14 4 9l5-5" }],
+    [
+      "path",
+      {
+        "d": "M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"
+      }
+    ]
+  ];
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("$$scope" in $$new_props)
+      $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$props = exclude_internal_props($$props);
+  return [iconNode, $$props, slots, $$scope];
+}
+var Undo_2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance48, create_fragment48, safe_not_equal, {});
+  }
+};
+var undo_2_default = Undo_2;
+
+// node_modules/lucide-svelte/dist/icons/x.svelte
+function create_default_slot48(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  return {
+    c() {
+      if (default_slot)
+        default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function create_fragment49(ctx) {
+  let icon;
+  let current;
+  const icon_spread_levels = [
+    { name: "x" },
+    /*$$props*/
+    ctx[1],
+    { iconNode: (
+      /*iconNode*/
+      ctx[0]
+    ) }
+  ];
+  let icon_props = {
+    $$slots: { default: [create_default_slot48] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < icon_spread_levels.length; i += 1) {
+    icon_props = assign(icon_props, icon_spread_levels[i]);
+  }
+  icon = new Icon_default({ props: icon_props });
+  return {
+    c() {
+      create_component(icon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(icon, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const icon_changes = dirty & /*$$props, iconNode*/
+      3 ? get_spread_update(icon_spread_levels, [
+        icon_spread_levels[0],
+        dirty & /*$$props*/
+        2 && get_spread_object(
+          /*$$props*/
+          ctx2[1]
+        ),
+        dirty & /*iconNode*/
+        1 && { iconNode: (
+          /*iconNode*/
+          ctx2[0]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope*/
+      8) {
+        icon_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      icon.$set(icon_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(icon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(icon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(icon, detaching);
+    }
+  };
+}
+function instance49($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
   const iconNode = [["path", { "d": "M18 6 6 18" }], ["path", { "d": "m6 6 12 12" }]];
   $$self.$$set = ($$new_props) => {
     $$invalidate(1, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
@@ -8519,7 +9355,7 @@ function instance44($$self, $$props, $$invalidate) {
 var X = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance44, create_fragment44, safe_not_equal, {});
+    init(this, options, instance49, create_fragment49, safe_not_equal, {});
   }
 };
 var x_default = X;
@@ -8531,50 +9367,6 @@ var getPlugin = () => {
 var getView = () => {
   return getContext("view");
 };
-
-// src/lib/store/derived.ts
-var derived = (source, mapper) => {
-  const subscribers = /* @__PURE__ */ new Set();
-  let derivedValue;
-  let unsubFromSource = null;
-  return {
-    subscribe: (run2) => {
-      subscribers.add(run2);
-      if (!unsubFromSource) {
-        unsubFromSource = source.subscribe(
-          (value, action, initialRun) => {
-            if (action || initialRun) {
-              const newValue = mapper(value, action);
-              if (newValue !== derivedValue) {
-                derivedValue = newValue;
-                for (const sub of subscribers) {
-                  sub(derivedValue, action, initialRun);
-                }
-              }
-            }
-          }
-        );
-      }
-      return () => {
-        subscribers.delete(run2);
-        if (unsubFromSource && subscribers.size === 0) {
-          unsubFromSource();
-          unsubFromSource = null;
-        }
-      };
-    }
-  };
-};
-
-// src/stores/document/derived/history-store.ts
-var historyStore = (view) => {
-  return derived(view.documentStore, (state2) => {
-    return state2.history;
-  });
-};
-
-// src/view/components/container/controls-bar/controls-container.svelte
-var import_obsidian3 = require("obsidian");
 
 // node_modules/svelte/src/runtime/store/index.js
 var subscriber_queue = [];
@@ -8624,7 +9416,7 @@ function writable(value, start = noop) {
   }
   return { set, update: update2, subscribe: subscribe2 };
 }
-function derived2(stores, fn, initial_value) {
+function derived(stores, fn, initial_value) {
   const single = !Array.isArray(stores);
   const stores_array = single ? [stores] : stores;
   if (!stores_array.every(Boolean)) {
@@ -8673,11 +9465,47 @@ function derived2(stores, fn, initial_value) {
   });
 }
 
+// src/lib/store/derived.ts
+var derived2 = (source, mapper) => {
+  const subscribers = /* @__PURE__ */ new Set();
+  let derivedValue;
+  let unsubFromSource = null;
+  return {
+    subscribe: (run2) => {
+      subscribers.add(run2);
+      if (!unsubFromSource) {
+        unsubFromSource = source.subscribe(
+          (value, action, initialRun) => {
+            if (action || initialRun) {
+              const newValue = mapper(value, action);
+              if (newValue !== derivedValue) {
+                derivedValue = newValue;
+                for (const sub of subscribers) {
+                  sub(derivedValue, action, initialRun);
+                }
+              }
+            }
+          }
+        );
+      } else {
+        run2(derivedValue, void 0, true);
+      }
+      return () => {
+        subscribers.delete(run2);
+        if (unsubFromSource && subscribers.size === 0) {
+          unsubFromSource();
+          unsubFromSource = null;
+        }
+      };
+    }
+  };
+};
+
 // src/stores/view/derived/ui-controls-store.ts
-var uiControlsStore = (view) => derived(view.viewStore, (state2) => state2.ui.controls);
+var uiControlsStore = (view) => derived2(view.viewStore, (state2) => state2.ui.controls);
 
 // src/view/components/container/shared/button.svelte
-function create_fragment45(ctx) {
+function create_fragment50(ctx) {
   let button;
   let button_class_value;
   let current;
@@ -8821,7 +9649,7 @@ function create_fragment45(ctx) {
     }
   };
 }
-function instance45($$self, $$props, $$invalidate) {
+function instance50($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { label } = $$props;
   let { tooltipPosition } = $$props;
@@ -8859,7 +9687,7 @@ function instance45($$self, $$props, $$invalidate) {
 var Button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance45, create_fragment45, safe_not_equal, {
+    init(this, options, instance50, create_fragment50, safe_not_equal, {
       label: 0,
       tooltipPosition: 1,
       disabled: 2,
@@ -8871,8 +9699,20 @@ var Button = class extends SvelteComponent {
 var button_default = Button;
 
 // src/stores/settings/derived/scrolling-store.ts
-var ScrollSettingsStore = (view) => derived(view.plugin.settings, (state2) => state2.view.scrolling);
-var showMinimapStore = (view) => derived(view.plugin.settings, (state2) => state2.view.showMinimap);
+var ScrollSettingsStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.scrolling);
+var showMinimapStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.showMinimap);
+
+// src/stores/settings/derived/view-settings-store.ts
+var ShowLeftSidebarStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.showLeftSidebar);
+var LeftSidebarActiveTabStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.leftSidebarActiveTab);
+var ApplyGapBetweenCardsStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.applyGapBetweenCards);
+var OutlineModeStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.outlineMode);
+var MaintainEditMode = (view) => derived2(view.plugin.settings, (state2) => state2.view.maintainEditMode);
+var AlwaysShowCardButtons = (view) => derived2(view.plugin.settings, (state2) => state2.view.alwaysShowCardButtons);
+var HiddenVerticalToolbarButtons = (plugin) => derived2(
+  plugin.settings,
+  (state2) => state2.view.hiddenVerticalToolbarButtons
+);
 
 // src/helpers/load-custom-icons.ts
 var import_obsidian = require("obsidian");
@@ -8967,65 +9807,698 @@ var loadCustomIcons = () => {
   }
 };
 
-// src/stores/settings/derived/view-settings-store.ts
-var ShowLeftSidebarStore = (view) => derived(view.plugin.settings, (state2) => state2.view.showLeftSidebar);
-var LeftSidebarActiveTabStore = (view) => derived(view.plugin.settings, (state2) => state2.view.leftSidebarActiveTab);
-var ApplyGapBetweenCardsStore = (view) => derived(view.plugin.settings, (state2) => state2.view.applyGapBetweenCards);
-var OutlineModeStore = (view) => derived(view.plugin.settings, (state2) => state2.view.outlineMode);
-var MaintainEditMode = (view) => derived(view.plugin.settings, (state2) => state2.view.maintainEditMode);
-var AlwaysShowCardButtons = (view) => derived(view.plugin.settings, (state2) => state2.view.alwaysShowCardButtons);
-
-// node_modules/tslib/tslib.es6.mjs
-function __awaiter(thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function(resolve) {
-      resolve(value);
-    });
+// src/view/components/container/toolbar-vertical/vertical-toolbar-actions.ts
+var VerticalToolbarActions = class {
+  constructor(view) {
+    this.view = view;
+    this.toggleHelp = () => {
+      this.view.viewStore.dispatch({ type: "view/hotkeys/toggle-modal" });
+    };
+    this.toggleStyleRules = () => {
+      this.view.viewStore.dispatch({
+        type: "view/style-rules/toggle-modal"
+      });
+    };
+    this.toggleSettings = () => {
+      this.view.viewStore.dispatch({ type: "view/settings/toggle-modal" });
+    };
+    this.toggleMinimap = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/toggle-minimap"
+      });
+    };
+    this.toggleScrollModeH = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/toggle-horizontal-scrolling-mode"
+      });
+    };
+    this.toggleScrollModeV = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/toggle-vertical-scrolling-mode"
+      });
+    };
+    this.toggleGap = () => {
+      this.view.plugin.settings.dispatch({
+        type: "view/modes/gap-between-cards/toggle"
+      });
+    };
+    this.toggleOutlineMode = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/modes/toggle-outline-mode"
+      });
+    };
+    this.zoomIn = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/set-zoom-level",
+        payload: { direction: "in" }
+      });
+    };
+    this.zoomOut = () => {
+      this.view.plugin.settings.dispatch({
+        type: "settings/view/set-zoom-level",
+        payload: { direction: "out" }
+      });
+    };
   }
-  return new (P || (P = Promise))(function(resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-
-// src/stores/view/derived/zoom-level-store.ts
-var zoomLevelStore = (view) => derived(view.plugin.settings, (state2) => state2.view.zoomLevel);
-
-// src/stores/settings/reducers/change-zoom-level.ts
-var formatNumber = (num) => parseFloat(num.toFixed(3));
-var zoomStep = 0.1;
-var maxZoomLevel = 2;
-var minZoomLevel = 0.05;
-var changeZoomLevel = (state2, payload) => {
-  if ("value" in payload) {
-    state2.view.zoomLevel = payload.value;
-  } else {
-    state2.view.zoomLevel = payload.direction === "in" ? Math.min(state2.view.zoomLevel + zoomStep, maxZoomLevel) : Math.max(state2.view.zoomLevel - zoomStep, minZoomLevel);
-  }
-  state2.view.zoomLevel = formatNumber(state2.view.zoomLevel);
 };
 
-// src/view/components/container/controls-bar/components/helpers/create-zoom-menu.ts
+// src/view/components/container/toolbar-vertical/vertical-toolbar-buttons-list.ts
+var VerticalToolbarButtonsList = (view) => {
+  const hiddenControlsBarButtons = HiddenVerticalToolbarButtons(view.plugin);
+  const h = new VerticalToolbarActions(view);
+  return derived([hiddenControlsBarButtons], ([hiddenControlsBarButtons2]) => {
+    const set = new Set(hiddenControlsBarButtons2);
+    const buttons = [
+      {
+        id: "minimap",
+        buttons: [
+          {
+            label: lang.controls_toggle_minimap,
+            onClick: h.toggleMinimap,
+            icon: panel_right_dashed_default,
+            id: "minimap"
+          }
+        ]
+      },
+      {
+        id: "settings",
+        buttons: [
+          {
+            label: lang.controls_settings,
+            onClick: h.toggleSettings,
+            icon: settings_default,
+            id: "settings"
+          },
+          {
+            label: lang.controls_hotkeys,
+            onClick: h.toggleHelp,
+            icon: keyboard_default,
+            id: "hotkeys"
+          },
+          {
+            label: lang.controls_rules,
+            onClick: h.toggleStyleRules,
+            icon: palette_default,
+            id: "style-rules"
+          }
+        ]
+      },
+      {
+        id: "scroll",
+        buttons: [
+          {
+            label: lang.controls_toggle_scrolling_mode_horizontal,
+            onClick: h.toggleScrollModeH,
+            icon: customIcons.alignH,
+            id: "center-active-node-h"
+          },
+          {
+            label: lang.controls_toggle_scrolling_mode_vertical,
+            onClick: h.toggleScrollModeV,
+            icon: customIcons.alignV,
+            id: "center-active-node-v"
+          },
+          {
+            label: lang.controls_single_column,
+            onClick: h.toggleOutlineMode,
+            icon: customIcons.outline,
+            id: "outline-mode"
+          },
+          {
+            label: lang.controls_gap_between_cards,
+            onClick: h.toggleGap,
+            icon: customIcons.gap,
+            id: "space-between-cards"
+          }
+        ]
+      }
+    ];
+    return buttons.map((group) => {
+      return {
+        id: group.id,
+        buttons: group.buttons.filter((b) => !set.has(b.id))
+      };
+    }).filter((g) => g.buttons.length > 0);
+  });
+};
+
+// src/view/components/container/toolbar-vertical/vertical-toolbar.svelte
+function add_css(target) {
+  append_styles(target, "svelte-101pjig", ".controls-container.svelte-101pjig{right:var(--size-4-2);top:var(--size-4-2);gap:var(--size-4-2);display:flex;flex-direction:column;position:absolute;z-index:2}.controls-toggle.svelte-101pjig{display:none}.is-mobile{& .controls-toggle {\n            display: block;\n        };& .buttons-group[data-visible='false'] {\n            display: none;\n        }}");
+}
+function get_each_context2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[13] = list[i];
+  return child_ctx;
+}
+function get_each_context_1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[16] = list[i];
+  return child_ctx;
+}
+function create_default_slot_1(ctx) {
+  let morevertical;
+  let current;
+  morevertical = new more_vertical_default({ props: { class: "svg-icon" } });
+  return {
+    c() {
+      create_component(morevertical.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(morevertical, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(morevertical.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(morevertical.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(morevertical, detaching);
+    }
+  };
+}
+function create_else_block(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  var switch_value = (
+    /*button*/
+    ctx[16].icon
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { class: "svg-icon" } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      2 && switch_value !== (switch_value = /*button*/
+      ctx2[16].icon)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+function create_if_block(ctx) {
+  let html_tag;
+  let raw_value = (
+    /*button*/
+    ctx[16].icon.svg + ""
+  );
+  let html_anchor;
+  return {
+    c() {
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      html_tag.a = html_anchor;
+    },
+    m(target, anchor) {
+      html_tag.m(raw_value, target, anchor);
+      insert(target, html_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      2 && raw_value !== (raw_value = /*button*/
+      ctx2[16].icon.svg + ""))
+        html_tag.p(raw_value);
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(html_anchor);
+        html_tag.d();
+      }
+    }
+  };
+}
+function create_default_slot49(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block, create_else_block];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if ("svg" in /*button*/
+    ctx2[16].icon)
+      return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_each_block_1(key_1, ctx) {
+  let first;
+  let button_1;
+  let current;
+  button_1 = new button_default({
+    props: {
+      active: (
+        /*$activeStates*/
+        ctx[2][
+          /*button*/
+          ctx[16].id
+        ]
+      ),
+      classes: "control-item",
+      label: (
+        /*button*/
+        ctx[16].label
+      ),
+      tooltipPosition: "left",
+      $$slots: { default: [create_default_slot49] },
+      $$scope: { ctx }
+    }
+  });
+  button_1.$on("click", function() {
+    if (is_function(
+      /*button*/
+      ctx[16].onClick
+    ))
+      ctx[16].onClick.apply(this, arguments);
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(button_1.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(button_1, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const button_1_changes = {};
+      if (dirty & /*$activeStates, $buttons*/
+      6)
+        button_1_changes.active = /*$activeStates*/
+        ctx[2][
+          /*button*/
+          ctx[16].id
+        ];
+      if (dirty & /*$buttons*/
+      2)
+        button_1_changes.label = /*button*/
+        ctx[16].label;
+      if (dirty & /*$$scope, $buttons*/
+      524290) {
+        button_1_changes.$$scope = { dirty, ctx };
+      }
+      button_1.$set(button_1_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(button_1, detaching);
+    }
+  };
+}
+function create_each_block2(key_1, ctx) {
+  let div;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let t;
+  let current;
+  let each_value_1 = ensure_array_like(
+    /*group*/
+    ctx[13].buttons
+  );
+  const get_key = (ctx2) => (
+    /*button*/
+    ctx2[16].label
+  );
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    let child_ctx = get_each_context_1(ctx, each_value_1, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block_1(key, child_ctx));
+  }
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t = space();
+      attr(div, "class", "buttons-group buttons-group--vertical");
+      attr(
+        div,
+        "data-visible",
+        /*$showControls*/
+        ctx[0]
+      );
+      this.first = div;
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      append(div, t);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$activeStates, $buttons*/
+      6) {
+        each_value_1 = ensure_array_like(
+          /*group*/
+          ctx[13].buttons
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, div, outro_and_destroy_block, create_each_block_1, t, get_each_context_1);
+        check_outros();
+      }
+      if (!current || dirty & /*$showControls*/
+      1) {
+        attr(
+          div,
+          "data-visible",
+          /*$showControls*/
+          ctx[0]
+        );
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+    }
+  };
+}
+function create_fragment51(ctx) {
+  let div1;
+  let div0;
+  let button_1;
+  let t;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let current;
+  button_1 = new button_default({
+    props: {
+      active: (
+        /*$showControls*/
+        ctx[0]
+      ),
+      label: lang.controls_toggle_bar,
+      tooltipPosition: "left",
+      $$slots: { default: [create_default_slot_1] },
+      $$scope: { ctx }
+    }
+  });
+  button_1.$on(
+    "click",
+    /*toggleShowControls*/
+    ctx[4]
+  );
+  let each_value = ensure_array_like(
+    /*$buttons*/
+    ctx[1]
+  );
+  const get_key = (ctx2) => (
+    /*group*/
+    ctx2[13].id
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context2(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block2(key, child_ctx));
+  }
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      create_component(button_1.$$.fragment);
+      t = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div0, "class", "buttons-group controls-toggle svelte-101pjig");
+      attr(div1, "class", "controls-container svelte-101pjig");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      mount_component(button_1, div0, null);
+      append(div1, t);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div1, null);
+        }
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const button_1_changes = {};
+      if (dirty & /*$showControls*/
+      1)
+        button_1_changes.active = /*$showControls*/
+        ctx2[0];
+      if (dirty & /*$$scope*/
+      524288) {
+        button_1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button_1.$set(button_1_changes);
+      if (dirty & /*$showControls, $buttons, $activeStates*/
+      7) {
+        each_value = ensure_array_like(
+          /*$buttons*/
+          ctx2[1]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div1, outro_and_destroy_block, create_each_block2, null, get_each_context2);
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button_1.$$.fragment, local);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      transition_out(button_1.$$.fragment, local);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(button_1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+    }
+  };
+}
+function instance51($$self, $$props, $$invalidate) {
+  let $showControls;
+  let $buttons;
+  let $activeStates;
+  const view = getView();
+  const showControls = writable(false);
+  component_subscribe($$self, showControls, (value) => $$invalidate(0, $showControls = value));
+  const toggleShowControls = () => {
+    showControls.update((v) => !v);
+  };
+  const controls = uiControlsStore(view);
+  const showMinimap = showMinimapStore(view);
+  const scrollSettingsStore = ScrollSettingsStore(view);
+  const applyGapBetweenCards = ApplyGapBetweenCardsStore(view);
+  const outlineMode = OutlineModeStore(view);
+  const buttons = VerticalToolbarButtonsList(view);
+  component_subscribe($$self, buttons, (value) => $$invalidate(1, $buttons = value));
+  const activeStates = derived([showMinimap, controls, scrollSettingsStore, outlineMode, applyGapBetweenCards], ([
+    showMinimap2,
+    controls2,
+    scrollSettingsStore2,
+    outlineMode2,
+    applyGapBetweenCards2
+  ]) => {
+    return {
+      minimap: showMinimap2,
+      settings: controls2.showSettingsSidebar,
+      hotkeys: controls2.showHelpSidebar,
+      "style-rules": controls2.showStyleRulesModal,
+      "center-active-node-h": scrollSettingsStore2.centerActiveNodeH,
+      "center-active-node-v": scrollSettingsStore2.centerActiveNodeV,
+      "outline-mode": outlineMode2,
+      "space-between-cards": applyGapBetweenCards2
+    };
+  });
+  component_subscribe($$self, activeStates, (value) => $$invalidate(2, $activeStates = value));
+  return [
+    $showControls,
+    $buttons,
+    $activeStates,
+    showControls,
+    toggleShowControls,
+    buttons,
+    activeStates
+  ];
+}
+var Vertical_toolbar = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance51, create_fragment51, safe_not_equal, {}, add_css);
+  }
+};
+var vertical_toolbar_default = Vertical_toolbar;
+
+// src/stores/view/derived/zoom-level-store.ts
+var zoomLevelStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.zoomLevel);
+
+// src/view/components/container/toolbar-vertical/helpers/create-zoom-menu.ts
 var import_obsidian2 = require("obsidian");
 
 // node_modules/tiny-invariant/dist/esm/tiny-invariant.js
-var isProduction = false;
+var isProduction = true;
 var prefix = "Invariant failed";
 function invariant(condition, message) {
   if (condition) {
@@ -9061,16 +10534,16 @@ var combineRects = (rect1, rect2) => {
   return new DOMRect(left, top, width, height);
 };
 
-// src/view/components/container/controls-bar/components/helpers/fit-document-height-into-view.ts
+// src/view/components/container/toolbar-vertical/helpers/fit-document-height-into-view.ts
 var fitDocumentHeightIntoView = async (view) => {
   invariant(view.container);
   const initialZoomLevel = get_store_value(zoomLevelStore(view));
   view.plugin.settings.dispatch({
-    type: "UI/CHANGE_ZOOM_LEVEL",
+    type: "settings/view/set-zoom-level",
     payload: { value: 1 }
   });
   const columns = Array.from(
-    view.containerEl.querySelectorAll(".column")
+    view.container.querySelectorAll(".column")
   );
   let result = 1;
   if (columns.length) {
@@ -9081,37 +10554,38 @@ var fitDocumentHeightIntoView = async (view) => {
     }).sort((a, b) => a - b);
     const height = groupHeights[groupHeights.length - 1];
     const width = getCombinedBoundingClientRect(columns).width;
-    const heightScale = view.container.getBoundingClientRect().height / (height + 100);
-    const widthScale = view.container.getBoundingClientRect().width / (width + 100);
+    const boundingClientRect = view.container.getBoundingClientRect();
+    const heightScale = boundingClientRect.height / (height + 100);
+    const widthScale = boundingClientRect.width / (width + 100);
     result = Math.min(heightScale, widthScale);
   }
   view.plugin.settings.dispatch({
-    type: "UI/CHANGE_ZOOM_LEVEL",
+    type: "settings/view/set-zoom-level",
     payload: { value: initialZoomLevel }
   });
   return result;
 };
 
-// src/view/components/container/controls-bar/components/helpers/fit-branch-into-view.ts
+// src/view/components/container/toolbar-vertical/helpers/fit-branch-into-view.ts
 var fitBranchIntoView = async (view) => {
   invariant(view.container);
   const initialZoomLevel = get_store_value(zoomLevelStore(view));
   view.plugin.settings.dispatch({
-    type: "UI/CHANGE_ZOOM_LEVEL",
+    type: "settings/view/set-zoom-level",
     payload: { value: 1 }
   });
   let result = 1;
   const parents = Array.from(
-    view.containerEl.querySelectorAll(".active-parent")
+    view.container.querySelectorAll(".active-parent")
   );
-  const activeNode = view.containerEl.querySelector(
+  const activeNode = view.container.querySelector(
     ".active-node"
   );
   const children2 = Array.from(
-    view.containerEl.querySelectorAll(".active-child")
+    view.container.querySelectorAll(".active-child")
   );
   const siblings = Array.from(
-    view.containerEl.querySelectorAll(".active-sibling")
+    view.container.querySelectorAll(".active-sibling")
   );
   const combinedRect = getCombinedBoundingClientRect([
     ...parents,
@@ -9119,41 +10593,42 @@ var fitBranchIntoView = async (view) => {
     ...siblings,
     ...children2
   ]);
-  const heightScale = view.container.getBoundingClientRect().height / (combinedRect.height + 100);
-  const widthScale = view.container.getBoundingClientRect().width / (combinedRect.width + 100);
+  const boundingClientRect = view.container.getBoundingClientRect();
+  const heightScale = boundingClientRect.height / (combinedRect.height + 100);
+  const widthScale = boundingClientRect.width / (combinedRect.width + 100);
   result = Math.min(heightScale, widthScale);
   view.plugin.settings.dispatch({
-    type: "UI/CHANGE_ZOOM_LEVEL",
+    type: "settings/view/set-zoom-level",
     payload: { value: initialZoomLevel }
   });
   return result;
 };
 
-// src/view/components/container/controls-bar/components/helpers/create-zoom-menu.ts
+// src/view/components/container/toolbar-vertical/helpers/create-zoom-menu.ts
 var staticZoomOptions = [
-  { label: "5%", scale: 0.05 },
-  { label: "10%", scale: 0.1 },
-  { label: "20%", scale: 0.2 },
-  { label: "30%", scale: 0.3 },
-  { label: "40%", scale: 0.4 },
-  { label: "50%", scale: 0.5 },
-  { label: "60%", scale: 0.6 },
-  { label: "70%", scale: 0.7 },
-  { label: "80%", scale: 0.8 },
-  { label: "90%", scale: 0.9 },
-  { label: "100%", scale: 1 },
-  { label: "125%", scale: 1.25 },
-  { label: "150%", scale: 1.5 },
+  { label: "200%", scale: 2 },
   { label: "175%", scale: 1.75 },
-  { label: "200%", scale: 2 }
+  { label: "150%", scale: 1.5 },
+  { label: "125%", scale: 1.25 },
+  { label: "100%", scale: 1 },
+  { label: "90%", scale: 0.9 },
+  { label: "80%", scale: 0.8 },
+  { label: "70%", scale: 0.7 },
+  { label: "60%", scale: 0.6 },
+  { label: "50%", scale: 0.5 },
+  { label: "40%", scale: 0.4 },
+  { label: "30%", scale: 0.3 },
+  { label: "20%", scale: 0.2 },
+  { label: "10%", scale: 0.1 },
+  { label: "5%", scale: 0.05 }
 ];
 var dynamicZoomOptions = [
   {
-    label: "Fit document height into view",
+    label: "Fit document",
     scale: fitDocumentHeightIntoView
   },
   {
-    label: "Fit active branch into view",
+    label: "Fit active branch",
     scale: fitBranchIntoView
   }
 ];
@@ -9168,7 +10643,7 @@ var createZoomMenu = (props) => {
       hoverZoom = newValue;
     }
     props.view.plugin.settings.dispatch({
-      type: "UI/CHANGE_ZOOM_LEVEL",
+      type: "settings/view/set-zoom-level",
       payload: {
         value: newValue
       }
@@ -9201,7 +10676,7 @@ var createZoomMenu = (props) => {
     menuDom.addEventListener("mouseleave", () => {
       if (hoverZoom !== lastClickedZoom) {
         props.view.plugin.settings.dispatch({
-          type: "UI/CHANGE_ZOOM_LEVEL",
+          type: "settings/view/set-zoom-level",
           payload: { value: lastClickedZoom }
         });
       }
@@ -9216,117 +10691,245 @@ var createZoomMenu = (props) => {
     menu.close();
   }
   const buttonRect = props.event.target.getBoundingClientRect();
+  const viewRect = props.view.container.getBoundingClientRect();
   menu.showAtPosition({
     x: get_store_value(showMinimapStore(props.view)) ? buttonRect.left - props.state.menuWidth - 10 : buttonRect.left - 10,
-    y: buttonRect.top + buttonRect.height / 2 - props.state.menuHeight / 2
+    y: viewRect.bottom - 10 - props.state.menuHeight
   });
   menu.onHide(() => {
     props.state.lastMenuHideEvent_ms = Date.now();
   });
 };
 
-// src/stores/view/derived/keyboard-store.ts
-var KeyboardStore = (view) => derived(view.viewStore, (state2) => state2.keyboard);
+// src/stores/settings/reducers/change-zoom-level.ts
+var formatNumber = (num) => parseFloat(num.toFixed(3));
+var zoomStep = 0.1;
+var maxZoomLevel = 2;
+var minZoomLevel = 0.05;
+var changeZoomLevel = (state2, payload) => {
+  if ("value" in payload) {
+    state2.view.zoomLevel = payload.value;
+  } else {
+    state2.view.zoomLevel = payload.direction === "in" ? Math.min(state2.view.zoomLevel + zoomStep, maxZoomLevel) : Math.max(state2.view.zoomLevel - zoomStep, minZoomLevel);
+  }
+  state2.view.zoomLevel = formatNumber(state2.view.zoomLevel);
+};
 
-// src/view/components/container/controls-bar/components/zoom-buttons.svelte
-function create_default_slot_3(ctx) {
-  let zoomin;
+// src/view/components/container/toolbar-vertical/zoom-buttons/zoom-buttons-list.ts
+var ZoomButtonsList = (view, restoreZoom, showZoomPopupMenu) => {
+  const hiddenControlsBarButtons = HiddenVerticalToolbarButtons(view.plugin);
+  const h = new VerticalToolbarActions(view);
+  return derived([hiddenControlsBarButtons], ([hiddenControlsBarButtons2]) => {
+    const set = new Set(hiddenControlsBarButtons2);
+    const buttons = [
+      {
+        id: "zoom",
+        buttons: [
+          {
+            label: lang.controls_zoom_in,
+            onClick: h.zoomIn,
+            icon: plus_default,
+            id: "zoom-in"
+          },
+          {
+            label: lang.controls_zoom_reset,
+            onClick: restoreZoom,
+            icon: rotate_ccw_default,
+            id: "zoom-reset"
+          },
+          {
+            label: lang.controls_zoom_presets,
+            onClick: showZoomPopupMenu,
+            icon: scan_search_default,
+            id: "zoom-presets"
+          },
+          {
+            label: lang.controls_zoom_out,
+            onClick: h.zoomOut,
+            icon: minus_default,
+            id: "zoom-out"
+          }
+        ]
+      }
+    ];
+    return buttons.map((group) => {
+      return {
+        id: group.id,
+        buttons: group.buttons.filter((b) => !set.has(b.id))
+      };
+    }).filter((g) => g.buttons.length > 0);
+  });
+};
+
+// src/stores/view/derived/keyboard-store.ts
+var KeyboardStore = (view) => derived2(view.viewStore, (state2) => state2.keyboard);
+
+// src/view/components/container/toolbar-vertical/zoom-buttons/zoom-buttons.svelte
+function add_css2(target) {
+  append_styles(target, "svelte-12oedbu", ".zoom-buttons-container.svelte-12oedbu{right:var(--size-4-2);bottom:var(--size-4-2);gap:var(--size-4-2);display:flex;flex-direction:column;position:absolute;z-index:2}");
+}
+function get_each_context3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[19] = list[i];
+  return child_ctx;
+}
+function create_if_block2(ctx) {
+  let div;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
   let current;
-  zoomin = new plus_default({ props: { class: "svg-icon" } });
+  let each_value = ensure_array_like(
+    /*$buttons*/
+    ctx[0][0].buttons
+  );
+  const get_key = (ctx2) => (
+    /*button*/
+    ctx2[19].label
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context3(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block3(key, child_ctx));
+  }
   return {
     c() {
-      create_component(zoomin.$$.fragment);
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div, "class", "buttons-group buttons-group--vertical");
     },
     m(target, anchor) {
-      mount_component(zoomin, target, anchor);
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
       current = true;
     },
-    p: noop,
+    p(ctx2, dirty) {
+      if (dirty & /*$activeStates, $buttons, $disabledStates, $showUndoRestZoomButton*/
+      15) {
+        each_value = ensure_array_like(
+          /*$buttons*/
+          ctx2[0][0].buttons
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block3, null, get_each_context3);
+        check_outros();
+      }
+    },
     i(local) {
       if (current)
         return;
-      transition_in(zoomin.$$.fragment, local);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
       current = true;
     },
     o(local) {
-      transition_out(zoomin.$$.fragment, local);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
       current = false;
     },
     d(detaching) {
-      destroy_component(zoomin, detaching);
+      if (detaching) {
+        detach(div);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
     }
   };
 }
-function create_else_block(ctx) {
-  let rotateccw;
+function create_else_block_1(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
   let current;
-  rotateccw = new rotate_ccw_default({ props: { class: "svg-icon" } });
+  var switch_value = (
+    /*button*/
+    ctx[19].icon
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { class: "svg-icon" } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
   return {
     c() {
-      create_component(rotateccw.$$.fragment);
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
     },
     m(target, anchor) {
-      mount_component(rotateccw, target, anchor);
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
       current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      1 && switch_value !== (switch_value = /*button*/
+      ctx2[19].icon)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+      }
     },
     i(local) {
       if (current)
         return;
-      transition_in(rotateccw.$$.fragment, local);
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
       current = true;
     },
     o(local) {
-      transition_out(rotateccw.$$.fragment, local);
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
       current = false;
     },
     d(detaching) {
-      destroy_component(rotateccw, detaching);
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
     }
   };
 }
-function create_if_block(ctx) {
-  let rotatecw;
-  let current;
-  rotatecw = new rotate_cw_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(rotatecw.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(rotatecw, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(rotatecw.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(rotatecw.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(rotatecw, detaching);
-    }
-  };
-}
-function create_default_slot_2(ctx) {
+function create_if_block_2(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block, create_else_block];
+  const if_block_creators = [create_if_block_3, create_else_block2];
   const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
+  function select_block_type_1(ctx2, dirty) {
     if (
-      /*showUndoRestZoomButton*/
-      ctx2[1]
+      /*$showUndoRestZoomButton*/
+      ctx2[3]
     )
       return 0;
     return 1;
   }
-  current_block_type_index = select_block_type(ctx, -1);
+  current_block_type_index = select_block_type_1(ctx, -1);
   if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   return {
     c() {
@@ -9340,7 +10943,7 @@ function create_default_slot_2(ctx) {
     },
     p(ctx2, dirty) {
       let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2, dirty);
+      current_block_type_index = select_block_type_1(ctx2, dirty);
       if (current_block_type_index !== previous_block_index) {
         group_outros();
         transition_out(if_blocks[previous_block_index], 1, 1, () => {
@@ -9375,333 +10978,410 @@ function create_default_slot_2(ctx) {
     }
   };
 }
-function create_default_slot_1(ctx) {
-  let scansearch;
-  let current;
-  scansearch = new scan_search_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(scansearch.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(scansearch, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(scansearch.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(scansearch.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(scansearch, detaching);
-    }
-  };
-}
-function create_default_slot44(ctx) {
-  let zoomout;
-  let current;
-  zoomout = new minus_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(zoomout.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(zoomout, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(zoomout.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(zoomout.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(zoomout, detaching);
-    }
-  };
-}
-function create_fragment46(ctx) {
-  let div;
-  let button0;
-  let t0;
-  let button1;
-  let t1;
-  let button2;
-  let t2;
-  let button3;
-  let current;
-  button0 = new button_default({
-    props: {
-      classes: "control-item",
-      disabled: (
-        /*$zoomLevel*/
-        ctx[2] >= maxZoomLevel
-      ),
-      label: lang.controls_zoom_in,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_3] },
-      $$scope: { ctx }
-    }
-  });
-  button0.$on(
-    "click",
-    /*zoomIn*/
-    ctx[4]
+function create_if_block_1(ctx) {
+  let html_tag;
+  let raw_value = (
+    /*button*/
+    ctx[19].icon.svg + ""
   );
-  button1 = new button_default({
+  let html_anchor;
+  return {
+    c() {
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      html_tag.a = html_anchor;
+    },
+    m(target, anchor) {
+      html_tag.m(raw_value, target, anchor);
+      insert(target, html_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      1 && raw_value !== (raw_value = /*button*/
+      ctx2[19].icon.svg + ""))
+        html_tag.p(raw_value);
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(html_anchor);
+        html_tag.d();
+      }
+    }
+  };
+}
+function create_else_block2(ctx) {
+  let rotateccw;
+  let current;
+  rotateccw = new rotate_ccw_default({ props: { class: "svg-icon" } });
+  return {
+    c() {
+      create_component(rotateccw.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(rotateccw, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(rotateccw.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(rotateccw.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(rotateccw, detaching);
+    }
+  };
+}
+function create_if_block_3(ctx) {
+  let rotatecw;
+  let current;
+  rotatecw = new rotate_cw_default({ props: { class: "svg-icon" } });
+  return {
+    c() {
+      create_component(rotatecw.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(rotatecw, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(rotatecw.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(rotatecw.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(rotatecw, detaching);
+    }
+  };
+}
+function create_default_slot50(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let t;
+  let current;
+  const if_block_creators = [create_if_block_1, create_if_block_2, create_else_block_1];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if ("svg" in /*button*/
+    ctx2[19].icon)
+      return 0;
+    if (
+      /*button*/
+      ctx2[19].id === "zoom-reset"
+    )
+      return 1;
+    return 2;
+  }
+  current_block_type_index = select_block_type(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      t = space();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, t, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(t.parentNode, t);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_each_block3(key_1, ctx) {
+  let first;
+  let button_1;
+  let current;
+  button_1 = new button_default({
     props: {
-      classes: "control-item",
-      disabled: (
-        /*showUndoRestZoomButton*/
-        ctx[1] ? false : (
-          /*$zoomLevel*/
-          ctx[2] === 1
-        )
-      ),
-      label: lang.controls_zoom_reset,
       active: (
-        /*showUndoRestZoomButton*/
-        ctx[1] ? true : (
-          /*$zoomLevel*/
-          ctx[2] !== 1
-        )
+        /*$activeStates*/
+        ctx[1][
+          /*button*/
+          ctx[19].id
+        ]
+      ),
+      classes: "control-item",
+      label: (
+        /*button*/
+        ctx[19].label
       ),
       tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_2] },
-      $$scope: { ctx }
-    }
-  });
-  button1.$on(
-    "click",
-    /*restoreZoom*/
-    ctx[6]
-  );
-  button2 = new button_default({
-    props: {
-      classes: "control-item",
-      label: lang.controls_zoom_presets,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_1] },
-      $$scope: { ctx }
-    }
-  });
-  button2.$on(
-    "click",
-    /*showZoomPopupMenu*/
-    ctx[8]
-  );
-  button3 = new button_default({
-    props: {
-      classes: "control-item",
       disabled: (
-        /*$zoomLevel*/
-        ctx[2] <= minZoomLevel
+        /*$disabledStates*/
+        ctx[2][
+          /*button*/
+          ctx[19].id
+        ]
       ),
-      label: lang.controls_zoom_out,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot44] },
+      $$slots: { default: [create_default_slot50] },
       $$scope: { ctx }
     }
   });
-  button3.$on(
-    "click",
-    /*zoomOut*/
-    ctx[5]
+  button_1.$on("click", function() {
+    if (is_function(
+      /*button*/
+      ctx[19].onClick
+    ))
+      ctx[19].onClick.apply(this, arguments);
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(button_1.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(button_1, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const button_1_changes = {};
+      if (dirty & /*$activeStates, $buttons*/
+      3)
+        button_1_changes.active = /*$activeStates*/
+        ctx[1][
+          /*button*/
+          ctx[19].id
+        ];
+      if (dirty & /*$buttons*/
+      1)
+        button_1_changes.label = /*button*/
+        ctx[19].label;
+      if (dirty & /*$disabledStates, $buttons*/
+      5)
+        button_1_changes.disabled = /*$disabledStates*/
+        ctx[2][
+          /*button*/
+          ctx[19].id
+        ];
+      if (dirty & /*$$scope, $buttons, $showUndoRestZoomButton*/
+      4194313) {
+        button_1_changes.$$scope = { dirty, ctx };
+      }
+      button_1.$set(button_1_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(button_1, detaching);
+    }
+  };
+}
+function create_fragment52(ctx) {
+  let div;
+  let current;
+  let if_block = (
+    /*$buttons*/
+    ctx[0].length > 0 && create_if_block2(ctx)
   );
   return {
     c() {
       div = element("div");
-      create_component(button0.$$.fragment);
-      t0 = space();
-      create_component(button1.$$.fragment);
-      t1 = space();
-      create_component(button2.$$.fragment);
-      t2 = space();
-      create_component(button3.$$.fragment);
-      attr(div, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div,
-        "data-visible",
-        /*showControls*/
-        ctx[0]
-      );
+      if (if_block)
+        if_block.c();
+      attr(div, "class", "zoom-buttons-container svelte-12oedbu");
     },
     m(target, anchor) {
       insert(target, div, anchor);
-      mount_component(button0, div, null);
-      append(div, t0);
-      mount_component(button1, div, null);
-      append(div, t1);
-      mount_component(button2, div, null);
-      append(div, t2);
-      mount_component(button3, div, null);
+      if (if_block)
+        if_block.m(div, null);
       current = true;
     },
     p(ctx2, [dirty]) {
-      const button0_changes = {};
-      if (dirty & /*$zoomLevel*/
-      4)
-        button0_changes.disabled = /*$zoomLevel*/
-        ctx2[2] >= maxZoomLevel;
-      if (dirty & /*$$scope*/
-      8192) {
-        button0_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button0.$set(button0_changes);
-      const button1_changes = {};
-      if (dirty & /*showUndoRestZoomButton, $zoomLevel*/
-      6)
-        button1_changes.disabled = /*showUndoRestZoomButton*/
-        ctx2[1] ? false : (
-          /*$zoomLevel*/
-          ctx2[2] === 1
-        );
-      if (dirty & /*showUndoRestZoomButton, $zoomLevel*/
-      6)
-        button1_changes.active = /*showUndoRestZoomButton*/
-        ctx2[1] ? true : (
-          /*$zoomLevel*/
-          ctx2[2] !== 1
-        );
-      if (dirty & /*$$scope, showUndoRestZoomButton*/
-      8194) {
-        button1_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button1.$set(button1_changes);
-      const button2_changes = {};
-      if (dirty & /*$$scope*/
-      8192) {
-        button2_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button2.$set(button2_changes);
-      const button3_changes = {};
-      if (dirty & /*$zoomLevel*/
-      4)
-        button3_changes.disabled = /*$zoomLevel*/
-        ctx2[2] <= minZoomLevel;
-      if (dirty & /*$$scope*/
-      8192) {
-        button3_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button3.$set(button3_changes);
-      if (!current || dirty & /*showControls*/
-      1) {
-        attr(
-          div,
-          "data-visible",
-          /*showControls*/
-          ctx2[0]
-        );
+      if (
+        /*$buttons*/
+        ctx2[0].length > 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*$buttons*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block2(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(div, null);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(button0.$$.fragment, local);
-      transition_in(button1.$$.fragment, local);
-      transition_in(button2.$$.fragment, local);
-      transition_in(button3.$$.fragment, local);
+      transition_in(if_block);
       current = true;
     },
     o(local) {
-      transition_out(button0.$$.fragment, local);
-      transition_out(button1.$$.fragment, local);
-      transition_out(button2.$$.fragment, local);
-      transition_out(button3.$$.fragment, local);
+      transition_out(if_block);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div);
       }
-      destroy_component(button0);
-      destroy_component(button1);
-      destroy_component(button2);
-      destroy_component(button3);
+      if (if_block)
+        if_block.d();
     }
   };
 }
-function instance46($$self, $$props, $$invalidate) {
+function instance52($$self, $$props, $$invalidate) {
   let $keyboardStore;
-  let $zoomLevel;
-  let { showControls } = $$props;
+  let $buttons;
+  let $activeStates;
+  let $disabledStates;
+  let $showUndoRestZoomButton;
   const view = getView();
   const keyboardStore = KeyboardStore(view);
   component_subscribe($$self, keyboardStore, (value) => $$invalidate(10, $keyboardStore = value));
-  const zoomIn = () => {
-    view.plugin.settings.dispatch({
-      type: "UI/CHANGE_ZOOM_LEVEL",
-      payload: { direction: "in" }
-    });
-  };
-  const zoomOut = () => {
-    view.plugin.settings.dispatch({
-      type: "UI/CHANGE_ZOOM_LEVEL",
-      payload: { direction: "out" }
-    });
-  };
+  const zoomLevel = zoomLevelStore(view);
+  const showUndoRestZoomButton = writable(false);
+  component_subscribe($$self, showUndoRestZoomButton, (value) => $$invalidate(3, $showUndoRestZoomButton = value));
   let zoomValueBeforeReset = -1;
+  let clearSavedZoomTimeoutRef = null;
+  const clearSavedZoomValue = () => {
+    if (clearSavedZoomTimeoutRef)
+      clearTimeout(clearSavedZoomTimeoutRef);
+    $$invalidate(9, zoomValueBeforeReset = -1);
+  };
+  const saveZoomValue = () => {
+    clearSavedZoomValue();
+    $$invalidate(9, zoomValueBeforeReset = get_store_value(zoomLevelStore(view)));
+    clearSavedZoomTimeoutRef = setTimeout(
+      () => {
+        $$invalidate(9, zoomValueBeforeReset = -1);
+      },
+      1e3 * 120
+    );
+  };
   const restoreZoom = () => {
-    if (showUndoRestZoomButton) {
+    if (get_store_value(showUndoRestZoomButton)) {
       view.plugin.settings.dispatch({
-        type: "UI/CHANGE_ZOOM_LEVEL",
+        type: "settings/view/set-zoom-level",
         payload: { value: zoomValueBeforeReset }
       });
-      $$invalidate(9, zoomValueBeforeReset = -1);
+      clearSavedZoomValue();
     } else {
-      $$invalidate(9, zoomValueBeforeReset = get_store_value(zoomLevelStore(view)));
+      saveZoomValue();
       view.plugin.settings.dispatch({
-        type: "UI/CHANGE_ZOOM_LEVEL",
+        type: "settings/view/set-zoom-level",
         payload: { value: 1 }
       });
     }
   };
-  const zoomLevel = zoomLevelStore(view);
-  component_subscribe($$self, zoomLevel, (value) => $$invalidate(2, $zoomLevel = value));
   const zoomMenuState = {
     menuHeight: 0,
     menuWidth: 0,
     lastMenuHideEvent_ms: 0
   };
-  const showZoomPopupMenu = (event) => __awaiter(void 0, void 0, void 0, function* () {
+  const showZoomPopupMenu = (event) => {
     if (Date.now() - zoomMenuState.lastMenuHideEvent_ms < 100)
       return;
     createZoomMenu({ event, view, state: zoomMenuState });
-  });
-  let showUndoRestZoomButton = false;
-  $$self.$$set = ($$props2) => {
-    if ("showControls" in $$props2)
-      $$invalidate(0, showControls = $$props2.showControls);
   };
+  const buttons = ZoomButtonsList(view, restoreZoom, showZoomPopupMenu);
+  component_subscribe($$self, buttons, (value) => $$invalidate(0, $buttons = value));
+  const activeStates = derived([zoomLevel, showUndoRestZoomButton], ([zoomLevel2, showUndoRestZoomButton2]) => {
+    return {
+      "zoom-reset": showUndoRestZoomButton2 ? true : zoomLevel2 !== 1
+    };
+  });
+  component_subscribe($$self, activeStates, (value) => $$invalidate(1, $activeStates = value));
+  const disabledStates = derived([zoomLevel, showUndoRestZoomButton], ([zoomLevel2, showUndoRestZoomButton2]) => {
+    return {
+      "zoom-in": zoomLevel2 >= maxZoomLevel,
+      "zoom-out": zoomLevel2 <= minZoomLevel,
+      "zoom-reset": showUndoRestZoomButton2 ? false : zoomLevel2 === 1
+    };
+  });
+  component_subscribe($$self, disabledStates, (value) => $$invalidate(2, $disabledStates = value));
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$keyboardStore, zoomValueBeforeReset*/
     1536) {
       $: {
-        $$invalidate(1, showUndoRestZoomButton = $keyboardStore.shift && zoomValueBeforeReset !== -1);
+        showUndoRestZoomButton.set($keyboardStore.shift && zoomValueBeforeReset !== -1);
       }
     }
   };
   return [
-    showControls,
-    showUndoRestZoomButton,
-    $zoomLevel,
+    $buttons,
+    $activeStates,
+    $disabledStates,
+    $showUndoRestZoomButton,
     keyboardStore,
-    zoomIn,
-    zoomOut,
-    restoreZoom,
-    zoomLevel,
-    showZoomPopupMenu,
+    showUndoRestZoomButton,
+    buttons,
+    activeStates,
+    disabledStates,
     zoomValueBeforeReset,
     $keyboardStore
   ];
@@ -9709,1036 +11389,10 @@ function instance46($$self, $$props, $$invalidate) {
 var Zoom_buttons = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance46, create_fragment46, safe_not_equal, { showControls: 0 });
+    init(this, options, instance52, create_fragment52, safe_not_equal, {}, add_css2);
   }
 };
 var zoom_buttons_default = Zoom_buttons;
-
-// src/view/components/container/controls-bar/controls-container.svelte
-function add_css(target) {
-  append_styles(target, "svelte-1316cva", ".controls-container.svelte-1316cva{right:var(--size-4-2);top:var(--size-4-2);gap:var(--size-4-2);display:flex;flex-direction:column;position:absolute;z-index:2}.controls-toggle.svelte-1316cva{display:none}.is-mobile{& .controls-toggle {\n            display: block;\n        };& .buttons-group[data-visible='false'] {\n            display: none;\n        }}");
-}
-function create_default_slot_11(ctx) {
-  let morevertical;
-  let current;
-  morevertical = new more_vertical_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(morevertical.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(morevertical, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(morevertical.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(morevertical.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(morevertical, detaching);
-    }
-  };
-}
-function create_default_slot_10(ctx) {
-  let panelright;
-  let current;
-  panelright = new panel_right_dashed_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(panelright.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(panelright, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(panelright.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(panelright.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(panelright, detaching);
-    }
-  };
-}
-function create_default_slot_9(ctx) {
-  let settings;
-  let current;
-  settings = new settings_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(settings.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(settings, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(settings.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(settings.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(settings, detaching);
-    }
-  };
-}
-function create_default_slot_8(ctx) {
-  let keyboard;
-  let current;
-  keyboard = new keyboard_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(keyboard.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(keyboard, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(keyboard.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(keyboard.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(keyboard, detaching);
-    }
-  };
-}
-function create_default_slot_7(ctx) {
-  let palette;
-  let current;
-  palette = new palette_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(palette.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(palette, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(palette.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(palette.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(palette, detaching);
-    }
-  };
-}
-function create_default_slot_6(ctx) {
-  let html_tag;
-  let raw_value = customIcons.alignH.svg + "";
-  let html_anchor;
-  return {
-    c() {
-      html_tag = new HtmlTag(false);
-      html_anchor = empty();
-      html_tag.a = html_anchor;
-    },
-    m(target, anchor) {
-      html_tag.m(raw_value, target, anchor);
-      insert(target, html_anchor, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(html_anchor);
-        html_tag.d();
-      }
-    }
-  };
-}
-function create_default_slot_5(ctx) {
-  let html_tag;
-  let raw_value = customIcons.alignV.svg + "";
-  let html_anchor;
-  return {
-    c() {
-      html_tag = new HtmlTag(false);
-      html_anchor = empty();
-      html_tag.a = html_anchor;
-    },
-    m(target, anchor) {
-      html_tag.m(raw_value, target, anchor);
-      insert(target, html_anchor, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(html_anchor);
-        html_tag.d();
-      }
-    }
-  };
-}
-function create_default_slot_4(ctx) {
-  let html_tag;
-  let raw_value = customIcons.outline.svg + "";
-  let html_anchor;
-  return {
-    c() {
-      html_tag = new HtmlTag(false);
-      html_anchor = empty();
-      html_tag.a = html_anchor;
-    },
-    m(target, anchor) {
-      html_tag.m(raw_value, target, anchor);
-      insert(target, html_anchor, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(html_anchor);
-        html_tag.d();
-      }
-    }
-  };
-}
-function create_default_slot_32(ctx) {
-  let html_tag;
-  let raw_value = customIcons.gap.svg + "";
-  let html_anchor;
-  return {
-    c() {
-      html_tag = new HtmlTag(false);
-      html_anchor = empty();
-      html_tag.a = html_anchor;
-    },
-    m(target, anchor) {
-      html_tag.m(raw_value, target, anchor);
-      insert(target, html_anchor, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(html_anchor);
-        html_tag.d();
-      }
-    }
-  };
-}
-function create_default_slot_22(ctx) {
-  let historyicon;
-  let current;
-  historyicon = new history_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(historyicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(historyicon, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(historyicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(historyicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(historyicon, detaching);
-    }
-  };
-}
-function create_default_slot_12(ctx) {
-  let undoicon;
-  let current;
-  undoicon = new undo_2_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(undoicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(undoicon, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(undoicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(undoicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(undoicon, detaching);
-    }
-  };
-}
-function create_default_slot45(ctx) {
-  let redoicon;
-  let current;
-  redoicon = new redo_2_default({ props: { class: "svg-icon" } });
-  return {
-    c() {
-      create_component(redoicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(redoicon, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(redoicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(redoicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(redoicon, detaching);
-    }
-  };
-}
-function create_fragment47(ctx) {
-  let div6;
-  let div0;
-  let button0;
-  let t0;
-  let div1;
-  let button1;
-  let t1;
-  let div2;
-  let button2;
-  let t2;
-  let button3;
-  let t3;
-  let button4;
-  let t4;
-  let div3;
-  let button5;
-  let t5;
-  let button6;
-  let t6;
-  let div4;
-  let button7;
-  let t7;
-  let button8;
-  let t8;
-  let div5;
-  let button9;
-  let t9;
-  let button10;
-  let t10;
-  let button11;
-  let t11;
-  let zoombuttons;
-  let current;
-  button0 = new button_default({
-    props: {
-      active: (
-        /*$showControls*/
-        ctx[0]
-      ),
-      label: lang.controls_toggle_bar,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_11] },
-      $$scope: { ctx }
-    }
-  });
-  button0.$on(
-    "click",
-    /*toggleShowControls*/
-    ctx[16]
-  );
-  button1 = new button_default({
-    props: {
-      active: (
-        /*$showMinimap*/
-        ctx[1]
-      ),
-      classes: "control-item",
-      label: lang.controls_toggle_minimap,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_10] },
-      $$scope: { ctx }
-    }
-  });
-  button1.$on(
-    "click",
-    /*toggleMinimap*/
-    ctx[18]
-  );
-  button2 = new button_default({
-    props: {
-      active: (
-        /*$controls*/
-        ctx[2].showSettingsSidebar
-      ),
-      classes: "control-item",
-      label: lang.controls_settings,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_9] },
-      $$scope: { ctx }
-    }
-  });
-  button2.$on(
-    "click",
-    /*toggleSettings*/
-    ctx[13]
-  );
-  button3 = new button_default({
-    props: {
-      active: (
-        /*$controls*/
-        ctx[2].showHelpSidebar
-      ),
-      classes: "control-item",
-      label: lang.controls_hotkeys,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_8] },
-      $$scope: { ctx }
-    }
-  });
-  button3.$on(
-    "click",
-    /*toggleHelp*/
-    ctx[11]
-  );
-  button4 = new button_default({
-    props: {
-      active: (
-        /*$controls*/
-        ctx[2].showStyleRulesModal
-      ),
-      classes: "control-item",
-      label: lang.controls_rules,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_7] },
-      $$scope: { ctx }
-    }
-  });
-  button4.$on(
-    "click",
-    /*toggleStyleRules*/
-    ctx[12]
-  );
-  button5 = new button_default({
-    props: {
-      active: (
-        /*$scrollSettingsStore*/
-        ctx[3].centerActiveNodeH
-      ),
-      classes: "control-item",
-      label: lang.controls_toggle_scrolling_mode_horizontal,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_6] },
-      $$scope: { ctx }
-    }
-  });
-  button5.$on(
-    "click",
-    /*toggleScrollModeH*/
-    ctx[19]
-  );
-  button6 = new button_default({
-    props: {
-      active: (
-        /*$scrollSettingsStore*/
-        ctx[3].centerActiveNodeV
-      ),
-      classes: "control-item",
-      label: lang.controls_toggle_scrolling_mode_vertical,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_5] },
-      $$scope: { ctx }
-    }
-  });
-  button6.$on(
-    "click",
-    /*toggleScrollModeV*/
-    ctx[20]
-  );
-  button7 = new button_default({
-    props: {
-      active: (
-        /*$outlineMode*/
-        ctx[4]
-      ),
-      classes: "control-item",
-      label: lang.controls_single_column,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_4] },
-      $$scope: { ctx }
-    }
-  });
-  button7.$on(
-    "click",
-    /*toggleOutlineMode*/
-    ctx[25]
-  );
-  button8 = new button_default({
-    props: {
-      active: (
-        /*$applyGapBetweenCards*/
-        ctx[5]
-      ),
-      classes: "control-item",
-      label: lang.controls_gap_between_cards,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_32] },
-      $$scope: { ctx }
-    }
-  });
-  button8.$on(
-    "click",
-    /*toggleGap*/
-    ctx[23]
-  );
-  button9 = new button_default({
-    props: {
-      active: (
-        /*$controls*/
-        ctx[2].showHistorySidebar
-      ),
-      classes: "control-item",
-      disabled: (
-        /*$history*/
-        ctx[6].items.length === 0
-      ),
-      label: lang.controls_history,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_22] },
-      $$scope: { ctx }
-    }
-  });
-  button9.$on(
-    "click",
-    /*click_handler*/
-    ctx[26]
-  );
-  button10 = new button_default({
-    props: {
-      classes: "control-item",
-      disabled: !/*$history*/
-      ctx[6].state.canGoBack,
-      label: lang.controls_history_undo,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot_12] },
-      $$scope: { ctx }
-    }
-  });
-  button10.$on(
-    "click",
-    /*handlePreviousClick*/
-    ctx[10]
-  );
-  button11 = new button_default({
-    props: {
-      classes: "control-item",
-      disabled: !/*$history*/
-      ctx[6].state.canGoForward,
-      label: lang.controls_history_redo,
-      tooltipPosition: "left",
-      $$slots: { default: [create_default_slot45] },
-      $$scope: { ctx }
-    }
-  });
-  button11.$on(
-    "click",
-    /*handleNextClick*/
-    ctx[9]
-  );
-  zoombuttons = new zoom_buttons_default({
-    props: { showControls: (
-      /*$showControls*/
-      ctx[0]
-    ) }
-  });
-  return {
-    c() {
-      div6 = element("div");
-      div0 = element("div");
-      create_component(button0.$$.fragment);
-      t0 = space();
-      div1 = element("div");
-      create_component(button1.$$.fragment);
-      t1 = space();
-      div2 = element("div");
-      create_component(button2.$$.fragment);
-      t2 = space();
-      create_component(button3.$$.fragment);
-      t3 = space();
-      create_component(button4.$$.fragment);
-      t4 = space();
-      div3 = element("div");
-      create_component(button5.$$.fragment);
-      t5 = space();
-      create_component(button6.$$.fragment);
-      t6 = space();
-      div4 = element("div");
-      create_component(button7.$$.fragment);
-      t7 = space();
-      create_component(button8.$$.fragment);
-      t8 = space();
-      div5 = element("div");
-      create_component(button9.$$.fragment);
-      t9 = space();
-      create_component(button10.$$.fragment);
-      t10 = space();
-      create_component(button11.$$.fragment);
-      t11 = space();
-      create_component(zoombuttons.$$.fragment);
-      attr(div0, "class", "buttons-group controls-toggle svelte-1316cva");
-      attr(div1, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div1,
-        "data-visible",
-        /*$showControls*/
-        ctx[0]
-      );
-      attr(div2, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div2,
-        "data-visible",
-        /*$showControls*/
-        ctx[0]
-      );
-      attr(div3, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div3,
-        "data-visible",
-        /*$showControls*/
-        ctx[0]
-      );
-      attr(div4, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div4,
-        "data-visible",
-        /*$showControls*/
-        ctx[0]
-      );
-      attr(div5, "class", "buttons-group buttons-group--vertical");
-      attr(
-        div5,
-        "data-visible",
-        /*$showControls*/
-        ctx[0]
-      );
-      attr(div6, "class", "controls-container svelte-1316cva");
-    },
-    m(target, anchor) {
-      insert(target, div6, anchor);
-      append(div6, div0);
-      mount_component(button0, div0, null);
-      append(div6, t0);
-      append(div6, div1);
-      mount_component(button1, div1, null);
-      append(div6, t1);
-      append(div6, div2);
-      mount_component(button2, div2, null);
-      append(div2, t2);
-      mount_component(button3, div2, null);
-      append(div2, t3);
-      mount_component(button4, div2, null);
-      append(div6, t4);
-      append(div6, div3);
-      mount_component(button5, div3, null);
-      append(div3, t5);
-      mount_component(button6, div3, null);
-      append(div6, t6);
-      append(div6, div4);
-      mount_component(button7, div4, null);
-      append(div4, t7);
-      mount_component(button8, div4, null);
-      append(div6, t8);
-      append(div6, div5);
-      mount_component(button9, div5, null);
-      append(div5, t9);
-      mount_component(button10, div5, null);
-      append(div5, t10);
-      mount_component(button11, div5, null);
-      append(div6, t11);
-      mount_component(zoombuttons, div6, null);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const button0_changes = {};
-      if (dirty & /*$showControls*/
-      1)
-        button0_changes.active = /*$showControls*/
-        ctx2[0];
-      if (dirty & /*$$scope*/
-      536870912) {
-        button0_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button0.$set(button0_changes);
-      const button1_changes = {};
-      if (dirty & /*$showMinimap*/
-      2)
-        button1_changes.active = /*$showMinimap*/
-        ctx2[1];
-      if (dirty & /*$$scope*/
-      536870912) {
-        button1_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button1.$set(button1_changes);
-      if (!current || dirty & /*$showControls*/
-      1) {
-        attr(
-          div1,
-          "data-visible",
-          /*$showControls*/
-          ctx2[0]
-        );
-      }
-      const button2_changes = {};
-      if (dirty & /*$controls*/
-      4)
-        button2_changes.active = /*$controls*/
-        ctx2[2].showSettingsSidebar;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button2_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button2.$set(button2_changes);
-      const button3_changes = {};
-      if (dirty & /*$controls*/
-      4)
-        button3_changes.active = /*$controls*/
-        ctx2[2].showHelpSidebar;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button3_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button3.$set(button3_changes);
-      const button4_changes = {};
-      if (dirty & /*$controls*/
-      4)
-        button4_changes.active = /*$controls*/
-        ctx2[2].showStyleRulesModal;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button4_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button4.$set(button4_changes);
-      if (!current || dirty & /*$showControls*/
-      1) {
-        attr(
-          div2,
-          "data-visible",
-          /*$showControls*/
-          ctx2[0]
-        );
-      }
-      const button5_changes = {};
-      if (dirty & /*$scrollSettingsStore*/
-      8)
-        button5_changes.active = /*$scrollSettingsStore*/
-        ctx2[3].centerActiveNodeH;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button5_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button5.$set(button5_changes);
-      const button6_changes = {};
-      if (dirty & /*$scrollSettingsStore*/
-      8)
-        button6_changes.active = /*$scrollSettingsStore*/
-        ctx2[3].centerActiveNodeV;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button6_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button6.$set(button6_changes);
-      if (!current || dirty & /*$showControls*/
-      1) {
-        attr(
-          div3,
-          "data-visible",
-          /*$showControls*/
-          ctx2[0]
-        );
-      }
-      const button7_changes = {};
-      if (dirty & /*$outlineMode*/
-      16)
-        button7_changes.active = /*$outlineMode*/
-        ctx2[4];
-      if (dirty & /*$$scope*/
-      536870912) {
-        button7_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button7.$set(button7_changes);
-      const button8_changes = {};
-      if (dirty & /*$applyGapBetweenCards*/
-      32)
-        button8_changes.active = /*$applyGapBetweenCards*/
-        ctx2[5];
-      if (dirty & /*$$scope*/
-      536870912) {
-        button8_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button8.$set(button8_changes);
-      if (!current || dirty & /*$showControls*/
-      1) {
-        attr(
-          div4,
-          "data-visible",
-          /*$showControls*/
-          ctx2[0]
-        );
-      }
-      const button9_changes = {};
-      if (dirty & /*$controls*/
-      4)
-        button9_changes.active = /*$controls*/
-        ctx2[2].showHistorySidebar;
-      if (dirty & /*$history*/
-      64)
-        button9_changes.disabled = /*$history*/
-        ctx2[6].items.length === 0;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button9_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button9.$set(button9_changes);
-      const button10_changes = {};
-      if (dirty & /*$history*/
-      64)
-        button10_changes.disabled = !/*$history*/
-        ctx2[6].state.canGoBack;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button10_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button10.$set(button10_changes);
-      const button11_changes = {};
-      if (dirty & /*$history*/
-      64)
-        button11_changes.disabled = !/*$history*/
-        ctx2[6].state.canGoForward;
-      if (dirty & /*$$scope*/
-      536870912) {
-        button11_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button11.$set(button11_changes);
-      if (!current || dirty & /*$showControls*/
-      1) {
-        attr(
-          div5,
-          "data-visible",
-          /*$showControls*/
-          ctx2[0]
-        );
-      }
-      const zoombuttons_changes = {};
-      if (dirty & /*$showControls*/
-      1)
-        zoombuttons_changes.showControls = /*$showControls*/
-        ctx2[0];
-      zoombuttons.$set(zoombuttons_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(button0.$$.fragment, local);
-      transition_in(button1.$$.fragment, local);
-      transition_in(button2.$$.fragment, local);
-      transition_in(button3.$$.fragment, local);
-      transition_in(button4.$$.fragment, local);
-      transition_in(button5.$$.fragment, local);
-      transition_in(button6.$$.fragment, local);
-      transition_in(button7.$$.fragment, local);
-      transition_in(button8.$$.fragment, local);
-      transition_in(button9.$$.fragment, local);
-      transition_in(button10.$$.fragment, local);
-      transition_in(button11.$$.fragment, local);
-      transition_in(zoombuttons.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button0.$$.fragment, local);
-      transition_out(button1.$$.fragment, local);
-      transition_out(button2.$$.fragment, local);
-      transition_out(button3.$$.fragment, local);
-      transition_out(button4.$$.fragment, local);
-      transition_out(button5.$$.fragment, local);
-      transition_out(button6.$$.fragment, local);
-      transition_out(button7.$$.fragment, local);
-      transition_out(button8.$$.fragment, local);
-      transition_out(button9.$$.fragment, local);
-      transition_out(button10.$$.fragment, local);
-      transition_out(button11.$$.fragment, local);
-      transition_out(zoombuttons.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div6);
-      }
-      destroy_component(button0);
-      destroy_component(button1);
-      destroy_component(button2);
-      destroy_component(button3);
-      destroy_component(button4);
-      destroy_component(button5);
-      destroy_component(button6);
-      destroy_component(button7);
-      destroy_component(button8);
-      destroy_component(button9);
-      destroy_component(button10);
-      destroy_component(button11);
-      destroy_component(zoombuttons);
-    }
-  };
-}
-function instance47($$self, $$props, $$invalidate) {
-  let $showControls;
-  let $showMinimap;
-  let $controls;
-  let $scrollSettingsStore;
-  let $outlineMode;
-  let $applyGapBetweenCards;
-  let $history;
-  const view = getView();
-  const viewStore = view.viewStore;
-  const documentStore = view.documentStore;
-  const history = historyStore(view);
-  component_subscribe($$self, history, (value) => $$invalidate(6, $history = value));
-  const handleNextClick = () => {
-    if (viewStore.getValue().document.editing.activeNodeId)
-      new import_obsidian3.Notice(lang.error_apply_snapshot_while_editing);
-    else
-      documentStore.dispatch({ type: "HISTORY/APPLY_NEXT_SNAPSHOT" });
-  };
-  const handlePreviousClick = () => {
-    if (viewStore.getValue().document.editing.activeNodeId)
-      new import_obsidian3.Notice(lang.error_apply_snapshot_while_editing);
-    else
-      documentStore.dispatch({ type: "HISTORY/APPLY_PREVIOUS_SNAPSHOT" });
-  };
-  const toggleHelp = () => {
-    viewStore.dispatch({ type: "UI/TOGGLE_HELP_SIDEBAR" });
-  };
-  const toggleStyleRules = () => {
-    viewStore.dispatch({ type: "view/modals/toggle-style-rules" });
-  };
-  const toggleSettings = () => {
-    viewStore.dispatch({ type: "UI/TOGGLE_SETTINGS_SIDEBAR" });
-  };
-  const controls = uiControlsStore(view);
-  component_subscribe($$self, controls, (value) => $$invalidate(2, $controls = value));
-  const showControls = writable(false);
-  component_subscribe($$self, showControls, (value) => $$invalidate(0, $showControls = value));
-  const toggleShowControls = () => {
-    showControls.update((v) => !v);
-  };
-  const showMinimap = showMinimapStore(view);
-  component_subscribe($$self, showMinimap, (value) => $$invalidate(1, $showMinimap = value));
-  const toggleMinimap = () => {
-    view.plugin.settings.dispatch({ type: "VIEW/TOGGLE_MINIMAP" });
-  };
-  const toggleScrollModeH = () => {
-    view.plugin.settings.dispatch({
-      type: "VIEW/SCROLLING/TOGGLE_SCROLLING_MODE"
-    });
-  };
-  const toggleScrollModeV = () => {
-    view.plugin.settings.dispatch({
-      type: "settings/view/scrolling/toggle-vertical-scrolling-mode"
-    });
-  };
-  const scrollSettingsStore = ScrollSettingsStore(view);
-  component_subscribe($$self, scrollSettingsStore, (value) => $$invalidate(3, $scrollSettingsStore = value));
-  const applyGapBetweenCards = ApplyGapBetweenCardsStore(view);
-  component_subscribe($$self, applyGapBetweenCards, (value) => $$invalidate(5, $applyGapBetweenCards = value));
-  const toggleGap = () => {
-    view.plugin.settings.dispatch({
-      type: "view/modes/gap-between-cards/toggle"
-    });
-  };
-  const outlineMode = OutlineModeStore(view);
-  component_subscribe($$self, outlineMode, (value) => $$invalidate(4, $outlineMode = value));
-  const toggleOutlineMode = () => {
-    view.plugin.settings.dispatch({
-      type: "settings/view/modes/toggle-outline-mode"
-    });
-  };
-  const click_handler = () => {
-    viewStore.dispatch({ type: "UI/TOGGLE_HISTORY_SIDEBAR" });
-  };
-  return [
-    $showControls,
-    $showMinimap,
-    $controls,
-    $scrollSettingsStore,
-    $outlineMode,
-    $applyGapBetweenCards,
-    $history,
-    viewStore,
-    history,
-    handleNextClick,
-    handlePreviousClick,
-    toggleHelp,
-    toggleStyleRules,
-    toggleSettings,
-    controls,
-    showControls,
-    toggleShowControls,
-    showMinimap,
-    toggleMinimap,
-    toggleScrollModeH,
-    toggleScrollModeV,
-    scrollSettingsStore,
-    applyGapBetweenCards,
-    toggleGap,
-    outlineMode,
-    toggleOutlineMode,
-    click_handler
-  ];
-}
-var Controls_container = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance47, create_fragment47, safe_not_equal, {}, add_css);
-  }
-};
-var controls_container_default = Controls_container;
 
 // src/lib/tree-utils/find/find-node-column.ts
 var findNodeColumn = (columns, nodeId) => {
@@ -10813,7 +11467,7 @@ var draggable = (node, data) => {
           false
         );
         viewStore.dispatch({
-          type: "SET_DRAG_STARTED",
+          type: "view/dnd/set-drag-started",
           payload: { nodeId: data.id, childGroups }
         });
         toggleDraggedNodeVisibility(node, data, false);
@@ -10824,7 +11478,7 @@ var draggable = (node, data) => {
   };
   node.addEventListener("dragstart", handleDragstart);
   const handleDragEnd = () => {
-    viewStore.dispatch({ type: "DOCUMENT/SET_DRAG_ENDED" });
+    viewStore.dispatch({ type: "view/dnd/set-drag-ended" });
     toggleDraggedNodeVisibility(node, data, true);
   };
   node.addEventListener("dragend", handleDragEnd);
@@ -10837,10 +11491,10 @@ var draggable = (node, data) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/dnd/draggable.svelte
-function add_css2(target) {
+function add_css3(target) {
   append_styles(target, "svelte-gtjx2q", ".draggable.svelte-gtjx2q.svelte-gtjx2q{width:100%;background-color:transparent;display:flex;position:relative}.drag-handle.svelte-gtjx2q.svelte-gtjx2q{height:100%;width:6px;background-color:transparent;cursor:grab;position:absolute;left:-5px;z-index:10}.active-node .drag-handle.svelte-gtjx2q.svelte-gtjx2q{left:0}.draggable.svelte-gtjx2q:hover .drag-handle.svelte-gtjx2q{background-size:2px 4px;background-image:linear-gradient(\n                0deg,\n                hsla(0, 0%, 60%, 0.5) 20%,\n                transparent 40%\n        )}.content.svelte-gtjx2q.svelte-gtjx2q{width:100%\n    }");
 }
-function create_if_block2(ctx) {
+function create_if_block3(ctx) {
   let div;
   return {
     c() {
@@ -10857,7 +11511,7 @@ function create_if_block2(ctx) {
     }
   };
 }
-function create_fragment48(ctx) {
+function create_fragment53(ctx) {
   let div1;
   let t;
   let div0;
@@ -10866,7 +11520,7 @@ function create_fragment48(ctx) {
   let mounted;
   let dispose;
   let if_block = !/*isInSidebar*/
-  ctx[0] && create_if_block2(ctx);
+  ctx[0] && create_if_block3(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[3].default
@@ -10919,7 +11573,7 @@ function create_fragment48(ctx) {
       ctx2[0]) {
         if (if_block) {
         } else {
-          if_block = create_if_block2(ctx2);
+          if_block = create_if_block3(ctx2);
           if_block.c();
           if_block.m(div1, t);
         }
@@ -10986,7 +11640,7 @@ function create_fragment48(ctx) {
     }
   };
 }
-function instance48($$self, $$props, $$invalidate) {
+function instance53($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { isInSidebar } = $$props;
   let { nodeId } = $$props;
@@ -11003,7 +11657,7 @@ function instance48($$self, $$props, $$invalidate) {
 var Draggable = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance48, create_fragment48, safe_not_equal, { isInSidebar: 0, nodeId: 1 }, add_css2);
+    init(this, options, instance53, create_fragment53, safe_not_equal, { isInSidebar: 0, nodeId: 1 }, add_css3);
   }
 };
 var draggable_default = Draggable;
@@ -11022,7 +11676,7 @@ var loadInlineEditor = (target, nodeId) => {
 };
 
 // src/stores/settings/derived/limit-preview-height-store.ts
-var limitPreviewHeightStore = (view) => derived(view.plugin.settings, (state2) => state2.view.limitPreviewHeight);
+var limitPreviewHeightStore = (view) => derived2(view.plugin.settings, (state2) => state2.view.limitPreviewHeight);
 
 // src/view/actions/inline-editor/expandable-textarea-action.ts
 var deletionKeys = /* @__PURE__ */ new Set(["Backspace", "Delete", "x", " "]);
@@ -11030,6 +11684,8 @@ var AdjustHeight = (view, el) => {
   let previousScrollHeight = 0;
   let x;
   const limitCardHeight = get_store_value(limitPreviewHeightStore(view));
+  const viewState = view.viewStore.getValue();
+  const isInSidebar = viewState.document.editing.isInSidebar;
   return (e) => {
     if (!x) {
       x = el.querySelector(".cm-scroller");
@@ -11044,7 +11700,7 @@ var AdjustHeight = (view, el) => {
         previousScrollHeight = x.scrollHeight;
         el.style.height = previousScrollHeight + "px";
         x.style.height = "";
-        if (limitCardHeight && scrollHeightChange) {
+        if (!isInSidebar && limitCardHeight && scrollHeightChange) {
           view.alignBranch.align({
             type: "view/align-branch/reveal-node"
           });
@@ -11065,10 +11721,10 @@ var expandableTextareaAction = (el) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/content/inline-editor.svelte
-function add_css3(target) {
+function add_css4(target) {
   append_styles(target, "svelte-lini95", ".editor-container.svelte-lini95{width:100%;min-height:var(--min-node-height);height:fit-content;overflow:hidden;display:flex}.apply-style-rule.svelte-lini95{& .view-content {\n            background-color: transparent !important;\n        }}");
 }
-function create_fragment49(ctx) {
+function create_fragment54(ctx) {
   let div;
   let div_class_value;
   let expandableTextareaAction_action;
@@ -11121,7 +11777,7 @@ function create_fragment49(ctx) {
     }
   };
 }
-function instance49($$self, $$props, $$invalidate) {
+function instance54($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   let { style } = $$props;
   $$self.$$set = ($$props2) => {
@@ -11135,19 +11791,19 @@ function instance49($$self, $$props, $$invalidate) {
 var Inline_editor = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance49, create_fragment49, safe_not_equal, { nodeId: 0, style: 1 }, add_css3);
+    init(this, options, instance54, create_fragment54, safe_not_equal, { nodeId: 0, style: 1 }, add_css4);
   }
 };
 var inline_editor_default = Inline_editor;
 
 // src/view/actions/markdown-preview/markdown-preview-action.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 
 // src/stores/document/derived/content-store.ts
 var contentStore = (view, nodeId) => {
   let nodeContent;
   let documentContent;
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     if (!nodeContent || documentContent !== state2.document.content || nodeContent !== documentContent[nodeId]) {
       documentContent = state2.document.content;
       nodeContent = documentContent[nodeId];
@@ -11158,7 +11814,7 @@ var contentStore = (view, nodeId) => {
   });
 };
 var documentContentStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return state2.document.content;
   });
 };
@@ -11214,25 +11870,24 @@ var formatText = (text2) => {
 var markdownPreviewAction = (element2, nodeId) => {
   const plugin = getPlugin();
   const view = getView();
-  const store = view.documentStore;
-  const render = (content) => {
+  const render2 = (content) => {
     if (view && element2) {
       element2.empty();
       if (content.length > 0) {
         content = formatText(content);
       }
-      import_obsidian4.MarkdownRenderer.render(
+      import_obsidian3.MarkdownRenderer.render(
         plugin.app,
         content,
         element2,
-        store.getValue().file.path,
+        view.file.path,
         view
       );
     }
   };
   const $content = contentStore(view, nodeId);
   const unsub = $content.subscribe((content) => {
-    render(content);
+    render2(content);
   });
   return {
     destroy: () => {
@@ -11241,7 +11896,7 @@ var markdownPreviewAction = (element2, nodeId) => {
   };
 };
 
-// src/view/components/container/column/components/group/components/card/components/content/event-handlers/helpers/get-existing-right-tab-group.ts
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/helpers/get-existing-right-tab-group.ts
 var getExistingRightTabGroup = (view) => {
   const rootSplit = view.plugin.app.workspace.rootSplit;
   if (!("children" in rootSplit))
@@ -11262,7 +11917,7 @@ var getExistingRightTabGroup = (view) => {
   }
 };
 
-// src/view/components/container/column/components/group/components/card/components/content/event-handlers/helpers/open-file-in-existing-right-tab-group.ts
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/helpers/open-file-in-existing-right-tab-group.ts
 var openFileInExistingRightTabGroup = (view, link, activeFilePath) => {
   const rightTabGroup = getExistingRightTabGroup(view);
   if (!rightTabGroup)
@@ -11274,20 +11929,77 @@ var openFileInExistingRightTabGroup = (view, link, activeFilePath) => {
     rightTabGroup
   );
   if (newLeaf) {
-    const linkedFile = view.plugin.app.metadataCache.getFirstLinkpathDest(
-      link,
-      activeFilePath
-    );
-    if (linkedFile) {
-      newLeaf.openFile(linkedFile);
-      return true;
+    if (link.contains("#")) {
+      view.plugin.app.workspace.openLinkText(
+        link,
+        activeFilePath,
+        "split",
+        newLeaf.getViewState()
+      );
+    } else {
+      const linkedFile = view.plugin.app.metadataCache.getFirstLinkpathDest(
+        link,
+        activeFilePath
+      );
+      if (linkedFile) {
+        newLeaf.openFile(linkedFile);
+        workspace.setActiveLeaf(newLeaf);
+        return true;
+      }
     }
   }
   return false;
 };
 
-// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links.ts
-var selectCard = (view, id2) => {
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/block-link/handle-global-block-link.ts
+var getLinkPaneType = (view, modKey2) => {
+  const linkPaneType = view.plugin.settings.getValue().general.linkPaneType;
+  if (modKey2) {
+    return linkPaneType === "tab" ? "split" : "tab";
+  } else {
+    return linkPaneType;
+  }
+};
+var handleGlobalBlockLink = (view, link, modKey2) => {
+  view.plugin.app.workspace.openLinkText(
+    link,
+    view.file.basename,
+    getLinkPaneType(view, modKey2)
+  );
+};
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/file-link/handle-file-link.ts
+var handleFileLink = (view, link, modKey2) => {
+  const path = view.file?.path;
+  if (!link || !path)
+    return;
+  const paneType = getLinkPaneType(view, modKey2);
+  if (paneType === "tab") {
+    view.plugin.app.workspace.openLinkText(link, path, "tab");
+  } else {
+    const success = openFileInExistingRightTabGroup(view, link, path);
+    if (!success) {
+      view.plugin.app.workspace.openLinkText(link, path, "split");
+    }
+  }
+};
+
+// src/helpers/delay.ts
+var delay = async (milliseconds, signal) => {
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => resolve(), milliseconds);
+    if (signal) {
+      signal.addEventListener("abort", () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+    }
+  });
+};
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/helpers/select-card.ts
+var selectCard = async (view, id2) => {
+  await delay(16);
   view.viewStore.dispatch({
     type: "view/set-active-node/mouse",
     payload: {
@@ -11295,68 +12007,91 @@ var selectCard = (view, id2) => {
     }
   });
 };
-var handleFile = (view, link) => {
-  const path = view.documentStore.getValue().file.path;
-  if (!link || !path)
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/heading-link/handle-local-heading-link.ts
+var handleLocalHeadingLink = (view, link) => {
+  const match = /#+(.*)$/.exec(link);
+  if (!match)
     return;
-  const success = openFileInExistingRightTabGroup(view, link, path);
-  if (!success) {
-    view.plugin.app.workspace.openLinkText(link, path, "split");
-  }
-};
-var handleHeading = (view, link) => {
-  const levelMatch = /(#+)/.exec(link);
-  if (levelMatch) {
-    for (let level2 = 1; level2 <= 6; level2++) {
-      const headings = Array.from(
-        view.containerEl.querySelectorAll("h" + level2)
-      );
-      const heading = headings.find(
-        (h) => "#" + h.dataset.heading === link
-      );
-      if (heading) {
-        const card = heading.closest(".lineage-card");
-        if (card && card.id) {
-          selectCard(view, card.id);
-          break;
-        }
+  const headingText = match[1].trimStart();
+  for (let level2 = 1; level2 <= 6; level2++) {
+    const headings = Array.from(
+      view.containerEl.querySelectorAll("h" + level2)
+    );
+    const heading = headings.find((h) => h.dataset.heading === headingText);
+    if (heading) {
+      const card = heading.closest(".lineage-card");
+      if (card && card.id) {
+        selectCard(view, card.id);
+        break;
       }
     }
   }
 };
-var handleBlockLink = (view, link) => {
-  const match = /#\^([a-zA-Z0-9]{4,})$/.exec(link);
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/heading-link/handle-heading.ts
+var handleHeading = (view, link, modKey2) => {
+  const file = link.split("#")[0];
+  if (file && file !== view.file.basename) {
+    handleGlobalBlockLink(view, link, modKey2);
+  } else {
+    handleLocalHeadingLink(view, link);
+  }
+};
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/block-link/handle-local-block-link.ts
+var handleLocalBlockLink = (view, id2) => {
+  const element2 = view.container.querySelector(
+    `[data-block-id="^${id2}"`
+  );
+  if (element2) {
+    const card = element2.closest(".lineage-card");
+    if (card && card.id) {
+      selectCard(view, card.id);
+      return true;
+    }
+  }
+};
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/block-link/handle-block-link.ts
+var handleBlockLink = (view, link, modKey2) => {
+  const viewFilePath = view.file.basename;
+  const match = /(.*)#\^(\S{4,})$/.exec(link);
   if (match) {
-    const id2 = match[1];
-    if (id2) {
-      const element2 = view.containerEl.querySelector(
-        `[data-block-id="^${id2}"`
-      );
-      if (element2) {
-        const card = element2.closest(".lineage-card");
-        if (card && card.id) {
-          selectCard(view, card.id);
-        }
-      }
+    const file = match[1];
+    const id2 = match[2];
+    if (!file.trim() || file === viewFilePath) {
+      handleLocalBlockLink(view, id2);
+    } else {
+      handleGlobalBlockLink(view, link, modKey2);
     }
   }
 };
+
+// src/view/actions/keyboard-shortcuts/helpers/keyboard-events/mod-key.ts
+var import_obsidian4 = require("obsidian");
+var isMacLike = import_obsidian4.Platform.isMacOS || import_obsidian4.Platform.isIosApp;
+var modKey = isMacLike ? "Cmd" : "Ctrl";
+
+// src/view/components/container/column/components/group/components/card/components/content/event-handlers/handle-links/handle-links.ts
 var handleLinks = (view, e) => {
   if (!(e.target instanceof HTMLAnchorElement))
     return;
   if (!e.target.hasClass("internal-link"))
     return;
   const link = e.target.dataset.href;
+  const modKey2 = isMacLike ? e.metaKey : e.ctrlKey;
   if (!link)
     return;
   if (link.contains("#^")) {
     e.stopPropagation();
-    handleBlockLink(view, link);
-  } else if (link.startsWith("#")) {
+    handleBlockLink(view, link, modKey2);
+  } else if (link.contains("#")) {
     e.stopPropagation();
-    handleHeading(view, link);
+    handleHeading(view, link, modKey2);
   } else {
-    handleFile(view, link);
+    e.stopPropagation();
+    handleFileLink(view, link, modKey2);
   }
 };
 
@@ -11401,11 +12136,6 @@ var setActiveSidebarNode = (view, id2) => {
   });
 };
 
-// src/view/actions/keyboard-shortcuts/helpers/keyboard-events/mod-key.ts
-var import_obsidian5 = require("obsidian");
-var isMacLike = import_obsidian5.Platform.isMacOS || import_obsidian5.Platform.isIosApp;
-var modKey = isMacLike ? "Cmd" : "Ctrl";
-
 // src/view/components/container/column/components/group/components/card/components/content/store-actions/set-active-main-split-node.ts
 var setActiveMainSplitNode = (view, nodeId, e) => {
   const silent = isMacLike ? e.metaKey : e.ctrlKey;
@@ -11420,7 +12150,7 @@ var enableEditModeInSidebar = (view, nodeId) => {
   const settings = view.plugin.settings.getValue();
   const activeSidebarTab = settings.view.leftSidebarActiveTab;
   view.viewStore.dispatch({
-    type: "view/sidebar/enable-edit",
+    type: "view/editor/enable-sidebar-editor",
     payload: {
       id: nodeId
     },
@@ -11433,7 +12163,7 @@ var enableEditModeInSidebar = (view, nodeId) => {
 // src/view/components/container/column/components/group/components/card/components/content/store-actions/enable-edit-mode-in-main-split.ts
 var enableEditModeInMainSplit = (view, nodeId) => {
   view.viewStore.dispatch({
-    type: "view/main/enable-edit",
+    type: "view/editor/enable-main-editor",
     payload: {
       nodeId
     }
@@ -11441,10 +12171,10 @@ var enableEditModeInMainSplit = (view, nodeId) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/content/content.svelte
-function add_css4(target) {
+function add_css5(target) {
   append_styles(target, "svelte-1wqkxy4", ".lng-prev.svelte-1wqkxy4{width:100%;min-height:var(--min-node-height);font-size:var(--font-text-size);padding:6px 6px 10px 12px;color-scheme:light}");
 }
-function create_fragment50(ctx) {
+function create_fragment55(ctx) {
   let div;
   let div_class_value;
   let markdownPreviewAction_action;
@@ -11501,7 +12231,7 @@ function create_fragment50(ctx) {
     }
   };
 }
-function instance50($$self, $$props, $$invalidate) {
+function instance55($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   let { isInSidebar } = $$props;
   let { active } = $$props;
@@ -11564,14 +12294,14 @@ function instance50($$self, $$props, $$invalidate) {
 var Content = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance50, create_fragment50, safe_not_equal, { nodeId: 0, isInSidebar: 3, active: 4 }, add_css4);
+    init(this, options, instance55, create_fragment55, safe_not_equal, { nodeId: 0, isInSidebar: 3, active: 4 }, add_css5);
   }
 };
 var content_default = Content;
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/shared/floating-button.svelte
 var import_classnames = __toESM(require_classnames());
-function create_fragment51(ctx) {
+function create_fragment56(ctx) {
   let button;
   let button_class_value;
   let current;
@@ -11694,7 +12424,7 @@ function create_fragment51(ctx) {
     }
   };
 }
-function instance51($$self, $$props, $$invalidate) {
+function instance56($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { classes = "" } = $$props;
   let { position } = $$props;
@@ -11725,7 +12455,7 @@ function instance51($$self, $$props, $$invalidate) {
 var Floating_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance51, create_fragment51, safe_not_equal, { classes: 0, position: 1, label: 2 });
+    init(this, options, instance56, create_fragment56, safe_not_equal, { classes: 0, position: 1, label: 2 });
   }
 };
 var floating_button_default = Floating_button;
@@ -11737,18 +12467,18 @@ var deleteNode = (view, nodeId, includeSelection = false) => {
   if (viewState.document.pendingConfirmation.deleteNode.has(nodeId)) {
     const selectedNodes = includeSelection ? viewState.document.selectedNodes : void 0;
     documentStore.dispatch({
-      type: "DOCUMENT/DELETE_NODE",
+      type: "document/delete-node",
       payload: {
         activeNodeId: nodeId,
         selectedNodes
       }
     });
     view.viewStore.dispatch({
-      type: "view/confirmation/reset/delete-node"
+      type: "view/delete-node/reset-confirmation"
     });
   } else {
     view.viewStore.dispatch({
-      type: "view/confirmation/confirm/delete-node",
+      type: "view/delete-node/confirm",
       payload: {
         id: nodeId,
         includeSelection
@@ -11758,7 +12488,7 @@ var deleteNode = (view, nodeId, includeSelection = false) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/components/delete-node-button.svelte
-function create_default_slot46(ctx) {
+function create_default_slot51(ctx) {
   let trashicon;
   let current;
   trashicon = new trash_default({ props: { class: "svg-con" } });
@@ -11786,7 +12516,7 @@ function create_default_slot46(ctx) {
     }
   };
 }
-function create_fragment52(ctx) {
+function create_fragment57(ctx) {
   let floatingbutton;
   let current;
   floatingbutton = new floating_button_default({
@@ -11794,7 +12524,7 @@ function create_fragment52(ctx) {
       label: lang.card_btn_delete,
       position: "up-right",
       classes: "delete-card-button",
-      $$slots: { default: [create_default_slot46] },
+      $$slots: { default: [create_default_slot51] },
       $$scope: { ctx }
     }
   });
@@ -11834,7 +12564,7 @@ function create_fragment52(ctx) {
     }
   };
 }
-function instance52($$self, $$props, $$invalidate) {
+function instance57($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   const view = getView();
   const _deleteNode = (e) => {
@@ -11850,7 +12580,7 @@ function instance52($$self, $$props, $$invalidate) {
 var Delete_node_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance52, create_fragment52, safe_not_equal, { nodeId: 1 });
+    init(this, options, instance57, create_fragment57, safe_not_equal, { nodeId: 1 });
   }
 };
 var delete_node_button_default = Delete_node_button;
@@ -11862,14 +12592,14 @@ var saveNodeContent = (view, modKey2 = false) => {
     const isInSidebar = view.viewStore.getValue().document.editing.isInSidebar;
     if (isInSidebar) {
       view.viewStore.dispatch({
-        type: "view/sidebar/disable-edit",
+        type: "view/editor/disable-sidebar-editor",
         context: {
           modKey: modKey2
         }
       });
     } else {
       view.viewStore.dispatch({
-        type: "view/main/disable-edit",
+        type: "view/editor/disable-main-editor",
         context: {
           modKey: modKey2
         }
@@ -11879,7 +12609,7 @@ var saveNodeContent = (view, modKey2 = false) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/components/edit-node-button.svelte
-function create_else_block2(ctx) {
+function create_else_block3(ctx) {
   let pencilicon;
   let current;
   pencilicon = new pencil_default({ props: { class: "svg-icon" } });
@@ -11906,7 +12636,7 @@ function create_else_block2(ctx) {
     }
   };
 }
-function create_if_block3(ctx) {
+function create_if_block4(ctx) {
   let saveicon;
   let current;
   saveicon = new save_default({ props: { class: "svg-con" } });
@@ -11933,12 +12663,12 @@ function create_if_block3(ctx) {
     }
   };
 }
-function create_default_slot47(ctx) {
+function create_default_slot52(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block3, create_else_block2];
+  const if_block_creators = [create_if_block4, create_else_block3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -11997,7 +12727,7 @@ function create_default_slot47(ctx) {
     }
   };
 }
-function create_fragment53(ctx) {
+function create_fragment58(ctx) {
   let floatingbutton;
   let current;
   floatingbutton = new floating_button_default({
@@ -12007,7 +12737,7 @@ function create_fragment53(ctx) {
         ctx[0] ? lang.card_btn_save : lang.card_btn_edit
       ),
       position: "down-right",
-      $$slots: { default: [create_default_slot47] },
+      $$slots: { default: [create_default_slot52] },
       $$scope: { ctx }
     }
   });
@@ -12051,7 +12781,7 @@ function create_fragment53(ctx) {
     }
   };
 }
-function instance53($$self, $$props, $$invalidate) {
+function instance58($$self, $$props, $$invalidate) {
   let { editing } = $$props;
   let { nodeId } = $$props;
   let { isInSidebar } = $$props;
@@ -12089,7 +12819,7 @@ function instance53($$self, $$props, $$invalidate) {
 var Edit_node_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance53, create_fragment53, safe_not_equal, { editing: 0, nodeId: 2, isInSidebar: 3 });
+    init(this, options, instance58, create_fragment58, safe_not_equal, { editing: 0, nodeId: 2, isInSidebar: 3 });
   }
 };
 var edit_node_button_default = Edit_node_button;
@@ -12106,7 +12836,7 @@ var saveNodeAndInsertNode = (view, direction, content = "", activeNodeId) => {
   }
   const nodeId = activeNodeId || view.viewStore.getValue().document.activeNode;
   view.documentStore.dispatch({
-    type: "DOCUMENT/INSERT_NODE",
+    type: "document/add-node",
     payload: {
       position: direction,
       content,
@@ -12114,14 +12844,15 @@ var saveNodeAndInsertNode = (view, direction, content = "", activeNodeId) => {
     }
   });
   if (content) {
+    const newNodeId = view.viewStore.getValue().document.activeNode;
     if (direction === "down" || direction === "right") {
-      view.inlineEditor.setNodeCursor(nodeId, { line: 0, ch: 0 });
+      view.inlineEditor.setNodeCursor(newNodeId, { line: 0, ch: 0 });
     }
   }
 };
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/components/create-card-button.svelte
-function create_default_slot48(ctx) {
+function create_default_slot53(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -12197,7 +12928,7 @@ function create_default_slot48(ctx) {
     }
   };
 }
-function create_fragment54(ctx) {
+function create_fragment59(ctx) {
   let floatingbutton;
   let current;
   floatingbutton = new floating_button_default({
@@ -12213,7 +12944,7 @@ function create_fragment54(ctx) {
         /*position*/
         ctx[0]
       ),
-      $$slots: { default: [create_default_slot48] },
+      $$slots: { default: [create_default_slot53] },
       $$scope: { ctx }
     }
   });
@@ -12264,7 +12995,7 @@ function create_fragment54(ctx) {
     }
   };
 }
-function instance54($$self, $$props, $$invalidate) {
+function instance59($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   let { position } = $$props;
   const view = getView();
@@ -12278,9 +13009,9 @@ function instance54($$self, $$props, $$invalidate) {
     down: chevron_down_default
   };
   const label = {
-    "up": lang.card_btn_add_card_above,
-    "down": lang.card_btn_add_card_below,
-    "right": lang.card_btn_add_child_card
+    "up": lang.card_btn_add_node_above,
+    "down": lang.card_btn_add_node_below,
+    "right": lang.card_btn_add_child_node
   };
   $$self.$$set = ($$props2) => {
     if ("nodeId" in $$props2)
@@ -12293,18 +13024,18 @@ function instance54($$self, $$props, $$invalidate) {
 var Create_card_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance54, create_fragment54, safe_not_equal, { nodeId: 4, position: 0 });
+    init(this, options, instance59, create_fragment59, safe_not_equal, { nodeId: 4, position: 0 });
   }
 };
 var create_card_button_default = Create_card_button;
 
 // src/stores/view/subscriptions/effects/focus-container.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 var focusContainer = (view) => {
   setTimeout(() => {
     if (view.container) {
       const isEditing2 = Boolean(view.inlineEditor.nodeId);
-      const isEditingOnMobile = import_obsidian6.Platform.isMobile && isEditing2;
+      const isEditingOnMobile = import_obsidian5.Platform.isMobile && isEditing2;
       if (!isEditingOnMobile) {
         if (isEditing2)
           view.inlineEditor.focus();
@@ -12316,7 +13047,7 @@ var focusContainer = (view) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/components/focus-card-button.svelte
-function create_default_slot49(ctx) {
+function create_default_slot54(ctx) {
   let focus;
   let current;
   focus = new focus_default({ props: { class: "svg-icon" } });
@@ -12344,14 +13075,14 @@ function create_default_slot49(ctx) {
     }
   };
 }
-function create_fragment55(ctx) {
+function create_fragment60(ctx) {
   let floatingbutton;
   let current;
   floatingbutton = new floating_button_default({
     props: {
       label: lang.card_btn_scroll_to_reveal,
       position: "up-right",
-      $$slots: { default: [create_default_slot49] },
+      $$slots: { default: [create_default_slot54] },
       $$scope: { ctx }
     }
   });
@@ -12391,7 +13122,7 @@ function create_fragment55(ctx) {
     }
   };
 }
-function instance55($$self, $$props, $$invalidate) {
+function instance60($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   const view = getView();
   const focusCard = () => {
@@ -12410,13 +13141,13 @@ function instance55($$self, $$props, $$invalidate) {
 var Focus_card_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance55, create_fragment55, safe_not_equal, { nodeId: 1 });
+    init(this, options, instance60, create_fragment60, safe_not_equal, { nodeId: 1 });
   }
 };
 var focus_card_button_default = Focus_card_button;
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/components/collapse-card-button.svelte
-function create_else_block3(ctx) {
+function create_else_block4(ctx) {
   let minus;
   let current;
   minus = new minus_default({ props: { class: "svg-icon" } });
@@ -12443,7 +13174,7 @@ function create_else_block3(ctx) {
     }
   };
 }
-function create_if_block4(ctx) {
+function create_if_block5(ctx) {
   let plus;
   let current;
   plus = new plus_default({ props: { class: "svg-icon" } });
@@ -12470,12 +13201,12 @@ function create_if_block4(ctx) {
     }
   };
 }
-function create_default_slot50(ctx) {
+function create_default_slot55(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block4, create_else_block3];
+  const if_block_creators = [create_if_block5, create_else_block4];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -12534,17 +13265,17 @@ function create_default_slot50(ctx) {
     }
   };
 }
-function create_fragment56(ctx) {
+function create_fragment61(ctx) {
   let floatingbutton;
   let current;
   floatingbutton = new floating_button_default({
     props: {
       label: (
         /*collapsed*/
-        ctx[0] ? lang.card_btn_collapse_card : lang.card_btn_expand_card
+        ctx[0] ? lang.card_btn_expand_node : lang.card_btn_collapse_node
       ),
       position: "collapse",
-      $$slots: { default: [create_default_slot50] },
+      $$slots: { default: [create_default_slot55] },
       $$scope: { ctx }
     }
   });
@@ -12566,7 +13297,7 @@ function create_fragment56(ctx) {
       if (dirty & /*collapsed*/
       1)
         floatingbutton_changes.label = /*collapsed*/
-        ctx2[0] ? lang.card_btn_collapse_card : lang.card_btn_expand_card;
+        ctx2[0] ? lang.card_btn_expand_node : lang.card_btn_collapse_node;
       if (dirty & /*$$scope, collapsed*/
       17) {
         floatingbutton_changes.$$scope = { dirty, ctx: ctx2 };
@@ -12588,17 +13319,14 @@ function create_fragment56(ctx) {
     }
   };
 }
-function instance56($$self, $$props, $$invalidate) {
+function instance61($$self, $$props, $$invalidate) {
   let { nodeId } = $$props;
   let { collapsed } = $$props;
   const view = getView();
   const toggleCollapse = () => {
     view.viewStore.dispatch({
       type: "view/outline/toggle-collapse-node",
-      payload: {
-        id: nodeId,
-        columns: view.documentStore.getValue().document.columns
-      }
+      payload: { id: nodeId }
     });
   };
   $$self.$$set = ($$props2) => {
@@ -12612,18 +13340,18 @@ function instance56($$self, $$props, $$invalidate) {
 var Collapse_card_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance56, create_fragment56, safe_not_equal, { nodeId: 2, collapsed: 0 });
+    init(this, options, instance61, create_fragment61, safe_not_equal, { nodeId: 2, collapsed: 0 });
   }
 };
 var collapse_card_button_default = Collapse_card_button;
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/card-buttons/card-buttons.svelte
-function create_if_block_1(ctx) {
+function create_if_block_12(ctx) {
   let t;
   let editnodebutton;
   let current;
   let if_block = !/*editing*/
-  ctx[0] && create_if_block_2(ctx);
+  ctx[0] && create_if_block_22(ctx);
   editnodebutton = new edit_node_button_default({
     props: {
       editing: (
@@ -12664,7 +13392,7 @@ function create_if_block_1(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_2(ctx2);
+          if_block = create_if_block_22(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(t.parentNode, t);
@@ -12713,12 +13441,12 @@ function create_if_block_1(ctx) {
     }
   };
 }
-function create_if_block_2(ctx) {
+function create_if_block_22(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_3, create_else_block4];
+  const if_block_creators = [create_if_block_32, create_else_block5];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (!/*isInSidebar*/
@@ -12778,7 +13506,7 @@ function create_if_block_2(ctx) {
     }
   };
 }
-function create_else_block4(ctx) {
+function create_else_block5(ctx) {
   let focuscardbutton;
   let current;
   focuscardbutton = new focus_card_button_default({ props: { nodeId: (
@@ -12816,7 +13544,7 @@ function create_else_block4(ctx) {
     }
   };
 }
-function create_if_block_3(ctx) {
+function create_if_block_32(ctx) {
   let createcardbutton0;
   let t0;
   let createcardbutton1;
@@ -12931,7 +13659,7 @@ function create_if_block_3(ctx) {
     }
   };
 }
-function create_if_block5(ctx) {
+function create_if_block6(ctx) {
   let collapsecardbutton;
   let current;
   collapsecardbutton = new collapse_card_button_default({
@@ -12981,19 +13709,19 @@ function create_if_block5(ctx) {
     }
   };
 }
-function create_fragment57(ctx) {
+function create_fragment62(ctx) {
   let t;
   let if_block1_anchor;
   let current;
   let if_block0 = (
     /*active*/
     (ctx[5] === "node" /* node */ || /*alwaysShowCardButtons*/
-    ctx[6]) && create_if_block_1(ctx)
+    ctx[6]) && create_if_block_12(ctx)
   );
   let if_block1 = (
     /*outlineMode*/
     ctx[7] && /*hasChildren*/
-    ctx[2] && create_if_block5(ctx)
+    ctx[2] && create_if_block6(ctx)
   );
   return {
     c() {
@@ -13026,7 +13754,7 @@ function create_fragment57(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_1(ctx2);
+          if_block0 = create_if_block_12(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(t.parentNode, t);
@@ -13050,7 +13778,7 @@ function create_fragment57(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block5(ctx2);
+          if_block1 = create_if_block6(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
@@ -13087,7 +13815,7 @@ function create_fragment57(ctx) {
     }
   };
 }
-function instance57($$self, $$props, $$invalidate) {
+function instance62($$self, $$props, $$invalidate) {
   let { editing } = $$props;
   let { nodeId } = $$props;
   let { hasChildren } = $$props;
@@ -13128,7 +13856,7 @@ function instance57($$self, $$props, $$invalidate) {
 var Card_buttons = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance57, create_fragment57, safe_not_equal, {
+    init(this, options, instance62, create_fragment62, safe_not_equal, {
       editing: 0,
       nodeId: 1,
       hasChildren: 2,
@@ -13146,16 +13874,16 @@ var card_buttons_default = Card_buttons;
 var import_classnames2 = __toESM(require_classnames());
 
 // src/view/components/container/column/components/group/components/card/components/bridges/bridges.svelte
-function add_css5(target) {
-  append_styles(target, "svelte-1bkhe9s", ".active-node-bridge.svelte-1bkhe9s,.active-parent-bridge-right.svelte-1bkhe9s,.active-parent-bridge-left.svelte-1bkhe9s{height:100%;width:10px;position:absolute;top:0}.active-parent-bridge-right.svelte-1bkhe9s{right:-10px;background-color:var(--bg-color)}.active-parent-bridge-left.svelte-1bkhe9s{left:-10px;background-color:var(--bg-color)}.active-node-bridge.svelte-1bkhe9s{right:-10px;background-color:var(--bg-color)}");
+function add_css6(target) {
+  append_styles(target, "svelte-7f61s4", ".active-node-bridge.svelte-7f61s4,.active-parent-bridge-right.svelte-7f61s4,.active-parent-bridge-left.svelte-7f61s4{height:100%;width:10px;position:absolute;top:0}.active-parent-bridge-right.svelte-7f61s4{right:-10px;background-color:var(--bg-color)}.active-parent-bridge-left.svelte-7f61s4{width:7px;left:-12px;background-color:var(--bg-color)}.active-node-bridge.svelte-7f61s4{right:-10px;background-color:var(--bg-color)}");
 }
-function create_if_block_12(ctx) {
+function create_if_block_13(ctx) {
   let div;
   let div_class_value;
   let t;
   let if_block_anchor;
   let if_block = !/*firstColumn*/
-  ctx[3] && create_if_block_22(ctx);
+  ctx[3] && create_if_block_23(ctx);
   return {
     c() {
       div = element("div");
@@ -13163,7 +13891,7 @@ function create_if_block_12(ctx) {
       if (if_block)
         if_block.c();
       if_block_anchor = empty();
-      attr(div, "class", div_class_value = null_to_empty("active-parent-bridge-right") + " svelte-1bkhe9s");
+      attr(div, "class", div_class_value = null_to_empty("active-parent-bridge-right") + " svelte-7f61s4");
       set_style(
         div,
         "--bg-color",
@@ -13201,7 +13929,7 @@ function create_if_block_12(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block_22(ctx2);
+          if_block = create_if_block_23(ctx2);
           if_block.c();
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
@@ -13221,12 +13949,12 @@ function create_if_block_12(ctx) {
     }
   };
 }
-function create_if_block6(ctx) {
+function create_if_block7(ctx) {
   let div;
   return {
     c() {
       div = element("div");
-      attr(div, "class", "active-node-bridge svelte-1bkhe9s");
+      attr(div, "class", "active-node-bridge svelte-7f61s4");
       set_style(
         div,
         "--bg-color",
@@ -13257,12 +13985,12 @@ function create_if_block6(ctx) {
     }
   };
 }
-function create_if_block_22(ctx) {
+function create_if_block_23(ctx) {
   let div;
   return {
     c() {
       div = element("div");
-      attr(div, "class", "active-parent-bridge-left svelte-1bkhe9s");
+      attr(div, "class", "active-parent-bridge-left svelte-7f61s4");
       set_style(
         div,
         "--bg-color",
@@ -13299,19 +14027,19 @@ function create_if_block_22(ctx) {
     }
   };
 }
-function create_fragment58(ctx) {
+function create_fragment63(ctx) {
   let if_block_anchor;
   function select_block_type(ctx2, dirty) {
     if (!/*editing*/
     ctx2[0] && /*hasActiveChildren*/
     ctx2[1] && /*active*/
     ctx2[2] === "node" /* node */)
-      return create_if_block6;
+      return create_if_block7;
     if (
       /*active*/
       ctx2[2] === "parent" /* parent */
     )
-      return create_if_block_12;
+      return create_if_block_13;
   }
   let current_block_type = select_block_type(ctx, -1);
   let if_block = current_block_type && current_block_type(ctx);
@@ -13351,7 +14079,7 @@ function create_fragment58(ctx) {
     }
   };
 }
-function instance58($$self, $$props, $$invalidate) {
+function instance63($$self, $$props, $$invalidate) {
   let { editing } = $$props;
   let { hasActiveChildren } = $$props;
   let { active } = $$props;
@@ -13377,8 +14105,8 @@ var Bridges = class extends SvelteComponent {
     init(
       this,
       options,
-      instance58,
-      create_fragment58,
+      instance63,
+      create_fragment63,
       safe_not_equal,
       {
         editing: 0,
@@ -13387,7 +14115,7 @@ var Bridges = class extends SvelteComponent {
         firstColumn: 3,
         style: 4
       },
-      add_css5
+      add_css6
     );
   }
 };
@@ -13486,16 +14214,16 @@ var droppable = (node) => {
     const sections = documentStore.getValue().sections;
     if (isId.node(data) && sections.id_section[data]) {
       documentStore.dispatch({
-        type: "DOCUMENT/DROP_NODE",
+        type: "document/drop-node",
         payload: {
           droppedNodeId: data,
           targetNodeId: targetCard.id,
           position: getDropPosition(event, targetCard)
         }
       });
-    } else {
+    } else if (!view.viewStore.getValue().document.editing.activeNodeId) {
       documentStore.dispatch({
-        type: "DOCUMENT/PASTE_NODE",
+        type: "document/paste-node",
         payload: {
           targetNodeId: targetCard.id,
           text: data,
@@ -13504,7 +14232,7 @@ var droppable = (node) => {
       });
     }
     viewStore.dispatch({
-      type: "DOCUMENT/SET_DRAG_ENDED"
+      type: "view/dnd/set-drag-ended"
     });
   }
   node.addEventListener("dragleave", HandleDragLeave);
@@ -13519,11 +14247,41 @@ var droppable = (node) => {
   };
 };
 
-// src/obsidian/events/workspace/helpers/get-document-format.ts
-var getDocumentFormat = (view) => {
+// node_modules/tslib/tslib.es6.mjs
+function __awaiter(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve) {
+      resolve(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+}
+
+// src/obsidian/events/workspace/helpers/get-persisted-document-format.ts
+var getPersistedDocumentFormat = (view, fail = true) => {
   invariant(view.file);
   const format2 = view.plugin.settings.getValue().documents[view.file.path]?.documentFormat;
-  invariant(format2);
+  if (fail)
+    invariant(format2);
   return format2;
 };
 
@@ -13624,9 +14382,9 @@ var extractFrontmatter = (markdown) => {
   if (match) {
     const frontmatter = match[0];
     const data = markdown.slice(frontmatter.length);
-    return { data, frontmatter: frontmatter.trim() + "\n" };
+    return { body: data, frontmatter: frontmatter.trim() + "\n" };
   } else {
-    return { data: markdown, frontmatter: "" };
+    return { body: markdown, frontmatter: "" };
   }
 };
 
@@ -13650,10 +14408,10 @@ var findOutlinePosition = (view, nodeId) => {
   }
 };
 
-// src/obsidian/events/workspace/actions/set-view-type.ts
+// src/stores/settings/actions/set-view-type.ts
 var setViewType = (plugin, path, type) => {
   plugin.settings.dispatch({
-    type: "SET_VIEW_TYPE",
+    type: "settings/documents/set-view-type",
     payload: {
       path,
       type
@@ -13690,9 +14448,9 @@ var openFileAndJumpToLine = async (view, line, ch) => {
 };
 
 // src/lib/data-conversion/helpers/html-element-marker/parse-html-element-marker.ts
-var htmlCommentRegex2 = /<span data-section="((\d\.?)*(\d))"\s*\/>/;
+var htmlElementRegex = /<span data-section="((\d\.?)*(\d))"\s*(\/>|><\/span>)/;
 var parseHtmlElementMarker = (line) => {
-  const results = htmlCommentRegex2.exec(line);
+  const results = htmlElementRegex.exec(line);
   if (results) {
     const result = results[1];
     const split2 = result.split(".");
@@ -13718,10 +14476,10 @@ var findHtmlElementPosition = (view, nodeId) => {
 };
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/pin-indicator.svelte
-function add_css6(target) {
+function add_css7(target) {
   append_styles(target, "svelte-180w9t5", ".pin-indicator.svelte-180w9t5{position:absolute;left:-20px;top:0px;cursor:default;& svg {\n            fill: var(--text-muted);\n            color: var(--text-muted);\n           width:16px !important;\n           height:16px !important;\n\n        }}");
 }
-function create_fragment59(ctx) {
+function create_fragment64(ctx) {
   let span;
   let pin;
   let current;
@@ -13759,16 +14517,16 @@ function create_fragment59(ctx) {
 var Pin_indicator = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment59, safe_not_equal, {}, add_css6);
+    init(this, options, null, create_fragment64, safe_not_equal, {}, add_css7);
   }
 };
 var pin_indicator_default = Pin_indicator;
 
 // src/view/components/container/column/components/group/components/card/components/card-buttons/tree-index-button.svelte
-function add_css7(target) {
+function add_css8(target) {
   append_styles(target, "svelte-1cmrwyv", ".tree-index.svelte-1cmrwyv{position:absolute;bottom:3px;right:8px;opacity:0.8;font-size:12px;cursor:pointer}.is-active.svelte-1cmrwyv{opacity:0.3}.is-active-child.svelte-1cmrwyv{opacity:0.3}.is-active-parent.svelte-1cmrwyv{opacity:0.6}");
 }
-function create_if_block_13(ctx) {
+function create_if_block8(ctx) {
   let pin;
   let current;
   pin = new pin_indicator_default({});
@@ -13795,23 +14553,7 @@ function create_if_block_13(ctx) {
     }
   };
 }
-function create_if_block7(ctx) {
-  let t;
-  return {
-    c() {
-      t = text(".");
-    },
-    m(target, anchor) {
-      insert(target, t, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t);
-      }
-    }
-  };
-}
-function create_fragment60(ctx) {
+function create_fragment65(ctx) {
   let div;
   let t0;
   let span;
@@ -13821,32 +14563,26 @@ function create_fragment60(ctx) {
   let current;
   let mounted;
   let dispose;
-  let if_block0 = (
+  let if_block = (
     /*pinned*/
-    ctx[3] && create_if_block_13(ctx)
-  );
-  let if_block1 = (
-    /*hasChildren*/
-    ctx[2] && create_if_block7(ctx)
+    ctx[2] && create_if_block8(ctx)
   );
   return {
     c() {
       div = element("div");
-      if (if_block0)
-        if_block0.c();
+      if (if_block)
+        if_block.c();
       t0 = space();
       span = element("span");
       t1 = text(
         /*section*/
         ctx[1]
       );
-      if (if_block1)
-        if_block1.c();
       attr(span, "aria-label", span_aria_label_value = lang.card_btn_reveal_in_editor);
       attr(div, "class", div_class_value = null_to_empty("tree-index " + /*activeStatus*/
       (ctx[0] ? (
         /*classes*/
-        ctx[5][
+        ctx[4][
           /*activeStatus*/
           ctx[0]
         ]
@@ -13854,20 +14590,18 @@ function create_fragment60(ctx) {
     },
     m(target, anchor) {
       insert(target, div, anchor);
-      if (if_block0)
-        if_block0.m(div, null);
+      if (if_block)
+        if_block.m(div, null);
       append(div, t0);
       append(div, span);
       append(span, t1);
-      if (if_block1)
-        if_block1.m(span, null);
       current = true;
       if (!mounted) {
         dispose = listen(
           span,
           "click",
           /*openFile*/
-          ctx[4]
+          ctx[3]
         );
         mounted = true;
       }
@@ -13875,23 +14609,23 @@ function create_fragment60(ctx) {
     p(ctx2, [dirty]) {
       if (
         /*pinned*/
-        ctx2[3]
+        ctx2[2]
       ) {
-        if (if_block0) {
+        if (if_block) {
           if (dirty & /*pinned*/
-          8) {
-            transition_in(if_block0, 1);
+          4) {
+            transition_in(if_block, 1);
           }
         } else {
-          if_block0 = create_if_block_13(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div, t0);
+          if_block = create_if_block8(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(div, t0);
         }
-      } else if (if_block0) {
+      } else if (if_block) {
         group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
         });
         check_outros();
       }
@@ -13902,25 +14636,11 @@ function create_fragment60(ctx) {
           /*section*/
           ctx2[1]
         );
-      if (
-        /*hasChildren*/
-        ctx2[2]
-      ) {
-        if (if_block1) {
-        } else {
-          if_block1 = create_if_block7(ctx2);
-          if_block1.c();
-          if_block1.m(span, null);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
       if (!current || dirty & /*activeStatus*/
       1 && div_class_value !== (div_class_value = null_to_empty("tree-index " + /*activeStatus*/
       (ctx2[0] ? (
         /*classes*/
-        ctx2[5][
+        ctx2[4][
           /*activeStatus*/
           ctx2[0]
         ]
@@ -13931,37 +14651,34 @@ function create_fragment60(ctx) {
     i(local) {
       if (current)
         return;
-      transition_in(if_block0);
+      transition_in(if_block);
       current = true;
     },
     o(local) {
-      transition_out(if_block0);
+      transition_out(if_block);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div);
       }
-      if (if_block0)
-        if_block0.d();
-      if (if_block1)
-        if_block1.d();
+      if (if_block)
+        if_block.d();
       mounted = false;
       dispose();
     }
   };
 }
-function instance59($$self, $$props, $$invalidate) {
+function instance64($$self, $$props, $$invalidate) {
   const view = getView();
   let { nodeId } = $$props;
   let { activeStatus } = $$props;
   let { section } = $$props;
-  let { hasChildren } = $$props;
   let { pinned } = $$props;
   const openFile2 = () => __awaiter(void 0, void 0, void 0, function* () {
     if (!view.file)
       return;
-    const format2 = getDocumentFormat(view);
+    const format2 = getPersistedDocumentFormat(view);
     const i = format2 === "sections" ? findSectionPosition(view, nodeId) : format2 === "html-element" ? findHtmlElementPosition(view, nodeId) : findOutlinePosition(view, nodeId);
     if (typeof i === "undefined")
       return;
@@ -13978,17 +14695,15 @@ function instance59($$self, $$props, $$invalidate) {
   };
   $$self.$$set = ($$props2) => {
     if ("nodeId" in $$props2)
-      $$invalidate(6, nodeId = $$props2.nodeId);
+      $$invalidate(5, nodeId = $$props2.nodeId);
     if ("activeStatus" in $$props2)
       $$invalidate(0, activeStatus = $$props2.activeStatus);
     if ("section" in $$props2)
       $$invalidate(1, section = $$props2.section);
-    if ("hasChildren" in $$props2)
-      $$invalidate(2, hasChildren = $$props2.hasChildren);
     if ("pinned" in $$props2)
-      $$invalidate(3, pinned = $$props2.pinned);
+      $$invalidate(2, pinned = $$props2.pinned);
   };
-  return [activeStatus, section, hasChildren, pinned, openFile2, classes, nodeId];
+  return [activeStatus, section, pinned, openFile2, classes, nodeId];
 }
 var Tree_index_button = class extends SvelteComponent {
   constructor(options) {
@@ -13996,24 +14711,23 @@ var Tree_index_button = class extends SvelteComponent {
     init(
       this,
       options,
-      instance59,
-      create_fragment60,
+      instance64,
+      create_fragment65,
       safe_not_equal,
       {
-        nodeId: 6,
+        nodeId: 5,
         activeStatus: 0,
         section: 1,
-        hasChildren: 2,
-        pinned: 3
+        pinned: 2
       },
-      add_css7
+      add_css8
     );
   }
 };
 var tree_index_button_default = Tree_index_button;
 
 // src/view/components/container/column/components/group/components/card/components/card-style.svelte
-function create_fragment61(ctx) {
+function create_fragment66(ctx) {
   let div;
   let div_style_value;
   let div_class_value;
@@ -14049,7 +14763,7 @@ function create_fragment61(ctx) {
     }
   };
 }
-function instance60($$self, $$props, $$invalidate) {
+function instance65($$self, $$props, $$invalidate) {
   let { style } = $$props;
   $$self.$$set = ($$props2) => {
     if ("style" in $$props2)
@@ -14060,13 +14774,13 @@ function instance60($$self, $$props, $$invalidate) {
 var Card_style = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance60, create_fragment61, safe_not_equal, { style: 0 });
+    init(this, options, instance65, create_fragment66, safe_not_equal, { style: 0 });
   }
 };
 var card_style_default = Card_style;
 
 // src/view/components/container/column/components/group/components/card/card.svelte
-function add_css8(target) {
+function add_css9(target) {
   append_styles(target, "svelte-1nruoli", ":root{--node-width:400px;--min-node-height:100px}.lineage-card.svelte-1nruoli{width:var(--node-width);height:fit-content;display:flex;position:relative;font-size:16px;--scrollbar-thumb-bg:var(--color-base-30);--scrollbar-active-thumb-bg:var(--color-base-40)}.lineage-card.svelte-1nruoli:hover{z-index:10}.lineage-card.svelte-1nruoli::-webkit-scrollbar{display:initial}");
 }
 function create_if_block_14(ctx) {
@@ -14107,7 +14821,7 @@ function create_if_block_14(ctx) {
     }
   };
 }
-function create_else_block5(ctx) {
+function create_else_block6(ctx) {
   let draggable2;
   let current;
   draggable2 = new draggable_default({
@@ -14120,7 +14834,7 @@ function create_else_block5(ctx) {
         /*isInSidebar*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot51] },
+      $$slots: { default: [create_default_slot56] },
       $$scope: { ctx }
     }
   });
@@ -14163,7 +14877,7 @@ function create_else_block5(ctx) {
     }
   };
 }
-function create_if_block8(ctx) {
+function create_if_block9(ctx) {
   let inlineeditor;
   let current;
   inlineeditor = new inline_editor_default({
@@ -14213,7 +14927,7 @@ function create_if_block8(ctx) {
     }
   };
 }
-function create_default_slot51(ctx) {
+function create_default_slot56(ctx) {
   let content;
   let current;
   content = new content_default({
@@ -14271,7 +14985,7 @@ function create_default_slot51(ctx) {
     }
   };
 }
-function create_fragment62(ctx) {
+function create_fragment67(ctx) {
   let div;
   let t0;
   let current_block_type_index;
@@ -14292,7 +15006,7 @@ function create_fragment62(ctx) {
     /*style*/
     ctx[13] && create_if_block_14(ctx)
   );
-  const if_block_creators = [create_if_block8, create_else_block5];
+  const if_block_creators = [create_if_block9, create_else_block6];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -14354,10 +15068,6 @@ function create_fragment62(ctx) {
       section: (
         /*section*/
         ctx[8]
-      ),
-      hasChildren: (
-        /*hasChildren*/
-        ctx[4]
       ),
       pinned: (
         /*pinned*/
@@ -14555,10 +15265,6 @@ function create_fragment62(ctx) {
       256)
         treeindex_changes.section = /*section*/
         ctx2[8];
-      if (dirty & /*hasChildren*/
-      16)
-        treeindex_changes.hasChildren = /*hasChildren*/
-        ctx2[4];
       if (dirty & /*pinned*/
       1024)
         treeindex_changes.pinned = /*pinned*/
@@ -14672,7 +15378,7 @@ function create_fragment62(ctx) {
     }
   };
 }
-function instance61($$self, $$props, $$invalidate) {
+function instance66($$self, $$props, $$invalidate) {
   let { node } = $$props;
   let { editing } = $$props;
   let { active } = $$props;
@@ -14772,8 +15478,8 @@ var Card = class extends SvelteComponent {
     init(
       this,
       options,
-      instance61,
-      create_fragment62,
+      instance66,
+      create_fragment67,
       safe_not_equal,
       {
         node: 0,
@@ -14795,7 +15501,7 @@ var Card = class extends SvelteComponent {
         hidden: 16,
         alwaysShowCardButtons: 17
       },
-      add_css8
+      add_css9
     );
   }
 };
@@ -14811,7 +15517,7 @@ var findColumn = (columns, columnId) => {
 var groupsStore = (view, columnId) => {
   let column;
   let columns;
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     if (!column || columns !== state2.document.columns) {
       columns = state2.document.columns;
       column = findColumn(columns, columnId);
@@ -14822,7 +15528,7 @@ var groupsStore = (view, columnId) => {
   });
 };
 var singleColumnGroupStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return state2.document.columns.length > 0 ? state2.document.columns[0].groups : [];
   });
 };
@@ -14868,7 +15574,7 @@ var findGroup = (columns, columnId, groupId) => {
 var nodesStore = (view, columnId, groupId) => {
   let group;
   let columns;
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     if (!group || columns !== state2.document.columns) {
       columns = state2.document.columns;
       group = findGroup(columns, columnId, groupId);
@@ -14879,18 +15585,18 @@ var nodesStore = (view, columnId, groupId) => {
   });
 };
 var singleColumnNodesStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return sortTreeNodes(state2.document.columns);
   });
 };
 
 // src/view/components/container/column/components/group/group.svelte
-function get_each_context2(ctx, list, i) {
+function get_each_context4(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[27] = list[i];
   return child_ctx;
 }
-function create_if_block9(ctx) {
+function create_if_block10(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -14906,9 +15612,9 @@ function create_if_block9(ctx) {
     ctx2[27]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context2(ctx, each_value, i);
+    let child_ctx = get_each_context4(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block2(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block4(key, child_ctx));
   }
   return {
     c() {
@@ -14953,7 +15659,7 @@ function create_if_block9(ctx) {
           ctx2[22]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block2, null, get_each_context2);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block4, null, get_each_context4);
         check_outros();
       }
       if (!current || dirty & /*activeChildGroups, groupId, outlineMode, activeGroup*/
@@ -15276,7 +15982,7 @@ function create_if_block_15(ctx) {
     }
   };
 }
-function create_each_block2(key_1, ctx) {
+function create_each_block4(key_1, ctx) {
   let first;
   let show_if = (
     /*searchQuery*/
@@ -15369,7 +16075,7 @@ function create_each_block2(key_1, ctx) {
     }
   };
 }
-function create_fragment63(ctx) {
+function create_fragment68(ctx) {
   let show_if = (
     /*$nodes*/
     ctx[22].length > 0 && /*searchQuery*/
@@ -15383,7 +16089,7 @@ function create_fragment63(ctx) {
   );
   let if_block_anchor;
   let current;
-  let if_block = show_if && create_if_block9(ctx);
+  let if_block = show_if && create_if_block10(ctx);
   return {
     c() {
       if (if_block)
@@ -15416,7 +16122,7 @@ function create_fragment63(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block9(ctx2);
+          if_block = create_if_block10(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -15448,7 +16154,7 @@ function create_fragment63(ctx) {
     }
   };
 }
-function instance62($$self, $$props, $$invalidate) {
+function instance67($$self, $$props, $$invalidate) {
   let $nodes;
   let { groupId } = $$props;
   let { columnId } = $$props;
@@ -15557,7 +16263,7 @@ function instance62($$self, $$props, $$invalidate) {
 var Group = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance62, create_fragment63, safe_not_equal, {
+    init(this, options, instance67, create_fragment68, safe_not_equal, {
       groupId: 0,
       columnId: 24,
       activeChildGroups: 1,
@@ -15587,15 +16293,15 @@ var Group = class extends SvelteComponent {
 var group_default = Group;
 
 // src/view/components/container/column/column.svelte
-function add_css9(target) {
+function add_css10(target) {
   append_styles(target, "svelte-f71k1e", ".column.svelte-f71k1e::-webkit-scrollbar{display:none}.column-buffer.svelte-f71k1e{height:90%;min-width:var(--node-width)}");
 }
-function get_each_context3(ctx, list, i) {
+function get_each_context5(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[26] = list[i];
   return child_ctx;
 }
-function create_if_block10(ctx) {
+function create_if_block11(ctx) {
   let group_1;
   let current;
   group_1 = new group_default({
@@ -15813,7 +16519,7 @@ function create_if_block10(ctx) {
     }
   };
 }
-function create_each_block3(key_1, ctx) {
+function create_each_block5(key_1, ctx) {
   let first;
   let show_if = !/*dndChildGroups*/
   ctx[2].has(
@@ -15822,7 +16528,7 @@ function create_each_block3(key_1, ctx) {
   );
   let if_block_anchor;
   let current;
-  let if_block = show_if && create_if_block10(ctx);
+  let if_block = show_if && create_if_block11(ctx);
   return {
     key: key_1,
     first: null,
@@ -15857,7 +16563,7 @@ function create_each_block3(key_1, ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block10(ctx);
+          if_block = create_if_block11(ctx);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -15890,7 +16596,7 @@ function create_each_block3(key_1, ctx) {
     }
   };
 }
-function create_fragment64(ctx) {
+function create_fragment69(ctx) {
   let div2;
   let div0;
   let t0;
@@ -15908,9 +16614,9 @@ function create_fragment64(ctx) {
     ctx2[26].parentId
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context3(ctx, each_value, i);
+    let child_ctx = get_each_context5(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block3(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block5(key, child_ctx));
   }
   return {
     c() {
@@ -15953,7 +16659,7 @@ function create_fragment64(ctx) {
           ctx2[23]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div2, outro_and_destroy_block, create_each_block3, t1, get_each_context3);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div2, outro_and_destroy_block, create_each_block5, t1, get_each_context5);
         check_outros();
       }
       if (!current || dirty & /*columnId*/
@@ -15990,7 +16696,7 @@ function create_fragment64(ctx) {
     }
   };
 }
-function instance63($$self, $$props, $$invalidate) {
+function instance68($$self, $$props, $$invalidate) {
   let $groups;
   let { columnId } = $$props;
   let { activeChildGroups } = $$props;
@@ -16100,8 +16806,8 @@ var Column = class extends SvelteComponent {
     init(
       this,
       options,
-      instance63,
-      create_fragment64,
+      instance68,
+      create_fragment69,
       safe_not_equal,
       {
         columnId: 0,
@@ -16128,7 +16834,7 @@ var Column = class extends SvelteComponent {
         hiddenNodes: 21,
         alwaysShowCardButtons: 22
       },
-      add_css9
+      add_css10
     );
   }
 };
@@ -16235,14 +16941,14 @@ var scrollOnDndX = (container) => {
 };
 
 // src/stores/document/derived/columns-store.ts
-var columnsStore = (view) => derived(view.documentStore, (state2) => state2.document.columns);
-var singleColumnStore = (view) => derived(view.documentStore, (state2) => {
+var columnsStore = (view) => derived2(view.documentStore, (state2) => state2.document.columns);
+var singleColumnStore = (view) => derived2(view.documentStore, (state2) => {
   const column = state2.document.columns[0];
   return column ? [column] : [];
 });
 
 // src/view/components/container/buffers/columns-buffer.svelte
-function create_fragment65(ctx) {
+function create_fragment70(ctx) {
   let div;
   return {
     c() {
@@ -16267,56 +16973,56 @@ function create_fragment65(ctx) {
 var Columns_buffer = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment65, safe_not_equal, {});
+    init(this, options, null, create_fragment70, safe_not_equal, {});
   }
 };
 var columns_buffer_default = Columns_buffer;
 
 // src/stores/view/derived/dnd-store.ts
-var dndStore = (view) => derived(view.viewStore, (state2) => state2.document.dnd);
+var dndStore = (view) => derived2(view.viewStore, (state2) => state2.document.dnd);
 
 // src/stores/view/derived/active-branch-store.ts
-var activeBranchStore = (view) => derived(view.viewStore, (state2) => state2.document.activeBranch);
+var activeBranchStore = (view) => derived2(view.viewStore, (state2) => state2.document.activeBranch);
 
 // src/stores/view/derived/active-node-store.ts
-var activeNodeStore = (view) => derived(view.viewStore, (state2) => state2.document.activeNode);
+var activeNodeStore = (view) => derived2(view.viewStore, (state2) => state2.document.activeNode);
 
 // src/stores/view/derived/editing-store.ts
-var documentStateStore = (view) => derived(view.viewStore, (state2) => state2.document.editing);
+var documentStateStore = (view) => derived2(view.viewStore, (state2) => state2.document.editing);
 
 // src/stores/view/derived/search-store.ts
-var searchStore = (view) => derived(view.viewStore, (state2) => state2.search);
+var searchStore = (view) => derived2(view.viewStore, (state2) => state2.search);
 
 // src/stores/document/derived/id-section-store.ts
 var IdSectionStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return state2.sections.id_section;
   });
 };
 
 // src/stores/view/derived/selected-nodes-store.ts
-var selectedNodesStore = (view) => derived(view.viewStore, (state2) => state2.document.selectedNodes);
+var selectedNodesStore = (view) => derived2(view.viewStore, (state2) => state2.document.selectedNodes);
 
 // src/stores/document/derived/pinned-nodes-store.ts
 var PinnedNodesStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return state2.pinnedNodes.Ids;
   });
 };
 
 // src/stores/document/derived/meta.ts
 var GroupParentIdsStore = (view) => {
-  return derived(view.documentStore, (state2) => {
+  return derived2(view.documentStore, (state2) => {
     return state2.meta.groupParentIds;
   });
 };
 
 // src/stores/view/derived/pending-confirmation.ts
-var PendingConfirmationStore = (view) => derived(view.viewStore, (state2) => state2.document.pendingConfirmation);
+var PendingConfirmationStore = (view) => derived2(view.viewStore, (state2) => state2.document.pendingConfirmation);
 
 // src/stores/view/derived/style-rules.ts
-var NodeStylesStore = (view) => derived(view.viewStore, (state2) => state2.styleRules.nodeStyles);
-var AllRuleMatchesStore = (view) => derived(view.viewStore, (state2) => state2.styleRules.allMatches);
+var NodeStylesStore = (view) => derived2(view.viewStore, (state2) => state2.styleRules.nodeStyles);
+var AllRuleMatchesStore = (view) => derived2(view.viewStore, (state2) => state2.styleRules.allMatches);
 
 // src/lib/tree-utils/get/get-all-children.ts
 var getAllChildren = (columns, nodeId) => {
@@ -16343,7 +17049,7 @@ var textIsSelected = () => {
 };
 
 // src/stores/view/derived/outline-store.ts
-var OutlineStore = (view) => derived(view.viewStore, (state2) => state2.outline);
+var OutlineStore = (view) => derived2(view.viewStore, (state2) => state2.outline);
 
 // src/view/actions/hide-floating-buttons.ts
 var toggleHideButtons = (element2, hide) => {
@@ -16372,18 +17078,10 @@ var hideFloatingButtons = (element2) => {
     resetHideButtons();
     delayedHideButtons();
   };
-  const view = getView();
-  const subscription = AlwaysShowCardButtons(view).subscribe((show) => {
-    if (show) {
-      element2.addEventListener("mousemove", onMousemove);
-    } else {
-      element2.removeEventListener("mousemove", onMousemove);
-    }
-  });
+  element2.addEventListener("mousemove", onMousemove);
   return {
     destroy: () => {
       resetHideButtons();
-      subscription();
       element2.removeEventListener("mousemove", onMousemove);
     }
   };
@@ -16475,16 +17173,16 @@ var scrollOnDndY = (container) => {
 };
 
 // src/view/components/container/container.svelte
-function add_css10(target) {
+function add_css11(target) {
   append_styles(target, "svelte-1dkv8lc", ".columns-container.svelte-1dkv8lc{--scrollbar-thumb-bg:transparent;--scrollbar-active-thumb-bg:transparent;--scrollbar-bg:transparent}.columns-container.svelte-1dkv8lc::-webkit-scrollbar{display:none}");
 }
-function get_each_context4(ctx, list, i) {
+function get_each_context6(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[43] = list[i];
   child_ctx[45] = i;
   return child_ctx;
 }
-function create_each_block4(key_1, ctx) {
+function create_each_block6(key_1, ctx) {
   let first;
   let column_1;
   let current;
@@ -16712,7 +17410,7 @@ function create_each_block4(key_1, ctx) {
     }
   };
 }
-function create_fragment66(ctx) {
+function create_fragment71(ctx) {
   let div1;
   let div0;
   let columnsbuffer0;
@@ -16738,9 +17436,9 @@ function create_fragment66(ctx) {
     ctx2[43].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context4(ctx, each_value, i);
+    let child_ctx = get_each_context6(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block4(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block6(key, child_ctx));
   }
   columnsbuffer1 = new columns_buffer_default({});
   return {
@@ -16806,7 +17504,7 @@ function create_fragment66(ctx) {
           ctx2[10]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block4, t1, get_each_context4);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block6, t1, get_each_context6);
         check_outros();
       }
       if (!current || dirty[0] & /*$limitPreviewHeight, $applyGap, outlineMode, $zoom*/
@@ -16851,7 +17549,7 @@ function create_fragment66(ctx) {
     }
   };
 }
-function instance64($$self, $$props, $$invalidate) {
+function instance69($$self, $$props, $$invalidate) {
   let pinnedNodes;
   let $dnd;
   let $pinnedNodesArray;
@@ -16916,11 +17614,13 @@ function instance64($$self, $$props, $$invalidate) {
     if (textIsSelected())
       return;
     const editingState = view.viewStore.getValue().document.editing;
-    if (editingState.activeNodeId && !editingState.isInSidebar) {
+    if (editingState.activeNodeId) {
       saveNodeContent(view, true);
     }
   };
   const centerActiveNode = (event) => {
+    if (!event.shiftKey)
+      return;
     const target = event.target;
     if (target.closest(".lng-prev") || target.closest(".active-node")) {
       return;
@@ -17015,13 +17715,13 @@ function instance64($$self, $$props, $$invalidate) {
 var Container = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance64, create_fragment66, safe_not_equal, { outlineMode: 0 }, add_css10, [-1, -1]);
+    init(this, options, instance69, create_fragment71, safe_not_equal, { outlineMode: 0 }, add_css11, [-1, -1]);
   }
 };
 var container_default = Container;
 
 // src/view/components/container/container-wrapper.svelte
-function create_if_block11(ctx) {
+function create_if_block12(ctx) {
   let container;
   let current;
   container = new container_default({
@@ -17061,11 +17761,11 @@ function create_if_block11(ctx) {
     }
   };
 }
-function create_fragment67(ctx) {
+function create_fragment72(ctx) {
   let if_block_anchor;
   let current;
   let if_block = !/*unmounting*/
-  ctx[0] && create_if_block11(ctx);
+  ctx[0] && create_if_block12(ctx);
   return {
     c() {
       if (if_block)
@@ -17088,7 +17788,7 @@ function create_fragment67(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block11(ctx2);
+          if_block = create_if_block12(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -17120,7 +17820,7 @@ function create_fragment67(ctx) {
     }
   };
 }
-function instance65($$self, $$props, $$invalidate) {
+function instance70($$self, $$props, $$invalidate) {
   let $outlineMode;
   const view = getView();
   let unmounting = false;
@@ -17148,22 +17848,22 @@ function instance65($$self, $$props, $$invalidate) {
 var Container_wrapper = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance65, create_fragment67, safe_not_equal, {});
+    init(this, options, instance70, create_fragment72, safe_not_equal, {});
   }
 };
 var container_wrapper_default = Container_wrapper;
 
 // src/view/components/container/breadcrumbs/breadcrumbs-item.svelte
-function add_css11(target) {
-  append_styles(target, "svelte-1q9w33n", ".separator.svelte-1q9w33n{padding:2px 1px;color:var(--text-faint);min-width:8px}.breadcrumbs-item.svelte-1q9w33n{height:30px;border-bottom:1px solid var(--background-modifier-border);color:var(--text-muted);background-color:var(--interactive-normal);cursor:pointer;padding:2px 4px;border-radius:var(--radius-s);max-width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:25px}.breadcrumbs-item.svelte-1q9w33n:hover{background-color:var(--interactive-hover)}.breadcrumbs-item.svelte-1q9w33n:last-child{border-bottom:none}.section-number.svelte-1q9w33n{font-style:italic;color:var(--text-faint)}");
+function add_css12(target) {
+  append_styles(target, "svelte-pls2d1", ".separator.svelte-pls2d1{padding:2px 1px;color:var(--text-faint);min-width:8px}.breadcrumbs-item.svelte-pls2d1{height:30px;color:var(--text-muted);cursor:pointer;padding:2px 6px;max-width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:25px}.breadcrumbs-item.svelte-pls2d1:hover{background-color:var(--interactive-hover)}.breadcrumbs-item.svelte-pls2d1:first-child{padding-left:8px}.breadcrumbs-item.svelte-pls2d1:last-child{padding-right:8px}.section-number.svelte-pls2d1{font-style:italic;color:var(--text-faint)}");
 }
-function create_if_block12(ctx) {
+function create_if_block13(ctx) {
   let span;
   return {
     c() {
       span = element("span");
       span.textContent = "/";
-      attr(span, "class", "separator svelte-1q9w33n");
+      attr(span, "class", "separator svelte-pls2d1");
     },
     m(target, anchor) {
       insert(target, span, anchor);
@@ -17175,7 +17875,7 @@ function create_if_block12(ctx) {
     }
   };
 }
-function create_fragment68(ctx) {
+function create_fragment73(ctx) {
   let t0;
   let span;
   let t1_value = (
@@ -17190,7 +17890,7 @@ function create_fragment68(ctx) {
   let dispose;
   let if_block = (
     /*index*/
-    ctx[0] > 0 && create_if_block12(ctx)
+    ctx[0] > 0 && create_if_block13(ctx)
   );
   return {
     c() {
@@ -17203,7 +17903,7 @@ function create_fragment68(ctx) {
       ctx[1] + "\n" + /*content*/
       ctx[2]);
       attr(span, "class", span_class_value = null_to_empty(`breadcrumbs-item ${/*content*/
-      ctx[2] ? "" : "section-number"}`) + " svelte-1q9w33n");
+      ctx[2] ? "" : "section-number"}`) + " svelte-pls2d1");
       attr(span, "data-tooltip-position", "top");
     },
     m(target, anchor) {
@@ -17229,7 +17929,7 @@ function create_fragment68(ctx) {
       ) {
         if (if_block) {
         } else {
-          if_block = create_if_block12(ctx2);
+          if_block = create_if_block13(ctx2);
           if_block.c();
           if_block.m(t0.parentNode, t0);
         }
@@ -17250,7 +17950,7 @@ function create_fragment68(ctx) {
       }
       if (dirty & /*content*/
       4 && span_class_value !== (span_class_value = null_to_empty(`breadcrumbs-item ${/*content*/
-      ctx2[2] ? "" : "section-number"}`) + " svelte-1q9w33n")) {
+      ctx2[2] ? "" : "section-number"}`) + " svelte-pls2d1")) {
         attr(span, "class", span_class_value);
       }
     },
@@ -17268,7 +17968,7 @@ function create_fragment68(ctx) {
     }
   };
 }
-function instance66($$self, $$props, $$invalidate) {
+function instance71($$self, $$props, $$invalidate) {
   let { parentId } = $$props;
   let { index } = $$props;
   let { section } = $$props;
@@ -17299,8 +17999,8 @@ var Breadcrumbs_item = class extends SvelteComponent {
     init(
       this,
       options,
-      instance66,
-      create_fragment68,
+      instance71,
+      create_fragment73,
       safe_not_equal,
       {
         parentId: 4,
@@ -17308,23 +18008,23 @@ var Breadcrumbs_item = class extends SvelteComponent {
         section: 1,
         content: 2
       },
-      add_css11
+      add_css12
     );
   }
 };
 var breadcrumbs_item_default = Breadcrumbs_item;
 
 // src/view/components/container/breadcrumbs/breadcrumbs.svelte
-function add_css12(target) {
-  append_styles(target, "svelte-576atj", ".breadcrumbs-container.svelte-576atj{z-index:var(--z-index-breadcrumbs);left:var(--size-4-2);bottom:var(--size-4-2);display:flex;position:absolute;max-width:calc(100% - var(--size-4-2) * 2)}.breadcrumbs.svelte-576atj{display:flex;align-items:center;justify-content:center;border-radius:var(--radius-s);background-color:var(--interactive-normal);box-shadow:var(--input-shadow);max-width:100%;overflow:auto;font-size:var(--file-header-font-size);color:var(--text-muted);gap:0}");
+function add_css13(target) {
+  append_styles(target, "svelte-1uz8lgp", ".breadcrumbs-container.svelte-1uz8lgp{z-index:var(--z-index-breadcrumbs);left:0;bottom:0;display:flex;position:absolute;max-width:calc(100% - var(--size-4-2) * 2 - 34px)}.breadcrumbs.svelte-1uz8lgp{display:flex;align-items:center;justify-content:center;border-style:solid;border-width:1px 1px 0 0;border-color:var(--status-bar-border-color);border-radius:0 6px 0 0;background-color:var(--status-bar-background);max-width:100%;overflow:hidden;font-size:var(--file-header-font-size);color:var(--text-muted);gap:0}");
 }
-function get_each_context5(ctx, list, i) {
+function get_each_context7(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[7] = list[i];
   child_ctx[9] = i;
   return child_ctx;
 }
-function create_each_block5(key_1, ctx) {
+function create_each_block7(key_1, ctx) {
   let first;
   let item;
   let current;
@@ -17412,7 +18112,7 @@ function create_each_block5(key_1, ctx) {
     }
   };
 }
-function create_fragment69(ctx) {
+function create_fragment74(ctx) {
   let div1;
   let div0;
   let each_blocks = [];
@@ -17427,9 +18127,9 @@ function create_fragment69(ctx) {
     ctx2[7]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context5(ctx, each_value, i);
+    let child_ctx = get_each_context7(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block5(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block7(key, child_ctx));
   }
   return {
     c() {
@@ -17438,8 +18138,8 @@ function create_fragment69(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "breadcrumbs svelte-576atj");
-      attr(div1, "class", "breadcrumbs-container svelte-576atj");
+      attr(div0, "class", "breadcrumbs svelte-1uz8lgp");
+      attr(div1, "class", "breadcrumbs-container svelte-1uz8lgp");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -17459,7 +18159,7 @@ function create_fragment69(ctx) {
           ctx2[0].sortedParentNodes
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block5, null, get_each_context5);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block7, null, get_each_context7);
         check_outros();
       }
     },
@@ -17487,7 +18187,7 @@ function create_fragment69(ctx) {
     }
   };
 }
-function instance67($$self, $$props, $$invalidate) {
+function instance72($$self, $$props, $$invalidate) {
   let $activeBranch;
   let $contents;
   let $sections;
@@ -17503,19 +18203,19 @@ function instance67($$self, $$props, $$invalidate) {
 var Breadcrumbs = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance67, create_fragment69, safe_not_equal, {}, add_css12);
+    init(this, options, instance72, create_fragment74, safe_not_equal, {}, add_css13);
   }
 };
 var breadcrumbs_default = Breadcrumbs;
 
 // src/stores/view/derived/navigation-history-store.ts
-var navigationHistoryStore = (view) => derived(view.viewStore, (state2) => state2.navigationHistory);
+var navigationHistoryStore = (view) => derived2(view.viewStore, (state2) => state2.navigationHistory);
 
 // src/view/components/container/toolbar/components/navigation-buttons.svelte
-function add_css13(target) {
+function add_css14(target) {
   append_styles(target, "svelte-13yyztm", ".navigation-history.svelte-13yyztm{display:flex;align-items:center;justify-content:center}");
 }
-function create_default_slot_13(ctx) {
+function create_default_slot_12(ctx) {
   let arrowleft;
   let current;
   arrowleft = new arrow_left_default({ props: { class: "svg-icon", size: "12" } });
@@ -17543,7 +18243,7 @@ function create_default_slot_13(ctx) {
     }
   };
 }
-function create_default_slot52(ctx) {
+function create_default_slot57(ctx) {
   let arrowright;
   let current;
   arrowright = new arrow_right_default({ props: { class: "svg-icon", size: "12" } });
@@ -17571,7 +18271,7 @@ function create_default_slot52(ctx) {
     }
   };
 }
-function create_fragment70(ctx) {
+function create_fragment75(ctx) {
   let div;
   let button0;
   let t;
@@ -17583,7 +18283,7 @@ function create_fragment70(ctx) {
       ctx[0].state.canGoBack,
       label: lang.tlb_navigation_navigate_back,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot_13] },
+      $$slots: { default: [create_default_slot_12] },
       $$scope: { ctx }
     }
   });
@@ -17598,7 +18298,7 @@ function create_fragment70(ctx) {
       ctx[0].state.canGoForward,
       label: lang.tlb_navigation_navigate_forward,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot52] },
+      $$slots: { default: [create_default_slot57] },
       $$scope: { ctx }
     }
   });
@@ -17665,17 +18365,21 @@ function create_fragment70(ctx) {
     }
   };
 }
-function instance68($$self, $$props, $$invalidate) {
+function instance73($$self, $$props, $$invalidate) {
   let $navigationHistory;
   const view = getView();
   const viewStore = view.viewStore;
   const navigationHistory = navigationHistoryStore(view);
   component_subscribe($$self, navigationHistory, (value) => $$invalidate(0, $navigationHistory = value));
   const click_handler = () => {
-    viewStore.dispatch({ type: "NAVIGATION/NAVIGATE_BACK" });
+    viewStore.dispatch({
+      type: "view/set-active-node/history/select-previous"
+    });
   };
   const click_handler_1 = () => {
-    viewStore.dispatch({ type: "NAVIGATION/NAVIGATE_FORWARD" });
+    viewStore.dispatch({
+      type: "view/set-active-node/history/select-next"
+    });
   };
   return [
     $navigationHistory,
@@ -17688,16 +18392,16 @@ function instance68($$self, $$props, $$invalidate) {
 var Navigation_buttons = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance68, create_fragment70, safe_not_equal, {}, add_css13);
+    init(this, options, instance73, create_fragment75, safe_not_equal, {}, add_css14);
   }
 };
 var navigation_buttons_default = Navigation_buttons;
 
 // src/view/components/container/toolbar/components/search-toggle.svelte
-function add_css14(target) {
+function add_css15(target) {
   append_styles(target, "svelte-17l9x5j", ".search-container.svelte-17l9x5j{display:flex;align-items:center;justify-content:center;gap:var(--size-4-2)}");
 }
-function create_default_slot53(ctx) {
+function create_default_slot58(ctx) {
   let search_1;
   let current;
   search_1 = new search_default({ props: { class: "svg-icon", size: "12" } });
@@ -17725,7 +18429,7 @@ function create_default_slot53(ctx) {
     }
   };
 }
-function create_fragment71(ctx) {
+function create_fragment76(ctx) {
   let div;
   let button;
   let current;
@@ -17737,7 +18441,7 @@ function create_fragment71(ctx) {
       ),
       label: lang.tlb_search_toggle,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot53] },
+      $$slots: { default: [create_default_slot58] },
       $$scope: { ctx }
     }
   });
@@ -17787,30 +18491,30 @@ function create_fragment71(ctx) {
     }
   };
 }
-function instance69($$self, $$props, $$invalidate) {
+function instance74($$self, $$props, $$invalidate) {
   let $search;
   const view = getView();
   const viewStore = view.viewStore;
   const search2 = searchStore(view);
   component_subscribe($$self, search2, (value) => $$invalidate(0, $search = value));
   const click_handler = () => {
-    viewStore.dispatch({ type: "SEARCH/TOGGLE_INPUT" });
+    viewStore.dispatch({ type: "view/search/toggle-input" });
   };
   return [$search, viewStore, search2, click_handler];
 }
 var Search_toggle = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance69, create_fragment71, safe_not_equal, {}, add_css14);
+    init(this, options, instance74, create_fragment76, safe_not_equal, {}, add_css15);
   }
 };
 var search_toggle_default = Search_toggle;
 
 // src/view/components/container/toolbar/components/search-input.svelte
-function add_css15(target) {
+function add_css16(target) {
   append_styles(target, "svelte-krr6j1", ".search-input-element.svelte-krr6j1{height:34px;padding-right:74px !important;padding-left:12px;min-width:250px}@media(max-width: 568px){.search-input-element.svelte-krr6j1{width:100%;min-width:50px}.search-input-wrapper.svelte-krr6j1{width:100%}}.search-input-wrapper.svelte-krr6j1{max-width:100%}.search-input-container.svelte-krr6j1::before{display:none}.no-results.svelte-krr6j1{box-shadow:0 0 0 2px var(--color-red) !important}");
 }
-function create_if_block13(ctx) {
+function create_if_block14(ctx) {
   let div;
   let eye;
   let div_aria_label_value;
@@ -17823,7 +18527,7 @@ function create_if_block13(ctx) {
     c() {
       div = element("div");
       create_component(eye.$$.fragment);
-      attr(div, "aria-label", div_aria_label_value = lang.tlb_search_show_all_cards);
+      attr(div, "aria-label", div_aria_label_value = lang.tlb_search_show_all_nodes);
       attr(div, "class", div_class_value = null_to_empty("input-right-decorator clickable-icon" + /*$search*/
       (ctx[0].showAllNodes ? " is-active" : "")) + " svelte-krr6j1");
       set_style(div, "right", "28px");
@@ -17869,7 +18573,7 @@ function create_if_block13(ctx) {
     }
   };
 }
-function create_fragment72(ctx) {
+function create_fragment77(ctx) {
   let div2;
   let input;
   let input_autofocus_value;
@@ -17891,7 +18595,7 @@ function create_fragment72(ctx) {
   let dispose;
   let if_block = (
     /*$search*/
-    ctx[0].query.length > 0 && create_if_block13(ctx)
+    ctx[0].query.length > 0 && create_if_block14(ctx)
   );
   text_1 = new text_default({ props: { class: "svg-icon" } });
   return {
@@ -17909,7 +18613,8 @@ function create_fragment72(ctx) {
       input.autofocus = input_autofocus_value = true;
       attr(input, "class", input_class_value = null_to_empty("search-input search-input-element" + /*$search*/
       (ctx[0].query && /*$search*/
-      ctx[0].results.size === 0 ? " no-results" : "")) + " svelte-krr6j1");
+      ctx[0].results.size === 0 && !/*$search*/
+      ctx[0].searching ? " no-results" : "")) + " svelte-krr6j1");
       attr(input, "enterkeyhint", "search");
       attr(input, "placeholder", input_placeholder_value = "search");
       attr(input, "spellcheck", "false");
@@ -17968,7 +18673,8 @@ function create_fragment72(ctx) {
       if (!current || dirty & /*$search*/
       1 && input_class_value !== (input_class_value = null_to_empty("search-input search-input-element" + /*$search*/
       (ctx2[0].query && /*$search*/
-      ctx2[0].results.size === 0 ? " no-results" : "")) + " svelte-krr6j1")) {
+      ctx2[0].results.size === 0 && !/*$search*/
+      ctx2[0].searching ? " no-results" : "")) + " svelte-krr6j1")) {
         attr(input, "class", input_class_value);
       }
       if (!current || dirty & /*$search*/
@@ -17992,7 +18698,7 @@ function create_fragment72(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block13(ctx2);
+          if_block = create_if_block14(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div2, t2);
@@ -18034,7 +18740,7 @@ function create_fragment72(ctx) {
     }
   };
 }
-function instance70($$self, $$props, $$invalidate) {
+function instance75($$self, $$props, $$invalidate) {
   let $search;
   const view = getView();
   const viewStore = view.viewStore;
@@ -18044,24 +18750,26 @@ function instance70($$self, $$props, $$invalidate) {
     // eslint-disable-next-line no-undef
     (e) => {
       viewStore.dispatch({
-        type: "SEARCH/SET_QUERY",
+        type: "view/search/set-query",
         payload: { query: e.currentTarget.value }
       });
     }
   );
   const click_handler = () => {
     viewStore.dispatch({
-      type: "SEARCH/SET_QUERY",
+      type: "view/search/set-query",
       payload: { query: "" }
     });
   };
   const click_handler_1 = () => {
-    viewStore.dispatch({ type: "search/toggle-show-all-nodes" });
+    viewStore.dispatch({
+      type: "search/view/toggle-show-all-nodes"
+    });
   };
   const click_handler_2 = () => {
-    viewStore.dispatch({ type: "SEARCH/TOGGLE_FUZZY_MODE" });
+    viewStore.dispatch({ type: "view/search/toggle-fuzzy-mode" });
     viewStore.dispatch({
-      type: "SEARCH/SET_QUERY",
+      type: "view/search/set-query",
       payload: { query: viewStore.getValue().search.query }
     });
   };
@@ -18078,16 +18786,16 @@ function instance70($$self, $$props, $$invalidate) {
 var Search_input = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance70, create_fragment72, safe_not_equal, {}, add_css15);
+    init(this, options, instance75, create_fragment77, safe_not_equal, {}, add_css16);
   }
 };
 var search_input_default = Search_input;
 
 // src/view/components/container/toolbar/components/left-sidebar-toggle.svelte
-function add_css16(target) {
+function add_css17(target) {
   append_styles(target, "svelte-lmpj5w", ".badge-container.svelte-lmpj5w{position:relative;display:inline-block}");
 }
-function create_default_slot54(ctx) {
+function create_default_slot59(ctx) {
   let panelleftdashed;
   let current;
   panelleftdashed = new panel_left_dashed_default({ props: { class: "svg-icon", size: "32" } });
@@ -18115,7 +18823,7 @@ function create_default_slot54(ctx) {
     }
   };
 }
-function create_fragment73(ctx) {
+function create_fragment78(ctx) {
   let div1;
   let div0;
   let button;
@@ -18128,7 +18836,7 @@ function create_fragment73(ctx) {
       ),
       label: lang.toolbar_toggle_left_sidebar,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot54] },
+      $$slots: { default: [create_default_slot59] },
       $$scope: { ctx }
     }
   });
@@ -18182,7 +18890,7 @@ function create_fragment73(ctx) {
     }
   };
 }
-function instance71($$self, $$props, $$invalidate) {
+function instance76($$self, $$props, $$invalidate) {
   let $show;
   const view = getView();
   const show = ShowLeftSidebarStore(view);
@@ -18195,12 +18903,12 @@ function instance71($$self, $$props, $$invalidate) {
 var Left_sidebar_toggle = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance71, create_fragment73, safe_not_equal, {}, add_css16);
+    init(this, options, instance76, create_fragment78, safe_not_equal, {}, add_css17);
   }
 };
 var left_sidebar_toggle_default = Left_sidebar_toggle;
 
-// src/helpers/sort-sections.ts
+// src/lib/tree-utils/sort/sort-sections.ts
 var sortSections = (keys) => {
   return keys.sort((a, b) => {
     const aParts = a.split(".");
@@ -18218,22 +18926,18 @@ var sortSections = (keys) => {
   });
 };
 
-// src/stores/document/reducers/pinned-nodes/pin-node.ts
+// src/lib/tree-utils/sort/sort-node-ids-by-section-number.ts
 var sortNodeIdsBySectionNumber = (sections, ids) => {
   const pinnedSections = ids.map((id2) => sections.id_section[id2]);
   const sortedSections = sortSections(pinnedSections);
   return sortedSections.map((section) => sections.section_id[section]);
 };
-var pinNode = (sections, pinnedNodes, id2) => {
-  pinnedNodes.Ids.push(id2);
-  pinnedNodes.Ids = sortNodeIdsBySectionNumber(sections, pinnedNodes.Ids);
-};
 
 // src/view/components/container/toolbar/components/search/search-navigation-buttons.svelte
-function add_css17(target) {
+function add_css18(target) {
   append_styles(target, "svelte-1owtmzs", ".search-container.svelte-1owtmzs{display:flex;align-items:center;justify-content:center}.search-stats.svelte-1owtmzs{color:var(--text-muted);font-size:var(--status-bar-font-size);font-variant-numeric:tabular-nums;padding:5px 10px;border-left:1px solid var(--text-faint)}");
 }
-function create_default_slot_14(ctx) {
+function create_default_slot_13(ctx) {
   let chevronup;
   let current;
   chevronup = new chevron_up_default({ props: { class: "svg-icon", size: "12" } });
@@ -18261,7 +18965,7 @@ function create_default_slot_14(ctx) {
     }
   };
 }
-function create_default_slot55(ctx) {
+function create_default_slot60(ctx) {
   let chevrondown;
   let current;
   chevrondown = new chevron_down_default({ props: { class: "svg-icon", size: "12" } });
@@ -18289,7 +18993,7 @@ function create_default_slot55(ctx) {
     }
   };
 }
-function create_fragment74(ctx) {
+function create_fragment79(ctx) {
   let div1;
   let button0;
   let t0;
@@ -18312,7 +19016,7 @@ function create_fragment74(ctx) {
       ),
       label: lang.tlb_search_previous_result,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot_14] },
+      $$slots: { default: [create_default_slot_13] },
       $$scope: { ctx }
     }
   });
@@ -18329,7 +19033,7 @@ function create_fragment74(ctx) {
       ),
       label: lang.tlb_search_next_result,
       tooltipPosition: "bottom",
-      $$slots: { default: [create_default_slot55] },
+      $$slots: { default: [create_default_slot60] },
       $$scope: { ctx }
     }
   });
@@ -18411,7 +19115,7 @@ function create_fragment74(ctx) {
     }
   };
 }
-function instance72($$self, $$props, $$invalidate) {
+function instance77($$self, $$props, $$invalidate) {
   let $activeNode;
   const view = getView();
   let { results } = $$props;
@@ -18462,16 +19166,607 @@ function instance72($$self, $$props, $$invalidate) {
 var Search_navigation_buttons = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance72, create_fragment74, safe_not_equal, { results: 5 }, add_css17);
+    init(this, options, instance77, create_fragment79, safe_not_equal, { results: 5 }, add_css18);
   }
 };
 var search_navigation_buttons_default = Search_navigation_buttons;
 
-// src/view/components/container/toolbar/toolbar.svelte
-function add_css18(target) {
-  append_styles(target, "svelte-zbwcn1", ".navigation-history-container.svelte-zbwcn1{z-index:var(--z-index-breadcrumbs);left:var(--size-4-2);top:var(--size-4-2);display:flex;position:absolute;gap:var(--size-4-2);flex-wrap:wrap;max-width:90%\n    }");
+// src/stores/document/derived/history-store.ts
+var historyStore = (view) => {
+  return derived2(view.documentStore, (state2) => {
+    return state2.history;
+  });
+};
+
+// src/view/components/container/toolbar/components/document-history-buttons.svelte
+var import_obsidian6 = require("obsidian");
+function add_css19(target) {
+  append_styles(target, "svelte-5lrsw4", ".navigation-history.svelte-5lrsw4{display:flex;align-items:center;justify-content:center}");
 }
-function create_if_block14(ctx) {
+function create_default_slot_2(ctx) {
+  let historyicon;
+  let current;
+  historyicon = new history_default({ props: { class: "svg-icon", size: "12" } });
+  return {
+    c() {
+      create_component(historyicon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(historyicon, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(historyicon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(historyicon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(historyicon, detaching);
+    }
+  };
+}
+function create_default_slot_14(ctx) {
+  let undoicon;
+  let current;
+  undoicon = new undo_2_default({ props: { class: "svg-icon", size: "12" } });
+  return {
+    c() {
+      create_component(undoicon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(undoicon, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(undoicon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(undoicon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(undoicon, detaching);
+    }
+  };
+}
+function create_default_slot61(ctx) {
+  let redoicon;
+  let current;
+  redoicon = new redo_2_default({ props: { class: "svg-icon", size: "12" } });
+  return {
+    c() {
+      create_component(redoicon.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(redoicon, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(redoicon.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(redoicon.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(redoicon, detaching);
+    }
+  };
+}
+function create_fragment80(ctx) {
+  let div;
+  let button0;
+  let t0;
+  let button1;
+  let t1;
+  let button2;
+  let current;
+  button0 = new button_default({
+    props: {
+      disabled: (
+        /*$history*/
+        ctx[0].items.length === 0
+      ),
+      label: lang.controls_history,
+      tooltipPosition: "bottom",
+      $$slots: { default: [create_default_slot_2] },
+      $$scope: { ctx }
+    }
+  });
+  button0.$on(
+    "click",
+    /*toggleSnapshotsModal*/
+    ctx[2]
+  );
+  button1 = new button_default({
+    props: {
+      disabled: !/*$history*/
+      ctx[0].state.canGoBack,
+      label: lang.controls_history_undo,
+      tooltipPosition: "bottom",
+      $$slots: { default: [create_default_slot_14] },
+      $$scope: { ctx }
+    }
+  });
+  button1.$on(
+    "click",
+    /*selectPreviousSnapshot*/
+    ctx[4]
+  );
+  button2 = new button_default({
+    props: {
+      disabled: !/*$history*/
+      ctx[0].state.canGoForward,
+      label: lang.controls_history_redo,
+      tooltipPosition: "bottom",
+      $$slots: { default: [create_default_slot61] },
+      $$scope: { ctx }
+    }
+  });
+  button2.$on(
+    "click",
+    /*selectNextSnapshot*/
+    ctx[3]
+  );
+  return {
+    c() {
+      div = element("div");
+      create_component(button0.$$.fragment);
+      t0 = space();
+      create_component(button1.$$.fragment);
+      t1 = space();
+      create_component(button2.$$.fragment);
+      attr(div, "class", "navigation-history buttons-group svelte-5lrsw4");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(button0, div, null);
+      append(div, t0);
+      mount_component(button1, div, null);
+      append(div, t1);
+      mount_component(button2, div, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const button0_changes = {};
+      if (dirty & /*$history*/
+      1)
+        button0_changes.disabled = /*$history*/
+        ctx2[0].items.length === 0;
+      if (dirty & /*$$scope*/
+      128) {
+        button0_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button0.$set(button0_changes);
+      const button1_changes = {};
+      if (dirty & /*$history*/
+      1)
+        button1_changes.disabled = !/*$history*/
+        ctx2[0].state.canGoBack;
+      if (dirty & /*$$scope*/
+      128) {
+        button1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button1.$set(button1_changes);
+      const button2_changes = {};
+      if (dirty & /*$history*/
+      1)
+        button2_changes.disabled = !/*$history*/
+        ctx2[0].state.canGoForward;
+      if (dirty & /*$$scope*/
+      128) {
+        button2_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button2.$set(button2_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button0.$$.fragment, local);
+      transition_in(button1.$$.fragment, local);
+      transition_in(button2.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button0.$$.fragment, local);
+      transition_out(button1.$$.fragment, local);
+      transition_out(button2.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(button0);
+      destroy_component(button1);
+      destroy_component(button2);
+    }
+  };
+}
+function instance78($$self, $$props, $$invalidate) {
+  let $history;
+  const view = getView();
+  const history = historyStore(view);
+  component_subscribe($$self, history, (value) => $$invalidate(0, $history = value));
+  const isEditing2 = (view2) => view2.viewStore.getValue().document.editing.activeNodeId;
+  const toggleSnapshotsModal = () => view.viewStore.dispatch({ type: "view/snapshots/toggle-modal" });
+  const selectNextSnapshot = () => {
+    if (isEditing2(view))
+      new import_obsidian6.Notice(lang.error_apply_snapshot_while_editing);
+    else
+      view.documentStore.dispatch({
+        type: "document/history/select-next-snapshot"
+      });
+  };
+  const selectPreviousSnapshot = () => {
+    if (isEditing2(view))
+      new import_obsidian6.Notice(lang.error_apply_snapshot_while_editing);
+    else
+      view.documentStore.dispatch({
+        type: "document/history/select-previous-snapshot"
+      });
+  };
+  return [
+    $history,
+    history,
+    toggleSnapshotsModal,
+    selectNextSnapshot,
+    selectPreviousSnapshot
+  ];
+}
+var Document_history_buttons = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance78, create_fragment80, safe_not_equal, {}, add_css19);
+  }
+};
+var document_history_buttons_default = Document_history_buttons;
+
+// src/view/components/container/toolbar/components/search-actions.svelte
+var import_obsidian7 = require("obsidian");
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/get-text-of-flat-nodes.ts
+var getTextOfFlatNodes = (view, nodes, copyAsOutline = false) => {
+  if (nodes.length === 1)
+    copyAsOutline = false;
+  const documentState = view.documentStore.getValue();
+  const documentContent = documentState.document.content;
+  const sortedNodes = sortNodeIdsBySectionNumber(
+    documentState.sections,
+    nodes
+  );
+  return sortedNodes.map((id2) => {
+    const content = documentContent[id2].content;
+    return (copyAsOutline ? "- " : "") + content;
+  }).join(copyAsOutline ? "\n" : "\n\n");
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/copy-flat-nodes-to-clipboard.ts
+var copyFlatNodesToClipboard = async (view, nodes, copyAsOutline = false) => {
+  const text2 = getTextOfFlatNodes(view, nodes, copyAsOutline);
+  await navigator.clipboard.writeText(text2);
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/copy-flat-search-results-to-clipboard.ts
+var copyFlatSearchResultsToClipboard = async (view) => {
+  const results = Array.from(view.viewStore.getValue().search.results.keys());
+  await copyFlatNodesToClipboard(view, results, true);
+};
+
+// src/lib/tree-utils/get/get-sorted-child-groups.ts
+var getSortedChildGroups = (columns, currentParentNode, remove = false) => {
+  const childGroupsArray = traverseDown(columns, currentParentNode, false);
+  const childGroups = new Set(childGroupsArray);
+  const sortedChildGroups = [];
+  for (const column of columns) {
+    const childGroupsOfColumns = [];
+    const groups = [];
+    for (const group of column.groups) {
+      if (childGroups.has(group.parentId)) {
+        childGroupsOfColumns.push(group);
+      } else {
+        groups.push(group);
+      }
+    }
+    if (remove)
+      column.groups = groups;
+    if (childGroupsOfColumns.length > 0)
+      sortedChildGroups.push(childGroupsOfColumns);
+  }
+  return sortedChildGroups;
+};
+
+// src/lib/tree-utils/delete/delete-node-by-id.ts
+var deleteNodeById = (columns, content, nodeId) => {
+  for (const column of columns) {
+    for (const group of column.groups) {
+      for (let i = 0; i < group.nodes.length; i++) {
+        const _nodeId2 = group.nodes[i];
+        if (_nodeId2 === nodeId) {
+          group.nodes.splice(i, 1);
+          group.nodes = [...group.nodes];
+          if (content)
+            delete content[_nodeId2];
+          return;
+        }
+      }
+    }
+  }
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/get-branch.ts
+var getBranch = (columns, content, nodeId, mode) => {
+  const cut = mode === "cut";
+  const sortedChildGroups = getSortedChildGroups(columns, nodeId, cut);
+  const newContent = {};
+  for (const sortedChildGroup of sortedChildGroups) {
+    for (const group of sortedChildGroup) {
+      for (const node of group.nodes) {
+        if (node in content) {
+          newContent[node] = content[node];
+          if (cut)
+            delete content[node];
+        }
+      }
+    }
+  }
+  newContent[nodeId] = content[nodeId];
+  const branch = {
+    sortedChildGroups,
+    content: newContent,
+    nodeId,
+    mode
+  };
+  if (cut)
+    deleteNodeById(columns, content, nodeId);
+  return clone(branch);
+};
+
+// src/lib/tree-utils/create/create-column.ts
+var createColumn = () => ({
+  id: id.column(),
+  groups: []
+});
+
+// src/lib/tree-utils/create/create-group.ts
+var createGroup = (parentId) => ({
+  nodes: [],
+  parentId
+});
+
+// src/lib/data-conversion/x-to-json/branch-to-json.ts
+var branchToColumns = (branch) => {
+  const columns = [];
+  columns.push(createColumn());
+  columns[columns.length - 1].groups.push(createGroup("root"));
+  columns[columns.length - 1].groups[0].nodes.push(branch.nodeId);
+  for (const groups of branch.sortedChildGroups) {
+    columns.push(createColumn());
+    for (const group of groups) {
+      columns[columns.length - 1].groups.push(group);
+    }
+  }
+  return columns;
+};
+var branchToJson = (branches) => {
+  const trees = [];
+  for (const branch of branches) {
+    const tree = columnsToJson(branchToColumns(branch), branch.content);
+    trees.push(tree[0]);
+  }
+  return trees;
+};
+
+// src/lib/data-conversion/branch-to-x/branch-to-outline.ts
+var branchToOutline = (branches) => {
+  return jsonToOutline(branchToJson(branches));
+};
+
+// src/lib/tree-utils/sort/sort-sections-by-depth.ts
+var sortSectionsByDepthDesc = (keys) => {
+  return keys.sort((a, b) => {
+    const aParts = a.split(".");
+    const bParts = b.split(".");
+    return bParts.length - aParts.length;
+  });
+};
+
+// src/lib/tree-utils/sort/sort-node-ids-by-depth-desc.ts
+var sortNodeIdsByDepthDesc = (sections, ids) => {
+  const sectionNumbers = ids.map((id2) => sections.id_section[id2]);
+  const sortedSections = sortSectionsByDepthDesc(sectionNumbers);
+  return sortedSections.map((section) => sections.section_id[section]);
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/get-search-results-from-document.ts
+var getSearchResultsFromDocument = (results, document2, sections) => {
+  const sortedByDepth = sortNodeIdsByDepthDesc(sections, results);
+  const documentClone = clone(document2);
+  const branches = sortedByDepth.map(
+    (node) => getBranch(documentClone.columns, documentClone.content, node, "cut")
+  );
+  const branchesMap = new Map(
+    branches.map((branch) => [branch.nodeId, branch])
+  );
+  const rootNodes = Array.from(branchesMap.keys());
+  const sortedBranches = sortNodeIdsBySectionNumber(sections, rootNodes).map(
+    (id2) => branchesMap.get(id2)
+  );
+  const isASingleNode = branches.length === 1 && branches[0].sortedChildGroups.length === 0;
+  return isASingleNode ? branches[0].content[branches[0].nodeId].content : branchToOutline(sortedBranches);
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/copy-search-results-to-clipboard.ts
+var copySearchResultsToClipboard = async (view) => {
+  const results = Array.from(view.viewStore.getValue().search.results.keys());
+  const documentState = view.documentStore.getValue();
+  const outline2 = getSearchResultsFromDocument(
+    results,
+    documentState.document,
+    documentState.sections
+  );
+  await navigator.clipboard.writeText(outline2);
+};
+
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/cut-search-results.ts
+var cutSearchResults = async (view) => {
+  copySearchResultsToClipboard(view);
+  const viewState = view.viewStore.getValue();
+  const documentState = view.documentStore.getValue();
+  const results = Array.from(viewState.search.results.keys());
+  if (results.length === 0)
+    return;
+  const sections = documentState.sections;
+  const sortedByDepth = sortNodeIdsByDepthDesc(sections, results);
+  const activeNodeIsAMatch = viewState.search.results.has(
+    viewState.document.activeNode
+  );
+  const activeSearchNode = activeNodeIsAMatch ? viewState.document.activeNode : sortNodeIdsBySectionNumber(sections, results)[0];
+  view.documentStore.dispatch({
+    type: "document/cut-node",
+    payload: {
+      nodeId: activeSearchNode,
+      selectedNodes: new Set(sortedByDepth)
+    }
+  });
+};
+
+// src/view/components/container/toolbar/components/search-actions.svelte
+function add_css20(target) {
+  append_styles(target, "svelte-17l9x5j", ".search-container.svelte-17l9x5j{display:flex;align-items:center;justify-content:center;gap:var(--size-4-2)}");
+}
+function create_default_slot62(ctx) {
+  let copy;
+  let current;
+  copy = new copy_default({ props: { class: "svg-icon", size: "12" } });
+  return {
+    c() {
+      create_component(copy.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(copy, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(copy.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(copy.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(copy, detaching);
+    }
+  };
+}
+function create_fragment81(ctx) {
+  let div;
+  let button;
+  let current;
+  button = new button_default({
+    props: {
+      label: "Search actions",
+      tooltipPosition: "bottom",
+      $$slots: { default: [create_default_slot62] },
+      $$scope: { ctx }
+    }
+  });
+  button.$on(
+    "click",
+    /*showContextMenu*/
+    ctx[0]
+  );
+  return {
+    c() {
+      div = element("div");
+      create_component(button.$$.fragment);
+      attr(div, "class", "search-container buttons-group svelte-17l9x5j");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(button, div, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      4) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(button);
+    }
+  };
+}
+function instance79($$self) {
+  const view = getView();
+  const showContextMenu2 = (e) => {
+    const menu = new import_obsidian7.Menu();
+    menu.addItem((item) => {
+      item.setTitle(lang.toolbar_copy_search_results);
+      item.setIcon("copy");
+      item.onClick(() => copySearchResultsToClipboard(view));
+    });
+    menu.addItem((item) => {
+      item.setTitle(lang.toolbar_copy_search_results_wo_subitems);
+      item.setIcon("copy");
+      item.onClick(() => copyFlatSearchResultsToClipboard(view));
+    });
+    menu.addItem((item) => {
+      item.setTitle(lang.toolbar_cut_search_results);
+      item.setIcon("scissors");
+      item.onClick(() => cutSearchResults(view));
+    });
+    menu.showAtMouseEvent(e);
+  };
+  return [showContextMenu2];
+}
+var Search_actions = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance79, create_fragment81, safe_not_equal, {}, add_css20);
+  }
+};
+var search_actions_default = Search_actions;
+
+// src/view/components/container/toolbar/toolbar.svelte
+function add_css21(target) {
+  append_styles(target, "svelte-scr2c", ".navigation-history-container.svelte-scr2c{z-index:var(--z-index-breadcrumbs);left:var(--size-4-2);top:var(--size-4-2);display:flex;position:absolute;gap:var(--size-4-2);flex-wrap:wrap;max-width:90%}");
+}
+function create_if_block15(ctx) {
   let searchinput;
   let t;
   let if_block_anchor;
@@ -18547,21 +19842,35 @@ function create_if_block14(ctx) {
 }
 function create_if_block_16(ctx) {
   let searchnavigationbuttons;
+  let t;
+  let if_block_anchor;
   let current;
   searchnavigationbuttons = new search_navigation_buttons_default({
     props: {
       results: Array.from(
         /*$search*/
-        ctx[0].results
+        ctx[0].results.keys()
       )
     }
   });
+  let if_block = (
+    /*$search*/
+    ctx[0].results.size > 0 && create_if_block_24(ctx)
+  );
   return {
     c() {
       create_component(searchnavigationbuttons.$$.fragment);
+      t = space();
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
     },
     m(target, anchor) {
       mount_component(searchnavigationbuttons, target, anchor);
+      insert(target, t, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
       current = true;
     },
     p(ctx2, dirty) {
@@ -18570,40 +19879,100 @@ function create_if_block_16(ctx) {
       1)
         searchnavigationbuttons_changes.results = Array.from(
           /*$search*/
-          ctx2[0].results
+          ctx2[0].results.keys()
         );
       searchnavigationbuttons.$set(searchnavigationbuttons_changes);
+      if (
+        /*$search*/
+        ctx2[0].results.size > 0
+      ) {
+        if (if_block) {
+          if (dirty & /*$search*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block_24(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
     },
     i(local) {
       if (current)
         return;
       transition_in(searchnavigationbuttons.$$.fragment, local);
+      transition_in(if_block);
       current = true;
     },
     o(local) {
       transition_out(searchnavigationbuttons.$$.fragment, local);
+      transition_out(if_block);
       current = false;
     },
     d(detaching) {
+      if (detaching) {
+        detach(t);
+        detach(if_block_anchor);
+      }
       destroy_component(searchnavigationbuttons, detaching);
+      if (if_block)
+        if_block.d(detaching);
     }
   };
 }
-function create_fragment75(ctx) {
+function create_if_block_24(ctx) {
+  let searchactions;
+  let current;
+  searchactions = new search_actions_default({});
+  return {
+    c() {
+      create_component(searchactions.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(searchactions, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(searchactions.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(searchactions.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(searchactions, detaching);
+    }
+  };
+}
+function create_fragment82(ctx) {
   let div;
   let leftsidebartoggle;
   let t0;
   let navigationhistory;
   let t1;
-  let searchtoggle;
+  let documenthistorybuttons;
   let t2;
+  let searchtoggle;
+  let t3;
   let current;
   leftsidebartoggle = new left_sidebar_toggle_default({});
   navigationhistory = new navigation_buttons_default({});
+  documenthistorybuttons = new document_history_buttons_default({});
   searchtoggle = new search_toggle_default({});
   let if_block = (
     /*$search*/
-    ctx[0].showInput && create_if_block14(ctx)
+    ctx[0].showInput && create_if_block15(ctx)
   );
   return {
     c() {
@@ -18612,11 +19981,13 @@ function create_fragment75(ctx) {
       t0 = space();
       create_component(navigationhistory.$$.fragment);
       t1 = space();
-      create_component(searchtoggle.$$.fragment);
+      create_component(documenthistorybuttons.$$.fragment);
       t2 = space();
+      create_component(searchtoggle.$$.fragment);
+      t3 = space();
       if (if_block)
         if_block.c();
-      attr(div, "class", "navigation-history-container svelte-zbwcn1");
+      attr(div, "class", "navigation-history-container svelte-scr2c");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -18624,8 +19995,10 @@ function create_fragment75(ctx) {
       append(div, t0);
       mount_component(navigationhistory, div, null);
       append(div, t1);
-      mount_component(searchtoggle, div, null);
+      mount_component(documenthistorybuttons, div, null);
       append(div, t2);
+      mount_component(searchtoggle, div, null);
+      append(div, t3);
       if (if_block)
         if_block.m(div, null);
       current = true;
@@ -18642,7 +20015,7 @@ function create_fragment75(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block14(ctx2);
+          if_block = create_if_block15(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div, null);
@@ -18660,6 +20033,7 @@ function create_fragment75(ctx) {
         return;
       transition_in(leftsidebartoggle.$$.fragment, local);
       transition_in(navigationhistory.$$.fragment, local);
+      transition_in(documenthistorybuttons.$$.fragment, local);
       transition_in(searchtoggle.$$.fragment, local);
       transition_in(if_block);
       current = true;
@@ -18667,6 +20041,7 @@ function create_fragment75(ctx) {
     o(local) {
       transition_out(leftsidebartoggle.$$.fragment, local);
       transition_out(navigationhistory.$$.fragment, local);
+      transition_out(documenthistorybuttons.$$.fragment, local);
       transition_out(searchtoggle.$$.fragment, local);
       transition_out(if_block);
       current = false;
@@ -18677,13 +20052,14 @@ function create_fragment75(ctx) {
       }
       destroy_component(leftsidebartoggle);
       destroy_component(navigationhistory);
+      destroy_component(documenthistorybuttons);
       destroy_component(searchtoggle);
       if (if_block)
         if_block.d();
     }
   };
 }
-function instance73($$self, $$props, $$invalidate) {
+function instance80($$self, $$props, $$invalidate) {
   let $search;
   const view = getView();
   const search2 = searchStore(view);
@@ -18693,13 +20069,13 @@ function instance73($$self, $$props, $$invalidate) {
 var Toolbar = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance73, create_fragment75, safe_not_equal, {}, add_css18);
+    init(this, options, instance80, create_fragment82, safe_not_equal, {}, add_css21);
   }
 };
 var toolbar_default = Toolbar;
 
 // src/view/actions/settings/components/shared/range-setting.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 var RangeSetting = (element2, settingsStore, props) => {
   let input;
   let resetButton;
@@ -18716,7 +20092,7 @@ var RangeSetting = (element2, settingsStore, props) => {
     input.setValue(currentValue);
     updateExtraButton(currentValue);
   };
-  const setting = new import_obsidian7.Setting(element2);
+  const setting = new import_obsidian8.Setting(element2);
   setting.setName(props.label);
   if (props.desc) {
     setting.setDesc(props.desc);
@@ -18744,7 +20120,7 @@ var FontSize = (element2, settingsStore) => {
     defaultValue: 16,
     onChange: (value) => {
       settingsStore.dispatch({
-        type: "SET_FONT_SIZE",
+        type: "settings/view/theme/set-font-size",
         payload: {
           fontSize: value
         }
@@ -18787,7 +20163,7 @@ var getDefaultTheme = () => {
 };
 
 // src/view/actions/settings/components/shared/color-setting.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 var ColorSetting = (container, settingsStore, props) => {
   let input;
   let resetButton;
@@ -18809,7 +20185,7 @@ var ColorSetting = (container, settingsStore, props) => {
     });
     updateExtraButton(currentValue);
   };
-  new import_obsidian8.Setting(container).setName(props.label).addColorPicker((cb) => {
+  new import_obsidian9.Setting(container).setName(props.label).addColorPicker((cb) => {
     input = cb;
   }).addExtraButton((cb) => {
     resetButton = cb;
@@ -18829,7 +20205,7 @@ var BackgroundColor = (container, settingsStore) => {
     valueSelector: (settings) => settings.view.theme.containerBg,
     onChange: (color) => {
       settingsStore.dispatch({
-        type: "SET_CONTAINER_BG",
+        type: "settings/view/theme/set-container-bg-color",
         payload: {
           backgroundColor: color
         }
@@ -18846,7 +20222,7 @@ var ActiveBranchBackground = (container, settingsStore) => {
     valueSelector: (settings) => settings.view.theme.activeBranchBg,
     onChange: (color) => {
       settingsStore.dispatch({
-        type: "SET_ACTIVE_BRANCH_BG",
+        type: "settings/view/theme/set-active-branch-bg-color",
         payload: {
           backgroundColor: color
         }
@@ -18857,9 +20233,10 @@ var ActiveBranchBackground = (container, settingsStore) => {
 
 // src/stores/settings/default-settings.ts
 var DEFAULT_CARD_WIDTH = 550;
-var DEFAULT_CARDS_GAP = 100;
+var DEFAULT_CARDS_GAP = 50;
 var DEFAULT_INDENTATION_WIDTH = 60;
 var DEFAULT_INACTIVE_NODE_OPACITY = 25;
+var DEFAULT_H1_FONT_SIZE_EM = 1.802;
 var DEFAULT_SETTINGS = () => ({
   documents: {},
   hotkeys: {
@@ -18867,6 +20244,7 @@ var DEFAULT_SETTINGS = () => ({
   },
   view: {
     fontSize: 16,
+    h1FontSize_em: DEFAULT_H1_FONT_SIZE_EM,
     theme: {
       inactiveNodeOpacity: DEFAULT_INACTIVE_NODE_OPACITY
     },
@@ -18885,14 +20263,22 @@ var DEFAULT_SETTINGS = () => ({
     applyGapBetweenCards: false,
     outlineMode: false,
     nodeIndentationWidth: DEFAULT_INDENTATION_WIDTH,
-    maintainEditMode: true,
-    alwaysShowCardButtons: false
+    maintainEditMode: false,
+    alwaysShowCardButtons: false,
+    hiddenVerticalToolbarButtons: []
   },
   general: {
-    defaultDocumentFormat: "sections"
+    defaultDocumentFormat: "sections",
+    linkPaneType: "tab"
   },
   styleRules: {
-    documents: {}
+    documents: {},
+    global: {
+      rules: []
+    },
+    settings: {
+      activeTab: "global-rules"
+    }
   }
 });
 
@@ -18902,7 +20288,7 @@ var CardWidth = (element2, settingsStore) => {
     defaultValue: DEFAULT_CARD_WIDTH,
     onChange: (value) => {
       settingsStore.dispatch({
-        type: "SET_CARD_WIDTH",
+        type: "settings/view/layout/set-card-width",
         payload: {
           width: value
         }
@@ -18917,14 +20303,14 @@ var CardWidth = (element2, settingsStore) => {
 };
 
 // src/view/actions/settings/components/limit-card-height.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 var LimitCardHeight = (element2, settingsStore) => {
   const settingsState = settingsStore.getValue();
-  new import_obsidian9.Setting(element2).setName(lang.settings_layout_limit_card_height).addToggle((cb) => {
+  new import_obsidian10.Setting(element2).setName(lang.settings_layout_limit_card_height).addToggle((cb) => {
     cb.setValue(settingsState.view.limitPreviewHeight).onChange(
       (limit) => {
         settingsStore.dispatch({
-          type: "SET_LIMIT_PREVIEW_HEIGHT",
+          type: "settings/view/layout/set-limit-card-height",
           payload: {
             limit
           }
@@ -18935,13 +20321,12 @@ var LimitCardHeight = (element2, settingsStore) => {
 };
 
 // src/view/actions/settings/components/default-document-format.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 var DefaultDocumentFormat = (element2, settingsStore) => {
   const settingsState = settingsStore.getValue();
-  const setting = new import_obsidian10.Setting(element2).setName(
+  const setting = new import_obsidian11.Setting(element2).setName(
     lang.settings_general_default_format
   );
-  setting.setDesc(lang.settings_general_default_format_desc);
   setting.addDropdown((cb) => {
     const value = settingsState.general.defaultDocumentFormat;
     cb.addOptions({
@@ -18950,7 +20335,7 @@ var DefaultDocumentFormat = (element2, settingsStore) => {
       outline: lang.settings_format_outline
     }).setValue(value).onChange((value2) => {
       settingsStore.dispatch({
-        type: "GENERAL/SET_DEFAULT_DOCUMENT_FORMAT",
+        type: "settings/general/set-default-document-format",
         payload: {
           format: value2
         }
@@ -18965,7 +20350,7 @@ var CardsGap = (element2, settingsStore) => {
     defaultValue: DEFAULT_CARDS_GAP,
     onChange: (value) => {
       settingsStore.dispatch({
-        type: "SET_CARDS_GAP",
+        type: "settings/view/layout/set-cards-gap",
         payload: {
           gap: value
         }
@@ -18973,7 +20358,6 @@ var CardsGap = (element2, settingsStore) => {
     },
     valueSelector: (settingsState) => settingsState.view.cardsGap,
     label: lang.settings_layout_space_between_cards,
-    desc: lang.settings_layout_space_between_cards_desc,
     max: 500,
     min: 0,
     step: 10
@@ -18993,7 +20377,6 @@ var CardIndentationWidth = (element2, settingsStore) => {
       });
     },
     valueSelector: (settingsState) => settingsState.view.nodeIndentationWidth,
-    desc: lang.settings_layout_indentation_width_desc,
     label: lang.settings_layout_indentation_width,
     max: 1e3,
     min: 0,
@@ -19002,10 +20385,10 @@ var CardIndentationWidth = (element2, settingsStore) => {
 };
 
 // src/view/actions/settings/components/maintain-edit-mode.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 var MaintainEditMode2 = (element2, settingsStore) => {
   const settingsState = settingsStore.getValue();
-  new import_obsidian11.Setting(element2).setName(lang.settings_general_maintain_edit_mode).setDesc(lang.settings_general_maintain_edit_mode_desc).addToggle((cb) => {
+  new import_obsidian12.Setting(element2).setName(lang.settings_general_maintain_edit_mode).setDesc(lang.settings_general_maintain_edit_mode_desc).addToggle((cb) => {
     cb.setValue(settingsState.view.maintainEditMode).onChange(
       (maintain) => {
         settingsStore.dispatch({
@@ -19018,9 +20401,6 @@ var MaintainEditMode2 = (element2, settingsStore) => {
     );
   });
 };
-
-// src/view/actions/settings/render-settings.ts
-var import_obsidian13 = require("obsidian");
 
 // src/view/actions/settings/components/inactive-card-opacity.ts
 var InactiveCardOpacity = (element2, settingsStore) => {
@@ -19060,10 +20440,10 @@ var ActiveBranchColor = (container, settingsStore) => {
 };
 
 // src/view/actions/settings/components/always-show-card-buttons.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 var AlwaysShowCardButtons2 = (element2, settingsStore) => {
   const settingsState = settingsStore.getValue();
-  new import_obsidian12.Setting(element2).setName(lang.settings_always_show_card_buttons).setDesc(lang.settings_always_show_card_buttons_desc).addToggle((cb) => {
+  new import_obsidian13.Setting(element2).setName(lang.settings_always_show_card_buttons).setDesc(lang.settings_always_show_card_buttons_desc).addToggle((cb) => {
     cb.setValue(settingsState.view.alwaysShowCardButtons).onChange(
       (show) => {
         settingsStore.dispatch({
@@ -19077,77 +20457,1001 @@ var AlwaysShowCardButtons2 = (element2, settingsStore) => {
   });
 };
 
-// src/view/actions/settings/render-settings.ts
-var renderSettings = (element2) => {
-  const view = getView();
-  const settingsStore = view.plugin.settings;
-  const render = () => {
-    DefaultDocumentFormat(element2, settingsStore);
-    MaintainEditMode2(element2, settingsStore);
-    AlwaysShowCardButtons2(element2, settingsStore);
-    new import_obsidian13.Setting(element2).setHeading().setName(lang.settings_appearance);
-    BackgroundColor(element2, settingsStore);
-    ActiveBranchBackground(element2, settingsStore);
-    ActiveBranchColor(element2, settingsStore);
-    InactiveCardOpacity(element2, settingsStore);
-    FontSize(element2, settingsStore);
-    new import_obsidian13.Setting(element2).setHeading().setName(lang.settings_layout);
-    CardWidth(element2, settingsStore);
-    CardsGap(element2, settingsStore);
-    CardIndentationWidth(element2, settingsStore);
-    LimitCardHeight(element2, settingsStore);
-  };
-  render();
-  return {
-    update: () => {
-      render();
-    }
-  };
-};
+// src/view/actions/settings/components/controls-bar-buttons/controls-bar-buttons.ts
+var import_obsidian15 = require("obsidian");
 
-// src/view/components/container/controls-bar/modals/settings/settings.svelte
-function add_css19(target) {
-  append_styles(target, "svelte-1ggfir8", ".setting-items.svelte-1ggfir8{display:flex;flex-direction:column;padding:20px;width:500px;overflow-y:auto;& .setting-item {\n            padding: 10px 0;\n        };& .setting-item-heading {\n            margin-top: 22px;\n\n            & .setting-item-name {\n                font-size: 17px;\n            }\n        }}@media(max-width: 720px){.setting-items.svelte-1ggfir8{width:initial}}.is-mobile{& .setting-items {\n            padding: 5px 10px;\n        };& :global(.setting-item) {\n            display: flex;\n            flex-direction: column;\n            gap: 4px;\n        };& :global(.setting-item-control) {\n            width: 100%;\n            justify-content: center;\n        }}");
+// src/view/modals/vertical-toolbar-buttons/vertical-toolbar-buttons-modal.ts
+var import_obsidian14 = require("obsidian");
+
+// src/view/modals/vertical-toolbar-buttons/vertical-toolbar-buttons.ts
+var verticalToolbarButtons = [
+  {
+    id: "settings",
+    buttons: [
+      {
+        id: "hotkeys",
+        label: lang.controls_hotkeys,
+        icon: keyboard_default
+      },
+      {
+        id: "style-rules",
+        label: lang.controls_rules,
+        icon: palette_default
+      }
+    ]
+  },
+  {
+    id: "scroll",
+    buttons: [
+      {
+        id: "center-active-node-h",
+        label: lang.controls_toggle_scrolling_mode_horizontal,
+        icon: customIcons.alignH
+      },
+      {
+        id: "center-active-node-v",
+        label: lang.controls_toggle_scrolling_mode_vertical,
+        icon: customIcons.alignV
+      }
+    ]
+  },
+  {
+    id: "display",
+    buttons: [
+      {
+        id: "outline-mode",
+        label: lang.controls_single_column,
+        icon: customIcons.outline
+      },
+      {
+        id: "space-between-cards",
+        label: lang.controls_gap_between_cards,
+        icon: customIcons.gap
+      }
+    ]
+  },
+  {
+    id: "zoom",
+    buttons: [
+      {
+        id: "zoom-in",
+        label: lang.controls_zoom_in,
+        icon: plus_default
+      },
+      {
+        id: "zoom-reset",
+        label: lang.controls_zoom_reset,
+        icon: rotate_ccw_default
+      },
+      {
+        id: "zoom-presets",
+        label: lang.controls_zoom_presets,
+        icon: scan_search_default
+      },
+      {
+        id: "zoom-out",
+        label: lang.controls_zoom_out,
+        icon: minus_default
+      }
+    ]
+  }
+];
+
+// src/view/modals/vertical-toolbar-buttons/components/vertical-toolbar-icons-selection-modal.svelte
+function add_css22(target) {
+  append_styles(target, "svelte-1nwvm61", ".buttons-list.svelte-1nwvm61{display:flex;flex-direction:column;& button {\n            background-color: transparent;\n            cursor: initial;\n        }}.button-list-item.svelte-1nwvm61{display:flex;gap:5px;align-items:center;border-top:1px solid var(--background-modifier-border);padding:6px 14px}.button-list-item.svelte-1nwvm61:first-child{border-top:none}.toolbar-icon-label.svelte-1nwvm61{color:var(--text-normal)}");
 }
-function create_fragment76(ctx) {
-  let div1;
-  let div0;
-  let renderSettings_action;
-  let mounted;
-  let dispose;
+function get_each_context8(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[6] = list[i];
+  return child_ctx;
+}
+function get_each_context_12(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[9] = list[i];
+  return child_ctx;
+}
+function create_else_block7(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  var switch_value = (
+    /*button*/
+    ctx[9].icon
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { class: "svg-icon" } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
   return {
     c() {
-      div1 = element("div");
-      div0 = element("div");
-      attr(div0, "class", "setting-items svelte-1ggfir8");
-      attr(div1, "class", "lineage-modal");
-      attr(div1, "id", "lineage-view-settings");
-      attr(div1, "tabindex", "0");
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
     },
     m(target, anchor) {
-      insert(target, div1, anchor);
-      append(div1, div0);
-      if (!mounted) {
-        dispose = action_destroyer(renderSettings_action = renderSettings.call(null, div0));
-        mounted = true;
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      2 && switch_value !== (switch_value = /*button*/
+      ctx2[9].icon)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
       }
     },
-    p: noop,
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+function create_if_block16(ctx) {
+  let html_tag;
+  let raw_value = (
+    /*button*/
+    ctx[9].icon.svg + ""
+  );
+  let html_anchor;
+  return {
+    c() {
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      html_tag.a = html_anchor;
+    },
+    m(target, anchor) {
+      html_tag.m(raw_value, target, anchor);
+      insert(target, html_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttons*/
+      2 && raw_value !== (raw_value = /*button*/
+      ctx2[9].icon.svg + ""))
+        html_tag.p(raw_value);
+    },
     i: noop,
     o: noop,
     d(detaching) {
       if (detaching) {
+        detach(html_anchor);
+        html_tag.d();
+      }
+    }
+  };
+}
+function create_default_slot63(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block16, create_else_block7];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if ("svg" in /*button*/
+    ctx2[9].icon)
+      return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_each_block_12(key_1, ctx) {
+  let div;
+  let input;
+  let input_checked_value;
+  let t0;
+  let button_1;
+  let t1;
+  let span;
+  let t2_value = (
+    /*button*/
+    ctx[9].label + ""
+  );
+  let t2;
+  let t3;
+  let current;
+  let mounted;
+  let dispose;
+  function change_handler(...args) {
+    return (
+      /*change_handler*/
+      ctx[5](
+        /*button*/
+        ctx[9],
+        ...args
+      )
+    );
+  }
+  button_1 = new button_default({
+    props: {
+      classes: "control-item",
+      label: (
+        /*button*/
+        ctx[9].label
+      ),
+      tooltipPosition: "left",
+      $$slots: { default: [create_default_slot63] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      div = element("div");
+      input = element("input");
+      t0 = space();
+      create_component(button_1.$$.fragment);
+      t1 = space();
+      span = element("span");
+      t2 = text(t2_value);
+      t3 = space();
+      attr(input, "type", "checkbox");
+      input.checked = input_checked_value = !/*button*/
+      ctx[9].hidden;
+      attr(span, "class", "toolbar-icon-label svelte-1nwvm61");
+      attr(div, "class", "button-list-item svelte-1nwvm61");
+      this.first = div;
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, input);
+      append(div, t0);
+      mount_component(button_1, div, null);
+      append(div, t1);
+      append(div, span);
+      append(span, t2);
+      append(div, t3);
+      current = true;
+      if (!mounted) {
+        dispose = listen(input, "change", change_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty & /*$buttons*/
+      2 && input_checked_value !== (input_checked_value = !/*button*/
+      ctx[9].hidden)) {
+        input.checked = input_checked_value;
+      }
+      const button_1_changes = {};
+      if (dirty & /*$buttons*/
+      2)
+        button_1_changes.label = /*button*/
+        ctx[9].label;
+      if (dirty & /*$$scope, $buttons*/
+      4098) {
+        button_1_changes.$$scope = { dirty, ctx };
+      }
+      button_1.$set(button_1_changes);
+      if ((!current || dirty & /*$buttons*/
+      2) && t2_value !== (t2_value = /*button*/
+      ctx[9].label + ""))
+        set_data(t2, t2_value);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(button_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(button_1);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_each_block8(key_1, ctx) {
+  let first;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let each_1_anchor;
+  let current;
+  let each_value_1 = ensure_array_like(
+    /*group*/
+    ctx[6].buttons
+  );
+  const get_key = (ctx2) => (
+    /*button*/
+    ctx2[9].label
+  );
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    let child_ctx = get_each_context_12(ctx, each_value_1, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block_12(key, child_ctx));
+  }
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$buttons, onChange*/
+      10) {
+        each_value_1 = ensure_array_like(
+          /*group*/
+          ctx[6].buttons
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block_12, each_1_anchor, get_each_context_12);
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+        detach(each_1_anchor);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d(detaching);
+      }
+    }
+  };
+}
+function create_fragment83(ctx) {
+  let div0;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let t0;
+  let div1;
+  let button_1;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*$buttons*/
+    ctx[1]
+  );
+  const get_key = (ctx2) => (
+    /*group*/
+    ctx2[6].id
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context8(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block8(key, child_ctx));
+  }
+  return {
+    c() {
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t0 = space();
+      div1 = element("div");
+      button_1 = element("button");
+      button_1.textContent = "Done";
+      attr(div0, "class", "buttons-list svelte-1nwvm61");
+      attr(button_1, "class", "mod-cta");
+      attr(div1, "class", "modal-button-container");
+    },
+    m(target, anchor) {
+      insert(target, div0, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+      insert(target, t0, anchor);
+      insert(target, div1, anchor);
+      append(div1, button_1);
+      current = true;
+      if (!mounted) {
+        dispose = listen(button_1, "click", function() {
+          if (is_function(
+            /*close*/
+            ctx[0]
+          ))
+            ctx[0].apply(this, arguments);
+        });
+        mounted = true;
+      }
+    },
+    p(new_ctx, [dirty]) {
+      ctx = new_ctx;
+      if (dirty & /*$buttons, onChange*/
+      10) {
+        each_value = ensure_array_like(
+          /*$buttons*/
+          ctx[1]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block8, null, get_each_context8);
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div0);
+        detach(t0);
         detach(div1);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
       }
       mounted = false;
       dispose();
     }
   };
 }
+function instance81($$self, $$props, $$invalidate) {
+  let $buttons;
+  let { close } = $$props;
+  let { plugin } = $$props;
+  const buttons = derived([HiddenVerticalToolbarButtons(plugin)], ([hidden]) => {
+    const set = new Set(hidden);
+    if (set.size > 0) {
+      return verticalToolbarButtons.map((bs) => ({
+        id: bs.id,
+        buttons: bs.buttons.map((b) => Object.assign(Object.assign({}, b), { hidden: set.has(b.id) }))
+      }));
+    } else
+      return verticalToolbarButtons;
+  });
+  component_subscribe($$self, buttons, (value) => $$invalidate(1, $buttons = value));
+  const onChange = (button, hidden) => {
+    plugin.settings.dispatch({
+      type: "settings/view/vertical-toolbar/set-hidden-button",
+      payload: { id: button, hide: hidden }
+    });
+  };
+  const change_handler = (button, e) => {
+    onChange(button.id, !e.currentTarget.checked);
+  };
+  $$self.$$set = ($$props2) => {
+    if ("close" in $$props2)
+      $$invalidate(0, close = $$props2.close);
+    if ("plugin" in $$props2)
+      $$invalidate(4, plugin = $$props2.plugin);
+  };
+  return [close, $buttons, buttons, onChange, plugin, change_handler];
+}
+var Vertical_toolbar_icons_selection_modal = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance81, create_fragment83, safe_not_equal, { close: 0, plugin: 4 }, add_css22);
+  }
+};
+var vertical_toolbar_icons_selection_modal_default = Vertical_toolbar_icons_selection_modal;
+
+// src/view/modals/vertical-toolbar-buttons/vertical-toolbar-buttons-modal.ts
+var VerticalToolbarButtonsModal = class extends import_obsidian14.Modal {
+  constructor(props) {
+    super(props.plugin.app);
+    this.props = props;
+    this.subscriptions = /* @__PURE__ */ new Set();
+    this.open = () => {
+      this.setTitle(lang.settings_vertical_toolbar_icons_desc);
+      this.initState();
+      new vertical_toolbar_icons_selection_modal_default({
+        target: this.contentEl,
+        props: {
+          plugin: this.props.plugin,
+          close: this.close
+        }
+      });
+      const promise = new Promise((resolve) => {
+        this.resolve = resolve;
+      });
+      super.open();
+      return promise;
+    };
+    this.close = () => {
+      this.resolve(void 0);
+      super.close();
+      for (const unsub of this.subscriptions) {
+        unsub();
+      }
+    };
+    this.initState = () => {
+    };
+  }
+};
+
+// src/view/actions/settings/components/controls-bar-buttons/controls-bar-buttons.ts
+var ControlsBarButtons = (container, view) => {
+  new import_obsidian15.Setting(container).setName(lang.settings_vertical_toolbar_icons).setDesc(lang.settings_vertical_toolbar_icons_desc).addButton((cb) => {
+    cb.setButtonText("Manage");
+    cb.onClick(() => {
+      const modal = new VerticalToolbarButtonsModal({
+        plugin: view.plugin
+      });
+      modal.open();
+    });
+  });
+};
+
+// src/view/actions/settings/components/headings-font-size.ts
+var HeadingsFontSize = (element2, settingsStore) => {
+  RangeSetting(element2, settingsStore, {
+    defaultValue: DEFAULT_H1_FONT_SIZE_EM,
+    onChange: (value) => {
+      settingsStore.dispatch({
+        type: "settings/view/theme/set-h1-font-size",
+        payload: {
+          fontSize_em: value
+        }
+      });
+    },
+    valueSelector: (settingsState) => settingsState.view.h1FontSize_em,
+    label: lang.settings_appearance_headings_font_size,
+    max: 4,
+    min: 1,
+    step: 0.1
+  });
+};
+
+// src/view/actions/settings/components/link-pane-type.ts
+var import_obsidian16 = require("obsidian");
+var LinkPaneType = (element2, settingsStore) => {
+  const settingsState = settingsStore.getValue();
+  const setting = new import_obsidian16.Setting(element2).setName(
+    lang.settings_general_link_behavior
+  );
+  setting.setDesc(
+    `Hold '${isMacLike ? "cmd" : "control"}' to use the other option`
+  );
+  setting.addDropdown((cb) => {
+    const value = settingsState.general.linkPaneType;
+    cb.addOptions({
+      split: lang.settings_general_link_split,
+      tab: lang.settings_general_link_tab
+    }).setValue(value).onChange((value2) => {
+      settingsStore.dispatch({
+        type: "settings/general/set-link-pane-type",
+        payload: {
+          position: value2
+        }
+      });
+    });
+  });
+};
+
+// src/view/actions/settings/render-settings.ts
+var setVisibleTab = (tabs, activeTab) => {
+  for (const tab of tabs) {
+    if (tab.name === activeTab) {
+      tab.element.style.visibility = "visible";
+    } else {
+      tab.element.style.visibility = "hidden";
+    }
+  }
+};
+var render = (view, element2, tabs) => {
+  const settingsStore = view.plugin.settings;
+  const generalTab = activeDocument.createElement("div");
+  const appearanceTab = activeDocument.createElement("div");
+  const layoutTab = activeDocument.createElement("div");
+  tabs.push({ element: generalTab, name: "General" });
+  tabs.push({ element: appearanceTab, name: "Appearance" });
+  tabs.push({ element: layoutTab, name: "Layout" });
+  DefaultDocumentFormat(generalTab, settingsStore);
+  LinkPaneType(generalTab, settingsStore);
+  MaintainEditMode2(generalTab, settingsStore);
+  AlwaysShowCardButtons2(generalTab, settingsStore);
+  ControlsBarButtons(generalTab, view);
+  BackgroundColor(appearanceTab, settingsStore);
+  ActiveBranchBackground(appearanceTab, settingsStore);
+  ActiveBranchColor(appearanceTab, settingsStore);
+  InactiveCardOpacity(appearanceTab, settingsStore);
+  FontSize(appearanceTab, settingsStore);
+  HeadingsFontSize(appearanceTab, settingsStore);
+  CardWidth(layoutTab, settingsStore);
+  CardsGap(layoutTab, settingsStore);
+  CardIndentationWidth(layoutTab, settingsStore);
+  LimitCardHeight(layoutTab, settingsStore);
+  element2.append(generalTab, appearanceTab, layoutTab);
+};
+var renderSettings = (element2, tab) => {
+  const tabs = [];
+  const view = getView();
+  render(view, element2, tabs);
+  setVisibleTab(tabs, tab);
+  return {
+    update: (tab2) => {
+      setVisibleTab(tabs, tab2);
+    }
+  };
+};
+
+// src/view/components/container/modals/settings/vertical-tab-header.svelte
+function add_css23(target) {
+  append_styles(target, "svelte-1m3tx9d", ".lineage-vertical-tab-header.svelte-1m3tx9d{width:250px;padding:var(--size-4-3);background-color:var(--background-secondary)}");
+}
+function get_each_context9(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[4] = list[i];
+  return child_ctx;
+}
+function create_each_block9(ctx) {
+  let div;
+  let t0_value = (
+    /*tab*/
+    ctx[4] + ""
+  );
+  let t0;
+  let t1;
+  let div_class_value;
+  let mounted;
+  let dispose;
+  function click_handler() {
+    return (
+      /*click_handler*/
+      ctx[3](
+        /*tab*/
+        ctx[4]
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      t0 = text(t0_value);
+      t1 = space();
+      attr(div, "class", div_class_value = null_to_empty("vertical-tab-nav-item" + /*tab*/
+      (ctx[4] === /*activeTab*/
+      ctx[1] ? " is-active" : "")) + " svelte-1m3tx9d");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, t0);
+      append(div, t1);
+      if (!mounted) {
+        dispose = listen(div, "click", click_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*activeTab*/
+      2 && div_class_value !== (div_class_value = null_to_empty("vertical-tab-nav-item" + /*tab*/
+      (ctx[4] === /*activeTab*/
+      ctx[1] ? " is-active" : "")) + " svelte-1m3tx9d")) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment84(ctx) {
+  let div2;
+  let div1;
+  let div0;
+  let each_value = ensure_array_like(
+    /*tabs*/
+    ctx[2]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block9(get_each_context9(ctx, each_value, i));
+  }
+  return {
+    c() {
+      div2 = element("div");
+      div1 = element("div");
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div0, "class", "vertical-tab-header-group-items");
+      attr(div1, "class", "vertical-tab-header-group");
+      attr(div2, "class", "lineage-vertical-tab-header svelte-1m3tx9d");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div1);
+      append(div1, div0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*tabs, activeTab, setActiveTab*/
+      7) {
+        each_value = ensure_array_like(
+          /*tabs*/
+          ctx2[2]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context9(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block9(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div0, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance82($$self, $$props, $$invalidate) {
+  let { setActiveTab } = $$props;
+  let { activeTab } = $$props;
+  const tabs = ["General", "Appearance", "Layout"];
+  const click_handler = (tab) => setActiveTab(tab);
+  $$self.$$set = ($$props2) => {
+    if ("setActiveTab" in $$props2)
+      $$invalidate(0, setActiveTab = $$props2.setActiveTab);
+    if ("activeTab" in $$props2)
+      $$invalidate(1, activeTab = $$props2.activeTab);
+  };
+  return [setActiveTab, activeTab, tabs, click_handler];
+}
+var Vertical_tab_header = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance82, create_fragment84, safe_not_equal, { setActiveTab: 0, activeTab: 1 }, add_css23);
+  }
+};
+var vertical_tab_header_default = Vertical_tab_header;
+
+// src/view/components/container/modals/settings/active-settings-tab-store.ts
+var ActiveSettingsTabStore = writable("General");
+
+// src/view/components/container/modals/settings/settings.svelte
+function add_css24(target) {
+  append_styles(target, "svelte-rqy3yr", ".lineage-vertical-tabs-container.svelte-rqy3yr{display:flex}.lineage-vertical-tab-content.svelte-rqy3yr{height:auto;display:grid;flex-direction:column;width:500px;overflow-y:auto;padding-top:var(--size-4-8);padding-bottom:var(--size-4-12);padding-inline-start:var(--size-4-12);padding-inline-end:var(--size-4-12);grid-template-areas:'main';& > div {\n            grid-area: main;\n        }}");
+}
+function create_fragment85(ctx) {
+  let div2;
+  let div1;
+  let verticaltabheader;
+  let t;
+  let div0;
+  let renderSettings_action;
+  let current;
+  let mounted;
+  let dispose;
+  verticaltabheader = new vertical_tab_header_default({
+    props: {
+      setActiveTab: (
+        /*setActiveTab*/
+        ctx[1]
+      ),
+      activeTab: (
+        /*$ActiveSettingsTabStore*/
+        ctx[0]
+      )
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div1 = element("div");
+      create_component(verticaltabheader.$$.fragment);
+      t = space();
+      div0 = element("div");
+      attr(div0, "class", "lineage-vertical-tab-content svelte-rqy3yr");
+      attr(div1, "class", "lineage-vertical-tabs-container svelte-rqy3yr");
+      attr(div2, "class", "lineage-modal");
+      attr(div2, "id", "lineage-view-settings");
+      attr(div2, "tabindex", "0");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div1);
+      mount_component(verticaltabheader, div1, null);
+      append(div1, t);
+      append(div1, div0);
+      current = true;
+      if (!mounted) {
+        dispose = action_destroyer(renderSettings_action = renderSettings.call(
+          null,
+          div0,
+          /*$ActiveSettingsTabStore*/
+          ctx[0]
+        ));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      const verticaltabheader_changes = {};
+      if (dirty & /*$ActiveSettingsTabStore*/
+      1)
+        verticaltabheader_changes.activeTab = /*$ActiveSettingsTabStore*/
+        ctx2[0];
+      verticaltabheader.$set(verticaltabheader_changes);
+      if (renderSettings_action && is_function(renderSettings_action.update) && dirty & /*$ActiveSettingsTabStore*/
+      1)
+        renderSettings_action.update.call(
+          null,
+          /*$ActiveSettingsTabStore*/
+          ctx2[0]
+        );
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(verticaltabheader.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(verticaltabheader.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(verticaltabheader);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance83($$self, $$props, $$invalidate) {
+  let $ActiveSettingsTabStore;
+  component_subscribe($$self, ActiveSettingsTabStore, ($$value) => $$invalidate(0, $ActiveSettingsTabStore = $$value));
+  const setActiveTab = (tab) => {
+    ActiveSettingsTabStore.set(tab);
+  };
+  return [$ActiveSettingsTabStore, setActiveTab];
+}
 var Settings2 = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment76, safe_not_equal, {}, add_css19);
+    init(this, options, instance83, create_fragment85, safe_not_equal, {}, add_css24);
   }
 };
 var settings_default2 = Settings2;
@@ -19174,63 +21478,70 @@ var relativeTime = (updated) => {
 
 // src/lang/snapshot-action-lang.ts
 var snapshotActionLang = {
-  "DOCUMENT/SET_NODE_CONTENT": (snapshot) => ({
-    label: lang.modals_snapshots_updated_card + snapshot.context.affectedSection,
+  "document/update-node-content": (snapshot) => ({
+    label: lang.modals_snapshots_updated_node + snapshot.context.affectedSection,
     icon: file_pen_default
   }),
-  "DOCUMENT/INSERT_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_created_card + snapshot.context.affectedSection,
+  "document/add-node": (snapshot) => ({
+    label: lang.modals_snapshots_created_node + snapshot.context.affectedSection,
     icon: file_plus_default
   }),
-  "DOCUMENT/DROP_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_dropped_card + snapshot.context.affectedSection,
+  "document/drop-node": (snapshot) => ({
+    label: lang.modals_snapshots_dropped_node + snapshot.context.affectedSection,
     icon: file_output_default
   }),
-  "DOCUMENT/LOAD_FILE": () => ({
+  "document/file/load-from-disk": () => ({
     label: lang.modals_snapshots_document_loaded,
     icon: file_up_default
   }),
-  "DOCUMENT/DELETE_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_deleted_card + snapshot.context.affectedSection,
+  "document/delete-node": (snapshot) => ({
+    label: lang.modals_snapshots_deleted_section + snapshot.context.affectedSection,
     icon: file_minus_default
   }),
-  "DOCUMENT/MOVE_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_moved_card + snapshot.context.affectedSection,
+  "document/move-node": (snapshot) => ({
+    label: lang.modals_snapshots_moved_node + snapshot.context.affectedSection,
     icon: file_output_default
   }),
-  "DOCUMENT/MERGE_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_merged_card + snapshot.context.affectedSection,
+  "document/merge-node": (snapshot) => ({
+    label: lang.modals_snapshots_merged_node + snapshot.context.affectedSection,
     icon: merge_default
   }),
-  "DOCUMENT/FORMAT_HEADINGS": () => ({
+  "document/format-headings": () => ({
     label: lang.modals_snapshots_formatted_headings,
     icon: heading_1_default
   }),
-  "DOCUMENT/CUT_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_cut_card + snapshot.context.affectedSection,
+  "document/cut-node": (snapshot) => ({
+    label: lang.modals_snapshots_cut_section + snapshot.context.affectedSection,
     icon: scissors_default
   }),
-  "DOCUMENT/PASTE_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_pasted_card + snapshot.context.affectedSection,
+  "document/paste-node": (snapshot) => ({
+    label: lang.modals_snapshots_pasted_section + snapshot.context.affectedSection,
     icon: clipboard_paste_default
   }),
-  "DOCUMENT/EXTRACT_BRANCH": (snapshot) => ({
-    label: lang.modals_snapshots_extracted_card + snapshot.context.affectedSection,
+  "document/extract-node": (snapshot) => ({
+    label: lang.modals_snapshots_extracted_node + snapshot.context.affectedSection,
     icon: file_symlink_default,
     iconHtml: customIcons.cards.svg
   }),
-  "DOCUMENT/SPLIT_NODE": (snapshot) => ({
-    label: lang.modals_snapshots_split_card + snapshot.context.affectedSection,
+  "document/split-node": (snapshot) => ({
+    label: lang.modals_snapshots_split_node + snapshot.context.affectedSection,
     icon: split_default
-  })
+  }),
+  "document/sort-direct-child-nodes": (snapshot) => {
+    const action = snapshot.context.action;
+    return {
+      label: lang.modals_snapshots_sorted_child_nodes + snapshot.context.affectedSection,
+      icon: action.payload.order === "descending" ? arrow_down_wide_narrow_default : arrow_up_narrow_wide_default
+    };
+  }
 };
 
-// src/view/components/container/controls-bar/modals/snapshots-list/components/snapshot-button.svelte
-var import_obsidian14 = require("obsidian");
-function add_css20(target) {
+// src/view/components/container/modals/snapshots-list/components/snapshot-button.svelte
+var import_obsidian17 = require("obsidian");
+function add_css25(target) {
   append_styles(target, "svelte-8u3rmg", ":root{--icon-wrapper-width:32px}.snapshot.svelte-8u3rmg{padding:var(--size-4-2);cursor:pointer;display:flex;align-items:center;border-radius:4px;gap:4px;height:66px;flex:1;background-color:var(--background-secondary)}.selected.svelte-8u3rmg{background-color:var(--nav-item-background-selected)}.icon-wrapper.svelte-8u3rmg{width:32px;display:flex;align-items:center;justify-content:center}.snapshot-content.svelte-8u3rmg{display:flex;flex-direction:column;gap:5px;flex:1}.snapshot-body.svelte-8u3rmg{display:flex;justify-content:space-between;gap:5px;width:100%}.snapshot-label.svelte-8u3rmg{font-size:14px;color:var(--color-base-70);display:block;flex:1;max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.snapshot-card-content.svelte-8u3rmg{font-size:14px;color:var(--color-base-60);display:block;white-space:nowrap;overflow:hidden;max-width:200px;text-overflow:ellipsis;font-style:italic;opacity:0.9}@media(max-width: 720px){.snapshot-card-content.svelte-8u3rmg{max-width:30vw}}.snapshot-context.svelte-8u3rmg{display:flex;flex-direction:column;align-items:end;height:100%;justify-content:space-between}.snapshot-section-number.svelte-8u3rmg{font-size:11px;color:var(--color-base-60);min-width:16px;text-align:left;margin-left:auto}.snapshot-time.svelte-8u3rmg{font-size:11px;color:var(--color-base-60)}");
 }
-function create_else_block6(ctx) {
+function create_else_block8(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -19299,7 +21610,7 @@ function create_else_block6(ctx) {
     }
   };
 }
-function create_if_block15(ctx) {
+function create_if_block17(ctx) {
   let html_tag;
   let raw_value = (
     /*info*/
@@ -19327,7 +21638,7 @@ function create_if_block15(ctx) {
     }
   };
 }
-function create_fragment77(ctx) {
+function create_fragment86(ctx) {
   let div6;
   let div0;
   let current_block_type_index;
@@ -19360,7 +21671,7 @@ function create_fragment77(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block15, create_else_block6];
+  const if_block_creators = [create_if_block17, create_else_block8];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if ("iconHtml" in /*info*/
@@ -19499,7 +21810,7 @@ function create_fragment77(ctx) {
     }
   };
 }
-function instance74($$self, $$props, $$invalidate) {
+function instance84($$self, $$props, $$invalidate) {
   let { snapshot } = $$props;
   let { active } = $$props;
   const view = getView();
@@ -19510,14 +21821,14 @@ function instance74($$self, $$props, $$invalidate) {
   const info = infoFactory(snapshot);
   const numberOfCharacters = snapshot.context.numberOfCharacters;
   const numberOfSections = snapshot.context.numberOfSections;
-  const sections = `${numberOfSections} card${numberOfSections === 1 ? "" : "s"}`;
+  const sections = `${numberOfSections} section${numberOfSections === 1 ? "" : "s"}`;
   const chars = `${numberOfCharacters} char${numberOfCharacters === 1 ? "" : "s"}`;
   const click_handler = () => {
     if (viewStore.getValue().document.editing.activeNodeId)
-      new import_obsidian14.Notice(lang.error_apply_snapshot_while_editing);
+      new import_obsidian17.Notice(lang.error_apply_snapshot_while_editing);
     else
       documentStore.dispatch({
-        type: "HISTORY/SELECT_SNAPSHOT",
+        type: "document/history/select-snapshot",
         payload: { snapshotId: snapshot.id }
       });
   };
@@ -19541,7 +21852,7 @@ function instance74($$self, $$props, $$invalidate) {
 var Snapshot_button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance74, create_fragment77, safe_not_equal, { snapshot: 0, active: 1 }, add_css20);
+    init(this, options, instance84, create_fragment86, safe_not_equal, { snapshot: 0, active: 1 }, add_css25);
   }
 };
 var snapshot_button_default = Snapshot_button;
@@ -19565,17 +21876,17 @@ var updateRelativeTime = (element2) => {
   };
 };
 
-// src/view/components/container/controls-bar/modals/snapshots-list/file-histoy.svelte
-function add_css21(target) {
-  append_styles(target, "svelte-1dzm90d", ".snapshots-list.svelte-1dzm90d{width:400px;display:flex;flex-direction:column;gap:var(--size-4-2);height:fit-content;max-height:400px;overflow-y:auto;padding-left:var(--size-4-2);padding-right:var(--size-4-2)}@media(max-width: 720px){.snapshots-list.svelte-1dzm90d{width:initial}}");
+// src/view/components/container/modals/snapshots-list/file-histoy.svelte
+function add_css26(target) {
+  append_styles(target, "svelte-1eg4s92", ".snapshots-list.svelte-1eg4s92{width:400px;display:flex;flex-direction:column;gap:var(--size-4-2);height:fit-content;max-height:400px;overflow-y:auto;padding-left:var(--size-4-2);padding-right:var(--size-4-2)}.snapshots-modal.svelte-1eg4s92{left:var(--size-4-2);top:50px}@media(max-width: 720px){.snapshots-list.svelte-1eg4s92{width:initial}}");
 }
-function get_each_context6(ctx, list, i) {
+function get_each_context10(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[3] = list[i];
   child_ctx[5] = i;
   return child_ctx;
 }
-function create_each_block6(key_1, ctx) {
+function create_each_block10(key_1, ctx) {
   let first;
   let snapshotbutton;
   let current;
@@ -19639,7 +21950,7 @@ function create_each_block6(key_1, ctx) {
     }
   };
 }
-function create_fragment78(ctx) {
+function create_fragment87(ctx) {
   let div1;
   let div0;
   let each_blocks = [];
@@ -19655,9 +21966,9 @@ function create_fragment78(ctx) {
     ctx2[3].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context6(ctx, each_value, i);
+    let child_ctx = get_each_context10(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block6(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block10(key, child_ctx));
   }
   return {
     c() {
@@ -19666,8 +21977,8 @@ function create_fragment78(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "snapshots-list svelte-1dzm90d");
-      attr(div1, "class", "lineage-modal");
+      attr(div0, "class", "snapshots-list svelte-1eg4s92");
+      attr(div1, "class", "lineage-modal snapshots-modal svelte-1eg4s92");
       set_style(div1, "padding-left", "0");
       set_style(div1, "padding-right", "0");
       attr(div1, "tabindex", "0");
@@ -19692,7 +22003,7 @@ function create_fragment78(ctx) {
         each_value = ensure_array_like([.../*$history*/
         ctx2[0].items].sort(func));
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block6, null, get_each_context6);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block10, null, get_each_context10);
         check_outros();
       }
     },
@@ -19723,7 +22034,7 @@ function create_fragment78(ctx) {
   };
 }
 var func = (a, b) => b.created - a.created;
-function instance75($$self, $$props, $$invalidate) {
+function instance85($$self, $$props, $$invalidate) {
   let $history;
   const view = getView();
   const history = historyStore(view);
@@ -19733,7 +22044,7 @@ function instance75($$self, $$props, $$invalidate) {
 var File_histoy = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance75, create_fragment78, safe_not_equal, {}, add_css21);
+    init(this, options, instance85, create_fragment87, safe_not_equal, {}, add_css26);
   }
 };
 var file_histoy_default = File_histoy;
@@ -19747,12 +22058,11 @@ var modKeyDictionary = {
   Shift: "Shift"
 };
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/hotkey/editor-state/render-editor-state.svelte
-var import_obsidian15 = require("obsidian");
-function add_css22(target) {
+// src/view/components/container/modals/hotkeys/components/hotkey/editor-state/render-editor-state.svelte
+function add_css27(target) {
   append_styles(target, "svelte-12gga04", ".editor-state.svelte-12gga04{display:flex;align-items:center;justify-content:center;padding:2px;background-color:var(--color-base-100);color:var(--color-base-00);& svg {\n            width: 14px;\n            height: 14px;\n        }}");
 }
-function create_fragment79(ctx) {
+function create_fragment88(ctx) {
   let kbd;
   let raw_value = (
     /*cursorIcon*/
@@ -19829,7 +22139,7 @@ function create_fragment79(ctx) {
     }
   };
 }
-function instance76($$self, $$props, $$invalidate) {
+function instance86($$self, $$props, $$invalidate) {
   let { hotkey } = $$props;
   let { onClick = void 0 } = $$props;
   const classes = {
@@ -19847,19 +22157,9 @@ function instance76($$self, $$props, $$invalidate) {
     "editor-on": lang.modal_hk_editor_state_on,
     "editor-off": lang.modal_hk_editor_state_off
   };
-  let notice;
   const wrappedOnClick = () => {
     if (onClick) {
       onClick();
-      setTimeout(
-        () => {
-          if (notice) {
-            notice.hide();
-          }
-          notice = new import_obsidian15.Notice(label[hotkey.editorState]);
-        },
-        16
-      );
     }
   };
   $$self.$$set = ($$props2) => {
@@ -19873,21 +22173,21 @@ function instance76($$self, $$props, $$invalidate) {
 var Render_editor_state = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance76, create_fragment79, safe_not_equal, { hotkey: 0, onClick: 5 }, add_css22);
+    init(this, options, instance86, create_fragment88, safe_not_equal, { hotkey: 0, onClick: 5 }, add_css27);
   }
 };
 var render_editor_state_default = Render_editor_state;
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/hotkey/render-hotkey.svelte
-function add_css23(target) {
+// src/view/components/container/modals/hotkeys/components/hotkey/render-hotkey.svelte
+function add_css28(target) {
   append_styles(target, "svelte-sbdud0", ".hotkey-buttons.svelte-sbdud0{width:100%;height:100%;position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:5px;opacity:0;background-color:var(--color-base-70)}.hotkey-button.svelte-sbdud0{border:none;width:16px;height:16px;box-shadow:none;padding:2px;cursor:pointer}.hotkey-buttons.svelte-sbdud0:hover{opacity:0.8}.hotkey-key.svelte-sbdud0{color:var(--text-on-accent);background-color:#175c5a}.blank-hotkey.svelte-sbdud0{background-color:var(--color-base-30)}");
 }
-function get_each_context7(ctx, list, i) {
+function get_each_context11(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[3] = list[i];
   return child_ctx;
 }
-function create_if_block_23(ctx) {
+function create_if_block_25(ctx) {
   let button;
   let trash;
   let current;
@@ -19938,7 +22238,7 @@ function create_if_block_23(ctx) {
     }
   };
 }
-function create_else_block7(ctx) {
+function create_else_block9(ctx) {
   let t0;
   let kbd;
   let t1_value = (
@@ -19959,7 +22259,7 @@ function create_else_block7(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block7(get_each_context7(ctx, each_value, i));
+    each_blocks[i] = create_each_block11(get_each_context11(ctx, each_value, i));
   }
   return {
     c() {
@@ -20026,11 +22326,11 @@ function create_else_block7(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context7(ctx2, each_value, i);
+          const child_ctx = get_each_context11(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block7(child_ctx);
+            each_blocks[i] = create_each_block11(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
           }
@@ -20064,7 +22364,7 @@ function create_else_block7(ctx) {
     }
   };
 }
-function create_if_block16(ctx) {
+function create_if_block18(ctx) {
   let kbd;
   return {
     c() {
@@ -20123,7 +22423,7 @@ function create_if_block_17(ctx) {
     }
   };
 }
-function create_each_block7(ctx) {
+function create_each_block11(ctx) {
   let kbd;
   let t_value = modKeyDictionary[
     /*modifier*/
@@ -20154,7 +22454,7 @@ function create_each_block7(ctx) {
     }
   };
 }
-function create_fragment80(ctx) {
+function create_fragment89(ctx) {
   let div;
   let button;
   let pen;
@@ -20169,9 +22469,9 @@ function create_fragment80(ctx) {
   pen = new pen_default({ props: { class: "svg-icon", size: 8 } });
   let if_block0 = (
     /*hotkey*/
-    ctx[2].key && create_if_block_23(ctx)
+    ctx[2].key && create_if_block_25(ctx)
   );
-  const if_block_creators = [create_if_block16, create_else_block7];
+  const if_block_creators = [create_if_block18, create_else_block9];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (!/*hotkey*/
@@ -20230,7 +22530,7 @@ function create_fragment80(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_23(ctx);
+          if_block0 = create_if_block_25(ctx);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(div, null);
@@ -20292,7 +22592,7 @@ function create_fragment80(ctx) {
     }
   };
 }
-function instance77($$self, $$props, $$invalidate) {
+function instance87($$self, $$props, $$invalidate) {
   let { enableEditing } = $$props;
   let { makeBlank } = $$props;
   let { hotkey } = $$props;
@@ -20312,15 +22612,15 @@ var Render_hotkey = class extends SvelteComponent {
     init(
       this,
       options,
-      instance77,
-      create_fragment80,
+      instance87,
+      create_fragment89,
       safe_not_equal,
       {
         enableEditing: 0,
         makeBlank: 1,
         hotkey: 2
       },
-      add_css23
+      add_css28
     );
   }
 };
@@ -20348,8 +22648,8 @@ var updateViewHotkeysDictionary = (hotkeys) => {
   }
 };
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/hotkey/editor-state/edit-editor-state.svelte
-function create_fragment81(ctx) {
+// src/view/components/container/modals/hotkeys/components/hotkey/editor-state/edit-editor-state.svelte
+function create_fragment90(ctx) {
   let editorstate;
   let current;
   editorstate = new render_editor_state_default({
@@ -20395,7 +22695,7 @@ function create_fragment81(ctx) {
     }
   };
 }
-function instance78($$self, $$props, $$invalidate) {
+function instance88($$self, $$props, $$invalidate) {
   let { hotkey } = $$props;
   let { commandName } = $$props;
   let { isPrimary } = $$props;
@@ -20422,16 +22722,16 @@ function instance78($$self, $$props, $$invalidate) {
 var Edit_editor_state = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance78, create_fragment81, safe_not_equal, { hotkey: 0, commandName: 2, isPrimary: 3 });
+    init(this, options, instance88, create_fragment90, safe_not_equal, { hotkey: 0, commandName: 2, isPrimary: 3 });
   }
 };
 var edit_editor_state_default = Edit_editor_state;
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/hotkey/edit-hotkey.svelte
-function add_css24(target) {
+// src/view/components/container/modals/hotkeys/components/hotkey/edit-hotkey.svelte
+function add_css29(target) {
   append_styles(target, "svelte-1xi2oy8", ".container.svelte-1xi2oy8{display:flex;gap:5px;align-items:center;justify-content:center}.hotkey-container.svelte-1xi2oy8{display:flex;flex-direction:column;align-items:center;gap:5px}.input.svelte-1xi2oy8{width:115px;height:25px;text-align:center;font-size:14px}.modifiers.svelte-1xi2oy8{display:flex;gap:5px;width:100%;justify-content:center}.disabled.svelte-1xi2oy8{background-color:var(--color-base-50)}button.svelte-1xi2oy8:disabled{cursor:not-allowed}.save-and-cancel-buttons.svelte-1xi2oy8{display:flex;gap:5px;flex-direction:column}.hotkey-button.svelte-1xi2oy8{background-color:transparent;color:var(--color-base-25);border:none;width:20px;height:20px;box-shadow:none;padding:2px;cursor:pointer}.hotkey-key.svelte-1xi2oy8{color:lightgrey;background-color:#175c5a;border-color:#227f7d}");
 }
-function create_if_block17(ctx) {
+function create_if_block19(ctx) {
   let kbd;
   let t_value = "Ctrl" /* Ctrl */ + "";
   let t;
@@ -20474,7 +22774,7 @@ function create_if_block17(ctx) {
     }
   };
 }
-function create_fragment82(ctx) {
+function create_fragment91(ctx) {
   let div3;
   let editeditorstate;
   let t0;
@@ -20526,7 +22826,7 @@ function create_fragment82(ctx) {
       )
     }
   });
-  let if_block = isMacLike && create_if_block17(ctx);
+  let if_block = isMacLike && create_if_block19(ctx);
   x = new x_default({ props: { class: "svg-icon", size: 8 } });
   rotateccw = new rotate_ccw_default({ props: { class: "svg-icon", size: 8 } });
   return {
@@ -20736,7 +23036,7 @@ function create_fragment82(ctx) {
     }
   };
 }
-function instance79($$self, $$props, $$invalidate) {
+function instance89($$self, $$props, $$invalidate) {
   let { hotkey } = $$props;
   let { commandName } = $$props;
   let { isPrimary } = $$props;
@@ -20847,8 +23147,8 @@ var Edit_hotkey = class extends SvelteComponent {
     init(
       this,
       options,
-      instance79,
-      create_fragment82,
+      instance89,
+      create_fragment91,
       safe_not_equal,
       {
         hotkey: 0,
@@ -20856,18 +23156,18 @@ var Edit_hotkey = class extends SvelteComponent {
         isPrimary: 2,
         onCancel: 3
       },
-      add_css24
+      add_css29
     );
   }
 };
 var edit_hotkey_default = Edit_hotkey;
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/hotkey/hotkey.svelte
+// src/view/components/container/modals/hotkeys/components/hotkey/hotkey.svelte
 var import_classnames4 = __toESM(require_classnames());
-function add_css25(target) {
+function add_css30(target) {
   append_styles(target, "svelte-1ctyvzu", ".hotkey.svelte-1ctyvzu{padding:5px;background-color:var(--color-base-50);display:flex;gap:5px;border-radius:3px;width:fit-content;position:relative}.editing.svelte-1ctyvzu{background-color:var(--color-base-60)}.hotkey--is-custom.svelte-1ctyvzu{background-color:var(--custom-hotkey-bg)}.obsidian-conflict.svelte-1ctyvzu{background-color:var(--color-red)}.plugin-conflict.svelte-1ctyvzu{background-color:var(--color-orange)}");
 }
-function create_else_block8(ctx) {
+function create_else_block10(ctx) {
   let renderhotkey;
   let current;
   renderhotkey = new render_hotkey_default({
@@ -20917,7 +23217,7 @@ function create_else_block8(ctx) {
     }
   };
 }
-function create_if_block18(ctx) {
+function create_if_block20(ctx) {
   let edithotkey;
   let current;
   edithotkey = new edit_hotkey_default({
@@ -20979,14 +23279,14 @@ function create_if_block18(ctx) {
     }
   };
 }
-function create_fragment83(ctx) {
+function create_fragment92(ctx) {
   let div;
   let current_block_type_index;
   let if_block;
   let div_aria_label_value;
   let div_class_value;
   let current;
-  const if_block_creators = [create_if_block18, create_else_block8];
+  const if_block_creators = [create_if_block20, create_else_block10];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -21090,7 +23390,7 @@ function create_fragment83(ctx) {
     }
   };
 }
-function instance80($$self, $$props, $$invalidate) {
+function instance90($$self, $$props, $$invalidate) {
   let $editing;
   let { hotkey } = $$props;
   let { commandName } = $$props;
@@ -21132,7 +23432,7 @@ function instance80($$self, $$props, $$invalidate) {
 var Hotkey = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance80, create_fragment83, safe_not_equal, { hotkey: 0, commandName: 1, isPrimary: 2 }, add_css25);
+    init(this, options, instance90, create_fragment92, safe_not_equal, { hotkey: 0, commandName: 1, isPrimary: 2 }, add_css30);
   }
 };
 var hotkey_default = Hotkey;
@@ -21144,13 +23444,13 @@ var hotkeysLang = {
   enable_edit_mode_and_place_cursor_at_start: lang.hk_enable_edit_mode_and_place_cursor_at_start,
   enable_edit_mode_and_place_cursor_at_end: lang.hk_enable_edit_mode_and_place_cursor_at_end,
   disable_edit_mode: lang.hk_disable_edit_mode,
-  add_child: lang.card_btn_add_child_card,
-  add_below: lang.card_btn_add_card_below,
-  add_above: lang.card_btn_add_card_above,
+  add_child: lang.card_btn_add_child_node,
+  add_below: lang.card_btn_add_node_below,
+  add_above: lang.card_btn_add_node_above,
   add_child_and_split: lang.hk_add_child_and_split,
   add_below_and_split: lang.hk_add_below_and_split,
   add_above_and_split: lang.hk_add_above_and_split,
-  delete_card: lang.hk_delete_card,
+  delete_card: lang.hk_delete_section,
   go_up: lang.hk_go_up,
   go_down: lang.hk_go_down,
   go_right: lang.hk_go_right,
@@ -21194,13 +23494,15 @@ var hotkeysLang = {
   zoom_reset: lang.hk_zoom_reset,
   toggle_collapse: lang.hk_outline_toggle_collapse,
   toggle_collapse_all: lang.hk_outline_toggle_collapse_all,
-  toggle_outline_mode: lang.hk_toggle_outline_mode
+  toggle_outline_mode: lang.hk_toggle_outline_mode,
+  add_parent_sibling: lang.hk_add_parent_sibling,
+  select_all_nodes: lang.hk_select_all
 };
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/helpers/get-dynamic-label.ts
+// src/view/components/container/modals/hotkeys/components/helpers/get-dynamic-label.ts
 var HotkeysThatBehaveDifferentlyInOutlineMode = /* @__PURE__ */ new Set(["go_down", "go_up", "go_left", "go_right"]);
-var getDynamicLabel = (state2, name) => {
-  if (state2.outlineMode) {
+var getDynamicLabel = (name, outlineMode) => {
+  if (outlineMode) {
     if (name === "go_down") {
       return hotkeysLang["navigate_to_previous_node"];
     } else if (name === "go_up") {
@@ -21214,17 +23516,17 @@ var getDynamicLabel = (state2, name) => {
   return hotkeysLang[name];
 };
 
-// src/view/components/container/controls-bar/modals/hotkeys/components/command.svelte
-function add_css26(target) {
+// src/view/components/container/modals/hotkeys/components/command.svelte
+function add_css31(target) {
   append_styles(target, "svelte-1qxnonu", ".command.svelte-1qxnonu{padding:8px;display:flex;align-items:center;justify-content:space-between;border-radius:4px;gap:8px;background-color:var(--color-base-30);flex-wrap:wrap}.hotkeys.svelte-1qxnonu{display:flex;flex-direction:column;align-items:end;gap:5px}.label.svelte-1qxnonu{font-size:14px;color:var(--text-normal);position:relative;display:flex;align-items:center;gap:5px}.info-icon.svelte-1qxnonu{color:#4973A1FF;margin-bottom:-4px;& svg {\n            width: 12px;\n            height: 12px;\n        }}");
 }
-function get_each_context8(ctx, list, i) {
+function get_each_context12(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[2] = list[i];
   child_ctx[4] = i;
   return child_ctx;
 }
-function create_if_block19(ctx) {
+function create_if_block21(ctx) {
   let span;
   let info;
   let current;
@@ -21259,7 +23561,7 @@ function create_if_block19(ctx) {
     }
   };
 }
-function create_each_block8(ctx) {
+function create_each_block12(ctx) {
   let hotkey_1;
   let current;
   hotkey_1 = new hotkey_default({
@@ -21313,14 +23615,14 @@ function create_each_block8(ctx) {
     }
   };
 }
-function create_fragment84(ctx) {
+function create_fragment93(ctx) {
   let div1;
   let span;
   let t0_value = getDynamicLabel(
-    /*labelState*/
-    ctx[1],
     /*commandHotkeys*/
-    ctx[0].name
+    ctx[0].name,
+    /*labelState*/
+    ctx[1].outlineMode
   ) + "";
   let t0;
   let t1;
@@ -21331,14 +23633,14 @@ function create_fragment84(ctx) {
   let t2;
   let div0;
   let current;
-  let if_block = show_if && create_if_block19(ctx);
+  let if_block = show_if && create_if_block21(ctx);
   let each_value = ensure_array_like(
     /*commandHotkeys*/
     ctx[0].hotkeys
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block8(get_each_context8(ctx, each_value, i));
+    each_blocks[i] = create_each_block12(get_each_context12(ctx, each_value, i));
   }
   const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -21377,12 +23679,12 @@ function create_fragment84(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
-      if ((!current || dirty & /*labelState, commandHotkeys*/
+      if ((!current || dirty & /*commandHotkeys, labelState*/
       3) && t0_value !== (t0_value = getDynamicLabel(
-        /*labelState*/
-        ctx2[1],
         /*commandHotkeys*/
-        ctx2[0].name
+        ctx2[0].name,
+        /*labelState*/
+        ctx2[1].outlineMode
       ) + ""))
         set_data(t0, t0_value);
       if (dirty & /*commandHotkeys*/
@@ -21398,7 +23700,7 @@ function create_fragment84(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block19(ctx2);
+          if_block = create_if_block21(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(span, null);
@@ -21418,12 +23720,12 @@ function create_fragment84(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context8(ctx2, each_value, i);
+          const child_ctx = get_each_context12(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block8(child_ctx);
+            each_blocks[i] = create_each_block12(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div0, null);
@@ -21463,7 +23765,7 @@ function create_fragment84(ctx) {
     }
   };
 }
-function instance81($$self, $$props, $$invalidate) {
+function instance91($$self, $$props, $$invalidate) {
   let { commandHotkeys } = $$props;
   let { labelState } = $$props;
   $$self.$$set = ($$props2) => {
@@ -21477,21 +23779,22 @@ function instance81($$self, $$props, $$invalidate) {
 var Command = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance81, create_fragment84, safe_not_equal, { commandHotkeys: 0, labelState: 1 }, add_css26);
+    init(this, options, instance91, create_fragment93, safe_not_equal, { commandHotkeys: 0, labelState: 1 }, add_css31);
   }
 };
 var command_default = Command;
 
-// src/view/components/container/controls-bar/modals/hotkeys/group.svelte
-function add_css27(target) {
-  append_styles(target, "svelte-1njqf5r", ".hotkey-group.svelte-1njqf5r{background-color:var(--background-secondary);padding:var(--size-4-2);border-radius:3px}.hotkeys-list.svelte-1njqf5r{display:flex;flex-direction:column;gap:var(--size-4-2);overflow-y:auto}.hotkey-group-name.svelte-1njqf5r{padding-bottom:10px;padding-left:5px;font-size:16px;color:var(--color-base-70)}");
+// src/view/components/container/modals/hotkeys/group.svelte
+function add_css32(target) {
+  append_styles(target, "svelte-1ct7tgv", ".hotkey-group.svelte-1ct7tgv{background-color:var(--background-secondary);padding:var(--size-4-2);border-radius:3px}.hotkeys-list.svelte-1ct7tgv{display:flex;flex-direction:column;gap:var(--size-4-2);overflow-y:auto}.hotkey-group-name.svelte-1ct7tgv{padding-bottom:10px;padding-left:5px;font-size:16px;color:var(--color-base-70)}");
 }
-function get_each_context9(ctx, list, i) {
+function get_each_context13(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[3] = list[i];
   return child_ctx;
 }
-function create_if_block20(ctx) {
+function create_each_block13(key_1, ctx) {
+  let first;
   let hotkey;
   let current;
   hotkey = new command_default({
@@ -21507,23 +23810,29 @@ function create_if_block20(ctx) {
     }
   });
   return {
+    key: key_1,
+    first: null,
     c() {
+      first = empty();
       create_component(hotkey.$$.fragment);
+      this.first = first;
     },
     m(target, anchor) {
+      insert(target, first, anchor);
       mount_component(hotkey, target, anchor);
       current = true;
     },
-    p(ctx2, dirty) {
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
       const hotkey_changes = {};
       if (dirty & /*group*/
       1)
         hotkey_changes.commandHotkeys = /*commandHotkeys*/
-        ctx2[3];
+        ctx[3];
       if (dirty & /*labelState*/
       2)
         hotkey_changes.labelState = /*labelState*/
-        ctx2[1];
+        ctx[1];
       hotkey.$set(hotkey_changes);
     },
     i(local) {
@@ -21537,82 +23846,14 @@ function create_if_block20(ctx) {
       current = false;
     },
     d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
       destroy_component(hotkey, detaching);
     }
   };
 }
-function create_each_block9(key_1, ctx) {
-  let first;
-  let if_block_anchor;
-  let current;
-  let if_block = !/*labelState*/
-  (ctx[1].outlineMode && /*commandHotkeys*/
-  (ctx[3].name === "navigate_to_next_node" || /*commandHotkeys*/
-  ctx[3].name === "navigate_to_previous_node")) && create_if_block20(ctx);
-  return {
-    key: key_1,
-    first: null,
-    c() {
-      first = empty();
-      if (if_block)
-        if_block.c();
-      if_block_anchor = empty();
-      this.first = first;
-    },
-    m(target, anchor) {
-      insert(target, first, anchor);
-      if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (!/*labelState*/
-      (ctx[1].outlineMode && /*commandHotkeys*/
-      (ctx[3].name === "navigate_to_next_node" || /*commandHotkeys*/
-      ctx[3].name === "navigate_to_previous_node"))) {
-        if (if_block) {
-          if_block.p(ctx, dirty);
-          if (dirty & /*labelState, group*/
-          3) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block20(ctx);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(first);
-        detach(if_block_anchor);
-      }
-      if (if_block)
-        if_block.d(detaching);
-    }
-  };
-}
-function create_fragment85(ctx) {
+function create_fragment94(ctx) {
   let div2;
   let div0;
   let t0;
@@ -21630,9 +23871,9 @@ function create_fragment85(ctx) {
     ctx2[3].name
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context9(ctx, each_value, i);
+    let child_ctx = get_each_context13(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block9(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block13(key, child_ctx));
   }
   return {
     c() {
@@ -21647,9 +23888,9 @@ function create_fragment85(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "hotkey-group-name svelte-1njqf5r");
-      attr(div1, "class", "hotkeys-list svelte-1njqf5r");
-      attr(div2, "class", "hotkey-group svelte-1njqf5r");
+      attr(div0, "class", "hotkey-group-name svelte-1ct7tgv");
+      attr(div1, "class", "hotkeys-list svelte-1ct7tgv");
+      attr(div2, "class", "hotkey-group svelte-1ct7tgv");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -21679,7 +23920,7 @@ function create_fragment85(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div1, outro_and_destroy_block, create_each_block9, null, get_each_context9);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div1, outro_and_destroy_block, create_each_block13, null, get_each_context13);
         check_outros();
       }
     },
@@ -21707,7 +23948,7 @@ function create_fragment85(ctx) {
     }
   };
 }
-function instance82($$self, $$props, $$invalidate) {
+function instance92($$self, $$props, $$invalidate) {
   let { group } = $$props;
   let { labelState } = $$props;
   let { groupName } = $$props;
@@ -21724,16 +23965,16 @@ function instance82($$self, $$props, $$invalidate) {
 var Group2 = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance82, create_fragment85, safe_not_equal, { group: 0, labelState: 1, groupName: 2 }, add_css27);
+    init(this, options, instance92, create_fragment94, safe_not_equal, { group: 0, labelState: 1, groupName: 2 }, add_css32);
   }
 };
 var group_default2 = Group2;
 
-// src/view/components/container/controls-bar/modals/hotkeys/front.svelte
-function add_css28(target) {
+// src/view/components/container/modals/hotkeys/front.svelte
+function add_css33(target) {
   append_styles(target, "svelte-105pskz", ".front.svelte-105pskz{display:flex;justify-content:space-between;align-items:center;width:100%}.search-input-container.svelte-105pskz{width:100%}");
 }
-function create_fragment86(ctx) {
+function create_fragment95(ctx) {
   let div2;
   let div1;
   let input;
@@ -21811,7 +24052,7 @@ function create_fragment86(ctx) {
     }
   };
 }
-function instance83($$self, $$props, $$invalidate) {
+function instance93($$self, $$props, $$invalidate) {
   let searchTerm = "";
   const view = getView();
   function input_input_handler() {
@@ -21837,13 +24078,13 @@ function instance83($$self, $$props, $$invalidate) {
 var Front = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance83, create_fragment86, safe_not_equal, {}, add_css28);
+    init(this, options, instance93, create_fragment95, safe_not_equal, {}, add_css33);
   }
 };
 var front_default = Front;
 
-// src/view/components/container/controls-bar/modals/hotkeys/status-bar.svelte
-var import_obsidian16 = require("obsidian");
+// src/view/components/container/modals/hotkeys/status-bar.svelte
+var import_obsidian18 = require("obsidian");
 
 // src/view/actions/keyboard-shortcuts/helpers/commands/presets/alt-primary-modifier.ts
 var AltPrimaryModifier = {
@@ -21906,14 +24147,24 @@ var AltPrimaryModifier = {
       key: "ArrowRight",
       modifiers: ["Alt"]
     }
+  },
+  add_parent_sibling: {
+    secondary: {
+      key: "H",
+      modifiers: ["Alt"]
+    },
+    primary: {
+      key: "ArrowLeft",
+      modifiers: ["Alt"]
+    }
   }
 };
 
-// src/view/components/container/controls-bar/modals/hotkeys/status-bar.svelte
-function add_css29(target) {
+// src/view/components/container/modals/hotkeys/status-bar.svelte
+function add_css34(target) {
   append_styles(target, "svelte-183y6er", ".hotkeys-status-bar.svelte-183y6er{display:flex;align-items:center}.conflicts-indicator.svelte-183y6er{font-size:12px;color:var(--color-red)}.hotkeys-menu.svelte-183y6er{margin-left:auto;padding:3px;cursor:pointer;transition:opacity ease 100ms;opacity:0.7;& svg {\n            width: 14px;\n            height: 14px;\n        };&:hover {\n            opacity: 1;\n        }}");
 }
-function create_if_block21(ctx) {
+function create_if_block22(ctx) {
   let span;
   let t0;
   let t1;
@@ -21962,7 +24213,7 @@ function create_if_block21(ctx) {
     }
   };
 }
-function create_fragment87(ctx) {
+function create_fragment96(ctx) {
   let div;
   let t;
   let span;
@@ -21972,7 +24223,7 @@ function create_fragment87(ctx) {
   let dispose;
   let if_block = (
     /*conflicts*/
-    ctx[0] && create_if_block21(ctx)
+    ctx[0] && create_if_block22(ctx)
   );
   settings = new settings_default({ props: { class: "svg-icon" } });
   return {
@@ -22012,7 +24263,7 @@ function create_fragment87(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block21(ctx2);
+          if_block = create_if_block22(ctx2);
           if_block.c();
           if_block.m(div, t);
         }
@@ -22043,11 +24294,11 @@ function create_fragment87(ctx) {
     }
   };
 }
-function instance84($$self, $$props, $$invalidate) {
+function instance94($$self, $$props, $$invalidate) {
   let { conflicts } = $$props;
   const view = getView();
   const showMenu = (e) => {
-    const menu = new import_obsidian16.Menu();
+    const menu = new import_obsidian18.Menu();
     menu.addItem((item) => {
       item.setTitle(lang.modals_hk_reset_hotkeys);
       item.onClick(() => {
@@ -22074,7 +24325,7 @@ function instance84($$self, $$props, $$invalidate) {
 var Status_bar = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance84, create_fragment87, safe_not_equal, { conflicts: 0 }, add_css29);
+    init(this, options, instance94, create_fragment96, safe_not_equal, { conflicts: 0 }, add_css34);
   }
 };
 var status_bar_default = Status_bar;
@@ -22098,10 +24349,9 @@ var maybeEnableEditMode = (view) => {
 var spatialNavigation = (view, direction) => {
   maybeEnableEditMode(view);
   view.viewStore.dispatch({
-    type: "DOCUMENT/NAVIGATE_USING_KEYBOARD",
+    type: "view/set-active-node/keyboard",
     payload: {
-      direction,
-      columns: view.documentStore.getValue().document.columns
+      direction
     },
     context: {
       outlineMode: outlineModeSelector(view)
@@ -22111,7 +24361,7 @@ var spatialNavigation = (view, direction) => {
 var sequentialNavigation = (view, direction) => {
   maybeEnableEditMode(view);
   view.viewStore.dispatch({
-    type: "NAVIGATION/SELECT_NEXT_NODE",
+    type: "view/set-active-node/sequential/select-next",
     payload: {
       direction,
       sections: view.documentStore.getValue().sections
@@ -22124,10 +24374,9 @@ var sequentialNavigation = (view, direction) => {
 var jump = (view, target) => {
   maybeEnableEditMode(view);
   view.viewStore.dispatch({
-    type: "DOCUMENT/JUMP_TO_NODE",
+    type: "view/set-active-node/keyboard-jump",
     payload: {
-      target,
-      columns: view.documentStore.getValue().document.columns
+      target
     }
   });
 };
@@ -22265,7 +24514,7 @@ var navigateCommands = () => {
       callback: (view, event) => {
         event.preventDefault();
         view.viewStore.dispatch({
-          type: "NAVIGATION/NAVIGATE_BACK"
+          type: "view/set-active-node/history/select-previous"
         });
       },
       hotkeys: [{ key: "J", modifiers: ["Alt"], editorState: "both" }]
@@ -22275,7 +24524,7 @@ var navigateCommands = () => {
       callback: (view, event) => {
         event.preventDefault();
         view.viewStore.dispatch({
-          type: "NAVIGATION/NAVIGATE_FORWARD"
+          type: "view/set-active-node/history/select-next"
         });
       },
       hotkeys: [{ key: "K", modifiers: ["Alt"], editorState: "both" }]
@@ -22291,21 +24540,21 @@ var cancelChanges = (view) => {
     view.inlineEditor.unloadNode(void 0, true);
     if (documentViewState.editing.isInSidebar) {
       view.viewStore.dispatch({
-        type: "view/sidebar/disable-edit"
+        type: "view/editor/disable-sidebar-editor"
       });
     } else {
       view.viewStore.dispatch({
-        type: "view/main/disable-edit"
+        type: "view/editor/disable-main-editor"
       });
     }
   } else {
     view.inlineEditor.onNextChange(() => {
       view.viewStore.dispatch({
-        type: "view/confirmation/reset/disable-edit"
+        type: "view/editor/disable/reset-confirmation"
       });
     });
     view.viewStore.dispatch({
-      type: "view/confirmation/confirm/disable-edit",
+      type: "view/editor/disable/confirm",
       payload: {
         id: documentViewState.editing.activeNodeId
       }
@@ -22321,7 +24570,7 @@ var editCommands = () => {
       callback: (view, event) => {
         event.preventDefault();
         view.viewStore.dispatch({
-          type: "view/main/enable-edit",
+          type: "view/editor/enable-main-editor",
           payload: {
             nodeId: view.viewStore.getValue().document.activeNode
           }
@@ -22338,7 +24587,7 @@ var editCommands = () => {
         const nodeId = view.viewStore.getValue().document.activeNode;
         view.inlineEditor.setNodeCursor(nodeId, { line: 0, ch: 0 });
         view.viewStore.dispatch({
-          type: "view/main/enable-edit",
+          type: "view/editor/enable-main-editor",
           payload: {
             nodeId
           }
@@ -22359,7 +24608,7 @@ var editCommands = () => {
         const nodeId = view.viewStore.getValue().document.activeNode;
         view.inlineEditor.deleteNodeCursor(nodeId);
         view.viewStore.dispatch({
-          type: "view/main/enable-edit",
+          type: "view/editor/enable-main-editor",
           payload: {
             nodeId
           }
@@ -22469,6 +24718,24 @@ var createCommands = () => {
       ]
     },
     {
+      name: "add_parent_sibling",
+      callback: (view) => {
+        saveNodeAndInsertNode(view, "left");
+      },
+      hotkeys: [
+        {
+          key: "ArrowLeft",
+          modifiers: ["Mod"],
+          editorState: "editor-off"
+        },
+        {
+          key: "H",
+          modifiers: ["Mod"],
+          editorState: "both"
+        }
+      ]
+    },
+    {
       name: "add_above_and_split",
       callback: (view) => {
         if (isEditing(view))
@@ -22505,7 +24772,7 @@ var createCommands = () => {
 var restoreEditingState = (view, state2) => {
   setTimeout(() => {
     view.viewStore.dispatch({
-      type: "view/main/enable-edit",
+      type: "view/editor/enable-main-editor",
       payload: {
         nodeId: state2.editedNode
       }
@@ -22522,7 +24789,7 @@ var moveNode = async (view, direction) => {
   saveNodeContent(view);
   const document2 = view.viewStore.getValue().document;
   view.documentStore.dispatch({
-    type: "DOCUMENT/MOVE_NODE",
+    type: "document/move-node",
     payload: {
       direction,
       activeNodeId: document2.activeNode,
@@ -22602,7 +24869,7 @@ var mergeNode = (view, direction) => {
     throw new Error(lang.error_hk_cant_merge_multiple_nodes);
   }
   view.documentStore.dispatch({
-    type: "DOCUMENT/MERGE_NODE",
+    type: "document/merge-node",
     payload: {
       direction,
       activeNodeId: view.viewStore.getValue().document.activeNode
@@ -22658,16 +24925,14 @@ var historyCommands = () => {
     {
       name: "undo_change",
       callback: (view) => {
-        const path = view.documentStore.getValue().file.path;
-        if (path)
-          view.documentStore.dispatch({
-            type: "HISTORY/APPLY_PREVIOUS_SNAPSHOT"
-          });
+        view.documentStore.dispatch({
+          type: "document/history/select-previous-snapshot"
+        });
       },
       hotkeys: [
         {
           key: "Z",
-          modifiers: ["Mod", "Shift"],
+          modifiers: ["Mod"],
           editorState: "editor-off"
         }
       ]
@@ -22675,90 +24940,24 @@ var historyCommands = () => {
     {
       name: "redo_change",
       callback: (view) => {
-        const path = view.documentStore.getValue().file.path;
-        if (path)
-          view.documentStore.dispatch({
-            type: "HISTORY/APPLY_NEXT_SNAPSHOT"
-          });
+        view.documentStore.dispatch({
+          type: "document/history/select-next-snapshot"
+        });
       },
       hotkeys: [
         {
           key: "Y",
+          modifiers: ["Mod"],
+          editorState: "editor-off"
+        },
+        {
+          key: "Z",
           modifiers: ["Mod", "Shift"],
           editorState: "editor-off"
         }
       ]
     }
   ];
-};
-
-// src/lib/tree-utils/get/get-sorted-child-groups.ts
-var getSortedChildGroups = (columns, currentParentNode, remove = false) => {
-  const childGroupsArray = traverseDown(columns, currentParentNode, false);
-  const childGroups = new Set(childGroupsArray);
-  const sortedChildGroups = [];
-  for (const column of columns) {
-    const childGroupsOfColumns = [];
-    const groups = [];
-    for (const group of column.groups) {
-      if (childGroups.has(group.parentId)) {
-        childGroupsOfColumns.push(group);
-      } else {
-        groups.push(group);
-      }
-    }
-    if (remove)
-      column.groups = groups;
-    if (childGroupsOfColumns.length > 0)
-      sortedChildGroups.push(childGroupsOfColumns);
-  }
-  return sortedChildGroups;
-};
-
-// src/lib/tree-utils/delete/delete-node-by-id.ts
-var deleteNodeById = (columns, content, nodeId) => {
-  for (const column of columns) {
-    for (const group of column.groups) {
-      for (let i = 0; i < group.nodes.length; i++) {
-        const _nodeId2 = group.nodes[i];
-        if (_nodeId2 === nodeId) {
-          group.nodes.splice(i, 1);
-          group.nodes = [...group.nodes];
-          if (content)
-            delete content[_nodeId2];
-          return;
-        }
-      }
-    }
-  }
-};
-
-// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/get-branch.ts
-var getBranch = (columns, content, nodeId, mode) => {
-  const cut = mode === "cut";
-  const sortedChildGroups = getSortedChildGroups(columns, nodeId, cut);
-  const newContent = {};
-  for (const sortedChildGroup of sortedChildGroups) {
-    for (const group of sortedChildGroup) {
-      for (const node of group.nodes) {
-        if (node in content) {
-          newContent[node] = content[node];
-          if (cut)
-            delete content[node];
-        }
-      }
-    }
-  }
-  newContent[nodeId] = content[nodeId];
-  const branch = {
-    sortedChildGroups,
-    content: newContent,
-    nodeId,
-    mode
-  };
-  if (cut)
-    deleteNodeById(columns, content, nodeId);
-  return clone(branch);
 };
 
 // src/lib/data-conversion/helpers/html-comment-marker/create-html-comment-marker.ts
@@ -22791,53 +24990,13 @@ var jsonToHtmlComment = (tree, parentNumber = "", text2 = "", includeStructure =
   return text2;
 };
 
-// src/lib/tree-utils/create/create-column.ts
-var createColumn = () => ({
-  id: id.column(),
-  groups: []
-});
-
-// src/lib/tree-utils/create/create-group.ts
-var createGroup = (parentId) => ({
-  nodes: [],
-  parentId
-});
-
-// src/lib/data-conversion/x-to-json/branch-to-json.ts
-var branchToColumns = (branch) => {
-  const columns = [];
-  columns.push(createColumn());
-  columns[columns.length - 1].groups.push(createGroup("root"));
-  columns[columns.length - 1].groups[0].nodes.push(branch.nodeId);
-  for (const groups of branch.sortedChildGroups) {
-    columns.push(createColumn());
-    for (const group of groups) {
-      columns[columns.length - 1].groups.push(group);
-    }
-  }
-  return columns;
-};
-var branchToJson = (branches) => {
-  const trees = [];
-  for (const branch of branches) {
-    const tree = columnsToJson(branchToColumns(branch), branch.content);
-    trees.push(tree[0]);
-  }
-  return trees;
-};
-
 // src/lib/data-conversion/branch-to-x/branch-to-html-comment.ts
 var branchToHtmlComment = (branches) => {
   return jsonToHtmlComment(branchToJson(branches));
 };
 
-// src/lib/data-conversion/branch-to-x/branch-to-outline.ts
-var branchToOutline = (branches) => {
-  return jsonToOutline(branchToJson(branches));
-};
-
-// src/lib/data-conversion/helpers/html-element-marker/create-html-element-marker.ts
-var createHtmlElementMarker = (parentNumber, index) => `<span data-section="${level(parentNumber, index)}"/>`;
+// src/lib/data-conversion/helpers/html-element-marker/collapsed-span-marker.ts
+var expandedSpanMarker = (parentNumber, index) => `<span data-section="${level(parentNumber, index)}"></span>`;
 
 // src/lib/data-conversion/json-to-x/json-to-html-element.ts
 var jsonToHtmlElement = (tree, parentNumber = "", text2 = "") => {
@@ -22847,33 +25006,37 @@ var jsonToHtmlElement = (tree, parentNumber = "", text2 = "") => {
     if (text2)
       text2 = text2 + "\n\n";
     let content = node.content.trimStart();
-    const marker = createHtmlElementMarker(parentNumber, index);
-    if (content.match(/^#+ /)) {
-      const headingLevel = content.match(/^#+/)?.[0];
-      content = `${headingLevel} ${marker}${content.slice(headingLevel.length).trim()}`;
-    } else if (content.match(/^#[^\s#\uFEFF\u200B]+/)) {
-      const tag = content.match(/^#[^\s#\uFEFF\u200B]+/)?.[0];
-      content = `${tag}${marker}${content.slice(tag.length)}`;
+    const expandedSpan = expandedSpanMarker(parentNumber, index);
+    if (/^#+ /.test(content)) {
+      content = `${expandedSpan}
+${content}`;
+    } else if (/^#[^\s#\uFEFF\u200B]+/.test(content)) {
+      content = `${expandedSpan}
+${content}`;
     } else if (content.startsWith(">")) {
-      content = `> ${marker}${content.slice(1).trim()}`;
-    } else if (content.match(/^[-*+]\s\[.\]\s/)) {
-      const taskPrefix = content.match(/^[-*+]\s\[.\]\s/)?.[0];
-      content = `${taskPrefix}${marker}${content.slice(taskPrefix.length).trim()}`;
-    } else if (content.match(/^[-*+]\s/)) {
-      const bullet = content.match(/^[-*+]\s/)?.[0];
-      content = `${bullet}${marker}${content.slice(bullet.length).trim()}`;
-    } else if (content.match(/^\d+\.\s/)) {
-      const number = content.match(/^\d+\.\s/)?.[0];
-      content = `${number} ${marker}${content.slice(number.length).trim()}`;
+      content = `${expandedSpan}
+${content}`;
+    } else if (/^[-*+]\s\[.\]\s/.test(content)) {
+      content = `${expandedSpan}
+${content}`;
+    } else if (/^[-*+]\s/.test(content)) {
+      content = `${expandedSpan}
+${content}`;
+    } else if (/^\d+\.\s/.test(content)) {
+      content = `${expandedSpan}
+${content}`;
     } else if (content.startsWith("```")) {
-      content = `${marker}
+      content = `${expandedSpan}
 ${content}`;
     } else if (content.startsWith("|")) {
-      content = `${marker}
+      content = `${expandedSpan}
 
 ${content}`;
+    } else if (/^!?\[\[/.test(content)) {
+      content = `${expandedSpan}
+${content}`;
     } else {
-      content = `${marker}${content}`;
+      content = `${expandedSpan}${content}`;
     }
     text2 += content;
     if (node.children.length > 0) {
@@ -22923,28 +25086,43 @@ var mapBranchesToText = (document2, nodes, format2) => {
   }
 };
 
+// src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/get-active-nodes.ts
+var getActiveNodes = (view, isInSidebar) => {
+  const viewState = view.viewStore.getValue();
+  const documentState = viewState.document;
+  let activeNode = "";
+  if (isInSidebar) {
+    const activeSidebarTab = view.plugin.settings.getValue().view.leftSidebarActiveTab;
+    if (activeSidebarTab === "recent-cards") {
+      activeNode = viewState.recentNodes.activeNode;
+    } else if (activeSidebarTab === "pinned-cards") {
+      activeNode = viewState.pinnedNodes.activeNode;
+    }
+    return [activeNode];
+  } else if (documentState.selectedNodes.size > 0) {
+    return Array.from(documentState.selectedNodes);
+  } else {
+    return [documentState.activeNode];
+  }
+};
+
 // src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/copy-active-branches-to-clipboard.ts
-var import_obsidian17 = require("obsidian");
-var copyActiveBranchesToClipboard = async (view, formatted) => {
-  const document2 = view.viewStore.getValue().document;
-  const nodes = document2.selectedNodes.size > 0 ? Array.from(document2.selectedNodes) : [document2.activeNode];
+var copyActiveBranchesToClipboard = async (view, formatted, isInSidebar) => {
+  const nodes = getActiveNodes(view, isInSidebar);
   const text2 = mapBranchesToText(
     view.documentStore.getValue().document,
     nodes,
-    formatted ? getDocumentFormat(view) : "unformatted-text"
+    formatted ? getPersistedDocumentFormat(view) : "unformatted-text"
   );
   await navigator.clipboard.writeText(text2);
-  const message = lang.hk_notice_copy(nodes.length, formatted, "branch");
-  if (message)
-    new import_obsidian17.Notice(message);
 };
 
 // src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/cut-node.ts
 var cutNode = async (view) => {
   const document2 = view.viewStore.getValue().document;
-  await copyActiveBranchesToClipboard(view, true);
+  await copyActiveBranchesToClipboard(view, true, false);
   view.documentStore.dispatch({
-    type: "DOCUMENT/CUT_NODE",
+    type: "document/cut-node",
     payload: {
       nodeId: document2.activeNode,
       selectedNodes: document2.selectedNodes
@@ -22953,7 +25131,7 @@ var cutNode = async (view) => {
 };
 
 // src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/paste-node.ts
-var import_obsidian18 = require("obsidian");
+var import_obsidian19 = require("obsidian");
 var pasteNode = async (view) => {
   const viewState = view.viewStore.getValue();
   const clipboardItems = await navigator.clipboard.read();
@@ -22965,14 +25143,14 @@ var pasteNode = async (view) => {
     }
   }
   if (containsImage) {
-    new import_obsidian18.Notice(lang.error_cant_paste);
+    new import_obsidian19.Notice(lang.error_cant_paste);
   } else {
     const text2 = (await navigator.clipboard.readText()).replace(
       /\r\n/g,
       "\n"
     );
     view.documentStore.dispatch({
-      type: "DOCUMENT/PASTE_NODE",
+      type: "document/paste-node",
       payload: {
         targetNodeId: viewState.document.activeNode,
         text: text2
@@ -22982,17 +25160,9 @@ var pasteNode = async (view) => {
 };
 
 // src/view/actions/keyboard-shortcuts/helpers/commands/commands/helpers/clipboard/copy-active-nodes-to-clipboard.ts
-var import_obsidian19 = require("obsidian");
-var copyActiveNodesToClipboard = async (view) => {
-  const document2 = view.viewStore.getValue().document;
-  const nodes = document2.selectedNodes.size > 0 ? Array.from(document2.selectedNodes) : [document2.activeNode];
-  const text2 = nodes.map((id2) => view.documentStore.getValue().document.content[id2].content).join("\n\n");
-  await navigator.clipboard.writeText(text2);
-  if (nodes.length > 1) {
-    const message = lang.hk_notice_copy(nodes.length, false, "section");
-    if (message)
-      new import_obsidian19.Notice(message);
-  }
+var copyActiveNodesToClipboard = async (view, isInSidebar) => {
+  const nodes = getActiveNodes(view, isInSidebar);
+  await copyFlatNodesToClipboard(view, nodes);
 };
 
 // src/view/actions/keyboard-shortcuts/helpers/commands/commands/clipboard-commands.ts
@@ -23006,7 +25176,7 @@ var clipboardCommands = () => {
           return;
         }
         event.preventDefault();
-        copyActiveBranchesToClipboard(view, true);
+        copyActiveBranchesToClipboard(view, true, false);
       },
       hotkeys: [
         { key: "C", modifiers: ["Mod"], editorState: "editor-off" }
@@ -23016,7 +25186,7 @@ var clipboardCommands = () => {
       name: "copy_node_unformatted",
       callback: async (view, event) => {
         event.preventDefault();
-        copyActiveBranchesToClipboard(view, false);
+        copyActiveBranchesToClipboard(view, false, false);
       },
       hotkeys: [
         {
@@ -23030,7 +25200,7 @@ var clipboardCommands = () => {
       name: "copy_node_without_subitems",
       callback: async (view, event) => {
         event.preventDefault();
-        copyActiveNodesToClipboard(view);
+        copyActiveNodesToClipboard(view, false);
       },
       hotkeys: [
         {
@@ -23072,14 +25242,30 @@ var selectionCommands = () => {
   const commands = [];
   commands.push(
     {
+      name: "select_all_nodes",
+      callback: (view, e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        view.viewStore.dispatch({
+          type: "view/selection/select-all"
+        });
+      },
+      hotkeys: [
+        {
+          key: "a",
+          modifiers: ["Mod"],
+          editorState: "editor-off"
+        }
+      ]
+    },
+    {
       name: "extend_select_up",
       callback: (view, event) => {
         event.preventDefault();
         view.viewStore.dispatch({
-          type: "DOCUMENT/NAVIGATE_USING_KEYBOARD",
+          type: "view/set-active-node/keyboard",
           payload: {
-            direction: "up",
-            columns: view.documentStore.getValue().document.columns
+            direction: "up"
           },
           context: {
             shiftKey: true,
@@ -23101,10 +25287,9 @@ var selectionCommands = () => {
       callback: (view, event) => {
         event.preventDefault();
         view.viewStore.dispatch({
-          type: "DOCUMENT/NAVIGATE_USING_KEYBOARD",
+          type: "view/set-active-node/keyboard",
           payload: {
-            direction: "down",
-            columns: view.documentStore.getValue().document.columns
+            direction: "down"
           },
           context: {
             shiftKey: true,
@@ -23127,10 +25312,9 @@ var selectionCommands = () => {
         e.preventDefault();
         e.stopPropagation();
         view.viewStore.dispatch({
-          type: "DOCUMENT/JUMP_TO_NODE",
+          type: "view/set-active-node/keyboard-jump",
           payload: {
-            target: "end-of-column",
-            columns: view.documentStore.getValue().document.columns
+            target: "end-of-column"
           },
           context: {
             shiftKey: true
@@ -23147,10 +25331,9 @@ var selectionCommands = () => {
         e.preventDefault();
         e.stopPropagation();
         view.viewStore.dispatch({
-          type: "DOCUMENT/JUMP_TO_NODE",
+          type: "view/set-active-node/keyboard-jump",
           payload: {
-            target: "start-of-column",
-            columns: view.documentStore.getValue().document.columns
+            target: "start-of-column"
           },
           context: {
             shiftKey: true
@@ -23171,10 +25354,9 @@ var selectionCommands = () => {
         e.preventDefault();
         e.stopPropagation();
         view.viewStore.dispatch({
-          type: "DOCUMENT/JUMP_TO_NODE",
+          type: "view/set-active-node/keyboard-jump",
           payload: {
-            target: "end-of-group",
-            columns: view.documentStore.getValue().document.columns
+            target: "end-of-group"
           },
           context: {
             shiftKey: true
@@ -23195,10 +25377,9 @@ var selectionCommands = () => {
         e.preventDefault();
         e.stopPropagation();
         view.viewStore.dispatch({
-          type: "DOCUMENT/JUMP_TO_NODE",
+          type: "view/set-active-node/keyboard-jump",
           payload: {
-            target: "start-of-group",
-            columns: view.documentStore.getValue().document.columns
+            target: "start-of-group"
           },
           context: {
             shiftKey: true
@@ -23314,8 +25495,10 @@ var defaultViewHotkeys = () => [
   ...scrollCommands(),
   {
     name: "delete_card",
-    callback: (view) => {
+    callback: (view, e) => {
       const document2 = view.viewStore.getValue().document;
+      e.preventDefault();
+      e.stopPropagation();
       deleteNode(view, document2.activeNode, true);
     },
     hotkeys: [
@@ -23327,7 +25510,7 @@ var defaultViewHotkeys = () => [
     callback: (view, e) => {
       e.preventDefault();
       e.stopPropagation();
-      view.viewStore.dispatch({ type: "SEARCH/TOGGLE_INPUT" });
+      view.viewStore.dispatch({ type: "view/search/toggle-input" });
     },
     hotkeys: [
       { key: "/", modifiers: [], editorState: "editor-off" },
@@ -23339,7 +25522,7 @@ var defaultViewHotkeys = () => [
     callback: (view, e) => {
       e.preventDefault();
       view.plugin.settings.dispatch({
-        type: "UI/CHANGE_ZOOM_LEVEL",
+        type: "settings/view/set-zoom-level",
         payload: { direction: "in" }
       });
     },
@@ -23350,7 +25533,7 @@ var defaultViewHotkeys = () => [
     callback: (view, e) => {
       e.preventDefault();
       view.plugin.settings.dispatch({
-        type: "UI/CHANGE_ZOOM_LEVEL",
+        type: "settings/view/set-zoom-level",
         payload: { direction: "out" }
       });
     },
@@ -23361,7 +25544,7 @@ var defaultViewHotkeys = () => [
     callback: (view, e) => {
       e.preventDefault();
       view.plugin.settings.dispatch({
-        type: "UI/CHANGE_ZOOM_LEVEL",
+        type: "settings/view/set-zoom-level",
         payload: { value: 1 }
       });
     },
@@ -23385,8 +25568,7 @@ var defaultViewHotkeys = () => [
       view.viewStore.dispatch({
         type: "view/outline/toggle-collapse-node",
         payload: {
-          id: view.viewStore.getValue().document.activeNode,
-          columns: view.documentStore.getValue().document.columns
+          id: view.viewStore.getValue().document.activeNode
         }
       });
     },
@@ -23399,10 +25581,7 @@ var defaultViewHotkeys = () => [
       if (!get_store_value(singleColumnStore(view)))
         return;
       view.viewStore.dispatch({
-        type: "view/outline/toggle-collapse-all",
-        payload: {
-          columns: view.documentStore.getValue().document.columns
-        }
+        type: "view/outline/toggle-collapse-all"
       });
     },
     hotkeys: [{ key: "=", modifiers: ["Alt", "Mod"], editorState: "both" }]
@@ -23411,32 +25590,33 @@ var defaultViewHotkeys = () => [
 
 // src/lang/hotkey-groups.ts
 var hotkeyGroups = {
-  [lang.hkg_create_cards]: /* @__PURE__ */ new Set([
+  [lang.hkg_create_nodes]: /* @__PURE__ */ new Set([
     "add_child",
     "add_below",
     "add_above",
+    "add_parent_sibling",
     "add_child_and_split",
     "add_below_and_split",
     "add_above_and_split"
   ]),
-  [lang.hkg_edit_cards]: /* @__PURE__ */ new Set([
+  [lang.hkg_edit_nodes]: /* @__PURE__ */ new Set([
     "enable_edit_mode",
     "enable_edit_mode_and_place_cursor_at_start",
     "enable_edit_mode_and_place_cursor_at_end",
     "disable_edit_mode",
     "save_changes_and_exit_card"
   ]),
-  [lang.hkg_move_cards]: /* @__PURE__ */ new Set([
+  [lang.hkg_move_nodes]: /* @__PURE__ */ new Set([
     "move_node_up",
     "move_node_down",
     "move_node_right",
     "move_node_left"
   ]),
-  [lang.hkg_merge_cards]: /* @__PURE__ */ new Set([
+  [lang.hkg_merge_nodes]: /* @__PURE__ */ new Set([
     "merge_with_node_above",
     "merge_with_node_below"
   ]),
-  [lang.hkg_delete_cards]: /* @__PURE__ */ new Set(["delete_card"]),
+  [lang.hkg_delete_nodes]: /* @__PURE__ */ new Set(["delete_card"]),
   [lang.hkg_navigation]: /* @__PURE__ */ new Set([
     "go_up",
     "go_down",
@@ -23458,7 +25638,8 @@ var hotkeyGroups = {
     "extend_select_to_start_of_group",
     "extend_select_to_end_of_group",
     "extend_select_to_start_of_column",
-    "extend_select_to_end_of_column"
+    "extend_select_to_end_of_column",
+    "select_all_nodes"
   ]),
   [lang.hkg_history]: /* @__PURE__ */ new Set(["undo_change", "redo_change"]),
   [lang.hkg_search]: /* @__PURE__ */ new Set(["toggle_search_input"]),
@@ -23488,10 +25669,10 @@ var hotkeysGroups = Object.fromEntries(
 );
 
 // src/stores/view/derived/hotkeys-store.ts
-var ConflictingHotkeys = (view) => derived(view.viewStore, (state2) => state2.hotkeys.conflictingHotkeys);
-var HotkeysSearchTerm = (view) => derived(view.viewStore, (state2) => state2.hotkeys.searchTerm);
+var ConflictingHotkeys = (view) => derived2(view.viewStore, (state2) => state2.hotkeys.conflictingHotkeys);
+var HotkeysSearchTerm = (view) => derived2(view.viewStore, (state2) => state2.hotkeys.searchTerm);
 
-// src/helpers/group-array-by-property.ts
+// src/helpers/array-helpers/group-array-by-property.ts
 var groupArrayByProperty = (array, property, grouped = {}) => {
   for (const item of array) {
     const key = String(item[property]);
@@ -23509,8 +25690,8 @@ var groupArrayByProperty = (array, property, grouped = {}) => {
 };
 
 // src/stores/settings/derived/view-hotkeys-store.ts
-var CustomHotkeysStore = (plugin) => derived2(plugin.settings, (state2) => state2.hotkeys.customHotkeys);
-var ViewHotkeysStore = (plugin) => derived2([CustomHotkeysStore(plugin)], ([customHotkeys]) => {
+var CustomHotkeysStore = (plugin) => derived(plugin.settings, (state2) => state2.hotkeys.customHotkeys);
+var ViewHotkeysStore = (plugin) => derived([CustomHotkeysStore(plugin)], ([customHotkeys]) => {
   const viewHotkeys2 = [];
   for (const defaultViewHotkey of defaultViewHotkeys()) {
     const customHotkey = customHotkeys[defaultViewHotkey.name];
@@ -23544,7 +25725,7 @@ var ViewHotkeysStore = (plugin) => derived2([CustomHotkeysStore(plugin)], ([cust
   }
   return viewHotkeys2;
 });
-var ConflictLabeledHotkeysStore = (view) => derived2(
+var ConflictLabeledHotkeysStore = (view) => derived(
   [ViewHotkeysStore(view.plugin), ConflictingHotkeys(view)],
   ([hotkeys, conflicts]) => {
     let numberOfConflictingHotkeys = 0;
@@ -23596,24 +25777,31 @@ var ConflictLabeledHotkeysStore = (view) => derived2(
     };
   }
 );
-var FilteredHotkeysStore = (view) => derived2(
-  [ConflictLabeledHotkeysStore(view), HotkeysSearchTerm(view)],
-  ([hotkeys, searchTerm]) => {
+var FilteredHotkeysStore = (view) => derived(
+  [
+    ConflictLabeledHotkeysStore(view),
+    HotkeysSearchTerm(view),
+    OutlineModeStore(view)
+  ],
+  ([hotkeys, searchTerm, outlineMode]) => {
     let array = [];
     if (searchTerm) {
       array = hotkeys.hotkeys.filter((c) => {
-        const fullName = hotkeysLang[c.name].toLowerCase();
+        const fullName = getDynamicLabel(
+          c.name,
+          outlineMode
+        ).toLowerCase();
         return fullName.includes(searchTerm) || c.group.toLowerCase().includes(searchTerm);
       });
     } else
       array = hotkeys.hotkeys;
     return {
       hotkeys: groupArrayByProperty(array, "group", {
-        [lang.hkg_create_cards]: [],
-        [lang.hkg_edit_cards]: [],
-        [lang.hkg_move_cards]: [],
-        [lang.hkg_merge_cards]: [],
-        [lang.hkg_delete_cards]: [],
+        [lang.hkg_create_nodes]: [],
+        [lang.hkg_edit_nodes]: [],
+        [lang.hkg_move_nodes]: [],
+        [lang.hkg_merge_nodes]: [],
+        [lang.hkg_delete_nodes]: [],
         [lang.hkg_clipboard]: [],
         [lang.hkg_navigation]: [],
         [lang.hkg_selection]: [],
@@ -23628,17 +25816,17 @@ var FilteredHotkeysStore = (view) => derived2(
   }
 );
 
-// src/view/components/container/controls-bar/modals/hotkeys/hotkeys.svelte
-function add_css30(target) {
+// src/view/components/container/modals/hotkeys/hotkeys.svelte
+function add_css35(target) {
   append_styles(target, "svelte-1kffelc", ".groups.svelte-1kffelc{width:500px;display:flex;flex-direction:column;gap:var(--size-4-2);overflow-y:auto;flex:1\n    }@media(max-width: 720px){.groups.svelte-1kffelc{width:fit-content}}");
 }
-function get_each_context10(ctx, list, i) {
+function get_each_context14(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[6] = list[i][0];
   child_ctx[7] = list[i][1];
   return child_ctx;
 }
-function create_each_block10(key_1, ctx) {
+function create_each_block14(key_1, ctx) {
   let first;
   let group_1;
   let current;
@@ -23706,7 +25894,7 @@ function create_each_block10(key_1, ctx) {
     }
   };
 }
-function create_fragment88(ctx) {
+function create_fragment97(ctx) {
   let div1;
   let front;
   let t0;
@@ -23726,9 +25914,9 @@ function create_fragment88(ctx) {
     ctx2[6]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context10(ctx, each_value, i);
+    let child_ctx = get_each_context14(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block10(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block14(key, child_ctx));
   }
   numberofconflicts = new status_bar_default({
     props: {
@@ -23774,7 +25962,7 @@ function create_fragment88(ctx) {
           ctx2[1].hotkeys
         ));
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block10, null, get_each_context10);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block14, null, get_each_context14);
         check_outros();
       }
       const numberofconflicts_changes = {};
@@ -23814,7 +26002,7 @@ function create_fragment88(ctx) {
     }
   };
 }
-function instance85($$self, $$props, $$invalidate) {
+function instance95($$self, $$props, $$invalidate) {
   let $outlineMode;
   let $store;
   const view = getView();
@@ -23836,7 +26024,7 @@ function instance85($$self, $$props, $$invalidate) {
 var Hotkeys = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance85, create_fragment88, safe_not_equal, {}, add_css30);
+    init(this, options, instance95, create_fragment97, safe_not_equal, {}, add_css35);
   }
 };
 var hotkeys_default = Hotkeys;
@@ -23869,33 +26057,33 @@ var handleEscapeKey = (view) => {
   const selection = value.document.selectedNodes;
   if (controls.showHelpSidebar || controls.showHistorySidebar || controls.showSettingsSidebar || controls.showStyleRulesModal) {
     viewStore.dispatch({
-      type: "CLOSE_MODALS",
+      type: "view/close-modals",
       payload: {
         closeAllModals: true
       }
     });
     return true;
+  } else if (value.document.pendingConfirmation.deleteNode.size > 0) {
+    viewStore.dispatch({
+      type: "view/delete-node/reset-confirmation"
+    });
+    return true;
+  } else if (selection.size > 0) {
+    viewStore.dispatch({
+      type: "view/selection/clear-selection"
+    });
+    return true;
   } else if (search2.query) {
     viewStore.dispatch({
-      type: "SEARCH/SET_QUERY",
+      type: "view/search/set-query",
       payload: {
         query: ""
       }
     });
     return true;
-  } else if (value.document.pendingConfirmation.deleteNode.size > 0) {
-    viewStore.dispatch({
-      type: "view/confirmation/reset/delete-node"
-    });
-    return true;
   } else if (search2.showInput) {
     viewStore.dispatch({
-      type: "SEARCH/TOGGLE_INPUT"
-    });
-    return true;
-  } else if (selection.size > 1) {
-    viewStore.dispatch({
-      type: "DOCUMENT/CLEAR_SELECTION"
+      type: "view/search/toggle-input"
     });
     return true;
   }
@@ -23909,7 +26097,7 @@ var SilentError = class extends Error {
 var import_obsidian20 = require("obsidian");
 
 // src/helpers/logger.ts
-var __dev__ = true;
+var __dev__ = false;
 var createLogger = () => {
   const debug = (...message) => {
     if (__dev__) {
@@ -24006,7 +26194,7 @@ var mouseWheelZoom = (element2, view) => {
       return;
     const delta = e.deltaY;
     view.plugin.settings.dispatch({
-      type: "UI/CHANGE_ZOOM_LEVEL",
+      type: "settings/view/set-zoom-level",
       payload: {
         direction: delta < 0 ? "in" : "out"
       }
@@ -24045,10 +26233,11 @@ var LINE_HEIGHT_DPX = cpx_to_dpx(LINE_HEIGHT_CPX);
 var onCanvasClick = (e, view) => {
   const minimapStore = view.getMinimapStore();
   const dom = view.getMinimapDom();
-  const rect = dom.canvas.getBoundingClientRect();
+  const rect = dom.canvasContainer.getBoundingClientRect();
   const domY = e.clientY - rect.top;
+  const minimapState = minimapStore.getValue();
   const y = dpx_to_cpx(domY);
-  const ranges = minimapStore.getValue().ranges.cards;
+  const ranges = minimapState.ranges.cards;
   const cardId = findCardAtPosition(y, ranges);
   if (cardId) {
     view.viewStore.dispatch({
@@ -24062,18 +26251,18 @@ var onCanvasClick = (e, view) => {
 };
 
 // src/stores/minimap/derived/minimap-ranges.ts
-var MinimapRangesStore = (view) => derived(view.getMinimapStore(), (state2) => state2.ranges.cards);
+var MinimapRangesStore = (view) => derived2(view.getMinimapStore(), (state2) => state2.ranges.cards);
 
 // src/view/components/container/minimap/components/indicators.svelte
-function add_css31(target) {
+function add_css36(target) {
   append_styles(target, "svelte-1be7f7d", ".active-card-indicator.svelte-1be7f7d{left:-3px;width:180px;position:absolute;background-color:var(--color-base-70);opacity:0.3;mix-blend-mode:lighten}.search-result-indicator.svelte-1be7f7d{left:-3px;width:180px;position:absolute;background-color:var(--color-yellow);opacity:0.3}");
 }
-function get_each_context11(ctx, list, i) {
+function get_each_context15(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[8] = list[i];
   return child_ctx;
 }
-function create_each_block11(ctx) {
+function create_each_block15(ctx) {
   let div;
   let div_style_value;
   return {
@@ -24102,7 +26291,7 @@ function create_each_block11(ctx) {
     }
   };
 }
-function create_fragment89(ctx) {
+function create_fragment98(ctx) {
   let div1;
   let div0;
   let div0_style_value;
@@ -24113,7 +26302,7 @@ function create_fragment89(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block11(get_each_context11(ctx, each_value, i));
+    each_blocks[i] = create_each_block15(get_each_context15(ctx, each_value, i));
   }
   return {
     c() {
@@ -24154,11 +26343,11 @@ function create_fragment89(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context11(ctx2, each_value, i);
+          const child_ctx = get_each_context15(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block11(child_ctx);
+            each_blocks[i] = create_each_block15(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(div1, null);
           }
@@ -24179,14 +26368,14 @@ function create_fragment89(ctx) {
     }
   };
 }
-function instance86($$self, $$props, $$invalidate) {
+function instance96($$self, $$props, $$invalidate) {
   let $activeCardRange;
   let $searchResultsRanges;
   const view = getView();
   const activeCard = activeNodeStore(view);
   const searchResults = searchStore(view);
   const ranges = MinimapRangesStore(view);
-  const activeCardRange = derived2([activeCard, ranges], ([activeCard2, ranges2]) => {
+  const activeCardRange = derived([activeCard, ranges], ([activeCard2, ranges2]) => {
     if (activeCard2) {
       const range = ranges2 === null || ranges2 === void 0 ? void 0 : ranges2[activeCard2];
       if (range) {
@@ -24201,9 +26390,9 @@ function instance86($$self, $$props, $$invalidate) {
     return { y_start: 0, height: 0 };
   });
   component_subscribe($$self, activeCardRange, (value) => $$invalidate(0, $activeCardRange = value));
-  const searchResultsRanges = derived2([searchResults, ranges], ([searchResults2, ranges2]) => {
+  const searchResultsRanges = derived([searchResults, ranges], ([searchResults2, ranges2]) => {
     if (searchResults2) {
-      const searchResultsRanges2 = Array.from(searchResults2.results).map((searchResult) => {
+      const searchResultsRanges2 = Array.from(searchResults2.results.keys()).map((searchResult) => {
         const range = ranges2 === null || ranges2 === void 0 ? void 0 : ranges2[searchResult];
         if (range) {
           const y_start = cpx_to_dpx(range.y_start);
@@ -24224,7 +26413,7 @@ function instance86($$self, $$props, $$invalidate) {
 var Indicators = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance86, create_fragment89, safe_not_equal, {}, add_css31);
+    init(this, options, instance96, create_fragment98, safe_not_equal, {}, add_css36);
   }
 };
 var indicators_default = Indicators;
@@ -24232,23 +26421,10 @@ var indicators_default = Indicators;
 // src/view/components/container/minimap/event-handlers/on-canvas-wheel.ts
 var onCanvasWheel = (e, view) => {
   e.preventDefault();
-  const minimapStore = view.getMinimapStore();
-  const state2 = minimapStore.getValue().scrollInfo;
-  const dom = view.getMinimapDom();
-  const minimapContainer = dom.canvasContainer.parentElement;
-  invariant(minimapContainer);
-  const scrollAmount_cpx = dpx_to_cpx(e.deltaY);
-  const containerHeight_cpx = dpx_to_cpx(minimapContainer.clientHeight);
-  minimapStore.dispatch({
-    type: "minimap/set-scroll-position",
+  view.getMinimapStore().dispatch({
+    type: "minimap/mouse-wheel-scroll",
     payload: {
-      position_cpx: Math.max(
-        0,
-        Math.min(
-          state2.totalDrawnHeight_cpx - containerHeight_cpx,
-          state2.scrollPosition_cpx + scrollAmount_cpx
-        )
-      )
+      delta_y_dpx: e.deltaY
     }
   });
 };
@@ -24288,18 +26464,23 @@ var createOnCanvasMousemove = (view) => {
 // src/lib/store/store.ts
 var NO_UPDATE = Symbol("NO_UPDATE");
 var Store = class {
-  constructor(initialValue, reducer, onError) {
+  constructor(initialValue, reducer, onError, context) {
     this.subscribers = /* @__PURE__ */ new Set();
     this.isProcessing = false;
     this.actionQueue = [];
     this.reducer = () => this.value;
     // eslint-disable-next-line no-console
     this.onError = (error) => console.error(error);
+    this.setContext = (context) => {
+      this.context = context;
+    };
     this.value = initialValue;
     if (reducer)
       this.reducer = reducer;
     if (onError)
       this.onError = onError;
+    if (context)
+      this.context = context;
   }
   getValue() {
     return this.value;
@@ -24334,7 +26515,11 @@ var Store = class {
     while (this.actionQueue.length > 0) {
       const action = this.actionQueue.shift();
       try {
-        const newValue = this.reducer(this.value, action);
+        const newValue = this.reducer(
+          this.value,
+          action,
+          this.context
+        );
         if (newValue !== NO_UPDATE) {
           this.value = newValue;
           this.notifySubscribers(action);
@@ -24360,24 +26545,96 @@ var Store = class {
 var defaultMinimapState = () => ({
   canvasId: id.canvas(),
   activeCardId: "",
-  scrollInfo: {
+  scrollbar: {
     totalDrawnHeight_cpx: 0,
-    scrollPosition_cpx: 0
+    scrollPosition_cpx: 0,
+    containerHeight_cpx: 0
   },
   ranges: {
     cards: {}
   }
 });
 
+// src/stores/minimap/reducers/update-scroll-position.ts
+var updateScrollPosition = (state2, delta_y_dpx) => {
+  const delta_y_cpx = dpx_to_cpx(delta_y_dpx);
+  if (state2.scrollbar.containerHeight_cpx === 0)
+    return;
+  state2.scrollbar.scrollPosition_cpx = Math.max(
+    0,
+    Math.min(
+      state2.scrollbar.totalDrawnHeight_cpx - state2.scrollbar.containerHeight_cpx,
+      state2.scrollbar.scrollPosition_cpx + delta_y_cpx
+    )
+  );
+};
+
+// src/stores/minimap/subscriptions/actions/set-scrollbar-position/calculate-scroll-delta-to-active-card.ts
+var calculateScrollDeltaToActiveCard = (y_start_cpx, y_end_cpx, totalDrawnHeight_cpx, scrollPosition_cpx, containerHeight_cpx) => {
+  const contentFitsContainer = totalDrawnHeight_cpx <= containerHeight_cpx;
+  if (contentFitsContainer) {
+    return null;
+  }
+  const currentScroll_cpx = scrollPosition_cpx;
+  const visibleStart_cpx = currentScroll_cpx;
+  const visibleEnd_cpx = currentScroll_cpx + containerHeight_cpx;
+  const startIsVisible = y_start_cpx > visibleStart_cpx && y_start_cpx < visibleEnd_cpx;
+  const endIsVisible = y_end_cpx > visibleStart_cpx && y_end_cpx < visibleEnd_cpx;
+  if (startIsVisible && endIsVisible) {
+    return null;
+  }
+  let newScroll_cpx = 0;
+  const range_height_cpx = y_end_cpx - y_start_cpx;
+  const rangeIsTallerThanContainer = range_height_cpx > containerHeight_cpx;
+  if (rangeIsTallerThanContainer) {
+    newScroll_cpx = y_start_cpx;
+  } else {
+    if (!startIsVisible) {
+      newScroll_cpx = y_start_cpx - 10;
+    } else if (!endIsVisible) {
+      newScroll_cpx = y_end_cpx - containerHeight_cpx + 10;
+    }
+  }
+  const maxScroll_cpx = totalDrawnHeight_cpx - containerHeight_cpx;
+  newScroll_cpx = Math.max(0, Math.min(newScroll_cpx, maxScroll_cpx));
+  return newScroll_cpx;
+};
+
+// src/stores/minimap/reducers/derive-scroll-position.ts
+var deriveScrollPosition = (state2) => {
+  const activeCardRange = state2.ranges.cards[state2.activeCardId];
+  if (!activeCardRange)
+    return;
+  const delta_cpx = calculateScrollDeltaToActiveCard(
+    activeCardRange.y_start,
+    activeCardRange.y_end,
+    state2.scrollbar.totalDrawnHeight_cpx,
+    state2.scrollbar.scrollPosition_cpx,
+    state2.scrollbar.containerHeight_cpx
+  );
+  if (typeof delta_cpx === "number") {
+    state2.scrollbar.scrollPosition_cpx = delta_cpx;
+  }
+};
+
 // src/stores/minimap/minimap-reducer.ts
 var updateDocumentState = (state2, action) => {
   if (action.type === "minimap/set-card-ranges") {
     state2.ranges.cards = action.payload.ranges;
-    state2.scrollInfo.totalDrawnHeight_cpx = action.payload.height_cpx;
+    const newDocumentHeight = state2.scrollbar.totalDrawnHeight_cpx !== action.payload.height_cpx;
+    if (newDocumentHeight) {
+      state2.scrollbar.scrollPosition_cpx = 0;
+    }
+    state2.scrollbar.totalDrawnHeight_cpx = action.payload.height_cpx;
+    deriveScrollPosition(state2);
   } else if (action.type === "minimap/set-active-node") {
     state2.activeCardId = action.payload.id;
-  } else if (action.type === "minimap/set-scroll-position") {
-    state2.scrollInfo.scrollPosition_cpx = action.payload.position_cpx;
+    deriveScrollPosition(state2);
+  } else if (action.type === "minimap/set-container-height") {
+    state2.scrollbar.containerHeight_cpx = action.payload.height_cpx;
+    deriveScrollPosition(state2);
+  } else if (action.type === "minimap/mouse-wheel-scroll") {
+    updateScrollPosition(state2, action.payload.delta_y_dpx);
   }
 };
 var minimapReducer = (store, action) => {
@@ -24434,7 +26691,7 @@ var themes = {
       // brighter red
       ["heading" /* heading */]: "#44cf6e77",
       // brighter green
-      ["bullet" /* bullet */]: "#fa99cd66",
+      ["bullet" /* bullet */]: "#E3BFD466",
       // brighter pink
       ["tag" /* tag */]: "#e9973f77",
       // brighter orange
@@ -24463,7 +26720,7 @@ var themes = {
       // brighter red
       ["heading" /* heading */]: "#08b94e77",
       // brighter green
-      ["bullet" /* bullet */]: "#d5398477",
+      ["bullet" /* bullet */]: "#E77EB277",
       // brighter pink
       ["tag" /* tag */]: "#ec750077",
       // brighter orange
@@ -24485,16 +26742,32 @@ var refreshMinimapTheme = () => {
   minimapTheme.current = themes[getTheme()];
 };
 
-// src/helpers/debounce.ts
-var debounce2 = (func2, delay2) => {
-  let timeoutId = null;
-  return (...args) => {
-    if (timeoutId)
-      clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func2(...args);
-    }, delay2);
+// src/stores/minimap/subscriptions/effects/set-minimap-dom.ts
+var setMinimapDom = (view) => {
+  const minimapContainer = view.contentEl.querySelector(
+    ".minimap-container"
+  );
+  if (!minimapContainer)
+    throw new SilentError("minimapContainer is undefined");
+  const canvasContainer = minimapContainer.querySelector(
+    ".canvas-container"
+  );
+  invariant(canvasContainer);
+  const scrollIndicator = minimapContainer.querySelector(
+    "#scrollIndicator"
+  );
+  const canvas = minimapContainer.querySelector("canvas");
+  invariant(scrollIndicator);
+  invariant(canvas);
+  canvas.width = CANVAS_WIDTH_CPX;
+  const offscreen = canvas.transferControlToOffscreen();
+  const dom = {
+    offscreen,
+    canvas,
+    scrollIndicator,
+    canvasContainer
   };
+  view.setMinimapDom(dom);
 };
 
 // inline-worker:__inline-worker
@@ -24508,12 +26781,12 @@ function inlineWorker(scriptText) {
 
 // src/stores/minimap/subscriptions/effects/minimap-canvas/worker/minimap-renderer.worker.ts
 function Worker2() {
-  return inlineWorker('var C=class{constructor(){this.caches={};this.getCachedResult=(t,i,r,s)=>{let c=this.caches[t];if(!c)return;let o=c.get(i);if(o){if(o.availableLineCharacters===s&&o.content===r)return o.result;c.delete(i)}};this.cacheResult=(t,i,r,s,c)=>{this.caches[t]||(this.caches[t]=new Map),this.caches[t].set(i,{availableLineCharacters:s,content:r,result:c})};this.deleteCanvasCache=t=>{delete this.caches[t]}}},d=new C;var A={"#":"heading","-":"bullet",".":"period","=":"highlight","*":"bold_italic",_:"bold_italic","[":"wikilink","]":"wikilink","~":"strikethrough",",":"comma"},X=/\\b(dr|mr|mrs|ms|e\\.g|e\\.i|sr|jr|st|ave|rd|no|vs|etc|vol|ed|pp)\\b/i,W=new Set(["^",".","!","`","*","%","?",\'"\',"~","@","\'","(",")","!","{","}","[","]","^","%","$","+","=","\\\\"]),v=(n,t,i,r)=>{let s=d.getCachedResult(r,i,n,t);if(s)return s;let c=!n.trim();c&&(n="empty");let o=[],e={chunk:{chunk:"",length_chars:-1,line:0,type:null,x_chars:0},x:0,line:0,type:null,previousType:null,previousLine:0,category:null,isSpace:!1,isAfterOpeningElement:!1,lineType:null};for(let a=0;a<n.length;a++){let l=n[a];if(l===`\n`){e.line++,e.lineType=null,e.x=0,(e.category==="full_line"||e.category==="block_without_space"||!e.isAfterOpeningElement)&&(e.category=null,e.type=null,e.previousType=null);continue}else if(l===" ")e.category==="block_with_space"||e.category==="full_line"||e.category==="full_line_container"||(e.type=null,e.isSpace=!0);else if(e.category!=="full_line"){let y=A[l];if(y){e.type=y;let p=n[a+1];if(l==="="&&p==="="||l==="~"&&p==="~"||l==="["&&p==="["||l==="]"&&p==="]"||l==="*"&&p==="*"||l==="*"&&n[a-1]!=="*"||l==="_")e.type!==e.previousType?(e.category="block_with_space",e.isAfterOpeningElement=!0):(e.category=null,e.isAfterOpeningElement=!1);else if(l==="#"&&e.x===0&&(p===" "||p==="#"))e.category="full_line",e.lineType=e.type;else if(l==="#"&&!W.has(p))e.type="tag",e.category="block_without_space";else if(l==="-"&&e.x===0)e.category="full_line_container",p===" "&&n[a+2]==="["&&n[a+4]==="]"&&(e.type="task"),e.lineType=e.type;else if(l==="."){let k=(n[a-3]||"")+n[a-2]+n[a-1];!(p&&p.match(/[A-Z\\d]/))&&!n[a-1].match(/[.!?]/)&&!X.test(k)&&!(n[a-1]==="e"&&p==="g")&&!(n[a-1]==="i"&&p==="e")?e.category="single_character":e.type=e.previousType}else if(l===","){let k=n[a-1]||"",S=n[a+1]||"";!k.match(/\\d/)||!S.match(/\\d/)?e.category="single_character":e.type=e.previousType}else e.type=e.previousType}}e.x+1>t?(e.line++,e.x=0,e.lineType=null):!e.type&&e.lineType&&(e.type=e.lineType),e.line!==e.previousLine?(e.chunk.length_chars=e.chunk.chunk.length,e.chunk.length_chars>0&&o.push(e.chunk),e.chunk={chunk:l,line:e.line,x_chars:0,length_chars:-1,type:e.type},e.previousLine=e.line):e.isSpace?(e.chunk.length_chars=e.chunk.chunk.length,e.chunk.length_chars>0&&o.push(e.chunk),e.chunk={chunk:"",line:e.line,x_chars:e.x+1,length_chars:-1,type:e.type},e.isSpace=!1,e.category=null):e.type!==e.previousType||e.category==="single_character"?(e.chunk.length_chars=e.chunk.chunk.length,e.chunk.length_chars>0&&o.push(e.chunk),e.chunk={chunk:l,line:e.line,x_chars:e.x,length_chars:-1,type:e.type},e.category==="single_character"&&(e.type=null)):e.chunk.chunk+=l,e.x++,e.previousType=e.type}e.chunk.length_chars=e.chunk.chunk.length,e.chunk.length_chars>0&&o.push(e.chunk);let u={chunks:o,totalLines:e.line+1,empty:c};return d.cacheResult(r,i,n,t,u),u};var I=58.666666666666664,b=2;var T=6,B=6,m=T+B;var G=1,w=(n,t,i)=>{var u;let r=I-t.depth*b,s=v(n.content,r,n.id,i),c={indentationLines:[],lineNumber:t.nextLineOffset,wordBlocks:[],depth:t.depth,nodeId:n.id,y_px:10*t.nextLineOffset};t.lines.push(c);let o=((u=s.chunks[0])==null?void 0:u.line)||0;for(let a of s.chunks){let l=t.nextLineOffset+a.line;a.line>o&&(c={indentationLines:[],lineNumber:l,wordBlocks:[],depth:t.depth,nodeId:n.id,y_px:10*l},t.lines.push(c),o=a.line),c.wordBlocks.push({width_px:a.length_chars*6,x_px:t.depth*m+a.x_chars*6,empty:s.empty,chunkType:a.type})}t.nextLineOffset=t.nextLineOffset+s.totalLines+1;let e=t.depth;t.depth=e+1;for(let a of n.children)w(a,t,i);t.depth=e},R=(n,t)=>{let i={nextLineOffset:G,depth:0,lines:[]};for(let r of n)w(r,i,t);return{lines:i.lines,totalLines:i.nextLineOffset+1}};var E=n=>{for(let t=0;t<n.length;t++){let i=n[t],r=i.depth,s=n[t+1],c=!0;s&&s.nodeId===i.nodeId&&(c=!1);for(let o=0;o<r;o++){let e=o*m;i.indentationLines.push({x_px:e,height_px:10-(c?4:0)})}}};var P=(n,t="")=>({id:n,content:t.trim(),children:[]}),D=(n,t)=>{var s;let i={};for(let c of n)for(let o of c.groups)for(let e of o.nodes){let u=P(e,(s=t[e])==null?void 0:s.content),a=i[o.parentId];a||(a=P(o.parentId),i[o.parentId]=a),a.children.push(u),i[e]=u}let r=[];if(n[0])for(let c of n[0].groups)for(let o of c.nodes){let e=i[o];if(e)r.push(e);else throw new Error(`could not find node ${o}`)}return r};var H=n=>{let t={};for(let i of n){let r=i.y_px,s=i.y_px+10;t[i.nodeId]?t[i.nodeId]={y_start:Math.min(r,t[i.nodeId].y_start),y_end:Math.max(s,t[i.nodeId].y_end),cardId:i.nodeId}:t[i.nodeId]={y_start:r,y_end:s,cardId:i.nodeId}}return t};var g=class{constructor(){this.lines=[];this.totalLines=0;this.cardRanges={}}calculateDocument(t,i){let r=D(t.columns,t.content),s=R(r,i);return this.lines=s.lines,this.totalLines=s.totalLines,E(s.lines),this.cardRanges=H(this.lines),{totalLines:this.totalLines,totalDrawnHeight_cpx:this.totalLines*10,cardRanges:this.cardRanges}}getLines(){return this.lines}getTotalLines(){return this.totalLines}getCardRange(t){return this.cardRanges[t]}getCardRanges(){return this.cardRanges}};var K=6,M=(n,t,i)=>{let r="",s="";for(let c=0;c<=t.length-1;c++){let o=t[c];for(let e of o.wordBlocks)e.empty||(s=e.chunkType?i.chars[e.chunkType]:i.wordBlock,s!==r&&(r=s,n.fillStyle=s),n.fillRect(e.x_px,o.y_px,e.width_px,K));r="",n.fillStyle=i.indentLine;for(let e of o.indentationLines)n.fillRect(e.x_px,o.y_px,T,e.height_px)}};var f=class{constructor(t,i,r){this.drawDocument=t=>{let i=this.shapes.getTotalLines()*10;this.canvas.height=i,M(this.ctx,this.shapes.getLines(),t)};this.ctx=t,this.canvas=i,this.shapes=r}};var F={dark:{isLightTheme:!1,card_active:"#a9a9a9a",card_searchResult:"#e0de7177",wordBlock:"#99999966",indentLine:"#ffffff55",chars:{highlight:"#e0de7177",wikilink:"#027aff77",bold_italic:"#fb464c66",heading:"#44cf6e77",bullet:"#fa99cd66",tag:"#e9973f77",period:"#ffffff88",strikethrough:"#a882ff66",task:"#17e7e077",comma:"#17e7e088"}},light:{isLightTheme:!0,wordBlock:"#70707088",card_active:"#aaaaaa",card_searchResult:"#e0ac0077",indentLine:"#777777aa",chars:{highlight:"#e0ac0077",wikilink:"#086ddd77",bold_italic:"#e9314777",heading:"#08b94e77",bullet:"#d5398477",tag:"#ec750077",period:"#777777ee",strikethrough:"#7852ee77",task:"#17e7e077",comma:"#11b3b3"}}},O={current:F.dark};var _=class{constructor(t,i,r){this.state={theme:O.current};this.setTheme=t=>{this.state.theme=t};this.setDocument=(t,i)=>{let r=this.shapes.calculateDocument(t,i);return this.renderer.drawDocument(this.state.theme),{totalDrawnHeight_cpx:r.totalDrawnHeight_cpx,cardRanges:r.cardRanges}};this.shapes=new g,this.renderer=new f(t,i,this.shapes),this.state.theme=r}};var L={canvases:{}};self.onmessage=n=>{let t=n.data.payload,i=null;if(t.type==="worker/initialize"){let r=t.payload.canvas.getContext("2d");r&&(L.canvases[t.payload.canvasId]={minimap:new _(r,t.payload.canvas,t.payload.theme)})}else if(t.type==="worker/destroy")delete L.canvases[t.payload.canvasId],d.deleteCanvasCache(t.payload.canvasId);else{let r=L.canvases[t.payload.canvasId];if(!r)throw new Error("no canvas context");t.type==="minimap/update-theme"?r.minimap.setTheme(t.payload.theme):t.type==="minimap/set/document"&&(i=r.minimap.setDocument(t.payload.document,t.payload.canvasId))}self.postMessage({id:n.data.id,payload:i})};\n');
+  return inlineWorker('var K=(a,t,n)=>{if(!t.has(a))throw TypeError("Cannot "+n)};var h=(a,t,n)=>(K(a,t,"read from private field"),n?n.call(a):t.get(a)),x=(a,t,n)=>{if(t.has(a))throw TypeError("Cannot add the same private member more than once");t instanceof WeakSet?t.add(a):t.set(a,n)},N=(a,t,n,i)=>(K(a,t,"write to private field"),i?i.call(a,n):t.set(a,n),n);var w=class{constructor(){this.caches={};this.getCachedResult=(t,n,i,s)=>{let l=this.caches[t];if(!l)return;let r=l.get(n);if(r){if(r.availableLineCharacters===s&&r.content===i)return r.result;l.delete(n)}};this.cacheResult=(t,n,i,s,l)=>{this.caches[t]||(this.caches[t]=new Map),this.caches[t].set(n,{availableLineCharacters:s,content:i,result:l})};this.deleteCanvasCache=t=>{delete this.caches[t]}}},k=new w;var se={"#":"heading","-":"bullet",".":"period","=":"highlight","*":"bold_italic",_:"bold_italic","[":"wikilink","]":"wikilink","~":"strikethrough",",":"comma"},re=/\\b(dr|mr|mrs|ms|e\\.g|e\\.i|sr|jr|st|ave|rd|no|vs|etc|vol|ed|pp)\\b/i,le=new Set(["^",".","!","`","*","%","?",\'"\',"~","@","\'","(",")","!","{","}","[","]","^","%","$","+","=","\\\\"]),F=(a,t,n,i)=>{var o,C,B,O,X,W;let s=k.getCachedResult(i,n,a,t);if(s)return s;let l=!a.trim();l&&(a="empty");let r=[],e={element:{chunk:"",length_chars:-1,line:0,type:null,x_chars:0},elementMeta:null,parentElementMeta:null,closingTagLength:0,x:0,lineNumber:0};for(let c=0;c<a.length;c++){let m=a[c];if(m===`\n`){e.lineNumber++,e.x=0,e.elementMeta&&e.elementMeta.scope==="multi_line"||(e.elementMeta=null);continue}else if(m===" ")(o=e.elementMeta)!=null&&o.noSpaces&&(e.elementMeta=null);else if(!e.elementMeta||e.elementMeta.scope!=="full_line"){let _=se[m];if(_){let d=a[c+1],ne=a[c+2];if(m==="#"&&e.x===0&&(d===" "||d==="#"))e.elementMeta={elementName:_,scope:"full_line"};else if(m==="#"&&!le.has(d)&&(!e.elementMeta||e.elementMeta.canBeParent||e.elementMeta.elementName===_))(C=e.elementMeta)!=null&&C.canBeParent&&(e.parentElementMeta=e.elementMeta),e.elementMeta={elementName:"tag",scope:"block",noSpaces:!0};else if(m==="-"&&e.x===0)d===" "&&a[c+2]==="["&&a[c+4]==="]"?e.elementMeta={elementName:"task",scope:"block",canBeParent:!0}:e.elementMeta={elementName:"bullet",scope:"block",canBeParent:!0};else if(m==="."&&(!e.elementMeta||e.elementMeta.elementName==="tag")){let f=(a[c-3]||"")+a[c-2]+a[c-1],u=a[c+1];!(u&&u.match(/[A-Z\\d]/))&&a[c-1]&&!a[c-1].match(/[.!?]/)&&!re.test(f)&&!(a[c-1]==="e"&&u==="g")&&!(a[c-1]==="i"&&u==="e")&&(e.elementMeta={elementName:"period",scope:"character"})}else if(m===","&&(!e.elementMeta||e.elementMeta.elementName==="tag")){let f=a[c-1]||"",u=a[c+1]||"";(!f.match(/\\d/)||!u.match(/\\d/))&&(e.elementMeta={elementName:"comma",scope:"character"})}else if(!e.elementMeta||e.elementMeta.canBeParent||e.elementMeta.elementName===_){let f=m==="=",u=f&&d==="="||m==="~"&&d==="~"||m==="["&&d==="["||m==="]"&&d==="]"||m==="*"&&d==="*";if(u||m==="*"&&a[c-1]!=="*"||m==="_"){let V=((B=e.elementMeta)==null?void 0:B.elementName)===_,ie=V?!1:u?ne===" ":d===" ";if(V)e.closingTagLength=u?2:1;else if(!ie){let G=f?"multi_line":"block";(O=e.elementMeta)!=null&&O.canBeParent&&G==="block"&&(e.parentElementMeta=e.elementMeta),e.elementMeta={elementName:_,scope:G,canBeParent:f}}}}}}e.x+1>t?(e.lineNumber++,e.x=0):e.closingTagLength===0&&!e.elementMeta&&e.parentElementMeta&&(e.elementMeta=e.parentElementMeta,e.parentElementMeta=null),e.lineNumber!==e.element.line?(e.element.length_chars=e.element.chunk.length,e.element.length_chars>0&&r.push(e.element),e.element={chunk:m,line:e.lineNumber,x_chars:0,length_chars:-1,type:e.elementMeta?e.elementMeta.elementName:null}):m===" "&&(!e.elementMeta||(X=e.elementMeta)!=null&&X.noSpaces)?(e.element.length_chars=e.element.chunk.length,e.element.length_chars>0&&r.push(e.element),e.element={chunk:"",line:e.lineNumber,x_chars:e.x+1,length_chars:-1,type:null},e.elementMeta=null):((W=e.elementMeta)==null?void 0:W.scope)==="character"?(e.element.length_chars=e.element.chunk.length,e.element.length_chars>0&&r.push(e.element),r.push({chunk:m,line:e.lineNumber,x_chars:e.x,length_chars:1,type:e.elementMeta.elementName}),e.elementMeta=null,e.element={chunk:"",line:e.lineNumber,x_chars:e.x+1,length_chars:-1,type:null}):e.elementMeta&&e.elementMeta.elementName!==e.element.type?(e.element.length_chars=e.element.chunk.length,e.element.length_chars>0&&r.push(e.element),e.element={chunk:m,line:e.lineNumber,x_chars:e.x,length_chars:-1,type:e.elementMeta.elementName}):e.element.chunk+=m,e.closingTagLength>0&&(e.closingTagLength--,e.closingTagLength===0&&(e.parentElementMeta?(e.elementMeta=e.parentElementMeta,e.parentElementMeta=null):e.elementMeta=null)),e.x++}e.element.length_chars=e.element.chunk.length,e.element.length_chars>0&&r.push(e.element);let p={chunks:r,totalLines:e.lineNumber+1,empty:l};return k.cacheResult(i,n,a,t,p),p};var Y=58.666666666666664,z=2;var D=6,oe=6,L=D+oe,S=3100;var me=1,$=(a,t,n)=>{var p;let i=Y-t.depth*z,s=F(a.content,i,a.id,n),l={indentationLines:[],lineNumber:t.nextLineOffset,wordBlocks:[],depth:t.depth,nodeId:a.id,y_px:10*t.nextLineOffset};t.lines.push(l);let r=((p=s.chunks[0])==null?void 0:p.line)||0;for(let o of s.chunks){let C=t.nextLineOffset+o.line;o.line>r&&(l={indentationLines:[],lineNumber:C,wordBlocks:[],depth:t.depth,nodeId:a.id,y_px:10*C},t.lines.push(l),r=o.line),l.wordBlocks.push({width_px:o.length_chars*6,x_px:t.depth*L+o.x_chars*6,empty:s.empty,chunkType:o.type})}t.nextLineOffset=t.nextLineOffset+s.totalLines+1;let e=t.depth;t.depth=e+1;for(let o of a.children)$(o,t,n);t.depth=e},j=(a,t)=>{let n={nextLineOffset:me,depth:0,lines:[]};for(let i of a)$(i,n,t);return{lines:n.lines,totalLines:n.nextLineOffset+1}};var Z=a=>{for(let t=0;t<a.length;t++){let n=a[t],i=n.depth,s=a[t+1],l=!0;s&&s.nodeId===n.nodeId&&(l=!1);for(let r=0;r<i;r++){let e=r*L;n.indentationLines.push({x_px:e,height_px:10-(l?4:0)})}}};var q=(a,t="")=>({id:a,content:t.trim(),children:[]}),Q=(a,t)=>{var s;let n={};for(let l of a)for(let r of l.groups)for(let e of r.nodes){let p=q(e,(s=t[e])==null?void 0:s.content),o=n[r.parentId];o||(o=q(r.parentId),n[r.parentId]=o),o.children.push(p),n[e]=p}let i=[];if(a[0])for(let l of a[0].groups)for(let r of l.nodes){let e=n[r];if(e)i.push(e);else throw new Error(`could not find node ${r}`)}return i};var U=a=>{let t={};for(let n of a){let i=n.y_px,s=n.y_px+10;t[n.nodeId]?t[n.nodeId]={y_start:Math.min(i,t[n.nodeId].y_start),y_end:Math.max(s,t[n.nodeId].y_end),cardId:n.nodeId}:t[n.nodeId]={y_start:i,y_end:s,cardId:n.nodeId}}return t};var M,T,b,y,v=class{constructor(){x(this,M,[]);x(this,T,!0);x(this,b,0);x(this,y,{})}calculateDocument(t,n){let i=Q(t.columns,t.content),s=j(i,n);return N(this,M,s.lines),N(this,b,s.totalLines),Z(s.lines),N(this,T,s.lines.length===0||s.lines.every(l=>l.wordBlocks.length===1&&l.wordBlocks[0].empty)),N(this,y,U(h(this,M))),{totalLines:h(this,b),totalDrawnHeight_cpx:h(this,b)*10,cardRanges:h(this,y)}}get lines(){return h(this,M)}get isEmpty(){return h(this,T)}};M=new WeakMap,T=new WeakMap,b=new WeakMap,y=new WeakMap;var ce=6,ee=(a,t,n,i)=>{let s="",l="";for(let r=0;r<=t.length-1;r++){let e=t[r],p=e.y_px;if(!(p<i.start_cpx)){if(p>i.end_cpx)break;i.start_cpx>0&&(p=p-i.start_cpx);for(let o of e.wordBlocks)o.empty||(l=o.chunkType?n.chars[o.chunkType]:n.wordBlock,l!==s&&(s=l,a.fillStyle=l),a.fillRect(o.x_px,p,o.width_px,ce));s="",a.fillStyle=n.indentLine;for(let o of e.indentationLines)a.fillRect(o.x_px,p,D,o.height_px)}}};var I=class{constructor(t,n,i){this.drawDocument=(t,n)=>{this.canvas.height=n.end_cpx-n.start_cpx,this.shapes.isEmpty?this.ctx.clearRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height):ee(this.ctx,this.shapes.lines,t,n)};this.ctx=t,this.canvas=n,this.shapes=i}};var pe={dark:{isLightTheme:!1,card_active:"#a9a9a9a",card_searchResult:"#e0de7177",wordBlock:"#99999966",indentLine:"#ffffff55",chars:{highlight:"#e0de7177",wikilink:"#027aff77",bold_italic:"#fb464c66",heading:"#44cf6e77",bullet:"#E3BFD466",tag:"#e9973f77",period:"#ffffff88",strikethrough:"#a882ff66",task:"#17e7e077",comma:"#17e7e088"}},light:{isLightTheme:!0,wordBlock:"#70707088",card_active:"#aaaaaa",card_searchResult:"#e0ac0077",indentLine:"#777777aa",chars:{highlight:"#e0ac0077",wikilink:"#086ddd77",bold_italic:"#e9314777",heading:"#08b94e77",bullet:"#E77EB277",tag:"#ec750077",period:"#777777ee",strikethrough:"#7852ee77",task:"#17e7e077",comma:"#11b3b3"}}},te={current:pe.dark};var E,R=class{constructor(t){x(this,E,void 0);this.canvas_height_cpx=t,this.calculateRenderedRange(0)}updateScrollPosition(t){let n=t,i=t+this.canvas_height_cpx;return n<h(this,E).start_cpx||i>h(this,E).end_cpx?(this.calculateRenderedRange(t),!0):!1}calculateRenderedRange(t){let n=Math.max(0,t-S),i=t+this.canvas_height_cpx+S;N(this,E,{start_cpx:n,end_cpx:i})}get visibleRange(){return h(this,E)}};E=new WeakMap;var P=class{constructor(t,n,i,s){this.state={theme:te.current};this.setTheme=t=>{this.state.theme=t};this.setDocument=(t,n)=>{let i=this.shapes.calculateDocument(t,n);return this.renderer.drawDocument(this.state.theme,this.range.visibleRange),{totalDrawnHeight_cpx:i.totalDrawnHeight_cpx,cardRanges:i.cardRanges}};this.drawDocument=()=>{this.renderer.drawDocument(this.state.theme,this.range.visibleRange)};this.setScrollPosition=t=>this.range.updateScrollPosition(t)?this.range.visibleRange:null;this.shapes=new v,this.renderer=new I(t,n,this.shapes),this.range=new R(s),this.state.theme=i}};var A={canvases:{}};self.onmessage=a=>{let t=a.data.payload,n=null;if(t.type==="worker/initialize"){let i=t.payload.canvas.getContext("2d");i&&(A.canvases[t.payload.canvasId]={minimap:new P(i,t.payload.canvas,t.payload.theme,t.payload.canvas_height_cpx)})}else if(t.type==="worker/destroy")delete A.canvases[t.payload.canvasId],k.deleteCanvasCache(t.payload.canvasId);else{let i=A.canvases[t.payload.canvasId];if(!i)throw new Error("no canvas context");t.type==="minimap/update-theme"?i.minimap.setTheme(t.payload.theme):t.type==="minimap/set/document"?n=i.minimap.setDocument(t.payload.document,t.payload.canvasId):t.type==="minimap/set/scroll-position"?n=i.minimap.setScrollPosition(t.payload.scroll_position_cpx):t.type==="minimap/draw-document"&&i.minimap.drawDocument()}self.postMessage({id:a.data.id,payload:n})};\n');
 }
 
 // src/stores/view/subscriptions/effects/style-rules/workers/style-rules.worker.ts
 function Worker3() {
-  return inlineWorker('var C=(r,u)=>{for(let e of r)for(let t of e.groups)if(t.parentId===u)return t};var y=(r,u)=>{var e,t;return(t=(e=C(r,u))==null?void 0:e.nodes.length)!=null?t:0};var g=r=>r.split(`\n`).filter(u=>u.trim().length>0).length;var N=/(?:[0-9]+(?:(?:,|.)[0-9]+)*|[-\'\u2019A-Za-z\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u052F\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0620-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0800-\\u0815\\u081A\\u0824\\u0828\\u0840-\\u0858\\u08A0-\\u08B4\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971-\\u0980\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0AF9\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C39\\u0C3D\\u0C58-\\u0C5A\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0CF1\\u0CF2\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D3A\\u0D3D\\u0D4E\\u0D5F-\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC-\\u0EDF\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10C7\\u10CD\\u10D0-\\u10FA\\u10FC-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F5\\u13F8-\\u13FD\\u1401-\\u166C\\u166F-\\u167F\\u1681-\\u169A\\u16A0-\\u16EA\\u16F1-\\u16F8\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u18B0-\\u18F5\\u1900-\\u191E\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19AB\\u19B0-\\u19C9\\u1A00-\\u1A16\\u1A20-\\u1A54\\u1AA7\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1BBA-\\u1BE5\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1CE9-\\u1CEC\\u1CEE-\\u1CF1\\u1CF5\\u1CF6\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u209C\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2CE4\\u2CEB-\\u2CEE\\u2CF2\\u2CF3\\u2D00-\\u2D25\\u2D27\\u2D2D\\u2D30-\\u2D67\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31BA\\u31F0-\\u31FF\\u3400-\\u4DB5\\uA000-\\uA48C\\uA4D0-\\uA4FD\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA66E\\uA67F-\\uA69D\\uA6A0-\\uA6E5\\uA717-\\uA71F\\uA722-\\uA788\\uA78B-\\uA7AD\\uA7B0-\\uA7B7\\uA7F7-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA8F2-\\uA8F7\\uA8FB\\uA8FD\\uA90A-\\uA925\\uA930-\\uA946\\uA984-\\uA9B2\\uA9CF\\uA9E0-\\uA9E4\\uA9E6-\\uA9EF\\uA9FA-\\uA9FE\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAA60-\\uAA76\\uAA7A\\uAA7E-\\uAAAF\\uAAB1\\uAAB5\\uAAB6\\uAAB9-\\uAABD\\uAAC0\\uAAC2\\uAADB-\\uAADD\\uAAE0-\\uAAEA\\uAAF2-\\uAAF4\\uAB01-\\uAB06\\uAB09-\\uAB0E\\uAB11-\\uAB16\\uAB20-\\uAB26\\uAB28-\\uAB2E\\uAB30-\\uAB5A\\uAB5C-\\uAB65\\uAB70-\\uABE2\\uD7CB-\\uD7FB\\uF900-\\uFA6D\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC\u0B80-\u0BFF\uAC00-\uD7A3\uA960-\uA97C\uD7B0-\uD7C6])+|[\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u4E00-\\u9FD5\\uAC00-\\uD7A3\\uA960-\\uA97C\\uD7B0-\\uD7C6]/g,f=r=>{N.lastIndex=0;let u=r.match(N);return u?u.length:0};var I=/(?:[0-9]+(?:(?:,|.)[0-9]+)*|[-\'\u2019A-Za-z\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u052F\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0620-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0800-\\u0815\\u081A\\u0824\\u0828\\u0840-\\u0858\\u08A0-\\u08B4\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971-\\u0980\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0AF9\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C39\\u0C3D\\u0C58-\\u0C5A\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0CF1\\u0CF2\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D3A\\u0D3D\\u0D4E\\u0D5F-\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC-\\u0EDF\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10C7\\u10CD\\u10D0-\\u10FA\\u10FC-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F5\\u13F8-\\u13FD\\u1401-\\u166C\\u166F-\\u167F\\u1681-\\u169A\\u16A0-\\u16EA\\u16F1-\\u16F8\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u18B0-\\u18F5\\u1900-\\u191E\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19AB\\u19B0-\\u19C9\\u1A00-\\u1A16\\u1A20-\\u1A54\\u1AA7\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1BBA-\\u1BE5\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1CE9-\\u1CEC\\u1CEE-\\u1CF1\\u1CF5\\u1CF6\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u209C\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2CE4\\u2CEB-\\u2CEE\\u2CF2\\u2CF3\\u2D00-\\u2D25\\u2D27\\u2D2D\\u2D30-\\u2D67\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31BA\\u31F0-\\u31FF\\u3400-\\u4DB5\\uA000-\\uA48C\\uA4D0-\\uA4FD\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA66E\\uA67F-\\uA69D\\uA6A0-\\uA6E5\\uA717-\\uA71F\\uA722-\\uA788\\uA78B-\\uA7AD\\uA7B0-\\uA7B7\\uA7F7-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA8F2-\\uA8F7\\uA8FB\\uA8FD\\uA90A-\\uA925\\uA930-\\uA946\\uA984-\\uA9B2\\uA9CF\\uA9E0-\\uA9E4\\uA9E6-\\uA9EF\\uA9FA-\\uA9FE\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAA60-\\uAA76\\uAA7A\\uAA7E-\\uAAAF\\uAAB1\\uAAB5\\uAAB6\\uAAB9-\\uAABD\\uAAC0\\uAAC2\\uAADB-\\uAADD\\uAAE0-\\uAAEA\\uAAF2-\\uAAF4\\uAB01-\\uAB06\\uAB09-\\uAB0E\\uAB11-\\uAB16\\uAB20-\\uAB26\\uAB28-\\uAB2E\\uAB30-\\uAB5A\\uAB5C-\\uAB65\\uAB70-\\uABE2\\uD7CB-\\uD7FB\\uF900-\\uFA6D\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC\u0B80-\u0BFF\uAC00-\uD7A3\uA960-\uA97C\uD7B0-\uD7C6])+|[\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u4E00-\\u9FD5\\uAC00-\\uD7A3\\uA960-\\uA97C\\uD7B0-\\uD7C6]/g,S=r=>r.length-r.replace(/--/g,"##").replace(I,"").length;var l=(r,u)=>{for(let e=0;e<r.length;e++){let t=r[e];for(let o of t.groups)if(o.nodes.find(n=>n===u))return e}return-1};var D=(r,u)=>{let e=l(r,u),t=new Set([u]);for(let o=e+1;o<r.length;o++){let n=r[o];for(let A of n.groups)if(t.has(A.parentId))for(let s of A.nodes)t.add(s)}return t.delete(u),Array.from(t)};var T=(r,u)=>D(r,u).length;var O=r=>{var e;return((e=r.match(/^#{1,6} .*/gm))!=null?e:[]).map(t=>t.replace(/^#{1,6} /,""))};var E=new Set(["HISTORY/APPLY_NEXT_SNAPSHOT","HISTORY/APPLY_PREVIOUS_SNAPSHOT","HISTORY/SELECT_SNAPSHOT","DOCUMENT/LOAD_FILE","RESET_STORE","DOCUMENT/MERGE_NODE","DOCUMENT/SPLIT_NODE","DOCUMENT/DELETE_NODE","DOCUMENT/EXTRACT_BRANCH","DOCUMENT/CUT_NODE"]);var p=new Set(["DOCUMENT/DROP_NODE","DOCUMENT/MOVE_NODE","DOCUMENT/INSERT_NODE","DOCUMENT/PASTE_NODE"]);var R=()=>({headings:{},content:{},"line-count":{},"character-count":{},"word-count":{},"headings-word-count":{},"direct-children-count":{},"total-children-count":{},depth:{}}),B=class{constructor(u,e){this.isEmpty=!0;this.resetCache=(u,e,t)=>{this.columns=e,this.content=t,!this.isEmpty&&(E.has(u.type)?(this.cache=R(),this.isEmpty=!0):p.has(u.type)?(this.cache.depth={},this.cache["direct-children-count"]={},this.cache["total-children-count"]={}):u.type==="DOCUMENT/SET_NODE_CONTENT"?(delete this.cache.headings[u.payload.nodeId],delete this.cache.content[u.payload.nodeId],delete this.cache["line-count"][u.payload.nodeId],delete this.cache["character-count"][u.payload.nodeId],delete this.cache["word-count"][u.payload.nodeId],delete this.cache["headings-word-count"][u.payload.nodeId]):u.type==="DOCUMENT/FORMAT_HEADINGS"&&(this.cache.headings={},this.cache.content={},this.cache["line-count"]={},this.cache["character-count"]={},this.cache["word-count"]={},this.cache["headings-word-count"]={}))};this.columns=u,this.content=e,this.cache=R()}cacheResult(u,e,t){this.isEmpty&&(this.isEmpty=!1),this.cache[e][u]=t}getProperty(u,e){var o,n,A,s;if(this.cache[e][u]!==void 0)return this.cache[e][u];let t;switch(e){case"direct-children-count":t=y(this.columns,u);break;case"total-children-count":t=T(this.columns,u);break;case"line-count":t=g((o=this.content[u])==null?void 0:o.content);break;case"word-count":t=f((n=this.content[u])==null?void 0:n.content);break;case"character-count":t=S((A=this.content[u])==null?void 0:A.content);break;case"depth":t=l(this.columns,u)+1;break;case"headings":t=O((s=this.content[u])==null?void 0:s.content).join(" ").toLowerCase();break;case"headings-word-count":t=f(this.getProperty(u,"headings"));break;default:throw new Error(`Unsupported property: ${e}`)}return this.cacheResult(u,e,t),t}};var v=(r,u)=>{for(let e of r)for(let t of e.groups)for(let o of t.nodes)if(o===u)return t};var w=(r,u)=>{for(let e=0;e<r.length;e++){let t=r[e];for(let o of t.groups)for(let n of o.nodes)if(n===u)return[e,o.parentId]}return null};var b=(r,u)=>{let e=[],t=w(r,u);if(!t)return e;let o=t[1],n=t[0];for(let A=n-1;A>=0&&o;A--){e.push(o);let s;for(let c of r[A].groups){for(let i of c.nodes)if(i===o){s=c.parentId;break}if(s)break}o=s}return e};var P=()=>({self:{},"direct-parent":{},"any-parent":{},"direct-children":{},"any-children":{}}),m=class{constructor(u){this.isEmpty=!0;this.resetCache=(u,e)=>{this.columns=e,!this.isEmpty&&(E.has(u.type)||p.has(u.type))&&(this.cache=P(),this.isEmpty=!0)};this.columns=u,this.cache=P()}cacheResult(u,e,t){this.isEmpty&&(this.isEmpty=!1),this.cache[e][u]=t}getTargetNodes(u,e){var o;if(this.cache[u][e]!==void 0)return this.cache[u][e];let t;switch(u){case"self":t=[e];break;case"direct-parent":{let n=v(this.columns,e);t=n?[n.parentId]:[];break}case"any-parent":t=b(this.columns,e);break;case"direct-children":{let n=C(this.columns,e);t=(o=n==null?void 0:n.nodes)!=null?o:[];break}case"any-children":t=D(this.columns,e);break;default:t=[]}return this.cacheResult(e,u,t),t}};var x=new Set(["equals","not-equals","empty","not-empty"]);var _=(r,u,e)=>{switch(u){case"equals":return r===e;case"not-equals":return r!==e;case"empty":return!r;case"not-empty":return!!r;case"contains":return r.includes(e);case"not-contains":return!r.includes(e);case"starts-with":return r.startsWith(e);case"not-starts-with":return!r.startsWith(e);case"ends-with":return r.endsWith(e);case"not-ends-with":return!r.endsWith(e);case"matches-regex":return new RegExp(e).test(r);case"not-matches-regex":return!new RegExp(e).test(r);default:return!1}};var M=(r,u,e,t)=>{switch(u){case"equals":return r===e;case"not-equals":return r!==e;case"empty":return r===0;case"not-empty":return r!==0;case"greater-than":return r>e;case"less-than":return r<e;case"between":return t!==void 0&&r>=e&&r<=t;case"not-between":return t!==void 0&&(r<e||r>t);default:return!1}};var U=(r,u,e,t,o)=>{var A,s;if(!u.enabled)return!1;let n=t.getTargetNodes(u.scope,r);for(let c of n){let i=(s=(A=e[c])==null?void 0:A.content)!=null?s:"";if("value"in u){let a=!1;if(u.property==="content"||u.property==="headings"){let F=u.property==="content"?i.toLowerCase():o.getProperty(r,"headings");a=_(F,u.operator,u.value.toLowerCase())}else{let F=o.getProperty(c,u.property);if(F===null)throw new Error("Value is null:"+u.property+" - "+c);a=M(F,u.operator,u.value,u.valueB)}if(a)return!0}}return!1};var L=(r,u,e,t)=>{let o={nodeStyles:new Map,allMatches:new Map},n=[...u].sort((A,s)=>A.priority-s.priority);for(let A of r.columns)for(let s of A.groups)for(let c of s.nodes)for(let i of n){if(!i.enabled||typeof i.condition.value=="string"&&i.condition.value.length===0&&!x.has(i.condition.operator))continue;if(U(c,i.condition,r.content,t,e)){o.nodeStyles.has(c)||o.nodeStyles.set(c,i.style);let F=o.allMatches.get(i.id);F||(F=[],o.allMatches.set(i.id,F)),F.push(c)}}return o};var d=class{constructor(){this.processStyleRules=(u,e,t)=>(!this.propertyResolver||!this.targetResolver?this.initialize(u):t&&this.resetResolversCache(u,t),L(u,e,this.propertyResolver,this.targetResolver));this.resetResolversCache=(u,e)=>{this.targetResolver.resetCache(e,u.columns),this.propertyResolver.resetCache(e,u.columns,u.content)};this.initialize=u=>{this.targetResolver=new m(u.columns),this.propertyResolver=new B(u.columns,u.content)}}};var h={};self.onmessage=r=>{let u=r.data,{id:e,payload:t}=u,o=null;switch(t.type){case"destroy":{delete h[t.payload.viewId];break}case"process-rules":{h[t.payload.viewId]||(h[t.payload.viewId]=new d),o=h[t.payload.viewId].processStyleRules(t.payload.document,t.payload.rules,t.payload.action);break}default:throw new Error(`Unhandled event type: ${t.type}`)}self.postMessage({id:e,payload:o})};\n');
+  return inlineWorker('var l=(o,u)=>{for(let e of o)for(let t of e.groups)if(t.parentId===u)return t};var S=(o,u)=>{var e,t;return(t=(e=l(o,u))==null?void 0:e.nodes.length)!=null?t:0};var R=o=>o.split(`\n`).filter(u=>u.trim().length>0).length;var N=/(?:[0-9]+(?:(?:,|.)[0-9]+)*|[-\'\u2019A-Za-z\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u052F\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0620-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0800-\\u0815\\u081A\\u0824\\u0828\\u0840-\\u0858\\u08A0-\\u08B4\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971-\\u0980\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0AF9\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C39\\u0C3D\\u0C58-\\u0C5A\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0CF1\\u0CF2\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D3A\\u0D3D\\u0D4E\\u0D5F-\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC-\\u0EDF\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10C7\\u10CD\\u10D0-\\u10FA\\u10FC-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F5\\u13F8-\\u13FD\\u1401-\\u166C\\u166F-\\u167F\\u1681-\\u169A\\u16A0-\\u16EA\\u16F1-\\u16F8\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u18B0-\\u18F5\\u1900-\\u191E\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19AB\\u19B0-\\u19C9\\u1A00-\\u1A16\\u1A20-\\u1A54\\u1AA7\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1BBA-\\u1BE5\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1CE9-\\u1CEC\\u1CEE-\\u1CF1\\u1CF5\\u1CF6\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u209C\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2CE4\\u2CEB-\\u2CEE\\u2CF2\\u2CF3\\u2D00-\\u2D25\\u2D27\\u2D2D\\u2D30-\\u2D67\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31BA\\u31F0-\\u31FF\\u3400-\\u4DB5\\uA000-\\uA48C\\uA4D0-\\uA4FD\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA66E\\uA67F-\\uA69D\\uA6A0-\\uA6E5\\uA717-\\uA71F\\uA722-\\uA788\\uA78B-\\uA7AD\\uA7B0-\\uA7B7\\uA7F7-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA8F2-\\uA8F7\\uA8FB\\uA8FD\\uA90A-\\uA925\\uA930-\\uA946\\uA984-\\uA9B2\\uA9CF\\uA9E0-\\uA9E4\\uA9E6-\\uA9EF\\uA9FA-\\uA9FE\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAA60-\\uAA76\\uAA7A\\uAA7E-\\uAAAF\\uAAB1\\uAAB5\\uAAB6\\uAAB9-\\uAABD\\uAAC0\\uAAC2\\uAADB-\\uAADD\\uAAE0-\\uAAEA\\uAAF2-\\uAAF4\\uAB01-\\uAB06\\uAB09-\\uAB0E\\uAB11-\\uAB16\\uAB20-\\uAB26\\uAB28-\\uAB2E\\uAB30-\\uAB5A\\uAB5C-\\uAB65\\uAB70-\\uABE2\\uD7CB-\\uD7FB\\uF900-\\uFA6D\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC\u0B80-\u0BFF\uAC00-\uD7A3\uA960-\uA97C\uD7B0-\uD7C6])+|[\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u4E00-\\u9FD5\\uAC00-\\uD7A3\\uA960-\\uA97C\\uD7B0-\\uD7C6]/g,y=o=>{N.lastIndex=0;let u=o.match(N);return u?u.length:0};var G=/(?:[0-9]+(?:(?:,|.)[0-9]+)*|[-\'\u2019A-Za-z\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u052F\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0620-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0800-\\u0815\\u081A\\u0824\\u0828\\u0840-\\u0858\\u08A0-\\u08B4\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971-\\u0980\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0AF9\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C39\\u0C3D\\u0C58-\\u0C5A\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0CF1\\u0CF2\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D3A\\u0D3D\\u0D4E\\u0D5F-\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC-\\u0EDF\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10C7\\u10CD\\u10D0-\\u10FA\\u10FC-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F5\\u13F8-\\u13FD\\u1401-\\u166C\\u166F-\\u167F\\u1681-\\u169A\\u16A0-\\u16EA\\u16F1-\\u16F8\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u18B0-\\u18F5\\u1900-\\u191E\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19AB\\u19B0-\\u19C9\\u1A00-\\u1A16\\u1A20-\\u1A54\\u1AA7\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1BBA-\\u1BE5\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1CE9-\\u1CEC\\u1CEE-\\u1CF1\\u1CF5\\u1CF6\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u209C\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2CE4\\u2CEB-\\u2CEE\\u2CF2\\u2CF3\\u2D00-\\u2D25\\u2D27\\u2D2D\\u2D30-\\u2D67\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31BA\\u31F0-\\u31FF\\u3400-\\u4DB5\\uA000-\\uA48C\\uA4D0-\\uA4FD\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA66E\\uA67F-\\uA69D\\uA6A0-\\uA6E5\\uA717-\\uA71F\\uA722-\\uA788\\uA78B-\\uA7AD\\uA7B0-\\uA7B7\\uA7F7-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA8F2-\\uA8F7\\uA8FB\\uA8FD\\uA90A-\\uA925\\uA930-\\uA946\\uA984-\\uA9B2\\uA9CF\\uA9E0-\\uA9E4\\uA9E6-\\uA9EF\\uA9FA-\\uA9FE\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAA60-\\uAA76\\uAA7A\\uAA7E-\\uAAAF\\uAAB1\\uAAB5\\uAAB6\\uAAB9-\\uAABD\\uAAC0\\uAAC2\\uAADB-\\uAADD\\uAAE0-\\uAAEA\\uAAF2-\\uAAF4\\uAB01-\\uAB06\\uAB09-\\uAB0E\\uAB11-\\uAB16\\uAB20-\\uAB26\\uAB28-\\uAB2E\\uAB30-\\uAB5A\\uAB5C-\\uAB65\\uAB70-\\uABE2\\uD7CB-\\uD7FB\\uF900-\\uFA6D\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC\u0B80-\u0BFF\uAC00-\uD7A3\uA960-\uA97C\uD7B0-\uD7C6])+|[\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u4E00-\\u9FD5\\uAC00-\\uD7A3\\uA960-\\uA97C\\uD7B0-\\uD7C6]/g,b=o=>o.length-o.replace(/--/g,"##").replace(G,"").length;var C=(o,u)=>{for(let e=0;e<o.length;e++){let t=o[e];for(let r of t.groups)if(r.nodes.find(A=>A===u))return e}return-1};var F=(o,u)=>{let e=C(o,u),t=new Set([u]);for(let r=e+1;r<o.length;r++){let A=o[r];for(let n of A.groups)if(t.has(n.parentId))for(let s of n.nodes)t.add(s)}return t.delete(u),Array.from(t)};var v=(o,u)=>F(o,u).length;var x=o=>{var e;return((e=o.match(/^#{1,6} .*/gm))!=null?e:[]).map(t=>t.replace(/^#{1,6} /,""))};var _={"document/update-node-content":{content:!0},"document/format-headings":{content:!0},"document/add-node":{createOrDelete:!0},"document/delete-node":{createOrDelete:!0},"document/merge-node":{createOrDelete:!0},"document/file/load-from-disk":{createOrDelete:!0},"document/extract-node":{createOrDelete:!0},"document/split-node":{createOrDelete:!0},"document/drop-node":{dropOrMove:!0},"document/move-node":{dropOrMove:!0},"document/sort-direct-child-nodes":{dropOrMove:!0},"document/history/select-next-snapshot":{changeHistory:!0},"document/history/select-previous-snapshot":{changeHistory:!0},"document/history/select-snapshot":{changeHistory:!0},"document/paste-node":{clipboard:!0},"document/cut-node":{clipboard:!0}},Q=new Map(Object.entries(_));var d=new Set(["document/history/select-next-snapshot","document/history/select-previous-snapshot","document/history/select-snapshot","document/file/load-from-disk","document/merge-node","document/split-node","document/delete-node","document/extract-node","document/cut-node"]);var D=new Set(["document/drop-node","document/move-node","document/add-node","document/paste-node","document/sort-direct-child-nodes"]);var w=()=>({headings:{},content:{},"line-count":{},"character-count":{},"word-count":{},"headings-word-count":{},"direct-children-count":{},"total-children-count":{},depth:{}}),B=class{constructor(u,e){this.isEmpty=!0;this.resetCache=(u,e,t)=>{this.columns=e,this.content=t,!this.isEmpty&&(d.has(u.type)?(this.cache=w(),this.isEmpty=!0):D.has(u.type)?(this.cache.depth={},this.cache["direct-children-count"]={},this.cache["total-children-count"]={}):u.type==="document/update-node-content"?(delete this.cache.headings[u.payload.nodeId],delete this.cache.content[u.payload.nodeId],delete this.cache["line-count"][u.payload.nodeId],delete this.cache["character-count"][u.payload.nodeId],delete this.cache["word-count"][u.payload.nodeId],delete this.cache["headings-word-count"][u.payload.nodeId]):u.type==="document/format-headings"&&(this.cache.headings={},this.cache.content={},this.cache["line-count"]={},this.cache["character-count"]={},this.cache["word-count"]={},this.cache["headings-word-count"]={}))};this.columns=u,this.content=e,this.cache=w()}cacheResult(u,e,t){this.isEmpty&&(this.isEmpty=!1),this.cache[e][u]=t}getProperty(u,e){var r,A,n,s;if(this.cache[e][u]!==void 0)return this.cache[e][u];let t;switch(e){case"direct-children-count":t=S(this.columns,u);break;case"total-children-count":t=v(this.columns,u);break;case"line-count":t=R((r=this.content[u])==null?void 0:r.content);break;case"word-count":t=y((A=this.content[u])==null?void 0:A.content);break;case"character-count":t=b((n=this.content[u])==null?void 0:n.content);break;case"depth":t=C(this.columns,u)+1;break;case"headings":t=x((s=this.content[u])==null?void 0:s.content).join(" ").toLowerCase();break;case"headings-word-count":t=y(this.getProperty(u,"headings"));break;default:throw new Error(`Unsupported property: ${e}`)}return this.cacheResult(u,e,t),t}};var f=(o,u)=>{for(let e of o)for(let t of e.groups)for(let r of t.nodes)if(r===u)return t};var T=(o,u)=>{for(let e=0;e<o.length;e++){let t=o[e];for(let r of t.groups)for(let A of r.nodes)if(A===u)return[e,r.parentId]}return null};var g=(o,u)=>{let e=[],t=T(o,u);if(!t)return e;let r=t[1],A=t[0];for(let n=A-1;n>=0&&r;n--){e.push(r);let s;for(let c of o[n].groups){for(let i of c.nodes)if(i===r){s=c.parentId;break}if(s)break}r=s}return e};var O=()=>({self:{},"direct-parent":{},"any-parent":{},"direct-children":{},"any-children":{},"self-or-any-parent":{},"self-or-direct-parent":{},"self-or-any-children":{},"self-or-direct-children":{}}),m=class{constructor(u){this.isEmpty=!0;this.resetCache=(u,e)=>{this.columns=e,!this.isEmpty&&(d.has(u.type)||D.has(u.type))&&(this.cache=O(),this.isEmpty=!0)};this.columns=u,this.cache=O()}cacheResult(u,e,t){this.isEmpty&&(this.isEmpty=!1),this.cache[e][u]=t}getTargetNodes(u,e){if(this.cache[u][e]!==void 0)return this.cache[u][e];let t;switch(u){case"self":t=[e];break;case"direct-parent":{let r=f(this.columns,e);t=r?[r.parentId]:[];break}case"self-or-direct-parent":{let r=f(this.columns,e);t=r?[r.parentId,e]:[e];break}case"any-parent":{t=g(this.columns,e);break}case"self-or-any-parent":{t=[...g(this.columns,e),e];break}case"direct-children":{let r=l(this.columns,e);t=r?r.nodes:[];break}case"self-or-direct-children":{let r=l(this.columns,e);t=r?[e,...r.nodes]:[e];break}case"any-children":{t=F(this.columns,e);break}case"self-or-any-children":{t=[e,...F(this.columns,e)];break}}return this.cacheResult(e,u,t),t}};var P=new Set(["equals","not-equals","empty","not-empty"]);var k=(o,u,e)=>{switch(u){case"equals":return o===e;case"not-equals":return o!==e;case"empty":return!o;case"not-empty":return!!o;case"contains":return o.includes(e);case"not-contains":return!o.includes(e);case"starts-with":return o.startsWith(e);case"not-starts-with":return!o.startsWith(e);case"ends-with":return o.endsWith(e);case"not-ends-with":return!o.endsWith(e);case"matches-regex":return new RegExp(e).test(o);case"not-matches-regex":return!new RegExp(e).test(o);default:return!1}};var L=(o,u,e,t)=>{switch(u){case"equals":return o===e;case"not-equals":return o!==e;case"empty":return o===0;case"not-empty":return o!==0;case"greater-than":return o>e;case"less-than":return o<e;case"between":return t!==void 0&&o>=e&&o<=t;case"not-between":return t!==void 0&&(o<e||o>t);default:return!1}};var M=(o,u,e,t,r)=>{var n,s;if(!u.enabled)return!1;let A=t.getTargetNodes(u.scope,o);for(let c of A){let i=(s=(n=e[c])==null?void 0:n.content)!=null?s:"";if("value"in u){let p=!1;if(u.property==="content"||u.property==="headings"){let a=u.property==="content"?i.toLowerCase():r.getProperty(o,"headings");p=k(a,u.operator,u.value.toLowerCase())}else{let a=r.getProperty(c,u.property);if(a===null)throw new Error("Value is null:"+u.property+" - "+c);p=L(a,u.operator,u.value,u.valueB)}if(p)return!0}}return!1};var U=(o,u,e,t)=>{let r={nodeStyles:new Map,allMatches:new Map},A=[...u].sort((n,s)=>n.global&&!s.global?1:n.priority-s.priority);for(let n of o.columns)for(let s of n.groups)for(let c of s.nodes)for(let i of A){if(!i.enabled||typeof i.condition.value=="string"&&i.condition.value.length===0&&!P.has(i.condition.operator))continue;if(M(c,i.condition,o.content,t,e)){r.nodeStyles.has(c)||r.nodeStyles.set(c,i.style);let a=r.allMatches.get(i.id);a||(a=[],r.allMatches.set(i.id,a)),a.push(c)}}return r};var E=class{constructor(){this.processStyleRules=(u,e,t)=>(!this.propertyResolver||!this.targetResolver?this.initialize(u):t&&this.resetResolversCache(u,t),U(u,e,this.propertyResolver,this.targetResolver));this.resetResolversCache=(u,e)=>{this.targetResolver.resetCache(e,u.columns),this.propertyResolver.resetCache(e,u.columns,u.content)};this.initialize=u=>{this.targetResolver=new m(u.columns),this.propertyResolver=new B(u.columns,u.content)}}};var h={};self.onmessage=o=>{let u=o.data,{id:e,payload:t}=u,r=null;switch(t.type){case"destroy":{delete h[t.payload.viewId];break}case"process-rules":{h[t.payload.viewId]||(h[t.payload.viewId]=new E),r=h[t.payload.viewId].processStyleRules(t.payload.document,t.payload.rules,t.payload.action);break}default:throw new Error(`Unhandled event type: ${t.type}`)}self.postMessage({id:e,payload:r})};\n');
 }
 
 // src/helpers/worker-promise.ts
@@ -24559,69 +26832,20 @@ var minimapWorker = new WorkerPromise(new Worker2());
 var rulesWorker = new WorkerPromise(new Worker3());
 var statusBarWorker = new WorkerPromise(new Worker4());
 
-// src/stores/minimap/subscriptions/effects/draw-document.ts
-var drawDocument = async (view) => {
-  const minimapStore = view.getMinimapStore();
-  const state2 = minimapStore.getValue();
-  const lineageDocument = view.documentStore.getValue().document;
-  const canvasId = state2.canvasId;
-  const activeCardId = state2.activeCardId;
-  const payload = await minimapWorker.run({
-    type: "minimap/set/document",
-    payload: {
-      document: lineageDocument,
-      canvasId,
-      activeNodeId: activeCardId
-    }
-  });
-  invariant(payload);
-  minimapStore.dispatch({
-    type: "minimap/set-card-ranges",
-    payload: {
-      ranges: payload.cardRanges,
-      height_cpx: payload.totalDrawnHeight_cpx
-    }
-  });
-};
-var debouncedDrawDocument = debounce2(drawDocument, 100);
-
-// src/stores/minimap/subscriptions/effects/set-minimap-dom.ts
-var setMinimapDom = (view) => {
-  const minimapContainer = view.contentEl.querySelector(
-    ".minimap-container"
-  );
-  if (!minimapContainer)
-    throw new SilentError("minimapContainer is undefined");
-  const canvasContainer = minimapContainer.querySelector(
-    ".canvas-container"
-  );
-  invariant(canvasContainer);
-  const scrollIndicator = minimapContainer.querySelector(
-    "#scrollIndicator"
-  );
-  const canvas = minimapContainer.querySelector("canvas");
-  invariant(scrollIndicator);
-  invariant(canvas);
-  canvas.width = CANVAS_WIDTH_CPX;
-  const offscreen = canvas.transferControlToOffscreen();
-  const dom = {
-    offscreen,
-    canvas,
-    scrollIndicator,
-    canvasContainer
-  };
-  view.setMinimapDom(dom);
-};
-
 // src/stores/minimap/subscriptions/effects/initialize-minimap-worker.ts
 var initializeMinimapWorker = async (view) => {
+  const canvasContainer = view.getMinimapDom().canvasContainer.parentElement;
+  const canvas_height_cpx = dpx_to_cpx(
+    canvasContainer.getBoundingClientRect().height
+  );
   await minimapWorker.run(
     {
       type: "worker/initialize",
       payload: {
         canvas: view.getMinimapDom().offscreen,
         canvasId: view.getMinimapStore().getValue().canvasId,
-        theme: minimapTheme.current
+        theme: minimapTheme.current,
+        canvas_height_cpx
       }
     },
     view.getMinimapDom().offscreen
@@ -24638,56 +26862,56 @@ var setMinimapActiveNode = (view) => {
   });
 };
 
-// src/stores/minimap/subscriptions/effects/scroll-indicator/apply-scroll-position.ts
-var import_obsidian22 = require("obsidian");
-var getContainerDimensions = (dom) => {
-  const minimapContainer = dom.scrollIndicator.parentElement;
-  if (!minimapContainer)
-    return null;
-  return {
-    clientHeight_dpx: minimapContainer.clientHeight,
-    containerHeight_cpx: dpx_to_cpx(minimapContainer.clientHeight)
-  };
+// src/stores/minimap/subscriptions/effects/draw-document.ts
+var drawDocument = async (view) => {
+  const minimapStore = view.getMinimapStore();
+  const state2 = minimapStore.getValue();
+  const lineageDocument = view.documentStore.getValue().document;
+  const canvasId = state2.canvasId;
+  const activeCardId = state2.activeCardId;
+  const payload = await minimapWorker.run({
+    type: "minimap/set/document",
+    payload: {
+      document: lineageDocument,
+      canvasId,
+      activeNodeId: activeCardId
+    }
+  });
+  invariant(payload);
+  if ("cardRanges" in payload) {
+    minimapStore.dispatch({
+      type: "minimap/set-card-ranges",
+      payload: {
+        ranges: payload.cardRanges,
+        height_cpx: payload.totalDrawnHeight_cpx
+      }
+    });
+  }
 };
-var calculateScrollDimensions = (state2, clientHeight_dpx, containerHeight_cpx) => {
-  const indicatorHeight_cpx = containerHeight_cpx / state2.totalDrawnHeight_cpx * containerHeight_cpx;
-  const maxScroll_cpx = state2.totalDrawnHeight_cpx - containerHeight_cpx;
-  const scrollPercent = state2.scrollPosition_cpx / maxScroll_cpx;
-  const indicatorHeight_dpx = cpx_to_dpx(indicatorHeight_cpx);
-  const indicatorPosition_dpx = scrollPercent * (clientHeight_dpx - indicatorHeight_dpx);
-  const scrollPosition_dpx = cpx_to_dpx(state2.scrollPosition_cpx);
-  return {
-    indicatorHeight_dpx,
-    indicatorPosition_dpx,
-    scrollPosition_dpx
-  };
+
+// src/stores/minimap/subscriptions/actions/set-client-height.ts
+var getActiveView = async (view) => {
+  for (let i = 0; i < 10; i++) {
+    const activeView = view.plugin.app.workspace.getActiveViewOfType(LineageView);
+    if (activeView) {
+      return activeView;
+    } else {
+      await delay(500);
+    }
+  }
 };
-var applyDomUpdates = (dom, dimensions) => {
-  requestAnimationFrame(() => {
-    dom.scrollIndicator.style.height = `${dimensions.indicatorHeight_dpx}px`;
-    dom.scrollIndicator.style.transform = `translateY(${dimensions.indicatorPosition_dpx}px)`;
-    dom.canvasContainer.style.transform = `translateY(${-dimensions.scrollPosition_dpx}px)`;
+var setClientHeight = async (view) => {
+  const activeView = await getActiveView(view);
+  if (!activeView)
+    return;
+  const minimapContainer = activeView.getMinimapDom().scrollIndicator.parentElement;
+  invariant(minimapContainer);
+  const containerHeight = minimapContainer.clientHeight;
+  view.getMinimapStore().dispatch({
+    type: "minimap/set-container-height",
+    payload: { height_cpx: dpx_to_cpx(containerHeight) }
   });
 };
-var applyScrollPosition = (state2, dom) => {
-  const dimensions = getContainerDimensions(dom);
-  if (!dimensions)
-    return;
-  const isScrollIndicatorHidden = state2.totalDrawnHeight_cpx <= dimensions.containerHeight_cpx;
-  if (isScrollIndicatorHidden) {
-    dom.scrollIndicator.style.display = "none";
-    dom.canvasContainer.style.transform = "translateY(0)";
-    return;
-  }
-  dom.scrollIndicator.style.display = "block";
-  const scrollDimensions = calculateScrollDimensions(
-    state2,
-    dimensions.clientHeight_dpx,
-    dimensions.containerHeight_cpx
-  );
-  applyDomUpdates(dom, scrollDimensions);
-};
-var debouncedApplyScrollPosition = (0, import_obsidian22.debounce)(applyScrollPosition, 16);
 
 // src/stores/minimap/subscriptions/on-minimap-mount.ts
 var onMinimapMount = async (view) => {
@@ -24697,93 +26921,34 @@ var onMinimapMount = async (view) => {
   setMinimapDom(view);
   initializeMinimapWorker(view);
   setMinimapActiveNode(view);
+  setClientHeight(view);
   await drawDocument(view);
-  debouncedApplyScrollPosition(
-    minimapStore.getValue().scrollInfo,
-    view.getMinimapDom()
-  );
 };
-
-// src/stores/minimap/subscriptions/actions/set-scrollbar-position/calculate-scroll-delta-to-active-card.ts
-var calculateScrollDeltaToActiveCard = (y_start_cpx, y_end_cpx, totalDrawnHeight_cpx, scrollPosition_cpx, clientHeight_dpx) => {
-  const containerHeight_cpx = dpx_to_cpx(clientHeight_dpx);
-  const contentFitsContainer = totalDrawnHeight_cpx <= containerHeight_cpx;
-  if (contentFitsContainer) {
-    return null;
-  }
-  const currentScroll_cpx = scrollPosition_cpx;
-  const visibleStart_cpx = currentScroll_cpx;
-  const visibleEnd_cpx = currentScroll_cpx + containerHeight_cpx;
-  const startIsVisible = y_start_cpx > visibleStart_cpx && y_start_cpx < visibleEnd_cpx;
-  const endIsVisible = y_end_cpx > visibleStart_cpx && y_end_cpx < visibleEnd_cpx;
-  if (startIsVisible && endIsVisible) {
-    return null;
-  }
-  let newScroll_cpx = 0;
-  const range_height_cpx = y_end_cpx - y_start_cpx;
-  const rangeIsTallerThanContainer = range_height_cpx > containerHeight_cpx;
-  if (rangeIsTallerThanContainer) {
-    newScroll_cpx = y_start_cpx;
-  } else {
-    if (!startIsVisible) {
-      newScroll_cpx = y_start_cpx - 10;
-    } else if (!endIsVisible) {
-      newScroll_cpx = y_end_cpx - containerHeight_cpx + 10;
-    }
-  }
-  const maxScroll_cpx = totalDrawnHeight_cpx - containerHeight_cpx;
-  newScroll_cpx = Math.max(0, Math.min(newScroll_cpx, maxScroll_cpx));
-  return newScroll_cpx;
-};
-
-// src/stores/minimap/subscriptions/actions/set-scrollbar-position/set-scrollbar-position.ts
-var setScrollbarPosition = debounce2((view) => {
-  const minimapStore = view.getMinimapStore();
-  const state2 = minimapStore.getValue();
-  const activeCardRange = state2.ranges.cards[state2.activeCardId];
-  invariant(activeCardRange);
-  const minimapContainer = view.getMinimapDom().canvasContainer.parentElement;
-  invariant(minimapContainer);
-  const delta_cpx = calculateScrollDeltaToActiveCard(
-    activeCardRange.y_start,
-    activeCardRange.y_end,
-    state2.scrollInfo.totalDrawnHeight_cpx,
-    state2.scrollInfo.scrollPosition_cpx,
-    minimapContainer.clientHeight
-  );
-  if (typeof delta_cpx === "number") {
-    minimapStore.dispatch({
-      type: "minimap/set-scroll-position",
-      payload: {
-        position_cpx: Number(delta_cpx)
-      }
-    });
-  }
-}, 16);
 
 // src/stores/minimap/subscriptions/on-minimap-state-update.ts
-var onMinimapStateUpdate = (view, action, state2) => {
+var onMinimapStateUpdate = (view, action, state2, localState) => {
   const minimapStore = view.minimapStore;
   invariant(minimapStore);
-  if (action.type === "minimap/set-card-ranges") {
-    setScrollbarPosition(view);
-  } else if (action.type === "minimap/set-active-node") {
-    if (state2.ranges.cards[state2.activeCardId]) {
-      setScrollbarPosition(view);
+  if (action.type === "minimap/set-active-node" || action.type === "minimap/set-container-height" || action.type === "minimap/mouse-wheel-scroll" || action.type === "minimap/set-card-ranges") {
+    const scrollPosition = state2.scrollbar.scrollPosition_cpx;
+    if (scrollPosition !== localState.previousScrollPosition) {
+      localState.previousScrollPosition = scrollPosition;
+      view.minimapEffects.updateVisibleRange(view);
     }
-  } else if (action.type === "minimap/set-scroll-position") {
-    debouncedApplyScrollPosition(state2.scrollInfo, view.getMinimapDom());
   }
 };
 
 // src/stores/minimap/subscriptions/minimap-subscriptions.ts
 var minimapSubscriptions = (view) => {
+  const localState = {
+    previousScrollPosition: 0
+  };
   const unsub = view.minimapStore.subscribe(
     (viewState, action, initialRun) => {
       if (initialRun) {
         onMinimapMount(view);
       } else if (action) {
-        onMinimapStateUpdate(view, action, viewState);
+        onMinimapStateUpdate(view, action, viewState, localState);
       }
     }
   );
@@ -24797,18 +26962,50 @@ var minimapSubscriptions = (view) => {
   };
 };
 
+// src/stores/minimap/derived/scrollbar-stores.ts
+var calculateThumbHeightDpx = (state2) => {
+  const isScrollIndicatorHidden = state2.totalDrawnHeight_cpx <= state2.containerHeight_cpx;
+  if (isScrollIndicatorHidden)
+    return 0;
+  const indicatorHeight_cpx = state2.containerHeight_cpx / state2.totalDrawnHeight_cpx * state2.containerHeight_cpx;
+  return cpx_to_dpx(indicatorHeight_cpx);
+};
+var ScrollThumbHeightStore = (view) => {
+  return derived2(view.getMinimapStore(), (state2) => {
+    return calculateThumbHeightDpx(state2.scrollbar);
+  });
+};
+var ScrollThumbPositionStore = (view) => {
+  return derived2(view.getMinimapStore(), (_state) => {
+    const state2 = _state.scrollbar;
+    const indicatorHeight_dpx = calculateThumbHeightDpx(state2);
+    if (indicatorHeight_dpx === 0)
+      return 0;
+    const maxScroll_cpx = state2.totalDrawnHeight_cpx - state2.containerHeight_cpx;
+    const scrollPercent = state2.scrollPosition_cpx / maxScroll_cpx;
+    const containerHeight_dpx = cpx_to_dpx(state2.containerHeight_cpx);
+    return scrollPercent * (containerHeight_dpx - indicatorHeight_dpx);
+  });
+};
+var MinimapScrollOffsetStore = (view) => derived2(view.getMinimapStore(), (state2) => {
+  const offset = cpx_to_dpx(state2.scrollbar.scrollPosition_cpx);
+  return offset > 0 ? -1 * offset : offset;
+});
+
 // src/view/components/container/minimap/minimap.svelte
-function add_css32(target) {
+function add_css37(target) {
   append_styles(target, "svelte-lp1si7", ":root{--scroll-indicator-color:rgba(255, 255, 255, 0.2)}.minimap-container.svelte-lp1si7{position:relative;height:100%;width:184px;padding:4px;background:var(--background-primary);overflow:hidden;flex:0 0 auto}canvas.svelte-lp1si7{width:176px;margin-right:4px}.canvas-container.svelte-lp1si7{transition:transform 0.1s ease-out;width:176px}.scroll-indicator.svelte-lp1si7{position:absolute;right:0;top:0;width:4px;background:var(--color-base-50);border-radius:2px;transition:transform 0.1s ease-out}");
 }
-function create_fragment90(ctx) {
+function create_fragment99(ctx) {
   let div2;
   let div0;
   let indicators;
   let t0;
   let canvas;
+  let div0_style_value;
   let t1;
   let div1;
+  let div1_style_value;
   let current;
   let mounted;
   let dispose;
@@ -24825,8 +27022,13 @@ function create_fragment90(ctx) {
       attr(canvas, "id", "minimap");
       attr(canvas, "class", "svelte-lp1si7");
       attr(div0, "class", "canvas-container svelte-lp1si7");
+      attr(div0, "style", div0_style_value = `transform: translateY(${/*$containerOffset*/
+      ctx[0]}px)`);
       attr(div1, "class", "scroll-indicator svelte-lp1si7");
       attr(div1, "id", "scrollIndicator");
+      attr(div1, "style", div1_style_value = `height: ${/*$thumbHeight*/
+      ctx[1]}px; transform: translateY(${/*$thumbPosition*/
+      ctx[2]}px)`);
       attr(div2, "class", "minimap-container svelte-lp1si7");
     },
     m(target, anchor) {
@@ -24844,25 +27046,37 @@ function create_fragment90(ctx) {
             div0,
             "click",
             /*onClick*/
-            ctx[0]
+            ctx[3]
           ),
           listen(
             div0,
             "mousemove",
             /*onMousemove*/
-            ctx[2]
+            ctx[5]
           ),
           listen(
             div2,
             "wheel",
             /*onWheel*/
-            ctx[1]
+            ctx[4]
           )
         ];
         mounted = true;
       }
     },
-    p: noop,
+    p(ctx2, [dirty]) {
+      if (!current || dirty & /*$containerOffset*/
+      1 && div0_style_value !== (div0_style_value = `transform: translateY(${/*$containerOffset*/
+      ctx2[0]}px)`)) {
+        attr(div0, "style", div0_style_value);
+      }
+      if (!current || dirty & /*$thumbHeight, $thumbPosition*/
+      6 && div1_style_value !== (div1_style_value = `height: ${/*$thumbHeight*/
+      ctx2[1]}px; transform: translateY(${/*$thumbPosition*/
+      ctx2[2]}px)`)) {
+        attr(div1, "style", div1_style_value);
+      }
+    },
     i(local) {
       if (current)
         return;
@@ -24883,7 +27097,10 @@ function create_fragment90(ctx) {
     }
   };
 }
-function instance87($$self) {
+function instance97($$self, $$props, $$invalidate) {
+  let $containerOffset;
+  let $thumbHeight;
+  let $thumbPosition;
   const view = getView();
   view.minimapStore = new Store(defaultMinimapState(), minimapReducer, this.onViewStoreError);
   const onClick = (e) => onCanvasClick(e, view);
@@ -24902,21 +27119,37 @@ function instance87($$self) {
         unsub();
     };
   });
-  return [onClick, onWheel, onMousemove];
+  const thumbHeight = ScrollThumbHeightStore(view);
+  component_subscribe($$self, thumbHeight, (value) => $$invalidate(1, $thumbHeight = value));
+  const thumbPosition = ScrollThumbPositionStore(view);
+  component_subscribe($$self, thumbPosition, (value) => $$invalidate(2, $thumbPosition = value));
+  const containerOffset = MinimapScrollOffsetStore(view);
+  component_subscribe($$self, containerOffset, (value) => $$invalidate(0, $containerOffset = value));
+  return [
+    $containerOffset,
+    $thumbHeight,
+    $thumbPosition,
+    onClick,
+    onWheel,
+    onMousemove,
+    thumbHeight,
+    thumbPosition,
+    containerOffset
+  ];
 }
 var Minimap = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance87, create_fragment90, safe_not_equal, {}, add_css32);
+    init(this, options, instance97, create_fragment99, safe_not_equal, {}, add_css37);
   }
 };
 var minimap_default = Minimap;
 
 // src/view/components/container/right-sidebar/right-sidebar.svelte
-function add_css33(target) {
+function add_css38(target) {
   append_styles(target, "svelte-wtyjlq", ".lineage-right-sidebar.svelte-wtyjlq{--node-width:calc(var(--sidebar-width) - 40px);flex:0 0 auto;width:var(--animated-sidebar-width);position:relative;overflow:hidden;transition:width 0.3s ease}");
 }
-function create_if_block22(ctx) {
+function create_if_block23(ctx) {
   let minimap;
   let current;
   minimap = new minimap_default({});
@@ -24943,14 +27176,14 @@ function create_if_block22(ctx) {
     }
   };
 }
-function create_fragment91(ctx) {
+function create_fragment100(ctx) {
   let div;
   let div_class_value;
   let div_style_value;
   let current;
   let if_block = (
     /*showMinimap*/
-    ctx[2] && create_if_block22(ctx)
+    ctx[2] && create_if_block23(ctx)
   );
   return {
     c() {
@@ -24979,7 +27212,7 @@ function create_fragment91(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block22(ctx2);
+          if_block = create_if_block23(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div, null);
@@ -25018,7 +27251,7 @@ function create_fragment91(ctx) {
   };
 }
 var MIN_WIDTH = 184;
-function instance88($$self, $$props, $$invalidate) {
+function instance98($$self, $$props, $$invalidate) {
   let $showSidebarStore;
   let animatedSidebarWidth = 0;
   let sidebarWidth = MIN_WIDTH;
@@ -25080,7 +27313,7 @@ function instance88($$self, $$props, $$invalidate) {
 var Right_sidebar = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance88, create_fragment91, safe_not_equal, {}, add_css33);
+    init(this, options, instance98, create_fragment100, safe_not_equal, {}, add_css38);
   }
 };
 var right_sidebar_default = Right_sidebar;
@@ -25184,55 +27417,29 @@ var clickAndDrag = (element2, view) => {
 };
 
 // src/view/components/container/left-sidebar/components/tab-header/components/clickable-icon.svelte
-function add_css34(target) {
-  append_styles(target, "svelte-1uy9r89", ".asterisk.svelte-1uy9r89{position:absolute;top:1px;right:1px;opacity:0.8}.theme-dark{& .clickable-icon {\n            color: var(--color-base-60);\n        };& .clickable-icon:active {\n            color: var(--icon-color-active);\n        }}.theme-light{& .lineage-view .sidebar-tabs-header .clickable-icon {\n            color: var(--color-base-10);\n        };& .lineage-view .sidebar-tabs-header .clickable-icon:active {\n            color: var(--icon-color-active);\n        }}.clickable-icon--active.svelte-1uy9r89{color:var(--icon-color-active);background-color:rgba(0, 0, 0, 0.3);background-blend-mode:multiply}");
+function add_css39(target) {
+  append_styles(target, "svelte-1scmxe1", ".lineage-view .clickable-icon.svelte-1scmxe1{cursor:pointer}.theme-dark{& .lineage-view .sidebar-tabs-header .clickable-icon {\n            color: var(--color-base-60);\n        };& .lineage-view .sidebar-tabs-header .clickable-icon:active {\n            color: var(--icon-color-active);\n        }}.theme-light{& .lineage-view .sidebar-tabs-header .clickable-icon {\n            color: var(--color-base-10);\n        };& .lineage-view .sidebar-tabs-header .clickable-icon:active {\n            color: var(--color-base-10);\n        }}.clickable-icon--active.svelte-1scmxe1{color:var(--icon-color-active);background-color:rgba(0, 0, 0, 0.3);background-blend-mode:multiply}");
 }
-function create_if_block23(ctx) {
-  let span;
-  return {
-    c() {
-      span = element("span");
-      span.textContent = "*";
-      attr(span, "class", "asterisk svelte-1uy9r89");
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-    }
-  };
-}
-function create_fragment92(ctx) {
+function create_fragment101(ctx) {
   let button;
-  let t;
   let button_class_value;
   let current;
   let mounted;
   let dispose;
-  let if_block = (
-    /*hasEnabledItems*/
-    ctx[3] && create_if_block23(ctx)
-  );
   const default_slot_template = (
     /*#slots*/
-    ctx[6].default
+    ctx[4].default
   );
   const default_slot = create_slot(
     default_slot_template,
     ctx,
     /*$$scope*/
-    ctx[5],
+    ctx[3],
     null
   );
   return {
     c() {
       button = element("button");
-      if (if_block)
-        if_block.c();
-      t = space();
       if (default_slot)
         default_slot.c();
       attr(
@@ -25242,16 +27449,11 @@ function create_fragment92(ctx) {
         ctx[1]
       );
       attr(button, "class", button_class_value = null_to_empty("clickable-icon nav-action-button " + /*isActive*/
-      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-1uy9r89");
-      button.disabled = /*disabled*/
-      ctx[4];
+      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-1scmxe1");
       set_style(button, "position", "relative");
     },
     m(target, anchor) {
       insert(target, button, anchor);
-      if (if_block)
-        if_block.m(button, null);
-      append(button, t);
       if (default_slot) {
         default_slot.m(button, null);
       }
@@ -25269,36 +27471,22 @@ function create_fragment92(ctx) {
     },
     p(new_ctx, [dirty]) {
       ctx = new_ctx;
-      if (
-        /*hasEnabledItems*/
-        ctx[3]
-      ) {
-        if (if_block) {
-        } else {
-          if_block = create_if_block23(ctx);
-          if_block.c();
-          if_block.m(button, t);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
       if (default_slot) {
         if (default_slot.p && (!current || dirty & /*$$scope*/
-        32)) {
+        8)) {
           update_slot_base(
             default_slot,
             default_slot_template,
             ctx,
             /*$$scope*/
-            ctx[5],
+            ctx[3],
             !current ? get_all_dirty_from_scope(
               /*$$scope*/
-              ctx[5]
+              ctx[3]
             ) : get_slot_changes(
               default_slot_template,
               /*$$scope*/
-              ctx[5],
+              ctx[3],
               dirty,
               null
             ),
@@ -25317,13 +27505,8 @@ function create_fragment92(ctx) {
       }
       if (!current || dirty & /*isActive*/
       4 && button_class_value !== (button_class_value = null_to_empty("clickable-icon nav-action-button " + /*isActive*/
-      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-1uy9r89")) {
+      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-1scmxe1")) {
         attr(button, "class", button_class_value);
-      }
-      if (!current || dirty & /*disabled*/
-      16) {
-        button.disabled = /*disabled*/
-        ctx[4];
       }
     },
     i(local) {
@@ -25340,8 +27523,6 @@ function create_fragment92(ctx) {
       if (detaching) {
         detach(button);
       }
-      if (if_block)
-        if_block.d();
       if (default_slot)
         default_slot.d(detaching);
       mounted = false;
@@ -25349,13 +27530,11 @@ function create_fragment92(ctx) {
     }
   };
 }
-function instance89($$self, $$props, $$invalidate) {
+function instance99($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { onClick } = $$props;
   let { label } = $$props;
   let { isActive = false } = $$props;
-  let { hasEnabledItems = false } = $$props;
-  let { disabled = false } = $$props;
   $$self.$$set = ($$props2) => {
     if ("onClick" in $$props2)
       $$invalidate(0, onClick = $$props2.onClick);
@@ -25363,39 +27542,21 @@ function instance89($$self, $$props, $$invalidate) {
       $$invalidate(1, label = $$props2.label);
     if ("isActive" in $$props2)
       $$invalidate(2, isActive = $$props2.isActive);
-    if ("hasEnabledItems" in $$props2)
-      $$invalidate(3, hasEnabledItems = $$props2.hasEnabledItems);
-    if ("disabled" in $$props2)
-      $$invalidate(4, disabled = $$props2.disabled);
     if ("$$scope" in $$props2)
-      $$invalidate(5, $$scope = $$props2.$$scope);
+      $$invalidate(3, $$scope = $$props2.$$scope);
   };
-  return [onClick, label, isActive, hasEnabledItems, disabled, $$scope, slots];
+  return [onClick, label, isActive, $$scope, slots];
 }
 var Clickable_icon = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(
-      this,
-      options,
-      instance89,
-      create_fragment92,
-      safe_not_equal,
-      {
-        onClick: 0,
-        label: 1,
-        isActive: 2,
-        hasEnabledItems: 3,
-        disabled: 4
-      },
-      add_css34
-    );
+    init(this, options, instance99, create_fragment101, safe_not_equal, { onClick: 0, label: 1, isActive: 2 }, add_css39);
   }
 };
 var clickable_icon_default = Clickable_icon;
 
 // src/view/components/container/left-sidebar/components/tab-header/tab-header.svelte
-function add_css35(target) {
+function add_css40(target) {
   append_styles(target, "svelte-rqh5hd", ".sidebar-tabs-header.svelte-rqh5hd{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;align-self:center;justify-self:center;box-sizing:border-box;height:auto}.tab-header-buttons.svelte-rqh5hd{display:flex;align-items:center;justify-content:center;gap:5px}");
 }
 function create_default_slot_15(ctx) {
@@ -25426,7 +27587,7 @@ function create_default_slot_15(ctx) {
     }
   };
 }
-function create_default_slot56(ctx) {
+function create_default_slot64(ctx) {
   let clock;
   let current;
   clock = new clock_default({ props: { class: "svg-icon" } });
@@ -25454,7 +27615,7 @@ function create_default_slot56(ctx) {
     }
   };
 }
-function create_fragment93(ctx) {
+function create_fragment102(ctx) {
   let div1;
   let div0;
   let clickableicon0;
@@ -25463,12 +27624,11 @@ function create_fragment93(ctx) {
   let current;
   clickableicon0 = new clickable_icon_default({
     props: {
-      hasEnabledItems: false,
       isActive: (
         /*$activeTab*/
         ctx[0] === "pinned-cards"
       ),
-      label: lang.sidebar_tab_pinned_cards,
+      label: lang.sidebar_tab_pinned_nodes,
       onClick: (
         /*func*/
         ctx[3]
@@ -25479,17 +27639,16 @@ function create_fragment93(ctx) {
   });
   clickableicon1 = new clickable_icon_default({
     props: {
-      hasEnabledItems: false,
       isActive: (
         /*$activeTab*/
         ctx[0] === "recent-cards"
       ),
-      label: lang.sidebar_tab_recent_cards,
+      label: lang.sidebar_tab_recent_nodes,
       onClick: (
         /*func_1*/
         ctx[4]
       ),
-      $$slots: { default: [create_default_slot56] },
+      $$slots: { default: [create_default_slot64] },
       $$scope: { ctx }
     }
   });
@@ -25554,7 +27713,7 @@ function create_fragment93(ctx) {
     }
   };
 }
-function instance90($$self, $$props, $$invalidate) {
+function instance100($$self, $$props, $$invalidate) {
   let $activeTab;
   const view = getView();
   const activeTab = LeftSidebarActiveTabStore(view);
@@ -25572,20 +27731,20 @@ function instance90($$self, $$props, $$invalidate) {
 var Tab_header = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance90, create_fragment93, safe_not_equal, {}, add_css35);
+    init(this, options, instance100, create_fragment102, safe_not_equal, {}, add_css40);
   }
 };
 var tab_header_default = Tab_header;
 
 // src/stores/view/derived/pinned-cards-sidebar.ts
-var ActivePinnedCardStore = (view) => derived(view.viewStore, (state2) => state2.pinnedNodes.activeNode);
+var ActivePinnedCardStore = (view) => derived2(view.viewStore, (state2) => state2.pinnedNodes.activeNode);
 
 // src/view/components/container/left-sidebar/components/no-items/no-items.svelte
-function create_fragment94(ctx) {
+function create_fragment103(ctx) {
   let div;
   let t_value = (
     /*variant*/
-    (ctx[0] === "pinned" ? lang.sidebar_no_pinned_cards : lang.sidebar_no_recent_cards) + ""
+    (ctx[0] === "pinned" ? lang.sidebar_no_pinned_nodes : lang.sidebar_no_recent_nodes) + ""
   );
   let t;
   return {
@@ -25601,7 +27760,7 @@ function create_fragment94(ctx) {
     p(ctx2, [dirty]) {
       if (dirty & /*variant*/
       1 && t_value !== (t_value = /*variant*/
-      (ctx2[0] === "pinned" ? lang.sidebar_no_pinned_cards : lang.sidebar_no_recent_cards) + ""))
+      (ctx2[0] === "pinned" ? lang.sidebar_no_pinned_nodes : lang.sidebar_no_recent_nodes) + ""))
         set_data(t, t_value);
     },
     i: noop,
@@ -25613,7 +27772,7 @@ function create_fragment94(ctx) {
     }
   };
 }
-function instance91($$self, $$props, $$invalidate) {
+function instance101($$self, $$props, $$invalidate) {
   let { variant } = $$props;
   $$self.$$set = ($$props2) => {
     if ("variant" in $$props2)
@@ -25624,7 +27783,7 @@ function instance91($$self, $$props, $$invalidate) {
 var No_items = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance91, create_fragment94, safe_not_equal, { variant: 0 });
+    init(this, options, instance101, create_fragment103, safe_not_equal, { variant: 0 });
   }
 };
 var no_items_default = No_items;
@@ -25679,15 +27838,15 @@ var scrollActivePinnedNode = (containerRef) => {
 };
 
 // src/view/components/container/left-sidebar/components/pinned-cards/pinned-cards-sidebar.svelte
-function add_css36(target) {
-  append_styles(target, "svelte-1l2hv0v", ".pinned-cards-container.svelte-1l2hv0v{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;flex:1 1 auto;padding-bottom:10px}");
+function add_css41(target) {
+  append_styles(target, "svelte-1ymcixr", ".pinned-cards-container.svelte-1ymcixr{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;flex:1 1 auto;padding-bottom:10px;overflow-y:auto}");
 }
-function get_each_context12(ctx, list, i) {
+function get_each_context16(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[13] = list[i];
   return child_ctx;
 }
-function create_else_block9(ctx) {
+function create_else_block11(ctx) {
   let noitems;
   let current;
   noitems = new no_items_default({ props: { variant: "pinned" } });
@@ -25729,9 +27888,9 @@ function create_if_block24(ctx) {
     ctx2[13]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context12(ctx, each_value, i);
+    let child_ctx = get_each_context16(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block12(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block16(key, child_ctx));
   }
   return {
     c() {
@@ -25757,7 +27916,7 @@ function create_if_block24(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block12, each_1_anchor, get_each_context12);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block16, each_1_anchor, get_each_context16);
         check_outros();
       }
     },
@@ -25785,7 +27944,7 @@ function create_if_block24(ctx) {
     }
   };
 }
-function create_each_block12(key_1, ctx) {
+function create_each_block16(key_1, ctx) {
   let first;
   let node_1;
   let current;
@@ -25927,7 +28086,7 @@ function create_each_block12(key_1, ctx) {
     }
   };
 }
-function create_fragment95(ctx) {
+function create_fragment104(ctx) {
   let div;
   let current_block_type_index;
   let if_block;
@@ -25935,7 +28094,7 @@ function create_fragment95(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block24, create_else_block9];
+  const if_block_creators = [create_if_block24, create_else_block11];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -25951,7 +28110,7 @@ function create_fragment95(ctx) {
     c() {
       div = element("div");
       if_block.c();
-      attr(div, "class", "pinned-cards-container svelte-1l2hv0v");
+      attr(div, "class", "pinned-cards-container svelte-1ymcixr");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -26004,7 +28163,7 @@ function create_fragment95(ctx) {
     }
   };
 }
-function instance92($$self, $$props, $$invalidate) {
+function instance102($$self, $$props, $$invalidate) {
   let $pinnedNodesArray;
   let $activePinnedCard;
   let $editingStateStore;
@@ -26042,15 +28201,15 @@ function instance92($$self, $$props, $$invalidate) {
 var Pinned_cards_sidebar = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance92, create_fragment95, safe_not_equal, {}, add_css36);
+    init(this, options, instance102, create_fragment104, safe_not_equal, {}, add_css41);
   }
 };
 var pinned_cards_sidebar_default = Pinned_cards_sidebar;
 
 // src/stores/view/derived/recent-nodes.ts
-var ActiveRecentNodeStore = (view) => derived(view.viewStore, (state2) => state2.recentNodes.activeNode);
+var ActiveRecentNodeStore = (view) => derived2(view.viewStore, (state2) => state2.recentNodes.activeNode);
 
-// src/helpers/remove-duplicates-from-array.ts
+// src/helpers/array-helpers/remove-duplicates-from-array.ts
 var removeDuplicatesFromArray = (array, reverse = false) => {
   const uniqueItems = /* @__PURE__ */ new Set();
   const newArray = [];
@@ -26065,15 +28224,15 @@ var removeDuplicatesFromArray = (array, reverse = false) => {
 };
 
 // src/view/components/container/left-sidebar/components/recent-cards/recent-cards.svelte
-function add_css37(target) {
-  append_styles(target, "svelte-uest1q", ".recent-cards-container.svelte-uest1q{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;flex:1 1 auto;padding-bottom:10px}");
+function add_css42(target) {
+  append_styles(target, "svelte-gdogae", ".recent-cards-container.svelte-gdogae{height:100%;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;flex:1 1 auto;padding-bottom:10px;overflow-y:auto}");
 }
-function get_each_context13(ctx, list, i) {
+function get_each_context17(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[15] = list[i];
   return child_ctx;
 }
-function create_else_block10(ctx) {
+function create_else_block12(ctx) {
   let noitems;
   let current;
   noitems = new no_items_default({ props: { variant: "recent" } });
@@ -26115,9 +28274,9 @@ function create_if_block25(ctx) {
     ctx2[15]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context13(ctx, each_value, i);
+    let child_ctx = get_each_context17(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block13(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block17(key, child_ctx));
   }
   return {
     c() {
@@ -26143,7 +28302,7 @@ function create_if_block25(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block13, each_1_anchor, get_each_context13);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block17, each_1_anchor, get_each_context17);
         check_outros();
       }
     },
@@ -26171,7 +28330,7 @@ function create_if_block25(ctx) {
     }
   };
 }
-function create_each_block13(key_1, ctx) {
+function create_each_block17(key_1, ctx) {
   let first;
   let node_1;
   let current;
@@ -26313,12 +28472,12 @@ function create_each_block13(key_1, ctx) {
     }
   };
 }
-function create_fragment96(ctx) {
+function create_fragment105(ctx) {
   let div;
   let current_block_type_index;
   let if_block;
   let current;
-  const if_block_creators = [create_if_block25, create_else_block10];
+  const if_block_creators = [create_if_block25, create_else_block12];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -26334,7 +28493,7 @@ function create_fragment96(ctx) {
     c() {
       div = element("div");
       if_block.c();
-      attr(div, "class", "recent-cards-container svelte-uest1q");
+      attr(div, "class", "recent-cards-container svelte-gdogae");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -26384,7 +28543,7 @@ function create_fragment96(ctx) {
   };
 }
 var RECENT_NODES_LIMIT = 30;
-function instance93($$self, $$props, $$invalidate) {
+function instance103($$self, $$props, $$invalidate) {
   let $activeRecentCard;
   let $editingStateStore;
   let $pendingConfirmation;
@@ -26454,13 +28613,13 @@ function instance93($$self, $$props, $$invalidate) {
 var Recent_cards = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance93, create_fragment96, safe_not_equal, {}, add_css37);
+    init(this, options, instance103, create_fragment105, safe_not_equal, {}, add_css42);
   }
 };
 var recent_cards_default = Recent_cards;
 
 // src/view/components/container/left-sidebar/left-sidebar.svelte
-function add_css38(target) {
+function add_css43(target) {
   append_styles(target, "svelte-11s0o0n", ".sidebar.svelte-11s0o0n{--node-width:calc(var(--sidebar-width) - 40px);flex:0 0 auto;width:var(--animated-sidebar-width);position:relative;overflow:hidden;background-color:rgba(0, 0, 0, 0.2);background-blend-mode:multiply;display:flex;flex-direction:column;padding:10px 0;gap:10px}.width-transition.svelte-11s0o0n{transition:width 0.3s ease}.resizer.svelte-11s0o0n{position:absolute;top:0;height:100%;bottom:0;background-color:transparent;transition:background-color 0.2s;cursor:col-resize;right:0px;width:4px}.resizer.svelte-11s0o0n:hover{background-color:var(--color-accent)}.limit-card-height.svelte-11s0o0n{& .lng-prev {\n            max-height: 65vh;\n        };& .editor-container {\n            max-height: 65vh;\n        }}");
 }
 function create_if_block_18(ctx) {
@@ -26517,7 +28676,7 @@ function create_if_block26(ctx) {
     }
   };
 }
-function create_fragment97(ctx) {
+function create_fragment106(ctx) {
   let div1;
   let tabheader;
   let t0;
@@ -26649,7 +28808,7 @@ function create_fragment97(ctx) {
   };
 }
 var MIN_WIDTH2 = 250;
-function instance94($$self, $$props, $$invalidate) {
+function instance104($$self, $$props, $$invalidate) {
   let $limitPreviewHeight;
   let $activeTab;
   let animatedSidebarWidth = 0;
@@ -26716,15 +28875,15 @@ function instance94($$self, $$props, $$invalidate) {
 var Left_sidebar = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance94, create_fragment97, safe_not_equal, {}, add_css38);
+    init(this, options, instance104, create_fragment106, safe_not_equal, {}, add_css43);
   }
 };
 var left_sidebar_default = Left_sidebar;
 
-// src/view/actions/context-menu/context-menu.ts
-var import_obsidian29 = require("obsidian");
+// src/view/actions/context-menu/show-context-menu.ts
+var import_obsidian27 = require("obsidian");
 
-// src/view/actions/context-menu/helpers/on-long-press.ts
+// src/helpers/on-long-press.ts
 var onLongPress = (element2, callback, preventDefaultPredicate) => {
   const state2 = { timer: null, longPress: false };
   const onTouchEnd = (e) => {
@@ -26754,6 +28913,65 @@ var onLongPress = (element2, callback, preventDefaultPredicate) => {
     element2.removeEventListener("touchend", onTouchEnd);
     element2.removeEventListener("touchmove", onTouchEnd);
   };
+};
+
+// src/obsidian/context-menu/render-context-menu.ts
+var import_obsidian22 = require("obsidian");
+var addMenuItem = (menu, menuItem) => {
+  if ("type" in menuItem && menuItem.type === "separator") {
+    menu.addSeparator();
+  } else if ("title" in menuItem) {
+    menu.addItem((item) => {
+      item.setTitle(menuItem.title).setIcon(menuItem.icon).setDisabled(menuItem.disabled || false).setChecked(menuItem.checked || false);
+      if ("submenu" in menuItem) {
+        const subMenu = item.setSubmenu();
+        for (const subItem of menuItem.submenu) {
+          addMenuItem(subMenu, subItem);
+        }
+      } else {
+        item.onClick(menuItem.action);
+      }
+      if (menuItem.dangerous) {
+        if ("dom" in item) {
+          item.dom.classList.add("is-warning");
+        }
+      }
+    });
+  }
+};
+var renderContextMenu = (event, menuItems) => {
+  const menu = new import_obsidian22.Menu();
+  for (const menuItem of menuItems) {
+    addMenuItem(menu, menuItem);
+  }
+  menu.showAtMouseEvent(event);
+};
+
+// src/obsidian/context-menu/select-inactive-card.ts
+var selectInactiveCard = (view, closestCardElement, isInSidebar, isInRecentCardsList) => {
+  const id2 = closestCardElement?.id;
+  if (!isInSidebar) {
+    view.viewStore.dispatch({
+      type: "view/set-active-node/mouse-silent",
+      payload: {
+        id: id2
+      }
+    });
+  } else if (isInRecentCardsList) {
+    view.viewStore.dispatch({
+      type: "view/recent-nodes/set-active-node",
+      payload: {
+        id: id2
+      }
+    });
+  } else {
+    view.viewStore.dispatch({
+      type: "view/pinned-nodes/set-active-node",
+      payload: {
+        id: id2
+      }
+    });
+  }
 };
 
 // src/obsidian/events/workspace/effects/create-new-file.ts
@@ -26809,115 +29027,202 @@ var openFile = async (plugin, file, newLeaf) => {
   return leaf;
 };
 
-// src/obsidian/events/workspace/effects/toggle-obsidian-view-type.ts
-var toggleObsidianViewType = (plugin, leaf, type) => {
-  setTimeout(() => {
-    leaf.setViewState({
-      type,
-      popstate: true,
-      state: leaf.view.getState()
-    });
-    const activeLeaf = plugin.app.workspace.getLeaf();
-    if (activeLeaf !== leaf) {
-      plugin.app.workspace.revealLeaf(leaf);
-    }
-    plugin.app.workspace.setActiveLeaf(leaf);
-  }, 0);
-};
-
-// src/obsidian/events/workspace/actions/set-document-format.ts
-var setDocumentFormat = (plugin, path, type) => {
-  plugin.settings.dispatch({
-    type: "SET_DOCUMENT_TYPE",
-    payload: {
-      path,
-      format: type
-    }
-  });
-};
-
-// src/obsidian/events/workspace/effects/open-file-in-lineage.ts
-var openFileInLineage = async (plugin, file, type, newLeaf) => {
-  const leaf = await openFile(plugin, file, newLeaf);
-  toggleObsidianViewType(plugin, leaf, "lineage");
-  setDocumentFormat(plugin, file.path, type);
-};
-
-// src/obsidian/commands/helpers/extract-branch/helpers/get-file-name-of-extracted-branch/get-file-name-from-content.ts
-var getFileNameFromContent = (text2) => {
-  const lines = text2.split("\n").map((line) => line.trim().replace(/\s+/g, " ")).filter((line) => line);
-  if (lines.length === 0)
+// src/view/actions/context-menu/card-context-menu/helpers/export-selection.ts
+var exportSelection = async (view, includeSubItems) => {
+  const viewState = view.viewStore.getValue();
+  const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
+  if (isEditing2) {
+    saveNodeContent(view);
+    setTimeout(() => {
+      exportSelection(view, includeSubItems);
+    }, 100);
     return;
-  let result = void 0;
-  const headingLine = lines.find((line) => /^(#+)\s(.+)/.test(line));
-  if (headingLine) {
-    const headingMatch = headingLine.match(/^(#+)\s(.+)/);
-    result = headingMatch[2];
-  } else if (lines[0].startsWith("- ")) {
-    result = lines[0].replace(/^- /, "");
-  } else {
-    result = lines.join(" ");
   }
-  return result.substring(0, 100).trim();
+  let text2 = "";
+  const nodes = getActiveNodes(view, false);
+  if (includeSubItems) {
+    text2 = mapBranchesToText(
+      view.documentStore.getValue().document,
+      nodes,
+      "unformatted-text"
+    );
+  } else {
+    text2 = getTextOfFlatNodes(view, nodes, false);
+  }
+  const file = view.file;
+  const newFile = await createNewFile(
+    view.plugin,
+    file.parent,
+    text2,
+    `${file.basename} - exported selection`
+  );
+  await openFile(view.plugin, newFile, "split");
 };
 
-// src/obsidian/commands/helpers/extract-branch/helpers/get-file-name-of-extracted-branch/get-file-name-of-extracted-branch.ts
-var getFileNameOfExtractedBranch = (nodeContent, currentFileName, sectionNumber) => {
-  const name = getFileNameFromContent(nodeContent);
-  if (name)
-    return name;
-  return `${currentFileName.trim()} - ${sectionNumber}`;
-};
-
-// src/obsidian/commands/helpers/extract-branch/extract-branch.ts
-var extractBranch = async (view) => {
-  try {
-    invariant(view.file);
-    invariant(view.file.parent);
-    const viewState = view.viewStore.getValue();
-    const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
-    if (isEditing2) {
-      saveNodeContent(view);
-      setTimeout(() => {
-        extractBranch(view);
-      }, 100);
-      return;
+// src/view/actions/context-menu/card-context-menu/create-multiple-nodes-context-menu.ts
+var createMultipleNodesContextMenu = (view) => {
+  const menuItems = [
+    {
+      title: lang.cm_copy,
+      icon: "documents",
+      submenu: [
+        {
+          title: lang.cm_copy_branches,
+          icon: "lineage-cards",
+          action: () => copyActiveBranchesToClipboard(view, true, false)
+        },
+        {
+          title: lang.cm_copy_branches_wo_formatting,
+          icon: "file-text",
+          action: () => copyActiveBranchesToClipboard(view, false, false)
+        },
+        {
+          title: lang.cm_copy_node_wo_subitems,
+          icon: "file-text",
+          action: () => copyActiveNodesToClipboard(view, false)
+        }
+      ]
+    },
+    {
+      title: lang.cm_cut,
+      icon: "scissors",
+      action: () => cutNode(view)
+    },
+    { type: "separator" },
+    {
+      title: lang.cm_export_selection,
+      icon: "file-text",
+      submenu: [
+        {
+          title: lang.cmd_export_branches_with_subitems,
+          icon: "file-text",
+          action: () => exportSelection(view, true)
+        },
+        {
+          title: lang.cmd_export_nodes_wo_subitems,
+          icon: "file-text",
+          action: () => exportSelection(view, false)
+        }
+      ]
     }
-    const documentState = view.documentStore.getValue();
-    const branch = getBranch(
-      documentState.document.columns,
-      documentState.document.content,
-      viewState.document.activeNode,
-      "copy"
-    );
-    const format2 = getDocumentFormat(view);
-    const text2 = format2 === "outline" ? branchToOutline([branch]) : format2 === "html-element" ? branchToHtmlElement([branch]) : branchToHtmlComment([branch]);
-    const fileName = getFileNameOfExtractedBranch(
-      branch.content[branch.nodeId].content,
-      view.file.basename,
-      documentState.sections.id_section[branch.nodeId]
-    );
-    const newFile = await createNewFile(
-      view.plugin,
-      view.file.parent,
-      text2,
-      fileName
-    );
-    await openFileInLineage(view.plugin, newFile, format2, "split");
+  ];
+  return menuItems;
+};
+
+// src/view/actions/context-menu/card-context-menu/helpers/insert-block-id.ts
+var getExistingBlockId = (lines) => {
+  const reversed = [...lines].reverse();
+  for (let line of reversed) {
+    line = line.trim();
+    const match = /\s+\^([a-zA-Z0-9]{4,})$/.exec(line);
+    if (match) {
+      return match[1];
+    }
+  }
+};
+var generateBlockId = () => Math.random().toString(36).substring(2, 8);
+var insertBlockId = (text2, __id__) => {
+  const lines = text2.trimEnd().split("\n");
+  const existingId = getExistingBlockId(lines);
+  if (existingId) {
+    return {
+      blockId: existingId,
+      text: text2
+    };
+  } else {
+    const lastLine = lines[lines.length - 1];
+    let blockId = null;
+    if (lastLine) {
+      blockId = __id__ || generateBlockId();
+      lines[lines.length - 1] = lines[lines.length - 1] + ` ^${blockId}`;
+      return {
+        blockId,
+        text: lines.join("\n")
+      };
+    }
+  }
+};
+
+// src/view/actions/context-menu/card-context-menu/helpers/copy-link-to-block.ts
+var import_obsidian24 = require("obsidian");
+var copyLinkToBlock = async (view, isInSidebar) => {
+  const file = view.file;
+  if (!file)
+    return;
+  const viewState = view.viewStore.getValue();
+  const activeTab = view.plugin.settings.getValue().view.leftSidebarActiveTab;
+  const activeNode = isInSidebar ? activeTab === "pinned-cards" ? viewState.pinnedNodes.activeNode : viewState.recentNodes.activeNode : viewState.document.activeNode;
+  const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
+  if (isEditing2) {
+    saveNodeContent(view);
+    setTimeout(() => {
+      copyLinkToBlock(view, isInSidebar);
+    }, 100);
+    return;
+  }
+  const documentState = view.documentStore.getValue();
+  const content = documentState.document.content[activeNode];
+  const text2 = content?.content;
+  const output = insertBlockId(text2);
+  if (output) {
+    const fileName = file.basename;
     view.documentStore.dispatch({
-      type: "DOCUMENT/EXTRACT_BRANCH",
+      type: "document/update-node-content",
       payload: {
-        nodeId: branch.nodeId,
-        documentName: newFile.basename
+        content: output.text,
+        nodeId: activeNode
+      },
+      context: {
+        isInSidebar: viewState.document.editing.isInSidebar
       }
     });
-  } catch (e) {
-    onPluginError(e, "command", { type: "extract-branch" });
+    const link = `[[${fileName}#^${output.blockId}]]`;
+    await navigator.clipboard.writeText(link);
+    new import_obsidian24.Notice("Copied");
+  } else {
+    new import_obsidian24.Notice("Could not copy link to clipboard");
   }
 };
 
+// src/view/actions/context-menu/card-context-menu/create-sidebar-context-menu-items.ts
+var togglePinNode = (view, activeNode, isPinned, isInSidebar) => {
+  const viewState = view.viewStore.getValue();
+  const id2 = isInSidebar ? viewState.pinnedNodes.activeNode : activeNode;
+  view.documentStore.dispatch({
+    type: isPinned ? "document/pinned-nodes/unpin" : "document/pinned-nodes/pin",
+    payload: { id: id2 }
+  });
+};
+var createSidebarContextMenuItems = (view, { isPinned, activeNode, isInRecentCardsList }) => {
+  const menuItems = [
+    {
+      title: lang.cm_copy_link_to_block,
+      icon: "links-coming-in",
+      action: () => copyLinkToBlock(view, true)
+    },
+    { type: "separator" },
+    {
+      title: lang.cm_copy,
+      icon: "documents",
+      action: () => copyActiveNodesToClipboard(view, true)
+    },
+    { type: "separator" },
+    {
+      title: isPinned ? lang.cm_unpin_from_left_sidebar : lang.cm_pin_in_left_sidebar,
+      icon: isPinned ? "pin-off" : "pin",
+      action: () => togglePinNode(view, activeNode, isPinned, true),
+      disabled: isInRecentCardsList
+    },
+    { type: "separator" }
+  ];
+  return menuItems;
+};
+
+// src/view/actions/context-menu/card-context-menu/create-single-node-context-menu-items.ts
+var import_obsidian26 = require("obsidian");
+
 // src/view/modals/split-node-modal/split-node-modal.ts
-var import_obsidian24 = require("obsidian");
+var import_obsidian25 = require("obsidian");
 
 // src/view/modals/split-node-modal/helpers/get-modal-state.ts
 var getModalState = () => {
@@ -26925,7 +29230,7 @@ var getModalState = () => {
 };
 
 // src/view/modals/split-node-modal/components/components/content-preview.svelte
-function add_css39(target) {
+function add_css44(target) {
   append_styles(target, "svelte-20u69o", ".preview.svelte-20u69o{flex-grow:1;max-height:500px;overflow:auto}");
 }
 function create_if_block27(ctx) {
@@ -26933,7 +29238,7 @@ function create_if_block27(ctx) {
   return {
     c() {
       p = element("p");
-      p.textContent = "This card's content does not match any splitting pattern";
+      p.textContent = "This section does not match any splitting pattern";
       attr(p, "class", "mod-warning");
     },
     m(target, anchor) {
@@ -26946,7 +29251,7 @@ function create_if_block27(ctx) {
     }
   };
 }
-function create_fragment98(ctx) {
+function create_fragment107(ctx) {
   let div0;
   let t;
   let div1;
@@ -27002,7 +29307,7 @@ function create_fragment98(ctx) {
     }
   };
 }
-function instance95($$self, $$props, $$invalidate) {
+function instance105($$self, $$props, $$invalidate) {
   let $mode;
   let $content;
   const state2 = getModalState();
@@ -27015,7 +29320,7 @@ function instance95($$self, $$props, $$invalidate) {
 var Content_preview = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance95, create_fragment98, safe_not_equal, {}, add_css39);
+    init(this, options, instance105, create_fragment107, safe_not_equal, {}, add_css44);
   }
 };
 var content_preview_default = Content_preview;
@@ -27026,15 +29331,15 @@ var getModalProps = () => {
 };
 
 // src/view/modals/split-node-modal/components/components/modal-buttons.svelte
-function add_css40(target) {
+function add_css45(target) {
   append_styles(target, "svelte-6fani8", ".split-content-footer.svelte-6fani8{display:flex;align-items:center;justify-content:space-between}.modes-container.svelte-6fani8{height:50px;display:flex;align-items:center}.buttons-container.svelte-6fani8{display:flex;gap:5px;width:fit-content}label.svelte-6fani8{display:block;text-transform:capitalize}label[data-disabled='true'].svelte-6fani8{opacity:0.6}");
 }
-function get_each_context14(ctx, list, i) {
+function get_each_context18(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[10] = list[i];
   return child_ctx;
 }
-function create_each_block14(ctx) {
+function create_each_block18(ctx) {
   let label;
   let input;
   let input_checked_value;
@@ -27110,7 +29415,7 @@ function create_each_block14(ctx) {
     }
   };
 }
-function create_fragment99(ctx) {
+function create_fragment108(ctx) {
   let div2;
   let div0;
   let t0;
@@ -27128,7 +29433,7 @@ function create_fragment99(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block14(get_each_context14(ctx, each_value, i));
+    each_blocks[i] = create_each_block18(get_each_context18(ctx, each_value, i));
   }
   return {
     c() {
@@ -27194,11 +29499,11 @@ function create_fragment99(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context14(ctx2, each_value, i);
+          const child_ctx = get_each_context18(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block14(child_ctx);
+            each_blocks[i] = create_each_block18(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(div0, null);
           }
@@ -27226,7 +29531,7 @@ function create_fragment99(ctx) {
     }
   };
 }
-function instance96($$self, $$props, $$invalidate) {
+function instance106($$self, $$props, $$invalidate) {
   let $mode;
   const state2 = getModalState();
   const props = getModalProps();
@@ -27255,16 +29560,16 @@ function instance96($$self, $$props, $$invalidate) {
 var Modal_buttons = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance96, create_fragment99, safe_not_equal, {}, add_css40);
+    init(this, options, instance106, create_fragment108, safe_not_equal, {}, add_css45);
   }
 };
 var modal_buttons_default = Modal_buttons;
 
 // src/view/modals/split-node-modal/components/modal-content.svelte
-function add_css41(target) {
+function add_css46(target) {
   append_styles(target, "svelte-1axt1o3", ".split-content-modal.svelte-1axt1o3{display:flex;flex-direction:column}");
 }
-function create_fragment100(ctx) {
+function create_fragment109(ctx) {
   let div;
   let content;
   let t;
@@ -27309,7 +29614,7 @@ function create_fragment100(ctx) {
     }
   };
 }
-function instance97($$self, $$props, $$invalidate) {
+function instance107($$self, $$props, $$invalidate) {
   let { state: state2 } = $$props;
   let { props } = $$props;
   setContext("modal-state", state2);
@@ -27325,7 +29630,7 @@ function instance97($$self, $$props, $$invalidate) {
 var Modal_content = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance97, create_fragment100, safe_not_equal, { state: 0, props: 1 }, add_css41);
+    init(this, options, instance107, create_fragment109, safe_not_equal, { state: 0, props: 1 }, add_css46);
   }
 };
 var modal_content_default = Modal_content;
@@ -27992,13 +30297,13 @@ var mapContent = (text2, mode) => {
 var hasNParagraph = (text2, n = 2) => splitByParagraph(text2).length >= n;
 
 // src/view/modals/split-node-modal/split-node-modal.ts
-var SplitNodeModal = class extends import_obsidian24.Modal {
+var SplitNodeModal = class extends import_obsidian25.Modal {
   constructor(props) {
     super(props.plugin.app);
     this.props = props;
     this.subscriptions = /* @__PURE__ */ new Set();
     this.open = () => {
-      this.setTitle("Choose how to split this card");
+      this.setTitle("Choose how to split this section");
       this.initState();
       new modal_content_default({
         target: this.contentEl,
@@ -28081,7 +30386,7 @@ var openSplitNodeModal = async (view) => {
         const mode = get_store_value(modal.state.mode);
         if (mode && newContent !== nodeContent) {
           view.documentStore.dispatch({
-            type: "DOCUMENT/SPLIT_NODE",
+            type: "document/split-node",
             payload: {
               target: activeNode,
               mode
@@ -28098,174 +30403,261 @@ var openSplitNodeModal = async (view) => {
   await modal.open();
 };
 
-// src/view/actions/context-menu/card-context-menu/helpers/insert-block-id.ts
-var getExistingBlockId = (lines) => {
-  const reversed = [...lines].reverse();
-  for (let line of reversed) {
-    line = line.trim();
-    const match = /\s+\^([a-zA-Z0-9]{4,})$/.exec(line);
-    if (match) {
-      return match[1];
+// src/view/actions/context-menu/card-context-menu/helpers/sort-child-nodes.ts
+var sortChildNodes = (view, activeNode, order) => {
+  view.documentStore.dispatch({
+    type: "document/sort-direct-child-nodes",
+    payload: {
+      id: activeNode,
+      order
     }
-  }
-};
-var generateBlockId = () => Math.random().toString(36).substring(2, 8);
-var insertBlockId = (text2, __id__) => {
-  const lines = text2.trimEnd().split("\n");
-  const existingId = getExistingBlockId(lines);
-  if (existingId) {
-    return {
-      blockId: existingId,
-      text: text2
-    };
-  } else {
-    const lastLine = lines[lines.length - 1];
-    let blockId = null;
-    if (lastLine) {
-      blockId = __id__ || generateBlockId();
-      lines[lines.length - 1] = lines[lines.length - 1] + ` ^${blockId}`;
-      return {
-        blockId,
-        text: lines.join("\n")
-      };
-    }
-  }
+  });
 };
 
-// src/view/actions/context-menu/card-context-menu/helpers/copy-link-to-block.ts
-var import_obsidian25 = require("obsidian");
-var copyLinkToBlock = async (view) => {
-  const file = view.file;
-  if (!file)
+// src/obsidian/events/workspace/effects/toggle-obsidian-view-type.ts
+var toggleObsidianViewType = (plugin, leaf, type) => {
+  setTimeout(() => {
+    leaf.setViewState({
+      type,
+      popstate: true,
+      state: leaf.view.getState()
+    });
+    plugin.app.workspace.setActiveLeaf(leaf);
+  }, 0);
+};
+
+// src/stores/settings/actions/set-document-format.ts
+var setDocumentFormat = (plugin, path, type) => {
+  plugin.settings.dispatch({
+    type: "settings/documents/set-document-format",
+    payload: {
+      path,
+      format: type
+    }
+  });
+};
+
+// src/obsidian/events/workspace/effects/open-file-in-lineage.ts
+var openFileInLineage = async (plugin, file, type, newLeaf) => {
+  const leaf = await openFile(plugin, file, newLeaf);
+  toggleObsidianViewType(plugin, leaf, "lineage");
+  setDocumentFormat(plugin, file.path, type);
+};
+
+// src/obsidian/commands/helpers/extract-branch/helpers/get-file-name-of-extracted-branch/get-file-name-from-content.ts
+var getFileNameFromContent = (text2) => {
+  const lines = text2.split("\n").map((line) => line.trim().replace(/\s+/g, " ")).filter((line) => line);
+  if (lines.length === 0)
     return;
-  const viewState = view.viewStore.getValue();
-  const activeNode = viewState.document.activeNode;
-  const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
-  if (isEditing2) {
-    saveNodeContent(view);
-    setTimeout(() => {
-      copyLinkToBlock(view);
-    }, 100);
-    return;
+  let result = void 0;
+  const headingLine = lines.find((line) => /^(#+)\s(.+)/.test(line));
+  if (headingLine) {
+    const headingMatch = headingLine.match(/^(#+)\s(.+)/);
+    result = headingMatch[2];
+  } else if (lines[0].startsWith("- ")) {
+    result = lines[0].replace(/^- /, "");
+  } else {
+    result = lines.join(" ");
   }
-  const documentState = view.documentStore.getValue();
-  const content = documentState.document.content[activeNode];
-  const text2 = content?.content;
-  const output = insertBlockId(text2);
-  if (output) {
-    const fileName = file.basename;
+  return result.substring(0, 100).trim();
+};
+
+// src/obsidian/commands/helpers/extract-branch/helpers/get-file-name-of-extracted-branch/get-file-name-of-extracted-branch.ts
+var getFileNameOfExtractedBranch = (nodeContent, currentFileName, sectionNumber) => {
+  const name = getFileNameFromContent(nodeContent);
+  if (name)
+    return name;
+  return `${currentFileName.trim()} - ${sectionNumber}`;
+};
+
+// src/obsidian/commands/helpers/extract-branch/extract-branch.ts
+var extractBranch = async (view) => {
+  try {
+    invariant(view.file);
+    invariant(view.file.parent);
+    const viewState = view.viewStore.getValue();
+    const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
+    if (isEditing2) {
+      saveNodeContent(view);
+      setTimeout(() => {
+        extractBranch(view);
+      }, 100);
+      return;
+    }
+    const documentState = view.documentStore.getValue();
+    const branch = getBranch(
+      documentState.document.columns,
+      documentState.document.content,
+      viewState.document.activeNode,
+      "copy"
+    );
+    const format2 = getPersistedDocumentFormat(view);
+    const text2 = format2 === "outline" ? branchToOutline([branch]) : format2 === "html-element" ? branchToHtmlElement([branch]) : branchToHtmlComment([branch]);
+    const fileName = getFileNameOfExtractedBranch(
+      branch.content[branch.nodeId].content,
+      view.file.basename,
+      documentState.sections.id_section[branch.nodeId]
+    );
+    const newFile = await createNewFile(
+      view.plugin,
+      view.file.parent,
+      text2,
+      fileName
+    );
+    await openFileInLineage(view.plugin, newFile, format2, "split");
     view.documentStore.dispatch({
-      type: "DOCUMENT/SET_NODE_CONTENT",
+      type: "document/extract-node",
       payload: {
-        content: output.text,
-        nodeId: activeNode
-      },
-      context: {
-        isInSidebar: viewState.document.editing.isInSidebar
+        nodeId: branch.nodeId,
+        documentName: newFile.basename
       }
     });
-    const link = `[[${fileName}#^${output.blockId}]]`;
-    await navigator.clipboard.writeText(link);
-    new import_obsidian25.Notice("Link copied to clipboard");
-  } else {
-    new import_obsidian25.Notice("Could not copy link to clipboard");
+  } catch (e) {
+    onPluginError(e, "command", { type: "extract-branch" });
   }
 };
 
-// src/view/actions/context-menu/card-context-menu/helpers/export-column.ts
-var import_obsidian26 = require("obsidian");
-var exportColumn = async (view) => {
-  const viewState = view.viewStore.getValue();
-  const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
-  if (isEditing2) {
-    saveNodeContent(view);
-    setTimeout(() => {
-      exportColumn(view);
-    }, 100);
-    return;
-  }
-  const activeNode = viewState.document.activeNode;
-  invariant(activeNode);
-  const document2 = view.documentStore.getValue().document;
-  const columnIndex = findNodeColumn(document2.columns, activeNode);
-  const column = document2.columns[columnIndex];
-  invariant(column);
-  const nodes = column.groups.map((g) => g.nodes).flat();
-  const content = nodes.map((n) => document2.content[n].content);
-  const text2 = content.filter((c) => c.trim().length > 0).join("\n\n");
-  if (!text2.trim()) {
-    new import_obsidian26.Notice("This column is empty");
-    return;
-  }
-  const file = view.file;
-  invariant(file);
-  invariant(file.parent);
-  const newFile = await createNewFile(
-    view.plugin,
-    file.parent,
-    text2,
-    `${file.basename} - column ${columnIndex + 1}`
-  );
-  await openFile(view.plugin, newFile, "split");
-};
-
-// src/obsidian/context-menu/render-context-menu.ts
-var import_obsidian27 = require("obsidian");
-var addMenuItem = (menu, menuItem) => {
-  if ("type" in menuItem && menuItem.type === "separator") {
-    menu.addSeparator();
-  } else if ("title" in menuItem) {
-    menu.addItem((item) => {
-      item.setTitle(menuItem.title).setIcon(menuItem.icon).setDisabled(menuItem.disabled || false).setChecked(menuItem.checked || false);
-      if ("submenu" in menuItem) {
-        const subMenu = item.setSubmenu();
-        for (const subItem of menuItem.submenu) {
-          addMenuItem(subMenu, subItem);
+// src/view/actions/context-menu/card-context-menu/create-single-node-context-menu-items.ts
+var createSingleNodeContextMenuItems = (view, { hasChildren, isPinned, activeNode }) => {
+  const menuItems = [
+    {
+      title: lang.cm_split_node,
+      icon: customIcons.split.name,
+      action: () => {
+        if (hasChildren) {
+          new import_obsidian26.Notice(lang.error_cm_cant_split_node_that_has_children);
+        } else {
+          openSplitNodeModal(view);
         }
-      } else {
-        item.onClick(menuItem.action);
       }
-    });
-  }
-};
-var renderContextMenu = (event, menuItems) => {
-  const menu = new import_obsidian27.Menu();
-  for (const menuItem of menuItems) {
-    addMenuItem(menu, menuItem);
-  }
-  menu.showAtMouseEvent(event);
+    },
+    {
+      title: lang.cm_sort_child,
+      icon: "sort-asc",
+      disabled: !hasChildren,
+      submenu: [
+        {
+          title: lang.cm_sort_child_nodes_asc,
+          icon: "sort-asc",
+          action: () => sortChildNodes(view, activeNode, "ascending")
+        },
+        {
+          title: lang.cm_sort_child_nodes_desc,
+          icon: "sort-desc",
+          action: () => sortChildNodes(view, activeNode, "descending")
+        }
+      ]
+    },
+    { type: "separator" },
+    {
+      title: lang.cm_merge_above,
+      icon: "merge",
+      action: () => mergeNode(view, "up")
+    },
+    {
+      title: lang.cm_merge_below,
+      icon: "merge",
+      action: () => mergeNode(view, "down")
+    },
+    { type: "separator" },
+    {
+      title: lang.cm_copy_link_to_block,
+      icon: "links-coming-in",
+      action: () => copyLinkToBlock(view, false)
+    },
+    { type: "separator" },
+    !hasChildren ? {
+      title: lang.cm_copy,
+      icon: "documents",
+      action: () => copyActiveNodesToClipboard(view, false)
+    } : {
+      title: lang.cm_copy,
+      icon: "documents",
+      submenu: [
+        {
+          title: lang.cm_copy_branch,
+          icon: "lineage-cards",
+          action: () => copyActiveBranchesToClipboard(view, true, false)
+        },
+        {
+          title: lang.cm_copy_branch_wo_formatting,
+          icon: "file-text",
+          action: () => copyActiveBranchesToClipboard(view, false, false)
+        },
+        {
+          title: lang.cm_copy_nodes_wo_subitems,
+          icon: "file-text",
+          action: () => copyActiveNodesToClipboard(view, false)
+        }
+      ]
+    },
+    {
+      title: lang.cm_cut,
+      icon: "scissors",
+      action: () => cutNode(view)
+    },
+    {
+      title: lang.cm_paste,
+      icon: "paste",
+      action: () => pasteNode(view)
+    },
+    { type: "separator" },
+    {
+      title: isPinned ? lang.cm_unpin_from_left_sidebar : lang.cm_pin_in_left_sidebar,
+      icon: isPinned ? "pin-off" : "pin",
+      action: () => {
+        togglePinNode(view, activeNode, false, false);
+      }
+    },
+    { type: "separator" },
+    {
+      title: hasChildren ? lang.cm_extract_branch : lang.cm_extract_section,
+      icon: customIcons.cards.name,
+      action: () => extractBranch(view)
+    },
+    !hasChildren ? {
+      title: lang.cm_export_section,
+      icon: "file-text",
+      action: () => exportSelection(view, false)
+    } : {
+      title: lang.cm_export_selection,
+      icon: "file-text",
+      submenu: [
+        {
+          title: lang.cm_export_branch_with_subitems,
+          icon: "file-text",
+          action: () => exportSelection(view, true)
+        },
+        {
+          title: lang.cm_export_branch_wo_subitems,
+          icon: "file-text",
+          action: () => exportSelection(view, false)
+        }
+      ]
+    }
+  ];
+  return menuItems;
 };
 
-// src/obsidian/context-menu/select-inactive-card.ts
-var selectInactiveCard = (view, closestCardElement, isInSidebar, isInRecentCardsList) => {
-  const id2 = closestCardElement?.id;
-  if (!isInSidebar) {
-    view.viewStore.dispatch({
-      type: "view/set-active-node/mouse-silent",
-      payload: {
-        id: id2
-      }
-    });
-  } else if (isInRecentCardsList) {
-    view.viewStore.dispatch({
-      type: "view/recent-nodes/set-active-node",
-      payload: {
-        id: id2
-      }
-    });
-  } else {
-    view.viewStore.dispatch({
-      type: "view/pinned-nodes/set-active-node",
-      payload: {
-        id: id2
-      }
-    });
-  }
+// src/view/actions/context-menu/card-context-menu/show-node-context-menu.ts
+var getContextMenuContext = (view, isInSidebar, isInRecentCardsList) => {
+  const viewState = view.viewStore.getValue();
+  const multipleNodesAreSelected = !isInSidebar && viewState.document.selectedNodes.size > 1;
+  const documentStore = view.documentStore;
+  const documentState = documentStore.getValue();
+  const activeNode = viewState.document.activeNode;
+  const isPinned = isInSidebar && !isInRecentCardsList || documentState.pinnedNodes.Ids.includes(activeNode);
+  const hasChildren = documentState.meta.groupParentIds.has(activeNode);
+  return {
+    activeNode,
+    isPinned,
+    isInSidebar,
+    isInRecentCardsList,
+    multipleNodesAreSelected,
+    hasChildren
+  };
 };
-
-// src/view/actions/context-menu/card-context-menu/show-card-context-menu.ts
-var import_obsidian28 = require("obsidian");
-var showCardContextMenu = (event, view) => {
+var showNodeContextMenu = (event, view) => {
   const target = event.target;
   const closestCardElement = target.closest(
     ".lineage-card"
@@ -28285,121 +30677,30 @@ var showCardContextMenu = (event, view) => {
       isInRecentCardsList
     );
   }
-  const viewState = view.viewStore.getValue();
-  const multipleNodesAreSelected = !isInSidebar && viewState.document.selectedNodes.size > 1;
-  const documentStore = view.documentStore;
-  const documentState = documentStore.getValue();
-  const activeNode = viewState.document.activeNode;
-  const isPinned = isInSidebar && !isInRecentCardsList || documentState.pinnedNodes.Ids.includes(activeNode);
-  const hasChildren = documentState.meta.groupParentIds.has(activeNode);
-  const menuItems = [
-    {
-      title: lang.cm_split_card,
-      icon: customIcons.split.name,
-      action: () => {
-        if (hasChildren) {
-          new import_obsidian28.Notice(lang.error_cm_cant_split_card_that_has_children);
-        } else {
-          openSplitNodeModal(view);
-        }
-      },
-      disabled: multipleNodesAreSelected || isInSidebar
-    },
-    { type: "separator" },
-    {
-      title: lang.cm_merge_above,
-      icon: "merge",
-      action: () => mergeNode(view, "up"),
-      disabled: multipleNodesAreSelected || isInSidebar
-    },
-    {
-      title: lang.cm_merge_below,
-      icon: "merge",
-      action: () => mergeNode(view, "down"),
-      disabled: multipleNodesAreSelected || isInSidebar
-    },
-    { type: "separator" },
-    {
-      title: lang.cm_copy_link_to_block,
-      icon: "links-coming-in",
-      action: () => copyLinkToBlock(view),
-      disabled: multipleNodesAreSelected
-    },
-    { type: "separator" },
-    !multipleNodesAreSelected && !hasChildren ? {
-      title: lang.cm_copy,
-      icon: "documents",
-      action: () => copyActiveNodesToClipboard(view)
-    } : {
-      title: lang.cm_copy,
-      icon: "documents",
-      submenu: [
-        {
-          title: multipleNodesAreSelected ? lang.cm_copy_branches : lang.cm_copy_branch,
-          icon: "lineage-cards",
-          action: () => copyActiveBranchesToClipboard(view, true)
-        },
-        {
-          title: multipleNodesAreSelected ? lang.cm_copy_branches_wo_formatting : lang.cm_copy_branch_wo_formatting,
-          icon: "file-text",
-          action: () => copyActiveBranchesToClipboard(view, false)
-        },
-        {
-          title: multipleNodesAreSelected ? lang.cm_copy_section_wo_subitems : lang.cm_copy_sections_wo_subitems,
-          icon: "file-text",
-          action: () => copyActiveNodesToClipboard(view)
-        }
-      ]
-    },
-    {
-      title: lang.cm_cut,
-      icon: "scissors",
-      action: () => cutNode(view),
-      disabled: isInSidebar
-    },
-    {
-      title: lang.cm_paste,
-      icon: "paste",
-      action: () => pasteNode(view),
-      disabled: isInSidebar
-    },
-    { type: "separator" },
-    {
-      title: isPinned ? lang.cm_unpin_from_left_sidebar : lang.cm_pin_in_left_sidebar,
-      icon: isPinned ? "pin-off" : "pin",
-      action: () => {
-        documentStore.dispatch({
-          type: isPinned ? "document/pinned-nodes/unpin" : "document/pinned-nodes/pin",
-          payload: { id: activeNode }
-        });
-      },
-      disabled: isInRecentCardsList || multipleNodesAreSelected
-    },
-    { type: "separator" },
-    {
-      title: lang.cm_extract_branch,
-      icon: customIcons.cards.name,
-      action: () => extractBranch(view),
-      disabled: multipleNodesAreSelected || isInSidebar
-    },
-    {
-      title: lang.cm_export_column,
-      icon: "file-text",
-      action: () => exportColumn(view),
-      disabled: multipleNodesAreSelected || isInSidebar
-    }
-  ];
+  const context = getContextMenuContext(
+    view,
+    isInSidebar,
+    isInRecentCardsList
+  );
+  let menuItems;
+  if (context.isInSidebar) {
+    menuItems = createSidebarContextMenuItems(view, context);
+  } else if (context.multipleNodesAreSelected) {
+    menuItems = createMultipleNodesContextMenu(view);
+  } else {
+    menuItems = createSingleNodeContextMenuItems(view, context);
+  }
   renderContextMenu(event, menuItems);
 };
 
-// src/view/actions/context-menu/card-context-menu/card-context-menu-predicate.ts
-var cardContextMenuPredicate = (e) => {
+// src/view/actions/context-menu/card-context-menu/should-show-node-context-menu.ts
+var shouldShowNodeContextMenu = (e) => {
   const target = e.target;
   return !target.hasClass("drag-handle") && Boolean(target.closest(".lineage-card"));
 };
 
-// src/view/actions/context-menu/view-context-menu/view-context-menu-predicate.ts
-var viewContextMenuPredicate = (e) => {
+// src/view/actions/context-menu/view-context-menu/should-show-view-context-menu.ts
+var shouldShowViewContextMenu = (e) => {
   const target = e.target;
   return target.hasClass("column-buffer") || target.hasClass("column") || target.hasClass("group") || target.hasClass("columns") || target.hasClass("columns-container");
 };
@@ -28500,7 +30801,7 @@ var htmlElementToJson = (text2) => {
       const [parent, , full] = sectionNumber;
       const isASibling = parent === currentParentNumber;
       const newNode = {
-        content: line.replace(htmlCommentRegex2, ""),
+        content: line.replace(htmlElementRegex, ""),
         children: []
       };
       map[full] = newNode;
@@ -28560,9 +30861,9 @@ var htmlElementToJson = (text2) => {
 };
 
 // src/obsidian/commands/helpers/export-document/map-document-to-text.ts
-var mapDocumentToText = (fileData, basename, format2) => {
-  const { data, frontmatter } = extractFrontmatter(fileData);
-  const tree = format2 === "outline" ? outlineToJson(data) : format2 === "html-element" ? htmlElementToJson(data) : htmlCommentToJson(data);
+var mapDocumentToText = (fileData, format2) => {
+  const { body, frontmatter } = extractFrontmatter(fileData);
+  const tree = format2 === "outline" ? outlineToJson(body) : format2 === "html-element" ? htmlElementToJson(body) : htmlCommentToJson(body);
   return (frontmatter ? frontmatter + "\n" : "") + jsonToText(tree);
 };
 
@@ -28584,8 +30885,8 @@ var exportDocument = async (view) => {
       return;
     }
     const fileData = await view.plugin.app.vault.read(file);
-    const format2 = getDocumentFormat(view);
-    const output = mapDocumentToText(fileData, file.basename, format2);
+    const format2 = getPersistedDocumentFormat(view);
+    const output = mapDocumentToText(fileData, format2);
     const newFile = await createNewFile(
       view.plugin,
       file.parent,
@@ -28600,12 +30901,40 @@ var exportDocument = async (view) => {
   }
 };
 
+// src/obsidian/commands/helpers/export-document/eject-document.ts
+var ejectDocument = async (view) => {
+  try {
+    const file = view.file;
+    if (!file)
+      return;
+    if (!file.parent)
+      return;
+    const viewState = view.viewStore.getValue();
+    const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
+    if (isEditing2) {
+      saveNodeContent(view);
+      setTimeout(() => {
+        ejectDocument(view);
+      }, 100);
+      return;
+    }
+    const fileData = await view.plugin.app.vault.read(file);
+    const format2 = getPersistedDocumentFormat(view);
+    const text2 = mapDocumentToText(fileData, format2);
+    await view.plugin.app.vault.modify(file, text2);
+    toggleObsidianViewType(view.plugin, view.leaf, "markdown");
+    setViewType(view.plugin, file.path, "markdown");
+  } catch (e) {
+    onPluginError(e, "command", { type: "export-document" });
+  }
+};
+
 // src/view/actions/context-menu/view-context-menu/show-view-context-menu.ts
 var showViewContextMenu = (event, view) => {
   const file = view.file;
   if (!file)
     return;
-  const format2 = getDocumentFormat(view);
+  const format2 = getPersistedDocumentFormat(view);
   const isOutline2 = format2 === "outline";
   const isHtmlElement = format2 === "html-element";
   const isHtmlComments = format2 === "sections";
@@ -28617,35 +30946,45 @@ var showViewContextMenu = (event, view) => {
       action: () => {
         saveNodeContent(view);
         view.documentStore.dispatch({
-          type: "DOCUMENT/FORMAT_HEADINGS"
+          type: "document/format-headings"
         });
       },
       disabled: !_hasHeading
     },
     { type: "separator" },
     {
-      title: lang.cm_change_format_to_html_element,
+      title: lang.cm_document_format,
       icon: "file-cog",
-      action: () => {
-        setDocumentFormat(view.plugin, file.path, "html-element");
-      },
-      checked: isHtmlElement
-    },
-    {
-      title: lang.cm_change_format_to_document,
-      icon: "file-cog",
-      action: () => {
-        setDocumentFormat(view.plugin, file.path, "sections");
-      },
-      checked: isHtmlComments
-    },
-    {
-      title: lang.cm_change_format_to_outline,
-      icon: "file-cog",
-      action: () => {
-        setDocumentFormat(view.plugin, file.path, "outline");
-      },
-      checked: isOutline2
+      submenu: [
+        {
+          title: lang.settings_format_html_elements,
+          icon: "file-cog",
+          action: () => {
+            setDocumentFormat(
+              view.plugin,
+              file.path,
+              "html-element"
+            );
+          },
+          checked: isHtmlElement
+        },
+        {
+          title: lang.settings_format_html_comments,
+          icon: "file-cog",
+          action: () => {
+            setDocumentFormat(view.plugin, file.path, "sections");
+          },
+          checked: isHtmlComments
+        },
+        {
+          title: lang.settings_format_outline,
+          icon: "file-cog",
+          action: () => {
+            setDocumentFormat(view.plugin, file.path, "outline");
+          },
+          checked: isOutline2
+        }
+      ]
     },
     { type: "separator" },
     {
@@ -28654,20 +30993,28 @@ var showViewContextMenu = (event, view) => {
       action: () => {
         exportDocument(view);
       }
+    },
+    {
+      title: lang.cm_eject_document,
+      icon: "file-text",
+      action: () => {
+        ejectDocument(view);
+      },
+      dangerous: true
     }
   ];
   renderContextMenu(event, menuItems);
 };
 
-// src/view/actions/context-menu/context-menu.ts
-var contextMenu = (element2, view) => {
+// src/view/actions/context-menu/show-context-menu.ts
+var showContextMenu = (element2, view) => {
   const listener = (e) => {
-    if (cardContextMenuPredicate(e)) {
+    if (shouldShowNodeContextMenu(e)) {
       if (e.instanceOf(MouseEvent))
-        showCardContextMenu(e, view);
+        showNodeContextMenu(e, view);
       else
-        showCardContextMenu(new MouseEvent("contextmenu", e), view);
-    } else if (viewContextMenuPredicate(e)) {
+        showNodeContextMenu(new MouseEvent("contextmenu", e), view);
+    } else if (shouldShowViewContextMenu(e)) {
       if (e.instanceOf(MouseEvent))
         showViewContextMenu(e, view);
       else
@@ -28676,11 +31023,11 @@ var contextMenu = (element2, view) => {
   };
   element2.addEventListener("contextmenu", listener);
   let unsubFromLongPress = null;
-  if (import_obsidian29.Platform.isMobile) {
+  if (import_obsidian27.Platform.isMobile) {
     unsubFromLongPress = onLongPress(
       element2,
       listener,
-      cardContextMenuPredicate
+      shouldShowNodeContextMenu
     );
   }
   return {
@@ -28694,10 +31041,10 @@ var contextMenu = (element2, view) => {
 };
 
 // src/view/components/container/dnd/dnd-edges.svelte
-function add_css42(target) {
+function add_css47(target) {
   append_styles(target, "svelte-gs5nl7", ".hide.svelte-gs5nl7{display:none}#dnd-edge-top.svelte-gs5nl7,#dnd-edge-bottom.svelte-gs5nl7{height:40px;position:absolute;left:0;right:0;z-index:100;background-color:var(--color-base-20);opacity:0.1}#dnd-edge-top.svelte-gs5nl7{top:0}#dnd-edge-bottom.svelte-gs5nl7{bottom:0}#dnd-edge-left.svelte-gs5nl7,#dnd-edge-right.svelte-gs5nl7{width:40px;position:absolute;top:40px;bottom:40px;z-index:100;background-color:var(--color-base-20);opacity:0.1}#dnd-edge-left.svelte-gs5nl7{left:0}#dnd-edge-right.svelte-gs5nl7{right:0}");
 }
-function create_fragment101(ctx) {
+function create_fragment110(ctx) {
   let div0;
   let div0_class_value;
   let t0;
@@ -28793,7 +31140,7 @@ function create_fragment101(ctx) {
     }
   };
 }
-function instance98($$self, $$props, $$invalidate) {
+function instance108($$self, $$props, $$invalidate) {
   let $dnd;
   const view = getView();
   const dnd = dndStore(view);
@@ -28803,23 +31150,29 @@ function instance98($$self, $$props, $$invalidate) {
 var Dnd_edges = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance98, create_fragment101, safe_not_equal, {}, add_css42);
+    init(this, options, instance108, create_fragment110, safe_not_equal, {}, add_css47);
   }
 };
 var dnd_edges_default = Dnd_edges;
 
 // src/stores/settings/derived/style-rules.ts
-var DocumentStyleRulesStore = (view) => derived(view.plugin.settings, (state2) => {
-  if (!view.file?.path)
-    return [];
-  return state2.styleRules.documents[view.file.path]?.rules || [];
+var DocumentStyleRulesStore = (view) => derived2(view.plugin.settings, (state2) => {
+  invariant(view.file?.path);
+  const documentRules = state2.styleRules.documents[view.file.path];
+  return documentRules ? documentRules.rules : [];
+});
+var GlobalStyleRulesStore = (view) => derived2(view.plugin.settings, (state2) => {
+  return state2.styleRules.global.rules;
+});
+var ActiveStyleRulesTab = (view) => derived2(view.plugin.settings, (state2) => {
+  return state2.styleRules.settings.activeTab;
 });
 
 // src/view/components/container/style-rules/components/style-rules-list/components/style-rule/components/rule-info.svelte
-function add_css43(target) {
+function add_css48(target) {
   append_styles(target, "svelte-1pay5a3", ".rule-info.svelte-1pay5a3{width:fit-content;padding-top:4px;padding-bottom:4px;padding-right:8px;border-right:1px solid var(--text-faint);display:flex;align-items:center;justify-content:center}");
 }
-function create_fragment102(ctx) {
+function create_fragment111(ctx) {
   let div;
   let navigationbuttons;
   let current;
@@ -28866,7 +31219,7 @@ function create_fragment102(ctx) {
     }
   };
 }
-function instance99($$self, $$props, $$invalidate) {
+function instance109($$self, $$props, $$invalidate) {
   let { rule } = $$props;
   let { results } = $$props;
   $$self.$$set = ($$props2) => {
@@ -28880,7 +31233,7 @@ function instance99($$self, $$props, $$invalidate) {
 var Rule_info = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance99, create_fragment102, safe_not_equal, { rule: 1, results: 0 }, add_css43);
+    init(this, options, instance109, create_fragment111, safe_not_equal, { rule: 1, results: 0 }, add_css48);
   }
 };
 var rule_info_default = Rule_info;
@@ -28888,10 +31241,14 @@ var rule_info_default = Rule_info;
 // src/view/components/container/style-rules/helpers/constants.ts
 var targets = [
   "self",
-  "direct-parent",
+  "self-or-any-parent",
+  "self-or-any-children",
+  "self-or-direct-parent",
+  "self-or-direct-children",
   "any-parent",
-  "direct-children",
-  "any-children"
+  "any-children",
+  "direct-parent",
+  "direct-children"
 ];
 var stringOperators = [
   "contains",
@@ -28980,10 +31337,14 @@ var ruleEditorEventHandlers = (view, ruleId) => {
 // src/lang/style-rules-lang.ts
 var styleRulesLang = {
   targets: {
-    self: "Of card",
-    "direct-parent": "Of immediate parent",
+    self: "Of section",
+    "self-or-direct-parent": "Of section or direct parent",
+    "self-or-any-parent": "Of section or any parent",
+    "self-or-direct-children": "Of section or direct child",
+    "self-or-any-children": "Of section or any child",
+    "direct-parent": "Of direct parent",
     "any-parent": "Of any parent",
-    "direct-children": "Of immediate child",
+    "direct-children": "Of direct child",
     "any-children": "Of any child"
   },
   operators: {
@@ -29022,15 +31383,15 @@ var styleRulesLang = {
 };
 
 // src/view/components/container/style-rules/components/style-rules-list/components/style-rule/components/rule-editor.svelte
-function add_css44(target) {
+function add_css49(target) {
   append_styles(target, "svelte-1yba036", ".rule-editor.svelte-1yba036{display:flex;gap:8px;align-items:center;position:relative;width:90%;flex:1;flex-wrap:wrap}.select-elements.svelte-1yba036{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;& select {\n            font-size: 12px;\n            width: 130px;\n        }}.input-elements.svelte-1yba036{width:130px;display:flex;gap:8px;align-items:center;justify-content:space-between;& input {\n            font-size: 12px;\n            width: 100%;\n        }}");
 }
-function get_each_context_1(ctx, list, i) {
+function get_each_context_13(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i];
   return child_ctx;
 }
-function get_each_context15(ctx, list, i) {
+function get_each_context19(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i];
   return child_ctx;
@@ -29095,12 +31456,12 @@ function create_each_block_2(ctx) {
     }
   };
 }
-function create_else_block11(ctx) {
+function create_else_block13(ctx) {
   let each_1_anchor;
   let each_value_1 = ensure_array_like(numericOperators);
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    each_blocks[i] = create_each_block_13(get_each_context_13(ctx, each_value_1, i));
   }
   return {
     c() {
@@ -29125,12 +31486,12 @@ function create_else_block11(ctx) {
     }
   };
 }
-function create_if_block_24(ctx) {
+function create_if_block_26(ctx) {
   let each_1_anchor;
   let each_value = ensure_array_like(stringOperators);
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block15(get_each_context15(ctx, each_value, i));
+    each_blocks[i] = create_each_block19(get_each_context19(ctx, each_value, i));
   }
   return {
     c() {
@@ -29155,7 +31516,7 @@ function create_if_block_24(ctx) {
     }
   };
 }
-function create_each_block_1(ctx) {
+function create_each_block_13(ctx) {
   let option;
   let option_value_value;
   return {
@@ -29180,7 +31541,7 @@ function create_each_block_1(ctx) {
     }
   };
 }
-function create_each_block15(ctx) {
+function create_each_block19(ctx) {
   let option;
   let option_value_value;
   return {
@@ -29333,7 +31694,7 @@ function create_if_block28(ctx) {
     }
   };
 }
-function create_fragment103(ctx) {
+function create_fragment112(ctx) {
   let div2;
   let div0;
   let select0;
@@ -29368,8 +31729,8 @@ function create_fragment103(ctx) {
       /*isStringCondition*/
       ctx2[1]
     )
-      return create_if_block_24;
-    return create_else_block11;
+      return create_if_block_26;
+    return create_else_block13;
   }
   let current_block_type = select_block_type(ctx, -1);
   let if_block0 = current_block_type(ctx);
@@ -29561,7 +31922,7 @@ function create_fragment103(ctx) {
     }
   };
 }
-function instance100($$self, $$props, $$invalidate) {
+function instance110($$self, $$props, $$invalidate) {
   let operatorIsBetween;
   let isStringCondition;
   let { rule } = $$props;
@@ -29588,7 +31949,7 @@ function instance100($$self, $$props, $$invalidate) {
 var Rule_editor = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance100, create_fragment103, safe_not_equal, { rule: 0 }, add_css44);
+    init(this, options, instance110, create_fragment112, safe_not_equal, { rule: 0 }, add_css49);
   }
 };
 var rule_editor_default = Rule_editor;
@@ -29619,15 +31980,15 @@ var ruleStyleEditorEventHandlers = (view, ruleId) => {
 };
 
 // src/view/components/container/style-rules/components/style-rules-list/components/style-rule/components/rule-style-editor.svelte
-function add_css45(target) {
+function add_css50(target) {
   append_styles(target, "svelte-13w1xs", ".rule-style-config.svelte-13w1xs{width:fit-content;padding:4px;padding-right:0px;border-left:1px solid var(--text-faint);display:flex;align-items:center;gap:8px;justify-content:center}.select-elements.svelte-13w1xs{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;& select {\n            font-size: 12px;\n            width: 130px;\n        }}");
 }
-function get_each_context16(ctx, list, i) {
+function get_each_context20(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[3] = list[i];
   return child_ctx;
 }
-function create_each_block16(ctx) {
+function create_each_block20(ctx) {
   let option;
   let option_value_value;
   return {
@@ -29652,7 +32013,7 @@ function create_each_block16(ctx) {
     }
   };
 }
-function create_fragment104(ctx) {
+function create_fragment113(ctx) {
   let div1;
   let input;
   let input_value_value;
@@ -29665,7 +32026,7 @@ function create_fragment104(ctx) {
   let each_value = ensure_array_like(styleVariants);
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block16(get_each_context16(ctx, each_value, i));
+    each_blocks[i] = create_each_block20(get_each_context20(ctx, each_value, i));
   }
   return {
     c() {
@@ -29745,7 +32106,7 @@ function create_fragment104(ctx) {
     }
   };
 }
-function instance101($$self, $$props, $$invalidate) {
+function instance111($$self, $$props, $$invalidate) {
   let { rule } = $$props;
   const view = getView();
   const h = ruleStyleEditorEventHandlers(view, rule.id);
@@ -29758,7 +32119,7 @@ function instance101($$self, $$props, $$invalidate) {
 var Rule_style_editor = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance101, create_fragment104, safe_not_equal, { rule: 0 }, add_css45);
+    init(this, options, instance111, create_fragment113, safe_not_equal, { rule: 0 }, add_css50);
   }
 };
 var rule_style_editor_default = Rule_style_editor;
@@ -29842,41 +32203,42 @@ var ruleDndAction = (element2, {
 };
 
 // src/view/components/container/style-rules/components/style-rules-list/components/style-rule/components/rule-actions.svelte
-function add_css46(target) {
-  append_styles(target, "svelte-g9rst9", ".rule-actions.svelte-g9rst9{display:flex;align-items:center;gap:8px;padding-top:4px;padding-bottom:4px;padding-left:8px;border-left:1px solid var(--text-faint);justify-content:center}.delete-button.svelte-g9rst9{color:var(--color-red)\n    }");
+var import_obsidian28 = require("obsidian");
+function add_css51(target) {
+  append_styles(target, "svelte-1gydyks", ".rule-actions.svelte-1gydyks{display:flex;align-items:center;padding-top:4px;padding-bottom:4px;padding-left:8px;border-left:1px solid var(--text-faint);justify-content:center}");
 }
-function create_fragment105(ctx) {
+function create_fragment114(ctx) {
   let div1;
   let input;
   let input_checked_value;
   let t;
   let div0;
-  let trash;
+  let morevertical;
   let current;
   let mounted;
   let dispose;
-  trash = new trash_default({ props: { class: "svg-icon" } });
+  morevertical = new more_vertical_default({ props: { class: "svg-icon" } });
   return {
     c() {
       div1 = element("div");
       input = element("input");
       t = space();
       div0 = element("div");
-      create_component(trash.$$.fragment);
+      create_component(morevertical.$$.fragment);
       attr(input, "type", "checkbox");
       input.checked = input_checked_value = /*rule*/
       ctx[0].enabled;
       attr(input, "aria-label", "Enable");
-      attr(div0, "class", "clickable-icon delete-button svelte-g9rst9");
-      attr(div0, "aria-label", "Delete");
-      attr(div1, "class", "rule-actions svelte-g9rst9");
+      attr(div0, "class", "clickable-icon");
+      attr(div0, "aria-label", "Actions");
+      attr(div1, "class", "rule-actions svelte-1gydyks");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
       append(div1, input);
       append(div1, t);
       append(div1, div0);
-      mount_component(trash, div0, null);
+      mount_component(morevertical, div0, null);
       current = true;
       if (!mounted) {
         dispose = [
@@ -29889,7 +32251,7 @@ function create_fragment105(ctx) {
           listen(
             div0,
             "click",
-            /*deleteRule*/
+            /*showContextMenu*/
             ctx[2]
           )
         ];
@@ -29906,24 +32268,24 @@ function create_fragment105(ctx) {
     i(local) {
       if (current)
         return;
-      transition_in(trash.$$.fragment, local);
+      transition_in(morevertical.$$.fragment, local);
       current = true;
     },
     o(local) {
-      transition_out(trash.$$.fragment, local);
+      transition_out(morevertical.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div1);
       }
-      destroy_component(trash);
+      destroy_component(morevertical);
       mounted = false;
       run_all(dispose);
     }
   };
 }
-function instance102($$self, $$props, $$invalidate) {
+function instance112($$self, $$props, $$invalidate) {
   let { rule } = $$props;
   const view = getView();
   const toggleRule = (e) => {
@@ -29945,25 +32307,78 @@ function instance102($$self, $$props, $$invalidate) {
       }
     });
   };
+  const moveRule = () => {
+    const activeTab = get_store_value(ActiveStyleRulesTab(view));
+    const activeTabIsGlobal = activeTab === "global-rules";
+    view.plugin.settings.dispatch({
+      type: "settings/style-rules/toggle-global",
+      payload: {
+        id: rule.id,
+        documentPath: view.file.path
+      }
+    });
+    view.plugin.settings.dispatch({
+      type: "settings/style-rules/set-active-tab",
+      payload: {
+        tab: activeTabIsGlobal ? "document-rules" : "global-rules"
+      }
+    });
+  };
+  const duplicateRule = () => {
+    view.plugin.settings.dispatch({
+      type: "settings/style-rules/duplicate-rule",
+      payload: {
+        id: rule.id,
+        documentPath: view.file.path
+      }
+    });
+  };
+  const showContextMenu2 = (e) => {
+    const target = e.target;
+    if (target.localName === "input")
+      return;
+    const menu = new import_obsidian28.Menu();
+    const activeTab = get_store_value(ActiveStyleRulesTab(view));
+    const activeTabIsGlobal = activeTab === "global-rules";
+    menu.addItem((item) => {
+      item.setTitle(activeTabIsGlobal ? lang.modals_rules_rule_cm_move_to_document : lang.modals_rules_rule_cm_move_to_global);
+      item.setIcon(activeTabIsGlobal ? "file-text" : "globe");
+      item.onClick(moveRule);
+    });
+    menu.addItem((item) => {
+      item.setTitle("Duplicate");
+      item.setIcon("copy");
+      item.onClick(duplicateRule);
+    });
+    menu.addItem((item) => {
+      item.setTitle("Delete");
+      item.setIcon("trash");
+      item.onClick(deleteRule);
+      if ("dom" in item) {
+        item.dom.addClass("is-warning");
+      }
+    });
+    menu.showAtMouseEvent(e);
+  };
   $$self.$$set = ($$props2) => {
     if ("rule" in $$props2)
       $$invalidate(0, rule = $$props2.rule);
   };
-  return [rule, toggleRule, deleteRule];
+  return [rule, toggleRule, showContextMenu2];
 }
 var Rule_actions = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance102, create_fragment105, safe_not_equal, { rule: 0 }, add_css46);
+    init(this, options, instance112, create_fragment114, safe_not_equal, { rule: 0 }, add_css51);
   }
 };
 var rule_actions_default = Rule_actions;
 
 // src/view/components/container/style-rules/components/style-rules-list/components/style-rule/style-rule.svelte
-function add_css47(target) {
+function add_css52(target) {
   append_styles(target, "svelte-13uscz", ".rule-container.svelte-13uscz{margin-top:10px;display:flex;border-radius:4px;overflow:hidden;background-color:var(--color-base-20);padding:12px;gap:8px;flex-wrap:wrap}.drag-handle.svelte-13uscz{cursor:grab;color:var(--text-muted);padding:4px;display:flex;align-items:center}.drag-handle.svelte-13uscz:hover{color:var(--text-normal)}.rule-container.svelte-13uscz:nth-child(-n + 1){margin-top:0}");
 }
-function create_fragment106(ctx) {
+function create_fragment115(ctx) {
   let div1;
   let div0;
   let gripvertical;
@@ -30148,7 +32563,7 @@ function create_fragment106(ctx) {
     }
   };
 }
-function instance103($$self, $$props, $$invalidate) {
+function instance113($$self, $$props, $$invalidate) {
   let { setDraggedRule } = $$props;
   let { setDropTarget } = $$props;
   let { resetDragState } = $$props;
@@ -30175,8 +32590,8 @@ var Style_rule = class extends SvelteComponent {
     init(
       this,
       options,
-      instance103,
-      create_fragment106,
+      instance113,
+      create_fragment115,
       safe_not_equal,
       {
         setDraggedRule: 0,
@@ -30185,14 +32600,14 @@ var Style_rule = class extends SvelteComponent {
         rule: 3,
         results: 4
       },
-      add_css47
+      add_css52
     );
   }
 };
 var style_rule_default = Style_rule;
 
 // src/view/components/container/style-rules/components/style-rules-list/components/drop-target.svelte
-function add_css48(target) {
+function add_css53(target) {
   append_styles(target, "svelte-1xjkxat", ".drop-target.svelte-1xjkxat{height:50px;background-color:var(--interactive-hover);border-radius:4px}");
 }
 function create_if_block_110(ctx) {
@@ -30263,7 +32678,7 @@ function create_if_block29(ctx) {
     }
   };
 }
-function create_fragment107(ctx) {
+function create_fragment116(ctx) {
   let t0;
   let t1;
   let if_block1_anchor;
@@ -30394,7 +32809,7 @@ function create_fragment107(ctx) {
 }
 var dragover_handler = (e) => e.preventDefault();
 var dragover_handler_1 = (e) => e.preventDefault();
-function instance104($$self, $$props, $$invalidate) {
+function instance114($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   var _a;
   let { rule } = $$props;
@@ -30449,8 +32864,8 @@ var Drop_target = class extends SvelteComponent {
     init(
       this,
       options,
-      instance104,
-      create_fragment107,
+      instance114,
+      create_fragment116,
       safe_not_equal,
       {
         rule: 2,
@@ -30458,17 +32873,17 @@ var Drop_target = class extends SvelteComponent {
         dropPosition: 0,
         draggedRule: 4
       },
-      add_css48
+      add_css53
     );
   }
 };
 var drop_target_default = Drop_target;
 
 // src/view/components/container/style-rules/components/style-rules-list/components/empty-list.svelte
-function add_css49(target) {
+function add_css54(target) {
   append_styles(target, "svelte-1tkjjmq", ".pane-empty.svelte-1tkjjmq{height:100%;flex:1;display:flex;align-items:center;justify-content:center}");
 }
-function create_fragment108(ctx) {
+function create_fragment117(ctx) {
   let div2;
   let div0;
   let stylerulecontainer;
@@ -30537,7 +32952,7 @@ function create_fragment108(ctx) {
     }
   };
 }
-function instance105($$self) {
+function instance115($$self) {
   const rule = {
     style: { color: "", styleVariant: "left-border" },
     enabled: false,
@@ -30560,21 +32975,21 @@ function instance105($$self) {
 var Empty_list = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance105, create_fragment108, safe_not_equal, {}, add_css49);
+    init(this, options, instance115, create_fragment117, safe_not_equal, {}, add_css54);
   }
 };
 var empty_list_default = Empty_list;
 
 // src/view/components/container/style-rules/components/style-rules-list/style-rules-list.svelte
-function add_css50(target) {
+function add_css55(target) {
   append_styles(target, "svelte-1se33m3", ".rules-list.svelte-1se33m3{padding:10px;height:100%}.rules-list.dragging.svelte-1se33m3{background-color:var(--interactive-hover)}");
 }
-function get_each_context17(ctx, list, i) {
+function get_each_context21(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[9] = list[i];
   return child_ctx;
 }
-function create_else_block12(ctx) {
+function create_else_block14(ctx) {
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
   let each_1_anchor;
@@ -30588,9 +33003,9 @@ function create_else_block12(ctx) {
     ctx2[9].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context17(ctx, each_value, i);
+    let child_ctx = get_each_context21(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block17(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block21(key, child_ctx));
   }
   return {
     c() {
@@ -30616,7 +33031,7 @@ function create_else_block12(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block17, each_1_anchor, get_each_context17);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block21, each_1_anchor, get_each_context21);
         check_outros();
       }
     },
@@ -30672,7 +33087,7 @@ function create_if_block30(ctx) {
     }
   };
 }
-function create_if_block_25(ctx) {
+function create_if_block_27(ctx) {
   let stylerulecontainer;
   let current;
   stylerulecontainer = new style_rule_default({
@@ -30761,7 +33176,7 @@ function create_if_block_111(ctx) {
         /*$dragState*/
         ctx[1].draggedRule
       ),
-      $$slots: { default: [create_default_slot57] },
+      $$slots: { default: [create_default_slot65] },
       $$scope: { ctx }
     }
   });
@@ -30808,7 +33223,7 @@ function create_if_block_111(ctx) {
     }
   };
 }
-function create_default_slot57(ctx) {
+function create_default_slot65(ctx) {
   let stylerulecontainer;
   let t;
   let current;
@@ -30882,13 +33297,13 @@ function create_default_slot57(ctx) {
     }
   };
 }
-function create_each_block17(key_1, ctx) {
+function create_each_block21(key_1, ctx) {
   let first;
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_111, create_if_block_25];
+  const if_block_creators = [create_if_block_111, create_if_block_27];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -30978,7 +33393,7 @@ function create_each_block17(key_1, ctx) {
     }
   };
 }
-function create_fragment109(ctx) {
+function create_fragment118(ctx) {
   let div;
   let current_block_type_index;
   let if_block;
@@ -30986,7 +33401,7 @@ function create_fragment109(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block30, create_else_block12];
+  const if_block_creators = [create_if_block30, create_else_block14];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -31066,7 +33481,7 @@ function create_fragment109(ctx) {
     }
   };
 }
-function instance106($$self, $$props, $$invalidate) {
+function instance116($$self, $$props, $$invalidate) {
   let $dragState;
   let $allMatches;
   let { rules } = $$props;
@@ -31114,16 +33529,16 @@ function instance106($$self, $$props, $$invalidate) {
 var Style_rules_list = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance106, create_fragment109, safe_not_equal, { rules: 0 }, add_css50);
+    init(this, options, instance116, create_fragment118, safe_not_equal, { rules: 0 }, add_css55);
   }
 };
 var style_rules_list_default = Style_rules_list;
 
 // src/view/components/container/style-rules/components/style-rules-footer.svelte
-function add_css51(target) {
-  append_styles(target, "svelte-n13666", ".modal-footer.svelte-n13666{width:100%;padding-bottom:10px;display:flex;justify-content:end}.add-rule.svelte-n13666{border:none;border-radius:4px;cursor:pointer;align-self:end;margin-right:10px;padding:8px}");
+function add_css56(target) {
+  append_styles(target, "svelte-77s61g", ".modal-footer.svelte-77s61g{width:100%;padding-bottom:10px;display:flex;justify-content:end}.add-rule.svelte-77s61g{border:none;border-radius:4px;cursor:pointer;align-self:end;margin-right:10px;padding:8px}");
 }
-function create_fragment110(ctx) {
+function create_fragment119(ctx) {
   let div;
   let button;
   let mounted;
@@ -31133,8 +33548,8 @@ function create_fragment110(ctx) {
       div = element("div");
       button = element("button");
       button.textContent = `${lang.modals_rules_add_rule}`;
-      attr(button, "class", "add-rule svelte-n13666");
-      attr(div, "class", "modal-footer svelte-n13666");
+      attr(button, "class", "add-rule svelte-77s61g");
+      attr(div, "class", "modal-footer svelte-77s61g");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -31161,7 +33576,7 @@ function create_fragment110(ctx) {
     }
   };
 }
-function instance107($$self) {
+function instance117($$self) {
   const view = getView();
   const addRule = () => {
     var _a;
@@ -31176,16 +33591,16 @@ function instance107($$self) {
 var Style_rules_footer = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance107, create_fragment110, safe_not_equal, {}, add_css51);
+    init(this, options, instance117, create_fragment119, safe_not_equal, {}, add_css56);
   }
 };
 var style_rules_footer_default = Style_rules_footer;
 
 // src/view/components/container/shared/draggable-modal/draggable-modal.svelte
-function add_css52(target) {
+function add_css57(target) {
   append_styles(target, "svelte-1l68k51", ".drag-handle.svelte-1l68k51.svelte-1l68k51{position:absolute;left:0;top:0;bottom:0;width:8px;cursor:grab;background-color:transparent;z-index:1}.lineage-modal.svelte-1l68k51:hover .drag-handle.svelte-1l68k51{background-size:2px 4px;background-image:linear-gradient(\n            0deg,\n            hsla(0, 0%, 60%, 0.35) 20%,\n            transparent 40%\n        )}.drag-handle.svelte-1l68k51.svelte-1l68k51:active{cursor:grabbing}");
 }
-function create_fragment111(ctx) {
+function create_fragment120(ctx) {
   let div1;
   let div0;
   let t;
@@ -31280,7 +33695,7 @@ function create_fragment111(ctx) {
     }
   };
 }
-function instance108($$self, $$props, $$invalidate) {
+function instance118($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let modal;
   let startX;
@@ -31336,77 +33751,511 @@ function instance108($$self, $$props, $$invalidate) {
 var Draggable_modal = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance108, create_fragment111, safe_not_equal, {}, add_css52);
+    init(this, options, instance118, create_fragment120, safe_not_equal, {}, add_css57);
   }
 };
 var draggable_modal_default = Draggable_modal;
 
-// src/view/components/container/style-rules/style-rules.svelte
-function add_css53(target) {
-  append_styles(target, "svelte-rft3in", ".modal-content.svelte-rft3in{max-width:100%;height:230px;overflow:auto}");
+// src/view/components/container/style-rules/components/tab-header/components/clickable-icon.svelte
+function add_css58(target) {
+  append_styles(target, "svelte-y9i24n", ".lineage-view .clickable-icon.svelte-y9i24n{cursor:pointer}.clickable-icon--active.svelte-y9i24n{color:var(--icon-color-active);background-color:rgba(0, 0, 0, 0.3);background-blend-mode:multiply}");
 }
-function create_default_slot58(ctx) {
-  let div;
-  let styleruleslist;
-  let t;
-  let stylerulesfooter;
+function create_fragment121(ctx) {
+  let button;
+  let button_class_value;
   let current;
-  styleruleslist = new style_rules_list_default({ props: { rules: (
-    /*$rulesStore*/
-    ctx[0]
-  ) } });
-  stylerulesfooter = new style_rules_footer_default({});
+  let mounted;
+  let dispose;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[4].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
   return {
     c() {
-      div = element("div");
-      create_component(styleruleslist.$$.fragment);
-      t = space();
-      create_component(stylerulesfooter.$$.fragment);
-      attr(div, "class", "modal-content svelte-rft3in");
+      button = element("button");
+      if (default_slot)
+        default_slot.c();
+      attr(
+        button,
+        "aria-label",
+        /*label*/
+        ctx[1]
+      );
+      attr(button, "class", button_class_value = null_to_empty("clickable-icon nav-action-button " + /*isActive*/
+      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-y9i24n");
+      set_style(button, "position", "relative");
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      mount_component(styleruleslist, div, null);
-      insert(target, t, anchor);
-      mount_component(stylerulesfooter, target, anchor);
+      insert(target, button, anchor);
+      if (default_slot) {
+        default_slot.m(button, null);
+      }
+      current = true;
+      if (!mounted) {
+        dispose = listen(button, "click", function() {
+          if (is_function(
+            /*onClick*/
+            ctx[0]
+          ))
+            ctx[0].apply(this, arguments);
+        });
+        mounted = true;
+      }
+    },
+    p(new_ctx, [dirty]) {
+      ctx = new_ctx;
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx,
+            /*$$scope*/
+            ctx[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*label*/
+      2) {
+        attr(
+          button,
+          "aria-label",
+          /*label*/
+          ctx[1]
+        );
+      }
+      if (!current || dirty & /*isActive*/
+      4 && button_class_value !== (button_class_value = null_to_empty("clickable-icon nav-action-button " + /*isActive*/
+      (ctx[2] ? "clickable-icon--active " : "")) + " svelte-y9i24n")) {
+        attr(button, "class", button_class_value);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button);
+      }
+      if (default_slot)
+        default_slot.d(detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance119($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { onClick } = $$props;
+  let { label } = $$props;
+  let { isActive = false } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("onClick" in $$props2)
+      $$invalidate(0, onClick = $$props2.onClick);
+    if ("label" in $$props2)
+      $$invalidate(1, label = $$props2.label);
+    if ("isActive" in $$props2)
+      $$invalidate(2, isActive = $$props2.isActive);
+    if ("$$scope" in $$props2)
+      $$invalidate(3, $$scope = $$props2.$$scope);
+  };
+  return [onClick, label, isActive, $$scope, slots];
+}
+var Clickable_icon2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance119, create_fragment121, safe_not_equal, { onClick: 0, label: 1, isActive: 2 }, add_css58);
+  }
+};
+var clickable_icon_default2 = Clickable_icon2;
+
+// src/view/components/container/style-rules/components/tab-header/tab-header.svelte
+function add_css59(target) {
+  append_styles(target, "svelte-1e75r2m", ".style-rules-tabs-header.svelte-1e75r2m{display:flex;flex-direction:column;align-items:center;justify-content:start;width:100%;align-self:center;justify-self:center;box-sizing:border-box;height:auto;padding-top:10px}.tab-header-buttons.svelte-1e75r2m{display:flex;align-items:center;justify-content:center;gap:5px}");
+}
+function create_default_slot_16(ctx) {
+  let globe;
+  let current;
+  globe = new globe_default({ props: { class: "svg-icon" } });
+  return {
+    c() {
+      create_component(globe.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(globe, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(globe.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(globe.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(globe, detaching);
+    }
+  };
+}
+function create_default_slot66(ctx) {
+  let filetext;
+  let current;
+  filetext = new file_text_default({ props: { class: "svg-icon" } });
+  return {
+    c() {
+      create_component(filetext.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(filetext, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(filetext.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(filetext.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(filetext, detaching);
+    }
+  };
+}
+function create_fragment122(ctx) {
+  let div1;
+  let div0;
+  let clickableicon0;
+  let t;
+  let clickableicon1;
+  let current;
+  clickableicon0 = new clickable_icon_default2({
+    props: {
+      isActive: (
+        /*$activeTab*/
+        ctx[0] === "global-rules"
+      ),
+      label: lang.modals_rules_tab_global_rules,
+      onClick: (
+        /*func*/
+        ctx[3]
+      ),
+      $$slots: { default: [create_default_slot_16] },
+      $$scope: { ctx }
+    }
+  });
+  clickableicon1 = new clickable_icon_default2({
+    props: {
+      isActive: (
+        /*$activeTab*/
+        ctx[0] === "document-rules"
+      ),
+      label: lang.modals_rules_tab_document_rules,
+      onClick: (
+        /*func_1*/
+        ctx[4]
+      ),
+      $$slots: { default: [create_default_slot66] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      create_component(clickableicon0.$$.fragment);
+      t = space();
+      create_component(clickableicon1.$$.fragment);
+      attr(div0, "class", "tab-header-buttons svelte-1e75r2m");
+      attr(div1, "class", "style-rules-tabs-header svelte-1e75r2m");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      mount_component(clickableicon0, div0, null);
+      append(div0, t);
+      mount_component(clickableicon1, div0, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const clickableicon0_changes = {};
+      if (dirty & /*$activeTab*/
+      1)
+        clickableicon0_changes.isActive = /*$activeTab*/
+        ctx2[0] === "global-rules";
+      if (dirty & /*$$scope*/
+      64) {
+        clickableicon0_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      clickableicon0.$set(clickableicon0_changes);
+      const clickableicon1_changes = {};
+      if (dirty & /*$activeTab*/
+      1)
+        clickableicon1_changes.isActive = /*$activeTab*/
+        ctx2[0] === "document-rules";
+      if (dirty & /*$$scope*/
+      64) {
+        clickableicon1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      clickableicon1.$set(clickableicon1_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(clickableicon0.$$.fragment, local);
+      transition_in(clickableicon1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(clickableicon0.$$.fragment, local);
+      transition_out(clickableicon1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(clickableicon0);
+      destroy_component(clickableicon1);
+    }
+  };
+}
+function instance120($$self, $$props, $$invalidate) {
+  let $activeTab;
+  const view = getView();
+  const activeTab = ActiveStyleRulesTab(view);
+  component_subscribe($$self, activeTab, (value) => $$invalidate(0, $activeTab = value));
+  const setActiveTab = (tab) => {
+    view.plugin.settings.dispatch({
+      type: "settings/style-rules/set-active-tab",
+      payload: { tab }
+    });
+  };
+  const func2 = () => setActiveTab("global-rules");
+  const func_1 = () => setActiveTab("document-rules");
+  return [$activeTab, activeTab, setActiveTab, func2, func_1];
+}
+var Tab_header2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance120, create_fragment122, safe_not_equal, {}, add_css59);
+  }
+};
+var tab_header_default2 = Tab_header2;
+
+// src/view/components/container/style-rules/style-rules.svelte
+function add_css60(target) {
+  append_styles(target, "svelte-rft3in", ".modal-content.svelte-rft3in{max-width:100%;height:230px;overflow:auto}");
+}
+function create_else_block15(ctx) {
+  let styleruleslist;
+  let current;
+  styleruleslist = new style_rules_list_default({
+    props: { rules: (
+      /*$globalRules*/
+      ctx[2]
+    ) }
+  });
+  return {
+    c() {
+      create_component(styleruleslist.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(styleruleslist, target, anchor);
       current = true;
     },
     p(ctx2, dirty) {
       const styleruleslist_changes = {};
-      if (dirty & /*$rulesStore*/
-      1)
-        styleruleslist_changes.rules = /*$rulesStore*/
-        ctx2[0];
+      if (dirty & /*$globalRules*/
+      4)
+        styleruleslist_changes.rules = /*$globalRules*/
+        ctx2[2];
       styleruleslist.$set(styleruleslist_changes);
     },
     i(local) {
       if (current)
         return;
       transition_in(styleruleslist.$$.fragment, local);
-      transition_in(stylerulesfooter.$$.fragment, local);
       current = true;
     },
     o(local) {
       transition_out(styleruleslist.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(styleruleslist, detaching);
+    }
+  };
+}
+function create_if_block31(ctx) {
+  let styleruleslist;
+  let current;
+  styleruleslist = new style_rules_list_default({
+    props: { rules: (
+      /*$documentRules*/
+      ctx[1]
+    ) }
+  });
+  return {
+    c() {
+      create_component(styleruleslist.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(styleruleslist, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const styleruleslist_changes = {};
+      if (dirty & /*$documentRules*/
+      2)
+        styleruleslist_changes.rules = /*$documentRules*/
+        ctx2[1];
+      styleruleslist.$set(styleruleslist_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(styleruleslist.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(styleruleslist.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(styleruleslist, detaching);
+    }
+  };
+}
+function create_default_slot67(ctx) {
+  let tabheader;
+  let t0;
+  let div;
+  let current_block_type_index;
+  let if_block;
+  let t1;
+  let stylerulesfooter;
+  let current;
+  tabheader = new tab_header_default2({});
+  const if_block_creators = [create_if_block31, create_else_block15];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*$activeTab*/
+      ctx2[0] === "document-rules"
+    )
+      return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  stylerulesfooter = new style_rules_footer_default({});
+  return {
+    c() {
+      create_component(tabheader.$$.fragment);
+      t0 = space();
+      div = element("div");
+      if_block.c();
+      t1 = space();
+      create_component(stylerulesfooter.$$.fragment);
+      attr(div, "class", "modal-content svelte-rft3in");
+    },
+    m(target, anchor) {
+      mount_component(tabheader, target, anchor);
+      insert(target, t0, anchor);
+      insert(target, div, anchor);
+      if_blocks[current_block_type_index].m(div, null);
+      insert(target, t1, anchor);
+      mount_component(stylerulesfooter, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(div, null);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tabheader.$$.fragment, local);
+      transition_in(if_block);
+      transition_in(stylerulesfooter.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tabheader.$$.fragment, local);
+      transition_out(if_block);
       transition_out(stylerulesfooter.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
+        detach(t0);
         detach(div);
-        detach(t);
+        detach(t1);
       }
-      destroy_component(styleruleslist);
+      destroy_component(tabheader, detaching);
+      if_blocks[current_block_type_index].d();
       destroy_component(stylerulesfooter, detaching);
     }
   };
 }
-function create_fragment112(ctx) {
+function create_fragment123(ctx) {
   let draggablemodal;
   let current;
   draggablemodal = new draggable_modal_default({
     props: {
-      $$slots: { default: [create_default_slot58] },
+      $$slots: { default: [create_default_slot67] },
       $$scope: { ctx }
     }
   });
@@ -31420,8 +34269,8 @@ function create_fragment112(ctx) {
     },
     p(ctx2, [dirty]) {
       const draggablemodal_changes = {};
-      if (dirty & /*$$scope, $rulesStore*/
-      9) {
+      if (dirty & /*$$scope, $documentRules, $activeTab, $globalRules*/
+      135) {
         draggablemodal_changes.$$scope = { dirty, ctx: ctx2 };
       }
       draggablemodal.$set(draggablemodal_changes);
@@ -31441,26 +34290,39 @@ function create_fragment112(ctx) {
     }
   };
 }
-function instance109($$self, $$props, $$invalidate) {
-  let $rulesStore;
+function instance121($$self, $$props, $$invalidate) {
+  let $activeTab;
+  let $documentRules;
+  let $globalRules;
   const view = getView();
-  const rulesStore = DocumentStyleRulesStore(view);
-  component_subscribe($$self, rulesStore, (value) => $$invalidate(0, $rulesStore = value));
-  return [$rulesStore, rulesStore];
+  const activeTab = ActiveStyleRulesTab(view);
+  component_subscribe($$self, activeTab, (value) => $$invalidate(0, $activeTab = value));
+  const documentRules = DocumentStyleRulesStore(view);
+  component_subscribe($$self, documentRules, (value) => $$invalidate(1, $documentRules = value));
+  const globalRules = GlobalStyleRulesStore(view);
+  component_subscribe($$self, globalRules, (value) => $$invalidate(2, $globalRules = value));
+  return [
+    $activeTab,
+    $documentRules,
+    $globalRules,
+    activeTab,
+    documentRules,
+    globalRules
+  ];
 }
 var Style_rules = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance109, create_fragment112, safe_not_equal, {}, add_css53);
+    init(this, options, instance121, create_fragment123, safe_not_equal, {}, add_css60);
   }
 };
 var style_rules_default = Style_rules;
 
 // src/view/components/container/main.svelte
-function add_css54(target) {
+function add_css61(target) {
   append_styles(target, "svelte-1g9h6to", ".lineage-main.svelte-1g9h6to{--z-index-breadcrumbs:10;display:flex;height:100%;flex:1 1 auto;width:0;position:relative}.lineage-view.svelte-1g9h6to{background-color:var(--background-container);display:flex;height:100%;width:100%}");
 }
-function create_if_block_32(ctx) {
+function create_if_block_33(ctx) {
   let stylerules;
   let current;
   stylerules = new style_rules_default({});
@@ -31487,7 +34349,7 @@ function create_if_block_32(ctx) {
     }
   };
 }
-function create_if_block_26(ctx) {
+function create_if_block_28(ctx) {
   let settings;
   let current;
   settings = new settings_default2({});
@@ -31541,7 +34403,7 @@ function create_if_block_112(ctx) {
     }
   };
 }
-function create_if_block31(ctx) {
+function create_if_block32(ctx) {
   let filehistory;
   let current;
   filehistory = new file_histoy_default({});
@@ -31568,7 +34430,7 @@ function create_if_block31(ctx) {
     }
   };
 }
-function create_fragment113(ctx) {
+function create_fragment124(ctx) {
   let div1;
   let leftsidebar;
   let t0;
@@ -31579,19 +34441,21 @@ function create_fragment113(ctx) {
   let t2;
   let breadcrumbs;
   let t3;
-  let controlsbar;
+  let verticaltoolbar;
   let t4;
+  let zoombuttons;
+  let t5;
   let current_block_type_index;
   let if_block;
-  let t5;
+  let t6;
   let dndedges;
   let div0_class_value;
   let mouseWheelZoom_action;
   let clickAndDrag_action;
-  let t6;
+  let t7;
   let rightsidebar;
   let viewHotkeysAction_action;
-  let contextMenu_action;
+  let showContextMenu_action;
   let current;
   let mounted;
   let dispose;
@@ -31599,8 +34463,9 @@ function create_fragment113(ctx) {
   container = new container_wrapper_default({});
   toolbar = new toolbar_default({});
   breadcrumbs = new breadcrumbs_default({});
-  controlsbar = new controls_container_default({});
-  const if_block_creators = [create_if_block31, create_if_block_112, create_if_block_26, create_if_block_32];
+  verticaltoolbar = new vertical_toolbar_default({});
+  zoombuttons = new zoom_buttons_default({});
+  const if_block_creators = [create_if_block32, create_if_block_112, create_if_block_28, create_if_block_33];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -31642,13 +34507,15 @@ function create_fragment113(ctx) {
       t2 = space();
       create_component(breadcrumbs.$$.fragment);
       t3 = space();
-      create_component(controlsbar.$$.fragment);
+      create_component(verticaltoolbar.$$.fragment);
       t4 = space();
+      create_component(zoombuttons.$$.fragment);
+      t5 = space();
       if (if_block)
         if_block.c();
-      t5 = space();
-      create_component(dndedges.$$.fragment);
       t6 = space();
+      create_component(dndedges.$$.fragment);
+      t7 = space();
       create_component(rightsidebar.$$.fragment);
       attr(div0, "class", div0_class_value = null_to_empty(`lineage-main`) + " svelte-1g9h6to");
       attr(div1, "class", "lineage-view svelte-1g9h6to");
@@ -31665,14 +34532,16 @@ function create_fragment113(ctx) {
       append(div0, t2);
       mount_component(breadcrumbs, div0, null);
       append(div0, t3);
-      mount_component(controlsbar, div0, null);
+      mount_component(verticaltoolbar, div0, null);
       append(div0, t4);
+      mount_component(zoombuttons, div0, null);
+      append(div0, t5);
       if (~current_block_type_index) {
         if_blocks[current_block_type_index].m(div0, null);
       }
-      append(div0, t5);
+      append(div0, t6);
       mount_component(dndedges, div0, null);
-      append(div1, t6);
+      append(div1, t7);
       mount_component(rightsidebar, div1, null);
       current = true;
       if (!mounted) {
@@ -31693,7 +34562,7 @@ function create_fragment113(ctx) {
             /*view*/
             ctx[0]
           ) })),
-          action_destroyer(contextMenu_action = contextMenu.call(
+          action_destroyer(showContextMenu_action = showContextMenu.call(
             null,
             div1,
             /*view*/
@@ -31722,7 +34591,7 @@ function create_fragment113(ctx) {
           } else {
           }
           transition_in(if_block, 1);
-          if_block.m(div0, t5);
+          if_block.m(div0, t6);
         } else {
           if_block = null;
         }
@@ -31747,9 +34616,9 @@ function create_fragment113(ctx) {
           /*view*/
           ctx2[0]
         ) });
-      if (contextMenu_action && is_function(contextMenu_action.update) && dirty & /*view*/
+      if (showContextMenu_action && is_function(showContextMenu_action.update) && dirty & /*view*/
       1)
-        contextMenu_action.update.call(
+        showContextMenu_action.update.call(
           null,
           /*view*/
           ctx2[0]
@@ -31762,7 +34631,8 @@ function create_fragment113(ctx) {
       transition_in(container.$$.fragment, local);
       transition_in(toolbar.$$.fragment, local);
       transition_in(breadcrumbs.$$.fragment, local);
-      transition_in(controlsbar.$$.fragment, local);
+      transition_in(verticaltoolbar.$$.fragment, local);
+      transition_in(zoombuttons.$$.fragment, local);
       transition_in(if_block);
       transition_in(dndedges.$$.fragment, local);
       transition_in(rightsidebar.$$.fragment, local);
@@ -31773,7 +34643,8 @@ function create_fragment113(ctx) {
       transition_out(container.$$.fragment, local);
       transition_out(toolbar.$$.fragment, local);
       transition_out(breadcrumbs.$$.fragment, local);
-      transition_out(controlsbar.$$.fragment, local);
+      transition_out(verticaltoolbar.$$.fragment, local);
+      transition_out(zoombuttons.$$.fragment, local);
       transition_out(if_block);
       transition_out(dndedges.$$.fragment, local);
       transition_out(rightsidebar.$$.fragment, local);
@@ -31787,7 +34658,8 @@ function create_fragment113(ctx) {
       destroy_component(container);
       destroy_component(toolbar);
       destroy_component(breadcrumbs);
-      destroy_component(controlsbar);
+      destroy_component(verticaltoolbar);
+      destroy_component(zoombuttons);
       if (~current_block_type_index) {
         if_blocks[current_block_type_index].d();
       }
@@ -31798,7 +34670,7 @@ function create_fragment113(ctx) {
     }
   };
 }
-function instance110($$self, $$props, $$invalidate) {
+function instance122($$self, $$props, $$invalidate) {
   let $controls;
   let { plugin } = $$props;
   let { view } = $$props;
@@ -31817,7 +34689,7 @@ function instance110($$self, $$props, $$invalidate) {
 var Main = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance110, create_fragment113, safe_not_equal, { plugin: 3, view: 0 }, add_css54);
+    init(this, options, instance122, create_fragment124, safe_not_equal, { plugin: 3, view: 0 }, add_css61);
   }
 };
 var main_default = Main;
@@ -31896,35 +34768,66 @@ var findGroupByParentId = (columns, parentId) => {
   }
 };
 
+// src/lib/tree-utils/find/find-node-column-and-parent.ts
+var findNodeColumnAndParent = (columns, nodeId) => {
+  for (let i = 0; i < columns.length; i++) {
+    const column = columns[i];
+    for (const group of column.groups) {
+      for (const node of group.nodes) {
+        if (node === nodeId) {
+          return [i, group.parentId];
+        }
+      }
+    }
+  }
+  return null;
+};
+
+// src/lib/tree-utils/insert/insert-node-after-parent.ts
+var insertNodeAfterParent = (document2, nodeId, newNodeId) => {
+  const column = findNodeColumnAndParent(document2.columns, nodeId);
+  if (!column)
+    throw new Error("could not find parent column");
+  if (column[0] === 0) {
+    throw new SilentError(
+      "can't create parent sibling for first column nodes"
+    );
+  }
+  const parentId = column[1];
+  const parentGroup = findGroupByNodeId(document2.columns, parentId);
+  if (!parentGroup)
+    throw new Error("could not find group of parent node");
+  parentGroup.nodes = parentGroup.nodes.reduce((nodes, nodeId2) => {
+    nodes.push(nodeId2);
+    if (nodeId2 === parentId) {
+      nodes.push(newNodeId);
+    }
+    return nodes;
+  }, []);
+};
+
 // src/stores/document/reducers/insert-node/insert-node.ts
-var insertNode = (document2, action, newNodeId = id.node()) => {
-  const payload = action.payload;
-  invariant(payload.activeNodeId);
-  if (payload.position === "right") {
-    insertChild(
-      document2,
-      payload.activeNodeId,
-      newNodeId,
-      !!action.payload.content
-    );
+var insertNode = (document2, position, activeNodeId, content, newNodeId = id.node()) => {
+  invariant(activeNodeId);
+  if (position === "right") {
+    insertChild(document2, activeNodeId, newNodeId, !!content);
+  } else if (position === "right-last") {
+    insertChild(document2, activeNodeId, newNodeId, false);
+  } else if (position === "left") {
+    insertNodeAfterParent(document2, activeNodeId, newNodeId);
   } else {
-    const columnIndex = findNodeColumn(
-      document2.columns,
-      payload.activeNodeId
-    );
+    const columnIndex = findNodeColumn(document2.columns, activeNodeId);
     const column = document2.columns[columnIndex];
     invariant(column);
-    const group = findGroupByNodeId([column], payload.activeNodeId);
-    invariant(group, "could not find group of " + payload.activeNodeId);
-    const groupIndex = group.nodes.findIndex(
-      (c) => c === payload.activeNodeId
-    );
-    const insertionIndex = action.payload.position === "up" ? groupIndex : groupIndex + 1;
+    const group = findGroupByNodeId([column], activeNodeId);
+    invariant(group, "could not find group of " + activeNodeId);
+    const groupIndex = group.nodes.findIndex((c) => c === activeNodeId);
+    const insertionIndex = position === "up" ? groupIndex : groupIndex + 1;
     group.nodes.splice(insertionIndex, 0, newNodeId);
     group.nodes = [...group.nodes];
   }
   document2.content[newNodeId] = {
-    content: action.payload.content || ""
+    content: content || ""
   };
   return newNodeId;
 };
@@ -32119,9 +35022,9 @@ var jsonToColumns = (tree, parentId = id.rootNode(), columns = [], content = {},
 
 // src/lib/tree-utils/insert/insert-first-node.ts
 var insertFirstNode = (columns, content) => {
+  const rootId = id.rootNode();
+  const createdNode = id.node();
   if (columns.length === 0) {
-    const rootId = id.rootNode();
-    const createdNode = id.node();
     content[createdNode] = { content: "" };
     columns.push({
       id: id.column(),
@@ -32132,7 +35035,12 @@ var insertFirstNode = (columns, content) => {
         }
       ]
     });
-  }
+  } else if (columns.length === 1 && columns[0].groups.length === 1 && columns[0].groups[0].nodes.length === 0) {
+    content[createdNode] = { content: "" };
+    columns[0].groups[0].nodes = [createdNode];
+  } else
+    throw new Error("document is not empty");
+  return createdNode;
 };
 
 // src/stores/document/reducers/load-document-from-file/load-document-from-file.ts
@@ -32145,7 +35053,7 @@ var loadDocumentFromFile = (state2, action) => {
   if (emptyTree) {
     insertFirstNode(state2.document.columns, state2.document.content);
   }
-  if (action.type === "DOCUMENT/LOAD_FILE")
+  if (action.type === "document/file/load-from-disk")
     state2.file.frontmatter = action.payload.document.frontmatter;
   const activeNode = state2.document.columns[0].groups[0].nodes[0];
   invariant(activeNode);
@@ -32229,60 +35137,23 @@ var findNextNodeAfterDeletion = (columns, node) => {
   return nextNode;
 };
 
-// src/lib/tree-utils/find/find-node-to-jump-to.ts
-var findNodeToJumpTo = (columns, node, target) => {
-  const columnIndex = findNodeColumn(columns, node);
-  const column = columns[columnIndex];
-  if (target === "start-of-column") {
-    return column.groups[0].nodes[0];
-  } else if (target === "end-of-column") {
-    const nodeGroup = column.groups[column.groups.length - 1];
-    return nodeGroup.nodes[nodeGroup.nodes.length - 1];
-  } else {
-    const group = column.groups.find((g) => g.nodes.includes(node));
-    if (group) {
-      if (target === "start-of-group")
-        return group.nodes[0];
-      else if (target === "end-of-group") {
-        return group.nodes[group.nodes.length - 1];
-      }
-    }
-  }
-};
-
-// src/lib/tree-utils/find/find-next-active-node.ts
-var findNextActiveNode = (columns, node, action) => {
-  if (action.type === "DOCUMENT/DELETE_NODE") {
-    return findNextNodeAfterDeletion(columns, node);
-  } else if (action.type === "DOCUMENT/JUMP_TO_NODE") {
-    return findNodeToJumpTo(columns, node, action.payload.target);
-  }
-};
-
 // src/stores/document/reducers/delete-node/delete-node.ts
 var deleteNode2 = (document2, nodeId, selectedNodes) => {
   invariant(nodeId);
-  const isSelection = selectedNodes && selectedNodes.size > 1;
+  const isSelection = selectedNodes && selectedNodes.size > 0;
   const nodes = isSelection ? [...selectedNodes] : [nodeId];
   let nextNode = void 0;
-  for (const nodeId2 of nodes) {
-    const lastNode = isLastRootNode(document2.columns, nodeId2);
-    if (lastNode) {
-      if (isSelection)
-        break;
-      else
-        throw new Error(lang.error_delete_last_node);
+  for (let i = 0; i < nodes.length; i++) {
+    const nodeId2 = nodes[i];
+    if (i === nodes.length - 1 && !isLastRootNode(document2.columns, nodeId2)) {
+      nextNode = findNextNodeAfterDeletion(document2.columns, nodeId2);
     }
-    nextNode = findNextActiveNode(document2.columns, nodeId2, {
-      type: "DOCUMENT/DELETE_NODE",
-      payload: {
-        activeNodeId: nodeId2
-      }
-    });
-    invariant(nextNode);
     deleteChildNodes(document2, nodeId2);
     deleteNodeById(document2.columns, document2.content, nodeId2);
     cleanAndSortColumns(document2);
+  }
+  if (!nextNode) {
+    nextNode = insertFirstNode(document2.columns, document2.content);
   }
   invariant(nextNode);
   return nextNode;
@@ -32338,21 +35209,6 @@ var findAdjacentNodeOfSelection = (document2, activeNodeId, selectedNodes, direc
     }
   }
   return findAdjacentNode(searchColumns, activeNodeId, direction);
-};
-
-// src/lib/tree-utils/find/find-node-column-and-parent.ts
-var findNodeColumnAndParent = (columns, nodeId) => {
-  for (let i = 0; i < columns.length; i++) {
-    const column = columns[i];
-    for (const group of column.groups) {
-      for (const node of group.nodes) {
-        if (node === nodeId) {
-          return [i, group.parentId];
-        }
-      }
-    }
-  }
-  return null;
 };
 
 // src/lib/tree-utils/find/find-adjacent-parent.ts
@@ -32553,8 +35409,8 @@ var addSnapshot = (document2, history, context) => {
   const activeIndex = history.state.activeIndex;
   const activeSnapshot = items[activeIndex];
   removeObsoleteHistoryItems(history);
-  removeOldHistoryItems(history, 50);
-  if (activeSnapshot && context.action.type === "DOCUMENT/LOAD_FILE") {
+  removeOldHistoryItems(history, 200);
+  if (activeSnapshot && context.action.type === "document/file/load-from-disk") {
     const snapshotContent = JSON.stringify(
       Object.values(JSON.parse(activeSnapshot.data.content))
     );
@@ -32608,51 +35464,28 @@ var undoAction = (document2, history) => {
 };
 
 // src/stores/view/helpers/get-document-event-type.ts
-var contentEvents = /* @__PURE__ */ new Set([
-  "DOCUMENT/SET_NODE_CONTENT",
-  "DOCUMENT/FORMAT_HEADINGS"
-]);
-var createAndDelete = /* @__PURE__ */ new Set([
-  "DOCUMENT/INSERT_NODE",
-  "DOCUMENT/DELETE_NODE",
-  "DOCUMENT/MERGE_NODE",
-  "DOCUMENT/LOAD_FILE",
-  "DOCUMENT/EXTRACT_BRANCH",
-  "DOCUMENT/SPLIT_NODE"
-]);
-var dropAndMoveEvents = /* @__PURE__ */ new Set([
-  "DOCUMENT/DROP_NODE",
-  "DOCUMENT/MOVE_NODE"
-]);
-var historyEvents = /* @__PURE__ */ new Set([
-  "HISTORY/APPLY_NEXT_SNAPSHOT",
-  "HISTORY/APPLY_PREVIOUS_SNAPSHOT",
-  "HISTORY/SELECT_SNAPSHOT"
-]);
-var clipboardEvents = /* @__PURE__ */ new Set([
-  "DOCUMENT/PASTE_NODE",
-  "DOCUMENT/CUT_NODE"
-]);
-var cachedResults = {};
+var eventTypesDictionary = {
+  "document/update-node-content": { content: true },
+  "document/format-headings": { content: true },
+  "document/add-node": { createOrDelete: true },
+  "document/delete-node": { createOrDelete: true },
+  "document/merge-node": { createOrDelete: true },
+  "document/file/load-from-disk": { createOrDelete: true },
+  "document/extract-node": { createOrDelete: true },
+  "document/split-node": { createOrDelete: true },
+  "document/drop-node": { dropOrMove: true },
+  "document/move-node": { dropOrMove: true },
+  "document/sort-direct-child-nodes": { dropOrMove: true },
+  "document/history/select-next-snapshot": { changeHistory: true },
+  "document/history/select-previous-snapshot": { changeHistory: true },
+  "document/history/select-snapshot": { changeHistory: true },
+  "document/paste-node": { clipboard: true },
+  "document/cut-node": { clipboard: true }
+};
+var documentEventTypes = new Map(Object.entries(eventTypesDictionary));
+var none = {};
 var getDocumentEventType = (type) => {
-  if (cachedResults[type]) {
-    return cachedResults[type];
-  }
-  let result = null;
-  if (contentEvents.has(type))
-    result = { content: true };
-  else if (createAndDelete.has(type))
-    result = { createOrDelete: true };
-  else if (dropAndMoveEvents.has(type))
-    result = { dropOrMove: true };
-  else if (historyEvents.has(type))
-    result = { changeHistory: true };
-  else if (clipboardEvents.has(type))
-    result = { clipboard: true };
-  if (!result)
-    result = {};
-  cachedResults[type] = result;
-  return result;
+  return documentEventTypes.get(type) || none;
 };
 
 // src/stores/document/reducers/history/redo-action.ts
@@ -32666,39 +35499,6 @@ var redoAction = (document2, history) => {
   updateNavigationState(history);
   loadDocumentFromSnapshot(document2, snapshot, history);
 };
-
-// src/stores/document/default-document-state.ts
-var defaultDocumentState = () => ({
-  document: {
-    columns: [],
-    content: {}
-  },
-  sections: {
-    id_section: {},
-    section_id: {}
-  },
-  file: {
-    path: null,
-    frontmatter: ""
-  },
-  history: {
-    items: [],
-    state: {
-      activeIndex: -1,
-      canGoBack: false,
-      canGoForward: false
-    },
-    context: {
-      activeSection: ""
-    }
-  },
-  pinnedNodes: {
-    Ids: []
-  },
-  meta: {
-    groupParentIds: /* @__PURE__ */ new Set()
-  }
-});
 
 // src/stores/document/reducers/content/format-content/helpers/format-headings.ts
 var formatHeadings = (content, treeIndexDict) => {
@@ -32803,12 +35603,12 @@ var hasNHtmlElementMarker = (input, n = 2) => {
 
 // src/lib/format-detection/detect-document-format.ts
 var detectDocumentFormat = (text2, strict = true) => {
-  const { data } = extractFrontmatter(text2);
-  if (hasNHtmlCommentMarker(data, 1))
+  const { body } = extractFrontmatter(text2);
+  if (hasNHtmlCommentMarker(body, 1))
     return "sections";
-  if (hasNHtmlElementMarker(data, 1))
+  if (hasNHtmlElementMarker(body, 1))
     return "html-element";
-  if (isOutline(data))
+  if (isOutline(body))
     return "outline";
   if (!strict) {
     if (hasNBulletListItems(text2, 1))
@@ -32843,13 +35643,9 @@ var pasteNode2 = (document2, action) => {
   for (const branch of branches.reverse()) {
     insertNode(
       document2,
-      {
-        payload: {
-          activeNodeId: targetNode,
-          position,
-          content: branch.content[branch.nodeId]?.content
-        }
-      },
+      position === "right" ? "right-last" : position,
+      targetNode,
+      branch.content[branch.nodeId]?.content,
       branch.nodeId
     );
     pastChildGroups(document2, branch);
@@ -32858,7 +35654,7 @@ var pasteNode2 = (document2, action) => {
   invariant(nextNode);
   return {
     nextNode,
-    rootNodes: branches.map((b) => b.nodeId)
+    rootNodes: branches.map((b) => b.nodeId).reverse()
   };
 };
 
@@ -32923,10 +35719,10 @@ var splitNode = (document2, action) => {
     throw new SilentError("empty node");
   const sections = splitText(content?.content, action.payload.mode);
   if (sections === content.content)
-    throw new Error(lang.error_cm_cant_split_card_identical);
+    throw new Error(lang.error_cm_cant_split_node_identical);
   const childGroup = findChildGroup(document2.columns, targetNode);
   if (childGroup)
-    throw new Error(lang.error_cm_cant_split_card_that_has_children);
+    throw new Error(lang.error_cm_cant_split_node_that_has_children);
   const result = pasteNode2(document2, {
     payload: {
       position: "down",
@@ -32936,6 +35732,12 @@ var splitNode = (document2, action) => {
   });
   deleteNode2(document2, targetNode);
   return result.nextNode;
+};
+
+// src/stores/document/reducers/pinned-nodes/pin-node.ts
+var pinNode = (sections, pinnedNodes, id2) => {
+  pinnedNodes.Ids.push(id2);
+  pinnedNodes.Ids = sortNodeIdsBySectionNumber(sections, pinnedNodes.Ids);
 };
 
 // src/stores/document/reducers/pinned-nodes/unpin-node.ts
@@ -32974,20 +35776,47 @@ var loadDocumentFromJSON = (state2, document2) => {
   return activeNode;
 };
 
+// src/stores/document/reducers/sort/sort-direct-child-nodes.ts
+var sortDirectChildNodes = (document2, payload) => {
+  const group = findGroupByParentId(document2.columns, payload.id);
+  invariant(group);
+  const copy = [...group.group.nodes];
+  const sorted = payload.order === "ascending" ? copy.sort((a, b) => {
+    const content_a = document2.content[a].content;
+    const content_b = document2.content[b].content;
+    return content_a.localeCompare(content_b, void 0, {
+      numeric: true
+    });
+  }) : copy.sort((a, b) => {
+    const content_a = document2.content[a].content;
+    const content_b = document2.content[b].content;
+    return content_b.localeCompare(content_a, void 0, {
+      numeric: true
+    });
+  });
+  group.group.nodes = sorted;
+  cleanAndSortColumns(document2);
+};
+
 // src/stores/document/document-reducer.ts
 var updateDocumentState2 = (state2, action) => {
   let newActiveNodeId = null;
   let affectedNodeId = null;
   let affectedNodeContent = null;
   let affectedNodes = void 0;
-  if (action.type === "DOCUMENT/SET_NODE_CONTENT") {
+  if (action.type === "document/update-node-content") {
     const update2 = setNodeContent(state2.document.content, action);
     if (!update2)
       return NO_UPDATE;
     newActiveNodeId = action.payload.nodeId;
-  } else if (action.type === "DOCUMENT/INSERT_NODE") {
-    newActiveNodeId = insertNode(state2.document, action);
-  } else if (action.type === "DOCUMENT/DELETE_NODE") {
+  } else if (action.type === "document/add-node") {
+    newActiveNodeId = insertNode(
+      state2.document,
+      action.payload.position,
+      action.payload.activeNodeId,
+      action.payload.content
+    );
+  } else if (action.type === "document/delete-node") {
     affectedNodeContent = state2.document.content[action.payload.activeNodeId];
     newActiveNodeId = deleteNode2(
       state2.document,
@@ -32995,7 +35824,7 @@ var updateDocumentState2 = (state2, action) => {
       action.payload.selectedNodes
     );
     affectedNodeId = action.payload.activeNodeId;
-  } else if (action.type === "DOCUMENT/EXTRACT_BRANCH") {
+  } else if (action.type === "document/extract-node") {
     affectedNodeContent = state2.document.content[action.payload.nodeId];
     const update2 = setNodeContent(state2.document.content, {
       payload: {
@@ -33007,22 +35836,26 @@ var updateDocumentState2 = (state2, action) => {
       return NO_UPDATE;
     removeExtractedBranch(state2.document, action);
     newActiveNodeId = action.payload.nodeId;
-  } else if (action.type === "DOCUMENT/SPLIT_NODE") {
+  } else if (action.type === "document/split-node") {
     affectedNodeId = action.payload.target;
     affectedNodeContent = state2.document.content[affectedNodeId];
     newActiveNodeId = splitNode(state2.document, action);
-  } else if (action.type === "DOCUMENT/DROP_NODE") {
+  } else if (action.type === "document/drop-node") {
     dropNode(state2.document, action);
     newActiveNodeId = action.payload.droppedNodeId;
-  } else if (action.type === "DOCUMENT/MOVE_NODE") {
+  } else if (action.type === "document/move-node") {
     moveNode2(state2.document, action);
     newActiveNodeId = action.payload.activeNodeId;
     affectedNodeId = newActiveNodeId;
-  } else if (action.type === "DOCUMENT/MERGE_NODE") {
+  } else if (action.type === "document/merge-node") {
     affectedNodeContent = state2.document.content[action.payload.activeNodeId];
     newActiveNodeId = mergeNode2(state2.document, action);
     affectedNodeId = action.payload.activeNodeId;
-  } else if (action.type === "DOCUMENT/LOAD_FILE") {
+  } else if (action.type === "document/sort-direct-child-nodes") {
+    sortDirectChildNodes(state2.document, action.payload);
+    newActiveNodeId = action.payload.id;
+    affectedNodeId = newActiveNodeId;
+  } else if (action.type === "document/file/load-from-disk") {
     if (action.payload.__test_document__) {
       newActiveNodeId = loadDocumentFromJSON(
         state2,
@@ -33031,33 +35864,26 @@ var updateDocumentState2 = (state2, action) => {
     } else {
       newActiveNodeId = loadDocumentFromFile(state2, action);
     }
-  } else if (action.type === "RESET_STORE") {
-    const newState = defaultDocumentState();
-    state2.document = newState.document;
-    state2.history = newState.history;
-    state2.file = newState.file;
-  } else if (action.type === "HISTORY/SELECT_SNAPSHOT") {
+  } else if (action.type === "document/history/select-snapshot") {
     selectSnapshot(state2.document, state2.history, action);
     state2.history = { ...state2.history };
-  } else if (action.type === "HISTORY/APPLY_PREVIOUS_SNAPSHOT") {
+  } else if (action.type === "document/history/select-previous-snapshot") {
     undoAction(state2.document, state2.history);
     state2.history = { ...state2.history };
-  } else if (action.type === "HISTORY/APPLY_NEXT_SNAPSHOT") {
+  } else if (action.type === "document/history/select-next-snapshot") {
     redoAction(state2.document, state2.history);
     state2.history = { ...state2.history };
-  } else if (action.type === "FS/SET_FILE_PATH") {
-    state2.file.path = action.payload.path;
-  } else if (action.type === "DOCUMENT/FORMAT_HEADINGS") {
+  } else if (action.type === "document/format-headings") {
     formatHeadings2(state2.document.content, state2.sections);
     newActiveNodeId = getIdOfSection(
       state2.sections,
       state2.history.context.activeSection
     );
-  } else if (action.type === "DOCUMENT/PASTE_NODE") {
+  } else if (action.type === "document/paste-node") {
     const result = pasteNode2(state2.document, action);
     newActiveNodeId = result.nextNode;
     affectedNodes = result.rootNodes;
-  } else if (action.type === "DOCUMENT/CUT_NODE") {
+  } else if (action.type === "document/cut-node") {
     affectedNodeContent = state2.document.content[action.payload.nodeId];
     newActiveNodeId = deleteNode2(
       state2.document,
@@ -33065,7 +35891,7 @@ var updateDocumentState2 = (state2, action) => {
       action.payload.selectedNodes
     );
     affectedNodeId = action.payload.nodeId;
-  } else if (action.type === "FILE/UPDATE_FRONTMATTER") {
+  } else if (action.type === "document/file/update-frontmatter") {
     state2.file.frontmatter = action.payload.frontmatter;
     return;
   } else if (action.type === "document/pinned-nodes/pin") {
@@ -33084,7 +35910,7 @@ var updateDocumentState2 = (state2, action) => {
       action.payload.sections
     );
     return;
-  } else if (action.type === "META/REFRESH_GROUP_PARENT_IDS") {
+  } else if (action.type === "document/meta/refresh-group-parent-ids") {
     refreshGroupParentIds(state2.document.columns, state2.meta);
     return;
   }
@@ -33096,7 +35922,7 @@ var updateDocumentState2 = (state2, action) => {
   if (e.dropOrMove || e.createOrDelete || e.changeHistory || e.clipboard) {
     updateSectionsDictionary(state2);
   }
-  if (action.type === "DOCUMENT/LOAD_FILE") {
+  if (action.type === "document/file/load-from-disk") {
     const activeSection = action.payload.activeSection;
     if (activeSection) {
       const id2 = state2.sections.section_id[activeSection];
@@ -33133,11 +35959,43 @@ var documentReducer = (store, action) => {
   return store;
 };
 
+// src/stores/document/default-document-state.ts
+var defaultDocumentState = () => ({
+  document: {
+    columns: [],
+    content: {}
+  },
+  sections: {
+    id_section: {},
+    section_id: {}
+  },
+  file: {
+    frontmatter: ""
+  },
+  history: {
+    items: [],
+    state: {
+      activeIndex: -1,
+      canGoBack: false,
+      canGoForward: false
+    },
+    context: {
+      activeSection: ""
+    }
+  },
+  pinnedNodes: {
+    Ids: []
+  },
+  meta: {
+    groupParentIds: /* @__PURE__ */ new Set()
+  }
+});
+
 // src/stores/view/default-view-state.ts
 var defaultViewState = () => ({
   search: {
     query: "",
-    results: /* @__PURE__ */ new Set(),
+    results: /* @__PURE__ */ new Map(),
     searching: false,
     showInput: false,
     fuzzySearch: false,
@@ -33211,14 +36069,14 @@ var defaultViewState = () => ({
 var setSearchQuery = (state2, query) => {
   state2.search.query = query;
   if (!query)
-    state2.search.results = /* @__PURE__ */ new Set();
+    state2.search.results = /* @__PURE__ */ new Map();
   state2.search.searching = query.length > 0;
   state2.search = { ...state2.search };
 };
 
 // src/stores/view/reducers/search/set-search-results.ts
 var setSearchResults = (state2, results) => {
-  state2.search.results = new Set(results);
+  state2.search.results = new Map(results);
   state2.search.searching = false;
   state2.search = { ...state2.search };
 };
@@ -33245,7 +36103,7 @@ var enableEditMode = (state2, nodeId, isInSidebar = false) => {
   if (state2.editing.activeNodeId) {
     if (state2.editing.activeNodeId === nodeId) {
       throw new Error(
-        `This card is being edited in the ${state2.editing.isInSidebar ? "sidebar" : "main view"}`
+        `This section is being edited in the ${state2.editing.isInSidebar ? "sidebar" : "main view"}`
       );
     }
   }
@@ -33347,8 +36205,34 @@ var removeStaleActiveNodes = (columns, activeNodes) => {
   return result;
 };
 
+// src/stores/view/reducers/document/helpers/compare-active-branch.ts
+var compareActiveBranch = (a, b) => {
+  if (a === b)
+    return true;
+  if (a.group !== b.group || a.column !== b.column || a.node !== b.node) {
+    return false;
+  }
+  if (a.sortedParentNodes.length !== b.sortedParentNodes.length) {
+    return false;
+  }
+  if (a.childGroups.size !== b.childGroups.size) {
+    return false;
+  }
+  for (let i = 0; i < a.sortedParentNodes.length; i++) {
+    if (a.sortedParentNodes[i] !== b.sortedParentNodes[i]) {
+      return false;
+    }
+  }
+  for (const item of a.childGroups) {
+    if (!b.childGroups.has(item)) {
+      return false;
+    }
+  }
+  return true;
+};
+
 // src/stores/view/reducers/document/helpers/update-active-branch.ts
-var updateActiveBranch = (state2, columns, changeType) => {
+var updateActiveBranch = (state2, columns, isDocumentAction) => {
   if (!state2.activeNode)
     return;
   const sortedParents = traverseUp(columns, state2.activeNode).reverse();
@@ -33357,24 +36241,21 @@ var updateActiveBranch = (state2, columns, changeType) => {
   if (!group)
     throw new Error("could not find group for node " + state2.activeNode);
   const columnId = columns[findNodeColumn(columns, state2.activeNode)].id;
-  const needsUpdate = state2.activeNode !== state2.activeBranch.node || childGroups.length !== state2.activeBranch.childGroups.size || sortedParents.length !== state2.activeBranch.sortedParentNodes.length || group.parentId !== state2.activeBranch.group || columnId !== state2.activeBranch.column || childGroups.some(
-    (group2) => !state2.activeBranch.childGroups.has(group2)
-  ) || sortedParents.some(
-    (node, i) => node !== state2.activeBranch.sortedParentNodes[i]
-  );
-  if (needsUpdate) {
-    state2.activeBranch = {
-      childGroups: new Set(childGroups),
-      sortedParentNodes: sortedParents,
-      group: group.parentId,
-      column: columnId,
-      node: state2.activeNode
-    };
+  const newActiveBranch = {
+    childGroups: new Set(childGroups),
+    sortedParentNodes: sortedParents,
+    group: group.parentId,
+    column: columnId,
+    node: state2.activeNode
+  };
+  const same = compareActiveBranch(state2.activeBranch, newActiveBranch);
+  if (!same) {
+    state2.activeBranch = newActiveBranch;
   }
   if (!state2.activeNodesOfColumn[columnId])
     state2.activeNodesOfColumn[columnId] = {};
   state2.activeNodesOfColumn[columnId][group.parentId] = state2.activeNode;
-  if (changeType === "structure") {
+  if (isDocumentAction) {
     state2.activeNodesOfColumn = removeStaleActiveNodes(
       columns,
       state2.activeNodesOfColumn
@@ -33553,12 +36434,10 @@ var resetSelectionState = (documentState) => {
 };
 
 // src/stores/view/reducers/document/helpers/update-selection-state.ts
-var updateSelectionState = (documentState, nextNode, action) => {
-  const isJump = action.type === "DOCUMENT/JUMP_TO_NODE";
-  const isVerticalStep = action.type === "DOCUMENT/NAVIGATE_USING_KEYBOARD" && (action.payload.direction === "up" || action.payload.direction === "down");
-  if (action.context?.shiftKey && (isJump || isVerticalStep)) {
-    const columnIndex = findNodeColumn(action.payload.columns, nextNode);
-    const column = action.payload.columns[columnIndex];
+var updateSelectionState = (columns, documentState, nextNode, isVertical, shiftKey) => {
+  if (shiftKey && isVertical) {
+    const columnIndex = findNodeColumn(columns, nextNode);
+    const column = columns[columnIndex];
     invariant(column);
     updateSelectedNodes(
       column,
@@ -33573,9 +36452,9 @@ var updateSelectionState = (documentState, nextNode, action) => {
 };
 
 // src/stores/view/reducers/document/navigate-using-keyboard.ts
-var navigateUsingKeyboard = (documentState, state2, action) => {
+var navigateUsingKeyboard = (documentState, state2, action, columns) => {
   const nextNode = findNextActiveNodeOnKeyboardNavigation(
-    action.payload.columns,
+    columns,
     documentState.activeNode,
     action.payload.direction,
     documentState.activeNodesOfColumn,
@@ -33583,7 +36462,13 @@ var navigateUsingKeyboard = (documentState, state2, action) => {
     action.context.shiftKey
   );
   if (nextNode) {
-    updateSelectionState(documentState, nextNode, action);
+    updateSelectionState(
+      columns,
+      documentState,
+      nextNode,
+      action.payload.direction === "up" || action.payload.direction === "down",
+      Boolean(action.context.shiftKey)
+    );
     updateActiveNode(documentState, nextNode, state2);
   }
 };
@@ -33599,18 +36484,46 @@ var navigateActiveNodeHistory = (documentState, state2, forward = false) => {
     state2.navigationHistory = { ...state2.navigationHistory };
     updateActiveNode(documentState, newItem, null);
     state2.recentNodes.activeNode = newItem;
+    resetSelectionState(documentState);
+  }
+};
+
+// src/lib/tree-utils/find/find-node-to-jump-to.ts
+var findNodeToJumpTo = (columns, node, target) => {
+  const columnIndex = findNodeColumn(columns, node);
+  const column = columns[columnIndex];
+  if (target === "start-of-column") {
+    return column.groups[0].nodes[0];
+  } else if (target === "end-of-column") {
+    const nodeGroup = column.groups[column.groups.length - 1];
+    return nodeGroup.nodes[nodeGroup.nodes.length - 1];
+  } else {
+    const group = column.groups.find((g) => g.nodes.includes(node));
+    if (group) {
+      if (target === "start-of-group")
+        return group.nodes[0];
+      else if (target === "end-of-group") {
+        return group.nodes[group.nodes.length - 1];
+      }
+    }
   }
 };
 
 // src/stores/view/reducers/document/jump-to-node.ts
-var jumpToNode = (documentViewState, state2, action) => {
-  const nextNode = findNextActiveNode(
-    action.payload.columns,
+var jumpToNode = (documentViewState, state2, action, columns) => {
+  const nextNode = findNodeToJumpTo(
+    columns,
     documentViewState.activeNode,
-    action
+    action.payload.target
   );
   if (nextNode) {
-    updateSelectionState(documentViewState, nextNode, action);
+    updateSelectionState(
+      columns,
+      documentViewState,
+      nextNode,
+      true,
+      Boolean(action.context?.shiftKey)
+    );
     updateActiveNode(documentViewState, nextNode, state2);
   }
 };
@@ -33666,8 +36579,10 @@ var navigateActiveNode = (documentState, state2, action) => {
     action.payload.direction,
     action.context.outlineMode ? state2.outline.hiddenNodes : null
   );
-  if (nextNode && nextNode !== documentState.activeNode)
+  if (nextNode && nextNode !== documentState.activeNode) {
     updateActiveNode(documentState, nextNode, state2);
+    resetSelectionState(documentState);
+  }
 };
 
 // src/stores/view/reducers/pinned-cards/set-active-pinned-node.ts
@@ -33740,10 +36655,15 @@ var toggleCollapseNode = (state2, columns, id2) => {
 // src/stores/view/reducers/outline/expand-parents-of-active-node.ts
 var expandParentsOfActiveNode = (state2, columns) => {
   const parents = state2.document.activeBranch.sortedParentNodes;
+  let update2 = false;
   for (const parent of parents) {
     if (state2.outline.collapsedParents.has(parent)) {
       expandNode(state2, columns, parent);
+      update2 = true;
     }
+  }
+  if (update2) {
+    state2.outline = { ...state2.outline };
   }
 };
 
@@ -33784,19 +36704,60 @@ var toggleCollapseAllNodes = (state2, columns) => {
   state2.outline = { ...state2.outline };
 };
 
+// src/stores/view/reducers/selection/select-all-nodes.ts
+var compareSetToArray = (set, array) => {
+  return set.size === array.length && array.every((node) => set.has(node));
+};
+var selectAllNodes = (state2, columns) => {
+  const firstColumnNodes = columns[0].groups[0].nodes;
+  const rootColumnIsSelected = compareSetToArray(
+    state2.selectedNodes,
+    firstColumnNodes
+  );
+  if (rootColumnIsSelected) {
+    return;
+  }
+  const column = columns[findNodeColumn(columns, state2.activeNode)];
+  invariant(column);
+  const nodeColumnNodes = column.groups.flatMap((g) => g.nodes);
+  const columnIsSelected = compareSetToArray(
+    state2.selectedNodes,
+    nodeColumnNodes
+  );
+  if (columnIsSelected) {
+    state2.selectedNodes = new Set(firstColumnNodes);
+    state2.activeNode = state2.activeBranch.sortedParentNodes[0];
+    return;
+  }
+  const nodeGroup = findGroupByNodeId(columns, state2.activeNode);
+  invariant(nodeGroup);
+  const groupIsSelected = compareSetToArray(
+    state2.selectedNodes,
+    nodeGroup.nodes
+  );
+  if (groupIsSelected) {
+    state2.selectedNodes = new Set(nodeColumnNodes);
+    return;
+  }
+  state2.selectedNodes = new Set(nodeGroup.nodes);
+};
+
 // src/stores/view/view-reducer.ts
-var updateDocumentState3 = (state2, action) => {
+var updateDocumentState3 = (state2, action, context) => {
+  const activeNode = state2.document.activeNode;
   if (action.type === "view/set-active-node/mouse" || action.type === "view/set-active-node/mouse-silent" || action.type === "view/set-active-node/document" || action.type === "view/set-active-node/search") {
     updateActiveNode(state2.document, action.payload.id, state2);
-  } else if (action.type === "DOCUMENT/NAVIGATE_USING_KEYBOARD") {
-    navigateUsingKeyboard(state2.document, state2, action);
-  } else if (action.type === "SEARCH/SET_QUERY") {
+    if (!state2.document.selectedNodes.has(state2.document.activeNode))
+      resetSelectionState(state2.document);
+  } else if (action.type === "view/set-active-node/keyboard") {
+    navigateUsingKeyboard(state2.document, state2, action, context.columns);
+  } else if (action.type === "view/search/set-query") {
     setSearchQuery(state2, action.payload.query);
-  } else if (action.type === "SEARCH/SET_RESULTS") {
+  } else if (action.type === "view/search/set-results") {
     setSearchResults(state2, action.payload.results);
-  } else if (action.type === "SEARCH/TOGGLE_INPUT") {
+  } else if (action.type === "view/search/toggle-input") {
     toggleSearchInput(state2);
-  } else if (action.type === "UI/TOGGLE_HISTORY_SIDEBAR") {
+  } else if (action.type === "view/snapshots/toggle-modal") {
     const showHistorySidebar = state2.ui.controls.showHistorySidebar;
     state2.ui.controls = {
       showHistorySidebar: !showHistorySidebar,
@@ -33804,7 +36765,7 @@ var updateDocumentState3 = (state2, action) => {
       showSettingsSidebar: false,
       showStyleRulesModal: false
     };
-  } else if (action.type === "UI/TOGGLE_HELP_SIDEBAR") {
+  } else if (action.type === "view/hotkeys/toggle-modal") {
     const showHelpSidebar = state2.ui.controls.showHelpSidebar;
     state2.ui.controls = {
       showHistorySidebar: false,
@@ -33812,7 +36773,7 @@ var updateDocumentState3 = (state2, action) => {
       showSettingsSidebar: false,
       showStyleRulesModal: false
     };
-  } else if (action.type === "UI/TOGGLE_SETTINGS_SIDEBAR") {
+  } else if (action.type === "view/settings/toggle-modal") {
     const showSettingsSidebar = state2.ui.controls.showSettingsSidebar;
     state2.ui.controls = {
       showHistorySidebar: false,
@@ -33820,19 +36781,19 @@ var updateDocumentState3 = (state2, action) => {
       showSettingsSidebar: !showSettingsSidebar,
       showStyleRulesModal: false
     };
-  } else if (action.type === "CLOSE_MODALS") {
+  } else if (action.type === "view/close-modals") {
     state2.ui.controls = {
       showHistorySidebar: false,
       showHelpSidebar: action.payload?.closeAllModals ? false : state2.ui.controls.showHelpSidebar,
       showSettingsSidebar: false,
       showStyleRulesModal: false
     };
-  } else if (action.type === "view/main/enable-edit") {
+  } else if (action.type === "view/editor/enable-main-editor") {
     if (state2.document.activeNode !== action.payload.nodeId) {
       updateActiveNode(state2.document, action.payload.nodeId, state2);
     }
     enableEditMode(state2.document, action.payload.nodeId);
-  } else if (action.type === "view/sidebar/enable-edit") {
+  } else if (action.type === "view/editor/enable-sidebar-editor") {
     if (action.context.activeSidebarTab === "pinned-cards") {
       if (state2.pinnedNodes.activeNode !== action.payload.id) {
         setActivePinnedNode(
@@ -33851,45 +36812,43 @@ var updateDocumentState3 = (state2, action) => {
       }
     }
     enableEditMode(state2.document, action.payload.id, true);
-  } else if (action.type === "view/confirmation/reset/disable-edit") {
+  } else if (action.type === "view/editor/disable/reset-confirmation") {
     resetPendingConfirmation(state2.document);
-  } else if (action.type === "view/confirmation/reset/delete-node") {
+  } else if (action.type === "view/delete-node/reset-confirmation") {
     resetPendingConfirmation(state2.document);
-  } else if (action.type === "view/confirmation/confirm/delete-node") {
+  } else if (action.type === "view/delete-node/confirm") {
     state2.document.pendingConfirmation = {
       ...state2.document.pendingConfirmation,
       deleteNode: action.payload.includeSelection && state2.document.selectedNodes.size > 1 ? new Set(state2.document.selectedNodes) : /* @__PURE__ */ new Set([action.payload.id])
     };
-  } else if (action.type === "view/confirmation/confirm/disable-edit") {
+  } else if (action.type === "view/editor/disable/confirm") {
     state2.document.pendingConfirmation = {
       ...state2.document.pendingConfirmation,
       disableEdit: action.payload.id
     };
-  } else if (action.type === "view/main/disable-edit" || action.type === "view/sidebar/disable-edit") {
+  } else if (action.type === "view/editor/disable-main-editor" || action.type === "view/editor/disable-sidebar-editor") {
     disableEditMode(state2.document);
-  } else if (action.type === "SET_DRAG_STARTED") {
+  } else if (action.type === "view/dnd/set-drag-started") {
     onDragStart(state2.document, action);
-  } else if (action.type === "DOCUMENT/SET_DRAG_ENDED") {
+  } else if (action.type === "view/dnd/set-drag-ended") {
     onDragEnd(state2.document);
-  } else if (action.type === "UPDATE_ACTIVE_BRANCH") {
-    updateActiveBranch(
-      state2.document,
-      action.payload.columns,
-      action.context.changeType
-    );
-  } else if (action.type === "NAVIGATION/NAVIGATE_FORWARD") {
+  } else if (action.type === "view/update-active-branch?source=document") {
+    updateActiveBranch(state2.document, context.columns, true);
+  } else if (action.type === "view/set-active-node/history/select-next") {
     navigateActiveNodeHistory(state2.document, state2, true);
-  } else if (action.type === "NAVIGATION/NAVIGATE_BACK") {
+  } else if (action.type === "view/set-active-node/history/select-previous") {
     navigateActiveNodeHistory(state2.document, state2);
-  } else if (action.type === "DOCUMENT/JUMP_TO_NODE") {
-    jumpToNode(state2.document, state2, action);
-  } else if (action.type === "NAVIGATION/REMOVE_OBSOLETE") {
+  } else if (action.type === "view/set-active-node/keyboard-jump") {
+    jumpToNode(state2.document, state2, action, context.columns);
+  } else if (action.type === "view/active-node-history/delete-obsolete") {
     removeDeletedNavigationItems(state2, action.payload.content);
-  } else if (action.type === "SEARCH/TOGGLE_FUZZY_MODE") {
+  } else if (action.type === "view/search/toggle-fuzzy-mode") {
     toggleFuzzySearch(state2);
-  } else if (action.type === "DOCUMENT/CLEAR_SELECTION") {
+  } else if (action.type === "view/selection/clear-selection") {
     resetSelectionState(state2.document);
-  } else if (action.type === "NAVIGATION/SELECT_NEXT_NODE") {
+  } else if (action.type === "view/selection/select-all") {
+    selectAllNodes(state2.document, context.columns);
+  } else if (action.type === "view/set-active-node/sequential/select-next") {
     navigateActiveNode(state2.document, state2, action);
   } else if (action.type === "view/pinned-nodes/set-active-node") {
     setActivePinnedNode(
@@ -33903,9 +36862,9 @@ var updateDocumentState3 = (state2, action) => {
       state2.recentNodes,
       action.payload.id
     );
-  } else if (action.type === "search/toggle-show-all-nodes") {
+  } else if (action.type === "search/view/toggle-show-all-nodes") {
     toggleShowAllNodes(state2);
-  } else if (action.type === "view/modals/toggle-style-rules") {
+  } else if (action.type === "view/style-rules/toggle-modal") {
     const showStyleRulesModal = state2.ui.controls.showStyleRulesModal;
     state2.ui.controls = {
       showHistorySidebar: false,
@@ -33932,37 +36891,28 @@ var updateDocumentState3 = (state2, action) => {
   } else if (action.type === "view/hotkeys/update-conflicts") {
     state2.hotkeys.conflictingHotkeys = action.payload.conflicts;
   } else if (action.type === "view/outline/toggle-collapse-node") {
-    toggleCollapseNode(state2, action.payload.columns, action.payload.id);
+    toggleCollapseNode(state2, context.columns, action.payload.id);
   } else if (action.type === "view/outline/refresh-collapsed-nodes") {
-    refreshCollapsedNodes(state2, action.payload.columns);
+    refreshCollapsedNodes(state2, context.columns);
   } else if (action.type === "view/outline/toggle-collapse-all") {
-    toggleCollapseAllNodes(state2, action.payload.columns);
+    toggleCollapseAllNodes(state2, context.columns);
   } else if (action.type === "view/selection/set-selection") {
     state2.document.selectedNodes = new Set(action.payload.ids);
-  } else if (action.type === "view/persisted-state/load-persisted-collapsed-parents") {
+  } else if (action.type === "view/outline/load-persisted-collapsed-parents") {
     for (const id2 of action.payload.collapsedIds) {
-      collapseNode(state2, action.context.columns, id2);
+      collapseNode(state2, context.columns, id2);
     }
-    expandParentsOfActiveNode(state2, action.context.columns);
+    expandParentsOfActiveNode(state2, context.columns);
     state2.outline = { ...state2.outline };
   }
+  if (activeNode !== state2.document.activeNode) {
+    updateActiveBranch(state2.document, context.columns, false);
+    expandParentsOfActiveNode(state2, context.columns);
+  }
 };
-var viewReducer = (store, action) => {
-  updateDocumentState3(store, action);
+var viewReducer = (store, action, context) => {
+  updateDocumentState3(store, action, context);
   return store;
-};
-
-// src/stores/view/subscriptions/actions/update-active-branch.ts
-var updateActiveBranch2 = (viewStore, documentState, changeType) => {
-  viewStore.dispatch({
-    type: "UPDATE_ACTIVE_BRANCH",
-    payload: {
-      columns: documentState.document.columns
-    },
-    context: {
-      changeType
-    }
-  });
 };
 
 // src/stores/view/subscriptions/helpers/is-empty-document.ts
@@ -33974,7 +36924,7 @@ var isEmptyDocument = (content) => {
 // src/stores/view/subscriptions/actions/enable-edit-mode.ts
 var enableEditMode2 = (viewStore, documentState) => {
   viewStore.dispatch({
-    type: "view/main/enable-edit",
+    type: "view/editor/enable-main-editor",
     payload: {
       nodeId: getIdOfSection(
         documentState.sections,
@@ -34051,16 +37001,19 @@ var setInitialActiveNode = (view) => {
   const settings = view.plugin.settings.getValue();
   const path = view.file.path;
   const persistedSection = settings.documents[path]?.activeSection;
-  const sections = documentState.sections;
   if (persistedSection) {
-    id2 = maybeGetIdOfSection(sections, persistedSection);
+    id2 = maybeGetIdOfSection(documentState.sections, persistedSection);
   }
   const mostRecentActiveSection = documentState.history.context.activeSection;
   if (!id2 && mostRecentActiveSection) {
-    id2 = maybeGetIdOfSection(sections, mostRecentActiveSection);
+    id2 = maybeGetIdOfSection(
+      documentState.sections,
+      mostRecentActiveSection
+    );
   }
   if (!id2)
     return;
+  viewStore.setContext(documentState.document);
   viewStore.dispatch({
     type: "view/set-active-node/document",
     payload: {
@@ -34068,9 +37021,6 @@ var setInitialActiveNode = (view) => {
     }
   });
 };
-
-// src/stores/view/subscriptions/effects/mark-unresolved-links/mark-unresolved-links.ts
-var import_obsidian30 = require("obsidian");
 
 // src/stores/view/subscriptions/effects/mark-unresolved-links/helpers/filter-non-existent-links.ts
 var filterNonExistentLinks = (plugin, links, filePath) => {
@@ -34119,7 +37069,6 @@ var markUnresolvedLinks = (view) => {
     }
   }
 };
-var debounced = (0, import_obsidian30.debounce)(markUnresolvedLinks, 100);
 
 // src/stores/view/subscriptions/event-listeners/attach-hover-preview-listener.ts
 var getLink = (el) => {
@@ -34195,7 +37144,7 @@ var loadPinnedNodesToDocument = (view) => {
   const settingsStore = view.plugin.settings;
   const settingsState = settingsStore.getValue();
   const persistedDocuments = settingsState.documents;
-  const persistedDocument = persistedDocuments[documentState.file.path];
+  const persistedDocument = persistedDocuments[view.file.path];
   if (!persistedDocument?.pinnedSections)
     return;
   if (persistedDocument.pinnedSections.sections.length === 0) {
@@ -34230,7 +37179,7 @@ var attachCloseModalsListener = (view) => {
     const isInsideModal = target.closest(".lineage-modal");
     const isInsideControlsBar = !isInsideModal && target.closest(".controls-container");
     if (e.button === 0 && !(isInsideModal || isInsideControlsBar)) {
-      view.viewStore.dispatch({ type: "CLOSE_MODALS" });
+      view.viewStore.dispatch({ type: "view/close-modals" });
       view.contentEl.removeEventListener("click", listener);
     }
   };
@@ -34297,7 +37246,6 @@ var updateCheckbox = (taskIndex, content, checked) => {
 };
 
 // src/stores/view/subscriptions/effects/checkbox-listener/attach-checkbox-listener.ts
-var import_obsidian31 = require("obsidian");
 var handleCheckboxChange = (event, view) => {
   const checkbox = event.target;
   if (!checkbox?.classList.contains("task-list-item-checkbox")) {
@@ -34325,13 +37273,10 @@ var handleCheckboxChange = (event, view) => {
   );
   if (content) {
     view.documentStore.dispatch({
-      type: "DOCUMENT/SET_NODE_CONTENT",
+      type: "document/update-node-content",
       payload: { nodeId: cardId, content: content.content },
       context: { isInSidebar: !!card.closest(".sidebar") }
     });
-    new import_obsidian31.Notice(
-      `"${content.task}" has been ${checkbox.checked ? "checked" : "unchecked"}`
-    );
   }
 };
 var attachCheckboxListener = (view) => {
@@ -34355,13 +37300,14 @@ var applyViewSize = (view) => {
   );
   if (!viewElement)
     return;
+  const rect = viewElement.getBoundingClientRect();
   view.containerEl.style.setProperty(
     cssVariables.viewWidth,
-    `${viewElement.innerWidth - PADDING_H}px`
+    `${rect.width - PADDING_H}px`
   );
   view.containerEl.style.setProperty(
     cssVariables.viewHeight,
-    `${viewElement.innerHeight - PADDING_V}px`
+    `${rect.height - PADDING_V}px`
   );
 };
 
@@ -34402,14 +37348,55 @@ var loadCollapsedSectionsFromSettings = (view) => {
   }).filter((x) => x);
   if (collapsedIds.length > 0) {
     viewStore.dispatch({
-      type: "view/persisted-state/load-persisted-collapsed-parents",
+      type: "view/outline/load-persisted-collapsed-parents",
       payload: {
         collapsedIds
-      },
-      context: {
-        columns: documentState.document.columns
       }
     });
+  }
+};
+
+// src/helpers/round-up.ts
+var roundUp = (value, precision) => {
+  precision = Math.pow(10, precision);
+  return Math.ceil(value * precision) / precision;
+};
+
+// src/stores/view/subscriptions/effects/css-variables/apply-headings-font-size.ts
+var variables = [
+  "--h2-size",
+  "--h3-size",
+  "--h4-size",
+  "--h5-size",
+  "--h6-size"
+];
+var BASE_MULTIPLIER = 1.125;
+var MIN_HEADING_SIZE = 1;
+var adjustMultiplier = (h1_em) => {
+  const subtracted = (DEFAULT_H1_FONT_SIZE_EM - h1_em) * 0.2;
+  return h1_em < DEFAULT_H1_FONT_SIZE_EM ? BASE_MULTIPLIER - Math.min(subtracted, 0.125) : BASE_MULTIPLIER;
+};
+var calculateFontSize = (h1_em, multiplier, level2) => {
+  return Math.max(
+    roundUp(h1_em * Math.pow(1 / multiplier, level2), 3),
+    MIN_HEADING_SIZE
+  );
+};
+var applyHeadingsFontSize = (view, h1_em) => {
+  const el = view.containerEl;
+  if (h1_em === DEFAULT_H1_FONT_SIZE_EM) {
+    el.style.removeProperty("--h1-size");
+    for (const key of variables) {
+      el.style.removeProperty(key);
+    }
+  } else {
+    el.style.setProperty("--h1-size", `${h1_em}em`);
+    const adjustedMultiplier = adjustMultiplier(h1_em);
+    for (let i = 0; i < variables.length; i++) {
+      const key = variables[i];
+      const value = calculateFontSize(h1_em, adjustedMultiplier, i + 1);
+      el.style.setProperty(key, `${value}em`);
+    }
   }
 };
 
@@ -34417,6 +37404,7 @@ var loadCollapsedSectionsFromSettings = (view) => {
 var applySettingsToView = (view) => {
   const state2 = view.plugin.settings.getValue();
   applyFontSize(view, state2.view.fontSize);
+  applyHeadingsFontSize(view, state2.view.h1FontSize_em);
   applyInactiveNodeOpacity(view, state2.view.theme.inactiveNodeOpacity);
   applyCssColor(view, "containerBg");
   applyCssColor(view, "activeBranchBg");
@@ -34438,7 +37426,6 @@ var onViewMount = (view) => {
     return subscriptions;
   setInitialActiveNode(view);
   loadCollapsedSectionsFromSettings(view);
-  updateActiveBranch2(viewStore, documentState, "none");
   if (view.isActive && isEmptyDocument(documentState.document.content)) {
     enableEditMode2(viewStore, documentState);
   }
@@ -34446,95 +37433,57 @@ var onViewMount = (view) => {
   if (view.isActive)
     focusContainer(view);
   loadPinnedNodesToDocument(view);
-  debounced(view);
+  markUnresolvedLinks(view);
   applySettingsToView(view);
   attachHoverPreviewListener(view);
   attachWheelScrollListener(view);
-  documentStore.dispatch({ type: "META/REFRESH_GROUP_PARENT_IDS" });
+  documentStore.dispatch({ type: "document/meta/refresh-group-parent-ids" });
   attachCloseModalsListener(view);
   view.rulesProcessor.onRulesUpdate();
   view.zoomFactor = view.plugin.settings.getValue().view.zoomLevel;
-  view.alignBranch.align({ type: "view/life-cycle/mount" });
   subscriptions.add(watchViewSize(view));
   return subscriptions;
 };
 
 // src/stores/view/helpers/get-view-event-type.ts
-var navigationEvents = /* @__PURE__ */ new Set([
-  "NAVIGATION/NAVIGATE_BACK",
-  "NAVIGATION/NAVIGATE_FORWARD",
-  "NAVIGATION/SELECT_NEXT_NODE"
-]);
-var searchEvents = /* @__PURE__ */ new Set([
-  "SEARCH/SET_QUERY",
-  "SEARCH/SET_RESULTS",
-  "SEARCH/TOGGLE_INPUT"
-]);
-var stateEvents = /* @__PURE__ */ new Set([
-  "view/set-active-node/document",
-  "view/set-active-node/mouse",
-  "view/set-active-node/mouse-silent",
-  "view/set-active-node/search",
-  "DOCUMENT/NAVIGATE_USING_KEYBOARD",
-  "DOCUMENT/JUMP_TO_NODE"
-]);
-var editMainSplitEvents = /* @__PURE__ */ new Set([
-  "view/main/enable-edit",
-  "view/main/disable-edit"
-]);
-var editSidebarEvents = /* @__PURE__ */ new Set([
-  "view/sidebar/enable-edit",
-  "view/sidebar/disable-edit"
-]);
-var cachedResults2 = {};
+var eventTypesDictionary2 = {
+  "view/set-active-node/history/select-previous": {
+    activeNodeHistory: true
+  },
+  "view/set-active-node/history/select-next": { activeNodeHistory: true },
+  "view/set-active-node/sequential/select-next": {
+    activeNodeHistory: true
+  },
+  "view/search/set-query": { search: true },
+  "view/search/set-results": { search: true },
+  "view/search/toggle-input": { search: true },
+  "view/set-active-node/document": { activeNode: true },
+  "view/set-active-node/mouse": { activeNode: true },
+  "view/set-active-node/mouse-silent": { activeNode: true },
+  "view/set-active-node/search": { activeNode: true },
+  "view/set-active-node/keyboard": { activeNode: true },
+  "view/set-active-node/keyboard-jump": { activeNode: true },
+  "view/selection/select-all": { activeNode: true },
+  "view/editor/enable-main-editor": { mainEditor: true },
+  "view/editor/disable-main-editor": { mainEditor: true },
+  "view/editor/enable-sidebar-editor": { sidebarEditor: true },
+  "view/editor/disable-sidebar-editor": { sidebarEditor: true }
+};
+var viewEventTypes = new Map(Object.entries(eventTypesDictionary2));
+var none2 = {};
 var getViewEventType = (type) => {
-  if (cachedResults2[type]) {
-    return cachedResults2[type];
-  }
-  let result = null;
-  if (navigationEvents.has(type))
-    result = { activeNodeHistory: true };
-  else if (stateEvents.has(type))
-    result = { activeNode: true };
-  else if (searchEvents.has(type))
-    result = { search: true };
-  else if (editMainSplitEvents.has(type))
-    result = { editMainSplit: true };
-  else if (editSidebarEvents.has(type))
-    result = { editSidebar: true };
-  if (!result)
-    result = {};
-  cachedResults2[type] = result;
-  return result;
-};
-
-// src/stores/view/subscriptions/actions/clear-selected-nodes.ts
-var clearSelectedNodes = (view) => {
-  view.viewStore.dispatch({ type: "DOCUMENT/CLEAR_SELECTION" });
-};
-
-// src/stores/view/subscriptions/actions/maybe-clear-selection.ts
-var maybeClearSelection = (view, action) => {
-  const selectedNodes = view.viewStore.getValue().document.selectedNodes;
-  if (selectedNodes.size > 1) {
-    const selectedNodeIsWithinSelection = action.type.startsWith("view/set-active-node") && // @ts-ignore
-    selectedNodes.has(action.payload.id);
-    if (!selectedNodeIsWithinSelection) {
-      clearSelectedNodes(view);
-    }
-  }
+  return viewEventTypes.get(type) || none2;
 };
 
 // src/stores/view/subscriptions/actions/update-search-results.ts
 var updateActiveNodeAfterSearch = (view, results) => {
-  const shouldUpdateActiveNode = results.length > 0 && !results.find(
-    (r) => r.item.id === view.viewStore.getValue().document.activeNode
-  );
+  const activeNode = view.viewStore.getValue().document.activeNode;
+  const shouldUpdateActiveNode = results.length > 0 && !results.find((r) => r === activeNode);
   if (shouldUpdateActiveNode) {
     view.viewStore.dispatch({
       type: "view/set-active-node/search",
       payload: {
-        id: results[0].item.id
+        id: results[0]
       }
     });
   }
@@ -34544,18 +37493,17 @@ var updateSearchResults = (view) => {
   const query = viewState.search.query;
   if (!query)
     return;
-  const search2 = view.documentSearch.search(query);
-  const results = search2.map((r) => r.item.id);
+  const results = view.documentSearch.search(query);
   view.viewStore.dispatch({
-    type: "SEARCH/SET_RESULTS",
+    type: "view/search/set-results",
     payload: {
       results
     }
   });
-  const newSearchResults = Array.from(results).sort().join("");
-  const previousSearchResults = Array.from(viewState.search.results).sort().join("");
+  const newSearchResults = Array.from(results.keys()).sort().join("");
+  const previousSearchResults = Array.from(viewState.search.results.keys()).sort().join("");
   if (previousSearchResults !== newSearchResults) {
-    updateActiveNodeAfterSearch(view, search2);
+    updateActiveNodeAfterSearch(view, Array.from(results.keys()));
   }
 };
 
@@ -34586,15 +37534,13 @@ var persistActiveNodeInPluginSettings = (view) => {
 // src/stores/view/subscriptions/actions/persist-active-pinned-node.ts
 var persistActivePinnedNode = (view) => {
   const documentState = view.documentStore.getValue();
-  if (!documentState.file.path)
-    return;
   const sections = documentState.sections;
   const viewState = view.viewStore.getValue();
   const section = sections.id_section[viewState.pinnedNodes.activeNode];
   view.plugin.settings.dispatch({
     type: "settings/pinned-nodes/persist-active-node",
     payload: {
-      filePath: documentState.file.path,
+      filePath: view.file.path,
       section
     }
   });
@@ -34609,12 +37555,16 @@ var showSearchResultsInMinimap = (view) => {
   if (viewState.search.showInput) {
     if (!settingsState.view.showMinimap) {
       if (viewState.search.results.size > 0) {
-        settingsStore.dispatch({ type: "VIEW/TOGGLE_MINIMAP" });
+        settingsStore.dispatch({
+          type: "settings/view/toggle-minimap"
+        });
         view.documentSearch.searchTriggeredMinimap = true;
       }
     }
   } else if (view.documentSearch.searchTriggeredMinimap) {
-    settingsStore.dispatch({ type: "VIEW/TOGGLE_MINIMAP" });
+    if (settingsState.view.showMinimap) {
+      settingsStore.dispatch({ type: "settings/view/toggle-minimap" });
+    }
     view.documentSearch.searchTriggeredMinimap = false;
   }
 };
@@ -34669,22 +37619,17 @@ var persistCollapsedSections = (view) => {
 
 // src/stores/view/subscriptions/on-view-state-update.ts
 var onViewStateUpdate = (view, action, localState) => {
-  const documentStore = view.documentStore;
-  const documentState = documentStore.getValue();
   const viewStore = view.viewStore;
   const viewState = viewStore.getValue();
   const container = view.container;
   const type = action.type;
-  const e = getViewEventType(
-    type
-  );
+  const e = getViewEventType(type);
   const activeNodeChange = e.activeNode || e.activeNodeHistory;
   const activeNodeHasChanged = localState.previousActiveNode !== viewState.document.activeNode;
   if (activeNodeHasChanged) {
     localState.previousActiveNode = viewState.document.activeNode;
   }
   if (activeNodeChange && activeNodeHasChanged) {
-    updateActiveBranch2(viewStore, documentState, "none");
     persistActiveNodeInPluginSettings(view);
     view.plugin.statusBar.updateProgressIndicatorAndChildCount(view);
   }
@@ -34698,35 +37643,32 @@ var onViewStateUpdate = (view, action, localState) => {
       });
     }
   }
-  if (activeNodeChange && activeNodeHasChanged && type !== "DOCUMENT/NAVIGATE_USING_KEYBOARD" && type !== "DOCUMENT/JUMP_TO_NODE") {
-    maybeClearSelection(view, action);
-  }
-  if (action.type === "SEARCH/SET_QUERY") {
+  if (action.type === "view/search/set-query") {
     updateSearchResults(view);
   }
-  if (activeNodeChange || e.search || e.editMainSplit) {
+  if (e.search || e.mainEditor || action.type === "view/update-active-branch?source=document" || activeNodeChange && activeNodeHasChanged) {
     view.alignBranch.align(action);
   }
   if (!container || !view.isViewOfFile)
     return;
-  if (type === "SEARCH/TOGGLE_FUZZY_MODE") {
+  if (type === "view/search/toggle-fuzzy-mode") {
     view.documentSearch.resetIndex();
   }
-  if (action.type === "view/main/disable-edit" || action.type === "view/sidebar/disable-edit" || action.type === "NAVIGATION/NAVIGATE_FORWARD" || action.type === "NAVIGATION/NAVIGATE_BACK") {
+  if (action.type === "view/editor/disable-main-editor" || action.type === "view/editor/disable-sidebar-editor" || action.type === "view/set-active-node/history/select-next" || action.type === "view/set-active-node/history/select-previous") {
     focusContainer(view);
   }
-  if (action.type === "SEARCH/TOGGLE_INPUT") {
+  if (action.type === "view/search/toggle-input") {
     if (!viewState.search.showInput) {
       focusContainer(view);
     }
   }
-  if (action.type === "SEARCH/SET_RESULTS" || action.type === "SEARCH/TOGGLE_INPUT" || action.type === "SEARCH/SET_QUERY") {
+  if (action.type === "view/search/set-results" || action.type === "view/search/toggle-input" || action.type === "view/search/set-query") {
     showSearchResultsInMinimap(view);
   }
   if (type === "view/pinned-nodes/set-active-node") {
     persistActivePinnedNode(view);
   }
-  if (action.type === "UI/TOGGLE_HELP_SIDEBAR") {
+  if (action.type === "view/hotkeys/toggle-modal") {
     if (viewState.ui.controls.showHelpSidebar) {
       view.viewStore.dispatch({
         type: "view/hotkeys/update-conflicts",
@@ -34753,14 +37695,14 @@ var setActiveNode = (view, action) => {
   let newActiveSection = documentState.history.context.activeSection;
   let shouldSetActiveNode = true;
   if (activeNodeExists) {
-    if (action.type === "HISTORY/APPLY_PREVIOUS_SNAPSHOT") {
+    if (action.type === "document/history/select-previous-snapshot") {
       const state2 = documentState.history.state;
       const previousSnapshot = documentState.history.items[state2.activeIndex + 1];
       const affectedSection = previousSnapshot.context.affectedSection;
       if (section_id[affectedSection]) {
         newActiveSection = affectedSection;
       }
-    } else if (view.isViewOfFile && (action.type === "DOCUMENT/DROP_NODE" || action.type === "DOCUMENT/MOVE_NODE")) {
+    } else if (view.isViewOfFile && (action.type === "document/drop-node" || action.type === "document/move-node")) {
       shouldSetActiveNode = false;
     } else if (!view.isActive) {
       shouldSetActiveNode = false;
@@ -34779,7 +37721,7 @@ var setActiveNode = (view, action) => {
 // src/stores/view/subscriptions/actions/remove-obsolete-navigation-items.ts
 var removeObsoleteNavigationItems = (viewStore, documentState) => {
   viewStore.dispatch({
-    type: "NAVIGATION/REMOVE_OBSOLETE",
+    type: "view/active-node-history/delete-obsolete",
     payload: {
       content: documentState.document.content
     }
@@ -34789,8 +37731,6 @@ var removeObsoleteNavigationItems = (viewStore, documentState) => {
 // src/stores/view/subscriptions/actions/persist-pinned-nodes.ts
 var persistPinnedNodes = (view) => {
   const documentState = view.documentStore.getValue();
-  if (!documentState.file.path)
-    return;
   const viewState = view.viewStore.getValue();
   const pinnedNodes = documentState.pinnedNodes;
   const sections = documentState.sections;
@@ -34800,7 +37740,7 @@ var persistPinnedNodes = (view) => {
     type: "settings/pinned-nodes/persist",
     payload: {
       sections: pinnedSections,
-      filePath: documentState.file.path,
+      filePath: view.file.path,
       section
     }
   });
@@ -34818,11 +37758,16 @@ var updateStaleActivePinnedNode = (view) => {
   }
 };
 
+// src/stores/view/subscriptions/actions/clear-selected-nodes.ts
+var clearSelectedNodes = (view) => {
+  view.viewStore.dispatch({ type: "view/selection/clear-selection" });
+};
+
 // src/stores/view/subscriptions/actions/update-selected-nodes.ts
 var updateSelectedNodes2 = (view, action, changeHistory) => {
   const documentState = view.documentStore.getValue();
   let clear = true;
-  if (action.type === "DOCUMENT/PASTE_NODE" || changeHistory) {
+  if (action.type === "document/paste-node" || changeHistory) {
     const history = documentState.history;
     const snapshot = history.items[history.state.activeIndex];
     if (snapshot.context.affectedSections) {
@@ -34849,56 +37794,60 @@ var onDocumentStateUpdate = (view, action) => {
   const documentState = documentStore.getValue();
   const viewStore = view.viewStore;
   const container = view.container;
+  viewStore.setContext(documentState.document);
   const type = action.type;
-  const e = getDocumentEventType(
-    type
-  );
-  if (type === "DOCUMENT/LOAD_FILE") {
+  const e = getDocumentEventType(type);
+  if (type === "document/file/load-from-disk") {
     view.inlineEditor.unloadNode();
   }
   const structuralChange = e.createOrDelete || e.dropOrMove || e.changeHistory || e.clipboard;
   if (structuralChange) {
     setActiveNode(view, action);
-    updateActiveBranch2(viewStore, documentState, "structure");
     viewStore.dispatch({
-      type: "view/outline/refresh-collapsed-nodes",
-      payload: {
-        columns: documentState.document.columns
+      type: "view/update-active-branch?source=document",
+      context: {
+        documentAction: action
       }
+    });
+    viewStore.dispatch({
+      type: "view/outline/refresh-collapsed-nodes"
     });
     documentStore.dispatch({
       type: "document/pinned-nodes/remove-stale-nodes"
     });
-    documentStore.dispatch({ type: "META/REFRESH_GROUP_PARENT_IDS" });
+    documentStore.dispatch({
+      type: "document/meta/refresh-group-parent-ids"
+    });
   }
-  if (structuralChange && type !== "DOCUMENT/MOVE_NODE") {
+  if (structuralChange && type !== "document/move-node") {
     updateSelectedNodes2(view, action, e.changeHistory);
   }
-  if (type === "DOCUMENT/INSERT_NODE" && view.isActive) {
+  if (type === "document/add-node" && view.isActive) {
     enableEditMode2(viewStore, documentState);
   }
-  if (type === "DOCUMENT/DELETE_NODE" || type === "DOCUMENT/CUT_NODE" || e.changeHistory || type === "DOCUMENT/EXTRACT_BRANCH" || type === "DOCUMENT/LOAD_FILE" || type === "DOCUMENT/SPLIT_NODE") {
+  if (type === "document/delete-node" || type === "document/cut-node" || e.changeHistory || type === "document/extract-node" || type === "document/file/load-from-disk" || type === "document/split-node") {
     removeObsoleteNavigationItems(viewStore, documentState);
   }
-  if (structuralChange || e.content) {
+  if (e.content) {
     view.alignBranch.align(action);
+  }
+  if (structuralChange || e.content) {
     view.rulesProcessor.onDocumentUpdate(action);
   }
   if (!container || !view.isViewOfFile)
     return;
   if (e.content || structuralChange) {
-    const maybeViewIsClosing = !view.isActive;
-    view.saveDocument(maybeViewIsClosing);
+    view.saveDocument();
   }
   if (e.content || structuralChange) {
     if (view.minimapStore) {
-      debouncedDrawDocument(view);
+      view.minimapEffects.drawDocument(view);
     }
     view.documentSearch.resetIndex();
     const query = viewStore.getValue().search.query;
     if (query) {
       view.viewStore.dispatch({
-        type: "SEARCH/SET_QUERY",
+        type: "view/search/set-query",
         payload: {
           query
         }
@@ -34930,20 +37879,22 @@ var onPluginSettingsUpdate = (view, state2, action) => {
   if (!view.container)
     return;
   const type = action.type;
-  if (type === "SET_FONT_SIZE") {
+  if (type === "settings/view/theme/set-font-size") {
     applyFontSize(view, state2.view.fontSize);
-  } else if (type === "SET_CONTAINER_BG") {
+  } else if (type === "settings/view/theme/set-h1-font-size") {
+    applyHeadingsFontSize(view, state2.view.h1FontSize_em);
+  } else if (type === "settings/view/theme/set-container-bg-color") {
     applyCssColor(view, "containerBg");
-  } else if (type === "SET_ACTIVE_BRANCH_BG") {
+  } else if (type === "settings/view/theme/set-active-branch-bg-color") {
     applyCssColor(view, "activeBranchBg");
-  } else if (type === "SET_CARD_WIDTH") {
+  } else if (type === "settings/view/layout/set-card-width") {
     applyCardWidth(view, state2.view.cardWidth);
-  } else if (type === "SET_CARDS_GAP") {
+  } else if (type === "settings/view/layout/set-cards-gap") {
     applyCardsGap(view, state2.view.cardsGap);
-  } else if (action.type === "UI/CHANGE_ZOOM_LEVEL") {
+  } else if (action.type === "settings/view/set-zoom-level") {
     applyZoomLevel(view, state2.view.zoomLevel);
     view.zoomFactor = state2.view.zoomLevel;
-  } else if (action.type === "SET_DOCUMENT_TYPE") {
+  } else if (action.type === "settings/documents/set-document-format") {
     view.saveDocument();
   } else if (type === "settings/view/set-node-indentation-width") {
     applyCardIndentationWidth(view, state2.view.nodeIndentationWidth);
@@ -34960,38 +37911,34 @@ var onPluginSettingsUpdate = (view, state2, action) => {
     });
   } else if (type === "settings/view/modes/toggle-outline-mode") {
     if (state2.view.outlineMode) {
-      const columns = view.documentStore.getValue().document.columns;
       view.viewStore.dispatch({
-        type: "view/outline/refresh-collapsed-nodes",
-        payload: {
-          columns
-        }
+        type: "view/outline/refresh-collapsed-nodes"
       });
     }
   }
-  const shouldAlign = type === "view/left-sidebar/toggle" || type === "view/left-sidebar/set-width" || type === "UI/CHANGE_ZOOM_LEVEL" || type === "SET_CARD_WIDTH" || type === "SET_LIMIT_PREVIEW_HEIGHT" || type === "VIEW/TOGGLE_MINIMAP" || type === "VIEW/SCROLLING/TOGGLE_SCROLLING_MODE" || type === "settings/view/scrolling/toggle-vertical-scrolling-mode" || type === "SET_CARDS_GAP" || type === "view/modes/gap-between-cards/toggle" || type === "settings/view/set-node-indentation-width";
+  const shouldAlign = type === "view/left-sidebar/toggle" || type === "view/left-sidebar/set-width" || type === "settings/view/set-zoom-level" || type === "settings/view/layout/set-card-width" || type === "settings/view/layout/set-limit-card-height" || type === "settings/view/toggle-minimap" || type === "settings/view/toggle-horizontal-scrolling-mode" || type === "settings/view/toggle-vertical-scrolling-mode" || type === "settings/view/layout/set-cards-gap" || type === "view/modes/gap-between-cards/toggle" || type === "settings/view/set-node-indentation-width";
   if (shouldAlign) {
     view.alignBranch.align(action);
   }
-  if (view.isActive && type === "UI/CHANGE_ZOOM_LEVEL") {
+  if (view.isActive && type === "settings/view/set-zoom-level") {
     focusContainer(view);
   }
-  const shouldUpdateStyleRules = type === "settings/style-rules/add" || type === "settings/style-rules/update" || type === "settings/style-rules/delete" || type === "settings/style-rules/update-condition" || type === "settings/style-rules/enable-rule" || type === "settings/style-rules/disable-rule" || type === "settings/style-rules/move" || type === "settings/style-rules/update-style";
+  const shouldUpdateStyleRules = type === "settings/style-rules/add" || type === "settings/style-rules/update" || type === "settings/style-rules/delete" || type === "settings/style-rules/update-condition" || type === "settings/style-rules/enable-rule" || type === "settings/style-rules/disable-rule" || type === "settings/style-rules/move" || type === "settings/style-rules/update-style" || type === "settings/style-rules/toggle-global";
   if (shouldUpdateStyleRules) {
     view.rulesProcessor.onRulesUpdate();
   }
 };
 
-// src/stores/view/subscriptions/on-documents-state-update.ts
-var onDocumentsStateUpdate = (view, action) => {
+// src/stores/view/subscriptions/on-plugin-state-update.ts
+var onPluginStateUpdate = (view, action) => {
   if (!view.container)
     return;
-  if (action.type === "WORKSPACE/ACTIVE_LEAF_CHANGE") {
+  if (action.type === "plugin/echo/workspace/active-leaf-change") {
     if (view.viewStore.getValue().document.editing.activeNodeId) {
       saveNodeContent(view);
     }
   }
-  if (action.type === "WORKSPACE/SET_ACTIVE_LINEAGE_VIEW" || action.type === "WORKSPACE/RESIZE") {
+  if (action.type === "plugin/documents/update-active-view-of-document" || action.type === "plugin/echo/workspace/resize") {
     if (view.isActive) {
       focusContainer(view);
       view.plugin.statusBar.updateAll(view);
@@ -35001,17 +37948,17 @@ var onDocumentsStateUpdate = (view, action) => {
 };
 
 // src/stores/view/subscriptions/on-metadata-cache.ts
-var import_obsidian32 = require("obsidian");
+var import_obsidian29 = require("obsidian");
 var metadataCallback = (view, updatedFile) => {
   const viewFile = view.file;
   if (!viewFile)
     return;
   if (updatedFile === viewFile) {
-    debounced(view);
+    markUnresolvedLinks(view);
   }
 };
 var vaultCallback = (view, affectedFile) => {
-  if (!(affectedFile instanceof import_obsidian32.TFile))
+  if (!(affectedFile instanceof import_obsidian29.TFile))
     return;
   const viewFile = view.file;
   if (!viewFile)
@@ -35028,7 +37975,7 @@ var vaultCallback = (view, affectedFile) => {
     }
   }
   if (affectedFileIsALink) {
-    debounced(view);
+    markUnresolvedLinks(view);
   }
 };
 var onMetadataCache = (view) => {
@@ -35074,10 +38021,10 @@ var viewSubscriptions = (view) => {
       }
     }
   );
-  const unsubFromDocuments = view.plugin.documents.subscribe((_, action) => {
+  const unsubFromDocuments = view.plugin.store.subscribe((_, action) => {
     if (!action)
       return;
-    onDocumentsStateUpdate(view, action);
+    onPluginStateUpdate(view, action);
   });
   const unsubFromSettings = view.plugin.settings.subscribe(
     (state2, action) => {
@@ -35101,7 +38048,7 @@ var viewSubscriptions = (view) => {
 };
 
 // src/obsidian/helpers/inline-editor/inline-editor.ts
-var import_obsidian35 = require("obsidian");
+var import_obsidian32 = require("obsidian");
 
 // src/obsidian/helpers/inline-editor/helpers/vim-enter-insert-mode.ts
 var vimEnterInsertMode = (plugin, view) => {
@@ -35162,13 +38109,13 @@ var fixVimCursorWhenZooming = (view) => {
 };
 
 // src/obsidian/helpers/inline-editor/helpers/lock-file.ts
-var import_obsidian33 = require("obsidian");
+var import_obsidian30 = require("obsidian");
 var noop2 = async () => {
 };
 var lockFile = (view) => {
   view.plugin.app.workspace.iterateAllLeaves((e) => {
     const leafView = e.view;
-    if (leafView instanceof import_obsidian33.MarkdownView) {
+    if (leafView instanceof import_obsidian30.MarkdownView) {
       if (leafView.file === view.file) {
         leafView.__setViewData__ = leafView.setViewData;
         leafView.setViewData = noop2;
@@ -35178,11 +38125,11 @@ var lockFile = (view) => {
 };
 
 // src/obsidian/helpers/inline-editor/helpers/unlock-file.ts
-var import_obsidian34 = require("obsidian");
+var import_obsidian31 = require("obsidian");
 var unlockFile = (view) => {
   view.plugin.app.workspace.iterateAllLeaves((e) => {
     const leafView = e.view;
-    if (leafView instanceof import_obsidian34.MarkdownView) {
+    if (leafView instanceof import_obsidian31.MarkdownView) {
       if (leafView.file === view.file) {
         if ("__setViewData__" in leafView) {
           leafView.setViewData = leafView.__setViewData__;
@@ -35196,13 +38143,14 @@ var unlockFile = (view) => {
 // src/obsidian/helpers/inline-editor/inline-editor.ts
 var noop3 = async () => {
 };
-var _nodeId;
+var _nodeId, _mounting;
 var InlineEditor = class {
   constructor(view) {
     this.view = view;
     __privateAdd(this, _nodeId, null);
     this.target = null;
     this.onChangeSubscriptions = /* @__PURE__ */ new Set();
+    __privateAdd(this, _mounting, Promise.resolve());
     this.subscriptions = /* @__PURE__ */ new Set();
     this.cursorPositions = /* @__PURE__ */ new Map();
     this.focus = () => {
@@ -35233,10 +38181,10 @@ var InlineEditor = class {
       }
     };
     this.setActiveEditor = () => {
-      this.view.plugin.app.workspace.activeEditor = this.inlineView;
+      this.view.plugin.app.workspace._activeEditor = this.inlineView;
     };
     this.invokeAndDeleteOnChangeSubscriptions = () => {
-      if (this.onChangeSubscriptions.size)
+      if (this.onChangeSubscriptions.size > 0)
         for (const subscription of this.onChangeSubscriptions) {
           subscription();
           this.onChangeSubscriptions.delete(subscription);
@@ -35249,7 +38197,7 @@ var InlineEditor = class {
       const content = this.getContent();
       const viewState = this.view.viewStore.getValue();
       this.view.documentStore.dispatch({
-        type: "DOCUMENT/SET_NODE_CONTENT",
+        type: "document/update-node-content",
         payload: {
           nodeId,
           content
@@ -35260,6 +38208,9 @@ var InlineEditor = class {
       });
     };
     this.fixVimWhenZooming = () => {
+      const viewState = this.view.viewStore.getValue();
+      if (viewState.document.editing.isInSidebar)
+        return;
       const unsub = fixVimCursorWhenZooming(this.view);
       if (unsub) {
         this.subscriptions.add(unsub);
@@ -35272,11 +38223,17 @@ var InlineEditor = class {
   set nodeId(value) {
     __privateSet(this, _nodeId, value);
   }
+  get mounting() {
+    return __privateGet(this, _mounting);
+  }
   getContent() {
     return this.inlineView.editor.getValue();
   }
   getCursor() {
     return this.inlineView.editor.getCursor();
+  }
+  getEditor() {
+    return this.inlineView.editor;
   }
   deleteNodeCursor(nodeId) {
     this.cursorPositions.delete(nodeId);
@@ -35296,6 +38253,11 @@ var InlineEditor = class {
     if (this.nodeId) {
       this.unloadNode();
     }
+    let resolve = () => {
+    };
+    __privateSet(this, _mounting, new Promise((_resolve) => {
+      resolve = _resolve;
+    }));
     const content = this.view.documentStore.getValue().document.content[nodeId]?.content;
     this.setContent(content);
     target.append(this.containerEl);
@@ -35311,6 +38273,7 @@ var InlineEditor = class {
     this.restoreCursor();
     this.lockFile();
     this.fixVimWhenZooming();
+    setTimeout(() => resolve(), Math.max(16, content.length / 60));
   }
   unloadNode(nodeId, discardChanges = false) {
     const currentNodeId = this.nodeId;
@@ -35338,7 +38301,7 @@ var InlineEditor = class {
     const workspace = this.view.plugin.app.workspace;
     this.containerEl = document.createElement("div");
     this.containerEl.addClasses(["lineage-inline-editor"]);
-    this.inlineView = new import_obsidian35.MarkdownView({
+    this.inlineView = new import_obsidian32.MarkdownView({
       containerEl: this.containerEl,
       app: this.view.plugin.app,
       workspace
@@ -35384,6 +38347,7 @@ var InlineEditor = class {
   }
 };
 _nodeId = new WeakMap();
+_mounting = new WeakMap();
 
 // src/view/helpers/stringify-document.ts
 var stringifyDocument = (document2, format2) => {
@@ -35395,35 +38359,6 @@ var stringifyDocument = (document2, format2) => {
   } else {
     return jsonToHtmlComment(json);
   }
-};
-
-// src/obsidian/events/workspace/helpers/maybe-get-document-format.ts
-var maybeGetDocumentFormat = (view) => {
-  invariant(view.file);
-  return view.plugin.settings.getValue().documents[view.file.path]?.documentFormat;
-};
-
-// src/obsidian/events/workspace/helpers/get-or-detect-document-format.ts
-var getOrDetectDocumentFormat = (view, data) => {
-  const format2 = maybeGetDocumentFormat(view);
-  if (format2) {
-    return format2;
-  }
-  const detected = detectDocumentFormat(view.data);
-  if (detected)
-    return detected;
-  const defaultFormat = view.plugin.settings.getValue().general.defaultDocumentFormat;
-  if (defaultFormat === "outline") {
-    if (!data.trim())
-      return "outline";
-    try {
-      const tree = outlineToJson(data);
-      if (tree.length <= 1 && tree[0]?.children?.length === 0)
-        return "outline";
-    } catch {
-    }
-  }
-  return defaultFormat;
 };
 
 // node_modules/fuse.js/dist/fuse.mjs
@@ -36735,7 +39670,7 @@ Fuse.config = Config;
   register(ExtendedSearch);
 }
 
-// src/view/helpers/document-search.ts
+// src/stores/view/subscriptions/effects/document-search/document-search.ts
 var _searchTriggeredMinimap;
 var DocumentSearch = class {
   constructor(view) {
@@ -36756,7 +39691,7 @@ var DocumentSearch = class {
       }
       this.fuse = new Fuse(items, {
         keys: ["content"],
-        threshold: viewState.search.fuzzySearch ? 0.4 : 0.1,
+        threshold: viewState.search.fuzzySearch ? 0.4 : 0,
         shouldSort: true,
         isCaseSensitive: false,
         ignoreLocation: true
@@ -36769,7 +39704,12 @@ var DocumentSearch = class {
       if (!this.fuse) {
         this.updateIndex();
       }
-      return this.fuse.search(query);
+      const results = this.fuse.search(query);
+      const map = /* @__PURE__ */ new Map();
+      for (const result of results) {
+        map.set(result.item.id, result);
+      }
+      return map;
     };
   }
   get searchTriggeredMinimap() {
@@ -36782,7 +39722,7 @@ var DocumentSearch = class {
 _searchTriggeredMinimap = new WeakMap();
 
 // src/stores/view/subscriptions/effects/style-rules/style-rules-processor.ts
-var import_obsidian36 = require("obsidian");
+var import_obsidian33 = require("obsidian");
 var StyleRulesProcessor = class {
   constructor(view) {
     this.rules = [];
@@ -36806,7 +39746,7 @@ var StyleRulesProcessor = class {
       });
       this.rules = [];
     };
-    this.processRules = (0, import_obsidian36.debounce)(
+    this.processRules = (0, import_obsidian33.debounce)(
       async (action) => {
         let results = null;
         if (this.rules.length > 0) {
@@ -36833,51 +39773,50 @@ var StyleRulesProcessor = class {
     this.setRules = () => {
       const path = this.view.file?.path;
       invariant(path);
-      const rules = this.view.plugin.settings.getValue().styleRules.documents[path];
-      this.rules = rules?.rules ?? [];
+      const settings = this.view.plugin.settings.getValue();
+      const documentRules = settings.styleRules.documents[path];
+      const globalRules = settings.styleRules.global;
+      this.rules = [];
+      if (documentRules) {
+        this.rules.push(...documentRules.rules);
+      }
+      this.rules.push(
+        ...globalRules.rules.map((r) => ({ ...r, global: true }))
+      );
     };
     this.view = view;
   }
 };
 
-// src/helpers/delay.ts
-var delay = async (milliseconds) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
-
 // src/stores/view/subscriptions/effects/align-branch/helpers/delay-align.ts
 var delayAlign = (action) => {
   let delay2 = 0;
-  if (action.type === "view/left-sidebar/toggle" || action.type === "VIEW/TOGGLE_MINIMAP") {
+  if (action.type === "view/left-sidebar/toggle" || action.type === "settings/view/toggle-minimap") {
     delay2 = 300;
-  } else if (action.type === "DOCUMENT/DROP_NODE") {
-    delay2 = 32;
+  } else if (action.type === "plugin/echo/workspace/resize") {
+    delay2 = 50;
+  } else if (action.type === "view/life-cycle/mount") {
+    delay2 = 16;
+  } else if (action.type === "view/update-active-branch?source=document") {
+    const documentAction = action.context.documentAction;
+    if (documentAction.type === "document/add-node" || documentAction.type === "document/drop-node") {
+      delay2 = 16;
+    } else if (documentAction.type === "document/move-node") {
+      const horizontalMove = documentAction.payload.direction === "left" || documentAction.payload.direction === "right";
+      if (horizontalMove)
+        delay2 = 16;
+    }
   }
   return delay2;
-};
-
-// src/stores/view/subscriptions/effects/align-branch/helpers/adjust-scroll-behavior.ts
-var adjustScrollBehavior = (action) => {
-  let behavior = "smooth";
-  if (action?.type === "DOCUMENT/MOVE_NODE") {
-    const verticalMove = action.payload.direction === "down" || action.payload.direction === "up";
-    if (verticalMove)
-      behavior = "instant";
-  } else if (action.type === "DOCUMENT/LOAD_FILE") {
-    behavior = "instant";
-  } else if (action.type === "UI/CHANGE_ZOOM_LEVEL") {
-    behavior = "instant";
-  }
-  return behavior;
 };
 
 // src/stores/view/subscriptions/effects/align-branch/create-align-branch-actions/force-center-active-node-v.ts
 var forceCenterActiveNodeV = (action) => {
   let centerActiveNodeV = false;
-  centerActiveNodeV = action.type === "view/life-cycle/mount" || action.type === "DOCUMENT/LOAD_FILE";
+  centerActiveNodeV = action.type === "view/life-cycle/mount" || action.type === "document/file/load-from-disk";
   if (!centerActiveNodeV) {
     const type = getDocumentEventType(action.type);
-    centerActiveNodeV = !!type.dropOrMove || !!type.changeHistory || !!type.createOrDelete && action.type !== "DOCUMENT/INSERT_NODE";
+    centerActiveNodeV = !!type.dropOrMove || !!type.changeHistory || !!type.createOrDelete && action.type !== "document/add-node";
   }
   return centerActiveNodeV;
 };
@@ -36885,7 +39824,7 @@ var forceCenterActiveNodeV = (action) => {
 // src/stores/view/subscriptions/effects/align-branch/create-align-branch-actions/lazy-vertical-scrolling-mode.ts
 var lazyVerticalScrollingMode = (context, action) => {
   const actions = [];
-  if (action.type === "DOCUMENT/INSERT_NODE") {
+  if (action.type === "document/add-node") {
     if (action.payload.position === "right") {
       actions.push({
         action: "20/active-node/vertical/align-with-parent"
@@ -36893,6 +39832,14 @@ var lazyVerticalScrollingMode = (context, action) => {
     } else {
       actions.push({ action: "20/active-node/vertical/reveal" });
     }
+  } else if (action.type === "plugin/echo/workspace/resize" || action.type === "plugin/echo/workspace/active-leaf-change" || action.type === "view/left-sidebar/toggle" || action.type === "view/left-sidebar/set-width") {
+    actions.push({ action: "20/active-node/vertical/reveal" });
+    actions.push({
+      action: "30/parents/vertical/align-with-active-node"
+    });
+    actions.push({
+      action: "40/children/vertical/align-with-active-node"
+    });
   } else {
     actions.push({ action: "20/active-node/vertical/reveal" });
     const previousActiveBranch = context.previousActiveBranch;
@@ -36922,7 +39869,7 @@ var lazyVerticalScrollingMode = (context, action) => {
 var outlineScrollingActions = (context, action) => {
   const actions = [];
   const settings = context.alignBranchSettings;
-  const forceCenterActiveNodeV2 = action.type === "view/life-cycle/mount" || action.type === "DOCUMENT/LOAD_FILE";
+  const forceCenterActiveNodeV2 = action.type === "view/life-cycle/mount" || action.type === "document/file/load-from-disk";
   if (forceCenterActiveNodeV2) {
     actions.push({ action: "20/active-node/horizontal/center" });
     actions.push({ action: "20/active-node/vertical/center" });
@@ -36956,6 +39903,9 @@ var forceCenterActiveNodeH = (context, action) => {
 // src/stores/view/subscriptions/effects/align-branch/create-align-branch-actions/create-align-branch-actions.ts
 var createAlignBranchActions = (context, action) => {
   const actions = [];
+  if (action.type === "view/update-active-branch?source=document") {
+    action = action.context.documentAction;
+  }
   if (action.type === "view/align-branch/reveal-node") {
     actions.push({ action: "20/active-node/vertical/reveal" });
     actions.push({ action: "20/active-node/horizontal/reveal" });
@@ -36985,10 +39935,10 @@ var createAlignBranchActions = (context, action) => {
   } else {
     actions.push(...lazyVerticalScrollingMode(context, action));
   }
-  if (action.type === "view/life-cycle/mount" || action.type === "DOCUMENT/SPLIT_NODE" || action.type === "DOCUMENT/LOAD_FILE") {
+  if (action.type === "view/life-cycle/mount" || action.type === "document/split-node" || action.type === "document/file/load-from-disk") {
     actions.push({ action: "50/inactive-columns/vertical/move-up" });
   }
-  if (!settings.centerActiveNodeH && (action.type === "view/life-cycle/mount" || action.type === "UI/CHANGE_ZOOM_LEVEL")) {
+  if (!settings.centerActiveNodeH && (action.type === "view/life-cycle/mount" || action.type === "settings/view/set-zoom-level")) {
     actions.push({
       action: "10/first-column/horizontal/move-to-the-left"
     });
@@ -37243,10 +40193,12 @@ var alignInactiveColumns = (context) => {
 };
 
 // src/stores/view/subscriptions/effects/align-branch/run-align-branch-actions/run-align-branch-actions.ts
-var runAlignBranchActions = (context, actions) => {
+var runAlignBranchActions = (context, actions, signal) => {
   actions = actions.sort((a, b) => a.action.localeCompare(b.action));
   const activeNode = context.activeBranch.node;
   for (const action of actions) {
+    if (signal.aborted)
+      return;
     const type = action.action;
     if (type === "10/first-column/horizontal/move-to-the-left") {
       scrollFirstColumnToTheLeft(context);
@@ -37281,7 +40233,7 @@ var runAlignBranchActions = (context, actions) => {
 
 // src/stores/view/subscriptions/effects/align-branch/helpers/skip-align.ts
 var skipAlign = (view, action) => {
-  if (action.type === "DOCUMENT/SET_NODE_CONTENT" && action.context.isInSidebar)
+  if (action.type === "document/update-node-content" && action.context.isInSidebar)
     return true;
   if (action.type === "view/set-active-node/mouse-silent")
     return true;
@@ -37294,160 +40246,11 @@ var skipAlign = (view, action) => {
   }
 };
 
-// src/stores/view/subscriptions/effects/align-branch/constants/action-category.ts
-var actionCategoryDict = {
-  "view/align-branch/center-node": "manual",
-  "view/align-branch/reveal-node": "manual",
-  "DOCUMENT/LOAD_FILE": "document/reset",
-  RESET_STORE: "document/reset",
-  "DOCUMENT/INSERT_NODE": "document/structure",
-  "DOCUMENT/DROP_NODE": "document/structure",
-  "DOCUMENT/DELETE_NODE": "document/structure",
-  "DOCUMENT/MERGE_NODE": "document/structure",
-  "DOCUMENT/MOVE_NODE": "document/structure",
-  "DOCUMENT/SPLIT_NODE": "document/structure",
-  "DOCUMENT/PASTE_NODE": "document/structure",
-  "DOCUMENT/EXTRACT_BRANCH": "document/structure",
-  "DOCUMENT/CUT_NODE": "document/structure",
-  "HISTORY/APPLY_PREVIOUS_SNAPSHOT": "document/structure",
-  "HISTORY/APPLY_NEXT_SNAPSHOT": "document/structure",
-  "HISTORY/SELECT_SNAPSHOT": "document/structure",
-  "DOCUMENT/SET_NODE_CONTENT": "document/content",
-  "DOCUMENT/FORMAT_HEADINGS": "document/content",
-  "view/main/disable-edit": "view/editor",
-  "view/main/enable-edit": "view/editor",
-  "DOCUMENT/JUMP_TO_NODE": "view/active-node/keyboard",
-  "DOCUMENT/NAVIGATE_USING_KEYBOARD": "view/active-node/keyboard",
-  "NAVIGATION/SELECT_NEXT_NODE": "view/active-node/mouse",
-  "NAVIGATION/NAVIGATE_BACK": "view/active-node/mouse",
-  "NAVIGATION/NAVIGATE_FORWARD": "view/active-node/mouse",
-  "view/outline/toggle-collapse-node": "view/outline",
-  "view/outline/refresh-collapsed-nodes": "view/outline",
-  "view/outline/toggle-collapse-all": "view/outline",
-  // todo: add a separate event for effect source
-  "view/set-active-node/mouse": "view/active-node/mouse",
-  "view/set-active-node/mouse-silent": "other",
-  "view/set-active-node/document": "view/active-node/document",
-  "view/set-active-node/search": "view/active-node/search",
-  "view/left-sidebar/set-width": "settings/layout",
-  "WORKSPACE/ACTIVE_LEAF_CHANGE": "view/life-cycle",
-  "WORKSPACE/RESIZE": "view/resize",
-  "WORKSPACE/LAYOUT_READY": "view/life-cycle",
-  "WORKSPACE/SET_ACTIVE_LINEAGE_VIEW": "view/life-cycle",
-  "view/life-cycle/mount": "view/life-cycle",
-  "VIEW/TOGGLE_MINIMAP": "settings/layout",
-  "view/left-sidebar/toggle": "settings/layout",
-  SET_CARD_WIDTH: "settings/layout",
-  SET_CARDS_GAP: "settings/layout",
-  SET_MIN_CARD_HEIGHT: "settings/layout",
-  "VIEW/SCROLLING/TOGGLE_SCROLLING_MODE": "settings/scrolling",
-  "settings/view/scrolling/toggle-vertical-scrolling-mode": "settings/scrolling",
-  SET_LIMIT_PREVIEW_HEIGHT: "settings/layout",
-  "UI/CHANGE_ZOOM_LEVEL": "settings/zoom",
-  "view/modes/gap-between-cards/toggle": "settings/layout",
-  "settings/view/modes/toggle-outline-mode": "settings/layout",
-  "settings/view/set-node-indentation-width": "settings/layout",
-  "SEARCH/SET_RESULTS": "view/active-node/search",
-  "search/toggle-show-all-nodes": "view/active-node/search",
-  "SEARCH/SET_QUERY": "view/active-node/search",
-  "SEARCH/TOGGLE_INPUT": "view/active-node/search",
-  "SEARCH/TOGGLE_FUZZY_MODE": "view/active-node/search",
-  "FS/SET_FILE_PATH": "other",
-  "DOCUMENT/COPY_NODE": "other",
-  "FILE/UPDATE_FRONTMATTER": "other",
-  "document/pinned-nodes/pin": "other",
-  "document/pinned-nodes/unpin": "other",
-  "document/pinned-nodes/remove-stale-nodes": "other",
-  "document/pinned-nodes/load-from-settings": "other",
-  "META/REFRESH_GROUP_PARENT_IDS": "other",
-  SET_DRAG_STARTED: "other",
-  "DOCUMENT/SET_DRAG_ENDED": "other",
-  UPDATE_ACTIVE_BRANCH: "other",
-  "view/confirmation/reset/disable-edit": "other",
-  "view/confirmation/reset/delete-node": "other",
-  "view/confirmation/confirm/delete-node": "other",
-  "view/confirmation/confirm/disable-edit": "other",
-  "DOCUMENT/CLEAR_SELECTION": "other",
-  "UI/TOGGLE_HELP_SIDEBAR": "other",
-  "UI/TOGGLE_HISTORY_SIDEBAR": "other",
-  "UI/TOGGLE_SETTINGS_SIDEBAR": "other",
-  CLOSE_MODALS: "other",
-  "view/modals/toggle-style-rules": "other",
-  "NAVIGATION/REMOVE_OBSOLETE": "other",
-  "view/pinned-nodes/set-active-node": "other",
-  "view/recent-nodes/set-active-node": "other",
-  "view/sidebar/enable-edit": "other",
-  "view/sidebar/disable-edit": "other",
-  "view/style-rules/update-results": "other",
-  "view/keyboard/shift/down": "other",
-  "view/keyboard/shift/up": "other",
-  "view/hotkeys/set-search-term": "other",
-  "view/hotkeys/update-conflicts": "other",
-  "view/selection/set-selection": "other",
-  SET_DOCUMENT_TYPE: "other",
-  SET_VIEW_TYPE: "other",
-  DELETE_DOCUMENT_PREFERENCES: "other",
-  "HISTORY/UPDATE_DOCUMENT_PATH": "other",
-  SET_CUSTOM_HOTKEYS: "other",
-  SET_FONT_SIZE: "other",
-  SET_CONTAINER_BG: "other",
-  SET_ACTIVE_BRANCH_BG: "other",
-  UPDATE_DOCUMENTS_DICTIONARY: "other",
-  "settings/document/persist-active-section": "other",
-  "GENERAL/SET_DEFAULT_DOCUMENT_FORMAT": "other",
-  "view/left-sidebar/set-active-tab": "other",
-  "settings/pinned-nodes/persist": "other",
-  "settings/pinned-nodes/persist-active-node": "other",
-  "settings/style-rules/add": "other",
-  "settings/style-rules/update": "other",
-  "settings/style-rules/delete": "other",
-  "settings/style-rules/move": "other",
-  "settings/style-rules/update-condition": "other",
-  "settings/style-rules/enable-rule": "other",
-  "settings/style-rules/disable-rule": "other",
-  "settings/view/set-maintain-edit-mode": "other",
-  "settings/view/theme/set-inactive-node-opacity": "other",
-  "settings/view/theme/set-active-branch-color": "other",
-  "settings/hotkeys/set-custom-hotkey": "other",
-  "settings/hotkeys/reset-custom-hotkey": "other",
-  "settings/hotkeys/reset-all": "other",
-  "settings/hotkeys/apply-preset": "other",
-  "settings/hotkeys/toggle-editor-state": "other",
-  "settings/hotkeys/set-blank": "other",
-  "DOCUMENTS/DELETE_DOCUMENT": "other",
-  "DOCUMENTS/UPDATE_DOCUMENT_PATH": "other",
-  "DOCUMENTS/ADD_DOCUMENT": "other"
-};
-var actionCategory = new Map(
-  Object.entries(actionCategoryDict)
-);
-var actionCategoryPriorityDict = {
-  "document/reset": 100,
-  "view/life-cycle": 100,
-  "view/active-node/keyboard": 90,
-  "view/active-node/mouse": 90,
-  "document/structure": 80,
-  "document/content": 70,
-  "view/active-node/document": 30,
-  "view/active-node/search": 30,
-  "view/resize": 20,
-  "view/editor": 20,
-  "view/outline": 20,
-  "settings/zoom": 20,
-  "settings/layout": 20,
-  "settings/scrolling": 20,
-  manual: 10,
-  other: 0
-};
-var actionCategoryPriority = new Map(
-  Object.entries(actionCategoryPriorityDict)
-);
-
 // src/lib/align-element/helpers/wait-for-active-node-to-stop-moving.ts
 var LOOP_DELAY_MS = 10;
 var MAX_ATTEMPTS = 100;
-var REQUIRED_MATCHES = 5;
-var waitForActiveNodeToStopMoving = async (view) => {
+var REQUIRED_MATCHES = 20;
+var waitForActiveNodeToStopMoving = async (view, signal) => {
   const activeBranch = view.viewStore.getValue().document.activeBranch;
   let columnEl;
   let retries = 0;
@@ -37455,7 +40258,7 @@ var waitForActiveNodeToStopMoving = async (view) => {
   let lastScrollTop = -1;
   let lastScrollLeft = -1;
   const container = view.container;
-  while (retries < MAX_ATTEMPTS) {
+  while (retries < MAX_ATTEMPTS && !signal.aborted) {
     if (!columnEl) {
       columnEl = getElementById(container, activeBranch.column);
     } else {
@@ -37475,92 +40278,266 @@ var waitForActiveNodeToStopMoving = async (view) => {
   }
 };
 
+// src/stores/view/subscriptions/effects/align-branch/helpers/adjust-scroll-behavior.ts
+var adjustScrollBehavior = (action) => {
+  let behavior = "smooth";
+  if (action.type === "view/update-active-branch?source=document") {
+    const documentAction = action.context.documentAction;
+    const documentEvent = documentAction.type;
+    if (documentEvent === "document/file/load-from-disk") {
+      behavior = "instant";
+    } else if (documentEvent === "document/move-node") {
+      const verticalMove = documentAction.payload.direction === "down" || documentAction.payload.direction === "up";
+      if (verticalMove)
+        behavior = "instant";
+    }
+  } else if (action.type === "settings/view/set-zoom-level") {
+    behavior = "instant";
+  }
+  return behavior;
+};
+
+// src/stores/view/subscriptions/effects/align-branch/helpers/create-context.ts
+var createContext = (view, action, previousActiveBranch) => {
+  const settings = view.plugin.settings.getValue();
+  const container = view.container;
+  const documentState = view.documentStore.getValue();
+  const viewState = view.viewStore.getValue();
+  const activeBranch = viewState.document.activeBranch;
+  const behavior = adjustScrollBehavior(action);
+  const context = {
+    previousActiveBranch,
+    activeBranch,
+    columns: documentState.document.columns,
+    container,
+    activeNodesOfColumn: viewState.document.activeNodesOfColumn,
+    containerRect: container.getBoundingClientRect(),
+    outlineMode: settings.view.outlineMode,
+    alignBranchSettings: {
+      centerActiveNodeH: settings.view.scrolling.centerActiveNodeH,
+      centerActiveNodeV: settings.view.scrolling.centerActiveNodeV,
+      zoomLevel: settings.view.zoomLevel,
+      behavior
+    },
+    state: {
+      rects: /* @__PURE__ */ new Map()
+    }
+  };
+  return context;
+};
+
+// src/stores/view/subscriptions/effects/align-branch/constants/action-priority.ts
+var actionPriorityRecord = {
+  "view/life-cycle/mount": 100,
+  "view/update-active-branch?source=document": 90,
+  "view/set-active-node/keyboard-jump": 90,
+  "view/set-active-node/sequential/select-next": 90,
+  "view/set-active-node/keyboard": 90,
+  "view/set-active-node/history/select-previous": 90,
+  "view/set-active-node/history/select-next": 90,
+  "view/set-active-node/mouse": 90,
+  "view/set-active-node/mouse-silent": 0,
+  "view/set-active-node/search": 30,
+  "view/align-branch/center-node": 30,
+  "view/align-branch/reveal-node": 30,
+  "view/selection/select-all": 30,
+  "document/update-node-content": 30,
+  "view/set-active-node/document": 20,
+  "view/editor/disable-main-editor": 20,
+  "view/editor/enable-main-editor": 20,
+  "view/outline/toggle-collapse-node": 10,
+  "view/outline/refresh-collapsed-nodes": 10,
+  "view/outline/toggle-collapse-all": 10,
+  "document/format-headings": 10,
+  "view/left-sidebar/set-width": 10,
+  "plugin/echo/workspace/active-leaf-change": 10,
+  "plugin/echo/workspace/resize": 10,
+  "plugin/echo/workspace/layout-ready": 10,
+  "plugin/documents/update-active-view-of-document": 10,
+  "settings/view/toggle-minimap": 10,
+  "view/left-sidebar/toggle": 10,
+  "settings/view/layout/set-card-width": 10,
+  "settings/view/layout/set-cards-gap": 10,
+  "settings/view/layout/set-min-card-height": 10,
+  "view/modes/gap-between-cards/toggle": 10,
+  "view/search/set-results": 10,
+  "search/view/toggle-show-all-nodes": 10,
+  "view/search/set-query": 10,
+  "view/search/toggle-input": 10,
+  "view/search/toggle-fuzzy-mode": 10,
+  "settings/view/toggle-horizontal-scrolling-mode": 10,
+  "settings/view/toggle-vertical-scrolling-mode": 10,
+  "settings/view/layout/set-limit-card-height": 10,
+  "settings/view/set-zoom-level": 10,
+  "settings/view/modes/toggle-outline-mode": 10,
+  "settings/view/set-node-indentation-width": 10
+};
+var actionPriority = new Map(
+  Object.entries(actionPriorityRecord)
+);
+
 // src/stores/view/subscriptions/effects/align-branch/align-branch.ts
 var AlignBranch = class {
   constructor(view) {
     this.view = view;
-    this.previousActiveBranch = null;
     this.previousEvent = null;
-    this.align = async (action) => {
-      if (skipAlign(this.view, action))
-        return;
-      const delay_ms = delayAlign(action);
-      if (delay_ms > 0)
-        await delay(delay_ms);
-      await this.waitForPreviousEvent(action);
-      const context = this.createContext(action);
-      const actions = createAlignBranchActions(context, action);
-      requestAnimationFrame(() => {
-        runAlignBranchActions(context, actions);
-      });
-      this.saveActiveBranch(context);
-    };
-    this.createContext = (action) => {
-      const settings = this.view.plugin.settings.getValue();
-      const container = this.view.container;
-      const documentState = this.view.documentStore.getValue();
-      const viewState = this.view.viewStore.getValue();
-      const activeBranch = viewState.document.activeBranch;
-      const behavior = adjustScrollBehavior(action);
-      const context = {
-        previousActiveBranch: this.previousActiveBranch,
-        activeBranch,
-        columns: documentState.document.columns,
-        container,
-        activeNodesOfColumn: viewState.document.activeNodesOfColumn,
-        containerRect: container.getBoundingClientRect(),
-        outlineMode: settings.view.outlineMode,
-        alignBranchSettings: {
-          centerActiveNodeH: settings.view.scrolling.centerActiveNodeH,
-          centerActiveNodeV: settings.view.scrolling.centerActiveNodeV,
-          zoomLevel: settings.view.zoomLevel,
-          behavior
-        },
-        state: {
-          rects: /* @__PURE__ */ new Map()
+    this.previousActiveBranch = null;
+    this.align = (action) => {
+      const priority = actionPriority.get(action.type);
+      if (typeof priority !== "number") {
+        throw new SilentError(action.type + " not allowed");
+      }
+      if (this.previousEvent && !this.previousEvent.completed) {
+        if (priority >= this.previousEvent.priority) {
+          this.previousEvent.controller.abort();
+        } else {
+          return;
         }
-      };
-      return context;
-    };
-    this.waitForPreviousEvent = async (action) => {
-      const category = actionCategory.get(action.type);
-      if (category === "other") {
-        throw new SilentError("unsupported event: " + action.type);
       }
       const event = {
-        action: action.type,
-        category,
-        priority: actionCategoryPriority.get(category),
-        ts: Date.now()
+        action,
+        priority,
+        controller: new AbortController(),
+        completed: false
       };
-      if (this.previousEvent) {
-        if (event.priority < this.previousEvent.priority) {
-          if (event.ts - this.previousEvent.ts < 500) {
-            await waitForActiveNodeToStopMoving(this.view);
-          }
-        }
-      }
+      this.run(event);
       this.previousEvent = event;
     };
+    this.run = async (event) => {
+      try {
+        if (skipAlign(this.view, event.action)) {
+          event.completed = true;
+          return;
+        }
+        const delay_ms = delayAlign(event.action);
+        if (delay_ms > 0) {
+          await delay(delay_ms, event.controller.signal);
+        }
+        await this.view.inlineEditor.mounting;
+        const context = createContext(
+          this.view,
+          event.action,
+          this.previousActiveBranch
+        );
+        this.previousActiveBranch = context.activeBranch;
+        const actions = createAlignBranchActions(context, event.action);
+        if (!event.controller.signal.aborted) {
+          requestAnimationFrame(() => {
+            runAlignBranchActions(
+              context,
+              actions,
+              event.controller.signal
+            );
+          });
+          if (context.alignBranchSettings.behavior === "smooth") {
+            await waitForActiveNodeToStopMoving(
+              this.view,
+              event.controller.signal
+            );
+          }
+        }
+      } catch (e) {
+        logger.error(e);
+      }
+      event.completed = true;
+    };
   }
-  saveActiveBranch(context) {
-    this.previousActiveBranch = context.activeBranch;
+};
+
+// src/helpers/debounce.ts
+var debounce3 = (func2, delay2) => {
+  let timeoutId = null;
+  return (...args) => {
+    if (timeoutId)
+      clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func2(...args);
+    }, delay2);
+  };
+};
+
+// src/stores/minimap/subscriptions/effects/update-visible-range.ts
+var updateVisibleRange = async (view) => {
+  const minimapStore = view.getMinimapStore();
+  const state2 = minimapStore.getValue();
+  const canvasId = state2.canvasId;
+  const payload = await minimapWorker.run({
+    type: "minimap/set/scroll-position",
+    payload: {
+      canvasId,
+      scroll_position_cpx: state2.scrollbar.scrollPosition_cpx
+    }
+  });
+  if (payload && "start_cpx" in payload) {
+    const dom = view.getMinimapDom();
+    const canvas = dom.canvas;
+    requestAnimationFrame(async () => {
+      const marginTop = cpx_to_dpx(payload.start_cpx) + "px";
+      await minimapWorker.run({
+        type: "minimap/draw-document",
+        payload: {
+          canvasId
+        }
+      });
+      canvas.style.marginTop = marginTop;
+    });
   }
+};
+
+// src/stores/minimap/subscriptions/effects/debounced-minimap-effects.ts
+var DebouncedMinimapEffects = class {
+  constructor() {
+    this.drawDocument = debounce3(drawDocument, 100);
+    this.updateVisibleRange = debounce3(updateVisibleRange, 16);
+  }
+};
+
+// src/stores/view/subscriptions/actions/document/update-frontmatter.ts
+var updateFrontmatter = (view, frontmatter) => {
+  view.documentStore.dispatch({
+    type: "document/file/update-frontmatter",
+    payload: {
+      frontmatter
+    }
+  });
+};
+
+// src/stores/view/subscriptions/actions/document/load-full-document.ts
+var loadFullDocument = (view, data, frontmatter, format2, activeSection) => {
+  view.documentStore.dispatch({
+    payload: {
+      document: { data, frontmatter, position: null },
+      format: format2,
+      activeSection
+    },
+    type: "document/file/load-from-disk"
+  });
+};
+
+// src/stores/plugin/actions/refresh-active-view-of-document.ts
+var refreshActiveViewOfDocument = (view) => {
+  const views = view.plugin.app.workspace.getLeavesOfType(LINEAGE_VIEW_TYPE).map(
+    (leaf) => leaf.view instanceof LineageView && leaf.view !== view && leaf.view.file ? [leaf.view.id, leaf.view.file.path] : null
+  ).filter((x) => x);
+  view.plugin.store.dispatch({
+    type: "plugin/documents/refresh-active-view-of-document",
+    payload: { views }
+  });
 };
 
 // src/view/view.ts
 var LINEAGE_VIEW_TYPE = "lineage";
-var LineageView = class _LineageView extends import_obsidian37.TextFileView {
+var LineageView = class _LineageView extends import_obsidian34.TextFileView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
     this.minimapDom = null;
     this.onDestroyCallbacks = /* @__PURE__ */ new Set();
     this.onViewStoreError = (error, location, action) => {
-      if (action && action.type === "DOCUMENT/LOAD_FILE") {
+      if (action && action.type === "document/file/load-from-disk") {
         if (this.file) {
-          this.plugin.documents.dispatch({
-            type: "DOCUMENTS/DELETE_DOCUMENT",
+          this.plugin.store.dispatch({
+            type: "plugin/documents/unregister-document-store",
             payload: { path: this.file.path }
           });
           setViewType(this.plugin, this.file.path, "markdown");
@@ -37573,30 +40550,28 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
       }
       onPluginError(error, location, action);
     };
-    this.saveDocument = async (immediate = false) => {
+    this.saveDocument = async () => {
       invariant(this.file);
       const state2 = clone(this.documentStore.getValue());
-      const data = state2.file.frontmatter + stringifyDocument(state2.document, getDocumentFormat(this));
+      const data = state2.file.frontmatter + stringifyDocument(state2.document, getPersistedDocumentFormat(this));
       if (data !== this.data) {
         if (data.trim().length === 0) {
           throw new Error(lang.error_save_empty_data);
         }
         this.data = data;
-        if (immediate)
-          await this.save();
-        else
-          this.requestSave();
+        this.requestSave();
       }
     };
     this.loadInitialData = async () => {
       invariant(this.file);
-      const fileHasAStore = this.plugin.documents.getValue().documents[this.file.path];
+      const pluginState = this.plugin.store.getValue();
+      const fileHasAStore = pluginState.documents[this.file.path];
       if (fileHasAStore) {
         this.useExistingStore();
       } else {
         this.createStore();
       }
-      this.loadDocumentToStore(true);
+      this.loadDocumentToStore("view-mount");
       if (!this.inlineEditor) {
         this.inlineEditor = new InlineEditor(this);
         await this.inlineEditor.onload();
@@ -37614,64 +40589,42 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
     };
     this.createStore = () => {
       invariant(this.file);
-      this.plugin.documents.dispatch({
-        type: "DOCUMENTS/ADD_DOCUMENT",
+      this.plugin.store.dispatch({
+        type: "plugin/documents/register-new-document-store",
         payload: {
           path: this.file.path,
           documentStore: this.documentStore,
           viewId: this.id
         }
       });
-      this.documentStore.dispatch({
-        type: "FS/SET_FILE_PATH",
-        payload: {
-          path: this.file.path
-        }
-      });
     };
     this.useExistingStore = () => {
       if (!this.file)
         return;
-      this.documentStore = this.plugin.documents.getValue().documents[this.file.path].documentStore;
+      this.documentStore = this.plugin.store.getValue().documents[this.file.path].documentStore;
     };
-    this.loadDocumentToStore = (isInitialLoad = false) => {
-      const { data, frontmatter } = extractFrontmatter(this.data);
-      const state2 = this.documentStore.getValue();
-      const format2 = getOrDetectDocumentFormat(this, data);
-      const existingData = stringifyDocument(state2.document, format2);
-      const bodyHasChanged = existingData !== data;
-      const frontmatterHasChanged = !bodyHasChanged && frontmatter !== state2.file.frontmatter;
-      if (!existingData || bodyHasChanged || frontmatterHasChanged) {
-        const isEditing2 = this.viewStore.getValue().document.editing.activeNodeId;
-        if (frontmatterHasChanged && !isInitialLoad) {
-          this.documentStore.dispatch({
-            type: "FILE/UPDATE_FRONTMATTER",
-            payload: {
-              frontmatter
-            }
-          });
-        } else if (!isEditing2) {
-          const activeNode = this.viewStore.getValue().document.activeNode;
-          const activeSection = activeNode ? this.documentStore.getValue().sections.id_section[activeNode] : null;
-          this.documentStore.dispatch({
-            payload: {
-              document: { data, frontmatter, position: null },
-              format: format2,
-              activeSection
-            },
-            type: "DOCUMENT/LOAD_FILE"
-          });
-          if (this.isActive && !isInitialLoad && existingData && bodyHasChanged) {
-            new import_obsidian37.Notice("Document reloaded due to external changes");
-          }
-          if (!maybeGetDocumentFormat(this)) {
-            invariant(this.file);
-            setDocumentFormat(this.plugin, this.file.path, format2);
-          }
+    this.loadDocumentToStore = (event) => {
+      const { body, frontmatter } = extractFrontmatter(this.data);
+      const documentState = this.documentStore.getValue();
+      const viewState = this.viewStore.getValue();
+      const format2 = this.getDocumentFormat(body);
+      const emptyStore = documentState.history.items.length === 0;
+      const existingBody = stringifyDocument(documentState.document, format2);
+      const bodyHasChanged = existingBody !== body;
+      const frontmatterHasChanged = frontmatter !== documentState.file.frontmatter;
+      const isEditing2 = Boolean(viewState.document.editing.activeNodeId);
+      const activeNode = viewState.document.activeNode;
+      const activeSection = activeNode ? documentState.sections.id_section[activeNode] : null;
+      if (emptyStore || bodyHasChanged && !isEditing2) {
+        loadFullDocument(this, body, frontmatter, format2, activeSection);
+        if (this.isActive && event !== "view-mount") {
+          new import_obsidian34.Notice("Document updated externally");
         }
+      } else if (frontmatterHasChanged) {
+        updateFrontmatter(this, frontmatter);
       }
     };
-    this.debouncedLoadDocumentToStore = (0, import_obsidian37.debounce)(
+    this.debouncedLoadDocumentToStore = (0, import_obsidian34.debounce)(
       this.loadDocumentToStore,
       250
     );
@@ -37683,19 +40636,21 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
     this.viewStore = new Store(
       defaultViewState(),
       viewReducer,
-      this.onViewStoreError
+      this.onViewStoreError,
+      this.documentStore.getValue().document
     );
     this.id = id.view();
     this.documentSearch = new DocumentSearch(this);
     this.rulesProcessor = new StyleRulesProcessor(this);
     this.alignBranch = new AlignBranch(this);
+    this.minimapEffects = new DebouncedMinimapEffects();
   }
   get isActive() {
     return this === this.plugin.app.workspace.getActiveViewOfType(_LineageView);
   }
   get isViewOfFile() {
     const path = this.file?.path;
-    return path ? this.id === this.plugin.documents.getValue().documents[path]?.viewId : false;
+    return path ? this.id === this.plugin.store.getValue().documents[path]?.viewId : false;
   }
   getViewData() {
     return this.data;
@@ -37704,20 +40659,10 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
     if (!this.activeFilePath && this.file) {
       this.activeFilePath = this.file?.path;
       this.loadInitialData();
-    } else if (this.file && data.trim().length === 0) {
-      this.plugin.app.vault.adapter.read(this.file.path).then((content) => {
-        if (content.trim().length !== 0) {
-          throw new Error(lang.error_set_empty_data);
-        } else {
-          this.data = data;
-          this.debouncedLoadDocumentToStore();
-        }
-      }).catch((error) => {
-        logger.error("Error reading file:", error);
-      });
     } else {
       this.data = data;
-      this.debouncedLoadDocumentToStore();
+      if (this.isViewOfFile)
+        this.debouncedLoadDocumentToStore();
     }
   }
   async onUnloadFile() {
@@ -37736,6 +40681,7 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
     for (const s of this.onDestroyCallbacks) {
       s();
     }
+    refreshActiveViewOfDocument(this);
   }
   clear() {
     this.data = "";
@@ -37751,22 +40697,18 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
   }
   async onOpen() {
   }
-  /*private destroyStore = () => {
-   const leavesOfType = this.plugin.app.workspace
-    .getLeavesOfType(FILE_VIEW_TYPE)
-    .filter(
-     (l) =>
-  	   l.view instanceof LineageView &&
-  	   l.view.file?.path === this.activeFilePath &&
-  	   l.view !== this,
-    );
-   if (leavesOfType.length === 0) {
-    this.store.dispatch({ type: 'RESET_STORE' });
-    if (this.file) delete stores[this.file.path];
-   }
-  };*/
   async onClose() {
     return this.onUnloadFile();
+  }
+  getDocumentFormat(body) {
+    let format2;
+    format2 = getPersistedDocumentFormat(this, false);
+    if (format2) {
+      return format2;
+    }
+    format2 = detectDocumentFormat(body) || this.plugin.settings.getValue().general.defaultDocumentFormat;
+    setDocumentFormat(this.plugin, this.file.path, format2);
+    return format2;
   }
   setMinimapDom(dom) {
     this.minimapDom = dom;
@@ -37781,28 +40723,24 @@ var LineageView = class _LineageView extends import_obsidian37.TextFileView {
   }
 };
 
-// src/stores/settings/subscriptions/effects/update-file-view-type-cache.ts
-var fileViewTypeCache = {};
-var updateFileViewTypeCache = (state2) => {
-  fileViewTypeCache = state2;
-};
-
-// src/obsidian/patches/set-view-state.ts
-function setViewState(next) {
-  return function(state2, ...rest) {
-    const isMarkdownView = state2.type === "markdown";
-    const path = state2?.state?.file;
-    if (isMarkdownView && // @ts-ignore
-    fileViewTypeCache[path]?.viewType === LINEAGE_VIEW_TYPE && // @ts-ignore
-    !state2.state.inlineEditor) {
-      const newState = {
-        ...state2,
-        type: LINEAGE_VIEW_TYPE
-      };
-      return next.apply(this, [newState, ...rest]);
-    } else {
-      return next.apply(this, [state2, ...rest]);
-    }
+// src/obsidian/patches/create-set-view-state.ts
+function createSetViewState(plugin) {
+  return function(next) {
+    return function(state2, ...rest) {
+      const isMarkdownView = state2.type === "markdown";
+      const path = state2?.state?.file;
+      if (isMarkdownView && // @ts-ignore
+      plugin.viewType[path]?.viewType === LINEAGE_VIEW_TYPE && // @ts-ignore
+      !state2.state.inlineEditor) {
+        const newState = {
+          ...state2,
+          type: LINEAGE_VIEW_TYPE
+        };
+        return next.apply(this, [newState, ...rest]);
+      } else {
+        return next.apply(this, [state2, ...rest]);
+      }
+    };
   };
 }
 
@@ -37864,7 +40802,7 @@ var fixConditionTypes = (rule) => {
   }
 };
 
-// src/helpers/move-array-item.ts
+// src/helpers/array-helpers/move-array-item.ts
 var moveArrayItem = (array, fromIndex, toIndex) => {
   const newArray = array.slice();
   const element2 = newArray[fromIndex];
@@ -37893,18 +40831,25 @@ var handleDND = (rules, payload) => {
   return rules;
 };
 
+// src/helpers/array-helpers/insert-item-at-index.ts
+var insertItemAtIndex = (array, item, index) => {
+  const copy = [...array];
+  copy.splice(index, 0, item);
+  return copy;
+};
+
 // src/stores/settings/reducers/update-style-rules/update-style-rules.ts
 var updateStyleRules = (settings, action) => {
-  let state2;
-  state2 = settings.styleRules.documents[action.payload.documentPath];
-  if (!state2) {
+  let rulesContainer;
+  rulesContainer = settings.styleRules.settings.activeTab === "global-rules" ? settings.styleRules.global : settings.styleRules.documents[action.payload.documentPath];
+  if (!rulesContainer) {
     if (action.type !== "settings/style-rules/add") {
       throw new Error("Document does not have any style rules");
     }
     settings.styleRules.documents[action.payload.documentPath] = {
       rules: []
     };
-    state2 = settings.styleRules.documents[action.payload.documentPath];
+    rulesContainer = settings.styleRules.documents[action.payload.documentPath];
   }
   if (action.type === "settings/style-rules/add") {
     const newRule = {
@@ -37920,66 +40865,111 @@ var updateStyleRules = (settings, action) => {
         enabled: true
       },
       style: {
-        color: "#fff",
-        styleVariant: "left-border"
+        color: getTheme() === "light" ? "#b2ccf5" : "#274462",
+        styleVariant: "background-color"
       },
       priority: 0
     };
-    state2.rules = [...state2.rules, newRule];
+    rulesContainer.rules = [...rulesContainer.rules, newRule];
   } else if (action.type === "settings/style-rules/update") {
     const { id: id2, rule } = action.payload;
-    const index = state2.rules.findIndex((r) => r.id === id2);
+    const index = rulesContainer.rules.findIndex((r) => r.id === id2);
     if (index !== -1) {
-      state2.rules[index] = { ...state2.rules[index], ...rule };
-      fixConditionTypes(state2.rules[index]);
-      state2.rules = [...state2.rules];
+      rulesContainer.rules[index] = {
+        ...rulesContainer.rules[index],
+        ...rule
+      };
+      fixConditionTypes(rulesContainer.rules[index]);
+      rulesContainer.rules = [...rulesContainer.rules];
     }
   } else if (action.type === "settings/style-rules/delete") {
-    state2.rules = state2.rules.filter(
+    rulesContainer.rules = rulesContainer.rules.filter(
       (rule) => rule.id !== action.payload.id
     );
   } else if (action.type === "settings/style-rules/move") {
-    state2.rules = handleDND(state2.rules, action.payload);
+    rulesContainer.rules = handleDND(rulesContainer.rules, action.payload);
   } else if (action.type === "settings/style-rules/update-style") {
-    const index = state2.rules.findIndex((r) => r.id === action.payload.id);
+    const index = rulesContainer.rules.findIndex(
+      (r) => r.id === action.payload.id
+    );
     if (index !== -1) {
-      state2.rules[index] = {
-        ...state2.rules[index],
+      rulesContainer.rules[index] = {
+        ...rulesContainer.rules[index],
         // @ts-ignore
         style: {
-          ...state2.rules[index].style,
+          ...rulesContainer.rules[index].style,
           ...action.payload.style
         }
       };
-      state2.rules = [...state2.rules];
+      rulesContainer.rules = [...rulesContainer.rules];
     }
   } else if (action.type === "settings/style-rules/update-condition") {
     const { ruleId, updates } = action.payload;
-    const index = state2.rules.findIndex((r) => r.id === ruleId);
+    const index = rulesContainer.rules.findIndex((r) => r.id === ruleId);
     if (index !== -1) {
-      state2.rules[index] = {
-        ...state2.rules[index],
+      rulesContainer.rules[index] = {
+        ...rulesContainer.rules[index],
         // @ts-ignore
         condition: {
-          ...state2.rules[index].condition,
+          ...rulesContainer.rules[index].condition,
           ...updates
         }
       };
-      fixConditionTypes(state2.rules[index]);
-      state2.rules = [...state2.rules];
+      fixConditionTypes(rulesContainer.rules[index]);
+      rulesContainer.rules = [...rulesContainer.rules];
     }
   } else if (action.type === "settings/style-rules/enable-rule") {
-    const index = state2.rules.findIndex((r) => r.id === action.payload.id);
+    const index = rulesContainer.rules.findIndex(
+      (r) => r.id === action.payload.id
+    );
     if (index !== -1) {
-      state2.rules[index].enabled = true;
-      state2.rules = [...state2.rules];
+      rulesContainer.rules[index].enabled = true;
+      rulesContainer.rules = [...rulesContainer.rules];
     }
   } else if (action.type === "settings/style-rules/disable-rule") {
-    const index = state2.rules.findIndex((r) => r.id === action.payload.id);
+    const index = rulesContainer.rules.findIndex(
+      (r) => r.id === action.payload.id
+    );
     if (index !== -1) {
-      state2.rules[index].enabled = false;
-      state2.rules = [...state2.rules];
+      rulesContainer.rules[index].enabled = false;
+      rulesContainer.rules = [...rulesContainer.rules];
     }
+  } else if (action.type === "settings/style-rules/toggle-global") {
+    const rule = rulesContainer.rules.find(
+      (r) => r.id === action.payload.id
+    );
+    invariant(rule);
+    rulesContainer.rules = rulesContainer.rules.filter(
+      (r) => r.id !== action.payload.id
+    );
+    if (settings.styleRules.settings.activeTab === "global-rules") {
+      let documentRules = settings.styleRules.documents[action.payload.documentPath];
+      if (!documentRules) {
+        settings.styleRules.documents[action.payload.documentPath] = {
+          rules: []
+        };
+        documentRules = settings.styleRules.documents[action.payload.documentPath];
+      }
+      documentRules.rules = [...documentRules.rules, rule];
+    } else {
+      settings.styleRules.global.rules = [
+        ...settings.styleRules.global.rules,
+        rule
+      ];
+    }
+  } else if (action.type === "settings/style-rules/duplicate-rule") {
+    const index = rulesContainer.rules.findIndex(
+      (r) => r.id === action.payload.id
+    );
+    const rule = rulesContainer.rules[index];
+    rulesContainer.rules = insertItemAtIndex(
+      rulesContainer.rules,
+      {
+        ...rule,
+        id: id.styleRule()
+      },
+      index + 1
+    );
   }
 };
 
@@ -38066,10 +41056,10 @@ var persistCollapsedSections2 = (state2, action) => {
 
 // src/stores/settings/settings-reducer.ts
 var updateState = (store, action) => {
-  if (action.type === "DELETE_DOCUMENT_PREFERENCES") {
+  if (action.type === "settings/documents/delete-document-preferences") {
     delete store.documents[action.payload.path];
     delete store.styleRules.documents[action.payload.path];
-  } else if (action.type === "SET_DOCUMENT_TYPE") {
+  } else if (action.type === "settings/documents/set-document-format") {
     if (!store.documents[action.payload.path]) {
       store.documents[action.payload.path] = {
         documentFormat: action.payload.format,
@@ -38086,7 +41076,7 @@ var updateState = (store, action) => {
     } else {
       store.documents[action.payload.path].documentFormat = action.payload.format;
     }
-  } else if (action.type === "SET_VIEW_TYPE") {
+  } else if (action.type === "settings/documents/set-view-type") {
     if (store.documents[action.payload.path]) {
       store.documents[action.payload.path].viewType = action.payload.type;
     }
@@ -38094,7 +41084,7 @@ var updateState = (store, action) => {
     if (store.documents[action.payload.path]) {
       store.documents[action.payload.path].activeSection = action.payload.sectionNumber;
     }
-  } else if (action.type === "HISTORY/UPDATE_DOCUMENT_PATH") {
+  } else if (action.type === "settings/documents/update-document-path") {
     const preferences = store.documents[action.payload.oldPath];
     delete store.documents[action.payload.oldPath];
     store.documents[action.payload.newPath] = preferences;
@@ -38103,27 +41093,29 @@ var updateState = (store, action) => {
       delete store.styleRules.documents[action.payload.oldPath];
       store.styleRules.documents[action.payload.newPath] = rules;
     }
-  } else if (action.type === "SET_CUSTOM_HOTKEYS") {
+  } else if (action.type === "settings/hotkeys/update-custom-hotkeys") {
     store.hotkeys.customHotkeys = action.payload.customHotkeys;
-  } else if (action.type === "SET_FONT_SIZE") {
+  } else if (action.type === "settings/view/theme/set-font-size") {
     store.view.fontSize = action.payload.fontSize;
-  } else if (action.type === "SET_CONTAINER_BG") {
+  } else if (action.type === "settings/view/theme/set-h1-font-size") {
+    store.view.h1FontSize_em = action.payload.fontSize_em;
+  } else if (action.type === "settings/view/theme/set-container-bg-color") {
     store.view.theme.containerBg = action.payload.backgroundColor;
-  } else if (action.type === "SET_ACTIVE_BRANCH_BG") {
+  } else if (action.type === "settings/view/theme/set-active-branch-bg-color") {
     store.view.theme.activeBranchBg = action.payload.backgroundColor;
-  } else if (action.type === "SET_CARD_WIDTH") {
+  } else if (action.type === "settings/view/layout/set-card-width") {
     store.view.cardWidth = action.payload.width;
-  } else if (action.type === "SET_MIN_CARD_HEIGHT") {
+  } else if (action.type === "settings/view/layout/set-min-card-height") {
     store.view.minimumCardHeight = action.payload.height;
-  } else if (action.type === "SET_LIMIT_PREVIEW_HEIGHT") {
+  } else if (action.type === "settings/view/layout/set-limit-card-height") {
     store.view.limitPreviewHeight = action.payload.limit;
-  } else if (action.type === "UPDATE_DOCUMENTS_DICTIONARY") {
-    store.documents = action.payload.documents;
-  } else if (action.type === "UI/CHANGE_ZOOM_LEVEL") {
+  } else if (action.type === "settings/documents/remove-stale-documents") {
+    store.documents = { ...action.payload.documents };
+  } else if (action.type === "settings/view/set-zoom-level") {
     changeZoomLevel(store, action.payload);
-  } else if (action.type === "GENERAL/SET_DEFAULT_DOCUMENT_FORMAT") {
+  } else if (action.type === "settings/general/set-default-document-format") {
     store.general.defaultDocumentFormat = action.payload.format;
-  } else if (action.type === "VIEW/TOGGLE_MINIMAP") {
+  } else if (action.type === "settings/view/toggle-minimap") {
     store.view.showMinimap = !store.view.showMinimap;
   } else if (action.type === "view/left-sidebar/toggle") {
     store.view.showLeftSidebar = !store.view.showLeftSidebar;
@@ -38146,17 +41138,17 @@ var updateState = (store, action) => {
       };
     }
     document2.pinnedSections.activeSection = action.payload.section;
-  } else if (action.type === "VIEW/SCROLLING/TOGGLE_SCROLLING_MODE") {
+  } else if (action.type === "settings/view/toggle-horizontal-scrolling-mode") {
     store.view.scrolling.centerActiveNodeH = !store.view.scrolling.centerActiveNodeH;
     store.view.scrolling = {
       ...store.view.scrolling
     };
-  } else if (action.type === "settings/view/scrolling/toggle-vertical-scrolling-mode") {
+  } else if (action.type === "settings/view/toggle-vertical-scrolling-mode") {
     store.view.scrolling.centerActiveNodeV = !store.view.scrolling.centerActiveNodeV;
     store.view.scrolling = {
       ...store.view.scrolling
     };
-  } else if (action.type === "SET_CARDS_GAP") {
+  } else if (action.type === "settings/view/layout/set-cards-gap") {
     store.view.cardsGap = action.payload.gap;
   } else if (action.type === "view/left-sidebar/set-width") {
     if (action.payload.width > 0) {
@@ -38231,6 +41223,23 @@ var updateState = (store, action) => {
     persistCollapsedSections2(store, action);
   } else if (action.type === "settings/view/set-always-show-card-buttons") {
     store.view.alwaysShowCardButtons = action.payload.show;
+  } else if (action.type === "settings/view/vertical-toolbar/set-hidden-button") {
+    if (action.payload.hide) {
+      store.view.hiddenVerticalToolbarButtons = Array.from(
+        /* @__PURE__ */ new Set([
+          ...store.view.hiddenVerticalToolbarButtons,
+          action.payload.id
+        ])
+      );
+    } else {
+      store.view.hiddenVerticalToolbarButtons = store.view.hiddenVerticalToolbarButtons.filter(
+        (b) => b !== action.payload.id
+      );
+    }
+  } else if (action.type === "settings/style-rules/set-active-tab") {
+    store.styleRules.settings.activeTab = action.payload.tab;
+  } else if (action.type === "settings/general/set-link-pane-type") {
+    store.general.linkPaneType = action.payload.position;
   } else if (action.type.startsWith("settings/style-rules")) {
     updateStyleRules(store, action);
   }
@@ -38262,7 +41271,7 @@ var deepMerge = (target, ...sources) => {
 };
 
 // src/obsidian/events/workspace/register-file-menu-event.ts
-var import_obsidian40 = require("obsidian");
+var import_obsidian37 = require("obsidian");
 
 // src/obsidian/events/workspace/helpers/get-leaf-of-file.ts
 var getLeafOfFile = (plugin, file, viewType) => {
@@ -38323,7 +41332,7 @@ var addFolderContextMenuItems = (menu, plugin, folder) => {
 };
 
 // src/obsidian/events/workspace/effects/import-from-gingko/import-from-gingko.ts
-var import_obsidian39 = require("obsidian");
+var import_obsidian36 = require("obsidian");
 
 // src/obsidian/events/workspace/effects/import-from-gingko/helpers/verify-json-file.ts
 var verifyJsonFile = (tree) => {
@@ -38366,10 +41375,10 @@ var mapFilesToGingkoFiles = async (plugin, files) => {
 };
 
 // src/obsidian/events/workspace/effects/create-new-folder.ts
-var import_obsidian38 = require("obsidian");
+var import_obsidian35 = require("obsidian");
 var createNewFolder = async (plugin, folder, basename) => {
   invariant(folder);
-  const children2 = folder.children.map((c) => c instanceof import_obsidian38.TFolder ? c.name : null).filter((f) => f);
+  const children2 = folder.children.map((c) => c instanceof import_obsidian35.TFolder ? c.name : null).filter((f) => f);
   const path = getUniqueFileName(folder.path, children2, basename);
   const createdFolder = await plugin.app.vault.createFolder(path);
   invariant(createdFolder);
@@ -38417,7 +41426,7 @@ var importFromGingko = async (plugin, files) => {
       gingkoFiles,
       parentFolder
     );
-    new import_obsidian39.Notice(
+    new import_obsidian36.Notice(
       `Imported ${gingkoFiles.length} Gingko file${gingkoFiles.length === 1 ? "" : "s"}`
     );
   } catch (e) {
@@ -38445,66 +41454,14 @@ var registerFileMenuEvent = (plugin) => {
     plugin.app.workspace.on(
       "file-menu",
       (menu, abstractFile, source, leaf) => {
-        if (abstractFile instanceof import_obsidian40.TFile) {
+        if (abstractFile instanceof import_obsidian37.TFile) {
           addToggleViewMenuItem(menu, plugin, abstractFile, leaf);
           addImportGinkgoMenuItem(menu, plugin, [abstractFile]);
-        } else if (abstractFile instanceof import_obsidian40.TFolder) {
+        } else if (abstractFile instanceof import_obsidian37.TFolder) {
           addFolderContextMenuItems(menu, plugin, abstractFile);
         }
       }
     )
-  );
-};
-
-// src/obsidian/events/vault/register-file-move-event.ts
-var import_obsidian41 = require("obsidian");
-var registerFileRenameEvent = (plugin) => {
-  plugin.registerEvent(
-    plugin.app.vault.on("rename", (file, oldPath) => {
-      if (file instanceof import_obsidian41.TFile) {
-        if (fileViewTypeCache[oldPath]) {
-          plugin.documents.dispatch({
-            type: "DOCUMENTS/UPDATE_DOCUMENT_PATH",
-            payload: {
-              newPath: file.path,
-              oldPath
-            }
-          });
-          plugin.settings.dispatch({
-            type: "HISTORY/UPDATE_DOCUMENT_PATH",
-            payload: {
-              newPath: file.path,
-              oldPath
-            }
-          });
-        }
-      }
-    })
-  );
-};
-
-// src/obsidian/events/vault/register-file-delete-event.ts
-var import_obsidian42 = require("obsidian");
-var registerFileDeleteEvent = (plugin) => {
-  plugin.registerEvent(
-    plugin.app.vault.on("delete", (file) => {
-      if (file instanceof import_obsidian42.TFile) {
-        if (fileViewTypeCache[file.path]) {
-          plugin.documents.dispatch({
-            type: "DOCUMENTS/DELETE_DOCUMENT",
-            payload: {
-              path: file.path
-            }
-          });
-          plugin.settings.dispatch({
-            type: "DELETE_DOCUMENT_PREFERENCES",
-            payload: {
-              path: file.path
-            }
-          });
-        }
-      }
-    })
   );
 };
 
@@ -38581,7 +41538,7 @@ var createCommands2 = (plugin) => {
         return Boolean(getActiveLineageView(plugin));
       }
       plugin.settings.dispatch({
-        type: "VIEW/SCROLLING/TOGGLE_SCROLLING_MODE"
+        type: "settings/view/toggle-horizontal-scrolling-mode"
       });
     }
   });
@@ -38593,12 +41550,12 @@ var createCommands2 = (plugin) => {
         return Boolean(getActiveLineageView(plugin));
       }
       plugin.settings.dispatch({
-        type: "settings/view/scrolling/toggle-vertical-scrolling-mode"
+        type: "settings/view/toggle-vertical-scrolling-mode"
       });
     }
   });
   commands.push({
-    name: lang.cm_split_card,
+    name: lang.cm_split_node,
     icon: customIcons.split.name,
     checkCallback: (checking) => {
       const view = getActiveLineageView(plugin);
@@ -38609,6 +41566,38 @@ var createCommands2 = (plugin) => {
     }
   });
   commands.push({
+    name: lang.cmd_sort_child_nodes_asc,
+    icon: "sort-asc",
+    checkCallback: (checking) => {
+      const view = getActiveLineageView(plugin);
+      if (checking) {
+        return Boolean(view);
+      }
+      invariant(view);
+      sortChildNodes(
+        view,
+        view.viewStore.getValue().document.activeNode,
+        "ascending"
+      );
+    }
+  });
+  commands.push({
+    name: lang.cmd_sort_child_nodes_desc,
+    icon: "sort-desc",
+    checkCallback: (checking) => {
+      const view = getActiveLineageView(plugin);
+      if (checking) {
+        return Boolean(view);
+      }
+      invariant(view);
+      sortChildNodes(
+        view,
+        view.viewStore.getValue().document.activeNode,
+        "descending"
+      );
+    }
+  });
+  commands.push({
     name: lang.cm_copy_link_to_block,
     icon: "links-coming-in",
     checkCallback: (checking) => {
@@ -38616,7 +41605,7 @@ var createCommands2 = (plugin) => {
       if (checking) {
         return Boolean(view);
       }
-      copyLinkToBlock(view);
+      copyLinkToBlock(view, false);
     }
   });
   commands.push({
@@ -38652,14 +41641,25 @@ var createCommands2 = (plugin) => {
     }
   });
   commands.push({
-    name: lang.cm_export_column,
+    name: lang.cmd_export_branches_with_subitems,
     icon: "file-text",
     checkCallback: (checking) => {
       const view = getActiveLineageView(plugin);
       if (checking) {
         return Boolean(view);
       }
-      exportColumn(view);
+      exportSelection(view, true);
+    }
+  });
+  commands.push({
+    name: lang.cmd_export_nodes_wo_subitems,
+    icon: "file-text",
+    checkCallback: (checking) => {
+      const view = getActiveLineageView(plugin);
+      if (checking) {
+        return Boolean(view);
+      }
+      exportSelection(view, false);
     }
   });
   commands.push({
@@ -38674,6 +41674,17 @@ var createCommands2 = (plugin) => {
     }
   });
   commands.push({
+    name: lang.cm_eject_document,
+    icon: "file-text",
+    checkCallback: (checking) => {
+      const view = getActiveLineageView(plugin);
+      if (checking) {
+        return Boolean(view);
+      }
+      ejectDocument(view);
+    }
+  });
+  commands.push({
     name: lang.cmd_toggle_minimap,
     icon: "panel-right",
     checkCallback: (checking) => {
@@ -38682,7 +41693,7 @@ var createCommands2 = (plugin) => {
         return Boolean(view);
       }
       plugin.settings.dispatch({
-        type: "VIEW/TOGGLE_MINIMAP"
+        type: "settings/view/toggle-minimap"
       });
     }
   });
@@ -38733,7 +41744,7 @@ var addCommands = (plugin) => {
 // src/stores/settings/subscriptions/settings-subscriptions.ts
 var settingsSubscriptions = (plugin) => {
   return plugin.settings.subscribe((state2, action, initialRun) => {
-    updateFileViewTypeCache(state2.documents);
+    plugin.viewType = state2.documents;
     if (initialRun) {
       updateViewHotkeysDictionary(get_store_value(ViewHotkeysStore(plugin)));
     } else if (action) {
@@ -38744,49 +41755,47 @@ var settingsSubscriptions = (plugin) => {
   });
 };
 
-// src/stores/documents/documents-reducer.ts
-var updateDocumentsState = (state2, action) => {
-  if (action.type === "DOCUMENTS/DELETE_DOCUMENT") {
+// src/stores/plugin/plugin-reducer.ts
+var updateState2 = (state2, action) => {
+  if (action.type === "plugin/documents/unregister-document-store") {
     const path = action.payload.path;
     if (path in state2.documents) {
       const oldEntry = state2.documents[path];
-      oldEntry.documentStore.dispatch({
-        type: "RESET_STORE"
-      });
+      oldEntry.documentStore.set(defaultDocumentState());
       delete state2.documents[path];
     }
-  } else if (action.type === "DOCUMENTS/UPDATE_DOCUMENT_PATH") {
+  } else if (action.type === "plugin/documents/update-document-path") {
     const oldPath = action.payload.oldPath;
     const newPath = action.payload.newPath;
     if (oldPath in state2.documents) {
       const oldEntry = state2.documents[oldPath];
       delete state2.documents[oldPath];
       state2.documents[newPath] = oldEntry;
-      oldEntry.documentStore.dispatch({
-        type: "FS/SET_FILE_PATH",
-        payload: {
-          path: newPath
-        }
-      });
     }
-  } else if (action.type === "DOCUMENTS/ADD_DOCUMENT") {
+  } else if (action.type === "plugin/documents/register-new-document-store") {
     state2.documents[action.payload.path] = {
       documentStore: action.payload.documentStore,
       viewId: action.payload.viewId
     };
-  } else if (action.type === "WORKSPACE/SET_ACTIVE_LINEAGE_VIEW") {
+  } else if (action.type === "plugin/documents/update-active-view-of-document") {
     if (state2.documents[action.payload.path]) {
       state2.documents[action.payload.path].viewId = action.payload.viewId;
     }
+  } else if (action.type === "plugin/documents/refresh-active-view-of-document") {
+    for (const [viewId, filePath] of action.payload.views) {
+      if (state2.documents[filePath]) {
+        state2.documents[filePath].viewId = viewId;
+      }
+    }
   }
 };
-var documentsReducer = (store, action) => {
-  updateDocumentsState(store, action);
+var pluginReducer = (store, action) => {
+  updateState2(store, action);
   return store;
 };
 
-// src/stores/documents/default-documents-state.ts
-var DefaultDocumentsState = () => ({
+// src/stores/plugin/default-plugin-state.ts
+var DefaultPluginState = () => ({
   documents: {}
 });
 
@@ -38803,7 +41812,7 @@ var StatusBar = class {
         view.documentStore.getValue().document.content
       ).length;
       this.elements.numberOfCards.setText(
-        cards2 + " card" + (cards2 === 1 ? "" : "s")
+        cards2 + " section" + (cards2 === 1 ? "" : "s")
       );
     };
     this.updateProgressIndicatorAndChildCount = async (view) => {
@@ -38814,15 +41823,6 @@ var StatusBar = class {
         activeNode
       });
       this.elements.documentProgress.setText(result.progress + " %");
-      const totalChildCount = result.totalChildCount;
-      if (totalChildCount > 0) {
-        this.elements.numberOfChildren.setText(
-          totalChildCount + " child card" + (totalChildCount === 1 ? "" : "s")
-        );
-        this.setElementVisibility(this.elements.numberOfChildren, true);
-      } else {
-        this.setElementVisibility(this.elements.numberOfChildren, false);
-      }
     };
     this.onload();
   }
@@ -38830,13 +41830,11 @@ var StatusBar = class {
     this.container = this.plugin.addStatusBarItem();
     this.elements = {
       numberOfCards: this.container.createDiv(),
-      numberOfChildren: this.container.createDiv(),
+      // numberOfChildren: this.container.createDiv(),
       documentProgress: this.container.createDiv()
     };
     this.elements.numberOfCards.style.marginRight = "5px";
-    this.elements.numberOfChildren.style.marginRight = "5px";
     this.elements.documentProgress.ariaLabel = "Progress through the document";
-    this.elements.documentProgress.ariaLabel = "Total number of child cards";
     this.plugin.registerEvent(
       this.plugin.app.workspace.on("active-leaf-change", (x) => {
         const visible = Boolean(x && x.view instanceof LineageView);
@@ -38850,117 +41848,6 @@ var StatusBar = class {
   setElementVisibility(element2, visible) {
     element2.toggleClass("lineage__hidden-element", !visible);
   }
-};
-
-// src/stores/documents/subscriptions/effects/remove-stale-documents/helpers/filter-stale-documents.ts
-var filterStaleDocuments = (settings, allFiles) => {
-  if (allFiles.size === 0)
-    return 0;
-  const paths = Object.keys(settings.documents);
-  const deletedPaths = /* @__PURE__ */ new Set();
-  for (const path of paths) {
-    if (!allFiles.has(path)) {
-      deletedPaths.add(path);
-      delete settings.documents[path];
-      delete settings.styleRules.documents[path];
-    }
-  }
-  return deletedPaths.size;
-};
-
-// src/stores/documents/subscriptions/effects/remove-stale-documents/helpers/get-all-loaded-files.ts
-var import_obsidian43 = require("obsidian");
-var getAllLoadedFiles = (plugin) => {
-  const allFiles = plugin.app.vault.getAllLoadedFiles();
-  const allPaths = /* @__PURE__ */ new Set();
-  for (const maybeFile of allFiles) {
-    if (maybeFile instanceof import_obsidian43.TFile) {
-      allPaths.add(maybeFile.path);
-    }
-  }
-  return allPaths;
-};
-
-// src/stores/documents/subscriptions/effects/remove-stale-documents/remove-stale-documents.ts
-var processStaleDocuments = (plugin) => {
-  const settings = plugin.settings.getValue();
-  const allLoadedFiles = getAllLoadedFiles(plugin);
-  const deleted = filterStaleDocuments(settings, allLoadedFiles);
-  if (deleted === 0)
-    return;
-  logger.debug(`[lineage] removed ${deleted} stale documents`);
-  plugin.settings.dispatch({
-    type: "UPDATE_DOCUMENTS_DICTIONARY",
-    payload: {
-      documents: settings.documents
-    }
-  });
-};
-var removeStaleDocuments = (plugin) => {
-  plugin.registerTimeout(
-    setTimeout(() => processStaleDocuments(plugin), 1e3 * 60 * 5)
-  );
-};
-
-// src/obsidian/events/workspace/actions/set-active-lineage-view.ts
-var setActiveLineageView = (view) => {
-  invariant(view.file);
-  view.plugin.documents.dispatch({
-    type: "WORKSPACE/SET_ACTIVE_LINEAGE_VIEW",
-    payload: {
-      path: view.file?.path,
-      viewId: view.id
-    }
-  });
-};
-
-// src/obsidian/events/workspace/actions/set-active-leaf-changed.ts
-var setActiveLeafChanged = (plugin) => {
-  plugin.documents.dispatch({
-    type: "WORKSPACE/ACTIVE_LEAF_CHANGE"
-  });
-};
-
-// src/obsidian/events/workspace/register-active-leaf-change.ts
-var registerActiveLeafChange = (plugin) => {
-  plugin.registerEvent(
-    plugin.app.workspace.on("active-leaf-change", (leaf) => {
-      if (leaf?.view instanceof LineageView && leaf.view.file?.path) {
-        setActiveLineageView(leaf.view);
-      }
-      setActiveLeafChanged(plugin);
-    })
-  );
-};
-
-// src/obsidian/events/workspace/actions/on-workspace-resize.ts
-var onWorkspaceResize = (plugin) => {
-  plugin.documents.dispatch({
-    type: "WORKSPACE/RESIZE"
-  });
-};
-
-// src/obsidian/events/workspace/register-workspace-resize.ts
-var registerWorkspaceResize = (plugin) => {
-  plugin.registerEvent(
-    plugin.app.workspace.on("resize", () => {
-      onWorkspaceResize(plugin);
-    })
-  );
-};
-
-// src/obsidian/events/workspace/actions/set-workspace-layout-ready.ts
-var setWorkspaceLayoutReady = (plugin) => {
-  plugin.documents.dispatch({
-    type: "WORKSPACE/LAYOUT_READY"
-  });
-};
-
-// src/obsidian/events/workspace/register-layout-ready.ts
-var registerLayoutReady = (plugin) => {
-  plugin.app.workspace.onLayoutReady(() => {
-    setWorkspaceLayoutReady(plugin);
-  });
 };
 
 // src/obsidian/patches/set-active-leaf.ts
@@ -38992,11 +41879,11 @@ var migrateSettings = (settings) => {
 };
 
 // src/obsidian/events/workspace/register-files-menu-event.ts
-var import_obsidian44 = require("obsidian");
+var import_obsidian38 = require("obsidian");
 var registerFilesMenuEvent = (plugin) => {
   plugin.registerEvent(
     plugin.app.workspace.on("files-menu", (menu, abstractFile) => {
-      const allFiles = abstractFile.every((af) => af instanceof import_obsidian44.TFile);
+      const allFiles = abstractFile.every((af) => af instanceof import_obsidian38.TFile);
       if (allFiles)
         addImportGinkgoMenuItem(menu, plugin, abstractFile);
     })
@@ -39024,17 +41911,148 @@ var removeHtmlElementMarkerInPreviewMode = (el) => {
   }
 };
 
+// src/stores/plugin/subscriptions/on-vault-event.ts
+var import_obsidian39 = require("obsidian");
+var onVaultEvent = (plugin) => {
+  const onDeleteRef = plugin.app.vault.on("delete", (file) => {
+    if (file instanceof import_obsidian39.TFile) {
+      if (plugin.viewType[file.path]) {
+        plugin.store.dispatch({
+          type: "plugin/documents/unregister-document-store",
+          payload: {
+            path: file.path
+          }
+        });
+        plugin.settings.dispatch({
+          type: "settings/documents/delete-document-preferences",
+          payload: {
+            path: file.path
+          }
+        });
+      }
+    }
+  });
+  const onRenameRef = plugin.app.vault.on("rename", (file, oldPath) => {
+    if (file instanceof import_obsidian39.TFile) {
+      if (plugin.viewType[oldPath]) {
+        plugin.store.dispatch({
+          type: "plugin/documents/update-document-path",
+          payload: {
+            newPath: file.path,
+            oldPath
+          }
+        });
+        plugin.settings.dispatch({
+          type: "settings/documents/update-document-path",
+          payload: {
+            newPath: file.path,
+            oldPath
+          }
+        });
+      }
+    }
+  });
+  plugin.registerEvent(onDeleteRef);
+  plugin.registerEvent(onRenameRef);
+};
+
+// src/stores/plugin/subscriptions/effects/remove-stale-documents/helpers/filter-stale-documents.ts
+var filterStaleDocuments = (settings, allFiles) => {
+  if (allFiles.size === 0)
+    return 0;
+  const paths = Object.keys(settings.documents);
+  const deletedPaths = /* @__PURE__ */ new Set();
+  for (const path of paths) {
+    if (!allFiles.has(path)) {
+      deletedPaths.add(path);
+      delete settings.documents[path];
+      delete settings.styleRules.documents[path];
+    }
+  }
+  return deletedPaths.size;
+};
+
+// src/stores/plugin/subscriptions/effects/remove-stale-documents/helpers/get-all-loaded-files.ts
+var import_obsidian40 = require("obsidian");
+var getAllLoadedFiles = (plugin) => {
+  const allFiles = plugin.app.vault.getAllLoadedFiles();
+  const allPaths = /* @__PURE__ */ new Set();
+  for (const maybeFile of allFiles) {
+    if (maybeFile instanceof import_obsidian40.TFile) {
+      allPaths.add(maybeFile.path);
+    }
+  }
+  return allPaths;
+};
+
+// src/stores/plugin/subscriptions/effects/remove-stale-documents/remove-stale-documents.ts
+var processStaleDocuments = (plugin) => {
+  const settings = plugin.settings.getValue();
+  const allLoadedFiles = getAllLoadedFiles(plugin);
+  const deleted = filterStaleDocuments(settings, allLoadedFiles);
+  if (deleted === 0)
+    return;
+  logger.debug(`[lineage] removed ${deleted} stale documents`);
+  plugin.settings.dispatch({
+    type: "settings/documents/remove-stale-documents",
+    payload: {
+      documents: settings.documents
+    }
+  });
+};
+var removeStaleDocuments = (plugin) => {
+  plugin.registerTimeout(
+    setTimeout(() => processStaleDocuments(plugin), 1e3 * 60 * 5)
+  );
+};
+
+// src/stores/plugin/subscriptions/on-workspace-event.ts
+var onWorkspaceEvent = (plugin) => {
+  const onActiveLeafChangeRef = plugin.app.workspace.on(
+    "active-leaf-change",
+    (leaf) => {
+      const view = leaf?.view;
+      if (view instanceof LineageView && view.file?.path) {
+        view.plugin.store.dispatch({
+          type: "plugin/documents/update-active-view-of-document",
+          payload: {
+            path: view.file?.path,
+            viewId: view.id
+          }
+        });
+      }
+      plugin.store.dispatch({
+        type: "plugin/echo/workspace/active-leaf-change"
+      });
+    }
+  );
+  const onResizeRef = plugin.app.workspace.on("resize", () => {
+    plugin.store.dispatch({
+      type: "plugin/echo/workspace/resize"
+    });
+  });
+  plugin.app.workspace.onLayoutReady(() => {
+    plugin.store.dispatch({
+      type: "plugin/echo/workspace/layout-ready"
+    });
+    removeStaleDocuments(plugin);
+  });
+  plugin.registerEvent(onActiveLeafChangeRef);
+  plugin.registerEvent(onResizeRef);
+};
+
 // src/main.ts
-var Lineage = class extends import_obsidian45.Plugin {
+var Lineage = class extends import_obsidian41.Plugin {
   constructor() {
     super(...arguments);
     this.timeoutReferences = /* @__PURE__ */ new Set();
+    this.viewType = {};
   }
   async onload() {
     await this.loadSettings();
-    this.documents = new Store(
-      DefaultDocumentsState(),
-      documentsReducer,
+    this.store = new Store(
+      DefaultPluginState(),
+      pluginReducer,
       onPluginError
     );
     loadCustomIcons();
@@ -39044,7 +42062,6 @@ var Lineage = class extends import_obsidian45.Plugin {
     );
     addCommands(this);
     this.registerPatches();
-    this.registerEffects();
     this.registerEvents();
     this.statusBar = new StatusBar(this);
     this.loadRibbonIcon();
@@ -39072,21 +42089,16 @@ var Lineage = class extends import_obsidian45.Plugin {
   registerEvents() {
     registerFileMenuEvent(this);
     registerFilesMenuEvent(this);
-    registerFileRenameEvent(this);
-    registerFileDeleteEvent(this);
-    registerActiveLeafChange(this);
-    registerWorkspaceResize(this);
-    registerLayoutReady(this);
+    onVaultEvent(this);
+    onWorkspaceEvent(this);
   }
   registerTimeout(timeout) {
     this.timeoutReferences.add(timeout);
   }
-  registerEffects() {
-    removeStaleDocuments(this);
-  }
   registerPatches() {
     this.register(around(this.app.workspace, { setActiveLeaf }));
-    this.register(around(import_obsidian45.WorkspaceLeaf.prototype, { setViewState }));
+    const setViewState = createSetViewState(this);
+    this.register(around(import_obsidian41.WorkspaceLeaf.prototype, { setViewState }));
   }
   loadRibbonIcon() {
     this.addRibbonIcon(
@@ -39128,6 +42140,14 @@ lucide-svelte/dist/defaultAttributes.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-svelte/dist/icons/arrow-down-wide-narrow.svelte:
+  (**
+   * @license lucide-svelte v0.344.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-svelte/dist/icons/arrow-left.svelte:
   (**
    * @license lucide-svelte v0.344.0 - ISC
@@ -39137,6 +42157,14 @@ lucide-svelte/dist/icons/arrow-left.svelte:
    *)
 
 lucide-svelte/dist/icons/arrow-right.svelte:
+  (**
+   * @license lucide-svelte v0.344.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-svelte/dist/icons/arrow-up-narrow-wide.svelte:
   (**
    * @license lucide-svelte v0.344.0 - ISC
    *
@@ -39177,6 +42205,14 @@ lucide-svelte/dist/icons/clipboard-paste.svelte:
    *)
 
 lucide-svelte/dist/icons/clock.svelte:
+  (**
+   * @license lucide-svelte v0.344.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-svelte/dist/icons/copy.svelte:
   (**
    * @license lucide-svelte v0.344.0 - ISC
    *
@@ -39232,6 +42268,14 @@ lucide-svelte/dist/icons/file-symlink.svelte:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-svelte/dist/icons/file-text.svelte:
+  (**
+   * @license lucide-svelte v0.344.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-svelte/dist/icons/file-up.svelte:
   (**
    * @license lucide-svelte v0.344.0 - ISC
@@ -39241,6 +42285,14 @@ lucide-svelte/dist/icons/file-up.svelte:
    *)
 
 lucide-svelte/dist/icons/focus.svelte:
+  (**
+   * @license lucide-svelte v0.344.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-svelte/dist/icons/globe.svelte:
   (**
    * @license lucide-svelte v0.344.0 - ISC
    *
