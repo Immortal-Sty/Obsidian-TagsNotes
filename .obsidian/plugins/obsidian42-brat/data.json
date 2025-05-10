@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "Moyf/easy-copy",
     "open-spaced-repetition/obsidian-spaced-repetition-recall",
     "Yeban8090/book-smith",
     "Canna71/obsidian-janitor",
@@ -11,6 +12,10 @@
     "yan42685/obsidian-clever-search"
   ],
   "pluginSubListFrozenVersion": [
+    {
+      "repo": "Moyf/easy-copy",
+      "version": "latest"
+    },
     {
       "repo": "open-spaced-repetition/obsidian-spaced-repetition-recall",
       "version": "1.12.5.14"

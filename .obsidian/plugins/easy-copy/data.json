@@ -1,0 +1,16 @@
+{
+  "addToMenu": true,
+  "showNotice": false,
+  "useHeadingAsDisplayText": true,
+  "linkFormat": "markdown-link",
+  "customizeTargets": true,
+  "enableInlineCode": true,
+  "enableBold": false,
+  "enableHighlight": false,
+  "enableItalic": false,
+  "enableStrikethrough": false,
+  "enableInlineLatex": true,
+  "enableLink": false,
+  "autoAddBlockId": true,
+  "allowManualBlockId": false
+}
