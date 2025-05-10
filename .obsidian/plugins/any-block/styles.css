@@ -43,9 +43,9 @@
 
 html[data-theme=light] #app,
 html[data-theme=dark] #app {
-  --ab-tab-root-bg-color: var(--bg-color);
-  --ab-tab-root-bd-color: var(--border-color);
-  --ab-tab-root-tx-color: var(--text-color);
+  --ab-tab-root-bg-color: var(--vp-c-bg);
+  --ab-tab-root-bd-color: var(--vp-c-border);
+  --ab-tab-root-tx-color: var(--vp-c-text);
   --ab-bright-color: var(--vp-c-accent);
   --pre-background-color: var(--code-bg-color);
 }
@@ -86,8 +86,8 @@ html[data-theme=dark] #app {
   margin-bottom: 22px;
 }
 .app-container .markdown-source-view .ab-replace {
-  margin-top: -18px;
-  margin-bottom: -18px;
+  margin-top: -0.5em;
+  margin-bottom: -0.5em;
 }
 .app-container .markdown-source-view .block-language-anyblock > .ab-replace {
   margin-top: 0;
@@ -376,13 +376,14 @@ html[data-theme=dark] #app {
   border: none;
   vertical-align: top;
 }
-.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr > td:first-child > .ab-list-table-witharrow {
+.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr > td:first-child > div.ab-list-table-witharrow {
   padding: 0 !important;
   padding-right: 8px;
   padding-left: 20px;
   position: relative;
+  display: inline-block;
 }
-.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr > td:first-child > .ab-list-table-witharrow::before {
+.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr > td:first-child > div.ab-list-table-witharrow::before {
   border: solid 1px !important;
   background: none !important;
   width: 6px !important;
@@ -395,7 +396,7 @@ html[data-theme=dark] #app {
   content: "";
   border-radius: 50%;
 }
-.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr[tr_level="0"] > td:first-child > .ab-list-table-witharrow::before {
+.ab-note table.ab-list-table.ab-listtable-likelist .ab-foldable-tr[tr_level="0"] > td:first-child > div.ab-list-table-witharrow::before {
   border: 0 !important;
   background-color: currentColor !important;
   width: 6px !important;
@@ -428,10 +429,18 @@ html[data-theme=dark] #app {
   border-right: none;
   border-bottom: none;
 }
-.ab-note table.ab-list-table .ab-table-fold {
+.ab-note .ab-list-table-parent {
+  position: relative;
+}
+.ab-note .ab-list-table-parent .ab-table-fold {
   position: absolute;
   bottom: 0;
   right: 0;
+  background: none;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  padding: 2px 6px;
 }
 .ab-note table.ab-table-timeline td {
   border-right: none;

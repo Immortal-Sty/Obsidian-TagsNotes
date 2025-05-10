@@ -5778,6 +5778,7 @@ var createDefaultSearchCommand = () => ({
   allowFuzzySearchForSearchTarget: false,
   minFuzzyMatchScore: 0.5,
   targetExtensions: [],
+  includeCurrentFile: false,
   floating: false,
   showFrontMatter: false,
   excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5802,6 +5803,7 @@ var createDefaultLinkSearchCommand = () => ({
   allowFuzzySearchForSearchTarget: false,
   minFuzzyMatchScore: 0.5,
   targetExtensions: [],
+  includeCurrentFile: false,
   floating: false,
   showFrontMatter: false,
   excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5826,6 +5828,7 @@ var createDefaultBacklinkSearchCommand = () => ({
   allowFuzzySearchForSearchTarget: false,
   minFuzzyMatchScore: 0.5,
   targetExtensions: ["md"],
+  includeCurrentFile: false,
   floating: false,
   showFrontMatter: false,
   excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5850,6 +5853,7 @@ var createDefault2HopLinkSearchCommand = () => ({
   allowFuzzySearchForSearchTarget: false,
   minFuzzyMatchScore: 0.5,
   targetExtensions: [],
+  includeCurrentFile: false,
   floating: false,
   showFrontMatter: false,
   excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5881,6 +5885,7 @@ var createPreSettingSearchCommands = () => [
     allowFuzzySearchForSearchTarget: false,
     minFuzzyMatchScore: 0.5,
     targetExtensions: [],
+    includeCurrentFile: false,
     floating: false,
     showFrontMatter: false,
     excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5905,6 +5910,7 @@ var createPreSettingSearchCommands = () => [
     allowFuzzySearchForSearchTarget: false,
     minFuzzyMatchScore: 0.5,
     targetExtensions: [],
+    includeCurrentFile: false,
     floating: false,
     showFrontMatter: false,
     excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5935,6 +5941,7 @@ var createPreSettingSearchCommands = () => [
     allowFuzzySearchForSearchTarget: true,
     minFuzzyMatchScore: 0.5,
     targetExtensions: [],
+    includeCurrentFile: false,
     floating: false,
     showFrontMatter: false,
     excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5965,6 +5972,7 @@ var createPreSettingSearchCommands = () => [
     allowFuzzySearchForSearchTarget: false,
     minFuzzyMatchScore: 0.5,
     targetExtensions: [],
+    includeCurrentFile: false,
     floating: false,
     showFrontMatter: false,
     excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -5998,6 +6006,7 @@ var createPreSettingSearchCommands = () => [
     allowFuzzySearchForSearchTarget: false,
     minFuzzyMatchScore: 0.5,
     targetExtensions: [],
+    includeCurrentFile: false,
     floating: false,
     showFrontMatter: false,
     excludeFrontMatterKeys: createDefaultExcludeFrontMatterKeys(),
@@ -6542,6 +6551,11 @@ ${invalidValues.map((x) => `- ${x}`).join("\n")}
         command.targetExtensions = smartCommaSplit(value);
       })
     );
+    new import_obsidian3.Setting(div).setName("Include current file").addToggle((cb) => {
+      cb.setValue(command.includeCurrentFile).onChange(async (value) => {
+        command.includeCurrentFile = value;
+      });
+    });
     new import_obsidian3.Setting(div).setName("Floating").addToggle((cb) => {
       cb.setValue(command.floating).onChange(async (value) => {
         command.floating = value;
@@ -7187,7 +7201,7 @@ var AnotherQuickSwitcherModal = class _AnotherQuickSwitcherModal extends import_
     const originFilePath = (_a = this.originFile) == null ? void 0 : _a.path;
     let start = performance.now();
     const fileItems = this.app.vault.getFiles().filter(
-      (x) => x.path !== originFilePath && this.app.metadataCache.getFileCache(x)
+      (x) => (this.command.includeCurrentFile || x.path !== originFilePath) && this.app.metadataCache.getFileCache(x)
     ).map((x) => {
       var _a2, _b, _c, _d, _e, _f;
       const cache = this.app.metadataCache.getFileCache(x);
