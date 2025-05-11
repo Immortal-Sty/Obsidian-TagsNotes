@@ -17,7 +17,6 @@
   "vim-yank-highlight",
   "any-block",
   "attachment-management",
-  "code-styler",
   "datacore",
   "dataview",
   "clever-search",
@@ -40,5 +39,6 @@
   "easy-typing-obsidian",
   "better-plugins-manager",
   "obsidian-latex-suite",
-  "obsidian-linter"
+  "obsidian-linter",
+  "code-styler"
 ]
