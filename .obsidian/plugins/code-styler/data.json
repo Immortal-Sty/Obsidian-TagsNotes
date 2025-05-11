@@ -485,7 +485,7 @@
       },
       "inline": {
         "syntaxHighlight": true,
-        "style": true,
+        "style": false,
         "fontWeight": 4,
         "curvature": 6,
         "paddingVertical": 5,
@@ -598,7 +598,7 @@
   "decoratePrint": true,
   "excludedLanguages": "dataview,dataviewjs,datacore*",
   "externalReferenceUpdateOnLoad": false,
-  "processedCodeblocksWhitelist": "*",
+  "processedCodeblocksWhitelist": "python",
   "redirectLanguages": {},
   "version": "1.1.7"
 }
