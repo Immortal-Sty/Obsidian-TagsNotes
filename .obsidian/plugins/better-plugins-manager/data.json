@@ -227,7 +227,7 @@
         "style",
         "grammar"
       ],
-      "enabled": true,
+      "enabled": false,
       "delay": "delay",
       "note": ""
     },
@@ -1357,6 +1357,16 @@
       "group": "",
       "tags": [],
       "enabled": false,
+      "delay": "",
+      "note": ""
+    },
+    {
+      "id": "shiki-highlighter",
+      "name": "Shiki Highlighter",
+      "desc": "Highlight code blocks with Shiki.",
+      "group": "",
+      "tags": [],
+      "enabled": true,
       "delay": "",
       "note": ""
     }

@@ -1,0 +1,10 @@
+{
+  "disabledLanguages": [],
+  "customThemeFolder": "",
+  "customLanguageFolder": "",
+  "theme": "obsidian-theme",
+  "renderMode": "textarea",
+  "renderEngine": "shiki",
+  "preferThemeColors": true,
+  "inlineHighlighting": true
+}
