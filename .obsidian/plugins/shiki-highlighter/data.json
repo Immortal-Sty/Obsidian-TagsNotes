@@ -3,7 +3,7 @@
   "customThemeFolder": "",
   "customLanguageFolder": "",
   "theme": "obsidian-theme",
-  "renderMode": "textarea",
+  "renderMode": "pre",
   "renderEngine": "shiki",
   "preferThemeColors": true,
   "inlineHighlighting": true
