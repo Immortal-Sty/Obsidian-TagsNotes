@@ -1365,9 +1365,12 @@
       "name": "Shiki Highlighter",
       "desc": "Highlight code blocks with Shiki.",
       "group": "",
-      "tags": [],
+      "tags": [
+        "style",
+        "grammar"
+      ],
       "enabled": false,
-      "delay": "",
+      "delay": "delay",
       "note": ""
     }
   ],
