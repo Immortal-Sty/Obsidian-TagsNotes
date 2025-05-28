@@ -3,5 +3,6 @@
   "hmm": true,
   "dict": "",
   "moveByChineseWords": true,
-  "moveTillChinesePunctuation": true
+  "moveTillChinesePunctuation": true,
+  "moveTillChinesePinYin": true
 }
