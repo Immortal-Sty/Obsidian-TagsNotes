@@ -15,7 +15,8 @@
   "pluginSubListFrozenVersion": [
     {
       "repo": "LincZero/obsidian-shiki-plugin",
-      "version": "0.5.1"
+      "version": "0.5.1",
+      "token": ""
     },
     {
       "repo": "jiyee/cm-chs-patch",
