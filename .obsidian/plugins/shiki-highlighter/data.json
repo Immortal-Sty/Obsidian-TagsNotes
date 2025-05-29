@@ -2,7 +2,7 @@
   "disabledLanguages": [],
   "customThemeFolder": "",
   "customLanguageFolder": "",
-  "theme": "github-dark-high-contrast",
+  "theme": "gruvbox-dark-medium",
   "renderMode": "textarea",
   "renderEngine": "shiki",
   "saveMode": "onchange",
