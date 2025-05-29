@@ -2,7 +2,7 @@
   "disabledLanguages": [],
   "customThemeFolder": "",
   "customLanguageFolder": "",
-  "theme": "material-theme-darker",
+  "theme": "min-dark",
   "renderMode": "textarea",
   "renderEngine": "shiki",
   "saveMode": "onchange",
