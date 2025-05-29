@@ -19,8 +19,8 @@
       "replacement": "|addClass(ab-custom-text-red)|addClass(ab-custom-bg-blue)|"
     },
     {
-      "regex": "/^(?<prefix>:{4,} ?)code4(?<section>.+)$/",
-      "replacement": "/$<prefix>mdit2code|$<section>/"
+      "regex": "/code4(?<section>.+)$/",
+      "replacement": "/mdit2code|$<section>/"
     }
   ],
   "user_processor": [
