@@ -2,7 +2,7 @@
   "disabledLanguages": [],
   "customThemeFolder": "",
   "customLanguageFolder": "",
-  "theme": "github-dark-dimmed",
+  "theme": "github-dark-high-contrast",
   "renderMode": "textarea",
   "renderEngine": "shiki",
   "saveMode": "onchange",
