@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "any-block/any-block",
     "jiyee/cm-chs-patch",
     "Moyf/easy-copy",
     "open-spaced-repetition/obsidian-spaced-repetition-recall",
@@ -12,6 +13,10 @@
     "yan42685/obsidian-clever-search"
   ],
   "pluginSubListFrozenVersion": [
+    {
+      "repo": "any-block/any-block",
+      "version": "3.3.1-beta"
+    },
     {
       "repo": "jiyee/cm-chs-patch",
       "version": "latest"
