@@ -1,0 +1,11 @@
+{
+  "disabledLanguages": [],
+  "customThemeFolder": "",
+  "customLanguageFolder": "",
+  "theme": "dracula",
+  "renderMode": "textarea",
+  "renderEngine": "shiki",
+  "saveMode": "onchange",
+  "preferThemeColors": true,
+  "inlineHighlighting": true
+}
