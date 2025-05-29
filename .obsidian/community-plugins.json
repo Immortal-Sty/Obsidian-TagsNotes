@@ -1,4 +1,5 @@
 [
   "better-plugins-manager",
-  "cm-chs-patch"
+  "cm-chs-patch",
+  "shiki-highlighter"
 ]

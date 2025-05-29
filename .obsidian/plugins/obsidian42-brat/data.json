@@ -1,7 +1,7 @@
 {
   "pluginList": [
-    "jiyee/cm-chs-patch",
     "LincZero/obsidian-shiki-plugin",
+    "jiyee/cm-chs-patch",
     "Moyf/easy-copy",
     "open-spaced-repetition/obsidian-spaced-repetition-recall",
     "Yeban8090/book-smith",
@@ -14,12 +14,12 @@
   ],
   "pluginSubListFrozenVersion": [
     {
-      "repo": "jiyee/cm-chs-patch",
-      "version": "latest"
-    },
-    {
       "repo": "LincZero/obsidian-shiki-plugin",
       "version": "0.5.1"
+    },
+    {
+      "repo": "jiyee/cm-chs-patch",
+      "version": "latest"
     },
     {
       "repo": "Moyf/easy-copy",

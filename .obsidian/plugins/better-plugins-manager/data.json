@@ -227,7 +227,7 @@
         "style",
         "grammar"
       ],
-      "enabled": true,
+      "enabled": false,
       "delay": "delay",
       "note": ""
     },
@@ -1369,7 +1369,7 @@
         "style",
         "grammar"
       ],
-      "enabled": false,
+      "enabled": true,
       "delay": "delay",
       "note": ""
     }
