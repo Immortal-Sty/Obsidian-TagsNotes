@@ -1,6 +1,5 @@
 {
   "pluginList": [
-    "LincZero/obsidian-shiki-plugin",
     "jiyee/cm-chs-patch",
     "Moyf/easy-copy",
     "open-spaced-repetition/obsidian-spaced-repetition-recall",
@@ -13,11 +12,6 @@
     "yan42685/obsidian-clever-search"
   ],
   "pluginSubListFrozenVersion": [
-    {
-      "repo": "LincZero/obsidian-shiki-plugin",
-      "version": "0.5.1",
-      "token": ""
-    },
     {
       "repo": "jiyee/cm-chs-patch",
       "version": "latest"
