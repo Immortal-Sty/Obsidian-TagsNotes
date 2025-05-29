@@ -20,7 +20,7 @@
     },
     {
       "regex": "/^(?<prefix>:{4,} ?)code4(?<section>.+)$/",
-      "replacement": "$<prefix>mdit2code|$<section>"
+      "replacement": "/$<prefix>mdit2code|$<section>/"
     }
   ],
   "user_processor": [
