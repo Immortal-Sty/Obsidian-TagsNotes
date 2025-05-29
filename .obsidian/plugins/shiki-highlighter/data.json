@@ -2,7 +2,7 @@
   "disabledLanguages": [],
   "customThemeFolder": "",
   "customLanguageFolder": "",
-  "theme": "dracula",
+  "theme": "github-dark-dimmed",
   "renderMode": "textarea",
   "renderEngine": "shiki",
   "saveMode": "onchange",
