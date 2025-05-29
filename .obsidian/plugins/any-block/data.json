@@ -25,8 +25,15 @@
       "name": "alias2_demo",
       "match": "alias2_demo",
       "process_alias": "|addClass(ab-custom-text-blue)|addClass(ab-custom-bg-red)|"
+    },
+    {
+      "id": "byCode",
+      "name": "byCode",
+      "match": "/code4(?<section>.*)$/",
+      "process_alias": "/mdit2code|${section}/"
     }
   ],
   "is_debug": false,
+  "enhance_refresh_time": 2000,
   "inline_split": "/\\| |,  |， |\\.  |。 |:  |： /"
 }
