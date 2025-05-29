@@ -17,6 +17,10 @@
     {
       "regex": "/\\|alias_reg_demo\\|/",
       "replacement": "|addClass(ab-custom-text-red)|addClass(ab-custom-bg-blue)|"
+    },
+    {
+      "regex": "/^(?<prefix>:{4,} ?)code4(?<section>.+)$/",
+      "replacement": "$<prefix>mdit2code|$<section>"
     }
   ],
   "user_processor": [
@@ -25,12 +29,6 @@
       "name": "alias2_demo",
       "match": "alias2_demo",
       "process_alias": "|addClass(ab-custom-text-blue)|addClass(ab-custom-bg-red)|"
-    },
-    {
-      "id": "byCode",
-      "name": "byCode",
-      "match": "/code4(?<section>.*)$/",
-      "process_alias": "/mdit2code|${section}/"
     }
   ],
   "is_debug": false,
