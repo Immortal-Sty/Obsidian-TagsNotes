@@ -1,8 +1,8 @@
-/******************/
-/* 表格内行号变窄 */
-/******************/
+/********************/
+/* 表格编辑行号变窄 */
+/********************/
 
-table .cm-gutters {
+table div.cm-gutters {
 	margin-inline-end: 0 !important;
 }
 
@@ -47,7 +47,7 @@ body.theme-light {
 	/* 表格按钮颜色 */
 	--table-btn-color: #fff;
 	/* 表格按钮背景色 */
-	--table-btn-bg: #fff;
+	--table-btn-bg: #aed7ff;
 	/* 表格头背景色 */
 	--table-header-bg: #f4f4f4;
 	/* 表格隔行背景色 */
@@ -56,6 +56,8 @@ body.theme-light {
 	--animation: 200ms var(--anim-motion-smooth);
 }
 
+/* 合并表格单元格 */
+.ab-note table.ab-table,
 .markdown-rendered table {
 	border-collapse: initial;
 	border-spacing: 0;
@@ -88,14 +90,21 @@ body.theme-light {
 	--table-drag-handle-color: var(--table-btn-color);
 }
 
+/* TODO */
+.markdown-rendered table:not(:has(thead)) tr:first-of-type {
+	background-color: var(--table-btn-bg);
+}
+
 :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) :is(tr:hover .table-row-drag-handle, th:hover .table-col-drag-handle) {
 	opacity: 1;
 }
 
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) th:first-child:not(:has(:is(.table-row-drag-handle, .table-col-drag-handle):hover)) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) th:first-child:not(:has(:is(.table-row-drag-handle, .table-col-drag-handle):hover)),
+.markdown-rendered table:not(:has(thead)) tr:first-child td:first-child:not(:has(:is(.table-row-drag-handle, .table-col-drag-handle):hover)) {
 	border-top-left-radius: var(--table-radius);
 }
 
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(:has(thead))) tr:first-of-type td:last-of-type,
 :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) th:last-child:not(:has(.table-col-drag-handle:hover)) {
 	border-top-right-radius: var(--table-radius);
 }
@@ -124,18 +133,23 @@ body.theme-light {
 	border-left: 0;
 }
 
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody td {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:not(:has(thead))) tbody tr:not(:first-of-type) td,
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:has(thead)) tbody td {
 	border-top: 0;
 }
 
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered) table:not(:has(thead)) tr:first-of-type,
 :is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) thead tr {
 	background-color: var(--table-header-bg);
+	font-weight: bold;
 }
 
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody tr:nth-of-type(2n) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered) table:not(:has(thead)) tbody tr:nth-of-type(2n+1),
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:has(thead)) tbody tr:nth-of-type(2n) {
 	background-color: var(--table-alt-line-bg);
 }
 
-:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table) tbody tr:nth-of-type(2n+1) {
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered) table:not(:has(thead)) tbody tr:nth-of-type(2n),
+:is(.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper, .markdown-rendered table:has(thead)) tbody tr:nth-of-type(2n+1) {
 	background-color: var(--background-primary);
 }
