@@ -390,5 +390,13 @@
   ],
   "various-complements:add-word-custom-dictionary": [],
   "various-complements:reload-custom-dictionaries": [],
-  "various-complements:show-suggestions": []
+  "various-complements:show-suggestions": [],
+  "vimium:show-markers": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "B"
+    }
+  ]
 }
