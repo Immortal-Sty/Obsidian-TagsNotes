@@ -1372,6 +1372,16 @@
       "enabled": true,
       "delay": "delay",
       "note": ""
+    },
+    {
+      "id": "vimium",
+      "name": "Vimium",
+      "desc": "Interact with elements using keyboard shortcuts in the spirit of Vim",
+      "group": "",
+      "tags": [],
+      "enabled": true,
+      "delay": "",
+      "note": ""
     }
   ],
   "HIDES": []
