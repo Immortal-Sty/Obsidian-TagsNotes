@@ -1,5 +1,6 @@
 " 复制到系统剪贴板
 vnoremap 'y \"+y
+nnoremap 'y \"+y
 nnoremap 'Y \"+Y
 
 " ; 和 : 功能交换
