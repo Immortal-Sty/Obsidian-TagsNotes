@@ -1215,7 +1215,7 @@
       "tags": [
         "style"
       ],
-      "enabled": true,
+      "enabled": false,
       "delay": "delay",
       "note": ""
     },

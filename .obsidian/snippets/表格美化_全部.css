@@ -2,7 +2,7 @@
 /* 表格编辑行号变窄 */
 /********************/
 
-table div.cm-gutters {
+.markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper table div.cm-gutters {
 	margin-inline-end: 0 !important;
 }
 
@@ -10,7 +10,7 @@ table div.cm-gutters {
 /* 表格垂直居中 */
 /****************/
 
-td {
+.markdown-rendered table td {
 	vertical-align: middle !important;
 }
 
@@ -56,7 +56,7 @@ body.theme-light {
 	--animation: 200ms var(--anim-motion-smooth);
 }
 
-/* 合并表格单元格 */
+/* 合并表格单元格边框 */
 .ab-note table.ab-table,
 .markdown-rendered table {
 	border-collapse: initial;
