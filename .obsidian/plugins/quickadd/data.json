@@ -167,6 +167,13 @@
       "type": "Macro",
       "command": false,
       "macroId": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83"
+    },
+    {
+      "id": "0a307652-81b0-4cfa-9ed7-a85e0ec2dd2d",
+      "name": "Search Folder to Focus",
+      "type": "Macro",
+      "command": true,
+      "macroId": "291d3eb9-2264-4b56-b7b8-f1571ad805e1"
     }
   ],
   "macros": [
@@ -404,6 +411,20 @@
           "settings": {
             "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
           }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Search Folder to Focus",
+      "id": "291d3eb9-2264-4b56-b7b8-f1571ad805e1",
+      "commands": [
+        {
+          "name": "Search Folder",
+          "type": "UserScript",
+          "id": "ff010a26-3b56-4d04-b0d8-4773e937a87a",
+          "path": "Attachment/Quickadd/Search Folder.js",
+          "settings": {}
         }
       ],
       "runOnStartup": false
