@@ -3,5 +3,9 @@
   "any-block",
   "vimium",
   "obsidian-vimrc-support",
-  "smart-composer"
+  "smart-composer",
+  "obsidian-git",
+  "pdf-plus",
+  "quickadd",
+  "templater-obsidian"
 ]

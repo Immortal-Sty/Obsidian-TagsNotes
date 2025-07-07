@@ -445,6 +445,7 @@ var PTreeTraverser = class {
 
 // src/settings.ts
 var import_obsidian = require("obsidian");
+var VALID_DEFINITION_FILE_TYPES = [".md"];
 var DEFAULT_DEF_FOLDER = "definitions";
 var DEFAULT_SETTINGS = {
   enableInReadingView: true,
@@ -962,15 +963,15 @@ var AtomicDefParser = class extends BaseDefParser {
 };
 
 // src/core/consolidated-def-parser.ts
+var EOF = "";
 var ConsolidatedDefParser = class extends BaseDefParser {
   constructor(app, file, parseSettings) {
     super(parseSettings);
     this.app = app;
     this.file = file;
     this.parseSettings = parseSettings ? parseSettings : this.getParseSettings();
-    this.defBuffer = {};
-    this.inDefinition = false;
-    this.definitions = [];
+    this.fileContent = "";
+    this.currLine = 0;
   }
   async parseFile(fileContent) {
     if (!fileContent) {
@@ -986,115 +987,138 @@ var ConsolidatedDefParser = class extends BaseDefParser {
   // Parse from string, no dependency on App
   // For ease of testing
   directParseFile(fileContent) {
-    const lines = fileContent.split(/\r?\n/);
-    this.currLine = -1;
-    for (const line of lines) {
-      this.currLine++;
-      if (this.isEndOfBlock(line)) {
-        if (this.bufferValid()) {
-          this.commitDefBuffer();
-        }
-        this.startNewBlock();
-        continue;
-      }
-      if (this.inDefinition) {
-        this.defBuffer.definition += line + "\n";
-        continue;
-      }
-      if (line == "") {
-        continue;
-      }
-      if (this.isWordDeclaration(line)) {
-        let from = this.currLine;
-        this.defBuffer.filePosition = {
-          from
-        };
-        this.defBuffer.word = this.extractWordDeclaration(line);
-        continue;
-      }
-      if (this.isAliasDeclaration(line)) {
-        this.defBuffer.aliases = this.extractAliases(line);
-        continue;
-      }
-      this.inDefinition = true;
-      this.defBuffer.definition = line + "\n";
-    }
-    this.currLine++;
-    if (this.bufferValid()) {
-      this.commitDefBuffer();
-    }
-    return this.definitions;
+    this.fileContent = fileContent;
+    this.currLine = 0;
+    this.cursor = 0;
+    const doc = this.parseDoc();
+    return doc.blocks.map((blk) => this.defBlockToDefinition(blk));
   }
-  commitDefBuffer() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i;
-    const aliases = (_a = this.defBuffer.aliases) != null ? _a : [];
-    this.defBuffer.aliases = aliases.concat(this.calculatePlurals([(_b = this.defBuffer.word) != null ? _b : ""].concat(aliases)));
-    const definition = ((_c = this.defBuffer.definition) != null ? _c : "").trim();
-    this.definitions.push({
-      key: (_e = (_d = this.defBuffer.word) == null ? void 0 : _d.toLowerCase()) != null ? _e : "",
-      word: (_f = this.defBuffer.word) != null ? _f : "",
-      aliases: (_g = this.defBuffer.aliases) != null ? _g : [],
-      definition,
+  parseDoc() {
+    const blocks = [];
+    while (this.cursor < this.fileContent.length) {
+      blocks.push(this.parseDefBlock());
+    }
+    return {
+      blocks
+    };
+  }
+  parseDefBlock() {
+    const posStart = this.currLine;
+    let header = this.parseHeader();
+    let aliases = this.parseAliases();
+    let def = this.parseDef();
+    const posEnd = this.currLine - 1;
+    return {
+      header,
+      aliases,
+      body: def,
+      position: {
+        from: posStart,
+        to: posEnd
+      }
+    };
+  }
+  parseHeader() {
+    let h;
+    do {
+      h = this.consumeChar();
+    } while (h == "\n");
+    if (h != "#") {
+      throw new Error(`Parse Header for ${this.file.path}: Unexpected character '${h}', expected '#'`);
+    }
+    let s = this.consumeChar();
+    if (s != " ") {
+      throw new Error(`Parse Header for ${this.file.path}: Unexpected character '${s}', expected SPACE`);
+    }
+    let header = [];
+    while (true) {
+      let c = this.consumeChar();
+      if (c == "\n") {
+        break;
+      }
+      header.push(c);
+    }
+    return header.join("");
+  }
+  parseAliases() {
+    let asterisk;
+    do {
+      asterisk = this.consumeChar();
+    } while (asterisk == "\n");
+    if (asterisk != "*") {
+      this.spitChar();
+      return [];
+    }
+    let aliasStart = this.cursor;
+    let aliasEnd = aliasStart;
+    while (true) {
+      let c = this.consumeChar();
+      if (c == "\n") {
+        this.cursor = aliasStart - 1;
+        return [];
+      }
+      if (c == "*") {
+        break;
+      }
+      aliasEnd++;
+    }
+    let aliasStr = this.fileContent.slice(aliasStart, aliasEnd);
+    const aliases = aliasStr.split(/[,|]/);
+    while (this.consumeChar() != "\n") {
+    }
+    return aliases.map((alias) => alias.trim());
+  }
+  parseDef() {
+    let defStr = "";
+    while (true) {
+      let c = this.consumeChar();
+      if (c === EOF) {
+        return defStr;
+      }
+      defStr += c;
+      if (defStr.length >= 5) {
+        if (this.checkDelimiter(defStr.slice(defStr.length - 5))) {
+          return defStr.slice(0, defStr.length - 5);
+        }
+      }
+    }
+  }
+  checkDelimiter(d) {
+    return d === "\n---\n" || d === "\n___\n";
+  }
+  // For backtracking, used for optional grammars rules
+  spitChar(count) {
+    if (!count) {
+      count = 1;
+    }
+    for (let i = 0; i < count; i++) {
+      this.cursor--;
+    }
+  }
+  consumeChar() {
+    if (this.cursor >= this.fileContent.length) {
+      return EOF;
+    }
+    const c = this.fileContent[this.cursor++];
+    if (c === "\n") {
+      this.currLine++;
+    }
+    return c;
+  }
+  defBlockToDefinition(blk) {
+    return {
+      key: blk.header.toLowerCase(),
+      word: blk.header,
+      aliases: blk.aliases.concat(this.calculatePlurals([blk.header].concat(blk.aliases))),
+      definition: blk.body.trim(),
       file: this.file,
-      linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
+      linkText: `${this.file.path}${blk.header ? "#" + blk.header : ""}`,
       fileType: "consolidated" /* Consolidated */,
       position: {
-        from: (_i = (_h = this.defBuffer.filePosition) == null ? void 0 : _h.from) != null ? _i : 0,
-        to: this.currLine - 1
+        from: blk.position.from,
+        to: blk.position.to
       }
-    });
-    if (this.defBuffer.aliases && this.defBuffer.aliases.length > 0) {
-      this.defBuffer.aliases.forEach((alias) => {
-        var _a2, _b2, _c2, _d2;
-        this.definitions.push({
-          key: alias.toLowerCase(),
-          word: (_a2 = this.defBuffer.word) != null ? _a2 : "",
-          aliases: (_b2 = this.defBuffer.aliases) != null ? _b2 : [],
-          definition,
-          file: this.file,
-          linkText: `${this.file.path}${this.defBuffer.word ? "#" + this.defBuffer.word : ""}`,
-          fileType: "consolidated" /* Consolidated */,
-          position: {
-            from: (_d2 = (_c2 = this.defBuffer.filePosition) == null ? void 0 : _c2.from) != null ? _d2 : 0,
-            to: this.currLine - 1
-          }
-        });
-      });
-    }
-    this.defBuffer = {};
-  }
-  bufferValid() {
-    return !!this.defBuffer.word;
-  }
-  isEndOfBlock(line) {
-    if (this.parseSettings.divider.dash && line.startsWith("---")) {
-      return true;
-    }
-    return this.parseSettings.divider.underscore && line.startsWith("___");
-  }
-  isAliasDeclaration(line) {
-    line = line.trimEnd();
-    return !!this.defBuffer.word && line.startsWith("*") && line.endsWith("*");
-  }
-  extractAliases(line) {
-    {
-      line = line.trimEnd().replace(/\*+/g, "");
-      const aliases = line.split(/[,|]/);
-      return aliases.map((alias) => alias.trim());
-    }
-  }
-  isWordDeclaration(line) {
-    return line.startsWith("# ");
-  }
-  extractWordDeclaration(line) {
-    const sepLine = line.split(" ");
-    if (sepLine.length <= 1) {
-      return "";
-    }
-    return sepLine.slice(1).join(" ");
-  }
-  startNewBlock() {
-    this.inDefinition = false;
+    };
   }
 };
 
@@ -1108,7 +1132,7 @@ var FileParser = class {
   // Optional argument used when file cache may not be updated
   // and we know the new contents of the file
   async parseFile(fileContent) {
-    this.defFileType = this.getDefFileType();
+    this.defFileType = await this.getDefFileType();
     switch (this.defFileType) {
       case "consolidated" /* Consolidated */:
         const defParser = new ConsolidatedDefParser(this.app, this.file);
@@ -1118,9 +1142,16 @@ var FileParser = class {
         return atomicParser.parseFile(fileContent);
     }
   }
-  getDefFileType() {
+  async getDefFileType() {
     var _a;
-    const fileCache = this.app.metadataCache.getFileCache(this.file);
+    let fileCache = null;
+    const retry = useRetry();
+    await retry.exec(() => {
+      fileCache = this.app.metadataCache.getFileCache(this.file);
+      if (!fileCache) {
+        retry.setShouldRetry();
+      }
+    });
     const fmFileType = (_a = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a[DEF_TYPE_FM];
     if (fmFileType && (fmFileType === "consolidated" /* Consolidated */ || fmFileType === "atomic" /* Atomic */)) {
       return fmFileType;
@@ -1260,7 +1291,7 @@ var DefManager = class {
     });
   }
   isDefFile(file) {
-    return file.path.startsWith(this.getGlobalDefFolder());
+    return file.path.startsWith(this.getGlobalDefFolder()) && VALID_DEFINITION_FILE_TYPES.some((ext) => file.path.endsWith(ext));
   }
   reset() {
     this.globalPrefixTree = new PTreeNode();
@@ -1356,7 +1387,7 @@ var DefManager = class {
       if (f instanceof import_obsidian3.TFolder) {
         let defs = await this.parseFolder(f);
         definitions.push(...defs);
-      } else if (f instanceof import_obsidian3.TFile) {
+      } else if (f instanceof import_obsidian3.TFile && this.isDefFile(f)) {
         let defs = await this.parseFile(f);
         definitions.push(...defs);
       }
@@ -1871,7 +1902,7 @@ var FileExplorerDecoration = class {
       try {
         this.exec();
       } catch (e) {
-        logError(e);
+        logDebug(e);
         this.retryCount++;
         await sleep(RETRY_INTERVAL2);
         continue;
@@ -1881,6 +1912,9 @@ var FileExplorerDecoration = class {
   }
   exec() {
     const fileExplorer = this.app.workspace.getLeavesOfType("file-explorer")[0];
+    if (!fileExplorer) {
+      throw new Error("app.workspace.getLeavesOfType('file-explorer') returned undefined (file explorer may not be available in view yet)");
+    }
     const fileExpView = fileExplorer.view;
     const settings = getSettings();
     Object.keys(fileExpView.fileItems).forEach((k) => {
@@ -1896,7 +1930,7 @@ var FileExplorerDecoration = class {
       if (!fileExpView.fileItems[defFolder]) {
         return;
       }
-      if (k.startsWith(defFolder)) {
+      if (k.startsWith(defFolder) && VALID_DEFINITION_FILE_TYPES.some((ext) => k.endsWith(ext))) {
         this.tagFile(fileExpView, k, "DEF");
       }
     });
@@ -2068,9 +2102,12 @@ var DefFileUpdater = class {
   }
   replaceDefinition(position, def, lines) {
     const before = lines.slice(0, position.from);
-    const after = lines.slice(position.to + 1);
+    const after = lines.slice(position.to);
     const newLines = this.constructLinesFromDef(def);
-    return before.concat(newLines, after);
+    return before.concat(newLines, this.isSeparator(lines[position.to]) ? after : []);
+  }
+  isSeparator(line) {
+    return line === "---" || line === "___";
   }
   constructLinesFromDef(def) {
     const lines = [`# ${def.word}`];

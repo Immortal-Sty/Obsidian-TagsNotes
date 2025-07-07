@@ -277,7 +277,8 @@ var path3 = __toESM(require("path"));
 // src/config.ts
 var ATTACHMENT_URL_REGEXP = /!\[\[((.*?)\.(\w+))(?:\s*\|\s*(?<width>\d+)\s*(?:[*|x]\s*(?<height>\d+))?)?\]\]/g;
 var MARKDOWN_ATTACHMENT_URL_REGEXP = /!\[(.*?)\]\(((.*?)\.(\w+))\)/g;
-var EMBED_URL_REGEXP = /!\[\[(.*?)\]\]/g;
+var EMBED_URL_REGEXP = /!\[\[([\s\S]*?)\]\]/g;
+var EMBED_METADATA_REGEXP = /^---(?:\n|\r\n)[\s\S]*?(?:\n|\r\n)---(?:\n|\r\n)?/;
 var GFM_IMAGE_FORMAT = "![]({0})";
 var OUTGOING_LINK_REGEXP = /(?<!!)\[\[(.*?)\]\]/g;
 var DEFAULT_SETTINGS = {
@@ -290,7 +291,9 @@ var DEFAULT_SETTINGS = {
   includeFileName: false,
   customFileName: "",
   customAttachPath: "",
-  relAttachPath: true
+  relAttachPath: true,
+  convertWikiLinksToMarkdown: false,
+  removeYamlHeader: false
 };
 
 // src/utils.ts
@@ -472,6 +475,9 @@ async function getEmbedMap(plugin, content, path4) {
     const embedContentHtml = el.getElementsByClassName("markdown-embed-content")[0];
     if (embedContentHtml) {
       let embedValue = (0, import_obsidian2.htmlToMarkdown)(embedContentHtml.innerHTML);
+      if (plugin.settings.removeYamlHeader) {
+        embedValue = embedValue.replace(EMBED_METADATA_REGEXP, "");
+      }
       embedValue = "> " + embedValue.replaceAll("# \n\n", "# ").replaceAll("\n", "\n> ");
       const embedKey = el.getAttribute("src");
       embedMap.set(embedKey, embedValue);
@@ -514,6 +520,12 @@ async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath
       }
       if (plugin.settings.removeOutgoingLinkBrackets) {
         content = content.replaceAll(OUTGOING_LINK_REGEXP, "$1");
+      }
+      if (plugin.settings.convertWikiLinksToMarkdown) {
+        content = content.replace(/\[\[(.*?)\]\]/g, (match, linkText) => {
+          const encodedLink = encodeURIComponent(linkText);
+          return `[${linkText}](${encodedLink})`;
+        });
       }
       const cfile = plugin.app.workspace.getActiveFile();
       if (cfile != void 0) {
@@ -658,6 +670,14 @@ var MarkdownExportSettingTab = class extends import_obsidian3.PluginSettingTab {
     }));
     new import_obsidian3.Setting(containerEl).setName("Set Attachment Path as Relative").setDesc("If enabled, the attachment path will be relative to the output.").addToggle((toggle) => toggle.setValue(this.plugin.settings.relAttachPath).onChange(async (value) => {
       this.plugin.settings.relAttachPath = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Convert WikiLinks to Markdown").setDesc("Automatically convert WikiLink style links to Markdown links").addToggle((toggle) => toggle.setValue(this.plugin.settings.convertWikiLinksToMarkdown).onChange(async (value) => {
+      this.plugin.settings.convertWikiLinksToMarkdown = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian3.Setting(containerEl).setName("Remove YAML Metadata Header").setDesc("If enabled, the YAML metadata header will be removed from embedded files when exporting.").addToggle((toggle) => toggle.setValue(this.plugin.settings.removeYamlHeader).onChange(async (value) => {
+      this.plugin.settings.removeYamlHeader = value;
       await this.plugin.saveSettings();
     }));
   }

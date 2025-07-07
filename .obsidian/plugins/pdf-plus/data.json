@@ -320,5 +320,7 @@
   "vimSmoothOutlineMode": true,
   "vimHintChars": "hjklasdfgyuiopqwertnmzxcvb",
   "vimHintArgs": "all",
-  "PATH": ""
+  "PATH": "",
+  "autoCheckForUpdates": false,
+  "fixObsidianTextSelectionBug": true
 }

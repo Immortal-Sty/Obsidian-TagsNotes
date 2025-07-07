@@ -83,7 +83,7 @@ function HeadingPlugin(settings, app) {
       updateStickyDom() {
         const dom = document.createElement("div");
         dom.classList.add(`${OBSIDIAN_STICKY_HEADING_CLASS}_inner`);
-        this.headings.forEach(([level, text]) => {
+        this.headings.forEach(([level, text, line]) => {
           const header = document.createElement("div");
           header.classList.add("HyperMD-header", `HyperMD-header-${level}`);
           const headerContent = document.createElement("div");
@@ -98,6 +98,9 @@ function HeadingPlugin(settings, app) {
           headerContent.appendChild(textDom);
           header.appendChild(headerContent);
           dom.appendChild(header);
+          header.addEventListener("click", () => {
+            this.view.dispatch({ effects: import_view.EditorView.scrollIntoView(this.view.state.doc.line(line).from) });
+          });
         });
         this.stickyDom.replaceChildren(dom);
       }
@@ -146,7 +149,8 @@ function HeadingPlugin(settings, app) {
               if (regExpExecArray) {
                 const level = Number(regExpExecArray[1]);
                 const text = view.state.sliceDoc(node.from, node.to).trim();
-                headerOutViewList.unshift([level, text]);
+                const line = view.state.doc.lineAt(node.from).number;
+                headerOutViewList.unshift([level, text, line]);
               }
             }
           });
@@ -224,3 +228,5 @@ var StickyHeadingPlugin = class extends import_obsidian3.Plugin {
     await this.saveData(this.settings);
   }
 };
+
+/* nosourcemap */
