@@ -21144,21 +21144,18 @@ var abc_fold = ABConvert.factory({
 var abc_scroll = ABConvert.factory({
   id: "scroll",
   name: "\u6EDA\u52A8",
-  match: /^scroll(\((\d+)\))?(T)?$/,
+  match: /^scroll(X)?(\((\d+)\))?$/,
   default: "scroll(460)",
+  detail: "\u9ED8\u8BA4\u662F\u7EB5\u5411\u6EDA\u52A8\u3002\u53EF\u4EE5\u6307\u5B9A\u6EA2\u51FA\u6EDA\u52A8\u7684\u8303\u56F4\uFF0C\u53EF\u4EE5\u4F7F\u7528scrollX\u8FDB\u884C\u6A2A\u5411\u6EDA\u52A8",
   process_param: "HTMLElement" /* el */,
   process_return: "HTMLElement" /* el */,
   process: (el, header, content) => {
-    const matchs = header.match(/^scroll(\((\d+)\))?(T)?$/);
+    const matchs = header.match(/^scroll(X)?(\((\d+)\))?$/);
     if (!matchs)
       return content;
-    let arg1;
-    if (!matchs[1])
-      arg1 = 460;
-    else {
-      if (!matchs[2])
-        return content;
-      arg1 = Number(matchs[2]);
+    let arg1 = 0;
+    if (matchs[2] && matchs[3]) {
+      arg1 = Number(matchs[3]);
       if (isNaN(arg1))
         return content;
     }
@@ -21169,13 +21166,14 @@ var abc_scroll = ABConvert.factory({
     const mid_el = document.createElement("div");
     content.appendChild(mid_el);
     mid_el.classList.add("ab-deco-scroll");
-    if (!matchs[3]) {
+    mid_el.appendChild(sub_el);
+    if (!matchs[1]) {
       mid_el.classList.add("ab-deco-scroll-y");
-      mid_el.setAttribute("style", `max-height: ${arg1}px`);
+      mid_el.setAttribute("style", `max-height: ${arg1 !== 0 ? arg1 + "px" : "460px"}`);
     } else {
       mid_el.classList.add("ab-deco-scroll-x");
+      mid_el.setAttribute("style", `max-height: ${arg1 !== 0 ? arg1 + "px" : "100%"}`);
     }
-    mid_el.appendChild(sub_el);
     return content;
   }
 });
@@ -21735,10 +21733,9 @@ var abc_faq = ABConvert.factory({
     return el;
   }
 });
-var abc_info = ABConvert.factory({
-  id: "info",
+var abc_info_converter = ABConvert.factory({
+  id: "info_converter",
   name: "INFO",
-  match: "info",
   detail: "\u67E5\u770B\u5F53\u524D\u8F6F\u4EF6\u7248\u672C\u4E0B\u7684\u6CE8\u518C\u5904\u7406\u5668\u8868",
   process_param: "string" /* text */,
   process_return: "HTMLElement" /* el */,
@@ -22173,11 +22170,6 @@ function list2ActivityDiagramText(listdata) {
   let result = "@startuml\n";
   const stats = listdata.map((item) => new Stat(item.content.trim(), item.level));
   const { result: bodyResult } = processBlock(stats, 0, -1);
-  const swimLanes = bodyResult.split("\n").filter((line) => line.startsWith("|") && line.endsWith("|"));
-  if (swimLanes.length > 0) {
-    result += swimLanes.join("\n");
-    result += "\n";
-  }
   result += bodyResult;
   result += "@enduml";
   return result;
@@ -48966,18 +48958,18 @@ var ABSettingTab = class extends import_obsidian2.PluginSettingTab {
           await this.plugin.saveSettings();
           this.processorPanel.remove();
           const div2 = containerEl.createEl("div");
-          ABConvertManager.autoABConvert(div2, "info", "", "null_content");
+          ABConvertManager.autoABConvert(div2, "info_converter", "", "null_content");
           this.processorPanel = div2;
         }).open();
       });
     });
     containerEl.createEl("hr", { attr: { "style": "border-color:#9999ff" } });
     containerEl.createEl("h2", { text: "Convertor Manager (\u8F6C\u6362\u5668\u7684\u7BA1\u7406)" });
-    containerEl.createEl("p", { text: "It can also be viewed in the main page using the `[info]` processor (\u8FD9\u90E8\u5206\u5185\u5BB9\u4E5F\u53EF\u4EE5\u4F7F\u7528 `[info]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B)" });
+    containerEl.createEl("p", { text: "It can also be viewed in the main page using the `[info_converter]` processor (\u8FD9\u90E8\u5206\u5185\u5BB9\u4E5F\u53EF\u4EE5\u4F7F\u7528 `[info_converter]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B)" });
     containerEl.createEl("p", { text: "This section is for query only and cannot be edited (\u8FD9\u4E00\u90E8\u5206\u4EC5\u4F9B\u67E5\u8BE2\u4E0D\u53EF\u7F16\u8F91)" });
     containerEl.createEl("p", { text: "" });
     const div = containerEl.createEl("div");
-    ABConvertManager.autoABConvert(div, "info", "", "null_content");
+    ABConvertManager.autoABConvert(div, "info_converter", "", "null_content");
     this.processorPanel = div;
   }
 };
@@ -49140,7 +49132,9 @@ var ABStateManager = class {
         clearInterval(global_timer);
         global_timer = null;
       }
-      if (plugin_this.settings.enhance_refresh_time < 1e3) {
+      if (plugin_this.settings.enhance_refresh_time > 0) {
+        if (plugin_this.settings.enhance_refresh_time < 1e3)
+          plugin_this.settings.enhance_refresh_time = 1e3;
         global_timer = setInterval(() => {
           if (plugin_this.settings.is_debug)
             console.log("    auto refresh event:", this.initialFileName);
@@ -49284,7 +49278,7 @@ var ABStateManager = class {
       });
     }
     if (this.plugin_this.settings.is_debug)
-      console.log(`ab cm \u88C5\u9970\u96C6\u53D8\u5316: ${debug_count1}-${debug_count2}+${debug_count3}+${debug_count4}`);
+      console.log(`ab cm \u88C5\u9970\u96C6\u53D8\u5316: ${debug_count1} -${debug_count2}+${debug_count3}+${debug_count4}`);
     this.is_prev_cursor_in = is_current_cursor_in;
     this.prev_decoration_mode = decoration_mode;
     this.prev_editor_mode = editor_mode;
@@ -49475,9 +49469,21 @@ var ABSelector_PostHtml = class {
       (() => {
         const view = this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
         const path = view == null ? void 0 : view.file.path;
+        const containerEl = view == null ? void 0 : view.containerEl;
+        if (!containerEl || containerEl.getAttribute("data-mode") != "preview" || containerEl.getAttribute("data-type") != "markdown") {
+          if (this.settings.is_debug)
+            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] in no readmode`, containerEl);
+          cache_item = {
+            name: ctx.sourcePath,
+            content: mdSrc.content_all
+          };
+          is_newContent = false;
+          is_subContent = true;
+          return;
+        }
         if (path && path !== ctx.sourcePath) {
           if (this.settings.is_debug)
-            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] `);
+            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] in readmode`);
           cache_item = {
             name: ctx.sourcePath,
             content: mdSrc.content_all
@@ -49486,18 +49492,7 @@ var ABSelector_PostHtml = class {
           is_subContent = true;
           return;
         }
-        const el2 = view == null ? void 0 : view.containerEl;
-        if (!el2 || el2.getAttribute("data-mode") != "preview" || el2.getAttribute("data-type") != "markdown") {
-          if (this.settings.is_debug)
-            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] in no readmode`, el2);
-          cache_item = {
-            name: ctx.sourcePath,
-            content: mdSrc.content_all
-          };
-          is_newContent = false;
-          is_subContent = true;
-          return;
-        }
+        getFileContentByPath(this.app.vault, ctx.sourcePath);
         for (let item of cache_map) {
           if (item.name == ctx.sourcePath) {
             cache_item = item;
@@ -49515,7 +49510,16 @@ var ABSelector_PostHtml = class {
             cache_item.content = mdSrc.content_all;
             is_newContent = true;
             if (this.settings.is_debug)
-              console.log(" !! \u6709\u7F13\u5B58, \u5185\u5BB9\u53D8 -> \u6709\u4FEE\u6539, perform a global refresh (rebuildView): ", cache_item, ctx);
+              console.log(
+                " !! \u6709\u7F13\u5B58, \u5185\u5BB9\u53D8 -> \u6709\u4FEE\u6539, perform a global refresh (rebuildView): ",
+                cache_item,
+                ctx,
+                mdSrc,
+                ctx.getSectionInfo(el),
+                ctx.docId,
+                ctx.frontmatter,
+                ctx.sourcePath
+              );
           } else {
             is_newContent = false;
           }
@@ -49769,6 +49773,19 @@ function getSourceMarkdown(sectionEl, ctx) {
     range.type = "other";
   }
   return range;
+}
+async function getFileContentByPath(vault, filePath) {
+  const file = vault.getAbstractFileByPath(filePath);
+  if (!(file instanceof import_obsidian5.TFile)) {
+    console.error(`\u672A\u627E\u5230\u6587\u4EF6: ${filePath}`);
+    return null;
+  }
+  try {
+    return await vault.read(file);
+  } catch (error2) {
+    console.error(`\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25: ${filePath}`, error2);
+    return null;
+  }
 }
 
 // main.ts
