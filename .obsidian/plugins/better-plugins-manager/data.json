@@ -1382,6 +1382,26 @@
       "enabled": true,
       "delay": "",
       "note": ""
+    },
+    {
+      "id": "floating-settings",
+      "name": "Floating Settings",
+      "desc": "Open the Floating Settings panel or replace the default settings modal with a floating panel. Depends on the Hover Editor.",
+      "group": "",
+      "tags": [],
+      "enabled": false,
+      "delay": "",
+      "note": ""
+    },
+    {
+      "id": "minimap",
+      "name": "Minimap",
+      "desc": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+      "group": "",
+      "tags": [],
+      "enabled": false,
+      "delay": "",
+      "note": ""
     }
   ],
   "HIDES": []

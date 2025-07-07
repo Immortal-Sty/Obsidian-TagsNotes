@@ -72,6 +72,7 @@
     "disableFileMenuReviewOptions": false,
     "maxNDaysNotesReviewQueue": 365,
     "initiallyExpandAllSubdecksInTree": false,
+    "openViewAsTab": false,
     "baseEase": 250,
     "lapsesIntervalChange": 0.5,
     "easyBonus": 1.3,
@@ -123,9 +124,9 @@
         "enable_short_term": true
       }
     },
-    "previousRelease": "1.12.5.14"
+    "previousRelease": "1.12.5.17"
   },
-  "buryDate": "2025-05-07",
+  "buryDate": "2025-07-07",
   "buryList": [],
   "historyDeck": null
 }
