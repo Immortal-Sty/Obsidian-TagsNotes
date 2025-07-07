@@ -36,6 +36,7 @@
       }
     ],
     "select with custom alias": [],
+    "select with query alias": [],
     "up": [
       {
         "modifiers": [
@@ -76,6 +77,7 @@
   "currentVaultMinNumberOfCharacters": 0,
   "includeCurrentVaultPathPrefixPatterns": "",
   "excludeCurrentVaultPathPrefixPatterns": "",
+  "excludeCurrentVaultPathGlobPatterns": [],
   "includeCurrentVaultOnlyFilesUnderCurrentDirectory": false,
   "excludeCurrentVaultWordPatterns": [],
   "enableCustomDictionaryComplement": true,
@@ -89,6 +91,9 @@
   "enableInternalLinkComplement": true,
   "suggestInternalLinkWithAlias": true,
   "excludeInternalLinkPathPrefixPatterns": "Attachment/\nImages/\nTemplate/",
+  "excludeInternalLinkPathGlobPatterns": [],
+  "excludeSelfInternalLink": true,
+  "excludeExistingInActiveFileInternalLinks": false,
   "updateInternalLinksOnSave": true,
   "insertAliasTransformedFromDisplayedInternalLink": {
     "enabled": false,
@@ -96,9 +101,14 @@
     "after": ""
   },
   "frontMatterKeyForExclusionInternalLink": "",
+  "tagsForExclusionInternalLink": [],
   "enableFrontMatterComplement": true,
   "frontMatterComplementMatchStrategy": "inherit",
   "insertCommaAfterFrontMatterCompletion": false,
+  "currentFileMinNumberOfCharactersForTrigger": 0,
+  "currentVaultMinNumberOfCharactersForTrigger": 0,
+  "customDictionaryMinNumberOfCharactersForTrigger": 0,
+  "internalLinkMinNumberOfCharactersForTrigger": 0,
   "intelligentSuggestionPrioritization": {
     "enabled": true,
     "historyFilePath": "Attachment\\Various Complements\\histories.json",
