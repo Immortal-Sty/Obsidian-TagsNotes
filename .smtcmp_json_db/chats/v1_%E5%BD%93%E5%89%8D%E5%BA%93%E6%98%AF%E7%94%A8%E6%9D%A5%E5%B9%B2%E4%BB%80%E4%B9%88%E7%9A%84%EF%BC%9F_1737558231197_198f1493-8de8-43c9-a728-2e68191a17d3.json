@@ -1,0 +1,321 @@
+{
+  "id": "198f1493-8de8-43c9-a728-2e68191a17d3",
+  "title": "当前库是用来干什么的？",
+  "messages": [
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "当前库是用来干什么的？",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "## Potentially Relevant Snippets from the current vault\n```Notes/20240707190215655.md\n1|---\n2|tags:\n3|  - 当前库记录\n4|title: 插件注释记录\n5|aliases:\n6|  - 插件注释记录\n7|ctime: 2024-07-07T19:02:15\n8|mtime: 2024-07-07T19:47:56\n9|---\n10|\n11|# 插件注释记录\n12|\n13|- [ ] Metadata Menu\n14|- [ ] MetaEdit\n15|- [ ] Moulinette Search for TTRPG\n16|- [ ] Note Refactor\n17|- [ ] Notice logger\n18|- [ ] Share my plugin list\n19|- [ ] Thino\n```\n```Notes/20240517203453008.md\n38|# Another Sticky Headings\n39|\n40|<!-- id: another-sticky-headings -->\n41|<!-- BEGIN ANNOTATION -->\n42|使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n43|\n44|- 优点：阅读模式可用，可点击跳转。\n45|- 缺点：标题样式丢失。\n46|<!-- END ANNOTATION -->\n47|\n48|# Attachment Management\n49|\n50|<!-- id: attachment-management -->\n51|<!-- BEGIN ANNOTATION -->\n52|附件管理插件，支持针对不同后缀使用不同方案。\n53|<!-- END ANNOTATION -->\n54|\n55|# Automation\n56|\n57|<!-- id: automation -->\n58|<!-- BEGIN ANNOTATION -->\n59|可监控文件打开和焦点变化来自动运行命令。\n60|<!-- END ANNOTATION -->\n61|\n62|# Better Command Palette\n63|\n64|<!-- id: obsidian-better-command-palette -->\n65|<!-- BEGIN ANNOTATION -->\n66|更好的命令面板，支持置顶上次的命令。\n67|<!-- END ANNOTATION -->\n68|\n69|# Better Search Views\n70|\n71|<!-- id: better-search-views -->\n72|<!-- BEGIN ANNOTATION -->\n73|渲染搜索、出入链面板等界面的 Markdown 语法。\n74|<!-- END ANNOTATION -->\n75|\n76|# BRAT\n77|\n78|<!-- id: obsidian42-brat -->\n79|<!-- BEGIN ANNOTATION -->\n80|用于安装、管理未在插件市场上架的插件和主题。\n81|<!-- END ANNOTATION -->\n82|\n83|# Clear Unused Images\n84|\n85|<!-- id: oz-clear-unused-images -->\n86|<!-- BEGIN ANNOTATION -->\n87|自动清理没有被嵌入或链接的附件和图像文件，有概率误删。\n88|<!-- END ANNOTATION -->\n89|\n90|# Clever Search\n```\n```Notes/20240517203453008.md\n132|# Dataview\n133|\n134|<!-- id: dataview -->\n135|<!-- BEGIN ANNOTATION -->\n136|使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。\n137|<!-- END ANNOTATION -->\n138|\n139|# Dataview Serializer\n140|\n141|<!-- id: dataview-serializer -->\n142|<!-- BEGIN ANNOTATION -->\n143|使用 Dataview 语法，将查询结果直接以文本形式插入。\n144|<!-- END ANNOTATION -->\n145|\n146|# Easy Typing\n147|\n148|<!-- id: easy-typing-obsidian -->\n149|<!-- BEGIN ANNOTATION -->\n150|提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。\n151|<!-- END ANNOTATION -->\n152|\n153|# Fast Image Cleaner\n154|\n155|<!-- id: nl-fast-image-cleaner -->\n156|<!-- BEGIN ANNOTATION -->\n157|提供右键删除图片和图片文件的功能。\n158|<!-- END ANNOTATION -->\n159|\n160|# File Cooker\n161|\n162|<!-- id: obsidian-file-cooker -->\n163|<!-- BEGIN ANNOTATION -->\n164|提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。\n165|<!-- END ANNOTATION -->\n166|\n167|# Fit\n168|\n169|<!-- id: fit -->\n170|<!-- BEGIN ANNOTATION -->\n171|用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。\n172|<!-- END ANNOTATION -->\n173|\n174|# Floating Search\n175|\n176|<!-- id: float-search -->\n177|<!-- BEGIN ANNOTATION -->\n178|将 Obsidian 原生的搜索以悬浮面板的方式呈现。\n179|<!-- END ANNOTATION -->\n180|\n181|# Floating Settings\n```\n```Notes/20240517203453008.md\n174|# Floating Search\n175|\n176|<!-- id: float-search -->\n177|<!-- BEGIN ANNOTATION -->\n178|将 Obsidian 原生的搜索以悬浮面板的方式呈现。\n179|<!-- END ANNOTATION -->\n180|\n181|# Floating Settings\n182|\n183|<!-- id: floating-settings -->\n184|<!-- BEGIN ANNOTATION -->\n185|将设置界面变成悬浮窗口，方便进行某些设置。\n186|<!-- END ANNOTATION -->\n187|\n188|# floating toc\n189|\n190|<!-- id: floating-toc -->\n191|<!-- BEGIN ANNOTATION -->\n192|在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。\n193|<!-- END ANNOTATION -->\n194|\n195|# Footnote Shortcut\n196|\n197|<!-- id: obsidian-footnotes -->\n198|<!-- BEGIN ANNOTATION -->\n199|用快捷键快速新增、编辑脚注。\n200|<!-- END ANNOTATION -->\n201|\n202|# Front Matter Title\n203|\n204|<!-- id: obsidian-front-matter-title-plugin -->\n205|<!-- BEGIN ANNOTATION -->\n206|用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。\n207|<!-- END ANNOTATION -->\n208|\n209|# Git\n210|\n211|<!-- id: obsidian-git -->\n212|<!-- BEGIN ANNOTATION -->\n213|用 Git 管理笔记，功能丰富强大。\n214|<!-- END ANNOTATION -->\n215|\n216|# Homepage\n217|\n218|<!-- id: homepage -->\n219|<!-- BEGIN ANNOTATION -->\n220|设置某个页面为笔记库主页。\n221|<!-- END ANNOTATION -->\n222|\n223|# Hover Editor\n224|\n225|<!-- id: obsidian-hover-editor -->\n226|<!-- BEGIN ANNOTATION -->\n227|增强悬浮小窗的功能，使其能进行编辑、拖动等操作。\n228|<!-- END ANNOTATION -->\n229|\n230|# Html Server\n```\n```Notes/20240517203453008.md\n1|Make changes only within the annotation blocks marked by `<!-- BEGIN ANNOTATION -->` and `<!-- END ANNOTATION -->`. Changes made anywhere else will be overwritten.\n2|\n3|# Actions URI\n4|\n5|<!-- id: actions-uri -->\n6|<!-- BEGIN ANNOTATION -->\n7|用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。\n8|<!-- END ANNOTATION -->\n9|\n10|# Admonition\n11|\n12|<!-- id: obsidian-admonition -->\n13|<!-- BEGIN ANNOTATION -->\n14|更多关于 Callout 样式的操作。\n15|<!-- END ANNOTATION -->\n16|\n17|# Advanced URI\n18|\n19|<!-- id: obsidian-advanced-uri -->\n20|<!-- BEGIN ANNOTATION -->\n21|用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。\n22|<!-- END ANNOTATION -->\n23|\n24|# Annotator\n25|\n26|<!-- id: obsidian-annotator -->\n27|<!-- BEGIN ANNOTATION -->\n28|PDF 注释插件，简单易用，但功能不多。\n29|<!-- END ANNOTATION -->\n30|\n31|# Another Quick Switcher\n32|\n33|<!-- id: obsidian-another-quick-switcher -->\n34|<!-- BEGIN ANNOTATION -->\n35|强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。\n36|<!-- END ANNOTATION -->\n37|\n38|# Another Sticky Headings\n39|\n40|<!-- id: another-sticky-headings -->\n41|<!-- BEGIN ANNOTATION -->\n42|使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n43|\n44|- 优点：阅读模式可用，可点击跳转。\n45|- 缺点：标题样式丢失。\n46|<!-- END ANNOTATION -->\n```\n```Notes/20240517203453008.md\n83|# Clear Unused Images\n84|\n85|<!-- id: oz-clear-unused-images -->\n86|<!-- BEGIN ANNOTATION -->\n87|自动清理没有被嵌入或链接的附件和图像文件，有概率误删。\n88|<!-- END ANNOTATION -->\n89|\n90|# Clever Search\n91|\n92|<!-- id: clever-search -->\n93|<!-- BEGIN ANNOTATION -->\n94|强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。\n95|<!-- END ANNOTATION -->\n96|\n97|# Close Similar Tabs\n98|\n99|<!-- id: close-similar-tabs -->\n100|<!-- BEGIN ANNOTATION -->\n101|关闭相同文件的多余标签页。\n102|<!-- END ANNOTATION -->\n103|\n104|# Code Styler\n105|\n106|<!-- id: code-styler -->\n107|<!-- BEGIN ANNOTATION -->\n108|为代码块添加各种样式。\n109|<!-- END ANNOTATION -->\n110|\n111|# Command Block List\n112|\n113|<!-- id: command-block-list -->\n114|<!-- BEGIN ANNOTATION -->\n115|在命令面板中隐藏一些命令。\n116|<!-- END ANNOTATION -->\n117|\n118|# Completr\n119|\n120|<!-- id: obsidian-completr -->\n121|<!-- BEGIN ANNOTATION -->\n122|提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。\n123|<!-- END ANNOTATION -->\n124|\n125|# Control Characters\n126|\n127|<!-- id: control-characters -->\n128|<!-- BEGIN ANNOTATION -->\n129|在编辑模式下，显示空白字符。\n130|<!-- END ANNOTATION -->\n131|\n132|# Dataview\n133|\n134|<!-- id: dataview -->\n135|<!-- BEGIN ANNOTATION -->\n136|使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。\n137|<!-- END ANNOTATION -->\n138|\n139|# Dataview Serializer\n```\n```Notes/20240517203453008.md\n546|# Templater\n547|\n548|<!-- id: templater-obsidian -->\n549|<!-- BEGIN ANNOTATION -->\n550|增强模版功能，可运行 JavaScript 代码。\n551|<!-- END ANNOTATION -->\n552|\n553|# Trash Explorer\n554|\n555|<!-- id: obsidian-trash-explorer -->\n556|<!-- BEGIN ANNOTATION -->\n557|提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。\n558|<!-- END ANNOTATION -->\n559|\n560|# Typewriter Mode\n561|\n562|<!-- id: typewriter-mode -->\n563|<!-- BEGIN ANNOTATION -->\n564|提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。\n565|<!-- END ANNOTATION -->\n566|\n567|# Typewriter Scroll\n568|\n569|<!-- id: cm-typewriter-scroll-obsidian -->\n570|<!-- BEGIN ANNOTATION -->\n571|提供打字机模式和聚焦模式，但未适配新版，有 Bug。\n572|<!-- END ANNOTATION -->\n573|\n574|# Update Relative Links\n575|\n576|<!-- id: update-relative-links -->\n577|<!-- BEGIN ANNOTATION -->\n578|A 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。\n579|<!-- END ANNOTATION -->\n580|\n581|# Various Complements\n582|\n583|<!-- id: various-complements -->\n584|<!-- BEGIN ANNOTATION -->\n585|提供下拉补全功能，自带链接、属性等补全功能，也可自定义。\n586|<!-- END ANNOTATION -->\n587|\n588|# Version History Diff\n```\n```Notes/20240517203453008.md\n223|# Hover Editor\n224|\n225|<!-- id: obsidian-hover-editor -->\n226|<!-- BEGIN ANNOTATION -->\n227|增强悬浮小窗的功能，使其能进行编辑、拖动等操作。\n228|<!-- END ANNOTATION -->\n229|\n230|# Html Server\n231|\n232|<!-- id: html-server -->\n233|<!-- BEGIN ANNOTATION -->\n234|本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。\n235|<!-- END ANNOTATION -->\n236|\n237|# Icon Shortcodes\n238|\n239|<!-- id: obsidian-icon-shortcodes -->\n240|<!-- BEGIN ANNOTATION -->\n241|通过输入 `:` 快速搜索输入 Emoji。\n242|<!-- END ANNOTATION -->\n243|\n244|# Image auto upload Plugin\n245|\n246|<!-- id: obsidian-image-auto-upload-plugin -->\n247|<!-- BEGIN ANNOTATION -->\n248|自动将图片上传图床。\n249|<!-- END ANNOTATION -->\n250|\n251|# Image Inline\n252|\n253|<!-- id: image-inline -->\n254|<!-- BEGIN ANNOTATION -->\n255|用 base64 代替图片嵌入，免去附件管理问题。\n256|<!-- END ANNOTATION -->\n257|\n258|# Immersive Translate\n259|\n260|<!-- id: immersive-translate -->\n261|<!-- BEGIN ANNOTATION -->\n262|沉浸式翻译，可用于翻译插件的设置页面。\n263|<!-- END ANNOTATION -->\n264|\n265|# Janitor\n266|\n267|<!-- id: janitor -->\n268|<!-- BEGIN ANNOTATION -->\n269|自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。\n270|<!-- END ANNOTATION -->\n271|\n272|# Latex Suite\n```\n```Notes/20231227175836027.md\n160|$$\n161|\\begin{align}\n162|\\cap \\cup \\in \\notin  \\\\\n163|\\emptyset{asdf} \\\\\n164|\\exists \\\\\n165|\\text{d} \\\\\n166|\\mathbf{asdf} \\\\\n167|\\ell \\\\\n168|\\lim_{ n \\to \\infty } \\\\\n169|\\int f \\left ( x \\right ) \\textrm{ d } x \\\\\n170|\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n171|\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n172|\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n173|\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right )\n174|\\end{align}\n175|$$\n```\n```Notes/20240713152124366.md\n63|```\n64|\n65|在这个程序中，`factorial` 函数使用递归方法来计算阶乘。`main` 函数中会提示用户输入一个正整数，然后计算并输出该整数的阶乘。如果用户输入的是负数，程序会提示用户输入一个正整数。\n66|\n67|[测试](./20240305142900160.md)\n```\n\n\n\n当前库是用来干什么的？\n\n"
+        }
+      ],
+      "id": "390810d7-621e-45e8-94bd-b6fcac3d8baf",
+      "mentionables": [],
+      "similaritySearchResults": [
+        {
+          "id": 7,
+          "path": "Notes/20240707190215655.md",
+          "mtime": 1724012174818,
+          "content": "---\ntags:\n  - 当前库记录\ntitle: 插件注释记录\naliases:\n  - 插件注释记录\nctime: 2024-07-07T19:02:15\nmtime: 2024-07-07T19:47:56\n---\n\n# 插件注释记录\n\n- [ ] Metadata Menu\n- [ ] MetaEdit\n- [ ] Moulinette Search for TTRPG\n- [ ] Note Refactor\n- [ ] Notice logger\n- [ ] Share my plugin list\n- [ ] Thino",
+          "metadata": {
+            "endLine": 19,
+            "startLine": 1
+          },
+          "similarity": 0.4688558782687994
+        },
+        {
+          "id": 10,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Another Sticky Headings\n\n<!-- id: another-sticky-headings -->\n<!-- BEGIN ANNOTATION -->\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。\n<!-- END ANNOTATION -->\n\n# Attachment Management\n\n<!-- id: attachment-management -->\n<!-- BEGIN ANNOTATION -->\n附件管理插件，支持针对不同后缀使用不同方案。\n<!-- END ANNOTATION -->\n\n# Automation\n\n<!-- id: automation -->\n<!-- BEGIN ANNOTATION -->\n可监控文件打开和焦点变化来自动运行命令。\n<!-- END ANNOTATION -->\n\n# Better Command Palette\n\n<!-- id: obsidian-better-command-palette -->\n<!-- BEGIN ANNOTATION -->\n更好的命令面板，支持置顶上次的命令。\n<!-- END ANNOTATION -->\n\n# Better Search Views\n\n<!-- id: better-search-views -->\n<!-- BEGIN ANNOTATION -->\n渲染搜索、出入链面板等界面的 Markdown 语法。\n<!-- END ANNOTATION -->\n\n# BRAT\n\n<!-- id: obsidian42-brat -->\n<!-- BEGIN ANNOTATION -->\n用于安装、管理未在插件市场上架的插件和主题。\n<!-- END ANNOTATION -->\n\n# Clear Unused Images\n\n<!-- id: oz-clear-unused-images -->\n<!-- BEGIN ANNOTATION -->\n自动清理没有被嵌入或链接的附件和图像文件，有概率误删。\n<!-- END ANNOTATION -->\n\n# Clever Search",
+          "metadata": {
+            "endLine": 90,
+            "startLine": 38
+          },
+          "similarity": 0.4582452128856105
+        },
+        {
+          "id": 12,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Dataview\n\n<!-- id: dataview -->\n<!-- BEGIN ANNOTATION -->\n使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。\n<!-- END ANNOTATION -->\n\n# Dataview Serializer\n\n<!-- id: dataview-serializer -->\n<!-- BEGIN ANNOTATION -->\n使用 Dataview 语法，将查询结果直接以文本形式插入。\n<!-- END ANNOTATION -->\n\n# Easy Typing\n\n<!-- id: easy-typing-obsidian -->\n<!-- BEGIN ANNOTATION -->\n提供自动补全功能和对应的自动删除功能，支持正则，不支持读文件配置。\n<!-- END ANNOTATION -->\n\n# Fast Image Cleaner\n\n<!-- id: nl-fast-image-cleaner -->\n<!-- BEGIN ANNOTATION -->\n提供右键删除图片和图片文件的功能。\n<!-- END ANNOTATION -->\n\n# File Cooker\n\n<!-- id: obsidian-file-cooker -->\n<!-- BEGIN ANNOTATION -->\n提供了批量移动、编辑文件的功能，可用 Dataview 语法筛选文件。\n<!-- END ANNOTATION -->\n\n# Fit\n\n<!-- id: fit -->\n<!-- BEGIN ANNOTATION -->\n用 Git 对笔记进行同步，相比 Obsidian Git 更加简单。\n<!-- END ANNOTATION -->\n\n# Floating Search\n\n<!-- id: float-search -->\n<!-- BEGIN ANNOTATION -->\n将 Obsidian 原生的搜索以悬浮面板的方式呈现。\n<!-- END ANNOTATION -->\n\n# Floating Settings",
+          "metadata": {
+            "endLine": 181,
+            "startLine": 132
+          },
+          "similarity": 0.45096866523119394
+        },
+        {
+          "id": 13,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Floating Search\n\n<!-- id: float-search -->\n<!-- BEGIN ANNOTATION -->\n将 Obsidian 原生的搜索以悬浮面板的方式呈现。\n<!-- END ANNOTATION -->\n\n# Floating Settings\n\n<!-- id: floating-settings -->\n<!-- BEGIN ANNOTATION -->\n将设置界面变成悬浮窗口，方便进行某些设置。\n<!-- END ANNOTATION -->\n\n# floating toc\n\n<!-- id: floating-toc -->\n<!-- BEGIN ANNOTATION -->\n在笔记页面的一侧，以悬浮的形式显示该笔记文件的大纲。\n<!-- END ANNOTATION -->\n\n# Footnote Shortcut\n\n<!-- id: obsidian-footnotes -->\n<!-- BEGIN ANNOTATION -->\n用快捷键快速新增、编辑脚注。\n<!-- END ANNOTATION -->\n\n# Front Matter Title\n\n<!-- id: obsidian-front-matter-title-plugin -->\n<!-- BEGIN ANNOTATION -->\n用别名、标题或其它属性代替文件名，显示在文件夹、标题栏、标签页等地方。\n<!-- END ANNOTATION -->\n\n# Git\n\n<!-- id: obsidian-git -->\n<!-- BEGIN ANNOTATION -->\n用 Git 管理笔记，功能丰富强大。\n<!-- END ANNOTATION -->\n\n# Homepage\n\n<!-- id: homepage -->\n<!-- BEGIN ANNOTATION -->\n设置某个页面为笔记库主页。\n<!-- END ANNOTATION -->\n\n# Hover Editor\n\n<!-- id: obsidian-hover-editor -->\n<!-- BEGIN ANNOTATION -->\n增强悬浮小窗的功能，使其能进行编辑、拖动等操作。\n<!-- END ANNOTATION -->\n\n# Html Server",
+          "metadata": {
+            "endLine": 230,
+            "startLine": 174
+          },
+          "similarity": 0.4444444311990545
+        },
+        {
+          "id": 11,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "Make changes only within the annotation blocks marked by `<!-- BEGIN ANNOTATION -->` and `<!-- END ANNOTATION -->`. Changes made anywhere else will be overwritten.\n\n# Actions URI\n\n<!-- id: actions-uri -->\n<!-- BEGIN ANNOTATION -->\n用于增强 Obsidian URI 功能的插件，可于用外部获取当前笔记信息。\n<!-- END ANNOTATION -->\n\n# Admonition\n\n<!-- id: obsidian-admonition -->\n<!-- BEGIN ANNOTATION -->\n更多关于 Callout 样式的操作。\n<!-- END ANNOTATION -->\n\n# Advanced URI\n\n<!-- id: obsidian-advanced-uri -->\n<!-- BEGIN ANNOTATION -->\n用于增强 Obsidian URI 功能的插件，可用于调用外部程序运行。\n<!-- END ANNOTATION -->\n\n# Annotator\n\n<!-- id: obsidian-annotator -->\n<!-- BEGIN ANNOTATION -->\nPDF 注释插件，简单易用，但功能不多。\n<!-- END ANNOTATION -->\n\n# Another Quick Switcher\n\n<!-- id: obsidian-another-quick-switcher -->\n<!-- BEGIN ANNOTATION -->\n强大的笔记文件搜索插件，可用于自定义各种搜索方案与权重。\n<!-- END ANNOTATION -->\n\n# Another Sticky Headings\n\n<!-- id: another-sticky-headings -->\n<!-- BEGIN ANNOTATION -->\n使当前内容上方最近的一个标题始终悬浮在笔记页面上方。\n\n- 优点：阅读模式可用，可点击跳转。\n- 缺点：标题样式丢失。\n<!-- END ANNOTATION -->",
+          "metadata": {
+            "endLine": 46,
+            "startLine": 1
+          },
+          "similarity": 0.44246020333639957
+        },
+        {
+          "id": 9,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Clear Unused Images\n\n<!-- id: oz-clear-unused-images -->\n<!-- BEGIN ANNOTATION -->\n自动清理没有被嵌入或链接的附件和图像文件，有概率误删。\n<!-- END ANNOTATION -->\n\n# Clever Search\n\n<!-- id: clever-search -->\n<!-- BEGIN ANNOTATION -->\n强大的内容搜索插件，快速且高效，支持本地 AI 语义搜索。\n<!-- END ANNOTATION -->\n\n# Close Similar Tabs\n\n<!-- id: close-similar-tabs -->\n<!-- BEGIN ANNOTATION -->\n关闭相同文件的多余标签页。\n<!-- END ANNOTATION -->\n\n# Code Styler\n\n<!-- id: code-styler -->\n<!-- BEGIN ANNOTATION -->\n为代码块添加各种样式。\n<!-- END ANNOTATION -->\n\n# Command Block List\n\n<!-- id: command-block-list -->\n<!-- BEGIN ANNOTATION -->\n在命令面板中隐藏一些命令。\n<!-- END ANNOTATION -->\n\n# Completr\n\n<!-- id: obsidian-completr -->\n<!-- BEGIN ANNOTATION -->\n提供下拉补全功能，自带 Latex 相关等补全功能，也可自定义。\n<!-- END ANNOTATION -->\n\n# Control Characters\n\n<!-- id: control-characters -->\n<!-- BEGIN ANNOTATION -->\n在编辑模式下，显示空白字符。\n<!-- END ANNOTATION -->\n\n# Dataview\n\n<!-- id: dataview -->\n<!-- BEGIN ANNOTATION -->\n使用代码块语法，引用笔记属性数据等操作显示，可用于汇总显示，同步信息。\n<!-- END ANNOTATION -->\n\n# Dataview Serializer",
+          "metadata": {
+            "endLine": 139,
+            "startLine": 83
+          },
+          "similarity": 0.43977264287802886
+        },
+        {
+          "id": 22,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Templater\n\n<!-- id: templater-obsidian -->\n<!-- BEGIN ANNOTATION -->\n增强模版功能，可运行 JavaScript 代码。\n<!-- END ANNOTATION -->\n\n# Trash Explorer\n\n<!-- id: obsidian-trash-explorer -->\n<!-- BEGIN ANNOTATION -->\n提供垃圾文件视图，方便对垃圾文件进行还原或删除操作。\n<!-- END ANNOTATION -->\n\n# Typewriter Mode\n\n<!-- id: typewriter-mode -->\n<!-- BEGIN ANNOTATION -->\n提供打字机模式和聚焦模式，且有对 Vim 模式进行适配。\n<!-- END ANNOTATION -->\n\n# Typewriter Scroll\n\n<!-- id: cm-typewriter-scroll-obsidian -->\n<!-- BEGIN ANNOTATION -->\n提供打字机模式和聚焦模式，但未适配新版，有 Bug。\n<!-- END ANNOTATION -->\n\n# Update Relative Links\n\n<!-- id: update-relative-links -->\n<!-- BEGIN ANNOTATION -->\nA 文件中有 B 文件的链接，Obsidian 默认会在 B 文件移动时更新 A 文件中的链接，但不会在 A 文件移动时更新 A 文件中的链接，没有适配相对链接，需要该插件补足。\n<!-- END ANNOTATION -->\n\n# Various Complements\n\n<!-- id: various-complements -->\n<!-- BEGIN ANNOTATION -->\n提供下拉补全功能，自带链接、属性等补全功能，也可自定义。\n<!-- END ANNOTATION -->\n\n# Version History Diff",
+          "metadata": {
+            "endLine": 588,
+            "startLine": 546
+          },
+          "similarity": 0.43968474911953326
+        },
+        {
+          "id": 15,
+          "path": "Notes/20240517203453008.md",
+          "mtime": 1735345114191,
+          "content": "# Hover Editor\n\n<!-- id: obsidian-hover-editor -->\n<!-- BEGIN ANNOTATION -->\n增强悬浮小窗的功能，使其能进行编辑、拖动等操作。\n<!-- END ANNOTATION -->\n\n# Html Server\n\n<!-- id: html-server -->\n<!-- BEGIN ANNOTATION -->\n本地发布服务，有 ipv6 可以试试，也可用于将笔记用浏览器打开。\n<!-- END ANNOTATION -->\n\n# Icon Shortcodes\n\n<!-- id: obsidian-icon-shortcodes -->\n<!-- BEGIN ANNOTATION -->\n通过输入 `:` 快速搜索输入 Emoji。\n<!-- END ANNOTATION -->\n\n# Image auto upload Plugin\n\n<!-- id: obsidian-image-auto-upload-plugin -->\n<!-- BEGIN ANNOTATION -->\n自动将图片上传图床。\n<!-- END ANNOTATION -->\n\n# Image Inline\n\n<!-- id: image-inline -->\n<!-- BEGIN ANNOTATION -->\n用 base64 代替图片嵌入，免去附件管理问题。\n<!-- END ANNOTATION -->\n\n# Immersive Translate\n\n<!-- id: immersive-translate -->\n<!-- BEGIN ANNOTATION -->\n沉浸式翻译，可用于翻译插件的设置页面。\n<!-- END ANNOTATION -->\n\n# Janitor\n\n<!-- id: janitor -->\n<!-- BEGIN ANNOTATION -->\n自动删除没有被嵌入或链接的附件和图片，删除时会有提示和文件操作界面。\n<!-- END ANNOTATION -->\n\n# Latex Suite",
+          "metadata": {
+            "endLine": 272,
+            "startLine": 223
+          },
+          "similarity": 0.43775585652573734
+        },
+        {
+          "id": 32,
+          "path": "Notes/20231227175836027.md",
+          "mtime": 1735190186039,
+          "content": "$$\n\\begin{align}\n\\cap \\cup \\in \\notin  \\\\\n\\emptyset{asdf} \\\\\n\\exists \\\\\n\\text{d} \\\\\n\\mathbf{asdf} \\\\\n\\ell \\\\\n\\lim_{ n \\to \\infty } \\\\\n\\int f \\left ( x \\right ) \\textrm{ d } x \\\\\n\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right ) \\\\\n\\int_{ 0 }^{ + \\infty } f \\left ( t \\right ) \\textrm{ d } t & = \\lim_{ n \\to \\infty } \\sum_{ i = 0 }^{ n } f \\left ( t \\right )\n\\end{align}\n$$",
+          "metadata": {
+            "endLine": 175,
+            "startLine": 160
+          },
+          "similarity": 0.43266299196238345
+        },
+        {
+          "id": 5,
+          "path": "Notes/20240713152124366.md",
+          "mtime": 1721533334247,
+          "content": "```\n\n在这个程序中，`factorial` 函数使用递归方法来计算阶乘。`main` 函数中会提示用户输入一个正整数，然后计算并输出该整数的阶乘。如果用户输入的是负数，程序会提示用户输入一个正整数。\n\n[测试](./20240305142900160.md)",
+          "metadata": {
+            "endLine": 67,
+            "startLine": 63
+          },
+          "similarity": 0.43197888399177664
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "从提供的 markdown 片段来看，这个库主要用于记录和管理 Obsidian 插件的使用情况、功能描述以及一些技术笔记。以下是具体用途的总结：\n\n1. **插件记录与管理**：\n   - 文件 `Notes/20240707190215655.md` 中记录了当前库中使用的插件列表，并以任务列表的形式呈现。\n   - 文件 `Notes/20240517203453008.md` 中详细记录了每个插件的功能描述、优缺点等信息，使用注释块 `<!-- BEGIN ANNOTATION -->` 和 `<!-- END ANNOTATION -->` 来标记插件的描述内容。\n\n2. **技术笔记与代码片段**：\n   - 文件 `Notes/20231227175836027.md` 中包含了一些 LaTeX 数学公式的代码片段，可能是用于记录数学相关的笔记。\n   - 文件 `Notes/20240713152124366.md` 中包含了编程相关的笔记，例如递归计算阶乘的代码示例。\n\n3. **插件功能描述**：\n   - 文件中详细记录了每个插件的功能，例如：\n     - `Dataview` 插件用于引用笔记属性数据并显示。\n     - `Templater` 插件增强了模板功能，支持运行 JavaScript 代码。\n     - `Floating Search` 插件将 Obsidian 的原生搜索功能以悬浮面板的形式呈现。\n\n4. **文件管理与自动化**：\n   - 一些插件如 `File Cooker` 提供了批量移动、编辑文件的功能，支持使用 Dataview 语法筛选文件。\n   - `Git` 插件用于管理笔记的版本控制。\n\n5. **附件与图片管理**：\n   - 插件如 `Clear Unused Images` 和 `Janitor` 用于自动清理未被使用的附件和图片文件。\n\n总结来说，这个库主要用于记录和管理 Obsidian 插件的使用情况、功能描述，以及一些技术笔记和代码片段。通过详细的注释和功能描述，用户可以更好地理解和利用这些插件来优化他们的 Obsidian 使用体验。\n\n如果需要进一步整理或添加内容，可以参考以下格式：\n\n<smtcmp_block filename=\"Notes/20240517203453008.md\" language=\"markdown\" startLine=\"38\" endLine=\"46\"></smtcmp_block>\n\n<smtcmp_block filename=\"Notes/20240517203453008.md\" language=\"markdown\" startLine=\"546\" endLine=\"551\"></smtcmp_block>\n\n这些片段展示了如何详细记录插件的功能和使用场景。",
+      "id": "86a802ed-ec42-4d29-a4f0-69a6bb137aa7",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 3877,
+          "completion_tokens": 519,
+          "total_tokens": 4396,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 3877
+        },
+        "model": {
+          "provider": "openai-compatible",
+          "baseURL": "https://api.deepseek.com",
+          "apiKey": "sk-0cdabadb1e314f1191301d8588761300",
+          "model": "deepseek-chat"
+        }
+      }
+    },
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "请介绍一下 Obsidian 这个软件。",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "\n\n请介绍一下 Obsidian 这个软件。\n\n"
+        }
+      ],
+      "id": "ce7d909d-2664-49f7-b249-f9818f4f8ea7",
+      "mentionables": []
+    },
+    {
+      "role": "assistant",
+      "content": "Obsidian 是一款基于 Markdown 的本地知识管理软件，主要用于个人知识库的构建和管理。以下是它的核心特点和功能：\n\n### 1. **本地优先**\n   - 所有笔记和数据都存储在本地，用户可以完全控制自己的数据，无需依赖云端服务。\n\n### 2. **双向链接**\n   - 支持笔记之间的双向链接，帮助用户建立知识网络，便于探索和发现笔记之间的关系。\n\n### 3. **图谱视图**\n   - 提供图谱视图，直观展示笔记之间的链接关系，帮助用户更好地理解知识结构。\n\n### 4. **插件系统**\n   - 拥有丰富的插件生态系统，用户可以通过安装插件扩展 Obsidian 的功能，例如：\n     - **Dataview**：动态查询和展示笔记数据。\n     - **Templater**：增强模板功能，支持运行 JavaScript 代码。\n     - **Git**：用于版本控制和同步笔记。\n\n### 5. **Markdown 支持**\n   - 完全支持 Markdown 语法，用户可以轻松编写和格式化笔记。\n\n### 6. **多平台支持**\n   - 支持 Windows、macOS、Linux、iOS 和 Android 等多个平台，用户可以在不同设备上同步使用。\n\n### 7. **自定义性强**\n   - 用户可以通过 CSS 自定义主题和样式，也可以通过插件和脚本来实现个性化功能。\n\n### 8. **社区支持**\n   - 拥有活跃的社区，用户可以在社区中分享插件、主题和使用技巧。\n\n### 9. **离线使用**\n   - 由于数据存储在本地，Obsidian 可以在没有网络连接的情况下使用。\n\n### 10. **安全性**\n   - 本地存储和加密选项确保了用户数据的安全性。\n\n### 典型使用场景\n- **个人知识管理**：用于记录和管理个人知识、学习笔记、项目计划等。\n- **写作**：支持长文写作，通过双向链接和图谱视图帮助组织思路。\n- **研究**：用于整理研究资料、文献笔记和数据。\n\nObsidian 的强大之处在于其灵活性和可扩展性，用户可以根据自己的需求定制和扩展功能，使其成为个人知识管理的强大工具。",
+      "id": "dcdcc9c2-41be-4359-a802-bcea2e2c2a49",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 4378,
+          "completion_tokens": 444,
+          "total_tokens": 4822,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 4378
+        },
+        "model": {
+          "provider": "openai-compatible",
+          "baseURL": "https://api.deepseek.com",
+          "apiKey": "sk-0cdabadb1e314f1191301d8588761300",
+          "model": "deepseek-chat"
+        }
+      }
+    },
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "请介绍得再简单一些。",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "\n\n请介绍得再简单一些。\n\n"
+        }
+      ],
+      "id": "c20abc5c-6ee4-4fe6-b3cc-b4391999dab0",
+      "mentionables": [
+        {
+          "type": "current-file",
+          "file": "Notes/20240417124509514.md"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "Obsidian 是一款本地优先的笔记软件，核心特点：\n\n1. **本地存储**：数据存在本地，安全可控。\n2. **双向链接**：笔记之间可以互相链接，形成知识网络。\n3. **图谱视图**：可视化展示笔记间的关系。\n4. **插件扩展**：通过插件增强功能，如模板、搜索、版本控制等。\n5. **Markdown 支持**：完全兼容 Markdown 语法，简单易用。\n\n适合个人知识管理、写作和研究等场景，灵活且可定制。",
+      "id": "4bcd7380-641e-4e73-a532-13762a773b45",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 5018,
+          "completion_tokens": 113,
+          "total_tokens": 5131,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "prompt_cache_hit_tokens": 384,
+          "prompt_cache_miss_tokens": 4634
+        },
+        "model": {
+          "provider": "openai-compatible",
+          "baseURL": "https://api.deepseek.com",
+          "apiKey": "sk-0cdabadb1e314f1191301d8588761300",
+          "model": "deepseek-chat"
+        }
+      }
+    }
+  ],
+  "createdAt": 1737558079755,
+  "updatedAt": 1737558231197,
+  "schemaVersion": 1
+}

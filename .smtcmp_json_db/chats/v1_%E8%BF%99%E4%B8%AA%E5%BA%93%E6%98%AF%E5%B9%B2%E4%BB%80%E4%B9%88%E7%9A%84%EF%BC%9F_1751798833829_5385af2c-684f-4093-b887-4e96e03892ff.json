@@ -1,0 +1,183 @@
+{
+  "id": "5385af2c-684f-4093-b887-4e96e03892ff",
+  "title": "这个库是干什么的？",
+  "messages": [
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "这个库是干什么的？",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "## Potentially Relevant Snippets from the current vault\n```Notes/20240111222346304.md\n98|```\n99|\n100|[测试 2](./20231227175913426.md)\n101|\n102|![20240101095959935-20240121125920863-Pasted image 20240121125920](../Images/20240101095959935-20240121125920863-Pasted%20image%2020240121125920.png)\n103|\n104|[asdf](obsidian://actions-uri/note/get-active?vault=标签试运行&x-success=quicker%3Arunaction%3A7e19743c-a708-4bec-a42f-ce88fc46f31c%3Fob-action-uri-runstatus%3D1%26vaultName%3D%E6%A0%87%E7%AD%BE%E8%AF%95%E8%BF%90%E8%A1%8C%26trulyParam%3Dob-action-uri-run&x-error=quicker%3Arunaction%3A7e19743c-a708-4bec-a42f-ce88fc46f31c%3Fob-action-uri-runstatus%3D0)\n105|\n106|```dataview\n107|table\n108|from \"asdf\"\n109|```\n110|\n111|^123445\n112|\n113|abc^aaa\n114|\n115|$$\n116|\\alpha + \\beta = \\gamma\n117|$$\n118|\n119|---\n120|\n121|# asdfb\n122|\n123|**lkasdf**:\n124|jlaksdf\n125|\n126|1. lkasdf\n127|2. lkajsdf\n128|3. lkajsdf\n129|\n130|---\n131|\n132|1. lkasdf\n133|2. lkasdf\n134|\n135|`测试一下复制`\n```\n```Notes/20240713152045715.md\n1|---\n2|tags:\n3|  - 试试/好家伙\n4|  - 咋了/试试呗/逝逝呗/好啊\n5|title: 测试命名空间\n6|aliases:\n7|  - 测试命名空间\n8|ctime: 2024-07-13T15:20:45\n9|mtime: 2024-07-13T15:20:45\n10|---\n11|\n12|# 测试命名空间\n13|\n14|测试成功。\n```\n```Notes/20240101095959935.md\n1|---\n2|tags:\n3|  - 试试/好家伙\n4|  - 咋了/试试呗/逝逝呗/好啊\n5|title: 测试 3\n6|aliases:\n7|  - 测试 3\n8|ctime: 2024-01-01T09:59:59\n9|mtime: 2024-11-01T10:12:33\n10|---\n11|\n12|# 测试 3\n```\n```Notes/20240713145821834.md\n1|---\n2|tags:\n3|  - 试试/好家/怎么讲/好不好\n4|title: 反复测试\n5|aliases:\n6|  - 反复测试\n7|ctime: 2024-07-13T14:58:21\n8|mtime: 2024-07-13T14:58:50\n9|---\n10|\n11|# 反复测试\n12|\n13|我真牛啊！！！\n```\n```Notes/20231227175836027.md\n18|- pmatrix:\n19|\t$$\n20|\t\\begin{pmatrix}\n21|\t1 & 2 & 3 & 4 \\\\\n22|\t5 & 6 & 7 & 8 \\\\\n23|\t9 & 10 & 11 & 12 \\\\\n24|\t13 & 14 & 15 & 16\n25|\t\\end{pmatrix}\n26|\t$$\n27|- cases\n28|\t$$\n29|\t\\begin{cases}\n30|\t1 & 2 & 3 & 4 \\\\\n31|\t5 & 6 & 7 & 8 \\\\\n32|\t9 & 10 & 11 & 12 \\\\\n33|\t13 & 14 & 15 & 16\n34|\t\\end{cases}\n35|\t$$\n36|- align\n37|\t$$\n38|\t\\begin{align}\n39|\t1 & 2 & 3 & 4 \\\\\n40|\t5 & 6 & 7 & 8 \\\\\n41|\t9 & 10 & 11 & 12 \\\\\n42|\t13 & 14 & 15 & 16\n43|\t\\end{align}\n44|\t$$\n45|- bmatrix\n46|\t$$\n47|\t\\begin{bmatrix}\n48|\t1 & 2 & 3 & 4 \\\\\n49|\t5 & 6 & 7 & 8 \\\\\n50|\t9 & 10 & 11 & 12 \\\\\n51|\t13 & 14 & 15 & 16\n52|\t\\end{bmatrix}\n53|\t$$\n54|- Bmatrix\n55|\t$$\n56|\t\\begin{Bmatrix}\n57|\t1 & 2 & 3 & 4 \\\\\n58|\t5 & 6 & 7 & 8 \\\\\n59|\t9 & 10 & 11 & 12 \\\\\n60|\t13 & 14 & 15 & 16\n61|\t\\end{Bmatrix}\n62|\t$$\n63|- vmatrix\n64|\t$$\n65|\t\\begin{vmatrix}\n66|\t1 & 2 & 3 & 4 \\\\\n67|\t5 & 6 & 7 & 8 \\\\\n68|\t9 & 10 & 11 & 12 \\\\\n69|\t13 & 14 & 15 & 16\n70|\t\\end{vmatrix}\n71|\t$$\n72|- Vmatrix\n73|\t$$\n74|\t\\begin{Vmatrix}\n75|\t1 & 2 & 3 & 4 \\\\\n76|\t5 & 6 & 7 & 8 \\\\\n77|\t9 & 10 & 11 & 12 \\\\\n78|\t13 & 14 & 15 & 16\n79|\t\\end{Vmatrix}\n80|\t$$\n81|- array\n82|\t$$\n83|\t\\begin{array}\n84|\t1 & 2 & 3 & 4 \\\\\n85|\t5 & 6 & 7 & 8 \\\\\n86|\t9 & 10 & 11 & 12 \\\\\n87|\t13 & 14 & 15 & 16\n88|\t\\end{array}\n89|\t$$\n```\n```Notes/20240713145441589.md\n1|---\n2|tags:\n3|  - 试试/好家\n4|title: 测试手动标签 2\n5|aliases:\n6|  - 测试手动标签 2\n7|ctime: 2024-07-13T14:54:41\n8|mtime: 2024-07-13T14:58:54\n9|---\n10|\n11|# 测试手动标签 2\n12|\n13|再次成功！！！\n```\n```Notes/20240301233405561.md\n1|---\n2|tags:\n3|  - 临时\n4|title: 测试 5\n5|aliases:\n6|  - 测试 5\n7|ctime: 2024-03-01T23:34:05\n8|mtime: 2025-03-02T18:34:44\n9|---\n10|\n11|# 测试 5\n12|\n13|<span style=\"background-color:#DC143C\">lkajsldflklasldf</span>\n14|\n15|<span style=\"background-color:#00008B\">lkasjdlfklkaslekflaskdfladf</span>\n16|\n17|$$\n18|\\begin{cases}\\vec{a}  \\\\  \\vec{b}\\end{cases}\n19|$$\n20|\n21|$$\n22|\\begin{align}\n23|\\Sigma_{asdf}^{asdf}{lkasdf} \\\\\n24|\\sum_{asdf}^{fdsa}{sdf}\n25|\\end{align}\n26|$$\n27|\n28|![](./20240111222346304.md#^123445)\n```\n```Notes/20240713144053291.md\n1|---\n2|tags:\n3|  - 试试/好家\n4|title: 测试手动标签\n5|aliases:\n6|  - 测试手动标签\n7|ctime: 2024-07-13T14:40:53\n8|mtime: 2024-07-13T14:58:55\n9|---\n10|\n11|# 测试手动标签\n12|\n13|测试成功。\n```\n```Notes/20240101095959935.md\n37|![测试 4](./20240111222346303.md)\n38|\n39|[00:01:41.95，当前窗口打开](obsidian://advanced-uri?eval=const%20%7Bexec%7D%20%3D%20require%28%27child_process%27%29%3B%0Aexec%28%60%22C%3A%2FProgram%20Files%2FDAUM%2FPotPlayer%2FPotPlayerMini64.exe%22%20%22C%3A%2FFiles%2FLong%2F%E7%BE%8E%E5%8C%96%2F%E8%A7%86%E9%A2%91%E5%A3%81%E7%BA%B8%2F%E4%BA%8C%E6%AC%A1%E5%85%83%2FLing_Meng.mp4%22%20%2Fcurrent%20%2Fseek%3D00%3A01%3A41.95%60%2C%20async%20%28error%2C%20stdout%2C%20stderr%29%20%3D%3E%20%7B%7D%29)\n40|\n41|[00:00:19.461，新窗口打开](obsidian://advanced-uri?eval=const%20%7Bexec%7D%20%3D%20require%28%27child_process%27%29%3B%0Aexec%28%60%22C%3A%2FProgram%20Files%2FDAUM%2FPotPlayer%2FPotPlayerMini64.exe%22%20%22C%3A%2FFiles%2FLong%2F%E7%BE%8E%E5%8C%96%2F%E8%A7%86%E9%A2%91%E5%A3%81%E7%BA%B8%2F%E4%BA%8C%E6%AC%A1%E5%85%83%2FCold_Sword.mp4%22%20%2Fseek%3D00%3A00%3A19.461%60%2C%20async%20%28error%2C%20stdout%2C%20stderr%29%20%3D%3E%20%7B%7D%29)\n42|\n43|[author :: ImmortalSty]\n```\n```Notes/20250507174358153.md\n1|---\n2|tags:\n3|  - 试试\n4|title: 测试 anyblock\n5|aliases:\n6|  - 测试 anyblock\n7|ctime: 2025-05-07T17:43:58\n8|mtime: 2025-05-31T15:47:58\n9|---\n10|\n11|# 测试 anyblock\n12|\n13|::: !note\n14|\n15|asdf\n16|\n17|- lkasdjf\n18|- lkasdflkd\n19|\t- lkjsdf\n20|- lksjdf\n21|\n22|:::\n23|\n24|lkasdf\n25|\n26|::: note 标题\n27|\n28|测试 anyblock 的 callout。\n29|\n30|- 还有列表\n31|\n32|```c\n33|#include <iostream>\n34|\n35|int main()\n36|{\n37|\tstd::cout << \"Hello World!\" << std::endl;\n38|\t\n39|\treturn 0;\n40|}\n41|```\n42|\n43|:::\n44|\n45|> [!missing] 标题\n46|>\n47|> 测试\n48|\n49|> [!tip] 标题\n50|>\n51|> 再测试\n52|\n53|::: col\n54|\n55|@col\n56|\n57|[add([!note] 标题)|quote]\n58|\n59|- lkasdf\n60|- lksdf\n61|\n62|@col\n63|\n64|[add([!note] 标题)|quote]\n65|\n66|- laksdf\n67|\t- lksdf\n68|\t- lkasdf\n69|- lksdf\n70|\t- lkjsadf\n71|\n72|:::\n73|\n74|[exTable]\n75|\n76|| lkasdf | <      | lkasdf |\n77|| ------ | ------ | ------ |\n78|| lkasdf | lkasdf | <      |\n79|| ^      | lksdf  | lkasdf |\n80|\n81|::: addList\n82|\n83|lkasdf\n84|\n85|lksdf\n86|\n87|:::\n88|\n89|```python\n90|print(\"\")\n91|```\n92|\n93|::: col\n94|\n95|@col\n96|\n97|```python\n98|print(\"\")\n99|```\n100|\n101|@col\n102|\n103|`{python} print(\"\")`\n104|\n105|:::\n106|\n107|| `{python} print(\"\")` | lksdf |\n108|| -------------------- | ----- |\n109|| lksdf                | flksd |\n110|\n111|```python\n112|print(\"Hello world!\")\n```\n\n\n\n这个库是干什么的？\n\n"
+        }
+      ],
+      "id": "72e99a07-fb93-4db3-a47e-b06fe77d0a82",
+      "mentionables": [],
+      "similaritySearchResults": [
+        {
+          "id": 80,
+          "path": "Notes/20240111222346304.md",
+          "mtime": 1744636036500,
+          "content": "```\n\n[测试 2](./20231227175913426.md)\n\n![20240101095959935-20240121125920863-Pasted image 20240121125920](../Images/20240101095959935-20240121125920863-Pasted%20image%2020240121125920.png)\n\n[asdf](obsidian://actions-uri/note/get-active?vault=标签试运行&x-success=quicker%3Arunaction%3A7e19743c-a708-4bec-a42f-ce88fc46f31c%3Fob-action-uri-runstatus%3D1%26vaultName%3D%E6%A0%87%E7%AD%BE%E8%AF%95%E8%BF%90%E8%A1%8C%26trulyParam%3Dob-action-uri-run&x-error=quicker%3Arunaction%3A7e19743c-a708-4bec-a42f-ce88fc46f31c%3Fob-action-uri-runstatus%3D0)\n\n```dataview\ntable\nfrom \"asdf\"\n```\n\n^123445\n\nabc^aaa\n\n$$\n\\alpha + \\beta = \\gamma\n$$\n\n---\n\n# asdfb\n\n**lkasdf**:\njlaksdf\n\n1. lkasdf\n2. lkajsdf\n3. lkajsdf\n\n---\n\n1. lkasdf\n2. lkasdf\n\n`测试一下复制`",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 135,
+            "startLine": 98
+          },
+          "similarity": 0.4818603932304131
+        },
+        {
+          "id": 59,
+          "path": "Notes/20240713152045715.md",
+          "mtime": 1744636036627,
+          "content": "---\ntags:\n  - 试试/好家伙\n  - 咋了/试试呗/逝逝呗/好啊\ntitle: 测试命名空间\naliases:\n  - 测试命名空间\nctime: 2024-07-13T15:20:45\nmtime: 2024-07-13T15:20:45\n---\n\n# 测试命名空间\n\n测试成功。",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 14,
+            "startLine": 1
+          },
+          "similarity": 0.481841923971166
+        },
+        {
+          "id": 69,
+          "path": "Notes/20240101095959935.md",
+          "mtime": 1744636036496,
+          "content": "---\ntags:\n  - 试试/好家伙\n  - 咋了/试试呗/逝逝呗/好啊\ntitle: 测试 3\naliases:\n  - 测试 3\nctime: 2024-01-01T09:59:59\nmtime: 2024-11-01T10:12:33\n---\n\n# 测试 3",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 12,
+            "startLine": 1
+          },
+          "similarity": 0.47971869361227004
+        },
+        {
+          "id": 60,
+          "path": "Notes/20240713145821834.md",
+          "mtime": 1744636036622,
+          "content": "---\ntags:\n  - 试试/好家/怎么讲/好不好\ntitle: 反复测试\naliases:\n  - 反复测试\nctime: 2024-07-13T14:58:21\nmtime: 2024-07-13T14:58:50\n---\n\n# 反复测试\n\n我真牛啊！！！",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 13,
+            "startLine": 1
+          },
+          "similarity": 0.47777925398522036
+        },
+        {
+          "id": 84,
+          "path": "Notes/20231227175836027.md",
+          "mtime": 1745238044055,
+          "content": "- pmatrix:\n\t$$\n\t\\begin{pmatrix}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{pmatrix}\n\t$$\n- cases\n\t$$\n\t\\begin{cases}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{cases}\n\t$$\n- align\n\t$$\n\t\\begin{align}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{align}\n\t$$\n- bmatrix\n\t$$\n\t\\begin{bmatrix}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{bmatrix}\n\t$$\n- Bmatrix\n\t$$\n\t\\begin{Bmatrix}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{Bmatrix}\n\t$$\n- vmatrix\n\t$$\n\t\\begin{vmatrix}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{vmatrix}\n\t$$\n- Vmatrix\n\t$$\n\t\\begin{Vmatrix}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{Vmatrix}\n\t$$\n- array\n\t$$\n\t\\begin{array}\n\t1 & 2 & 3 & 4 \\\\\n\t5 & 6 & 7 & 8 \\\\\n\t9 & 10 & 11 & 12 \\\\\n\t13 & 14 & 15 & 16\n\t\\end{array}\n\t$$",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 89,
+            "startLine": 18
+          },
+          "similarity": 0.47640200578987835
+        },
+        {
+          "id": 61,
+          "path": "Notes/20240713145441589.md",
+          "mtime": 1744636036616,
+          "content": "---\ntags:\n  - 试试/好家\ntitle: 测试手动标签 2\naliases:\n  - 测试手动标签 2\nctime: 2024-07-13T14:54:41\nmtime: 2024-07-13T14:58:54\n---\n\n# 测试手动标签 2\n\n再次成功！！！",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 13,
+            "startLine": 1
+          },
+          "similarity": 0.46877105160806787
+        },
+        {
+          "id": 76,
+          "path": "Notes/20240301233405561.md",
+          "mtime": 1744636036521,
+          "content": "---\ntags:\n  - 临时\ntitle: 测试 5\naliases:\n  - 测试 5\nctime: 2024-03-01T23:34:05\nmtime: 2025-03-02T18:34:44\n---\n\n# 测试 5\n\n<span style=\"background-color:#DC143C\">lkajsldflklasldf</span>\n\n<span style=\"background-color:#00008B\">lkasjdlfklkaslekflaskdfladf</span>\n\n$$\n\\begin{cases}\\vec{a}  \\\\  \\vec{b}\\end{cases}\n$$\n\n$$\n\\begin{align}\n\\Sigma_{asdf}^{asdf}{lkasdf} \\\\\n\\sum_{asdf}^{fdsa}{sdf}\n\\end{align}\n$$\n\n![](./20240111222346304.md#^123445)",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 28,
+            "startLine": 1
+          },
+          "similarity": 0.4657625678435917
+        },
+        {
+          "id": 62,
+          "path": "Notes/20240713144053291.md",
+          "mtime": 1744636036613,
+          "content": "---\ntags:\n  - 试试/好家\ntitle: 测试手动标签\naliases:\n  - 测试手动标签\nctime: 2024-07-13T14:40:53\nmtime: 2024-07-13T14:58:55\n---\n\n# 测试手动标签\n\n测试成功。",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 13,
+            "startLine": 1
+          },
+          "similarity": 0.4609405705658224
+        },
+        {
+          "id": 73,
+          "path": "Notes/20240101095959935.md",
+          "mtime": 1744636036496,
+          "content": "![测试 4](./20240111222346303.md)\n\n[00:01:41.95，当前窗口打开](obsidian://advanced-uri?eval=const%20%7Bexec%7D%20%3D%20require%28%27child_process%27%29%3B%0Aexec%28%60%22C%3A%2FProgram%20Files%2FDAUM%2FPotPlayer%2FPotPlayerMini64.exe%22%20%22C%3A%2FFiles%2FLong%2F%E7%BE%8E%E5%8C%96%2F%E8%A7%86%E9%A2%91%E5%A3%81%E7%BA%B8%2F%E4%BA%8C%E6%AC%A1%E5%85%83%2FLing_Meng.mp4%22%20%2Fcurrent%20%2Fseek%3D00%3A01%3A41.95%60%2C%20async%20%28error%2C%20stdout%2C%20stderr%29%20%3D%3E%20%7B%7D%29)\n\n[00:00:19.461，新窗口打开](obsidian://advanced-uri?eval=const%20%7Bexec%7D%20%3D%20require%28%27child_process%27%29%3B%0Aexec%28%60%22C%3A%2FProgram%20Files%2FDAUM%2FPotPlayer%2FPotPlayerMini64.exe%22%20%22C%3A%2FFiles%2FLong%2F%E7%BE%8E%E5%8C%96%2F%E8%A7%86%E9%A2%91%E5%A3%81%E7%BA%B8%2F%E4%BA%8C%E6%AC%A1%E5%85%83%2FCold_Sword.mp4%22%20%2Fseek%3D00%3A00%3A19.461%60%2C%20async%20%28error%2C%20stdout%2C%20stderr%29%20%3D%3E%20%7B%7D%29)\n\n[author :: ImmortalSty]",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 43,
+            "startLine": 37
+          },
+          "similarity": 0.4597411039577708
+        },
+        {
+          "id": 53,
+          "path": "Notes/20250507174358153.md",
+          "mtime": 1748684639776,
+          "content": "---\ntags:\n  - 试试\ntitle: 测试 anyblock\naliases:\n  - 测试 anyblock\nctime: 2025-05-07T17:43:58\nmtime: 2025-05-31T15:47:58\n---\n\n# 测试 anyblock\n\n::: !note\n\nasdf\n\n- lkasdjf\n- lkasdflkd\n\t- lkjsdf\n- lksjdf\n\n:::\n\nlkasdf\n\n::: note 标题\n\n测试 anyblock 的 callout。\n\n- 还有列表\n\n```c\n#include <iostream>\n\nint main()\n{\n\tstd::cout << \"Hello World!\" << std::endl;\n\t\n\treturn 0;\n}\n```\n\n:::\n\n> [!missing] 标题\n>\n> 测试\n\n> [!tip] 标题\n>\n> 再测试\n\n::: col\n\n@col\n\n[add([!note] 标题)|quote]\n\n- lkasdf\n- lksdf\n\n@col\n\n[add([!note] 标题)|quote]\n\n- laksdf\n\t- lksdf\n\t- lkasdf\n- lksdf\n\t- lkjsadf\n\n:::\n\n[exTable]\n\n| lkasdf | <      | lkasdf |\n| ------ | ------ | ------ |\n| lkasdf | lkasdf | <      |\n| ^      | lksdf  | lkasdf |\n\n::: addList\n\nlkasdf\n\nlksdf\n\n:::\n\n```python\nprint(\"\")\n```\n\n::: col\n\n@col\n\n```python\nprint(\"\")\n```\n\n@col\n\n`{python} print(\"\")`\n\n:::\n\n| `{python} print(\"\")` | lksdf |\n| -------------------- | ----- |\n| lksdf                | flksd |\n\n```python\nprint(\"Hello world!\")",
+          "model": "Qwen3-Embedding",
+          "dimension": 2560,
+          "metadata": {
+            "endLine": 112,
+            "startLine": 1
+          },
+          "similarity": 0.4576541164997451
+        }
+      ]
+    }
+  ],
+  "createdAt": 1751798813246,
+  "updatedAt": 1751798833829,
+  "schemaVersion": 1
+}
