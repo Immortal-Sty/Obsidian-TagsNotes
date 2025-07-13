@@ -1402,6 +1402,20 @@
       "enabled": false,
       "delay": "",
       "note": ""
+    },
+    {
+      "id": "css-editor",
+      "name": "CSS Editor",
+      "desc": "Edit CSS files within Obsidian. 提供直接编辑 CSS 的功能。",
+      "group": "",
+      "tags": [
+        "file",
+        "style",
+        "editing"
+      ],
+      "enabled": false,
+      "delay": "",
+      "note": ""
     }
   ],
   "HIDES": []
