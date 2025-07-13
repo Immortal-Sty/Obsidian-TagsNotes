@@ -1416,6 +1416,31 @@
       "enabled": false,
       "delay": "",
       "note": ""
+    },
+    {
+      "id": "scrolling",
+      "name": "Scrolling",
+      "desc": "Improve scrolling and keep your cursor exactly where you want it. 保持光标在屏幕中的位置，类似打字机。再次打开时记住光标位置。控制光标滚动速度。",
+      "group": "",
+      "tags": [
+        "editing"
+      ],
+      "enabled": false,
+      "delay": "",
+      "note": ""
+    },
+    {
+      "id": "pixel-perfect-image",
+      "name": "Pixel Perfect Image",
+      "desc": "Pixel perfect 100% image resizing, copy to clipboard, show image in Finder/Explorer, edit image in external editor, and much more. 在图片的右键菜单添加各种功能，非常强。",
+      "group": "",
+      "tags": [
+        "file",
+        "editing"
+      ],
+      "enabled": false,
+      "delay": "",
+      "note": ""
     }
   ],
   "HIDES": []

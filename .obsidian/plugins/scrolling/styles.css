@@ -1,0 +1,53 @@
+/*
+ *
+ * name: Scrolling
+ * id: scrolling
+ *
+ * Classes for document body:
+ * .scrolling-scrollbar-width
+ * .scrolling-visibility-hide
+ * .scrolling-visibility-scroll
+ * .scrolling-filetree-horizontal
+ *
+ * Classes for elements supporting scrolling:
+ * .scrolling-transparent
+ *
+ * Variables:
+ * --scrolling-scrollbar-width
+ *
+ */
+
+/* Hide specific scrollbars in files */
+.scrolling-visibility-hide .pdf-viewer-container::-webkit-scrollbar,
+.scrolling-visibility-hide .markdown-source-view::-webkit-scrollbar,
+.scrolling-visibility-hide .cm-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar on containers with scrolling-transparent class */
+.scrolling-visibility-scroll .scrolling-transparent::-webkit-scrollbar,
+.scrolling-visibility-scroll .scrolling-transparent::-webkit-scrollbar-thumb,
+.scrolling-visibility-scroll .scrolling-transparent::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+/* Scrollbar width */
+.scrolling-scrollbar-width *::-webkit-scrollbar {
+  width: var(--scrolling-scrollbar-width) !important;
+  height: var(--scrolling-scrollbar-width) !important;
+}
+
+/* Horizontal scrollbar for file tree */
+.scrolling-filetree-horizontal .nav-files-container {
+    overflow: auto;
+}
+
+.scrolling-filetree-horizontal .nav-files-container > div {
+    min-width: max-content;
+    min-height: max-content;
+}
+
+.scrolling-filetree-horizontal .tree-item-self .nav-file-title,
+.scrolling-filetree-horizontal .tree-item-self .nav-folder-title {
+    flex-shrink: 0;
+}

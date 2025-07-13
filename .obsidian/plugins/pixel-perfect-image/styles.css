@@ -1,0 +1,46 @@
+/* Pixel Perfect Image Plugin Styles */
+
+/* Rename Modal Styles */
+.pixel-perfect-rename-modal {
+  padding: 0.8em 1.2em;
+}
+
+.pixel-perfect-rename-modal .modal-title {
+  margin-top: 0;
+}
+
+.pixel-perfect-rename-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.pixel-perfect-rename-input {
+  width: 100%;
+}
+
+.pixel-perfect-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8em;
+  margin-top: 0.4em;
+}
+
+/* Settings Tab Styles */
+.pixel-perfect-px-suffix {
+  width: 40px;
+  text-align: left;
+  border: none;
+  background-color: transparent;
+}
+
+.pixel-perfect-zoom-value {
+  min-width: 2.5em;
+  text-align: right;
+  margin-right: 1em;
+}
+
+/* Settings page indentation for sub-settings */
+.pixel-perfect-sub-settings {
+  margin-inline-start: var(--size-4-5);
+}
