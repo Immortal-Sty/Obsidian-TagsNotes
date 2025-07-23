@@ -1,0 +1,16 @@
+{
+  "id": "d0e23ec1-3793-43a6-84e9-5111003bff27",
+  "fields": [],
+  "actions": [
+    {
+      "id": "2840f731-6270-4fed-a9fc-8529ccf50f3a",
+      "type": "createFile",
+      "targetFolder": "",
+      "fileName": "",
+      "filePath": "Template/New Note.md",
+      "contentTemplateSource": "text",
+      "content": ""
+    }
+  ],
+  "autoSubmit": false
+}

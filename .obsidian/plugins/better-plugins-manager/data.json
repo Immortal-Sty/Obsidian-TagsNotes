@@ -1441,6 +1441,21 @@
       "enabled": false,
       "delay": "",
       "note": ""
+    },
+    {
+      "id": "form-flow",
+      "name": "Form Flow",
+      "desc": "Create simple, one-action workflows — with ease. 有代替 Quickadd 和 Templater 的潜力。",
+      "group": "",
+      "tags": [
+        "file",
+        "searching",
+        "editing",
+        "Script"
+      ],
+      "enabled": false,
+      "delay": "",
+      "note": ""
     }
   ],
   "HIDES": []
