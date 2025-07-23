@@ -9,5 +9,6 @@
   "quickadd",
   "templater-obsidian",
   "cm-chs-patch",
-  "datacore"
+  "datacore",
+  "notebook-navigator"
 ]
