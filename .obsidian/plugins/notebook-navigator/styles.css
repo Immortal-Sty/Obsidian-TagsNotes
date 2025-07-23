@@ -1,0 +1,2089 @@
+/* ========================================================================
+   Notebook Navigator - Notes Style
+   ======================================================================== */
+
+/* ========================================================================
+   Fixed Height Variables for Pixel-Perfect Rendering
+   ======================================================================== */
+
+:root {
+    /* File item heights - fixed pixel values to prevent fractional rendering */
+    --nn-file-line-height: 20px; /* Height of single line of text */
+    --nn-file-padding-vertical: 8px; /* var(--size-4-2) typically equals 8px */
+    --nn-file-second-line-height: 19px; /* Height for date/preview line - tighter spacing */
+    --nn-file-preview-line-height: 18px; /* Height for multi-line preview only */
+
+    /* Font sizes - fixed pixel values to prevent scaling with Obsidian font size */
+    --nn-file-name-size: 14px; /* Fixed 14px */
+    --nn-file-small-size: 13px; /* Fixed 13px */
+
+    /* Date header heights and padding */
+    --nn-date-header-height: 35px; /* First header */
+    --nn-date-header-height-subsequent: 50px; /* Headers with margin */
+    --nn-date-header-padding-top: 24px; /* Top padding for subsequent headers */
+    --nn-date-header-padding-bottom: 6px; /* Bottom padding for subsequent headers */
+
+    /* Navigation item heights - fixed pixel values to prevent fractional rendering */
+    --nn-nav-line-height: 18px; /* Fixed line height for folder/tag names */
+    --nn-nav-padding-vertical: 5px; /* Padding to achieve 28px total height */
+    --nn-nav-item-height: 28px; /* Total height: 5px + 18px + 5px = 28px */
+
+    /* Mobile navigation heights */
+    --nn-nav-item-height-mobile: 40px; /* Total height for mobile */
+    --nn-nav-padding-vertical-mobile: 11px; /* (40px - 18px) / 2 = 11px */
+
+    /* Navigation font sizes - fixed for pixel-perfect rendering */
+    --nn-nav-font-size: 13px; /* Fixed 13px */
+    --nn-nav-icon-size: 16px; /* Fixed icon size */
+}
+
+/* ========================================================================
+   Base Layout & Container Styles
+   ======================================================================== */
+
+/* Resets Obsidian's default view-content padding for cleaner integration */
+.view-content.notebook-navigator {
+    padding: 0;
+    border: none;
+}
+
+/* Main container - establishes the plugin's layout foundation */
+.notebook-navigator {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-primary);
+    font-family: var(--font-interface);
+}
+
+/* Removes focus outline on main container for cleaner appearance */
+.notebook-navigator:focus {
+    outline: none;
+}
+
+/* Split container - creates the two-pane layout structure */
+.nn-split-container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ========================================================================
+   Pane Layout
+   ======================================================================== */
+
+/* Navigation pane - contains the folder tree navigation */
+.nn-navigation-pane {
+    flex: 0 0 auto; /* Don't grow or shrink, use explicit width */
+    min-width: 150px;
+    background-color: var(--background-secondary);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Performance optimization for virtualized content */
+    contain: layout style;
+}
+
+/* Right pane - contains the file list */
+.nn-list-pane {
+    flex: 1;
+    min-width: 150px;
+    background-color: var(--background-primary);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Performance optimization for virtualized content */
+    contain: layout style;
+}
+
+/* Resize handle - allows users to drag and resize the navigation pane */
+.nn-resize-handle {
+    width: 5px;
+    background-color: transparent;
+    cursor: col-resize;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Resize handle hover state - provides visual feedback */
+.nn-resize-handle:hover {
+    background-color: var(--interactive-accent);
+    opacity: 0.5;
+}
+
+/* Resize handle active state - stronger feedback during drag */
+.nn-resize-handle:active {
+    background-color: var(--interactive-accent);
+    opacity: 0.8;
+}
+
+/* ========================================================================
+   Header Styles
+   ======================================================================== */
+
+/* Pane headers - consistent header styling for both panes */
+.nn-pane-header {
+    padding: var(--size-4-2) var(--size-4-2);
+    border-bottom: 1px solid var(--background-modifier-border);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: var(--background-primary);
+    min-height: 32px;
+    height: 32px;
+}
+
+/* File pane header needs flex layout for title and buttons */
+.nn-list-pane .nn-pane-header > .nn-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Navigation pane header - matches folder tree background for visual consistency */
+.nn-navigation-pane .nn-pane-header {
+    background-color: var(--background-secondary);
+}
+
+/* Remove left padding from file pane header when navigation pane is visible */
+.nn-list-pane .nn-pane-header {
+    padding-left: 0;
+}
+
+/* Header actions container - groups action buttons in headers */
+.nn-header-actions {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+/* Desktop pane header title */
+.nn-pane-header-title {
+    font-size: var(--nn-nav-font-size); /* Use nav font size (13px) to match folder items */
+    font-weight: 600;
+    color: var(--text-muted);
+    /* Match date header padding */
+    padding-left: var(--size-4-3);
+    /* Text overflow with ellipsis like file names */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1; /* Take remaining space */
+    display: flex;
+    align-items: center;
+}
+
+/* Icon in pane header */
+.nn-pane-header-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin-inline-end: var(--size-4-2);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+}
+
+/* Ensure pane header icon SVG matches icon button size */
+.nn-pane-header-icon svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+/* Emoji icon in pane header */
+.nn-pane-header-icon.nn-emoji-icon {
+    font-size: var(--icon-size);
+    line-height: var(--icon-size);
+    text-align: center;
+    justify-content: center;
+}
+
+/* Text in pane header - matches folder name styling */
+.nn-pane-header-text {
+    line-height: var(--nn-nav-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+}
+
+/* ========================================================================
+   Button Styles
+   ======================================================================== */
+
+/* Icon button base style - transparent buttons matching Obsidian's design */
+.nn-icon-button {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: var(--radius-s);
+    padding: var(--size-2-2) var(--size-4-1);
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Reduce button padding in headers to prevent overflow */
+.nn-header-actions button.nn-icon-button {
+    padding: 1px 7px;
+    width: 30px;
+    height: 28px;
+}
+
+/* iPad-specific adjustment for icon buttons in headers */
+@media (min-width: 768px) {
+    .notebook-navigator-mobile .nn-header-actions button.nn-icon-button {
+        /* Maintain same dimensions as desktop for consistency */
+        padding: 1px 7px;
+        width: 30px;
+        height: 28px;
+    }
+}
+
+/* Icon button hover state - subtle background on hover - desktop only */
+.nn-desktop .nn-icon-button:hover {
+    background-color: var(--background-modifier-hover) !important;
+}
+
+/* Icon button active state - feedback on click */
+.nn-icon-button:active {
+    opacity: 0.8;
+}
+
+/* Icon button active state - for toggle buttons that are "ON" */
+.nn-icon-button-active {
+    background-color: var(--background-modifier-hover) !important;
+    color: var(--text-normal) !important;
+}
+
+/* Active button icon color */
+.nn-icon-button-active svg {
+    stroke: var(--text-normal) !important;
+}
+
+/* Icon button disabled state - visual indicator for unavailable actions */
+.nn-icon-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Disabled hover state - no hover effect when disabled */
+.nn-desktop .nn-icon-button:disabled:hover {
+    background-color: transparent;
+    color: var(--text-muted);
+}
+
+/* Disabled icon color - maintains muted appearance */
+.nn-desktop .nn-icon-button:disabled:hover svg {
+    stroke: var(--text-muted);
+}
+
+/* Icon styling - consistent size and appearance for all button icons */
+.nn-icon-button svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    stroke: var(--text-muted);
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Remove line-height from icon span to prevent vertical offset */
+.nn-icon-button > span {
+    line-height: 0;
+}
+
+/* ========================================================================
+   Navigation Pane Scroller
+   ======================================================================== */
+
+/* Scroller container for both folder tree and tag list */
+.nn-navigation-pane-scroller {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--size-4-1) 0;
+    background-color: var(--background-secondary);
+    line-height: 1; /* Reset to 1 - we'll use fixed line-heights on individual elements */
+    /* Ensure scroll events work properly with virtualization */
+    position: relative;
+}
+
+/* ========================================================================
+   Folder Tree Styles
+   ======================================================================== */
+
+/* Note: Navigation pane scroller styles are defined above in the Navigation Pane Scroller section */
+
+/* Folder item - container for each folder in the tree */
+.nn-folder-item {
+    -webkit-user-select: none;
+    user-select: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    min-width: 0; /* Allow folder items to shrink below min-content width */
+    height: var(--nn-nav-item-height); /* Fixed height for virtualizer accuracy */
+    box-sizing: border-box;
+}
+
+/* Folder content - clickable area containing folder UI elements */
+.nn-folder-content {
+    display: flex;
+    align-items: center;
+    padding: var(--nn-nav-padding-vertical) var(--size-4-2);
+    padding-inline-start: 0; /* Remove start padding since it's on the parent */
+    cursor: pointer;
+    border-radius: var(--radius-s);
+    margin: 0;
+    background: transparent;
+    position: relative;
+    flex: 1;
+    min-width: 0; /* Critical: allows flex children to shrink below their min-content width */
+    box-sizing: border-box;
+}
+
+/* Folder content hover state - desktop only */
+.nn-desktop .nn-folder-content:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+/* Folder chevron/arrow - expand/collapse indicator */
+.nn-folder-arrow,
+.nn-folder-chevron {
+    width: var(--nn-nav-icon-size);
+    height: var(--nn-nav-icon-size);
+    margin-inline-end: var(--size-4-1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+/* Chevron states for folders without children */
+.nn-folder-chevron--no-children {
+    visibility: hidden;
+    cursor: default;
+}
+
+/* Chevron states for folders with children */
+.nn-folder-chevron--has-children {
+    visibility: visible;
+    cursor: pointer;
+}
+
+/* Folder icon - displays folder open/closed or custom icons */
+.nn-folder-icon {
+    width: var(--nn-nav-icon-size);
+    height: var(--nn-nav-icon-size);
+    margin-inline-end: var(--size-4-2);
+    flex-shrink: 0;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+}
+
+/* Smooth icon color transitions */
+.nn-folder-icon svg {
+}
+
+/* Folder name text - truncates with ellipsis on overflow */
+.nn-folder-name {
+    font-size: var(--nn-nav-font-size);
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: var(--nn-nav-line-height);
+    color: var(--text-normal);
+    unicode-bidi: plaintext; /* Proper bidirectional text handling */
+}
+
+/* Custom colored folder names - bold to indicate custom color */
+.nn-folder-name.nn-has-custom-color {
+    font-weight: 600;
+}
+
+/* Folder with folder note - underlined */
+.nn-folder-name.nn-has-folder-note {
+    text-decoration: underline;
+}
+
+/* Spacer element to push count to the end */
+.nn-folder-spacer {
+    flex: 1;
+    min-width: var(--size-4-2); /* Minimum space between name and count */
+}
+
+/* Folder file count - shows number of files in folder */
+.nn-folder-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-inline-end: var(--size-4-1);
+    flex-shrink: 0;
+}
+
+/* Folder children container - enables smooth expand/collapse animation */
+.nn-folder-children {
+    display: grid;
+    grid-template-rows: 0fr;
+    min-height: 0;
+}
+
+/* Expanded folder children - shows nested content */
+.nn-folder-children.nn-expanded {
+    grid-template-rows: 1fr;
+}
+
+/* Folder children inner wrapper - required for grid animation */
+.nn-folder-children-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ========================================================================
+   Tag List Styles
+   ======================================================================== */
+
+/* Section header for Tags */
+.nn-section-header {
+    padding: var(--size-4-3) var(--size-4-2) var(--size-4-1) var(--size-4-3);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: var(--size-4-2);
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* Tag children container - for nested tags */
+.nn-tag-children {
+    display: grid;
+    grid-template-rows: 0fr;
+    min-height: 0;
+}
+
+/* Expanded tag children - shows nested tags */
+.nn-tag-children.nn-expanded {
+    grid-template-rows: 1fr;
+}
+
+/* Tag children inner wrapper - required for grid animation */
+.nn-tag-children-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ========================================================================
+   File List Styles
+   ======================================================================== */
+
+/* File list container - scrollable area for files */
+.nn-list-pane-scroller {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    background-color: var(--background-primary);
+}
+
+/* File item - container for each file in the list */
+.nn-file-item {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    position: relative;
+}
+
+/* Remove shadows for clean Apple Notes aesthetic */
+.nn-file-item,
+.nn-desktop .nn-file-item:hover {
+    box-shadow: none;
+}
+
+/* File content wrapper - contains all file information */
+.nn-file-content {
+    padding: var(--nn-file-padding-vertical) var(--size-4-3);
+    margin: 0px var(--size-4-2);
+    border-radius: var(--radius-m);
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-4-1);
+    align-items: center;
+    position: relative;
+}
+
+/* Virtual list file separator */
+.nn-virtual-file-item:not(.nn-last-file)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: var(--size-4-5);
+    inset-inline-end: var(--size-4-5);
+    height: 1px;
+    background-color: var(--background-modifier-border);
+    z-index: 100; /* Very high to ensure it's always on top */
+    pointer-events: none; /* Ensure it doesn't interfere with clicks */
+}
+
+/* Hide separator when current item is selected but doesn't have selected below */
+.nn-virtual-file-item:has(.nn-file-item.nn-selected:not(.nn-has-selected-below))::after {
+    display: none;
+}
+
+/* Hide separator of previous item when current is selected but doesn't have selected above */
+.nn-virtual-file-item:has(+ .nn-virtual-file-item .nn-file-item.nn-selected:not(.nn-has-selected-above))::after {
+    display: none;
+}
+
+/* File text content - left side container for name and preview */
+.nn-file-text-content {
+    flex: 1;
+    min-width: 0; /* Enable text truncation */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    order: 1; /* Ensure it appears on the left */
+    min-height: 42px; /* Match feature image height for consistent item heights */
+    justify-content: flex-start; /* Top-align content */
+}
+
+/* File name - primary text with ellipsis overflow */
+.nn-file-name {
+    font-size: var(--nn-file-name-size);
+    font-weight: 600;
+    color: var(--text-normal);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--filename-rows, 1);
+    -webkit-box-orient: vertical;
+    line-height: var(--nn-file-line-height);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    unicode-bidi: plaintext; /* Proper bidirectional text handling */
+    /* Fixed height: always take up configured number of lines */
+    min-height: calc(var(--nn-file-line-height) * var(--filename-rows, 1));
+    height: calc(var(--nn-file-line-height) * var(--filename-rows, 1));
+}
+
+/* Dark mode file name - consistent color */
+.theme-dark .nn-file-name {
+    color: var(--text-normal);
+}
+
+/* Second line container - holds date and preview text */
+.nn-file-second-line {
+    display: flex;
+    align-items: baseline; /* Align text on same baseline */
+    gap: var(--size-4-1);
+}
+
+/* File date - modification date display */
+.nn-file-date {
+    font-size: var(--nn-file-small-size);
+    color: var(--text-normal);
+    flex-shrink: 1; /* Allow date to shrink when space is limited */
+    white-space: nowrap;
+    margin-inline-end: var(--size-4-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; /* Allow shrinking below content size */
+    max-width: 150px; /* Reasonable max width for dates */
+    line-height: var(--nn-file-second-line-height);
+}
+
+/* Dark mode file date */
+.theme-dark .nn-file-date {
+    color: var(--text-normal);
+}
+
+/* File preview text - secondary line showing file content */
+.nn-file-preview {
+    font-size: var(--nn-file-small-size);
+    color: var(--text-muted);
+    line-height: var(--nn-file-preview-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--preview-rows, 1);
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    flex: 1;
+}
+
+/* Multi-line preview - always take up configured number of lines */
+.nn-file-preview:not(.nn-file-second-line .nn-file-preview) {
+    min-height: calc(var(--nn-file-preview-line-height) * var(--preview-rows, 1));
+    height: calc(var(--nn-file-preview-line-height) * var(--preview-rows, 1));
+}
+
+/* Preview on same line as date - match date line-height for alignment */
+.nn-file-second-line .nn-file-preview {
+    line-height: var(--nn-file-second-line-height);
+}
+
+/* Date below preview - when preview has 2+ lines */
+.nn-file-date-below {
+    margin-right: 0;
+    max-width: none;
+    line-height: var(--nn-file-second-line-height); /* Consistent line height */
+}
+
+/* Folder indicator - shows parent folder for files from subfolders */
+.nn-file-folder {
+    font-size: var(--nn-file-small-size);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-1);
+    overflow: hidden;
+    line-height: var(--nn-file-second-line-height); /* Use second line height for consistent spacing */
+}
+
+/* Dark mode folder indicator */
+.theme-dark .nn-file-folder {
+    color: var(--text-muted);
+}
+
+/* Folder indicator text */
+.nn-file-folder span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Folder icon styling */
+.nn-file-folder-icon {
+    width: calc(var(--icon-size) * 0.8);
+    height: calc(var(--icon-size) * 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ========================================================================
+   Slim Mode Styles - When date, preview, and image are all disabled
+   ======================================================================== */
+
+/* Slim file item - more compact list appearance */
+.nn-file-item.nn-slim .nn-file-content {
+    padding: var(--nn-file-padding-vertical) var(--size-4-3);
+}
+
+/* Slim file name - no bold, smaller font like folder items */
+.nn-file-item.nn-slim .nn-file-name {
+    font-size: var(--nn-file-small-size);
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: var(--nn-file-line-height);
+}
+
+/* Selected slim file - maintain selection styles */
+.nn-file-item.nn-slim.nn-selected .nn-file-name {
+    color: var(--text-normal);
+}
+
+/* Dark mode slim file name */
+.theme-dark .nn-file-item.nn-slim .nn-file-name {
+    color: var(--text-normal);
+}
+
+/* ========================================================================
+   Feature Image Styles
+   ======================================================================== */
+
+/* Feature image container - right-aligned image thumbnail */
+.nn-feature-image {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: var(--radius-s);
+    overflow: hidden;
+    background-color: var(--background-secondary-alt);
+    position: relative;
+    order: 2; /* Ensure it appears on the right */
+}
+
+/* Feature image element - covers container with proper aspect ratio */
+.nn-feature-image-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+/* Selected file image - slightly transparent when selected */
+.nn-file-item.nn-selected .nn-feature-image {
+    opacity: 0.9;
+}
+
+/* File extension badge - shown for non-markdown/non-image files */
+.nn-file-extension-badge {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-secondary);
+    font-family: var(--font-monospace);
+}
+
+.nn-file-extension-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* ========================================================================
+   Date Group Headers
+   ======================================================================== */
+
+/* Date group headers - sticky headers for grouped files */
+.nn-date-group-header {
+    height: var(--nn-date-header-height-subsequent);
+    box-sizing: border-box;
+    padding: var(--nn-date-header-padding-top) var(--size-4-3) var(--nn-date-header-padding-bottom) var(--size-4-3);
+    font-size: var(--nn-file-small-size);
+    font-weight: 600;
+    color: var(--text-muted);
+    background-color: var(--background-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* First date header - no top margin or extra padding for first group */
+.nn-date-group-header.nn-first-header {
+    height: var(--nn-date-header-height);
+    padding: 0 var(--size-4-3);
+    align-items: center;
+}
+
+/* Virtual item wrapper - ensures proper rendering for virtualized items */
+.nn-virtual-item {
+    /* Force pixel snapping for crisp rendering */
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Virtual list item - absolute positioning for list pane items */
+.nn-list-pane-scroller .nn-virtual-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* ========================================================================
+   Empty State
+   ======================================================================== */
+
+/* Empty state container - shown when no files in folder */
+.nn-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--size-4-10) var(--size-4-5);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Empty state message text */
+.nn-empty-message {
+    text-align: center;
+}
+
+/* ========================================================================
+   Selection States
+   ======================================================================== */
+
+/* Selected file background pseudo-element - better control over styling */
+.nn-file-item.nn-selected .nn-file-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    bottom: 0; /* Extend all the way down */
+    background-color: var(--text-selection);
+    border-radius: var(--radius-m);
+    z-index: 0; /* Below separator lines */
+}
+
+/* Adjust rounded corners for multiselection */
+.nn-file-item.nn-selected.nn-has-selected-above .nn-file-content::before {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.nn-file-item.nn-selected.nn-has-selected-below .nn-file-content::before {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Selected folder - transparent background for pseudo-element approach */
+.nn-folder-item.nn-selected > .nn-folder-content {
+    position: relative;
+    background: transparent;
+}
+
+/* Selected folder background - uses pseudo-element for better control */
+.nn-folder-item.nn-selected > .nn-folder-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    bottom: 0;
+    background-color: var(--text-selection);
+    border-radius: var(--radius-s);
+    z-index: 0;
+}
+
+/* Selected folder content z-index - ensures text appears above background */
+.nn-folder-item.nn-selected > .nn-folder-content > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Keep consistent text color for selected folders */
+.nn-folder-item.nn-selected .nn-folder-name {
+    color: var(--text-normal);
+}
+
+/* Selected folder icon - maintains muted color */
+.nn-folder-item.nn-selected .nn-folder-icon {
+    color: var(--text-muted);
+}
+
+/* Selected folder count - maintains muted color */
+.nn-folder-item.nn-selected .nn-folder-count {
+    color: var(--text-muted);
+}
+
+/* Selected file content z-index - ensures content above background */
+.nn-file-item.nn-selected .nn-file-content > * {
+    position: relative;
+    z-index: 5; /* Above selection background but below separators */
+}
+
+/* Selected file text colors - maintains readability */
+.nn-file-item.nn-selected .nn-file-name {
+    color: var(--text-normal);
+}
+
+.nn-file-item.nn-selected .nn-file-date {
+    color: var(--text-normal);
+}
+
+.nn-file-item.nn-selected .nn-file-preview {
+    color: var(--text-muted);
+}
+
+.nn-file-item.nn-selected .nn-file-folder {
+    color: var(--text-muted);
+}
+
+/* ========================================================================
+   Focus States
+   ======================================================================== */
+
+/* Focused folder - no outline for cleaner Apple Notes style */
+.nn-folder-item.nn-focused > .nn-folder-content {
+    /* No outline for cleaner look */
+}
+
+/* Focused file - no outline for cleaner appearance */
+.nn-file-item.nn-focused {
+    /* No outline for cleaner Notes style */
+}
+
+/* Dimmed selections - apply to all these cases:
+   1. Navigator unfocused (all selections dimmed)
+   2. Navigator focused but inactive pane (cross-pane dimming) */
+.nn-split-container[data-navigator-focused='false'] .nn-file-item.nn-selected .nn-file-content::before,
+.nn-split-container[data-navigator-focused='false'] .nn-folder-item.nn-selected > .nn-folder-content::before,
+.nn-split-container[data-navigator-focused='true'][data-focus-pane='navigation'] .nn-file-item.nn-selected .nn-file-content::before,
+.nn-split-container[data-navigator-focused='true'][data-focus-pane='files'] .nn-folder-item.nn-selected > .nn-folder-content::before {
+    background-color: var(--background-modifier-hover);
+}
+
+/* ========================================================================
+   Hover States
+   ======================================================================== */
+
+/* File hover states - maintains transparency - desktop only */
+.nn-desktop .nn-file-item:hover .nn-file-content {
+    background-color: transparent;
+}
+
+.nn-desktop .nn-file-item.nn-selected:hover .nn-file-content,
+.theme-dark .nn-desktop .nn-file-item.nn-selected:hover .nn-file-content {
+    background-color: transparent;
+}
+
+/* ========================================================================
+   Drag and Drop States
+   ======================================================================== */
+
+/* Dragging state - visual feedback during drag operations */
+.nn-dragging {
+    opacity: 0.5;
+}
+
+/* Resizing state - prevents text selection during pane resize */
+body.nn-resizing {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Drag over state - highlights valid drop targets */
+.nn-folder-content.nn-drag-over {
+    background-color: var(--interactive-accent-hover);
+}
+
+/* Special visual feedback for tag drop zones */
+[data-drop-zone='tag'].nn-drag-over .nn-folder-content {
+    background-color: var(--background-modifier-success);
+}
+
+/* Different style for untagged drop zone */
+[data-drop-zone='tag'][data-tag='__untagged__'].nn-drag-over .nn-folder-content {
+    background-color: var(--background-modifier-error-hover);
+}
+
+/* Drag image container - positions the custom drag image off-screen */
+.nn-drag-image-container {
+    position: absolute;
+    left: -9999px;
+    width: 48px;
+    height: 48px;
+}
+
+/* Drag count badge - shows number of items being dragged */
+.nn-drag-count-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* File list spacer - adds spacing at the bottom of file lists */
+.nn-list-pane-scroller-spacer {
+    height: 20px;
+}
+
+/* Header actions layout variations 
+   Different layouts are needed for mobile vs desktop views:
+   - space-between: Mobile file pane (back button + folder name + actions)
+   - flex-end: Mobile folder pane (actions only, aligned right)
+*/
+.nn-header-actions--space-between {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.nn-header-actions--flex-end {
+    width: 100%;
+    justify-content: flex-end;
+}
+
+/* ========================================================================
+   Context Menu States
+   ======================================================================== */
+
+/* Context menu active folder - prepares for outline */
+.nn-folder-item.nn-context-menu-active > .nn-folder-content {
+    position: relative;
+}
+
+/* Context menu outline for folders - shows which item menu affects */
+.nn-folder-item.nn-context-menu-active:not(.nn-selected) > .nn-folder-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0px;
+    inset-inline-end: 0px;
+    bottom: 0;
+    border: 2px solid var(--text-selection);
+    border-radius: var(--radius-s);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Dark mode context menu outline for folders */
+.theme-dark .nn-folder-item.nn-context-menu-active:not(.nn-selected) > .nn-folder-content::after {
+    border-color: var(--text-selection);
+    opacity: 0.5;
+}
+
+/* Context menu active file - prepares for outline */
+.nn-file-item.nn-context-menu-active .nn-file-content {
+    position: relative;
+}
+
+/* Context menu outline for files - shows which item menu affects */
+.nn-file-item.nn-context-menu-active:not(.nn-selected) .nn-file-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0px;
+    inset-inline-end: 0px;
+    bottom: 1px; /* Account for separator line */
+    border: 2px solid var(--text-selection);
+    border-radius: var(--radius-m);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ========================================================================
+   Folder Suggestion Modal Styles
+   ======================================================================== */
+
+/* Folder item in suggestion modal */
+.nn-folder-suggest-item {
+    color: var(--text-normal);
+}
+
+/* Dark mode context menu outline for files */
+.theme-dark .nn-file-item.nn-context-menu-active:not(.nn-selected) .nn-file-content::after {
+    border-color: var(--text-selection);
+    opacity: 0.5;
+}
+
+/* ========================================================================
+   Modal Styles
+   ======================================================================== */
+
+/* Modal input field - used in rename/create dialogs */
+.nn-input {
+    width: 100%;
+    padding: var(--size-4-2) var(--size-4-3);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 14px;
+    margin: var(--size-4-4) 0;
+}
+
+/* Modal input focus state */
+.nn-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+/* Modal button container - right-aligned button group */
+.nn-button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-4-2);
+    margin-top: var(--size-4-4);
+}
+
+/* ========================================================================
+   What's New Modal
+   ======================================================================== */
+
+/* What's new modal width */
+.modal.nn-whats-new-modal {
+    width: 600px;
+    max-width: calc(100vw - 40px);
+}
+
+/* What's new content layout */
+.nn-whats-new-modal .modal-content {
+    padding: var(--size-4-4);
+}
+
+/* What's new header */
+.nn-whats-new-header {
+    margin-bottom: var(--size-4-4);
+}
+
+/* What's new scrollable container */
+.nn-whats-new-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 0;
+    padding-right: var(--size-4-2);
+    padding-bottom: var(--size-4-4);
+}
+
+/* Version container */
+.nn-whats-new-version {
+    margin-bottom: var(--size-4-4);
+    padding-bottom: var(--size-4-4);
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* Version container - last child no border */
+.nn-whats-new-version:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Version header */
+.nn-whats-new-version h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-normal);
+    margin: 0 0 var(--size-4-1) 0;
+}
+
+/* Feature list */
+.nn-whats-new-features {
+    margin-left: var(--size-4-4);
+}
+
+/* What's new divider */
+.nn-whats-new-divider {
+    border-top: 1px solid var(--background-modifier-border);
+    margin-top: 0;
+    margin-bottom: var(--size-4-4);
+}
+
+/* Version date */
+.nn-whats-new-date {
+    color: var(--text-muted);
+    font-size: 12px;
+    display: block;
+    margin-bottom: var(--size-4-2);
+}
+
+/* Feature list */
+.nn-whats-new-version ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: var(--size-4-4);
+}
+
+/* Feature list item */
+.nn-whats-new-version li {
+    margin-bottom: var(--size-4-1);
+    color: var(--text-normal);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Support container */
+.nn-whats-new-support {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Support text */
+.nn-whats-new-support-text {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: var(--size-4-3);
+}
+
+/* Button container */
+.nn-whats-new-buttons {
+    display: flex;
+    gap: var(--size-4-2);
+    margin-top: var(--size-4-3);
+    justify-content: center;
+}
+
+/* Support button styling */
+.nn-support-button-small {
+    font-size: 12px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .modal.nn-whats-new-modal {
+        width: calc(100vw - 40px);
+        max-width: calc(100vw - 40px);
+        margin: 0 auto;
+    }
+
+    .nn-whats-new-modal .modal-content {
+        padding: var(--size-4-3);
+    }
+
+    .nn-whats-new-scroll {
+        max-height: 300px;
+        padding-right: var(--size-4-1);
+    }
+}
+
+/* ========================================================================
+   Icon Picker Modal
+   ======================================================================== */
+
+/* Icon picker modal width - adjust for mobile */
+.modal.nn-icon-picker-modal {
+    width: 480px;
+    max-width: calc(100vw - 40px);
+}
+
+/* Icon picker content layout */
+.nn-icon-picker-modal .modal-content {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Icon picker modal height control */
+.nn-icon-picker-modal .modal {
+    height: auto;
+}
+
+/* Prevent icon picker content overflow */
+.nn-icon-picker-modal .modal-content {
+    overflow: hidden;
+}
+
+/* Icon search container with bottom border */
+.nn-icon-search-container {
+    padding: var(--size-4-3);
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* Icon search input field */
+.nn-icon-search-input {
+    width: 100%;
+    padding: var(--size-4-2) var(--size-4-3);
+    font-size: 14px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+}
+
+/* Icon search input focus */
+.nn-icon-search-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+/* Icon results scrollable container */
+.nn-icon-results-container {
+    height: 280px;
+    min-height: 280px;
+    overflow-y: auto;
+    padding: var(--size-4-2);
+    flex: 0 0 auto;
+}
+
+/* Icon category headers */
+.nn-icon-section-header {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--size-4-3);
+}
+
+/* Icon grid layout - 5 columns */
+.nn-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--size-4-1);
+}
+
+/* Individual icon item */
+.nn-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--size-4-2) var(--size-4-2);
+    border-radius: var(--radius-s);
+    cursor: pointer;
+}
+
+/* Icon item hover/focus states */
+.nn-icon-item:hover,
+.nn-icon-item:focus {
+    background-color: var(--background-modifier-hover);
+    outline: none;
+}
+
+/* Icon item keyboard focus indicator */
+.nn-icon-item:focus-visible {
+    box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+
+/* Icon preview container */
+.nn-icon-item-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+}
+
+/* Icon SVG size */
+.nn-icon-item-preview svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Icon name label */
+.nn-icon-item-name {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.2;
+    max-width: 100%;
+}
+
+/* Empty search and additional icons messages */
+.nn-icon-empty-message,
+.nn-icon-more-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: var(--size-4-6);
+    font-size: 14px;
+}
+
+/* ========================================================================
+   Scrollbar Styles
+   ======================================================================== */
+
+/* Custom scrollbar width 
+   Note: Obsidian doesn't provide CSS variables for scrollbar dimensions yet,
+   so we use a hardcoded value that matches the default Obsidian scrollbar width */
+.nn-navigation-pane-scroller::-webkit-scrollbar,
+.nn-list-pane-scroller::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Scrollbar track - transparent background */
+.nn-navigation-pane-scroller::-webkit-scrollbar-track,
+.nn-list-pane-scroller::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Scrollbar thumb - visible scroll indicator */
+.nn-navigation-pane-scroller::-webkit-scrollbar-thumb,
+.nn-list-pane-scroller::-webkit-scrollbar-thumb {
+    background-color: var(--background-modifier-border);
+    border-radius: var(--radius-s);
+}
+
+/* Scrollbar thumb hover - darker on hover */
+.nn-navigation-pane-scroller::-webkit-scrollbar-thumb:hover,
+.nn-list-pane-scroller::-webkit-scrollbar-thumb:hover {
+    background-color: var(--background-modifier-border-hover);
+}
+
+/* ========================================================================
+   Virtual List Styles
+   ======================================================================== */
+
+/* Virtual container wrapper - ensures proper absolute positioning context */
+.nn-navigation-pane-scroller > div:first-child,
+.nn-list-pane-scroller > div:first-child {
+    position: relative;
+    /* Remove overflow: hidden to allow scroll events to propagate properly */
+}
+
+/* Virtual list container - holds all virtual items */
+.nn-virtual-container {
+    width: 100%;
+    position: relative;
+}
+
+/* Virtual items container */
+.nn-navigation-pane-scroller [data-index],
+.nn-list-pane-scroller [data-index] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Virtual navigation item (folders and tags) */
+.nn-virtual-nav-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Virtual file item wrapper - position relative for separator positioning */
+.nn-virtual-file-item {
+    position: relative;
+}
+
+/* ========================================================================
+   Settings Page Styles
+   ======================================================================== */
+
+/* Settings page indentation for sub-settings */
+.nn-sub-settings {
+    margin-inline-start: var(--size-4-5);
+}
+
+/* Settings section header spacing */
+.setting-item-heading {
+    margin-top: 30px;
+}
+
+/* First settings header - no top margin */
+.setting-item-heading:first-child {
+    margin-top: 0;
+}
+
+/* Utility class for conditionally hidden settings */
+.nn-setting-hidden {
+    display: none;
+}
+
+/* Informational text in settings */
+.nn-setting-info {
+    margin-top: var(--size-2-2);
+    font-size: var(--font-ui-smaller);
+    color: var(--text-normal);
+    font-weight: var(--font-semibold);
+    line-height: 1.4;
+}
+
+/* Container for additional info below settings */
+.nn-setting-info-container {
+    margin-top: var(--size-4-2);
+    margin-bottom: var(--size-4-2);
+}
+
+/* Wider text inputs for settings that benefit from more space */
+.nn-setting-wide-input input[type='text'] {
+    width: 300px;
+    max-width: 100%;
+}
+
+/* ========================================================================
+   Sponsor Button Styles
+   ======================================================================== */
+
+/* Support buttons - minimal, clean styling */
+.nn-support-button {
+}
+
+/* Support button hover - subtle opacity change */
+.nn-support-button:hover {
+    opacity: 0.8;
+}
+
+/* ========================================================================
+   Mobile Styles
+   ======================================================================== */
+
+/* Mobile-specific wide input fields - full width on mobile */
+.is-mobile .nn-setting-wide-input input[type='text'] {
+    width: 100%;
+}
+
+/* ========================================================================
+   Database Statistics Section
+   ======================================================================== */
+
+/* Container for database statistics */
+.nn-database-stats {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* Statistics text styling */
+.nn-stats-text {
+    font-size: var(--font-ui-smaller);
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Remove duplicate borders when statistics are displayed */
+.nn-stats-section {
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* Ensure proper spacing from previous sections */
+.nn-stats-section.setting-item {
+    margin-top: 0;
+}
+
+/* Mobile container - use grid for consistent structure while allowing sliding */
+.notebook-navigator-mobile .nn-split-container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Mobile panes - maintain flex structure like desktop but positioned in grid */
+.notebook-navigator-mobile .nn-navigation-pane,
+.notebook-navigator-mobile .nn-list-pane {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make navigation pane flexible on mobile to handle resize gracefully */
+.notebook-navigator-mobile .nn-navigation-pane {
+    flex: 1;
+}
+
+/* Hide resize handle on mobile */
+.notebook-navigator-mobile .nn-resize-handle {
+    display: none !important;
+}
+
+/* Mobile view states - show navigation view */
+.notebook-navigator-mobile .nn-split-container.show-navigation .nn-navigation-pane {
+    transform: translateX(0%);
+}
+.notebook-navigator-mobile .nn-split-container.show-navigation .nn-list-pane {
+    transform: translateX(100%);
+}
+
+/* Mobile view states - show files view */
+.notebook-navigator-mobile .nn-split-container.show-files .nn-navigation-pane {
+    transform: translateX(-100%);
+}
+.notebook-navigator-mobile .nn-split-container.show-files .nn-list-pane {
+    transform: translateX(0%);
+}
+
+/* Add touch-action to prevent browser gestures interfering */
+.notebook-navigator-mobile .nn-split-container {
+    -webkit-touch-action: pan-y;
+    touch-action: pan-y;
+}
+
+/* Mobile header - adjust for back button */
+.notebook-navigator-mobile .nn-pane-header {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* Mobile header back button */
+.notebook-navigator-mobile .nn-mobile-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px;
+}
+
+/* Mobile header title */
+.notebook-navigator-mobile .nn-mobile-title {
+    font-weight: 500;
+    color: var(--text-normal);
+}
+
+/* Ensure scrollers fill available space on mobile */
+.notebook-navigator-mobile .nn-navigation-pane-scroller,
+.notebook-navigator-mobile .nn-list-pane-scroller {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Note: Bottom spacing is handled by a spacer item in the virtualized list */
+
+/* Desktop single-pane mode styles */
+/* Desktop single-pane - show navigation view (hide files) */
+.nn-desktop-single-pane.show-navigation .nn-list-pane {
+    position: absolute;
+    contain: layout style paint; /* Exclude 'size' to allow virtualizer to measure properly */
+    content-visibility: hidden; /* Modern optimization */
+}
+
+/* Desktop single-pane - show files view (hide navigation) */
+.nn-desktop-single-pane.show-files .nn-navigation-pane {
+    position: absolute;
+    contain: layout style paint; /* Exclude 'size' to allow virtualizer to measure properly */
+    content-visibility: hidden; /* Modern optimization */
+}
+
+/* Disable drag and drop cursors on mobile */
+.notebook-navigator-mobile [draggable='true'] {
+    cursor: default !important;
+}
+
+/* Disable drag-over states on mobile */
+.notebook-navigator-mobile .nn-drag-over {
+    background-color: transparent !important;
+}
+
+/* Touch-friendly tap targets on mobile */
+.notebook-navigator-mobile .nn-folder-item {
+    height: var(--nn-nav-item-height-mobile); /* Fixed height instead of min-height */
+}
+
+/* Larger touch targets for chevrons on mobile */
+.notebook-navigator-mobile .nn-folder-chevron {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================================================
+   Color Picker Modal
+   ======================================================================== */
+
+/* Color picker modal width - calculated for 5 columns */
+.modal.nn-color-picker-modal {
+    width: 340px !important;
+    max-width: 340px !important;
+    min-width: 340px !important;
+}
+
+/* Color picker content layout */
+.nn-color-picker-modal .modal-content {
+    padding: var(--size-4-5);
+}
+
+/* Color picker header */
+.nn-color-picker-header {
+    margin-bottom: var(--size-4-4);
+    width: 100%;
+    text-align: center;
+}
+
+.nn-color-picker-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+/* Color grid layout - 5 columns */
+.nn-color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--size-4-3);
+}
+
+/* Individual color item */
+.nn-color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4-1);
+    padding: var(--size-4-2);
+    border-radius: var(--radius-m);
+    cursor: pointer;
+}
+
+/* Color item hover/focus states */
+.nn-color-item:hover {
+    background-color: var(--background-modifier-hover);
+    transform: scale(1.05);
+}
+
+.nn-color-item:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+
+/* Color preview circle */
+.nn-color-preview {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Apply background colors based on data attribute 
+ * NOTE: These colors must match COLOR_PALETTE in ColorPickerModal.ts
+ * This duplication is required for Obsidian plugin compliance (no JS styles)
+ */
+.nn-color-preview[data-color-value='#ef4444'] {
+    background-color: #ef4444;
+}
+.nn-color-preview[data-color-value='#f97316'] {
+    background-color: #f97316;
+}
+.nn-color-preview[data-color-value='#f59e0b'] {
+    background-color: #f59e0b;
+}
+.nn-color-preview[data-color-value='#eab308'] {
+    background-color: #eab308;
+}
+.nn-color-preview[data-color-value='#84cc16'] {
+    background-color: #84cc16;
+}
+.nn-color-preview[data-color-value='#22c55e'] {
+    background-color: #22c55e;
+}
+.nn-color-preview[data-color-value='#10b981'] {
+    background-color: #10b981;
+}
+.nn-color-preview[data-color-value='#14b8a6'] {
+    background-color: #14b8a6;
+}
+.nn-color-preview[data-color-value='#06b6d4'] {
+    background-color: #06b6d4;
+}
+.nn-color-preview[data-color-value='#0ea5e9'] {
+    background-color: #0ea5e9;
+}
+.nn-color-preview[data-color-value='#3b82f6'] {
+    background-color: #3b82f6;
+}
+.nn-color-preview[data-color-value='#6366f1'] {
+    background-color: #6366f1;
+}
+.nn-color-preview[data-color-value='#8b5cf6'] {
+    background-color: #8b5cf6;
+}
+.nn-color-preview[data-color-value='#a855f7'] {
+    background-color: #a855f7;
+}
+.nn-color-preview[data-color-value='#d946ef'] {
+    background-color: #d946ef;
+}
+.nn-color-preview[data-color-value='#ec4899'] {
+    background-color: #ec4899;
+}
+.nn-color-preview[data-color-value='#f43f5e'] {
+    background-color: #f43f5e;
+}
+.nn-color-preview[data-color-value='#6b7280'] {
+    background-color: #6b7280;
+}
+.nn-color-preview[data-color-value='#64748b'] {
+    background-color: #64748b;
+}
+.nn-color-preview[data-color-value='#78716c'] {
+    background-color: #78716c;
+}
+
+/* Color name label */
+.nn-color-name {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Dark theme adjustments for color picker */
+.theme-dark .nn-color-preview {
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================================================
+   Folder Color Styles
+   ======================================================================== */
+
+/* Smooth color transitions for folder items */
+.nn-folder-icon svg,
+.nn-folder-name {
+}
+
+/* ========================================================================
+   Mobile-specific Folder Text Size
+   ======================================================================== */
+
+/* Increase folder text size on mobile for better readability */
+.notebook-navigator-mobile .nn-folder-name {
+    font-size: 15px;
+}
+
+/* Increase folder icon size on mobile */
+.notebook-navigator-mobile .nn-folder-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Increase folder count size on mobile to match folder text */
+.notebook-navigator-mobile .nn-folder-count {
+    font-size: 13px;
+}
+
+/* Mobile emoji icon size to match regular mobile icons */
+.notebook-navigator-mobile .nn-folder-icon.nn-emoji-icon,
+.notebook-navigator-mobile .nn-tag-icon.nn-emoji-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+/* Mobile folder content padding adjustment for proper selection height */
+.notebook-navigator-mobile .nn-folder-content {
+    padding: 8px var(--size-4-2);
+    padding-inline-start: var(--size-4-1);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* ========================================================================
+   RTL (Right-to-Left) Support
+   ======================================================================== */
+
+/* Mobile slide animations for RTL */
+.mod-rtl .notebook-navigator-mobile .nn-split-container.show-navigation .nn-navigation-pane {
+    transform: translateX(0%);
+}
+.mod-rtl .notebook-navigator-mobile .nn-split-container.show-navigation .nn-list-pane {
+    transform: translateX(-100%);
+}
+
+.mod-rtl .notebook-navigator-mobile .nn-split-container.show-files .nn-navigation-pane {
+    transform: translateX(100%);
+}
+.mod-rtl .notebook-navigator-mobile .nn-split-container.show-files .nn-list-pane {
+    transform: translateX(0%);
+}
+
+/* Ensure proper text direction for file preview and dates */
+.nn-file-preview,
+.nn-file-date,
+.nn-file-folder,
+.nn-date-group-header {
+    unicode-bidi: plaintext;
+}
+
+/* Fix icon mirroring - Obsidian auto-mirrors icons, but we may need to prevent it for some icons */
+/* Currently, all our icons (chevrons, folders, etc.) should be mirrored in RTL, so no overrides needed */
+
+/* Sidebar toggle button in file pane header */
+.nn-pane-header-icon-button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+.nn-pane-header-icon-button:hover {
+    opacity: 1;
+    color: var(--text-normal);
+}
+
+.nn-icon-button-muted {
+    color: var(--text-muted);
+}
+
+/* =================================================================================
+   Icon System
+   ================================================================================= */
+
+/* Emoji icon styles */
+.nn-emoji-icon {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-align: center;
+    /* Prevent text selection of emoji icons */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Ensure emojis in navigation items display properly */
+.nn-folder-icon.nn-emoji-icon,
+.nn-tag-icon.nn-emoji-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Prevent emoji icons from being affected by text styles */
+.nn-emoji-icon {
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* Ensure proper sizing when used in buttons */
+.nn-icon-button .nn-emoji-icon {
+    width: 1em;
+    height: 1em;
+    font-size: inherit;
+}
+
+/* Icon Picker Modal Styles */
+.nn-icon-picker-modal {
+    min-height: 380px;
+}
+
+.nn-icon-provider-tabs {
+    display: flex;
+    gap: var(--size-2-2);
+    margin-bottom: var(--size-4-2);
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: var(--size-2-1);
+}
+
+.nn-icon-provider-tab {
+    padding: var(--size-2-2) var(--size-4-3);
+    cursor: pointer;
+    border-radius: var(--radius-s);
+    color: var(--text-muted);
+}
+
+.nn-icon-provider-tab:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+.nn-icon-provider-tab.nn-active {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+}
+
+/* Emoji preview in icon picker */
+.nn-icon-item-preview.nn-emoji-preview {
+    font-size: 24px;
+}
+
+/* Icon section headers for categories */
+.nn-icon-section-header {
+    font-size: var(--font-ui-small);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: var(--size-4-3);
+    margin-bottom: var(--size-2-2);
+    text-transform: capitalize;
+}
+
+.nn-icon-section-header:first-child {
+    margin-top: 0;
+}
+
+/* Custom emoji input section */
+.nn-custom-emoji-section {
+    margin-bottom: var(--size-4-4);
+}
+
+.nn-custom-emoji-input-container {
+    display: flex;
+    gap: var(--size-4-2);
+    margin: var(--size-4-2) 0;
+    align-items: center;
+}
+
+.nn-custom-emoji-input {
+    flex: 1;
+    padding: var(--size-4-2) var(--size-4-3);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: var(--font-ui-medium);
+}
+
+.nn-custom-emoji-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--interactive-accent-hover);
+}
+
+.nn-custom-emoji-actions {
+    display: flex;
+    gap: var(--size-4-2);
+    align-items: center;
+}
+
+.nn-custom-emoji-preview {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    background: var(--background-secondary);
+    font-size: 24px;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+.nn-custom-emoji-preview.nn-has-emoji {
+    border-color: var(--interactive-accent);
+    background: var(--background-modifier-hover);
+}
+
+.nn-custom-emoji-button {
+    padding: var(--size-4-2) var(--size-4-3);
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: var(--radius-s);
+    cursor: pointer;
+    font-size: var(--font-ui-small);
+}
+
+.nn-custom-emoji-button:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+.nn-custom-emoji-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nn-custom-emoji-divider {
+    height: 1px;
+    background: var(--background-modifier-border);
+    margin: var(--size-4-4) 0 var(--size-4-3) 0;
+}
