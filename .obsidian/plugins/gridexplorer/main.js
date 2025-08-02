@@ -27,167 +27,1590 @@ __export(main_exports, {
   default: () => GridExplorerPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian15 = require("obsidian");
+var import_obsidian19 = require("obsidian");
 
 // src/GridView.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 
-// src/handleKeyDown.ts
-function handleKeyDown(gridView, event) {
-  if (gridView.gridItems.length === 0)
-    return;
-  if (document.querySelector(".modal-container"))
-    return;
-  let newIndex = gridView.selectedItemIndex;
-  if (gridView.selectedItemIndex === -1 && ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
-    gridView.hasKeyboardFocus = true;
-    gridView.selectItem(0);
-    event.preventDefault();
-    return;
-  }
-  switch (event.key) {
-    case "ArrowRight":
-      if (event.altKey) {
-        if (gridView.selectedItemIndex >= 0 && gridView.selectedItemIndex < gridView.gridItems.length) {
-          gridView.gridItems[gridView.selectedItemIndex].click();
-        }
-      }
-      newIndex = Math.min(gridView.gridItems.length - 1, gridView.selectedItemIndex + 1);
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "ArrowLeft":
-      if (event.altKey) {
-        if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
-          const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-          gridView.setSource("folder", parentPath, true);
-          gridView.clearSelection();
-          event.preventDefault();
-        }
-        break;
-      }
-      newIndex = Math.max(0, gridView.selectedItemIndex - 1);
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "ArrowDown":
-      if (gridView.selectedItemIndex >= 0) {
-        const currentItem = gridView.gridItems[gridView.selectedItemIndex];
-        const currentRect = currentItem.getBoundingClientRect();
-        const currentCenterX = currentRect.left + currentRect.width / 2;
-        const currentBottom = currentRect.bottom;
-        let closestItem = -1;
-        let minDistance = Number.MAX_VALUE;
-        let minVerticalDistance = Number.MAX_VALUE;
-        for (let i = 0; i < gridView.gridItems.length; i++) {
-          if (i === gridView.selectedItemIndex)
-            continue;
-          const itemRect = gridView.gridItems[i].getBoundingClientRect();
-          const itemCenterX = itemRect.left + itemRect.width / 2;
-          const itemTop = itemRect.top;
-          if (itemTop <= currentBottom)
-            continue;
-          const horizontalDistance = Math.abs(itemCenterX - currentCenterX);
-          const verticalDistance = itemTop - currentBottom;
-          if (verticalDistance < minVerticalDistance || verticalDistance === minVerticalDistance && horizontalDistance < minDistance) {
-            minVerticalDistance = verticalDistance;
-            minDistance = horizontalDistance;
-            closestItem = i;
-          }
-        }
-        if (closestItem !== -1) {
-          newIndex = closestItem;
-        } else {
-          newIndex = gridView.gridItems.length - 1;
-        }
-      } else {
-        newIndex = 0;
-      }
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "ArrowUp":
-      if (event.altKey) {
-        if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
-          const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-          gridView.setSource("folder", parentPath, true);
-          gridView.clearSelection();
-          event.preventDefault();
-        }
-        break;
-      }
-      if (gridView.selectedItemIndex >= 0) {
-        const currentItem = gridView.gridItems[gridView.selectedItemIndex];
-        const currentRect = currentItem.getBoundingClientRect();
-        const currentCenterX = currentRect.left + currentRect.width / 2;
-        const currentTop = currentRect.top;
-        let closestItem = -1;
-        let minDistance = Number.MAX_VALUE;
-        let minVerticalDistance = Number.MAX_VALUE;
-        for (let i = 0; i < gridView.gridItems.length; i++) {
-          if (i === gridView.selectedItemIndex)
-            continue;
-          const itemRect = gridView.gridItems[i].getBoundingClientRect();
-          const itemCenterX = itemRect.left + itemRect.width / 2;
-          const itemBottom = itemRect.bottom;
-          if (itemBottom >= currentTop)
-            continue;
-          const horizontalDistance = Math.abs(itemCenterX - currentCenterX);
-          const verticalDistance = currentTop - itemBottom;
-          if (verticalDistance < minVerticalDistance || verticalDistance === minVerticalDistance && horizontalDistance < minDistance) {
-            minVerticalDistance = verticalDistance;
-            minDistance = horizontalDistance;
-            closestItem = i;
-          }
-        }
-        if (closestItem !== -1) {
-          newIndex = closestItem;
-        } else {
-          newIndex = 0;
-        }
-      } else {
-        newIndex = 0;
-      }
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "Home":
-      newIndex = 0;
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "End":
-      newIndex = gridView.gridItems.length - 1;
-      gridView.hasKeyboardFocus = true;
-      event.preventDefault();
-      break;
-    case "Enter":
-      if (gridView.selectedItemIndex >= 0 && gridView.selectedItemIndex < gridView.gridItems.length) {
-        gridView.gridItems[gridView.selectedItemIndex].click();
-      }
-      gridView.clearSelection();
-      event.preventDefault();
-      break;
-    case "Backspace":
-      if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
-        const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-        gridView.setSource("folder", parentPath, true);
-        gridView.clearSelection();
-        event.preventDefault();
-      }
-      break;
-    case "Escape":
-      if (gridView.selectedItemIndex >= 0) {
-        gridView.hasKeyboardFocus = false;
-        gridView.clearSelection();
-        event.preventDefault();
-      }
-      break;
-  }
-  if (newIndex !== gridView.selectedItemIndex) {
-    gridView.selectItem(newIndex);
-  }
+// src/renderHeaderButton.ts
+var import_obsidian5 = require("obsidian");
+
+// src/modal/folderSelectionModal.ts
+var import_obsidian2 = require("obsidian");
+
+// src/translations.ts
+function t(key) {
+  const lang = window.localStorage.getItem("language");
+  const translations = TRANSLATIONS[lang] || TRANSLATIONS["en"];
+  return translations[key] || key;
 }
+var TRANSLATIONS = {
+  "zh-TW": {
+    // 通知訊息
+    "bookmarks_plugin_disabled": "\u8ACB\u5148\u555F\u7528\u66F8\u7C64\u5916\u639B",
+    // 按鈕和標籤
+    "sorting": "\u6392\u5E8F\u65B9\u5F0F",
+    "refresh": "\u91CD\u65B0\u6574\u7406",
+    "reselect": "\u91CD\u65B0\u9078\u64C7\u4F4D\u7F6E",
+    "no_backlinks": "\u6C92\u6709\u53CD\u5411\u9023\u7D50",
+    "search": "\u641C\u5C0B",
+    "search_placeholder": "\u641C\u5C0B\u95DC\u9375\u5B57",
+    "search_current_location_only": "\u50C5\u641C\u5C0B\u76EE\u524D\u4F4D\u7F6E",
+    "search_files_name_only": "\u50C5\u641C\u5C0B\u6A94\u540D",
+    "search_media_files": "\u641C\u5C0B\u5A92\u9AD4\u6A94\u6848",
+    "cancel": "\u53D6\u6D88",
+    "new_note": "\u65B0\u589E\u7B46\u8A18",
+    "new_folder": "\u65B0\u589E\u8CC7\u6599\u593E",
+    "new_canvas": "\u65B0\u589E\u756B\u5E03",
+    "new_shortcut": "\u65B0\u589E\u6377\u5F91",
+    "delete_folder": "\u522A\u9664\u8CC7\u6599\u593E",
+    "move_folder": "\u642C\u79FB\u8CC7\u6599\u593E",
+    "select_destination_folder": "\u9078\u64C7\u76EE\u6A19\u8CC7\u6599\u593E",
+    "untitled": "\u672A\u547D\u540D",
+    "files": "\u500B\u6A94\u6848",
+    "add": "\u65B0\u589E",
+    "root": "\u6839\u76EE\u9304",
+    "sub_folders": "\u5B50\u76EE\u9304",
+    "parent_folders": "\u4E0A\u5C64\u76EE\u9304",
+    "more_options": "\u66F4\u591A\u9078\u9805",
+    "add_tag_to_search": "\u52A0\u5165\u641C\u5C0B",
+    "remove_tag_from_search": "\u5F9E\u641C\u5C0B\u4E2D\u79FB\u9664",
+    "global_search": "\u5168\u57DF\u641C\u5C0B",
+    "remove": "\u79FB\u9664",
+    "edit": "\u7DE8\u8F2F",
+    "delete": "\u522A\u9664",
+    "save": "\u5132\u5B58",
+    "option": "\u9078\u9805",
+    "add_option": "\u65B0\u589E\u9078\u9805",
+    // 視圖標題
+    "grid_view_title": "\u7DB2\u683C\u8996\u5716",
+    "bookmarks_mode": "\u66F8\u7C64",
+    "folder_mode": "\u8CC7\u6599\u593E",
+    "search_results": "\u641C\u5C0B\u7D50\u679C",
+    "backlinks_mode": "\u53CD\u5411\u9023\u7D50",
+    "outgoinglinks_mode": "\u5916\u90E8\u9023\u7D50",
+    "all_files_mode": "\u6240\u6709\u6A94\u6848",
+    "recent_files_mode": "\u6700\u8FD1\u6A94\u6848",
+    "random_note_mode": "\u96A8\u6A5F\u7B46\u8A18",
+    "tasks_mode": "\u4EFB\u52D9",
+    // 排序選項
+    "sort_name_asc": "\u540D\u7A31 (A \u2192 Z)",
+    "sort_name_desc": "\u540D\u7A31 (Z \u2192 A)",
+    "sort_mtime_desc": "\u4FEE\u6539\u6642\u9593 (\u65B0 \u2192 \u820A)",
+    "sort_mtime_asc": "\u4FEE\u6539\u6642\u9593 (\u820A \u2192 \u65B0)",
+    "sort_ctime_desc": "\u5EFA\u7ACB\u6642\u9593 (\u65B0 \u2192 \u820A)",
+    "sort_ctime_asc": "\u5EFA\u7ACB\u6642\u9593 (\u820A \u2192 \u65B0)",
+    "sort_random": "\u96A8\u6A5F\u6392\u5E8F",
+    // 設定
+    "grid_view_settings": "\u7DB2\u683C\u8996\u5716\u8A2D\u5B9A",
+    "show_media_files": "\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
+    "show_media_files_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
+    "show_video_thumbnails": "\u986F\u793A\u5F71\u7247\u7E2E\u5716",
+    "show_video_thumbnails_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u5F71\u7247\u7684\u7E2E\u5716\uFF0C\u95DC\u9589\u6642\u5C07\u986F\u793A\u64AD\u653E\u5716\u793A",
+    "show_note_in_grid": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u7B46\u8A18",
+    "show_note_in_grid_desc": "\u555F\u7528\u5F8C\uFF0C\u9EDE\u64CA\u7B46\u8A18\u6703\u76F4\u63A5\u5728\u7DB2\u683C\u4E2D\u986F\u793A\u5167\u5BB9\uFF0C\u4E0D\u555F\u7528\u5247\u9700\u8981\u6309\u4F4F Alt \u9375\u6253\u958B",
+    "show_note_tags": "\u986F\u793A\u7B46\u8A18\u6A19\u7C64",
+    "show_note_tags_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u7B46\u8A18\u7684\u6A19\u7C64",
+    "ignored_folders": "\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
+    "ignored_folders_desc": "\u5728\u9019\u88E1\u8A2D\u5B9A\u8981\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
+    "add_ignored_folder": "\u65B0\u589E\u5FFD\u7565\u8CC7\u6599\u593E",
+    "no_ignored_folders": "\u6C92\u6709\u5FFD\u7565\u7684\u8CC7\u6599\u593E\u3002",
+    "ignored_folder_patterns": "\u4EE5\u5B57\u4E32\u5FFD\u7565\u8CC7\u6599\u593E\u548C\u6A94\u6848",
+    "ignored_folder_patterns_desc": "\u4F7F\u7528\u5B57\u4E32\u6A21\u5F0F\u5FFD\u7565\u8CC7\u6599\u593E\u548C\u6A94\u6848\uFF08\u652F\u63F4\u6B63\u5247\u8868\u9054\u5F0F\uFF09",
+    "add_ignored_folder_pattern": "\u65B0\u589E\u5FFD\u7565\u8CC7\u6599\u593E\u6A21\u5F0F",
+    "ignored_folder_pattern_placeholder": "\u8F38\u5165\u8CC7\u6599\u593E\u540D\u7A31\u6216\u6B63\u5247\u8868\u9054\u5F0F",
+    "no_ignored_folder_patterns": "\u6C92\u6709\u5FFD\u7565\u7684\u8CC7\u6599\u593E\u6A21\u5F0F\u3002",
+    "default_sort_type": "\u9810\u8A2D\u6392\u5E8F\u6A21\u5F0F",
+    "default_sort_type_desc": "\u8A2D\u5B9A\u958B\u555F\u7DB2\u683C\u8996\u5716\u6642\u7684\u9810\u8A2D\u6392\u5E8F\u6A21\u5F0F",
+    "note_title_field": "\u7B46\u8A18\u6A19\u984C\u6B04\u4F4D\u540D\u7A31",
+    "note_title_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u6A19\u984C\u7684\u6B04\u4F4D\u540D\u7A31",
+    "note_summary_field": "\u7B46\u8A18\u6458\u8981\u6B04\u4F4D\u540D\u7A31",
+    "note_summary_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u6458\u8981\u7684\u6B04\u4F4D\u540D\u7A31",
+    "modified_date_field": '"\u4FEE\u6539\u6642\u9593"\u6B04\u4F4D\u540D\u7A31',
+    "modified_date_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u4FEE\u6539\u6642\u9593\u7684\u6B04\u4F4D\u540D\u7A31 (\u652F\u63F4\u591A\u500B\u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694)",
+    "created_date_field": '"\u5EFA\u7ACB\u6642\u9593"\u6B04\u4F4D\u540D\u7A31',
+    "created_date_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u5EFA\u7ACB\u6642\u9593\u7684\u6B04\u4F4D\u540D\u7A31 (\u652F\u63F4\u591A\u500B\u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694)",
+    "grid_item_width": "\u7DB2\u683C\u9805\u76EE\u5BEC\u5EA6",
+    "grid_item_width_desc": "\u8A2D\u5B9A\u7DB2\u683C\u9805\u76EE\u7684\u5BEC\u5EA6",
+    "grid_item_height": "\u7DB2\u683C\u9805\u76EE\u9AD8\u5EA6",
+    "grid_item_height_desc": "\u8A2D\u5B9A\u7DB2\u683C\u9805\u76EE\u7684\u9AD8\u5EA6 (\u8A2D\u70BA0\u6642\u70BA\u81EA\u52D5\u8ABF\u6574)",
+    "image_area_width": "\u5716\u7247\u5340\u57DF\u5BEC\u5EA6",
+    "image_area_width_desc": "\u8A2D\u5B9A\u5716\u7247\u9810\u89BD\u5340\u57DF\u7684\u5BEC\u5EA6",
+    "image_area_height": "\u5716\u7247\u5340\u57DF\u9AD8\u5EA6",
+    "image_area_height_desc": "\u8A2D\u5B9A\u5716\u7247\u9810\u89BD\u5340\u57DF\u7684\u9AD8\u5EA6",
+    "title_font_size": "\u6A19\u984C\u5B57\u9AD4\u5927\u5C0F",
+    "title_font_size_desc": "\u8A2D\u5B9A\u6A19\u984C\u5B57\u9AD4\u7684\u5927\u5C0F",
+    "summary_length": "\u6458\u8981\u9577\u5EA6",
+    "summary_length_desc": "\u8A2D\u5B9A\u6458\u8981\u7684\u9577\u5EA6",
+    "grid_item_style_settings": "\u7DB2\u683C\u9805\u76EE\u6A23\u5F0F\u8A2D\u5B9A",
+    "card_layout": "\u5361\u7247\u7248\u9762",
+    "card_layout_desc": "\u9078\u64C7\u9810\u8A2D\u7684\u5361\u7247\u7248\u9762\u6A23\u5F0F",
+    "horizontal_card": "\u6A6B\u5411\u5361\u7247",
+    "vertical_card": "\u76F4\u5411\u5361\u7247",
+    "image_position": "\u5716\u7247\u4F4D\u7F6E",
+    "image_position_desc": "\u8A2D\u5B9A\u5716\u7247\u7684\u4F4D\u7F6E",
+    "top": "\u9802\u90E8",
+    "bottom": "\u5E95\u90E8",
+    "multi_line_title": "\u6A19\u984C\u652F\u63F4\u591A\u884C\u986F\u793A",
+    "multi_line_title_desc": "\u8A2D\u5B9A\u662F\u5426\u5141\u8A31\u6A19\u984C\u591A\u884C\u986F\u793A",
+    "show_code_block_in_summary": "\u6458\u8981\u4E2D\u986F\u793ACodeBlock",
+    "show_code_block_in_summary_desc": "\u8A2D\u5B9A\u662F\u5426\u5728\u6458\u8981\u4E2D\u986F\u793ACodeBlock\u7684\u5167\u5BB9",
+    "enable_file_watcher": "\u555F\u7528\u6A94\u6848\u76E3\u63A7",
+    "enable_file_watcher_desc": "\u555F\u7528\u5F8C\u6703\u81EA\u52D5\u5075\u6E2C\u6A94\u6848\u8B8A\u66F4\u4E26\u66F4\u65B0\u8996\u5716\uFF0C\u95DC\u9589\u5F8C\u9700\u624B\u52D5\u9EDE\u64CA\u91CD\u65B0\u6574\u7406\u6309\u9215",
+    "intercept_all_tag_clicks": "\u6514\u622A\u6240\u6709\u6A19\u7C64\u9EDE\u64CA\u4E8B\u4EF6",
+    "intercept_all_tag_clicks_desc": "\u555F\u7528\u5F8C\u6703\u6514\u622A\u6240\u6709\u6A19\u7C64\u9EDE\u64CA\u4E8B\u4EF6\uFF0C\u4E26\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u6253\u958B\u6A19\u7C64",
+    "intercept_breadcrumb_clicks": "\u6514\u622A\u7B46\u8A18\u5C0E\u822A\u5217\u9EDE\u64CA\u4E8B\u4EF6",
+    "intercept_breadcrumb_clicks_desc": "\u555F\u7528\u5F8C\u6703\u6514\u622A\u7B46\u8A18\u5C0E\u822A\u5217\u9EDE\u64CA\u4E8B\u4EF6\uFF0C\u4E26\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u6253\u958B\u8DEF\u5F91",
+    "reset_to_default": "\u91CD\u7F6E\u70BA\u9810\u8A2D\u503C",
+    "settings_reset_notice": "\u8A2D\u5B9A\u503C\u5DF2\u91CD\u7F6E\u70BA\u9810\u8A2D\u503C",
+    "config_management": "\u8A2D\u5B9A\u6A94\u7BA1\u7406",
+    "config_management_desc": "\u7BA1\u7406\u8A2D\u5B9A\u6A94\u7684\u91CD\u7F6E\u3001\u532F\u51FA\u548C\u532F\u5165",
+    "ignored_folders_settings": "\u5FFD\u7565\u8CC7\u6599\u593E\u8A2D\u5B9A",
+    "display_mode_settings": "\u986F\u793A\u6A21\u5F0F\u8A2D\u5B9A",
+    "custom_mode_settings": "\u81EA\u8A02\u6A21\u5F0F\u8A2D\u5B9A",
+    "add_custom_mode": "\u65B0\u589E\u81EA\u8A02\u6A21\u5F0F",
+    "export": "\u532F\u51FA",
+    "import": "\u532F\u5165",
+    "no_custom_modes_to_export": "\u6C92\u6709\u53EF\u532F\u51FA\u7684\u81EA\u8A02\u6A21\u5F0F",
+    "import_success": "\u532F\u5165\u6210\u529F",
+    "import_error": "\u532F\u5165\u5931\u6557\uFF1A\u7121\u6548\u7684\u6A94\u6848\u683C\u5F0F",
+    "edit_custom_mode": "\u7DE8\u8F2F\u81EA\u8A02\u6A21\u5F0F",
+    "custom_mode": "\u81EA\u8A02\u6A21\u5F0F",
+    "custom_mode_display_name": "\u986F\u793A\u540D\u7A31",
+    "custom_mode_display_name_desc": "\u5728\u6A21\u5F0F\u9078\u55AE\u4E2D\u986F\u793A\u7684\u540D\u7A31",
+    "custom_mode_dataview_code": "Dataviewjs \u4EE3\u78BC",
+    "custom_mode_dataview_code_desc": "\u8F38\u5165 Dataviewjs \u4EE3\u78BC\u4EE5\u53D6\u5F97\u6A94\u6848\u5217\u8868",
+    "custom_mode_sub_options": "\u81EA\u8A02\u6A21\u5F0F\u5B50\u9078\u9805",
+    "custom_mode_fields_placeholder": "\u8F38\u5165 frontmatter \u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694 (\u5982: date,category,status) (\u53EF\u9078)",
+    "dataview_plugin_not_enabled": "Dataview \u5916\u639B\u672A\u555F\u7528",
+    "show_bookmarks_mode": "\u986F\u793A\u66F8\u7C64\u6A21\u5F0F",
+    "show_search_mode": "\u986F\u793A\u641C\u5C0B\u7D50\u679C\u6A21\u5F0F",
+    "show_backlinks_mode": "\u986F\u793A\u53CD\u5411\u9023\u7D50\u6A21\u5F0F",
+    "show_outgoinglinks_mode": "\u986F\u793A\u5916\u90E8\u9023\u7D50\u6A21\u5F0F",
+    "show_all_files_mode": "\u986F\u793A\u6240\u6709\u6A94\u6848\u6A21\u5F0F",
+    "show_recent_files_mode": "\u986F\u793A\u6700\u8FD1\u6A94\u6848\u6A21\u5F0F",
+    "recent_files_count": "\u6700\u8FD1\u6A94\u6848\u6A21\u5F0F\u986F\u793A\u7B46\u6578",
+    "show_random_note_mode": "\u986F\u793A\u96A8\u6A5F\u7B46\u8A18\u6A21\u5F0F",
+    "random_note_count": "\u96A8\u6A5F\u7B46\u8A18\u6A21\u5F0F\u986F\u793A\u7B46\u6578",
+    "random_note_notes_only": "\u50C5\u7B46\u8A18",
+    "random_note_include_media_files": "\u5305\u542B\u5A92\u9AD4\u6A94\u6848",
+    "show_tasks_mode": "\u986F\u793A\u4EFB\u52D9\u6A21\u5F0F",
+    "task_filter": "\u4EFB\u52D9\u5206\u985E",
+    "uncompleted": "\u672A\u5B8C\u6210",
+    "completed": "\u5DF2\u5B8C\u6210",
+    "foldernote_display_settings": "\u8CC7\u6599\u593E\u7B46\u8A18\u986F\u793A\u8A2D\u5B9A",
+    "foldernote_display_settings_desc": "\u8A2D\u5B9A\u8CC7\u6599\u593E\u7B46\u8A18\u7684\u986F\u793A\u65B9\u5F0F",
+    "all": "\u5168\u90E8",
+    "default": "\u9810\u8A2D",
+    "hidden": "\u96B1\u85CF",
+    // 隱藏頂部元素
+    "hide_header_elements": "\u96B1\u85CF\u9802\u90E8\u5143\u7D20",
+    // 預設開啟位置設定
+    "default_open_location": "\u9810\u8A2D\u958B\u555F\u4F4D\u7F6E",
+    "default_open_location_desc": "\u8A2D\u5B9A\u7DB2\u683C\u8996\u5716\u9810\u8A2D\u958B\u555F\u7684\u4F4D\u7F6E",
+    "open_in_left_sidebar": "\u958B\u5728\u5DE6\u5074\u908A\u6B04",
+    "open_in_right_sidebar": "\u958B\u5728\u53F3\u5074\u908A\u6B04",
+    "open_in_new_tab": "\u5728\u65B0\u5206\u9801\u958B\u555F",
+    "reuse_existing_leaf": "\u91CD\u8907\u4F7F\u7528\u5DF2\u958B\u555F\u7684\u8996\u5716",
+    "reuse_existing_leaf_desc": "\u958B\u555F\u7DB2\u683C\u8996\u5716\u6642\uFF0C\u512A\u5148\u4F7F\u7528\u5DF2\u958B\u555F\u7684\u8996\u5716\u800C\u975E\u5EFA\u7ACB\u65B0\u8996\u5716",
+    "custom_document_extensions": "\u81EA\u8A02\u6587\u4EF6\u6A94\u6848\u526F\u6A94\u540D",
+    "custom_document_extensions_desc": "\u984D\u5916\u7684\u6587\u4EF6\u526F\u6A94\u540D\uFF08\u7528\u9017\u865F\u5206\u9694\uFF0C\u4E0D\u542B\u9EDE\u865F\uFF09",
+    "custom_document_extensions_placeholder": "\u4F8B\u5982\uFF1Atxt,doc,docx",
+    "custom_folder_icon": "\u81EA\u8A02\u8CC7\u6599\u593E\u5716\u793A",
+    "custom_folder_icon_desc": "\u81EA\u8A02\u8CC7\u6599\u593E\u5716\u793A\uFF08\u4F7F\u7528Emoji\uFF09",
+    // 選擇資料夾對話框
+    "select_folders": "\u9078\u64C7\u8CC7\u6599\u593E",
+    "select_folders_to_ignore": "\u9078\u64C7\u8981\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
+    "open_grid_view": "\u958B\u555F\u7DB2\u683C\u8996\u5716",
+    "open_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u958B\u555F",
+    "open_note_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u958B\u555F\u7576\u524D\u7B46\u8A18",
+    "open_backlinks_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u958B\u555F\u53CD\u5411\u9023\u7D50",
+    "open_outgoinglinks_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u958B\u555F\u5916\u90E8\u9023\u7D50",
+    "open_recent_files_in_grid_view": "\u5728\u6700\u8FD1\u6A94\u6848\u958B\u555F\u7576\u524D\u7B46\u8A18",
+    "open_settings": "\u958B\u555F\u8A2D\u5B9A",
+    "open_new_grid_view": "\u958B\u555F\u65B0\u7DB2\u683C\u8996\u5716",
+    "open_in_new_grid_view": "\u5728\u65B0\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F",
+    "min_mode": "\u6700\u5C0F\u5316\u6A21\u5F0F",
+    "show_ignored_folders": "\u986F\u793A\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
+    "delete_note": "\u522A\u9664\u6A94\u6848",
+    "open_folder_note": "\u958B\u555F\u8CC7\u6599\u593E\u7B46\u8A18",
+    "create_folder_note": "\u5EFA\u7ACB\u8CC7\u6599\u593E\u7B46\u8A18",
+    "delete_folder_note": "\u522A\u9664\u8CC7\u6599\u593E\u7B46\u8A18",
+    "edit_folder_note_settings": "\u7DE8\u8F2F\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A",
+    "ignore_folder": "\u5FFD\u7565\u6B64\u8CC7\u6599\u593E",
+    "unignore_folder": "\u53D6\u6D88\u5FFD\u7565\u6B64\u8CC7\u6599\u593E",
+    "searching": "\u641C\u5C0B\u4E2D...",
+    "no_files": "\u6C92\u6709\u627E\u5230\u4EFB\u4F55\u6A94\u6848",
+    "filter_folders": "\u7BE9\u9078\u8CC7\u6599\u593E...",
+    // 快捷方式選擇對話框
+    "create_shortcut": "\u5EFA\u7ACB\u6377\u5F91",
+    "select_folder": "\u9078\u64C7\u8CC7\u6599\u593E",
+    "select_file": "\u9078\u64C7\u6A94\u6848",
+    "target_not_found": "\u76EE\u6A19\u672A\u627E\u5230",
+    "shortcut_created": "\u6377\u5F91\u5DF2\u5EFA\u7ACB",
+    "failed_to_create_shortcut": "\u5EFA\u7ACB\u6377\u5F91\u5931\u6557",
+    // 資料夾筆記設定對話框
+    "folder_note_settings": "\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A",
+    "folder_sort_type": "\u8CC7\u6599\u593E\u6392\u5E8F\u65B9\u5F0F",
+    "folder_sort_type_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u9810\u8A2D\u6392\u5E8F\u65B9\u5F0F",
+    "folder_color": "\u8CC7\u6599\u593E\u984F\u8272",
+    "folder_color_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u986F\u793A\u984F\u8272",
+    "folder_icon": "\u8CC7\u6599\u593E\u5716\u793A",
+    "folder_icon_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u986F\u793A\u5716\u793A",
+    "no_color": "\u7121\u984F\u8272",
+    "color_red": "\u7D05\u8272",
+    "color_orange": "\u6A59\u8272",
+    "color_yellow": "\u9EC3\u8272",
+    "color_green": "\u7DA0\u8272",
+    "color_cyan": "\u9752\u8272",
+    "color_blue": "\u85CD\u8272",
+    "color_purple": "\u7D2B\u8272",
+    "color_pink": "\u7C89\u8272",
+    "confirm": "\u78BA\u8A8D",
+    "note_attribute_settings": "\u7B46\u8A18\u5C6C\u6027\u8A2D\u5B9A",
+    "note_title": "\u7B46\u8A18\u6A19\u984C",
+    "note_title_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u986F\u793A\u6A19\u984C",
+    "note_summary": "\u7B46\u8A18\u6458\u8981",
+    "note_summary_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u6458\u8981",
+    "note_color": "\u7B46\u8A18\u984F\u8272",
+    "note_color_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u986F\u793A\u984F\u8272",
+    "set_note_attribute": "\u8A2D\u5B9A\u7B46\u8A18\u5C6C\u6027",
+    "rename_folder": "\u91CD\u65B0\u547D\u540D\u8CC7\u6599\u593E",
+    "enter_new_folder_name": "\u8F38\u5165\u65B0\u8CC7\u6599\u593E\u540D\u7A31",
+    "search_selection_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u641C\u5C0B...",
+    "show_date_dividers": "\u986F\u793A\u65E5\u671F\u5206\u9694\u5668",
+    "show_date_dividers_desc": "\u5728\u65E5\u671F\u76F8\u95DC\u6392\u5E8F\u6642\uFF0C\u5728\u4E0D\u540C\u5929\u7684\u7B2C\u4E00\u7B46\u4E4B\u524D\u986F\u793A\u65E5\u671F\u5206\u9694\u5668",
+    "date_divider_format": "\u65E5\u671F\u5206\u9694\u5668\u683C\u5F0F",
+    "date_divider_mode": "\u65E5\u671F\u5206\u9694\u5668",
+    "date_divider_mode_desc": "\u9078\u64C7\u65E5\u671F\u5206\u9694\u5668\u7684\u986F\u793A\u6A21\u5F0F",
+    "date_divider_mode_none": "\u4E0D\u4F7F\u7528",
+    "date_divider_mode_year": "\u5E74",
+    "date_divider_mode_month": "\u6708",
+    "date_divider_mode_day": "\u65E5",
+    "pinned": "\u7F6E\u9802",
+    "pinned_desc": "\u5C07\u6B64\u6A94\u6848\u56FA\u5B9A\u5728\u6700\u4E0A\u65B9",
+    "foldernote_pinned": "\u8CC7\u6599\u593E\u7B46\u8A18\u7F6E\u9802",
+    "foldernote_pinned_desc": "\u5C07\u8CC7\u6599\u593E\u7B46\u8A18\u56FA\u5B9A\u5728\u6700\u4E0A\u65B9",
+    "display_minimized": "\u6700\u5C0F\u5316\u986F\u793A",
+    "display_minimized_desc": "\u5C07\u6B64\u7B46\u8A18\u4EE5\u6700\u5C0F\u5316\u65B9\u5F0F\u986F\u793A",
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "\u5FEB\u901F\u5B58\u53D6\u8A2D\u5B9A",
+    "quick_access_folder_name": "\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
+    "quick_access_folder_desc": "\u8A2D\u5B9A\u300C\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E\u300D\u547D\u4EE4\u6240\u4F7F\u7528\u7684\u8CC7\u6599\u593E",
+    "quick_access_mode_name": "\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F",
+    "quick_access_mode_desc": "\u8A2D\u5B9A\u300C\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F\u300D\u547D\u4EE4\u6240\u4F7F\u7528\u7684\u9810\u8A2D\u6A21\u5F0F",
+    "use_quick_access_as_new_tab_view": "\u5C07\u5FEB\u901F\u5B58\u53D6\u4F5C\u70BA\u65B0\u5206\u9801\u4F7F\u7528",
+    "use_quick_access_as_new_tab_view_desc": "\u5C07\u9810\u8A2D\u7684\u300C\u65B0\u5206\u9801\u300D\u756B\u9762\u66FF\u63DB\u70BA\u6240\u9078\u5FEB\u901F\u5B58\u53D6\u9078\u9805\uFF08\u8CC7\u6599\u593E\u6216\u6A21\u5F0F\uFF09\u7684\u7DB2\u683C\u6AA2\u8996\u3002\u6B64\u8A2D\u5B9A\u50C5\u5728\u300C\u9810\u8A2D\u958B\u555F\u4F4D\u7F6E\u300D\u8A2D\u70BA\u300C\u5728\u65B0\u5206\u9801\u958B\u555F\u300D\u6642\u6709\u6548\uFF01",
+    "default_new_tab": "\u9810\u8A2D\u65B0\u5206\u9801",
+    "use_quick_access_folder": "\u4F7F\u7528\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
+    "use_quick_access_mode": "\u4F7F\u7528\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F",
+    "open_quick_access_folder": "\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
+    "open_quick_access_mode": "\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F"
+  },
+  "en": {
+    // Notifications
+    "bookmarks_plugin_disabled": "Please enable the Bookmarks plugin first",
+    // Buttons and Labels
+    "sorting": "Sort by",
+    "refresh": "Refresh",
+    "reselect": "Reselect",
+    "no_backlinks": "No backlinks",
+    "search": "Search",
+    "search_placeholder": "Search keyword",
+    "search_current_location_only": "Search current location only",
+    "search_files_name_only": "Search files name only",
+    "search_media_files": "Search media files",
+    "cancel": "Cancel",
+    "new_note": "New note",
+    "new_folder": "New folder",
+    "new_canvas": "New canvas",
+    "new_shortcut": "New shortcut",
+    "delete_folder": "Delete Folder",
+    "move_folder": "Move Folder",
+    "select_destination_folder": "Select destination folder",
+    "untitled": "Untitled",
+    "files": "files",
+    "add": "Add",
+    "root": "Root",
+    "sub_folders": "Sub folders",
+    "parent_folders": "Parent folders",
+    "more_options": "More options",
+    "add_tag_to_search": "Add to search",
+    "remove_tag_from_search": "Remove from search",
+    "global_search": "Global search",
+    "remove": "Remove",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "option": "Option",
+    "add_option": "Add option",
+    // View Titles
+    "grid_view_title": "Grid view",
+    "bookmarks_mode": "Bookmarks",
+    "folder_mode": "Folder",
+    "search_results": "Search results",
+    "backlinks_mode": "Backlinks",
+    "outgoinglinks_mode": "Outgoing links",
+    "all_files_mode": "All files",
+    "recent_files_mode": "Recent files",
+    "random_note_mode": "Random note",
+    "tasks_mode": "Tasks",
+    // Sort Options
+    "sort_name_asc": "Name (A \u2192 Z)",
+    "sort_name_desc": "Name (Z \u2192 A)",
+    "sort_mtime_desc": "Modified (New \u2192 Old)",
+    "sort_mtime_asc": "Modified (Old \u2192 New)",
+    "sort_ctime_desc": "Created (New \u2192 Old)",
+    "sort_ctime_asc": "Created (Old \u2192 New)",
+    "sort_random": "Random",
+    // Settings
+    "grid_view_settings": "Grid view settings",
+    "show_media_files": "Show media files",
+    "show_media_files_desc": "Display media files in the grid view",
+    "show_video_thumbnails": "Show video thumbnails",
+    "show_video_thumbnails_desc": "Display thumbnails for videos in the grid view, shows a play icon when disabled",
+    "show_note_in_grid": "Show note in grid",
+    "show_note_in_grid_desc": "Display note in grid container when clicked. If disabled, you need to hold down the Alt key to display the note.",
+    "show_note_tags": "Show note tags",
+    "show_note_tags_desc": "Display tags for notes in the grid view",
+    "ignored_folders": "Ignored folders",
+    "ignored_folders_desc": "Set folders to ignore here",
+    "add_ignored_folder": "Add ignored folder",
+    "no_ignored_folders": "No ignored folders.",
+    "ignored_folder_patterns": "Ignore folders and files by pattern",
+    "ignored_folder_patterns_desc": "Use string patterns to ignore folders and files (supports regular expressions)",
+    "add_ignored_folder_pattern": "Add folder pattern",
+    "ignored_folder_pattern_placeholder": "Enter folder name or regex pattern",
+    "no_ignored_folder_patterns": "No ignored folder patterns.",
+    "default_sort_type": "Default sort type",
+    "default_sort_type_desc": "Set the default sorting method when opening Grid View",
+    "note_title_field": "Note title field name",
+    "note_title_field_desc": "Set the field name in frontmatter to use for the note title",
+    "note_summary_field": "Note summary field name",
+    "note_summary_field_desc": "Set the field name in frontmatter to use for the note summary",
+    "modified_date_field": '"Modified date" field name',
+    "modified_date_field_desc": "Set the field name in frontmatter to use for the modified date (support multiple field names, separated by commas)",
+    "created_date_field": '"Created date" field name',
+    "created_date_field_desc": "Set the field name in frontmatter to use for the created date (support multiple field names, separated by commas)",
+    "grid_item_width": "Grid item width",
+    "grid_item_width_desc": "Set the width of grid items",
+    "grid_item_height": "Grid item height",
+    "grid_item_height_desc": "Set the height of grid items (set to 0 to automatically adjust)",
+    "image_area_width": "Image area width",
+    "image_area_width_desc": "Set the width of the image preview area",
+    "image_area_height": "Image area height",
+    "image_area_height_desc": "Set the height of the image preview area",
+    "title_font_size": "Title font size",
+    "title_font_size_desc": "Set the size of the title font",
+    "summary_length": "Summary length",
+    "summary_length_desc": "Set the length of summary",
+    "grid_item_style_settings": "Grid item style settings",
+    "card_layout": "Card layout",
+    "card_layout_desc": "Choose default card layout",
+    "horizontal_card": "Horizontal card",
+    "vertical_card": "Vertical card",
+    "image_position": "Image position",
+    "image_position_desc": "Set the position of the image",
+    "top": "Top",
+    "bottom": "Bottom",
+    "multi_line_title": "Multi-line title",
+    "multi_line_title_desc": "Set whether to allow multi-line title",
+    "show_code_block_in_summary": "Show code block in summary",
+    "show_code_block_in_summary_desc": "Set whether to show code block in the summary",
+    "enable_file_watcher": "Enable file watcher",
+    "enable_file_watcher_desc": "When enabled, the view will automatically update when files change. If disabled, you need to click the refresh button manually",
+    "intercept_all_tag_clicks": "Intercept all tag clicks",
+    "intercept_all_tag_clicks_desc": "When enabled, all tag clicks will be intercepted and opened in the grid view",
+    "intercept_breadcrumb_clicks": "Intercept breadcrumb clicks",
+    "intercept_breadcrumb_clicks_desc": "When enabled, breadcrumb clicks will be intercepted and the path will be opened in the grid view",
+    "reset_to_default": "Reset to default",
+    "settings_reset_notice": "Settings have been reset to default values",
+    "config_management": "Config management",
+    "config_management_desc": "Manage config reset, export and import",
+    "ignored_folders_settings": "Ignore folders settings",
+    "display_mode_settings": "Display mode settings",
+    "custom_mode_settings": "Custom Mode Settings",
+    "add_custom_mode": "Add Custom Mode",
+    "export": "Export",
+    "import": "Import",
+    "no_custom_modes_to_export": "No custom modes to export",
+    "import_success": "Import success",
+    "import_error": "Import failed: Invalid file format",
+    "edit_custom_mode": "Edit Custom Mode",
+    "custom_mode": "Custom Mode",
+    "custom_mode_display_name": "Display Name",
+    "custom_mode_display_name_desc": "The name displayed in the mode menu",
+    "custom_mode_dataview_code": "Dataview Query",
+    "custom_mode_dataview_code_desc": "Enter a Dataview query to get the list of files",
+    "custom_mode_sub_options": "Custom Mode Sub Options",
+    "custom_mode_fields_placeholder": "Enter frontmatter field names, separated by commas (e.g. date,category,status) (optional)",
+    "dataview_plugin_not_enabled": "Dataview plugin is not enabled",
+    "show_bookmarks_mode": "Show bookmarks mode",
+    "show_search_mode": "Show search results mode",
+    "show_backlinks_mode": "Show backlinks mode",
+    "show_outgoinglinks_mode": "Show outgoing links mode",
+    "show_all_files_mode": "Show all files mode",
+    "show_recent_files_mode": "Show recent files mode",
+    "recent_files_count": "Recent files count",
+    "show_random_note_mode": "Show random note mode",
+    "random_note_count": "Random note count",
+    "random_note_notes_only": "Notes Only",
+    "random_note_include_media_files": "Include Media Files",
+    "show_tasks_mode": "Show tasks mode",
+    "task_filter": "Task filter",
+    "uncompleted": "Uncompleted",
+    "completed": "Completed",
+    "foldernote_display_settings": "Folder note display settings",
+    "foldernote_display_settings_desc": "Set the display mode of folder notes",
+    "all": "All",
+    "default": "Default",
+    "hidden": "Hidden",
+    // Hide header elements setting
+    "hide_header_elements": "Hide header elements",
+    // Default open location setting
+    "default_open_location": "Default open location",
+    "default_open_location_desc": "Set the default location to open the grid view",
+    "open_in_left_sidebar": "Open in left sidebar",
+    "open_in_right_sidebar": "Open in right sidebar",
+    "open_in_new_tab": "Open in new tab",
+    "reuse_existing_leaf": "Reuse existing view",
+    "reuse_existing_leaf_desc": "When opening Grid View, prioritize using an existing view instead of creating a new one",
+    "custom_document_extensions": "Custom Document Extensions",
+    "custom_document_extensions_desc": "Additional document extensions (comma-separated, without dots)",
+    "custom_document_extensions_placeholder": "e.g., txt,doc,docx",
+    "custom_folder_icon": "Custom Folder Icon",
+    "custom_folder_icon_desc": "Custom folder icon (use emoji)",
+    // Select Folder Dialog
+    "select_folders": "Select folder",
+    "select_folders_to_ignore": "Select folders to ignore",
+    "open_grid_view": "Open grid view",
+    "open_in_grid_view": "Open in grid view",
+    "open_note_in_grid_view": "Open note in grid view",
+    "open_backlinks_in_grid_view": "Open backlinks in grid view",
+    "open_outgoinglinks_in_grid_view": "Open outgoing links in grid view",
+    "open_recent_files_in_grid_view": "Open current note in recent files",
+    "open_settings": "Open settings",
+    "open_new_grid_view": "Open new grid view",
+    "open_in_new_grid_view": "Open in new grid view",
+    "min_mode": "Minimize mode",
+    "show_ignored_folders": "Show ignored folders",
+    "delete_note": "Delete file",
+    "open_folder_note": "Open folder note",
+    "create_folder_note": "Create folder note",
+    "delete_folder_note": "Delete folder note",
+    "edit_folder_note_settings": "Edit folder note settings",
+    "ignore_folder": "Ignore this folder",
+    "unignore_folder": "Unignore this folder",
+    "searching": "Searching...",
+    "no_files": "No files found",
+    "filter_folders": "Filter folders...",
+    // Shortcut Selection Dialog
+    "create_shortcut": "Create Shortcut",
+    "select_folder": "Select Folder",
+    "select_file": "Select File",
+    "target_not_found": "Target not found",
+    "shortcut_created": "Shortcut created",
+    "failed_to_create_shortcut": "Failed to create shortcut",
+    // Folder Note Settings Dialog
+    "folder_note_settings": "Folder Note Settings",
+    "folder_sort_type": "Folder Sort Type",
+    "folder_sort_type_desc": "Set the default sort type for this folder",
+    "folder_color": "Folder Color",
+    "folder_color_desc": "Set the display color for this folder",
+    "folder_icon": "Folder Icon",
+    "folder_icon_desc": "Set the display icon for this folder",
+    "no_color": "No Color",
+    "color_red": "Red",
+    "color_orange": "Orange",
+    "color_yellow": "Yellow",
+    "color_green": "Green",
+    "color_cyan": "Cyan",
+    "color_blue": "Blue",
+    "color_purple": "Purple",
+    "color_pink": "Pink",
+    "confirm": "Confirm",
+    "note_attribute_settings": "Note attribute settings",
+    "note_title": "Note title",
+    "note_title_desc": "Set the display title for this note",
+    "note_summary": "Note summary",
+    "note_summary_desc": "Set the display summary for this note",
+    "note_color": "Note color",
+    "note_color_desc": "Set the display color for this note",
+    "set_note_attribute": "Set note attribute",
+    "rename_folder": "Rename folder",
+    "enter_new_folder_name": "Enter new folder name",
+    "search_selection_in_grid_view": "Search ... in grid view",
+    "show_date_dividers": "Show date dividers",
+    "show_date_dividers_desc": "Show date dividers before the first item of each different day when using date-related sorting",
+    "date_divider_format": "Date divider format",
+    "date_divider_mode": "Date divider",
+    "date_divider_mode_desc": "Select the display mode for date dividers",
+    "date_divider_mode_none": "None",
+    "date_divider_mode_year": "Year",
+    "date_divider_mode_month": "Month",
+    "date_divider_mode_day": "Day",
+    "pinned": "Pinned",
+    "pinned_desc": "Pin this file at the top",
+    "foldernote_pinned": "Folder note pinned",
+    "foldernote_pinned_desc": "Pin this folder note at the top",
+    "display_minimized": "Display minimized",
+    "display_minimized_desc": "Show this note in minimized mode",
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "Quick Access Settings",
+    "quick_access_folder_name": "Quick access folder",
+    "quick_access_folder_desc": 'Set the folder used by the "Open quick access folder" command',
+    "quick_access_mode_name": "Quick access mode",
+    "quick_access_mode_desc": 'Set the default mode used by the "Open quick access mode" command',
+    "use_quick_access_as_new_tab_view": "Use Quick Access as a new tab view",
+    "use_quick_access_as_new_tab_view_desc": 'Replace the default "New Tab" view with a Grid View of the selected Quick Access option (folder or mode). Only works if default open location is set to "Open in new tab"!',
+    "default_new_tab": "Default New Tab",
+    "use_quick_access_folder": "Use quick access folder",
+    "use_quick_access_mode": "Use quick access mode",
+    "open_quick_access_folder": "Open quick access folder",
+    "open_quick_access_mode": "Open quick access mode"
+  },
+  "zh": {
+    // 通知信息
+    "bookmarks_plugin_disabled": "\u8BF7\u5148\u542F\u7528\u4E66\u7B7E\u63D2\u4EF6",
+    // 按钮和标签
+    "sorting": "\u6392\u5E8F\u65B9\u5F0F",
+    "refresh": "\u5237\u65B0",
+    "reselect": "\u91CD\u65B0\u9009\u62E9\u4F4D\u7F6E",
+    "no_backlinks": "\u6CA1\u6709\u53CD\u5411\u94FE\u63A5",
+    "search": "\u641C\u7D22",
+    "search_placeholder": "\u641C\u7D22\u5173\u952E\u5B57",
+    "search_current_location_only": "\u4EC5\u641C\u7D22\u5F53\u524D\u4F4D\u7F6E",
+    "search_files_name_only": "\u4EC5\u641C\u7D22\u6587\u4EF6\u540D",
+    "search_media_files": "\u641C\u7D22\u5A92\u4F53\u6587\u4EF6",
+    "cancel": "\u53D6\u6D88",
+    "new_note": "\u65B0\u5EFA\u7B14\u8BB0",
+    "new_folder": "\u65B0\u5EFA\u6587\u4EF6\u5939",
+    "new_canvas": "\u65B0\u5EFA\u753B\u5E03",
+    "new_shortcut": "\u65B0\u5EFA\u5FEB\u6377\u65B9\u5F0F",
+    "delete_folder": "\u5220\u9664\u6587\u4EF6\u5939",
+    "untitled": "\u672A\u547D\u540D",
+    "files": "\u4E2A\u6587\u4EF6",
+    "add": "\u6DFB\u52A0",
+    "root": "\u6839\u76EE\u5F55",
+    "sub_folders": "\u5B50\u76EE\u5F55",
+    "parent_folders": "\u4E0A\u5C42\u76EE\u5F55",
+    "more_options": "\u66F4\u591A\u9009\u9879",
+    "add_tag_to_search": "\u52A0\u5165\u641C\u7D22",
+    "remove_tag_from_search": "\u4ECE\u641C\u7D22\u4E2D\u79FB\u9664",
+    "global_search": "\u5168\u57DF\u641C\u7D22",
+    "remove": "\u79FB\u9664",
+    "edit": "\u7F16\u8F91",
+    "delete": "\u5220\u9664",
+    "save": "\u4FDD\u5B58",
+    "option": "\u9009\u9879",
+    "add_option": "\u6DFB\u52A0\u9009\u9879",
+    // 视图标题
+    "grid_view_title": "\u7F51\u683C\u89C6\u56FE",
+    "bookmarks_mode": "\u4E66\u7B7E",
+    "folder_mode": "\u6587\u4EF6\u5939",
+    "search_results": "\u641C\u7D22\u7ED3\u679C",
+    "backlinks_mode": "\u53CD\u5411\u94FE\u63A5",
+    "outgoinglinks_mode": "\u5916\u90E8\u94FE\u63A5",
+    "all_files_mode": "\u6240\u6709\u6587\u4EF6",
+    "recent_files_mode": "\u6700\u8FD1\u6587\u4EF6",
+    "random_note_mode": "\u968F\u673A\u7B14\u8BB0",
+    "tasks_mode": "\u4EFB\u52A1",
+    // 排序选项
+    "sort_name_asc": "\u540D\u79F0 (A \u2192 Z)",
+    "sort_name_desc": "\u540D\u79F0 (Z \u2192 A)",
+    "sort_mtime_desc": "\u4FEE\u6539\u65F6\u95F4 (\u65B0 \u2192 \u65E7)",
+    "sort_mtime_asc": "\u4FEE\u6539\u65F6\u95F4 (\u65E7 \u2192 \u65B0)",
+    "sort_ctime_desc": "\u521B\u5EFA\u65F6\u95F4 (\u65B0 \u2192 \u65E7)",
+    "sort_ctime_asc": "\u521B\u5EFA\u65F6\u95F4 (\u65E7 \u2192 \u65B0)",
+    "sort_random": "\u968F\u673A\u6392\u5E8F",
+    // 设置
+    "grid_view_settings": "\u7F51\u683C\u89C6\u56FE\u8BBE\u7F6E",
+    "show_media_files": "\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
+    "show_media_files_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
+    "show_video_thumbnails": "\u663E\u793A\u89C6\u9891\u7F29\u7565\u56FE",
+    "show_video_thumbnails_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u89C6\u9891\u7684\u7F29\u7565\u56FE\uFF0C\u5173\u95ED\u65F6\u5C06\u663E\u793A\u64AD\u653E\u56FE\u6807",
+    "show_note_in_grid": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0",
+    "show_note_in_grid_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0\uFF0C\u5173\u95ED\u65F6\u9700\u8981\u6309\u4F4F Alt \u952E\u6253\u5F00\u7B14\u8BB0",
+    "show_note_tags": "\u663E\u793A\u7B14\u8BB0\u6807\u7B7E",
+    "show_note_tags_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0\u7684\u6807\u7B7E",
+    "ignored_folders": "\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
+    "ignored_folders_desc": "\u5728\u8FD9\u91CC\u8BBE\u7F6E\u8981\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
+    "add_ignored_folder": "\u6DFB\u52A0\u5FFD\u7565\u6587\u4EF6\u5939",
+    "no_ignored_folders": "\u6CA1\u6709\u5FFD\u7565\u7684\u6587\u4EF6\u5939\u3002",
+    "ignored_folder_patterns": "\u4EE5\u5B57\u7B26\u4E32\u5FFD\u7565\u6587\u4EF6\u5939\u548C\u6587\u4EF6",
+    "ignored_folder_patterns_desc": "\u4F7F\u7528\u5B57\u7B26\u4E32\u6A21\u5F0F\u5FFD\u7565\u6587\u4EF6\u5939\u548C\u6587\u4EF6\uFF08\u652F\u6301\u6B63\u5219\u8868\u8FBE\u5F0F\uFF09",
+    "add_ignored_folder_pattern": "\u6DFB\u52A0\u5FFD\u7565\u6587\u4EF6\u5939\u6A21\u5F0F",
+    "ignored_folder_pattern_placeholder": "\u8F93\u5165\u6587\u4EF6\u5939\u540D\u79F0\u6216\u6B63\u5219\u8868\u8FBE\u5F0F",
+    "no_ignored_folder_patterns": "\u6CA1\u6709\u5FFD\u7565\u7684\u6587\u4EF6\u5939\u6A21\u5F0F\u3002",
+    "default_sort_type": "\u9ED8\u8BA4\u6392\u5E8F\u6A21\u5F0F",
+    "default_sort_type_desc": "\u8BBE\u7F6E\u6253\u5F00\u7F51\u683C\u89C6\u56FE\u65F6\u7684\u9ED8\u8BA4\u6392\u5E8F\u6A21\u5F0F",
+    "note_title_field": "\u7B14\u8BB0\u6807\u9898\u5B57\u6BB5\u540D\u79F0",
+    "note_title_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u6807\u9898\u7684\u5B57\u6BB5\u540D\u79F0",
+    "note_summary_field": "\u7B14\u8BB0\u6458\u8981\u5B57\u6BB5\u540D\u79F0",
+    "note_summary_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u6458\u8981\u7684\u5B57\u6BB5\u540D\u79F0",
+    "modified_date_field": '"\u4FEE\u6539\u65F6\u95F4"\u5B57\u6BB5\u540D\u79F0',
+    "modified_date_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u4FEE\u6539\u65F6\u95F4\u7684\u5B57\u6BB5\u540D\u79F0 (\u652F\u6301\u591A\u4E2A\u5B57\u6BB5\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694)",
+    "created_date_field": '"\u521B\u5EFA\u65F6\u95F4"\u5B57\u6BB5\u540D\u79F0',
+    "created_date_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u521B\u5EFA\u65F6\u95F4\u7684\u5B57\u6BB5\u540D\u79F0 (\u652F\u6301\u591A\u4E2A\u5B57\u6BB5\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694)",
+    "grid_item_width": "\u7F51\u683C\u9879\u76EE\u5BBD\u5EA6",
+    "grid_item_width_desc": "\u8BBE\u7F6E\u7F51\u683C\u9879\u76EE\u7684\u5BBD\u5EA6",
+    "grid_item_height": "\u7F51\u683C\u9879\u76EE\u9AD8\u5EA6",
+    "grid_item_height_desc": "\u8BBE\u7F6E\u7F51\u683C\u9879\u76EE\u7684\u9AD8\u5EA6 (\u8BBE\u4E3A0\u65F6\u4E3A\u81EA\u52A8\u8C03\u6574)",
+    "image_area_width": "\u56FE\u7247\u533A\u57DF\u5BBD\u5EA6",
+    "image_area_width_desc": "\u8BBE\u7F6E\u56FE\u7247\u9884\u89C8\u533A\u57DF\u7684\u5BBD\u5EA6",
+    "image_area_height": "\u56FE\u7247\u533A\u57DF\u9AD8\u5EA6",
+    "image_area_height_desc": "\u8BBE\u7F6E\u56FE\u7247\u9884\u89C8\u533A\u57DF\u7684\u9AD8\u5EA6",
+    "title_font_size": "\u6807\u9898\u5B57\u4F53\u5927\u5C0F",
+    "title_font_size_desc": "\u8BBE\u7F6E\u6807\u9898\u5B57\u4F53\u7684\u5927\u5C0F",
+    "summary_length": "\u6458\u8981\u957F\u5EA6",
+    "summary_length_desc": "\u8BBE\u7F6E\u6458\u8981\u7684\u957F\u5EA6",
+    "grid_item_style_settings": "\u7F51\u683C\u9879\u76EE\u6837\u5F0F\u8BBE\u7F6E",
+    "card_layout": "\u5361\u7247\u5E03\u5C40",
+    "card_layout_desc": "\u9009\u62E9\u9ED8\u8BA4\u5361\u7247\u5E03\u5C40",
+    "horizontal_card": "\u6C34\u5E73\u5361\u7247",
+    "vertical_card": "\u5782\u76F4\u5361\u7247",
+    "image_position": "\u56FE\u7247\u4F4D\u7F6E",
+    "image_position_desc": "\u8BBE\u7F6E\u56FE\u7247\u7684\u4F4D\u7F6E",
+    "top": "\u9876\u90E8",
+    "bottom": "\u5E95\u90E8",
+    "multi_line_title": "\u6807\u9898\u652F\u6301\u591A\u884C\u663E\u793A",
+    "multi_line_title_desc": "\u8BBE\u7F6E\u662F\u5426\u5141\u8BB8\u6807\u9898\u591A\u884C\u663E\u793A",
+    "show_code_block_in_summary": "\u6458\u8981\u4E2D\u663E\u793ACodeBlock",
+    "show_code_block_in_summary_desc": "\u8BBE\u7F6E\u662F\u5426\u5728\u6458\u8981\u4E2D\u663E\u793ACodeBlock\u7684\u5167\u5BB9",
+    "enable_file_watcher": "\u542F\u7528\u6587\u4EF6\u76D1\u63A7",
+    "enable_file_watcher_desc": "\u542F\u7528\u540E\u4F1A\u81EA\u52A8\u68C0\u6D4B\u6587\u4EF6\u53D8\u66F4\u5E76\u66F4\u65B0\u89C6\u56FE\uFF0C\u5173\u95ED\u540E\u9700\u624B\u52A8\u70B9\u51FB\u5237\u65B0\u6309\u94AE",
+    "intercept_all_tag_clicks": "\u62E6\u622A\u6240\u6709\u6807\u7B7E\u70B9\u51FB\u4E8B\u4EF6",
+    "intercept_all_tag_clicks_desc": "\u542F\u7528\u540E\u4F1A\u62E6\u622A\u6240\u6709\u6807\u7B7E\u70B9\u51FB\u4E8B\u4EF6\uFF0C\u6539\u4E3A\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u6807\u7B7E",
+    "intercept_breadcrumb_clicks": "\u62E6\u622A\u7B14\u8BB0\u5BFC\u822A\u680F\u70B9\u51FB\u4E8B\u4EF6",
+    "intercept_breadcrumb_clicks_desc": "\u542F\u7528\u540E\u4F1A\u62E6\u622A\u7B14\u8BB0\u5BFC\u822A\u680F\u70B9\u51FB\u4E8B\u4EF6\uFF0C\u5E76\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u8DEF\u5F84",
+    "reset_to_default": "\u91CD\u7F6E\u4E3A\u9ED8\u8BA4\u503C",
+    "settings_reset_notice": "\u8BBE\u7F6E\u503C\u5DF2\u91CD\u7F6E\u4E3A\u9ED8\u8BA4\u503C",
+    "config_management": "\u914D\u7F6E\u7BA1\u7406",
+    "config_management_desc": "\u7BA1\u7406\u914D\u7F6E\u7684\u91CD\u7F6E\u3001\u5BFC\u51FA\u548C\u5BFC\u5165",
+    "ignored_folders_settings": "\u5FFD\u7565\u6587\u4EF6\u5939\u8BBE\u7F6E",
+    "display_mode_settings": "\u663E\u793A\u6A21\u5F0F\u8BBE\u7F6E",
+    "custom_mode_settings": "\u81EA\u5B9A\u4E49\u6A21\u5F0F\u8BBE\u7F6E",
+    "add_custom_mode": "\u6DFB\u52A0\u81EA\u5B9A\u4E49\u6A21\u5F0F",
+    "export": "\u5BFC\u51FA",
+    "import": "\u5BFC\u5165",
+    "no_custom_modes_to_export": "\u6CA1\u6709\u53EF\u5BFC\u51FA\u7684\u81EA\u5B9A\u4E49\u6A21\u5F0F",
+    "import_success": "\u5BFC\u5165\u6210\u529F",
+    "import_error": "\u5BFC\u5165\u5931\u8D25\uFF1A\u65E0\u6548\u7684\u6587\u4EF6\u683C\u5F0F",
+    "edit_custom_mode": "\u7F16\u8F91\u81EA\u5B9A\u4E49\u6A21\u5F0F",
+    "custom_mode": "\u81EA\u5B9A\u4E49\u6A21\u5F0F",
+    "custom_mode_display_name": "\u663E\u793A\u540D\u79F0",
+    "custom_mode_display_name_desc": "\u5728\u6A21\u5F0F\u83DC\u5355\u4E2D\u663E\u793A\u7684\u540D\u79F0",
+    "custom_mode_dataview_code": "Dataviewjs \u4EE3\u7801",
+    "custom_mode_dataview_code_desc": "\u8F93\u5165 Dataviewjs \u4EE3\u7801\u4EE5\u83B7\u53D6\u6587\u4EF6\u5217\u8868",
+    "custom_mode_sub_options": "\u81EA\u5B9A\u4E49\u6A21\u5F0F\u5B50\u9009\u9879",
+    "custom_mode_fields_placeholder": "\u8F93\u5165 frontmatter \u680F\u4F4D\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694 (\u5982: date,category,status) (\u53EF\u9009)",
+    "dataview_plugin_not_enabled": "Dataview \u5916\u639B\u672A\u555F\u7528",
+    "show_bookmarks_mode": "\u663E\u793A\u4E66\u7B7E\u6A21\u5F0F",
+    "show_search_mode": "\u663E\u793A\u641C\u7D22\u7ED3\u679C\u6A21\u5F0F",
+    "show_backlinks_mode": "\u663E\u793A\u53CD\u5411\u94FE\u63A5\u6A21\u5F0F",
+    "show_outgoinglinks_mode": "\u663E\u793A\u5916\u90E8\u94FE\u63A5\u6A21\u5F0F",
+    "show_all_files_mode": "\u663E\u793A\u6240\u6709\u6587\u4EF6\u6A21\u5F0F",
+    "show_recent_files_mode": "\u663E\u793A\u6700\u8FD1\u6587\u4EF6\u6A21\u5F0F",
+    "recent_files_count": "\u6700\u8FD1\u6587\u4EF6\u6A21\u5F0F\u663E\u793A\u7B14\u6570",
+    "show_random_note_mode": "\u663E\u793A\u968F\u673A\u7B14\u8BB0\u6A21\u5F0F",
+    "random_note_count": "\u968F\u673A\u7B14\u8BB0\u6A21\u5F0F\u663E\u793A\u7B14\u6570",
+    "random_note_notes_only": "\u4EC5\u7B14\u8BB0",
+    "random_note_include_media_files": "\u5305\u542B\u5A92\u4F53\u6587\u4EF6",
+    "show_tasks_mode": "\u663E\u793A\u4EFB\u52A1\u6A21\u5F0F",
+    "task_filter": "\u4EFB\u52A1\u5206\u7C7B",
+    "uncompleted": "\u672A\u5B8C\u6210",
+    "completed": "\u5DF2\u5B8C\u6210",
+    "foldernote_display_settings": "\u6587\u4EF6\u5939\u7B14\u8BB0\u663E\u793A\u8BBE\u7F6E",
+    "foldernote_display_settings_desc": "\u8BBE\u7F6E\u6587\u4EF6\u5939\u7B14\u8BB0\u7684\u663E\u793A\u65B9\u5F0F",
+    "all": "\u5168\u90E8",
+    "default": "\u9ED8\u8BA4",
+    "hidden": "\u9690\u85CF",
+    // 隐藏頂部元素
+    "hide_header_elements": "\u96B1\u85CF\u9802\u90E8\u5143\u7D20",
+    // 默认打开位置设置
+    "default_open_location": "\u9ED8\u8BA4\u6253\u5F00\u4F4D\u7F6E",
+    "default_open_location_desc": "\u8BBE\u7F6E\u7F51\u683C\u89C6\u56FE\u9ED8\u8BA4\u6253\u5F00\u7684\u4F4D\u7F6E",
+    "open_in_left_sidebar": "\u5728\u5DE6\u4FA7\u8FB9\u680F\u6253\u5F00",
+    "open_in_right_sidebar": "\u5728\u53F3\u4FA7\u8FB9\u680F\u6253\u5F00",
+    "open_in_new_tab": "\u5728\u65B0\u6807\u7B7E\u9875\u6253\u5F00",
+    "reuse_existing_leaf": "\u91CD\u590D\u4F7F\u7528\u5DF2\u6253\u5F00\u7684\u89C6\u56FE",
+    "reuse_existing_leaf_desc": "\u6253\u5F00\u7F51\u683C\u89C6\u56FE\u65F6\uFF0C\u4F18\u5148\u4F7F\u7528\u5DF2\u6253\u5F00\u7684\u89C6\u56FE\u800C\u975E\u521B\u5EFA\u65B0\u89C6\u56FE",
+    "custom_document_extensions": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u6269\u5C55\u540D",
+    "custom_document_extensions_desc": "\u989D\u5916\u7684\u6587\u4EF6\u6269\u5C55\u540D\uFF08\u7528\u9017\u53F7\u5206\u9694\uFF0C\u4E0D\u542B\u70B9\u53F7\uFF09",
+    "custom_document_extensions_placeholder": "\u4F8B\u5982\uFF1Atxt,doc,docx",
+    "custom_folder_icon": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u5939\u56FE\u6807",
+    "custom_folder_icon_desc": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u5939\u56FE\u6807\uFF08\u4F7F\u7528Emoji\uFF09",
+    // 选择文件夹对话框
+    "select_folders": "\u9009\u62E9\u6587\u4EF6\u5939",
+    "select_folders_to_ignore": "\u9009\u62E9\u8981\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
+    "open_grid_view": "\u6253\u5F00\u7F51\u683C\u89C6\u56FE",
+    "open_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00",
+    "open_note_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u6253\u5F00\u5F53\u524D\u7B14\u8BB0",
+    "open_backlinks_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u6253\u5F00\u53CD\u5411\u94FE\u63A5",
+    "open_outgoinglinks_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u6253\u5F00\u5916\u90E8\u94FE\u63A5",
+    "open_recent_files_in_grid_view": "\u5728\u6700\u8FD1\u6587\u4EF6\u6253\u5F00\u5F53\u524D\u7B14\u8BB0",
+    "open_settings": "\u6253\u5F00\u8BBE\u7F6E",
+    "open_new_grid_view": "\u6253\u5F00\u65B0\u7F51\u683C\u89C6\u56FE",
+    "open_in_new_grid_view": "\u5728\u65B0\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00",
+    "min_mode": "\u6700\u5C0F\u5316\u6A21\u5F0F",
+    "show_ignored_folders": "\u663E\u793A\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
+    "delete_note": "\u5220\u9664\u6587\u4EF6",
+    "open_folder_note": "\u6253\u5F00\u6587\u4EF6\u5939\u7B14\u8BB0",
+    "create_folder_note": "\u521B\u5EFA\u6587\u4EF6\u5939\u7B14\u8BB0",
+    "delete_folder_note": "\u5220\u9664\u6587\u4EF6\u5939\u7B14\u8BB0",
+    "edit_folder_note_settings": "\u7F16\u8F91\u6587\u4EF6\u5939\u7B14\u8BB0\u8BBE\u7F6E",
+    "ignore_folder": "\u5FFD\u7565\u6B64\u6587\u4EF6\u5939",
+    "unignore_folder": "\u53D6\u6D88\u5FFD\u7565\u6B64\u6587\u4EF6\u5939",
+    "searching": "\u641C\u7D22\u4E2D...",
+    "no_files": "\u6CA1\u6709\u627E\u5230\u4EFB\u4F55\u6587\u4EF6",
+    "filter_folders": "\u7B5B\u9009\u6587\u4EF6\u5939...",
+    // 快捷方式选择对话框
+    "create_shortcut": "\u521B\u5EFA\u5FEB\u6377\u65B9\u5F0F",
+    "select_folder": "\u9009\u62E9\u6587\u4EF6\u5939",
+    "select_file": "\u9009\u62E9\u6587\u4EF6",
+    "target_not_found": "\u76EE\u6807\u672A\u627E\u5230",
+    "shortcut_created": "\u5FEB\u6377\u65B9\u5F0F\u5DF2\u521B\u5EFA",
+    "failed_to_create_shortcut": "\u521B\u5EFA\u5FEB\u6377\u65B9\u5F0F\u5931\u8D25",
+    // 文件夹笔记设置对话框
+    "folder_note_settings": "\u6587\u4EF6\u5939\u7B14\u8BB0\u8BBE\u7F6E",
+    "folder_sort_type": "\u6587\u4EF6\u5939\u6392\u5E8F\u65B9\u5F0F",
+    "folder_sort_type_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u9ED8\u8BA4\u6392\u5E8F\u65B9\u5F0F",
+    "folder_color": "\u6587\u4EF6\u5939\u989C\u8272",
+    "folder_color_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u663E\u793A\u989C\u8272",
+    "folder_icon": "\u6587\u4EF6\u5939\u56FE\u793A",
+    "folder_icon_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u663E\u793A\u56FE\u793A",
+    "no_color": "\u65E0\u989C\u8272",
+    "color_red": "\u7EA2\u8272",
+    "color_orange": "\u6A59\u8272",
+    "color_yellow": "\u9EC4\u8272",
+    "color_green": "\u7EFF\u8272",
+    "color_cyan": "\u9752\u8272",
+    "color_blue": "\u84DD\u8272",
+    "color_purple": "\u7D2B\u8272",
+    "color_pink": "\u7C89\u8272",
+    "confirm": "\u786E\u8BA4",
+    "note_attribute_settings": "\u7B14\u8BB0\u5C5E\u6027\u8BBE\u7F6E",
+    "note_title": "\u7B14\u8BB0\u6807\u9898",
+    "note_title_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u6807\u9898",
+    "note_summary": "\u7B14\u8BB0\u6458\u8981",
+    "note_summary_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u6458\u8981",
+    "note_color": "\u7B14\u8BB0\u989C\u8272",
+    "note_color_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u989C\u8272",
+    "set_note_attribute": "\u8BBE\u7F6E\u7B14\u8BB0\u5C5E\u6027",
+    "rename_folder": "\u91CD\u65B0\u547D\u540D\u6587\u4EF6\u5939",
+    "enter_new_folder_name": "\u8F93\u5165\u65B0\u6587\u4EF6\u5939\u540D\u79F0",
+    "search_selection_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u641C\u5BFB...",
+    "show_date_dividers": "\u663E\u793A\u65E5\u671F\u5206\u9694\u5668",
+    "show_date_dividers_desc": "\u5728\u65E5\u671F\u76F8\u5173\u6392\u5E8F\u65F6\uFF0C\u5728\u4E0D\u540C\u5929\u7684\u7B2C\u4E00\u6761\u4E4B\u524D\u663E\u793A\u65E5\u671F\u5206\u9694\u5668",
+    "date_divider_format": "\u65E5\u671F\u5206\u9694\u5668\u683C\u5F0F",
+    "date_divider_mode": "\u65E5\u671F\u5206\u9694\u5668",
+    "date_divider_mode_desc": "\u9009\u62E9\u65E5\u671F\u5206\u9694\u5668\u7684\u663E\u793A\u6A21\u5F0F",
+    "date_divider_mode_none": "\u4E0D\u4F7F\u7528",
+    "date_divider_mode_year": "\u5E74",
+    "date_divider_mode_month": "\u6708",
+    "date_divider_mode_day": "\u65E5",
+    "pinned": "\u7F6E\u9876",
+    "pinned_desc": "\u5C06\u6B64\u6587\u4EF6\u56FA\u5B9A\u5728\u9876\u90E8",
+    "foldernote_pinned": "\u6587\u4EF6\u5939\u7B14\u8BB0\u7F6E\u9876",
+    "foldernote_pinned_desc": "\u5C06\u6587\u4EF6\u5939\u7B14\u8BB0\u56FA\u5B9A\u5728\u9876\u90E8",
+    "display_minimized": "\u6700\u5C0F\u5316\u663E\u793A",
+    "display_minimized_desc": "\u5C06\u6B64\u7B14\u8BB0\u4EE5\u6700\u5C0F\u5316\u65B9\u5F0F\u663E\u793A",
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "\u5FEB\u901F\u8BBF\u95EE\u8BBE\u7F6E",
+    "quick_access_folder_name": "\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
+    "quick_access_folder_desc": "\u8BBE\u7F6E\u201C\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939\u201D\u547D\u4EE4\u4F7F\u7528\u7684\u6587\u4EF6\u5939",
+    "quick_access_mode_name": "\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F",
+    "quick_access_mode_desc": "\u8BBE\u7F6E\u201C\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F\u201D\u547D\u4EE4\u4F7F\u7528\u7684\u9ED8\u8BA4\u6A21\u5F0F",
+    "use_quick_access_as_new_tab_view": "\u5C06\u5FEB\u901F\u8BBF\u95EE\u7528\u4F5C\u65B0\u6807\u7B7E\u9875",
+    "use_quick_access_as_new_tab_view_desc": "\u5C06\u9ED8\u8BA4\u7684\u201C\u65B0\u6807\u7B7E\u9875\u201D\u89C6\u56FE\u66FF\u6362\u4E3A\u6240\u9009\u5FEB\u901F\u8BBF\u95EE\u9009\u9879\uFF08\u6587\u4EF6\u5939\u6216\u6A21\u5F0F\uFF09\u7684\u7F51\u683C\u89C6\u56FE\u3002\u6B64\u8BBE\u7F6E\u4EC5\u5728\u201C\u9ED8\u8BA4\u6253\u5F00\u4F4D\u7F6E\u201D\u8BBE\u4E3A\u201C\u5728\u65B0\u6807\u7B7E\u9875\u6253\u5F00\u201D\u65F6\u751F\u6548\uFF01",
+    "default_new_tab": "\u9ED8\u8BA4\u65B0\u6807\u7B7E\u9875",
+    "use_quick_access_folder": "\u4F7F\u7528\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
+    "use_quick_access_mode": "\u4F7F\u7528\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F",
+    "open_quick_access_folder": "\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
+    "open_quick_access_mode": "\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F"
+  },
+  "ja": {
+    // 通知メッジ
+    "bookmarks_plugin_disabled": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF\u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u6709\u52B9\u306B\u3057\u3066\u304F\u3060\u3055\u3044",
+    // ボタンとラベル
+    "sorting": "\u4E26\u3073\u66FF\u3048",
+    "refresh": "\u66F4\u65B0",
+    "reselect": "\u518D\u9078\u629E",
+    "no_backlinks": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u306A\u3057",
+    "search": "\u691C\u7D22",
+    "search_placeholder": "\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22",
+    "search_current_location_only": "\u73FE\u5728\u306E\u5834\u6240\u306E\u307F\u691C\u7D22",
+    "search_files_name_only": "\u30D5\u30A1\u30A4\u30EB\u540D\u306E\u307F\u691C\u7D22",
+    "search_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u691C\u7D22",
+    "cancel": "\u30AD\u30E3\u30F3\u30BB\u30EB",
+    "new_note": "\u65B0\u898F\u30CE\u30FC\u30C8",
+    "new_folder": "\u65B0\u898F\u30D5\u30A9\u30EB\u30C0",
+    "new_canvas": "\u65B0\u898F\u30AD\u30E3\u30F3\u30D0\u30B9",
+    "new_shortcut": "\u65B0\u898F\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8",
+    "delete_folder": "\u524A\u9664\u30D5\u30A9\u30EB\u30C0",
+    "untitled": "\u7121\u984C",
+    "files": "\u30D5\u30A1\u30A4\u30EB",
+    "add": "\u8FFD\u52A0",
+    "root": "\u30EB\u30FC\u30C8",
+    "sub_folders": "\u5B50\u30D5\u30A9\u30EB\u30C0",
+    "parent_folders": "\u4E0A\u5C64\u30D5\u30A9\u30EB\u30C0",
+    "more_options": "\u3082\u3063\u3068\u9078\u629E\u80A2",
+    "add_tag_to_search": "\u691C\u7D22\u306B\u8FFD\u52A0",
+    "remove_tag_from_search": "\u691C\u7D22\u304B\u3089\u524A\u9664",
+    "global_search": "\u30B0\u30ED\u30FC\u30D0\u30EB\u691C\u7D22",
+    "remove": "\u524A\u9664",
+    "edit": "\u7DE8\u96C6",
+    "delete": "\u524A\u9664",
+    "save": "\u4FDD\u5B58",
+    "option": "\u9078\u629E\u80A2",
+    "add_option": "\u9078\u629E\u80A2\u3092\u8FFD\u52A0",
+    // ビュータイトル
+    "grid_view_title": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC",
+    "bookmarks_mode": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF",
+    "folder_mode": "\u30D5\u30A9\u30EB\u30C0",
+    "search_results": "\u691C\u7D22\u7D50\u679C",
+    "backlinks_mode": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF",
+    "outgoinglinks_mode": "\u30A2\u30A6\u30C8\u30B0\u30EA\u30F3\u30AF",
+    "all_files_mode": "\u3059\u3079\u3066\u306E\u30D5\u30A1\u30A4\u30EB",
+    "recent_files_mode": "\u6700\u8FD1\u306E\u30D5\u30A1\u30A4\u30EB",
+    "random_note_mode": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8",
+    "tasks_mode": "\u30BF\u30B9\u30AF",
+    // 並べ替えオプション
+    "sort_name_asc": "\u540D\u524D (A \u2192 Z)",
+    "sort_name_desc": "\u540D\u524D (Z \u2192 A)",
+    "sort_mtime_desc": "\u66F4\u65B0\u65E5\u6642 (\u65B0 \u2192 \u53E4)",
+    "sort_mtime_asc": "\u66F4\u65B0\u65E5\u6642 (\u53E4 \u2192 \u65B0)",
+    "sort_ctime_desc": "\u4F5C\u6210\u65E5\u6642 (\u65B0 \u2192 \u53E4)",
+    "sort_ctime_asc": "\u4F5C\u6210\u65E5\u6642 (\u53E4 \u2192 \u65B0)",
+    "sort_random": "\u30E9\u30F3\u30C0\u30E0",
+    // 設定
+    "grid_view_settings": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u8A2D\u5B9A",
+    "show_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A",
+    "show_media_files_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A\u3059\u308B",
+    "show_video_thumbnails": "\u52D5\u753B\u306E\u30B5\u30E0\u30CD\u30A4\u30EB\u3092\u8868\u793A",
+    "show_video_thumbnails_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u52D5\u753B\u306E\u30B5\u30E0\u30CD\u30A4\u30EB\u3092\u8868\u793A\u3059\u308B\u3001\u7121\u52B9\u306E\u5834\u5408\u306F\u518D\u751F\u30A2\u30A4\u30B3\u30F3\u3092\u8868\u793A",
+    "show_note_in_grid": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u3092\u8868\u793A",
+    "show_note_in_grid_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u3092\u8868\u793A\u3059\u308B\u3001\u7121\u52B9\u306E\u5834\u5408\u306FAlt\u30AD\u30FC\u3092\u62BC\u3057\u306A\u304C\u3089\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u958B\u304F",
+    "show_note_tags": "\u30CE\u30FC\u30C8\u306E\u30BF\u30B0\u3092\u8868\u793A",
+    "show_note_tags_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u306E\u30BF\u30B0\u3092\u8868\u793A\u3059\u308B",
+    "ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0",
+    "ignored_folders_desc": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u8A2D\u5B9A\u3059\u308B",
+    "add_ignored_folder": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u8FFD\u52A0",
+    "no_ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u306F\u3042\u308A\u307E\u305B\u3093\u3002",
+    "ignored_folder_patterns": "\u30D1\u30BF\u30FC\u30F3\u3067\u30D5\u30A9\u30EB\u30C0\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u7121\u8996",
+    "ignored_folder_patterns_desc": "\u6587\u5B57\u5217\u30D1\u30BF\u30FC\u30F3\u3092\u4F7F\u7528\u3057\u3066\u30D5\u30A9\u30EB\u30C0\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u7121\u8996\u3059\u308B\uFF08\u6B63\u898F\u8868\u73FE\u3092\u30B5\u30DD\u30FC\u30C8\uFF09",
+    "add_ignored_folder_pattern": "\u30D5\u30A9\u30EB\u30C0\u30D1\u30BF\u30FC\u30F3\u3092\u8FFD\u52A0",
+    "ignored_folder_pattern_placeholder": "\u30D5\u30A9\u30EB\u30C0\u540D\u307E\u305F\u306F\u6B63\u898F\u8868\u73FE\u30D1\u30BF\u30FC\u30F3\u3092\u5165\u529B",
+    "no_ignored_folder_patterns": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30D1\u30BF\u30FC\u30F3\u306F\u3042\u308A\u307E\u305B\u3093\u3002",
+    "default_sort_type": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048",
+    "default_sort_type_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u3044\u305F\u3068\u304D\u306E\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048\u65B9\u6CD5\u3092\u8A2D\u5B9A",
+    "note_title_field": "\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB\u30D5\u30A3\u30FC\u30EB\u30C9\u540D",
+    "note_title_field_desc": "frontmatter\u3067\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A",
+    "note_summary_field": "\u30CE\u30FC\u30C8\u8981\u7D04\u30D5\u30A3\u30FC\u30EB\u30C9\u540D",
+    "note_summary_field_desc": "frontmatter\u3067\u30CE\u30FC\u30C8\u8981\u7D04\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A",
+    "modified_date_field": '"\u66F4\u65B0\u65E5"\u30D5\u30A3\u30FC\u30EB\u30C9\u540D',
+    "modified_date_field_desc": "frontmatter\u3067\u66F4\u65B0\u65E5\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A (\u8907\u6570\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u6307\u5B9A\u53EF\u80FD)",
+    "created_date_field": '"\u4F5C\u6210\u65E5"\u30D5\u30A3\u30FC\u30EB\u30C9\u540D',
+    "created_date_field_desc": "frontmatter\u3067\u4F5C\u6210\u65E5\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A (\u8907\u6570\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u6307\u5B9A\u53EF\u80FD)",
+    "grid_item_width": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u5E45",
+    "grid_item_width_desc": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u5E45\u3092\u8A2D\u5B9A",
+    "grid_item_height": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u9AD8\u3055",
+    "grid_item_height_desc": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u9AD8\u3055\u3092\u8A2D\u5B9A\uFF080\u306B\u8A2D\u5B9A\u3059\u308B\u3068\u81EA\u52D5\u8ABF\u6574\uFF09",
+    "image_area_width": "\u753B\u50CF\u30A8\u30EA\u30A2\u306E\u5E45",
+    "image_area_width_desc": "\u753B\u50CF\u30D7\u30EC\u30D3\u30E5\u30FC\u30A8\u30EA\u30A2\u306E\u5E45\u3092\u8A2D\u5B9A",
+    "image_area_height": "\u753B\u50CF\u30A8\u30EA\u30A2\u306E\u9AD8\u3055",
+    "image_area_height_desc": "\u753B\u50CF\u30D7\u30EC\u30D3\u30E5\u30FC\u30A8\u30EA\u30A2\u306E\u9AD8\u3055\u3092\u8A2D\u5B9A",
+    "title_font_size": "\u30BF\u30A4\u30C8\u30EB\u306E\u30D5\u30A9\u30F3\u30C8\u30B5\u30A4\u30BA",
+    "title_font_size_desc": "\u30BF\u30A4\u30C8\u30EB\u306E\u30D5\u30A9\u30F3\u30C8\u30B5\u30A4\u30BA\u3092\u8A2D\u5B9A",
+    "summary_length": "\u8981\u7D04\u306E\u9577\u3055",
+    "summary_length_desc": "\u8981\u7D04\u306E\u9577\u3055\u3092\u8A2D\u5B9A",
+    "grid_item_style_settings": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u30B9\u30BF\u30A4\u30EB\u8A2D\u5B9A",
+    "card_layout": "\u30AB\u30FC\u30C9\u30EC\u30A4\u30A2\u30A6\u30C8",
+    "card_layout_desc": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30AB\u30FC\u30C9\u30EC\u30A4\u30A2\u30A6\u30C8\u3092\u9078\u629E",
+    "horizontal_card": "\u6C34\u5E73\u30AB\u30FC\u30C9",
+    "vertical_card": "\u5782\u76F4\u30AB\u30FC\u30C9",
+    "image_position": "\u753B\u50CF\u4F4D\u7F6E",
+    "image_position_desc": "\u753B\u50CF\u306E\u4F4D\u7F6E\u3092\u8A2D\u5B9A",
+    "top": "\u4E0A\u90E8",
+    "bottom": "\u4E0B\u90E8",
+    "multi_line_title": "\u30BF\u30A4\u30C8\u30EB\u30B5\u30DD\u30FC\u30C8\u591A\u884C\u8868\u793A",
+    "multi_line_title_desc": "\u30BF\u30A4\u30C8\u30EB\u3092\u591A\u884C\u8868\u793A\u3059\u308B\u304B\u3069\u3046\u304B\u3092\u8A2D\u5B9A",
+    "show_code_block_in_summary": "\u8981\u7D04\u306BCodeBlock\u3092\u8868\u793A",
+    "show_code_block_in_summary_desc": "\u8981\u7D04\u306BCodeBlock\u3092\u8868\u793A\u3059\u308B\u304B\u3069\u3046\u304B\u3092\u8A2D\u5B9A",
+    "enable_file_watcher": "\u30D5\u30A1\u30A4\u30EB\u76E3\u8996\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "enable_file_watcher_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u30D5\u30A1\u30A4\u30EB\u306E\u5909\u66F4\u3092\u81EA\u52D5\u7684\u306B\u691C\u51FA\u3057\u3066\u30D3\u30E5\u30FC\u3092\u66F4\u65B0\u3057\u307E\u3059\u3002\u7121\u52B9\u306E\u5834\u5408\u306F\u3001\u66F4\u65B0\u30DC\u30BF\u30F3\u3092\u624B\u52D5\u3067\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059",
+    "intercept_all_tag_clicks": "\u3059\u3079\u3066\u306E\u30BF\u30B0\u30AF\u30EA\u30C3\u30AF\u3092\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8",
+    "intercept_all_tag_clicks_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30BF\u30B0\u30AF\u30EA\u30C3\u30AF\u304C\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8\u3055\u308C\u3001\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304B\u308C\u307E\u3059",
+    "intercept_breadcrumb_clicks": "\u30D1\u30F3\u304F\u305A\u30EA\u30B9\u30C8\u306E\u30AF\u30EA\u30C3\u30AF\u3092\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8",
+    "intercept_breadcrumb_clicks_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u30D1\u30F3\u304F\u305A\u30EA\u30B9\u30C8\u306E\u30AF\u30EA\u30C3\u30AF\u304C\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8\u3055\u308C\u3001\u30D1\u30B9\u304C\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304B\u308C\u307E\u3059",
+    "reset_to_default": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306B\u623B\u3059",
+    "settings_reset_notice": "\u8A2D\u5B9A\u5024\u304C\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u306B\u30EA\u30BB\u30C3\u30C8\u3055\u308C\u307E\u3057\u305F",
+    "config_management": "\u8A2D\u5B9A\u7BA1\u7406",
+    "config_management_desc": "\u7BA1\u7406\u8A2D\u5B9A\u306E\u30EA\u30BB\u30C3\u30C8\u3001\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3001\u30A4\u30F3\u30DD\u30FC\u30C8",
+    "ignored_folders_settings": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u8A2D\u5B9A",
+    "display_mode_settings": "\u8868\u793A\u30E2\u30FC\u30C9\u8A2D\u5B9A",
+    "custom_mode_settings": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u8A2D\u5B9A",
+    "add_custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u3092\u8FFD\u52A0",
+    "export": "\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
+    "import": "\u30A4\u30F3\u30DD\u30FC\u30C8",
+    "no_custom_modes_to_export": "\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3059\u308B\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u304C\u3042\u308A\u307E\u305B\u3093",
+    "import_success": "\u30A4\u30F3\u30DD\u30FC\u30C8\u6210\u529F",
+    "import_error": "\u30A4\u30F3\u30DD\u30FC\u30C8\u5931\u6557\uFF1A\u7121\u52B9\u306A\u30D5\u30A1\u30A4\u30EB\u5F62\u5F0F",
+    "edit_custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u3092\u7DE8\u96C6",
+    "custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9",
+    "custom_mode_display_name": "\u8868\u793A\u540D",
+    "custom_mode_display_name_desc": "\u30E2\u30FC\u30C9\u30E1\u30CB\u30E5\u30FC\u3067\u8868\u793A\u3059\u308B\u540D\u524D",
+    "custom_mode_dataview_code": "Dataviewjs \u30B3\u30FC\u30C9",
+    "custom_mode_dataview_code_desc": "\u30D5\u30A1\u30A4\u30EB\u30EA\u30B9\u30C8\u3092\u53D6\u5F97\u3059\u308B Dataviewjs \u30B3\u30FC\u30C9\u3092\u5165\u529B",
+    "custom_mode_sub_options": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u5B50\u9078\u629E\u80A2",
+    "custom_mode_fields_placeholder": "frontmatter\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u5165\u529B (\u4F8B: date,category,status) (\u4EFB\u610F)",
+    "dataview_plugin_not_enabled": "Dataview \u30D7\u30E9\u30B0\u30A4\u30F3\u304C\u6709\u52B9\u306B\u306A\u3063\u3066\u3044\u307E\u305B\u3093",
+    "show_bookmarks_mode": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "show_search_mode": "\u691C\u7D22\u7D50\u679C\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "show_backlinks_mode": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "show_outgoinglinks_mode": "\u30A2\u30A6\u30C8\u30B0\u30EA\u30F3\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "show_all_files_mode": "\u5168\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "show_recent_files_mode": "\u6700\u8FD1\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "recent_files_count": "\u6700\u8FD1\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u8868\u793A\u7B46\u6570",
+    "show_random_note_mode": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "random_note_count": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8\u30E2\u30FC\u30C9\u8868\u793A\u7B46\u6570",
+    "random_note_notes_only": "\u30CE\u30FC\u30C8\u306E\u307F",
+    "random_note_include_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u542B\u3080",
+    "show_tasks_mode": "\u30BF\u30B9\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
+    "task_filter": "\u30BF\u30B9\u30AF\u30D5\u30A3\u30EB\u30BF",
+    "uncompleted": "\u672A\u5B8C\u4E86",
+    "completed": "\u5B8C\u4E86",
+    "foldernote_display_settings": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8A2D\u5B9A",
+    "foldernote_display_settings_desc": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u306E\u8868\u793A\u65B9\u6CD5\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
+    "all": "\u3059\u3079\u3066",
+    "default": "\u30C7\u30D5\u30A9\u30EB\u30C8",
+    "hidden": "\u96A0\u3059",
+    // 隠す頂部元素
+    "hide_header_elements": "\u9802\u90E8\u5143\u7D20\u3092\u96A0\u3059",
+    // 開く場所設定
+    "default_open_location": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u958B\u304F\u5834\u6240",
+    "default_open_location_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u5834\u6240\u3092\u8A2D\u5B9A",
+    "open_in_left_sidebar": "\u5DE6\u30B5\u30A4\u30C9\u30D0\u30FC\u3067\u958B\u304F",
+    "open_in_right_sidebar": "\u53F3\u30B5\u30A4\u30C9\u30D0\u30FC\u3067\u958B\u304F",
+    "open_in_new_tab": "\u65B0\u3057\u3044\u30BF\u30D6\u3067\u958B\u304F",
+    "reuse_existing_leaf": "\u65E2\u5B58\u306E\u30D3\u30E5\u30FC\u3092\u518D\u5229\u7528",
+    "reuse_existing_leaf_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F\u3068\u304D\u3001\u65B0\u3057\u3044\u30D3\u30E5\u30FC\u3092\u4F5C\u6210\u305B\u305A\u306B\u65E2\u5B58\u306E\u30D3\u30E5\u30FC\u3092\u512A\u5148\u4F7F\u7528",
+    "custom_document_extensions": "\u30AB\u30B9\u30BF\u30E0\u6587\u66F8\u62E1\u5F35\u5B50",
+    "custom_document_extensions_desc": "\u8FFD\u52A0\u306E\u6587\u66F8\u62E1\u5F35\u5B50\uFF08\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3001\u30C9\u30C3\u30C8\u7121\u3057\uFF09",
+    "custom_document_extensions_placeholder": "\u4F8B\uFF1Atxt,doc,docx",
+    "custom_folder_icon": "\u30AB\u30B9\u30BF\u30E0\u30D5\u30A9\u30EB\u30C0\u30FC\u30A2\u30A4\u30B3\u30F3",
+    "custom_folder_icon_desc": "\u30AB\u30B9\u30BF\u30E0\u30D5\u30A9\u30EB\u30C0\u30FC\u30A2\u30A4\u30B3\u30F3\uFF08Emoji\u3092\u4F7F\u7528\uFF09",
+    // フォルダ選択ダイアログ
+    "select_folders": "\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
+    "select_folders_to_ignore": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
+    "open_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F",
+    "open_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304F",
+    "open_note_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u73FE\u5728\u306E\u30CE\u30FC\u30C8\u3092\u958B\u304F",
+    "open_backlinks_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u3092\u958B\u304F",
+    "open_outgoinglinks_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u5916\u90E8\u30EA\u30F3\u30AF\u3092\u958B\u304F",
+    "open_recent_files_in_grid_view": "\u6700\u8FD1\u306E\u30D5\u30A1\u30A4\u30EB\u3067\u73FE\u5728\u306E\u30CE\u30FC\u30C8\u3092\u958B\u304F",
+    "open_settings": "\u8A2D\u5B9A\u3092\u958B\u304F",
+    "open_new_grid_view": "\u65B0\u3057\u3044\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F",
+    "open_in_new_grid_view": "\u65B0\u3057\u3044\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304F",
+    "min_mode": "\u6700\u5C0F\u5316\u30E2\u30FC\u30C9",
+    "show_ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u8868\u793A",
+    "delete_note": "\u30D5\u30A1\u30A4\u30EB\u3092\u524A\u9664",
+    "open_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u958B\u304F",
+    "create_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u4F5C\u6210",
+    "delete_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u524A\u9664",
+    "edit_folder_note_settings": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u8A2D\u5B9A\u3092\u7DE8\u96C6",
+    "ignore_folder": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u7121\u8996",
+    "unignore_folder": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u7121\u8996\u89E3\u9664",
+    "searching": "\u691C\u7D22\u4E2D...",
+    "no_files": "\u30D5\u30A1\u30A4\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093",
+    "filter_folders": "\u30D5\u30A9\u30EB\u30C0\u3092\u30D5\u30A3\u30EB\u30BF\u30EA\u30F3\u30B0...",
+    // ショートカット選択ダイアログ
+    "create_shortcut": "\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u3092\u4F5C\u6210",
+    "select_folder": "\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
+    "select_file": "\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E",
+    "target_not_found": "\u76EE\u6A19\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093",
+    "shortcut_created": "\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u304C\u4F5C\u6210\u3055\u308C\u307E\u3057\u305F",
+    "failed_to_create_shortcut": "\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u306E\u4F5C\u6210\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
+    // フォルダーノート設定ダイアログ
+    "folder_note_settings": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u8A2D\u5B9A",
+    "folder_sort_type": "\u30D5\u30A9\u30EB\u30C0\u306E\u4E26\u3073\u66FF\u3048",
+    "folder_sort_type_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048\u65B9\u6CD5\u3092\u8A2D\u5B9A",
+    "folder_color": "\u30D5\u30A9\u30EB\u30C0\u306E\u8272",
+    "folder_color_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u8868\u793A\u8272\u3092\u8A2D\u5B9A",
+    "folder_icon": "\u30D5\u30A9\u30EB\u30C0\u306E\u30A2\u30A4\u30B3\u30F3",
+    "folder_icon_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u8868\u793A\u30A2\u30A4\u30B3\u30F3\u3092\u8A2D\u5B9A",
+    "no_color": "\u8272\u306A\u3057",
+    "color_red": "\u8D64",
+    "color_orange": "\u30AA\u30EC\u30F3\u30B8",
+    "color_yellow": "\u9EC4",
+    "color_green": "\u7DD1",
+    "color_cyan": "\u30B7\u30A2\u30F3",
+    "color_blue": "\u9752",
+    "color_purple": "\u7D2B",
+    "color_pink": "\u30D4\u30F3\u30AF",
+    "confirm": "\u78BA\u8A8D",
+    "note_attribute_settings": "\u30CE\u30FC\u30C8\u5C5E\u6027\u8A2D\u5B9A",
+    "note_title": "\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB",
+    "note_title_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u30BF\u30A4\u30C8\u30EB\u3092\u8A2D\u5B9A",
+    "note_summary": "\u30CE\u30FC\u30C8\u8981\u7D04",
+    "note_summary_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8981\u7D04\u3092\u8A2D\u5B9A",
+    "note_color": "\u30CE\u30FC\u30C8\u8272",
+    "note_color_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8272\u3092\u8A2D\u5B9A",
+    "set_note_attribute": "\u30CE\u30FC\u30C8\u5C5E\u6027\u8A2D\u5B9A",
+    "rename_folder": "\u30D5\u30A9\u30EB\u30C0\u3092\u518D\u547D\u540D",
+    "enter_new_folder_name": "\u65B0\u3057\u3044\u30D5\u30A9\u30EB\u30C0\u540D\u3092\u5165\u529B",
+    "search_selection_in_grid_view": "... \u3092\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u691C\u7D22",
+    "show_date_dividers": "\u65E5\u4ED8\u533A\u5207\u308A\u3092\u8868\u793A",
+    "show_date_dividers_desc": "\u65E5\u4ED8\u95A2\u9023\u306E\u4E26\u3073\u66FF\u3048\u6642\u3001\u5404\u65E5\u306E\u6700\u521D\u306E\u30A2\u30A4\u30C6\u30E0\u306E\u524D\u306B\u65E5\u4ED8\u533A\u5207\u308A\u3092\u8868\u793A\u3059\u308B",
+    "date_divider_format": "\u65E5\u4ED8\u533A\u5207\u308A\u30D5\u30A9\u30FC\u30DE\u30C3\u30C8",
+    "date_divider_mode": "\u65E5\u4ED8\u533A\u5207\u308A",
+    "date_divider_mode_desc": "\u65E5\u4ED8\u533A\u5207\u308A\u306E\u8868\u793A\u30E2\u30FC\u30C9\u3092\u9078\u629E",
+    "date_divider_mode_none": "\u4F7F\u7528\u3057\u306A\u3044",
+    "date_divider_mode_year": "\u5E74",
+    "date_divider_mode_month": "\u6708",
+    "date_divider_mode_day": "\u65E5",
+    "pinned": "\u30D4\u30F3\u7559\u3081",
+    "pinned_desc": "\u3053\u306E\u30D5\u30A1\u30A4\u30EB\u3092\u6700\u4E0A\u90E8\u306B\u56FA\u5B9A\u3059\u308B",
+    "foldernote_pinned": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u3092\u30D4\u30F3\u7559\u3081",
+    "foldernote_pinned_desc": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u6700\u4E0A\u90E8\u306B\u56FA\u5B9A",
+    "display_minimized": "\u6700\u5C0F\u5316\u8868\u793A",
+    "display_minimized_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u3092\u6700\u5C0F\u5316\u30E2\u30FC\u30C9\u3067\u8868\u793A",
+    //TODO: please check the translation!
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u8A2D\u5B9A",
+    "quick_access_folder_name": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30D5\u30A9\u30EB\u30C0\u30FC",
+    "quick_access_folder_desc": "\u300C\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9 \u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u958B\u304F\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u4F7F\u7528\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
+    "quick_access_mode_name": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9",
+    "quick_access_mode_desc": "\u300C\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u958B\u304F\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u4F7F\u7528\u3059\u308B\u65E2\u5B9A\u306E\u30E2\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
+    "use_quick_access_as_new_tab_view": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u3092\u65B0\u3057\u3044\u30BF\u30D6\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B",
+    "use_quick_access_as_new_tab_view_desc": "\u65E2\u5B9A\u306E\u300C\u65B0\u3057\u3044\u30BF\u30D6\u300D\u306E\u8868\u793A\u3092\u3001\u9078\u629E\u3057\u305F\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30AA\u30D7\u30B7\u30E7\u30F3\uFF08\u30D5\u30A9\u30EB\u30C0\u30FC\u307E\u305F\u306F\u30E2\u30FC\u30C9\uFF09\u306E\u30B0\u30EA\u30C3\u30C9\u8868\u793A\u306B\u7F6E\u304D\u63DB\u3048\u307E\u3059\u3002\u3053\u306E\u8A2D\u5B9A\u306F\u3001\u300C\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u958B\u304F\u5834\u6240\u300D\u304C\u300C\u65B0\u3057\u3044\u30BF\u30D6\u3067\u958B\u304F\u300D\u306B\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u308B\u5834\u5408\u306B\u306E\u307F\u6709\u52B9\u3067\u3059\uFF01",
+    "default_new_tab": "\u65E2\u5B9A\u306E\u65B0\u3057\u3044\u30BF\u30D6",
+    "use_quick_access_folder": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u4F7F\u7528\u3059\u308B",
+    "use_quick_access_mode": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u4F7F\u7528\u3059\u308B",
+    "open_quick_access_folder": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9 \u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u958B\u304F",
+    "open_quick_access_mode": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u958B\u304F"
+  },
+  "ru": {
+    // Notifications
+    "bookmarks_plugin_disabled": "\u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u0441\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u043A\u043B\u044E\u0447\u0438\u0442\u0435 \u043F\u043B\u0430\u0433\u0438\u043D \u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
+    // Buttons and Labels
+    "sorting": "\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E",
+    "refresh": "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C",
+    "reselect": "\u041F\u0435\u0440\u0435\u0432\u044B\u0431\u0440\u0430\u0442\u044C",
+    "no_backlinks": "\u041D\u0435\u0442 \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
+    "search": "\u041F\u043E\u0438\u0441\u043A",
+    "search_placeholder": "\u041A\u043B\u044E\u0447\u0435\u0432\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0438\u0441\u043A\u0430",
+    "search_current_location_only": "\u0418\u0441\u043A\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0440\u0430\u0441\u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0438",
+    "search_files_name_only": "\u0418\u0441\u043A\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0438 \u0444\u0430\u0439\u043B\u043E\u0432",
+    "search_media_files": "\u0418\u0441\u043A\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
+    "cancel": "\u041E\u0442\u043C\u0435\u043D\u0430",
+    "new_note": "\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0430",
+    "new_folder": "\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430",
+    "new_canvas": "\u041D\u043E\u0432\u044B\u0439 \u043A\u0430\u043D\u0432\u0430\u0441",
+    "new_shortcut": "\u041D\u043E\u0432\u044B\u0439 \u044F\u0440\u043B\u044B\u043A",
+    "delete_folder": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
+    "untitled": "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F",
+    "files": "\u0444\u0430\u0439\u043B\u044B",
+    "add": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C",
+    "root": "\u041A\u043E\u0440\u0435\u043D\u044C",
+    "sub_folders": "\u041F\u043E\u0434\u043F\u0430\u043F\u043A\u0438",
+    "parent_folders": "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0430\u043F\u043A\u0438",
+    "more_options": "\u0411\u043E\u043B\u044C\u0448\u0435 \u043E\u043F\u0446\u0438\u0439",
+    "add_tag_to_search": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u043F\u043E\u0438\u0441\u043A",
+    "remove_tag_from_search": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0438\u0437 \u043F\u043E\u0438\u0441\u043A\u0430",
+    "global_search": "\u0413\u043B\u043E\u0431\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0438\u0441\u043A",
+    "remove": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
+    "edit": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
+    "delete": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
+    "save": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C",
+    "option": "\u041E\u043F\u0446\u0438\u044F",
+    "add_option": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u043F\u0446\u0438\u044E",
+    // View Titles
+    "grid_view_title": "\u0421\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
+    "bookmarks_mode": "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
+    "folder_mode": "\u041F\u0430\u043F\u043A\u0430",
+    "search_results": "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430",
+    "backlinks_mode": "\u041E\u0431\u0440\u0430\u0442\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438",
+    "outgoinglinks_mode": "\u0418\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0441\u0441\u044B\u043B\u043A\u0438",
+    "all_files_mode": "\u0412\u0441\u0435 \u0444\u0430\u0439\u043B\u044B",
+    "recent_files_mode": "\u041D\u0435\u0434\u0430\u0432\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u044B",
+    "random_note_mode": "\u0421\u043B\u0443\u0447\u0430\u0439\u043D\u0430\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0430",
+    "tasks_mode": "\u0417\u0430\u0434\u0430\u0447\u0438",
+    // Sort Options
+    "sort_name_asc": "\u0418\u043C\u044F (\u0410 \u2192 \u042F)",
+    "sort_name_desc": "\u0418\u043C\u044F (\u042F \u2192 \u0410)",
+    "sort_mtime_desc": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E (\u041D\u043E\u0432\u043E\u0435 \u2192 \u0421\u0442\u0430\u0440\u043E\u0435)",
+    "sort_mtime_asc": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u043E\u0435 \u2192 \u041D\u043E\u0432\u043E\u0435)",
+    "sort_ctime_desc": "\u0421\u043E\u0437\u0434\u0430\u043D\u043E (\u041D\u043E\u0432\u043E\u0435 \u2192 \u0421\u0442\u0430\u0440\u043E\u0435)",
+    "sort_ctime_asc": "\u0421\u043E\u0437\u0434\u0430\u043D\u043E (\u0421\u0442\u0430\u0440\u043E\u0435 \u2192 \u041D\u043E\u0432\u043E\u0435)",
+    "sort_random": "\u0421\u043B\u0443\u0447\u0430\u0439\u043D\u043E",
+    // Settings
+    "grid_view_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430",
+    "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
+    "show_media_files_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u044B \u0432\u0438\u0434\u0435\u043E",
+    "show_video_thumbnails_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u044B \u0434\u043B\u044F \u0432\u0438\u0434\u0435\u043E \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435, \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u0437\u043D\u0430\u0447\u043E\u043A \u0432\u043E\u0441\u043F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0438\u044F, \u0435\u0441\u043B\u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E",
+    "show_note_in_grid": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "show_note_in_grid_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435, \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E - \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u043D\u0430\u0436\u0430\u0442\u044C \u0438 \u0443\u0434\u0435\u0440\u0436\u0430\u0442\u044C Alt",
+    "show_note_tags": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0442\u0435\u0433\u0438 \u0437\u0430\u043C\u0435\u0442\u043E\u043A",
+    "show_note_tags_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u0442\u0435\u0433\u0438 \u0434\u043B\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "ignored_folders": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0435 \u043F\u0430\u043F\u043A\u0438",
+    "ignored_folders_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0437\u0434\u0435\u0441\u044C",
+    "add_ignored_folder": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u0443\u044E \u043F\u0430\u043F\u043A\u0443",
+    "no_ignored_folders": "\u041D\u0435\u0442 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A.",
+    "ignored_folder_patterns": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0438 \u0444\u0430\u0439\u043B\u044B \u043F\u043E \u0448\u0430\u0431\u043B\u043E\u043D\u0443",
+    "ignored_folder_patterns_desc": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0440\u043E\u043A\u043E\u0432\u044B\u0435 \u0448\u0430\u0431\u043B\u043E\u043D\u044B \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0430\u043F\u043E\u043A \u0438 \u0444\u0430\u0439\u043B\u043E\u0432 (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F)",
+    "add_ignored_folder_pattern": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0448\u0430\u0431\u043B\u043E\u043D \u043F\u0430\u043F\u043A\u0438",
+    "ignored_folder_pattern_placeholder": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u0430\u043F\u043A\u0438 \u0438\u043B\u0438 \u0448\u0430\u0431\u043B\u043E\u043D \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0433\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "no_ignored_folder_patterns": "\u041D\u0435\u0442 \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u0432 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A.",
+    "default_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "default_sort_type_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043C\u0435\u0442\u043E\u0434 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430",
+    "note_title_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438"',
+    "note_title_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_summary_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u041A\u0440\u0430\u0442\u043A\u043E\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435"',
+    "note_summary_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
+    "modified_date_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F"',
+    "modified_date_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u0434\u0430\u0442\u044B \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043B\u0435\u0439, \u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438)",
+    "created_date_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F"',
+    "created_date_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u0434\u0430\u0442\u044B \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043B\u0435\u0439, \u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438)",
+    "grid_item_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
+    "grid_item_width_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0448\u0438\u0440\u0438\u043D\u0443 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u0435\u0442\u043A\u0438",
+    "grid_item_height": "\u0412\u044B\u0441\u043E\u0442\u0430 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
+    "grid_item_height_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0432\u044B\u0441\u043E\u0442\u0443 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u0435\u0442\u043A\u0438 (0 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438)",
+    "image_area_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "image_area_width_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0448\u0438\u0440\u0438\u043D\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "image_area_height": "\u0412\u044B\u0441\u043E\u0442\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "image_area_height_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0432\u044B\u0441\u043E\u0442\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "title_font_size": "\u0420\u0430\u0437\u043C\u0435\u0440 \u0448\u0440\u0438\u0444\u0442\u0430 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "title_font_size_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\u0440 \u0448\u0440\u0438\u0444\u0442\u0430 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "summary_length": "\u0414\u043B\u0438\u043D\u0430 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
+    "summary_length_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0434\u043B\u0438\u043D\u0443 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
+    "grid_item_style_settings": "\u0421\u0442\u0438\u043B\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
+    "card_layout": "\u041A\u0430\u0440\u0442\u043E\u0447\u043D\u044B\u0439 \u043C\u0430\u043A\u0435\u0442",
+    "card_layout_desc": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u0430\u043A\u0435\u0442 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "horizontal_card": "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
+    "vertical_card": "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
+    "image_position": "\u041F\u043E\u0437\u0438\u0446\u0438\u044F \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "image_position_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u043E\u0437\u0438\u0446\u0438\u044E \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "top": "\u0412\u0435\u0440\u0445",
+    "bottom": "\u041D\u0438\u0437",
+    "multi_line_title": "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u0438\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "multi_line_title_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u044C \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u0438\u0435 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "show_code_block_in_summary": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C CodeBlock \u0432 \u043A\u0440\u0430\u0442\u043A\u043E\u043C \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0438",
+    "show_code_block_in_summary_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C CodeBlock \u0432 \u043A\u0440\u0430\u0442\u043A\u043E\u043C \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0438",
+    "enable_file_watcher": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043D\u0430\u0431\u043B\u044E\u0434\u0435\u043D\u0438\u0435 \u0437\u0430 \u0444\u0430\u0439\u043B\u0430\u043C\u0438",
+    "enable_file_watcher_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0432\u0438\u0434 \u0431\u0443\u0434\u0435\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0442\u044C\u0441\u044F \u043F\u0440\u0438 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0438 \u0444\u0430\u0439\u043B\u043E\u0432. \u0415\u0441\u043B\u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E, \u043D\u0443\u0436\u043D\u043E \u0432\u0440\u0443\u0447\u043D\u0443\u044E \u043D\u0430\u0436\u0438\u043C\u0430\u0442\u044C \u043A\u043D\u043E\u043F\u043A\u0443 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F",
+    "intercept_all_tag_clicks": "\u041F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C \u0432\u0441\u0435 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u0442\u0435\u0433\u0430\u043C",
+    "intercept_all_tag_clicks_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0432\u0441\u0435 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u0442\u0435\u0433\u0430\u043C \u0431\u0443\u0434\u0443\u0442 \u043F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0438 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0432 \u0432\u0438\u0434\u0435 \u0441\u0435\u0442\u043A\u0438",
+    "intercept_breadcrumb_clicks": "\u041F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0435",
+    "intercept_breadcrumb_clicks_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0435 \u0431\u0443\u0434\u0443\u0442 \u043F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C\u0441\u044F, \u0438 \u043F\u0443\u0442\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0432 \u0432\u0438\u0434\u0435 \u0441\u0435\u0442\u043A\u0438",
+    "reset_to_default": "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043D\u0430 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "settings_reset_notice": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0431\u0440\u043E\u0448\u0435\u043D\u044B \u043D\u0430 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "config_management": "\u041A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044F \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
+    "config_management_desc": "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0435\u0439 (\u0441\u0431\u0440\u043E\u0441, \u044D\u043A\u0441\u043F\u043E\u0440\u0442, \u0438\u043C\u043F\u043E\u0440\u0442)",
+    "ignored_folders_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A",
+    "display_mode_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0440\u0435\u0436\u0438\u043C\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "custom_mode_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0440\u0435\u0436\u0438\u043C\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "add_custom_mode": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "export": "\u042D\u043A\u0441\u043F\u043E\u0440\u0442",
+    "import": "\u0418\u043C\u043F\u043E\u0440\u0442",
+    "no_custom_modes_to_export": "\u041D\u0435\u0442 \u0440\u0435\u0436\u0438\u043C\u043E\u0432 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430",
+    "import_success": "\u0418\u043C\u043F\u043E\u0440\u0442 \u0443\u0441\u043F\u0435\u0448\u043D\u043E",
+    "import_error": "\u041E\u0448\u0438\u0431\u043A\u0430 \u0438\u043C\u043F\u043E\u0440\u0442\u0430: \u043D\u0435\u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u044B\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u0444\u0430\u0439\u043B\u0430",
+    "edit_custom_mode": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "custom_mode": "\u0420\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
+    "custom_mode_display_name": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u0438\u043C\u044F",
+    "custom_mode_display_name_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u0438\u043C\u044F \u0432 \u043C\u0435\u043D\u044E \u0440\u0435\u0436\u0438\u043C\u043E\u0432",
+    "custom_mode_dataview_code": "\u041A\u043E\u0434 Dataview",
+    "custom_mode_dataview_code_desc": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0434 Dataview \u0434\u043B\u044F \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0441\u043F\u0438\u0441\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432",
+    "custom_mode_sub_options": "\u041F\u043E\u0434\u043E\u043F\u0446\u0438\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430",
+    "custom_mode_fields_placeholder": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F \u043F\u043E\u043B\u0435\u0439 frontmatter \u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u043F\u044F\u0442\u0443\u044E (\u043D\u0430\u043F\u0440.: date,category,status) (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
+    "dataview_plugin_not_enabled": "Dataview \u043F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0432\u043A\u043B\u044E\u0447\u0435\u043D",
+    "show_bookmarks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u043A\u043B\u0430\u0434\u043E\u043A",
+    "show_search_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u043E\u0438\u0441\u043A\u0430",
+    "show_backlinks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
+    "show_outgoinglinks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0438\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
+    "show_all_files_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0441\u0435\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
+    "show_recent_files_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
+    "recent_files_count": "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
+    "show_random_note_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "random_note_count": "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u044B\u0445 \u0437\u0430\u043C\u0435\u0442\u043E\u043A",
+    "random_note_notes_only": "\u0422\u043E\u043B\u044C\u043A\u043E \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "random_note_include_media_files": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
+    "show_tasks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u0434\u0430\u0447",
+    "task_filter": "\u0424\u0438\u043B\u044C\u0442\u0440 \u0437\u0430\u0434\u0430\u0447",
+    "uncompleted": "\u041D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043D\u044B\u0435",
+    "completed": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043D\u044B\u0435",
+    "foldernote_display_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u043F\u0430\u043F\u043E\u043A",
+    "foldernote_display_settings_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u043F\u0430\u043F\u043E\u043A",
+    "all": "\u0412\u0441\u0435",
+    "default": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "hidden": "\u0421\u043A\u0440\u044B\u0442\u044B\u0435",
+    // Hide header elements setting
+    "hide_header_elements": "\u0421\u043A\u0440\u044B\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    // Default open location setting
+    "default_open_location": "\u041C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "default_open_location_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "open_in_left_sidebar": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043B\u0435\u0432\u043E\u0439 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438",
+    "open_in_right_sidebar": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043F\u0440\u0430\u0432\u043E\u0439 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438",
+    "open_in_new_tab": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u0439 \u0432\u043A\u043B\u0430\u0434\u043A\u0435",
+    "reuse_existing_leaf": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u0432\u0438\u0434",
+    "reuse_existing_leaf_desc": "\u041F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430 \u043F\u0440\u0435\u0434\u043F\u043E\u0447\u0442\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u0432\u0438\u0434 \u0432\u043C\u0435\u0441\u0442\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043D\u043E\u0432\u043E\u0433\u043E",
+    "custom_document_extensions": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432",
+    "custom_document_extensions_desc": "\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432 (\u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u043F\u044F\u0442\u0443\u044E, \u0431\u0435\u0437 \u0442\u043E\u0447\u0435\u043A)",
+    "custom_document_extensions_placeholder": "\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, txt,doc,docx",
+    "custom_folder_icon": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439 \u0438\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
+    "custom_folder_icon_desc": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0430\u044F \u0438\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438 (\u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 Emoji)",
+    // Select Folder Dialog
+    "select_folders": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
+    "select_folders_to_ignore": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F",
+    "open_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
+    "open_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "open_note_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "open_backlinks_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "open_outgoinglinks_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0438\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0441\u0441\u044B\u043B\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "open_recent_files_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0442\u0435\u043A\u0443\u0449\u0443\u044E \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u0430\u0445",
+    "open_settings": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
+    "open_new_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u043E\u0432\u044B\u0439 \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
+    "open_in_new_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u043C \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "min_mode": "\u041C\u0438\u043D\u0438\u043C\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u0438\u0434",
+    "show_ignored_folders": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0435 \u043F\u0430\u043F\u043A\u0438",
+    "delete_note": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0444\u0430\u0439\u043B",
+    "open_folder_note": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "create_folder_note": "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "delete_folder_note": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "edit_folder_note_settings": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "ignore_folder": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u044D\u0442\u0443 \u043F\u0430\u043F\u043A\u0443",
+    "unignore_folder": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
+    "searching": "\u041F\u043E\u0438\u0441\u043A...",
+    "no_files": "\u0424\u0430\u0439\u043B\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
+    "filter_folders": "\u0424\u0438\u043B\u044C\u0442\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438...",
+    //
+    "create_shortcut": "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u044F\u0440\u043B\u0438\u043A",
+    "select_folder": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
+    "select_file": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0444\u0430\u0439\u043B",
+    "target_not_found": "\u0426\u0435\u043B\u044C \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430",
+    "shortcut_created": "\u042F\u0440\u043B\u0438\u043A \u0441\u043E\u0437\u0434\u0430\u043D",
+    "failed_to_create_shortcut": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u044F\u0440\u043B\u0438\u043A",
+    // Folder Note Settings Dialog
+    "folder_note_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "folder_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "folder_sort_type_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0442\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
+    "folder_color": "\u0426\u0432\u0435\u0442 \u043F\u0430\u043F\u043A\u0438",
+    "folder_color_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0446\u0432\u0435\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
+    "folder_icon": "\u0418\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
+    "folder_icon_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0438\u043A\u043E\u043D\u043A\u0443 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
+    "no_color": "\u0411\u0435\u0437 \u0446\u0432\u0435\u0442\u0430",
+    "color_red": "\u041A\u0440\u0430\u0441\u043D\u044B\u0439",
+    "color_orange": "\u041E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439",
+    "color_yellow": "\u0416\u0435\u043B\u0442\u044B\u0439",
+    "color_green": "\u0417\u0435\u043B\u0435\u043D\u044B\u0439",
+    "color_cyan": "\u0413\u043E\u043B\u0443\u0431\u043E\u0439",
+    "color_blue": "\u0421\u0438\u043D\u0438\u0439",
+    "color_purple": "\u0424\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439",
+    "color_pink": "\u0420\u043E\u0437\u043E\u0432\u044B\u0439",
+    "confirm": "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C",
+    "note_attribute_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u043E\u0432 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_title": "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_title_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_summary": "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044C",
+    "note_summary_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u043A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044C \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_color": "\u0426\u0432\u0435\u0442 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "note_color_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0446\u0432\u0435\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "set_note_attribute": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044B \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+    "rename_folder": "\u041F\u0435\u0440\u0435\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
+    "enter_new_folder_name": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u043E\u0432\u043E\u0435 \u0438\u043C\u044F \u043F\u0430\u043F\u043A\u0438",
+    "search_selection_in_grid_view": "\u041F\u043E\u0438\u0441\u043A ... \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
+    "show_date_dividers": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0434\u0430\u0442",
+    "show_date_dividers_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0434\u0430\u0442 \u043F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0432\u044B\u043C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u043C \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043D\u043E\u0432\u043E\u0433\u043E \u0434\u043D\u044F \u043F\u0440\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0438 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0434\u0430\u0442\u0435",
+    "date_divider_format": "\u0424\u043E\u0440\u043C\u0430\u0442 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u0434\u0430\u0442",
+    "date_divider_mode": "\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u0434\u0430\u0442",
+    "date_divider_mode_desc": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0435\u0439 \u0434\u0430\u0442",
+    "date_divider_mode_none": "\u041D\u0435\u0442",
+    "date_divider_mode_year": "\u0413\u043E\u0434",
+    "date_divider_mode_month": "\u041C\u0435\u0441\u044F\u0446",
+    "date_divider_mode_day": "\u0414\u0435\u043D\u044C",
+    "pinned": "\u0417\u0430\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043E",
+    "pinned_desc": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u043D\u0430\u0432\u0435\u0440\u0445\u0443",
+    "foldernote_pinned": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "foldernote_pinned_desc": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0432\u0432\u0435\u0440\u0445\u0443",
+    "display_minimized": "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0432\u0438\u0434",
+    "display_minimized_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u044D\u0442\u0443 \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u043C \u0440\u0435\u0436\u0438\u043C\u0435",
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0411\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "quick_access_folder_name": "\u041F\u0430\u043F\u043A\u0430 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "quick_access_folder_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u0430\u043F\u043A\u0443, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u0443\u044E \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u0439 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430\xBB",
+    "quick_access_mode_name": "\u0420\u0435\u0436\u0438\u043C \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "quick_access_mode_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0440\u0435\u0436\u0438\u043C \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0439 \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u0439 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043F\u043E \u0440\u0435\u0436\u0438\u043C\u0443\xBB",
+    "use_quick_access_as_new_tab_view": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0411\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043A\u0430\u043A \u043D\u043E\u0432\u0443\u044E \u0432\u043A\u043B\u0430\u0434\u043A\u0443",
+    "use_quick_access_as_new_tab_view_desc": "\u0417\u0430\u043C\u0435\u043D\u0438\u0442\u0435 \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u0432\u0438\u0434 \xAB\u041D\u043E\u0432\u0430\u044F \u0432\u043A\u043B\u0430\u0434\u043A\u0430\xBB \u043D\u0430 \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u043E\u043F\u0446\u0438\u0438 \u0411\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430 (\u043F\u0430\u043F\u043A\u0438 \u0438\u043B\u0438 \u0440\u0435\u0436\u0438\u043C\u0430). \u0420\u0430\u0431\u043E\u0442\u0430\u0435\u0442, \u0442\u043E\u043B\u044C\u043A\u043E \u0435\u0441\u043B\u0438 \xAB\u041C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E\xBB \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u043D\u0430 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u0439 \u0432\u043A\u043B\u0430\u0434\u043A\u0435\xBB!",
+    "default_new_tab": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "use_quick_access_folder": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "use_quick_access_mode": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "open_quick_access_folder": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
+    "open_quick_access_mode": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043F\u043E \u0440\u0435\u0436\u0438\u043C\u0443"
+  },
+  "uk": {
+    // Notifications
+    "bookmarks_plugin_disabled": "\u0411\u0443\u0434\u044C \u043B\u0430\u0441\u043A\u0430, \u0441\u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0443\u0432\u0456\u043C\u043A\u043D\u0456\u0442\u044C \u043F\u043B\u0430\u0433\u0456\u043D \u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
+    // Buttons and Labels
+    "sorting": "\u0421\u043E\u0440\u0442\u0443\u0432\u0430\u0442\u0438 \u0437\u0430",
+    "refresh": "\u041E\u043D\u043E\u0432\u0438\u0442\u0438",
+    "reselect": "\u041F\u0435\u0440\u0435\u043E\u0431\u0440\u0430\u0442\u0438",
+    "no_backlinks": "\u041D\u0435\u043C\u0430\u0454 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
+    "search": "\u041F\u043E\u0448\u0443\u043A",
+    "search_placeholder": "\u041A\u043B\u044E\u0447\u043E\u0432\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0448\u0443\u043A\u0443",
+    "search_current_location_only": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043B\u0438\u0448\u0435 \u0432 \u043F\u043E\u0442\u043E\u0447\u043D\u043E\u043C\u0443 \u0440\u043E\u0437\u0442\u0430\u0448\u0443\u0432\u0430\u043D\u043D\u0456",
+    "search_files_name_only": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043B\u0438\u0448\u0435 \u0432 \u043D\u0430\u0437\u0432\u0456 \u0444\u0430\u0439\u043B\u0456\u0432",
+    "search_media_files": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
+    "cancel": "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438",
+    "new_note": "\u041D\u043E\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0430",
+    "new_folder": "\u041D\u043E\u0432\u0430 \u043F\u0430\u043F\u043A\u0430",
+    "new_canvas": "\u041D\u043E\u0432\u0438\u0439 \u043A\u0430\u043D\u0432\u0430\u0441",
+    "new_shortcut": "\u041D\u043E\u0432\u0438\u0439 \u044F\u0440\u043B\u0438\u043A",
+    "delete_folder": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
+    "untitled": "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0438",
+    "files": "\u0444\u0430\u0439\u043B\u0438",
+    "add": "\u0414\u043E\u0434\u0430\u0442\u0438",
+    "root": "\u041A\u043E\u0440\u0435\u043D\u044C",
+    "sub_folders": "\u041F\u0456\u0434\u043F\u0430\u043F\u043A\u0438",
+    "parent_folders": "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u044C\u043A\u0456 \u043F\u0430\u043F\u043A\u0438",
+    "more_options": "\u0411\u0456\u043B\u044C\u0448\u0435 \u043E\u043F\u0446\u0456\u0439",
+    "add_tag_to_search": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043F\u043E\u0448\u0443\u043A\u0443",
+    "remove_tag_from_search": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0437 \u043F\u043E\u0448\u0443\u043A\u0443",
+    "global_search": "\u0413\u043B\u043E\u0431\u0430\u043B\u044C\u043D\u0438\u0439 \u043F\u043E\u0448\u0443\u043A",
+    "remove": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438",
+    "edit": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438",
+    "delete": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438",
+    "save": "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438",
+    "option": "\u041E\u043F\u0446\u0456\u044F",
+    "add_option": "\u0414\u043E\u0434\u0430\u0442\u0438 \u043E\u043F\u0446\u0456\u044E",
+    // View Titles
+    "grid_view_title": "\u0421\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "bookmarks_mode": "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
+    "folder_mode": "\u041F\u0430\u043F\u043A\u0430",
+    "search_results": "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0438 \u043F\u043E\u0448\u0443\u043A\u0443",
+    "backlinks_mode": "\u0417\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F",
+    "outgoinglinks_mode": "\u0412\u0438\u0445\u0456\u0434\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F",
+    "all_files_mode": "\u0423\u0441\u0456 \u0444\u0430\u0439\u043B\u0438",
+    "recent_files_mode": "\u041E\u0441\u0442\u0430\u043D\u043D\u0456 \u0444\u0430\u0439\u043B\u0438",
+    "random_note_mode": "\u0412\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0430",
+    "tasks_mode": "\u0417\u0430\u0434\u0430\u0447\u0456",
+    // Sort Options
+    "sort_name_asc": "\u041D\u0430\u0437\u0432\u0430 (\u0410 \u2192 \u042F)",
+    "sort_name_desc": "\u041D\u0430\u0437\u0432\u0430 (\u042F \u2192 \u0410)",
+    "sort_mtime_desc": "\u0417\u043C\u0456\u043D\u0435\u043D\u043E (\u041D\u043E\u0432\u0435 \u2192 \u0421\u0442\u0430\u0440\u0435)",
+    "sort_mtime_asc": "\u0417\u043C\u0456\u043D\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u0435 \u2192 \u041D\u043E\u0432\u0435)",
+    "sort_ctime_desc": "\u0421\u0442\u0432\u043E\u0440\u0435\u043D\u043E (\u041D\u043E\u0432\u0435 \u2192 \u0421\u0442\u0430\u0440\u0435)",
+    "sort_ctime_asc": "\u0421\u0442\u0432\u043E\u0440\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u0435 \u2192 \u041D\u043E\u0432\u0435)",
+    "sort_random": "\u0412\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E",
+    // Settings
+    "grid_view_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443",
+    "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
+    "show_media_files_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0456\u043D\u0456\u0430\u0442\u044E\u0440\u0438 \u0432\u0456\u0434\u0435\u043E",
+    "show_video_thumbnails_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u043C\u0456\u043D\u0456\u0430\u0442\u044E\u0440\u0438 \u0434\u043B\u044F \u0432\u0456\u0434\u0435\u043E \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456, \u043F\u043E\u043A\u0430\u0437\u0443\u0454 \u0456\u043A\u043E\u043D\u043A\u0443 \u0432\u0456\u0434\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F, \u044F\u043A\u0449\u043E \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E",
+    "show_note_in_grid": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "show_note_in_grid_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456, \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E - \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u043D\u0430\u0442\u0438\u0441\u043D\u0443\u0442\u0438 \u0442\u0430 \u0442\u0440\u0438\u043C\u0430\u0442\u0438 Alt",
+    "show_note_tags": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0442\u0435\u0433\u0438 \u043D\u043E\u0442\u0430\u0442\u043E\u043A",
+    "show_note_tags_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u0442\u0435\u0433\u0438 \u0434\u043B\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "ignored_folders": "\u0406\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0456 \u043F\u0430\u043F\u043A\u0438",
+    "ignored_folders_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u0442\u0443\u0442",
+    "add_ignored_folder": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0443 \u043F\u0430\u043F\u043A\u0443",
+    "no_ignored_folders": "\u041D\u0435\u043C\u0430\u0454 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A.",
+    "ignored_folder_patterns": "\u0406\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438 \u0442\u0430 \u0444\u0430\u0439\u043B\u0438 \u0437\u0430 \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u043C",
+    "ignored_folder_patterns_desc": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0440\u044F\u0434\u043A\u043E\u0432\u0456 \u0448\u0430\u0431\u043B\u043E\u043D\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u043F\u0430\u043F\u043E\u043A \u0456 \u0444\u0430\u0439\u043B\u0456\u0432 (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u0456 \u0432\u0438\u0440\u0430\u0437\u0438)",
+    "add_ignored_folder_pattern": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0448\u0430\u0431\u043B\u043E\u043D \u043F\u0430\u043F\u043A\u0438",
+    "ignored_folder_pattern_placeholder": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u0430\u043F\u043A\u0438 \u0430\u0431\u043E \u0448\u0430\u0431\u043B\u043E\u043D \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0433\u043E \u0432\u0438\u0440\u0430\u0437\u0443",
+    "no_ignored_folder_patterns": "\u041D\u0435\u043C\u0430\u0454 \u0448\u0430\u0431\u043B\u043E\u043D\u0456\u0432 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A.",
+    "default_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
+    "default_sort_type_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043C\u0435\u0442\u043E\u0434 \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C \u043F\u0440\u0438 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u0456 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443",
+    "note_title_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u041D\u0430\u0437\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0438"',
+    "note_title_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u043D\u0430\u0437\u0432\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_summary_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441"',
+    "note_summary_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
+    "modified_date_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0437\u043C\u0456\u043D\u0438"',
+    "modified_date_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u0434\u0430\u0442\u0438 \u0437\u043C\u0456\u043D\u0438 (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u0456\u043B\u044C\u043A\u0430 \u043D\u0430\u0437\u0432 \u043F\u043E\u043B\u0456\u0432, \u0440\u043E\u0437\u0434\u0456\u043B\u0435\u043D\u0438\u0445 \u043A\u043E\u043C\u0430\u043C\u0438)",
+    "created_date_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F"',
+    "created_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u0434\u0430\u0442\u0438 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u0456\u043B\u044C\u043A\u0430 \u043D\u0430\u0437\u0432 \u043F\u043E\u043B\u0456\u0432, \u0440\u043E\u0437\u0434\u0456\u043B\u0435\u043D\u0438\u0445 \u043A\u043E\u043C\u0430\u043C\u0438)",
+    "grid_item_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
+    "grid_item_width_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0448\u0438\u0440\u0438\u043D\u0443 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0456\u0432 \u0441\u0456\u0442\u043A\u0438",
+    "grid_item_height": "\u0412\u0438\u0441\u043E\u0442\u0430 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
+    "grid_item_height_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0432\u0438\u0441\u043E\u0442\u0443 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0456\u0432 \u0441\u0456\u0442\u043A\u0438 (0 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E\u0457 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438)",
+    "image_area_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "image_area_width_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0448\u0438\u0440\u0438\u043D\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u043F\u043E\u043F\u0435\u0440\u0435\u0434\u043D\u044C\u043E\u0433\u043E \u043F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0443 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "image_area_height": "\u0412\u0438\u0441\u043E\u0442\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "image_area_height_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0432\u0438\u0441\u043E\u0442\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u043F\u043E\u043F\u0435\u0440\u0435\u0434\u043D\u044C\u043E\u0433\u043E \u043F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0443 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "title_font_size": "\u0420\u043E\u0437\u043C\u0456\u0440 \u0448\u0440\u0438\u0444\u0442\u0443 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "title_font_size_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u043E\u0437\u043C\u0456\u0440 \u0448\u0440\u0438\u0444\u0442\u0443 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "summary_length": "\u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
+    "summary_length_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0434\u043E\u0432\u0436\u0438\u043D\u0443 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
+    "grid_item_style_settings": "\u0421\u0442\u0438\u043B\u044C \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
+    "card_layout": "\u041A\u0430\u0440\u0442\u043E\u0447\u043D\u0438\u0439 \u043C\u0430\u043A\u0435\u0442",
+    "card_layout_desc": "\u0412\u0438\u0431\u0435\u0440\u0456\u0442\u044C \u043C\u0430\u043A\u0435\u0442 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
+    "horizontal_card": "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
+    "vertical_card": "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
+    "image_position": "\u041F\u043E\u0437\u0438\u0446\u0456\u044F \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "image_position_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043F\u043E\u0437\u0438\u0446\u0456\u044E \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "top": "\u0412\u0435\u0440\u0445",
+    "bottom": "\u041D\u0438\u0436\u0447\u0435",
+    "multi_line_title": "\u041F\u043E\u0434\u0442\u0440\u0438\u043C\u043A\u0430 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u043D\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "multi_line_title_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C, \u0449\u043E\u0431 \u0434\u043E\u0437\u0432\u043E\u043B\u0438\u0442\u0438 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u043D\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "show_code_block_in_summary": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 CodeBlock \u0432 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u043C\u0443 \u043E\u043F\u0438\u0441\u0456",
+    "show_code_block_in_summary_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C, \u0449\u043E\u0431 \u043F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 CodeBlock \u0432 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u043C\u0443 \u043E\u043F\u0438\u0441\u0456",
+    "enable_file_watcher": "\u0423\u0432\u0456\u043C\u043A\u043D\u0443\u0442\u0438 \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0435\u0436\u0435\u043D\u043D\u044F \u0437\u0430 \u0444\u0430\u0439\u043B\u0430\u043C\u0438",
+    "enable_file_watcher_desc": "\u041F\u0440\u0438 \u0443\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u0432\u0438\u0433\u043B\u044F\u0434 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E \u043E\u043D\u043E\u0432\u043B\u044E\u0432\u0430\u0442\u0438\u043C\u0435\u0442\u044C\u0441\u044F \u043F\u0440\u0438 \u0437\u043C\u0456\u043D\u0456 \u0444\u0430\u0439\u043B\u0456\u0432. \u042F\u043A\u0449\u043E \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E, \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0432\u0440\u0443\u0447\u043D\u0443 \u043D\u0430\u0442\u0438\u0441\u043A\u0430\u0442\u0438 \u043A\u043D\u043E\u043F\u043A\u0443 \u043E\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F",
+    "intercept_all_tag_clicks": "\u041F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438 \u0432\u0441\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u0442\u0435\u0433\u0430\u043C\u0438",
+    "intercept_all_tag_clicks_desc": "\u041F\u0440\u0438 \u0432\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u0432\u0441\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u0442\u0435\u0433\u0430\u043C\u0438 \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438\u0441\u044F \u0442\u0430 \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044F \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0441\u0456\u0442\u043A\u0438",
+    "intercept_breadcrumb_clicks": "\u041F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u043D\u0430\u0432\u0456\u0433\u0430\u0446\u0456\u0439\u043D\u0438\u043C \u043B\u0430\u043D\u0446\u044E\u0436\u043A\u043E\u043C",
+    "intercept_breadcrumb_clicks_desc": "\u041F\u0440\u0438 \u0432\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u043D\u0430\u0432\u0456\u0433\u0430\u0446\u0456\u0439\u043D\u0438\u043C \u043B\u0430\u043D\u0446\u044E\u0436\u043A\u043E\u043C \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438\u0441\u044F, \u0456 \u0448\u043B\u044F\u0445 \u0431\u0443\u0434\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044F \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0441\u0456\u0442\u043A\u0438",
+    "reset_to_default": "\u0421\u043A\u0438\u043D\u0443\u0442\u0438 \u0434\u043E \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u044C",
+    "settings_reset_notice": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0441\u043A\u0438\u043D\u0443\u0442\u043E \u0434\u043E \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u044C",
+    "config_management": "\u041A\u043E\u043D\u0444\u0456\u0433\u0443\u0440\u0430\u0446\u0456\u044F \u0443\u043F\u0440\u0430\u0432\u043B\u0456\u043D\u043D\u044F",
+    "config_management_desc": "\u0423\u043F\u0440\u0430\u0432\u043B\u0456\u043D\u043D\u044F \u043A\u043E\u043D\u0444\u0456\u0433\u0443\u0440\u0430\u0446\u0456\u0454\u044E (\u0441\u043A\u0438\u0434\u0430\u043D\u043D\u044F, \u0435\u043A\u0441\u043F\u043E\u0440\u0442, \u0456\u043C\u043F\u043E\u0440\u0442)",
+    "ignored_folders_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A",
+    "display_mode_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0440\u0435\u0436\u0438\u043C\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "custom_mode_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0440\u0435\u0436\u0438\u043C\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "add_custom_mode": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "export": "\u0415\u043A\u0441\u043F\u043E\u0440\u0442",
+    "import": "\u0406\u043C\u043F\u043E\u0440\u0442",
+    "no_custom_modes_to_export": "\u041D\u0435\u043C\u0430\u0454 \u0440\u0435\u0436\u0438\u043C\u0456\u0432 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0435\u043A\u0441\u043F\u043E\u0440\u0442\u0443",
+    "import_success": "\u0406\u043C\u043F\u043E\u0440\u0442 \u0443\u0441\u043F\u0456\u0448\u043D\u0438\u0439",
+    "import_error": "\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u0456\u043C\u043F\u043E\u0440\u0442\u0443: \u043D\u0435\u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u0438\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u0444\u0430\u0439\u043B\u0443",
+    "edit_custom_mode": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "custom_mode": "\u0420\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
+    "custom_mode_display_name": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0454\u0442\u044C\u0441\u044F \u0456\u043C`\u044F",
+    "custom_mode_display_name_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0454\u0442\u044C\u0441\u044F \u0456\u043C`\u044F \u0432 \u043C\u0435\u043D\u044E \u0440\u0435\u0436\u0438\u043C\u0456\u0432",
+    "custom_mode_dataview_code": "\u041A\u043E\u0434 Dataview",
+    "custom_mode_dataview_code_desc": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043A\u043E\u0434 Dataview \u0434\u043B\u044F \u043E\u0442\u0440\u0438\u043C\u0430\u043D\u043D\u044F \u0441\u043F\u0438\u0441\u043A\u0443 \u0444\u0430\u0439\u043B\u0456\u0432",
+    "custom_mode_sub_options": "\u041F\u0456\u0434\u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0443",
+    "custom_mode_fields_placeholder": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0438 \u043F\u043E\u043B\u0456\u0432 frontmatter \u0447\u0435\u0440\u0435\u0437 \u043A\u043E\u043C\u0443 (\u043D\u0430\u043F\u0440.: date,category,status) (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
+    "dataview_plugin_not_enabled": "Dataview \u043F\u043B\u0430\u0433\u0456\u043D \u043D\u0435 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439",
+    "show_bookmarks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u043A\u043B\u0430\u0434\u043E\u043A",
+    "show_search_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0456\u0432 \u043F\u043E\u0448\u0443\u043A\u0443",
+    "show_backlinks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
+    "show_outgoinglinks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0438\u0445\u0456\u0434\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
+    "show_all_files_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0443\u0441\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
+    "show_recent_files_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
+    "recent_files_count": "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
+    "show_random_note_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "random_note_count": "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0432\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u0438\u0445 \u043D\u043E\u0442\u0430\u0442\u043E\u043A",
+    "random_note_notes_only": "\u0422\u0456\u043B\u044C\u043A\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "random_note_include_media_files": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
+    "show_tasks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u0432\u0434\u0430\u043D\u044C",
+    "task_filter": "\u0424\u0456\u043B\u044C\u0442\u0440 \u0437\u0430\u0432\u0434\u0430\u043D\u044C",
+    "uncompleted": "\u041D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0456",
+    "completed": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0456",
+    "foldernote_display_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u043F\u0430\u043F\u043A\u0438",
+    "foldernote_display_settings_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u043F\u0430\u043F\u043A\u0438",
+    "all": "\u0412\u0441\u0456",
+    "default": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
+    "hidden": "\u0421\u0445\u043E\u0432\u0430\u0442\u0438",
+    // Hide header elements setting
+    "hide_header_elements": "\u0421\u043A\u0440\u044B\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    // Default open location setting
+    "default_open_location": "\u041C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
+    "default_open_location_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
+    "open_in_left_sidebar": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043B\u0456\u0432\u0456\u0439 \u0431\u0456\u0447\u043D\u0456\u0439 \u043F\u0430\u043D\u0435\u043B\u0456",
+    "open_in_right_sidebar": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043F\u0440\u0430\u0432\u0456\u0439 \u0431\u0456\u0447\u043D\u0456\u0439 \u043F\u0430\u043D\u0435\u043B\u0456",
+    "open_in_new_tab": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u0456\u0439 \u0432\u043A\u043B\u0430\u0434\u0446\u0456",
+    "reuse_existing_leaf": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u043D\u0430\u044F\u0432\u043D\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "reuse_existing_leaf_desc": "\u041F\u0440\u0438 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u0456 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u043D\u0430\u0434\u0430\u0432\u0430\u0442\u0438 \u043F\u0435\u0440\u0435\u0432\u0430\u0433\u0443 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044E \u043D\u0430\u044F\u0432\u043D\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u0437\u0430\u043C\u0456\u0441\u0442\u044C \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u043D\u043E\u0432\u043E\u0433\u043E",
+    "custom_document_extensions": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0456 \u0440\u043E\u0437\u0448\u0438\u0440\u0435\u043D\u043D\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0456\u0432",
+    "custom_document_extensions_desc": "\u0414\u043E\u0434\u0430\u0442\u043A\u043E\u0432\u0456 \u0440\u043E\u0437\u0448\u0438\u0440\u0435\u043D\u043D\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0456\u0432 (\u0447\u0435\u0440\u0435\u0437 \u043A\u043E\u043C\u0443, \u0431\u0435\u0437 \u043A\u0440\u0430\u043F\u043E\u043A)",
+    "custom_document_extensions_placeholder": "\u043D\u0430\u043F\u0440\u0438\u043A\u043B\u0430\u0434, txt,doc,docx",
+    "custom_folder_icon": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0430 \u0456\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
+    "custom_folder_icon_desc": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0430 \u0456\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438 (\u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 Emoji)",
+    // Select Folder Dialog
+    "select_folders": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
+    "select_folders_to_ignore": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F",
+    "open_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "open_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "open_note_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "open_backlinks_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "open_outgoinglinks_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432\u0438\u0445\u0456\u0434\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "open_recent_files_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u043E\u0442\u043E\u0447\u043D\u0443 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0432 \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0430\u0445",
+    "open_settings": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F",
+    "open_new_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0432\u0438\u0439 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "open_in_new_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u043E\u043C\u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "min_mode": "\u041C\u0456\u043D\u0456\u043C\u0456\u0437\u0443\u0432\u0430\u0442\u0438 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "show_ignored_folders": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0456 \u043F\u0430\u043F\u043A\u0438",
+    "delete_note": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0444\u0430\u0439\u043B",
+    "open_folder_note": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "create_folder_note": "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "delete_folder_note": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "edit_folder_note_settings": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "ignore_folder": "\u0406\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u0442\u0438 \u0446\u044E \u043F\u0430\u043F\u043A\u0443",
+    "unignore_folder": "\u0412\u0456\u0434\u043C\u0456\u043D\u0438\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
+    "searching": "\u041F\u043E\u0448\u0443\u043A...",
+    "no_files": "\u0424\u0430\u0439\u043B\u0438 \u043D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u043E",
+    "filter_folders": "\u0424\u0456\u043B\u044C\u0442\u0440\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438...",
+    // Shortcut Selection Dialog
+    "create_shortcut": "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u044F\u0440\u043B\u0438\u043A",
+    "select_folder": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
+    "select_file": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u0444\u0430\u0439\u043B",
+    "target_not_found": "\u0426\u0435\u043B\u044C \u043D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u0430",
+    "shortcut_created": "\u042F\u0440\u043B\u0438\u043A \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0438\u0439",
+    "failed_to_create_shortcut": "\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044F \u0441\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u044F\u0440\u043B\u0438\u043A",
+    // Folder Note Settings Dialog
+    "folder_note_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "folder_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043F\u0430\u043F\u043A\u0438",
+    "folder_sort_type_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0442\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
+    "folder_color": "\u041A\u043E\u043B\u0456\u0440 \u043F\u0430\u043F\u043A\u0438",
+    "folder_color_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u043E\u043B\u0456\u0440 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
+    "folder_icon": "\u0406\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
+    "folder_icon_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0456\u043A\u043E\u043D\u043A\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
+    "no_color": "\u0411\u0435\u0437 \u043A\u043E\u043B\u044C\u043E\u0440\u0443",
+    "color_red": "\u0427\u0435\u0440\u0432\u043E\u043D\u0438\u0439",
+    "color_orange": "\u041F\u043E\u043C\u0430\u0440\u0430\u043D\u0447\u0435\u0432\u0438\u0439",
+    "color_yellow": "\u0416\u043E\u0432\u0442\u0438\u0439",
+    "color_green": "\u0417\u0435\u043B\u0435\u043D\u0438\u0439",
+    "color_cyan": "\u0411\u0456\u0440\u044E\u0437\u043E\u0432\u0438\u0439",
+    "color_blue": "\u0421\u0438\u043D\u0456\u0439",
+    "color_purple": "\u0424\u0456\u043E\u043B\u0435\u0442\u043E\u0432\u0438\u0439",
+    "color_pink": "\u0420\u043E\u0436\u0435\u0432\u0438\u0439",
+    "confirm": "\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0438",
+    "note_attribute_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0456\u0432 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_title": "\u041D\u0430\u0437\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_title_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_summary": "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441",
+    "note_summary_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441 \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_color": "\u041A\u043E\u043B\u0456\u0440 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "note_color_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u043E\u043B\u0456\u0440 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "set_note_attribute": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0438 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+    "rename_folder": "\u041F\u0435\u0440\u0435\u0439\u043C\u0435\u043D\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
+    "enter_new_folder_name": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u043E\u0432\u0443 \u043D\u0430\u0437\u0432\u0443 \u043F\u0430\u043F\u043A\u0438",
+    "search_selection_in_grid_view": "\u041F\u043E\u0448\u0443\u043A ... \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
+    "show_date_dividers": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0438 \u0434\u0430\u0442",
+    "show_date_dividers_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0438 \u0434\u0430\u0442 \u043F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0448\u0438\u043C \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u043C \u043A\u043E\u0436\u043D\u043E\u0433\u043E \u043D\u043E\u0432\u043E\u0433\u043E \u0434\u043D\u044F \u043F\u0440\u0438 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u0456 \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0434\u0430\u0442\u043E\u044E",
+    "date_divider_format": "\u0424\u043E\u0440\u043C\u0430\u0442 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0430 \u0434\u0430\u0442",
+    "date_divider_mode": "\u0420\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A \u0434\u0430\u0442",
+    "date_divider_mode_desc": "\u0412\u0438\u0431\u0435\u0440\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0456\u0432 \u0434\u0430\u0442",
+    "date_divider_mode_none": "\u041D\u0435\u043C\u0430\u0454",
+    "date_divider_mode_year": "\u0420\u0456\u043A",
+    "date_divider_mode_month": "\u041C\u0456\u0441\u044F\u0446\u044C",
+    "date_divider_mode_day": "\u0414\u0435\u043D\u044C",
+    "pinned": "\u0417\u0430\u043A\u0440\u0456\u043F\u043B\u0435\u043D\u043E",
+    "pinned_desc": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u0444\u0430\u0439\u043B \u0443\u0433\u043E\u0440\u0456",
+    "foldernote_pinned": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "foldernote_pinned_desc": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0443\u0433\u043E\u0440\u0456",
+    "display_minimized": "\u041C\u0456\u043D\u0456\u043C\u0456\u0437\u043E\u0432\u0430\u043D\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
+    "display_minimized_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0446\u044E \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0443 \u043C\u0456\u043D\u0456\u043C\u0456\u0437\u043E\u0432\u0430\u043D\u043E\u043C\u0443 \u0440\u0435\u0436\u0438\u043C\u0456",
+    // Quick Access Settings and Commands
+    "quick_access_settings_title": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0428\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "quick_access_folder_name": "\u041F\u0430\u043F\u043A\u0430 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "quick_access_folder_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043F\u0430\u043F\u043A\u0443, \u0449\u043E \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u044E \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443\xBB",
+    "quick_access_mode_name": "\u0420\u0435\u0436\u0438\u043C \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "quick_access_mode_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C, \u0449\u043E \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u044E \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0448\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u0437\u0430 \u0440\u0435\u0436\u0438\u043C\u043E\u043C\xBB",
+    "use_quick_access_as_new_tab_view": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0428\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u044F\u043A \u043D\u043E\u0432\u0443 \u0432\u043A\u043B\u0430\u0434\u043A\u0443",
+    "use_quick_access_as_new_tab_view_desc": "\u0417\u0430\u043C\u0456\u043D\u0456\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0439 \u0432\u0438\u0434 \xAB\u041D\u043E\u0432\u0430 \u0432\u043A\u043B\u0430\u0434\u043A\u0430\xBB \u043D\u0430 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0434 \u043E\u0431\u0440\u0430\u043D\u043E\u0457 \u043E\u043F\u0446\u0456\u0457 \u0428\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443 (\u043F\u0430\u043F\u043A\u0438 \u0430\u0431\u043E \u0440\u0435\u0436\u0438\u043C\u0443). \u041F\u0440\u0430\u0446\u044E\u0454, \u043B\u0438\u0448\u0435 \u044F\u043A\u0449\u043E \xAB\u041C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C\xBB \u0432\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u043D\u0430 \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u0456\u0439 \u0432\u043A\u043B\u0430\u0434\u0446\u0456\xBB!",
+    "default_new_tab": "\u0417\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
+    "use_quick_access_folder": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "use_quick_access_mode": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "open_quick_access_folder": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
+    "open_quick_access_mode": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0448\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u0437\u0430 \u0440\u0435\u0436\u0438\u043C\u043E\u043C"
+  }
+};
 
 // src/fileUtils.ts
 var import_obsidian = require("obsidian");
@@ -557,7 +1980,7 @@ async function getFiles(gridView, includeMediaFiles) {
   } else if (sourceMode.startsWith("custom-")) {
     const dvApi = (_b = app.plugins.plugins.dataview) == null ? void 0 : _b.api;
     if (!dvApi) {
-      new import_obsidian.Notice("Dataview plugin is not enabled.");
+      new import_obsidian.Notice(t("Dataview plugin is not enabled."));
       return [];
     }
     const mode = settings.customModes.find((m) => m.internalName === sourceMode);
@@ -601,1770 +2024,11 @@ async function getFiles(gridView, includeMediaFiles) {
   }
 }
 
-// src/fileWatcher.ts
-var import_obsidian2 = require("obsidian");
-var FileWatcher = class {
-  // 用於去抖動 render()
-  constructor(plugin, gridView) {
-    this.renderTimer = null;
-    // 以 200ms 去抖動的方式排程 render，避免短時間內大量重繪
-    this.scheduleRender = (delay = 200) => {
-      if (this.gridView.isPinned()) {
-        return;
-      }
-      if (this.gridView.sourceMode === "recent-files" && this.gridView.containerEl.offsetParent === null) {
-        return;
-      }
-      if (this.renderTimer !== null) {
-        clearTimeout(this.renderTimer);
-      }
-      this.renderTimer = window.setTimeout(() => {
-        this.gridView.render();
-        this.renderTimer = null;
-      }, delay);
-    };
-    this.plugin = plugin;
-    this.gridView = gridView;
-    this.app = plugin.app;
-  }
-  registerFileWatcher() {
-    if (!this.plugin.settings.enableFileWatcher) {
-      return;
-    }
-    this.plugin.registerEvent(
-      this.app.vault.on("modify", (file) => {
-        if (file instanceof import_obsidian2.TFile) {
-          if (this.gridView.sourceMode === "recent-files") {
-            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
-              this.scheduleRender(5e3);
-            }
-          }
-        }
-      })
-    );
-    this.plugin.registerEvent(
-      this.app.vault.on("create", (file) => {
-        if (file instanceof import_obsidian2.TFile) {
-          if (this.gridView.searchQuery !== "" && this.gridView.searchAllFiles) {
-            this.scheduleRender(2e3);
-            return;
-          }
-          if (this.gridView.sourceMode === "random-note") {
-            return;
-          } else if (this.gridView.sourceMode === "recent-files") {
-            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
-              this.scheduleRender(2e3);
-            }
-          } else if (this.gridView.sourceMode === "folder") {
-            if (this.gridView.sourcePath) {
-              const fileDirPath = file.path.split("/").slice(0, -1).join("/") || "/";
-              if (fileDirPath === this.gridView.sourcePath) {
-                this.scheduleRender();
-              }
-            }
-          } else if (this.gridView.sourceMode === "backlinks") {
-            if (isDocumentFile(file)) {
-              this.scheduleRender();
-            }
-          } else {
-            this.scheduleRender();
-          }
-        }
-      })
-    );
-    this.plugin.registerEvent(
-      this.app.vault.on("delete", (file) => {
-        if (file instanceof import_obsidian2.TFile) {
-          if (this.gridView) {
-            const gridItemIndex = this.gridView.gridItems.findIndex(
-              (item) => item.dataset.filePath === file.path
-            );
-            if (gridItemIndex >= 0) {
-              this.gridView.gridItems[gridItemIndex].remove();
-              this.gridView.gridItems.splice(gridItemIndex, 1);
-              const gridContainer = this.gridView.containerEl.querySelector(".ge-grid-container");
-              this.cleanupDateDividers(gridContainer);
-            }
-          }
-        }
-      })
-    );
-    this.plugin.registerEvent(
-      this.app.vault.on("rename", (file, oldPath) => {
-        if (file instanceof import_obsidian2.TFile) {
-          const fileDirPath = file.path.split("/").slice(0, -1).join("/") || "/";
-          const oldDirPath = oldPath.split("/").slice(0, -1).join("/") || "/";
-          if (fileDirPath !== oldDirPath) {
-            if (this.gridView.sourceMode === "folder") {
-              if (this.gridView.sourcePath && this.gridView.searchQuery === "") {
-                if (fileDirPath === this.gridView.sourcePath || oldDirPath === this.gridView.sourcePath) {
-                  this.scheduleRender();
-                  return;
-                }
-              }
-            }
-          }
-          if (this.gridView) {
-            const gridItemIndex = this.gridView.gridItems.findIndex(
-              (item) => item.dataset.filePath === oldPath
-            );
-            if (gridItemIndex >= 0) {
-              const getitle = this.gridView.gridItems[gridItemIndex].querySelector(".ge-grid-item .ge-title");
-              if (getitle) {
-                this.gridView.gridItems[gridItemIndex].dataset.filePath = file.path;
-                getitle.textContent = file.basename;
-                getitle.setAttribute("title", file.basename);
-              }
-            }
-          }
-        }
-      })
-    );
-    this.plugin.registerEvent(
-      this.app.internalPlugins.plugins.bookmarks.instance.on("changed", () => {
-        if (this.gridView.sourceMode === "bookmarks") {
-          this.scheduleRender();
-        }
-      })
-    );
-    this.plugin.registerEvent(
-      this.app.workspace.on("file-open", (file) => {
-        if (file instanceof import_obsidian2.TFile && this.gridView.searchQuery === "") {
-          const sourceMode = this.gridView.sourceMode;
-          if (sourceMode === "backlinks" || sourceMode === "outgoinglinks") {
-            this.scheduleRender();
-            return;
-          }
-          if (sourceMode.startsWith("custom-")) {
-            const mode = this.plugin.settings.customModes.find((m) => m.internalName === sourceMode);
-            if (mode && mode.dataviewCode.includes("dv.current")) {
-              this.scheduleRender();
-            }
-          }
-        }
-      })
-    );
-  }
-  // 清理日期分隔線
-  cleanupDateDividers(container) {
-    if (!container)
-      return;
-    const dateDividers = Array.from(container.querySelectorAll(".ge-date-divider"));
-    for (let i = dateDividers.length - 1; i >= 0; i--) {
-      const currentDivider = dateDividers[i];
-      const nextDivider = dateDividers[i + 1];
-      let nextElement = currentDivider.nextElementSibling;
-      let hasItemsBetween = false;
-      while (nextElement && (!nextDivider || nextElement !== nextDivider)) {
-        if (!nextElement.classList.contains("ge-date-divider")) {
-          hasItemsBetween = true;
-          break;
-        }
-        nextElement = nextElement.nextElementSibling;
-      }
-      if (!nextDivider) {
-        hasItemsBetween = currentDivider.nextElementSibling !== null;
-      }
-      if (!hasItemsBetween) {
-        currentDivider.remove();
-      }
-    }
-  }
-};
-
-// src/mediaUtils.ts
-var import_obsidian3 = require("obsidian");
-async function findFirstImageInNote(app, content) {
-  try {
-    const internalStyle = /!?\[\[(.*?\.(?:jpg|jpeg|png|gif|webp))(?:\|.*?)?\]\]/;
-    const markdownStyle = /!\[(.*?)\]\(\s*(\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s)]*)\s*(?:\s+["'][^"']*["'])?\s*\)/;
-    const frontmatterUrl = /^[\w\-_]+:\s*(https?:\/\/\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s]*)\s*$/;
-    const internalMatch = content.match(new RegExp(`(?:${internalStyle.source}|${markdownStyle.source}|${frontmatterUrl.source})`, "im"));
-    if (internalMatch) {
-      return processMediaLink(app, internalMatch);
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error("Error finding image in note:", error);
-    return null;
-  }
-}
-function processMediaLink(app, internalMatch) {
-  if (internalMatch[4]) {
-    return internalMatch[4];
-  }
-  if (internalMatch[1]) {
-    const file = app.metadataCache.getFirstLinkpathDest(internalMatch[1], "");
-    if (file) {
-      return app.vault.getResourcePath(file);
-    }
-  }
-  if (internalMatch[3]) {
-    const url = internalMatch[3];
-    if (url.startsWith("http")) {
-      return url;
-    } else {
-      const file = app.metadataCache.getFirstLinkpathDest(url, "");
-      if (!file) {
-        const fileByPath = app.vault.getAbstractFileByPath(url);
-        if (fileByPath instanceof import_obsidian3.TFile) {
-          return app.vault.getResourcePath(fileByPath);
-        }
-      } else {
-        return app.vault.getResourcePath(file);
-      }
-    }
-  }
-  return null;
-}
-
-// src/modal/folderSelectionModal.ts
-var import_obsidian4 = require("obsidian");
-
-// src/translations.ts
-function t(key) {
-  const lang = window.localStorage.getItem("language");
-  const translations = TRANSLATIONS[lang] || TRANSLATIONS["en"];
-  return translations[key] || key;
-}
-var TRANSLATIONS = {
-  "zh-TW": {
-    // 通知訊息
-    "bookmarks_plugin_disabled": "\u8ACB\u5148\u555F\u7528\u66F8\u7C64\u5916\u639B",
-    // 按鈕和標籤
-    "sorting": "\u6392\u5E8F\u65B9\u5F0F",
-    "refresh": "\u91CD\u65B0\u6574\u7406",
-    "reselect": "\u91CD\u65B0\u9078\u64C7\u4F4D\u7F6E",
-    "no_backlinks": "\u6C92\u6709\u53CD\u5411\u9023\u7D50",
-    "search": "\u641C\u5C0B",
-    "search_placeholder": "\u641C\u5C0B\u95DC\u9375\u5B57",
-    "search_current_location_only": "\u50C5\u641C\u5C0B\u76EE\u524D\u4F4D\u7F6E",
-    "search_media_files": "\u641C\u5C0B\u5A92\u9AD4\u6A94\u6848",
-    "cancel": "\u53D6\u6D88",
-    "new_note": "\u65B0\u589E\u7B46\u8A18",
-    "new_folder": "\u65B0\u589E\u8CC7\u6599\u593E",
-    "new_canvas": "\u65B0\u589E\u756B\u5E03",
-    "delete_folder": "\u522A\u9664\u8CC7\u6599\u593E",
-    "move_folder": "\u642C\u79FB\u8CC7\u6599\u593E",
-    "select_destination_folder": "\u9078\u64C7\u76EE\u6A19\u8CC7\u6599\u593E",
-    "untitled": "\u672A\u547D\u540D",
-    "files": "\u500B\u6A94\u6848",
-    "add": "\u65B0\u589E",
-    "root": "\u6839\u76EE\u9304",
-    "sub_folders": "\u5B50\u76EE\u9304",
-    "parent_folders": "\u4E0A\u5C64\u76EE\u9304",
-    "more_options": "\u66F4\u591A\u9078\u9805",
-    "add_tag_to_search": "\u52A0\u5165\u641C\u5C0B",
-    "remove_tag_from_search": "\u5F9E\u641C\u5C0B\u4E2D\u79FB\u9664",
-    "global_search": "\u5168\u57DF\u641C\u5C0B",
-    "remove": "\u79FB\u9664",
-    "edit": "\u7DE8\u8F2F",
-    "delete": "\u522A\u9664",
-    "save": "\u5132\u5B58",
-    "option": "\u9078\u9805",
-    "add_option": "\u65B0\u589E\u9078\u9805",
-    // 視圖標題
-    "grid_view_title": "\u7DB2\u683C\u8996\u5716",
-    "bookmarks_mode": "\u66F8\u7C64",
-    "folder_mode": "\u8CC7\u6599\u593E",
-    "search_results": "\u641C\u5C0B\u7D50\u679C",
-    "backlinks_mode": "\u53CD\u5411\u9023\u7D50",
-    "outgoinglinks_mode": "\u5916\u90E8\u9023\u7D50",
-    "all_files_mode": "\u6240\u6709\u6A94\u6848",
-    "recent_files_mode": "\u6700\u8FD1\u6A94\u6848",
-    "random_note_mode": "\u96A8\u6A5F\u7B46\u8A18",
-    "tasks_mode": "\u4EFB\u52D9",
-    // 排序選項
-    "sort_name_asc": "\u540D\u7A31 (A \u2192 Z)",
-    "sort_name_desc": "\u540D\u7A31 (Z \u2192 A)",
-    "sort_mtime_desc": "\u4FEE\u6539\u6642\u9593 (\u65B0 \u2192 \u820A)",
-    "sort_mtime_asc": "\u4FEE\u6539\u6642\u9593 (\u820A \u2192 \u65B0)",
-    "sort_ctime_desc": "\u5EFA\u7ACB\u6642\u9593 (\u65B0 \u2192 \u820A)",
-    "sort_ctime_asc": "\u5EFA\u7ACB\u6642\u9593 (\u820A \u2192 \u65B0)",
-    "sort_random": "\u96A8\u6A5F\u6392\u5E8F",
-    // 設定
-    "grid_view_settings": "\u7DB2\u683C\u8996\u5716\u8A2D\u5B9A",
-    "show_media_files": "\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
-    "show_media_files_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
-    "show_video_thumbnails": "\u986F\u793A\u5F71\u7247\u7E2E\u5716",
-    "show_video_thumbnails_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u5F71\u7247\u7684\u7E2E\u5716\uFF0C\u95DC\u9589\u6642\u5C07\u986F\u793A\u64AD\u653E\u5716\u793A",
-    "show_note_in_grid": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u7B46\u8A18",
-    "show_note_in_grid_desc": "\u555F\u7528\u5F8C\uFF0C\u9EDE\u64CA\u7B46\u8A18\u6703\u76F4\u63A5\u5728\u7DB2\u683C\u4E2D\u986F\u793A\u5167\u5BB9\uFF0C\u4E0D\u555F\u7528\u5247\u9700\u8981\u6309\u4F4F Alt \u9375\u6253\u958B",
-    "show_note_tags": "\u986F\u793A\u7B46\u8A18\u6A19\u7C64",
-    "show_note_tags_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u7B46\u8A18\u7684\u6A19\u7C64",
-    "ignored_folders": "\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
-    "ignored_folders_desc": "\u5728\u9019\u88E1\u8A2D\u5B9A\u8981\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
-    "add_ignored_folder": "\u65B0\u589E\u5FFD\u7565\u8CC7\u6599\u593E",
-    "no_ignored_folders": "\u6C92\u6709\u5FFD\u7565\u7684\u8CC7\u6599\u593E\u3002",
-    "ignored_folder_patterns": "\u4EE5\u5B57\u4E32\u5FFD\u7565\u8CC7\u6599\u593E\u548C\u6A94\u6848",
-    "ignored_folder_patterns_desc": "\u4F7F\u7528\u5B57\u4E32\u6A21\u5F0F\u5FFD\u7565\u8CC7\u6599\u593E\u548C\u6A94\u6848\uFF08\u652F\u63F4\u6B63\u5247\u8868\u9054\u5F0F\uFF09",
-    "add_ignored_folder_pattern": "\u65B0\u589E\u5FFD\u7565\u8CC7\u6599\u593E\u6A21\u5F0F",
-    "ignored_folder_pattern_placeholder": "\u8F38\u5165\u8CC7\u6599\u593E\u540D\u7A31\u6216\u6B63\u5247\u8868\u9054\u5F0F",
-    "no_ignored_folder_patterns": "\u6C92\u6709\u5FFD\u7565\u7684\u8CC7\u6599\u593E\u6A21\u5F0F\u3002",
-    "default_sort_type": "\u9810\u8A2D\u6392\u5E8F\u6A21\u5F0F",
-    "default_sort_type_desc": "\u8A2D\u5B9A\u958B\u555F\u7DB2\u683C\u8996\u5716\u6642\u7684\u9810\u8A2D\u6392\u5E8F\u6A21\u5F0F",
-    "note_title_field": "\u7B46\u8A18\u6A19\u984C\u6B04\u4F4D\u540D\u7A31",
-    "note_title_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u6A19\u984C\u7684\u6B04\u4F4D\u540D\u7A31",
-    "note_summary_field": "\u7B46\u8A18\u6458\u8981\u6B04\u4F4D\u540D\u7A31",
-    "note_summary_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u6458\u8981\u7684\u6B04\u4F4D\u540D\u7A31",
-    "modified_date_field": '"\u4FEE\u6539\u6642\u9593"\u6B04\u4F4D\u540D\u7A31',
-    "modified_date_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u4FEE\u6539\u6642\u9593\u7684\u6B04\u4F4D\u540D\u7A31 (\u652F\u63F4\u591A\u500B\u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694)",
-    "created_date_field": '"\u5EFA\u7ACB\u6642\u9593"\u6B04\u4F4D\u540D\u7A31',
-    "created_date_field_desc": "\u6307\u5B9A frontmatter \u4E2D\u7528\u65BC\u7B46\u8A18\u5EFA\u7ACB\u6642\u9593\u7684\u6B04\u4F4D\u540D\u7A31 (\u652F\u63F4\u591A\u500B\u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694)",
-    "grid_item_width": "\u7DB2\u683C\u9805\u76EE\u5BEC\u5EA6",
-    "grid_item_width_desc": "\u8A2D\u5B9A\u7DB2\u683C\u9805\u76EE\u7684\u5BEC\u5EA6",
-    "grid_item_height": "\u7DB2\u683C\u9805\u76EE\u9AD8\u5EA6",
-    "grid_item_height_desc": "\u8A2D\u5B9A\u7DB2\u683C\u9805\u76EE\u7684\u9AD8\u5EA6 (\u8A2D\u70BA0\u6642\u70BA\u81EA\u52D5\u8ABF\u6574)",
-    "image_area_width": "\u5716\u7247\u5340\u57DF\u5BEC\u5EA6",
-    "image_area_width_desc": "\u8A2D\u5B9A\u5716\u7247\u9810\u89BD\u5340\u57DF\u7684\u5BEC\u5EA6",
-    "image_area_height": "\u5716\u7247\u5340\u57DF\u9AD8\u5EA6",
-    "image_area_height_desc": "\u8A2D\u5B9A\u5716\u7247\u9810\u89BD\u5340\u57DF\u7684\u9AD8\u5EA6",
-    "title_font_size": "\u6A19\u984C\u5B57\u9AD4\u5927\u5C0F",
-    "title_font_size_desc": "\u8A2D\u5B9A\u6A19\u984C\u5B57\u9AD4\u7684\u5927\u5C0F",
-    "summary_length": "\u6458\u8981\u9577\u5EA6",
-    "summary_length_desc": "\u8A2D\u5B9A\u6458\u8981\u7684\u9577\u5EA6",
-    "grid_item_style_settings": "\u7DB2\u683C\u9805\u76EE\u6A23\u5F0F\u8A2D\u5B9A",
-    "card_layout": "\u5361\u7247\u7248\u9762",
-    "card_layout_desc": "\u9078\u64C7\u9810\u8A2D\u7684\u5361\u7247\u7248\u9762\u6A23\u5F0F",
-    "horizontal_card": "\u6A6B\u5411\u5361\u7247",
-    "vertical_card": "\u76F4\u5411\u5361\u7247",
-    "image_position": "\u5716\u7247\u4F4D\u7F6E",
-    "image_position_desc": "\u8A2D\u5B9A\u5716\u7247\u7684\u4F4D\u7F6E",
-    "top": "\u9802\u90E8",
-    "bottom": "\u5E95\u90E8",
-    "multi_line_title": "\u6A19\u984C\u652F\u63F4\u591A\u884C\u986F\u793A",
-    "multi_line_title_desc": "\u8A2D\u5B9A\u662F\u5426\u5141\u8A31\u6A19\u984C\u591A\u884C\u986F\u793A",
-    "show_code_block_in_summary": "\u6458\u8981\u4E2D\u986F\u793ACodeBlock",
-    "show_code_block_in_summary_desc": "\u8A2D\u5B9A\u662F\u5426\u5728\u6458\u8981\u4E2D\u986F\u793ACodeBlock\u7684\u5167\u5BB9",
-    "enable_file_watcher": "\u555F\u7528\u6A94\u6848\u76E3\u63A7",
-    "enable_file_watcher_desc": "\u555F\u7528\u5F8C\u6703\u81EA\u52D5\u5075\u6E2C\u6A94\u6848\u8B8A\u66F4\u4E26\u66F4\u65B0\u8996\u5716\uFF0C\u95DC\u9589\u5F8C\u9700\u624B\u52D5\u9EDE\u64CA\u91CD\u65B0\u6574\u7406\u6309\u9215",
-    "intercept_all_tag_clicks": "\u6514\u622A\u6240\u6709\u6A19\u7C64\u9EDE\u64CA\u4E8B\u4EF6",
-    "intercept_all_tag_clicks_desc": "\u555F\u7528\u5F8C\u6703\u6514\u622A\u6240\u6709\u6A19\u7C64\u9EDE\u64CA\u4E8B\u4EF6\uFF0C\u4E26\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u6253\u958B\u6A19\u7C64",
-    "intercept_breadcrumb_clicks": "\u6514\u622A\u7B46\u8A18\u5C0E\u822A\u5217\u9EDE\u64CA\u4E8B\u4EF6",
-    "intercept_breadcrumb_clicks_desc": "\u555F\u7528\u5F8C\u6703\u6514\u622A\u7B46\u8A18\u5C0E\u822A\u5217\u9EDE\u64CA\u4E8B\u4EF6\uFF0C\u4E26\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u6253\u958B\u8DEF\u5F91",
-    "reset_to_default": "\u91CD\u7F6E\u70BA\u9810\u8A2D\u503C",
-    "settings_reset_notice": "\u8A2D\u5B9A\u503C\u5DF2\u91CD\u7F6E\u70BA\u9810\u8A2D\u503C",
-    "config_management": "\u8A2D\u5B9A\u6A94\u7BA1\u7406",
-    "config_management_desc": "\u7BA1\u7406\u8A2D\u5B9A\u6A94\u7684\u91CD\u7F6E\u3001\u532F\u51FA\u548C\u532F\u5165",
-    "ignored_folders_settings": "\u5FFD\u7565\u8CC7\u6599\u593E\u8A2D\u5B9A",
-    "display_mode_settings": "\u986F\u793A\u6A21\u5F0F\u8A2D\u5B9A",
-    "custom_mode_settings": "\u81EA\u8A02\u6A21\u5F0F\u8A2D\u5B9A",
-    "add_custom_mode": "\u65B0\u589E\u81EA\u8A02\u6A21\u5F0F",
-    "export": "\u532F\u51FA",
-    "import": "\u532F\u5165",
-    "no_custom_modes_to_export": "\u6C92\u6709\u53EF\u532F\u51FA\u7684\u81EA\u8A02\u6A21\u5F0F",
-    "import_success": "\u532F\u5165\u6210\u529F",
-    "import_error": "\u532F\u5165\u5931\u6557\uFF1A\u7121\u6548\u7684\u6A94\u6848\u683C\u5F0F",
-    "edit_custom_mode": "\u7DE8\u8F2F\u81EA\u8A02\u6A21\u5F0F",
-    "custom_mode": "\u81EA\u8A02\u6A21\u5F0F",
-    "custom_mode_display_name": "\u986F\u793A\u540D\u7A31",
-    "custom_mode_display_name_desc": "\u5728\u6A21\u5F0F\u9078\u55AE\u4E2D\u986F\u793A\u7684\u540D\u7A31",
-    "custom_mode_dataview_code": "Dataviewjs \u4EE3\u78BC",
-    "custom_mode_dataview_code_desc": "\u8F38\u5165 Dataviewjs \u4EE3\u78BC\u4EE5\u53D6\u5F97\u6A94\u6848\u5217\u8868",
-    "custom_mode_sub_options": "\u81EA\u8A02\u6A21\u5F0F\u5B50\u9078\u9805",
-    "custom_mode_fields_placeholder": "\u8F38\u5165 frontmatter \u6B04\u4F4D\u540D\u7A31\uFF0C\u7528\u9017\u865F\u5206\u9694 (\u5982: date,category,status) (\u53EF\u9078)",
-    "show_bookmarks_mode": "\u986F\u793A\u66F8\u7C64\u6A21\u5F0F",
-    "show_search_mode": "\u986F\u793A\u641C\u5C0B\u7D50\u679C\u6A21\u5F0F",
-    "show_backlinks_mode": "\u986F\u793A\u53CD\u5411\u9023\u7D50\u6A21\u5F0F",
-    "show_outgoinglinks_mode": "\u986F\u793A\u5916\u90E8\u9023\u7D50\u6A21\u5F0F",
-    "show_all_files_mode": "\u986F\u793A\u6240\u6709\u6A94\u6848\u6A21\u5F0F",
-    "show_recent_files_mode": "\u986F\u793A\u6700\u8FD1\u6A94\u6848\u6A21\u5F0F",
-    "recent_files_count": "\u6700\u8FD1\u6A94\u6848\u6A21\u5F0F\u986F\u793A\u7B46\u6578",
-    "show_random_note_mode": "\u986F\u793A\u96A8\u6A5F\u7B46\u8A18\u6A21\u5F0F",
-    "random_note_count": "\u96A8\u6A5F\u7B46\u8A18\u6A21\u5F0F\u986F\u793A\u7B46\u6578",
-    "random_note_notes_only": "\u50C5\u7B46\u8A18",
-    "random_note_include_media_files": "\u5305\u542B\u5A92\u9AD4\u6A94\u6848",
-    "show_tasks_mode": "\u986F\u793A\u4EFB\u52D9\u6A21\u5F0F",
-    "task_filter": "\u4EFB\u52D9\u5206\u985E",
-    "uncompleted": "\u672A\u5B8C\u6210",
-    "completed": "\u5DF2\u5B8C\u6210",
-    "foldernote_display_settings": "\u8CC7\u6599\u593E\u7B46\u8A18\u986F\u793A\u8A2D\u5B9A",
-    "foldernote_display_settings_desc": "\u8A2D\u5B9A\u8CC7\u6599\u593E\u7B46\u8A18\u7684\u986F\u793A\u65B9\u5F0F",
-    "all": "\u5168\u90E8",
-    "default": "\u9810\u8A2D",
-    "hidden": "\u96B1\u85CF",
-    // 隱藏頂部元素
-    "hide_header_elements": "\u96B1\u85CF\u9802\u90E8\u5143\u7D20",
-    // 顯示"返回上層資料夾"選項設定
-    "show_parent_folder_item": "\u986F\u793A\u300C\u8FD4\u56DE\u4E0A\u5C64\u8CC7\u6599\u593E\u300D",
-    "show_parent_folder_item_desc": "\u5728\u7DB2\u683C\u7684\u7B2C\u4E00\u9805\u986F\u793A\u300C\u8FD4\u56DE\u4E0A\u5C64\u8CC7\u6599\u593E\u300D\u9078\u9805",
-    "parent_folder": "\u4E0A\u5C64\u8CC7\u6599\u593E",
-    // 預設開啟位置設定
-    "default_open_location": "\u9810\u8A2D\u958B\u555F\u4F4D\u7F6E",
-    "default_open_location_desc": "\u8A2D\u5B9A\u7DB2\u683C\u8996\u5716\u9810\u8A2D\u958B\u555F\u7684\u4F4D\u7F6E",
-    "open_in_left_sidebar": "\u958B\u5728\u5DE6\u5074\u908A\u6B04",
-    "open_in_right_sidebar": "\u958B\u5728\u53F3\u5074\u908A\u6B04",
-    "open_in_new_tab": "\u5728\u65B0\u5206\u9801\u958B\u555F",
-    "reuse_existing_leaf": "\u91CD\u8907\u4F7F\u7528\u5DF2\u958B\u555F\u7684\u8996\u5716",
-    "reuse_existing_leaf_desc": "\u958B\u555F\u7DB2\u683C\u8996\u5716\u6642\uFF0C\u512A\u5148\u4F7F\u7528\u5DF2\u958B\u555F\u7684\u8996\u5716\u800C\u975E\u5EFA\u7ACB\u65B0\u8996\u5716",
-    "custom_document_extensions": "\u81EA\u8A02\u6587\u4EF6\u6A94\u6848\u526F\u6A94\u540D",
-    "custom_document_extensions_desc": "\u984D\u5916\u7684\u6587\u4EF6\u526F\u6A94\u540D\uFF08\u7528\u9017\u865F\u5206\u9694\uFF0C\u4E0D\u542B\u9EDE\u865F\uFF09",
-    "custom_document_extensions_placeholder": "\u4F8B\u5982\uFF1Atxt,doc,docx",
-    "custom_folder_icon": "\u81EA\u8A02\u8CC7\u6599\u593E\u5716\u793A",
-    "custom_folder_icon_desc": "\u81EA\u8A02\u8CC7\u6599\u593E\u5716\u793A\uFF08\u4F7F\u7528Emoji\uFF09",
-    // 選擇資料夾對話框
-    "select_folders": "\u9078\u64C7\u8CC7\u6599\u593E",
-    "select_folders_to_ignore": "\u9078\u64C7\u8981\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
-    "open_grid_view": "\u958B\u555F\u7DB2\u683C\u8996\u5716",
-    "open_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F",
-    "open_note_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F\u7576\u524D\u7B46\u8A18",
-    "open_backlinks_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F\u53CD\u5411\u9023\u7D50",
-    "open_outgoinglinks_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F\u5916\u90E8\u9023\u7D50",
-    "open_recent_files_in_grid_view": "\u5728\u6700\u8FD1\u6A94\u6848\u4E2D\u958B\u555F\u7576\u524D\u7B46\u8A18",
-    "open_settings": "\u958B\u555F\u8A2D\u5B9A",
-    "open_new_grid_view": "\u958B\u555F\u65B0\u7DB2\u683C\u8996\u5716",
-    "open_in_new_grid_view": "\u5728\u65B0\u7DB2\u683C\u8996\u5716\u4E2D\u958B\u555F",
-    "min_mode": "\u6700\u5C0F\u5316\u6A21\u5F0F",
-    "show_ignored_folders": "\u986F\u793A\u5FFD\u7565\u7684\u8CC7\u6599\u593E",
-    "delete_note": "\u522A\u9664\u6A94\u6848",
-    "open_folder_note": "\u958B\u555F\u8CC7\u6599\u593E\u7B46\u8A18",
-    "create_folder_note": "\u5EFA\u7ACB\u8CC7\u6599\u593E\u7B46\u8A18",
-    "delete_folder_note": "\u522A\u9664\u8CC7\u6599\u593E\u7B46\u8A18",
-    "edit_folder_note_settings": "\u7DE8\u8F2F\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A",
-    "ignore_folder": "\u5FFD\u7565\u6B64\u8CC7\u6599\u593E",
-    "unignore_folder": "\u53D6\u6D88\u5FFD\u7565\u6B64\u8CC7\u6599\u593E",
-    "searching": "\u641C\u5C0B\u4E2D...",
-    "no_files": "\u6C92\u6709\u627E\u5230\u4EFB\u4F55\u6A94\u6848",
-    "filter_folders": "\u7BE9\u9078\u8CC7\u6599\u593E...",
-    // 資料夾筆記設定對話框
-    "folder_note_settings": "\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A",
-    "folder_sort_type": "\u8CC7\u6599\u593E\u6392\u5E8F\u65B9\u5F0F",
-    "folder_sort_type_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u9810\u8A2D\u6392\u5E8F\u65B9\u5F0F",
-    "folder_color": "\u8CC7\u6599\u593E\u984F\u8272",
-    "folder_color_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u986F\u793A\u984F\u8272",
-    "folder_icon": "\u8CC7\u6599\u593E\u5716\u793A",
-    "folder_icon_desc": "\u8A2D\u5B9A\u6B64\u8CC7\u6599\u593E\u7684\u986F\u793A\u5716\u793A",
-    "no_color": "\u7121\u984F\u8272",
-    "color_red": "\u7D05\u8272",
-    "color_orange": "\u6A59\u8272",
-    "color_yellow": "\u9EC3\u8272",
-    "color_green": "\u7DA0\u8272",
-    "color_cyan": "\u9752\u8272",
-    "color_blue": "\u85CD\u8272",
-    "color_purple": "\u7D2B\u8272",
-    "color_pink": "\u7C89\u8272",
-    "confirm": "\u78BA\u8A8D",
-    "note_attribute_settings": "\u7B46\u8A18\u5C6C\u6027\u8A2D\u5B9A",
-    "note_title": "\u7B46\u8A18\u6A19\u984C",
-    "note_title_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u986F\u793A\u6A19\u984C",
-    "note_summary": "\u7B46\u8A18\u6458\u8981",
-    "note_summary_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u6458\u8981",
-    "note_color": "\u7B46\u8A18\u984F\u8272",
-    "note_color_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u986F\u793A\u984F\u8272",
-    "set_note_attribute": "\u8A2D\u5B9A\u7B46\u8A18\u5C6C\u6027",
-    "rename_folder": "\u91CD\u65B0\u547D\u540D\u8CC7\u6599\u593E",
-    "enter_new_folder_name": "\u8F38\u5165\u65B0\u8CC7\u6599\u593E\u540D\u7A31",
-    "search_selection_in_grid_view": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u641C\u5C0B...",
-    "show_date_dividers": "\u986F\u793A\u65E5\u671F\u5206\u9694\u5668",
-    "show_date_dividers_desc": "\u5728\u65E5\u671F\u76F8\u95DC\u6392\u5E8F\u6642\uFF0C\u5728\u4E0D\u540C\u5929\u7684\u7B2C\u4E00\u7B46\u4E4B\u524D\u986F\u793A\u65E5\u671F\u5206\u9694\u5668",
-    "date_divider_format": "\u65E5\u671F\u5206\u9694\u5668\u683C\u5F0F",
-    "date_divider_mode": "\u65E5\u671F\u5206\u9694\u5668",
-    "date_divider_mode_desc": "\u9078\u64C7\u65E5\u671F\u5206\u9694\u5668\u7684\u986F\u793A\u6A21\u5F0F",
-    "date_divider_mode_none": "\u4E0D\u4F7F\u7528",
-    "date_divider_mode_year": "\u5E74",
-    "date_divider_mode_month": "\u6708",
-    "date_divider_mode_day": "\u65E5",
-    "pinned": "\u7F6E\u9802",
-    "pinned_desc": "\u5C07\u6B64\u6A94\u6848\u56FA\u5B9A\u5728\u6700\u4E0A\u65B9",
-    "foldernote_pinned": "\u8CC7\u6599\u593E\u7B46\u8A18\u7F6E\u9802",
-    "foldernote_pinned_desc": "\u5C07\u8CC7\u6599\u593E\u7B46\u8A18\u56FA\u5B9A\u5728\u6700\u4E0A\u65B9",
-    "display_minimized": "\u6700\u5C0F\u5316\u986F\u793A",
-    "display_minimized_desc": "\u5C07\u6B64\u7B46\u8A18\u4EE5\u6700\u5C0F\u5316\u65B9\u5F0F\u986F\u793A",
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "\u5FEB\u901F\u5B58\u53D6\u8A2D\u5B9A",
-    "quick_access_folder_name": "\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
-    "quick_access_folder_desc": "\u8A2D\u5B9A\u300C\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E\u300D\u547D\u4EE4\u6240\u4F7F\u7528\u7684\u8CC7\u6599\u593E",
-    "quick_access_mode_name": "\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F",
-    "quick_access_mode_desc": "\u8A2D\u5B9A\u300C\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F\u300D\u547D\u4EE4\u6240\u4F7F\u7528\u7684\u9810\u8A2D\u6A21\u5F0F",
-    "use_quick_access_as_new_tab_view": "\u5C07\u5FEB\u901F\u5B58\u53D6\u4F5C\u70BA\u65B0\u5206\u9801\u4F7F\u7528",
-    "use_quick_access_as_new_tab_view_desc": "\u5C07\u9810\u8A2D\u7684\u300C\u65B0\u5206\u9801\u300D\u756B\u9762\u66FF\u63DB\u70BA\u6240\u9078\u5FEB\u901F\u5B58\u53D6\u9078\u9805\uFF08\u8CC7\u6599\u593E\u6216\u6A21\u5F0F\uFF09\u7684\u7DB2\u683C\u6AA2\u8996\u3002\u6B64\u8A2D\u5B9A\u50C5\u5728\u300C\u9810\u8A2D\u958B\u555F\u4F4D\u7F6E\u300D\u8A2D\u70BA\u300C\u5728\u65B0\u5206\u9801\u958B\u555F\u300D\u6642\u6709\u6548\uFF01",
-    "default_new_tab": "\u9810\u8A2D\u65B0\u5206\u9801",
-    "use_quick_access_folder": "\u4F7F\u7528\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
-    "use_quick_access_mode": "\u4F7F\u7528\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F",
-    "open_quick_access_folder": "\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u8CC7\u6599\u593E",
-    "open_quick_access_mode": "\u958B\u555F\u5FEB\u901F\u5B58\u53D6\u6A21\u5F0F"
-  },
-  "en": {
-    // Notifications
-    "bookmarks_plugin_disabled": "Please enable the Bookmarks plugin first",
-    // Buttons and Labels
-    "sorting": "Sort by",
-    "refresh": "Refresh",
-    "reselect": "Reselect",
-    "no_backlinks": "No backlinks",
-    "search": "Search",
-    "search_placeholder": "Search keyword",
-    "search_current_location_only": "Search current location only",
-    "search_media_files": "Search media files",
-    "cancel": "Cancel",
-    "new_note": "New note",
-    "new_folder": "New folder",
-    "new_canvas": "New canvas",
-    "delete_folder": "Delete Folder",
-    "move_folder": "Move Folder",
-    "select_destination_folder": "Select destination folder",
-    "untitled": "Untitled",
-    "files": "files",
-    "add": "Add",
-    "root": "Root",
-    "sub_folders": "Sub folders",
-    "parent_folders": "Parent folders",
-    "more_options": "More options",
-    "add_tag_to_search": "Add to search",
-    "remove_tag_from_search": "Remove from search",
-    "global_search": "Global search",
-    "remove": "Remove",
-    "edit": "Edit",
-    "delete": "Delete",
-    "save": "Save",
-    "option": "Option",
-    "add_option": "Add option",
-    // View Titles
-    "grid_view_title": "Grid view",
-    "bookmarks_mode": "Bookmarks",
-    "folder_mode": "Folder",
-    "search_results": "Search results",
-    "backlinks_mode": "Backlinks",
-    "outgoinglinks_mode": "Outgoing links",
-    "all_files_mode": "All files",
-    "recent_files_mode": "Recent files",
-    "random_note_mode": "Random note",
-    "tasks_mode": "Tasks",
-    // Sort Options
-    "sort_name_asc": "Name (A \u2192 Z)",
-    "sort_name_desc": "Name (Z \u2192 A)",
-    "sort_mtime_desc": "Modified (New \u2192 Old)",
-    "sort_mtime_asc": "Modified (Old \u2192 New)",
-    "sort_ctime_desc": "Created (New \u2192 Old)",
-    "sort_ctime_asc": "Created (Old \u2192 New)",
-    "sort_random": "Random",
-    // Settings
-    "grid_view_settings": "Grid view settings",
-    "show_media_files": "Show media files",
-    "show_media_files_desc": "Display media files in the grid view",
-    "show_video_thumbnails": "Show video thumbnails",
-    "show_video_thumbnails_desc": "Display thumbnails for videos in the grid view, shows a play icon when disabled",
-    "show_note_in_grid": "Show note in grid",
-    "show_note_in_grid_desc": "Display note in grid container when clicked. If disabled, you need to hold down the Alt key to display the note.",
-    "show_note_tags": "Show note tags",
-    "show_note_tags_desc": "Display tags for notes in the grid view",
-    "ignored_folders": "Ignored folders",
-    "ignored_folders_desc": "Set folders to ignore here",
-    "add_ignored_folder": "Add ignored folder",
-    "no_ignored_folders": "No ignored folders.",
-    "ignored_folder_patterns": "Ignore folders and files by pattern",
-    "ignored_folder_patterns_desc": "Use string patterns to ignore folders and files (supports regular expressions)",
-    "add_ignored_folder_pattern": "Add folder pattern",
-    "ignored_folder_pattern_placeholder": "Enter folder name or regex pattern",
-    "no_ignored_folder_patterns": "No ignored folder patterns.",
-    "default_sort_type": "Default sort type",
-    "default_sort_type_desc": "Set the default sorting method when opening Grid View",
-    "note_title_field": "Note title field name",
-    "note_title_field_desc": "Set the field name in frontmatter to use for the note title",
-    "note_summary_field": "Note summary field name",
-    "note_summary_field_desc": "Set the field name in frontmatter to use for the note summary",
-    "modified_date_field": '"Modified date" field name',
-    "modified_date_field_desc": "Set the field name in frontmatter to use for the modified date (support multiple field names, separated by commas)",
-    "created_date_field": '"Created date" field name',
-    "created_date_field_desc": "Set the field name in frontmatter to use for the created date (support multiple field names, separated by commas)",
-    "grid_item_width": "Grid item width",
-    "grid_item_width_desc": "Set the width of grid items",
-    "grid_item_height": "Grid item height",
-    "grid_item_height_desc": "Set the height of grid items (set to 0 to automatically adjust)",
-    "image_area_width": "Image area width",
-    "image_area_width_desc": "Set the width of the image preview area",
-    "image_area_height": "Image area height",
-    "image_area_height_desc": "Set the height of the image preview area",
-    "title_font_size": "Title font size",
-    "title_font_size_desc": "Set the size of the title font",
-    "summary_length": "Summary length",
-    "summary_length_desc": "Set the length of summary",
-    "grid_item_style_settings": "Grid item style settings",
-    "card_layout": "Card layout",
-    "card_layout_desc": "Choose default card layout",
-    "horizontal_card": "Horizontal card",
-    "vertical_card": "Vertical card",
-    "image_position": "Image position",
-    "image_position_desc": "Set the position of the image",
-    "top": "Top",
-    "bottom": "Bottom",
-    "multi_line_title": "Multi-line title",
-    "multi_line_title_desc": "Set whether to allow multi-line title",
-    "show_code_block_in_summary": "Show code block in summary",
-    "show_code_block_in_summary_desc": "Set whether to show code block in the summary",
-    "enable_file_watcher": "Enable file watcher",
-    "enable_file_watcher_desc": "When enabled, the view will automatically update when files change. If disabled, you need to click the refresh button manually",
-    "intercept_all_tag_clicks": "Intercept all tag clicks",
-    "intercept_all_tag_clicks_desc": "When enabled, all tag clicks will be intercepted and opened in the grid view",
-    "intercept_breadcrumb_clicks": "Intercept breadcrumb clicks",
-    "intercept_breadcrumb_clicks_desc": "When enabled, breadcrumb clicks will be intercepted and the path will be opened in the grid view",
-    "reset_to_default": "Reset to default",
-    "settings_reset_notice": "Settings have been reset to default values",
-    "config_management": "Config management",
-    "config_management_desc": "Manage config reset, export and import",
-    "ignored_folders_settings": "Ignore folders settings",
-    "display_mode_settings": "Display mode settings",
-    "custom_mode_settings": "Custom Mode Settings",
-    "add_custom_mode": "Add Custom Mode",
-    "export": "Export",
-    "import": "Import",
-    "no_custom_modes_to_export": "No custom modes to export",
-    "import_success": "Import success",
-    "import_error": "Import failed: Invalid file format",
-    "edit_custom_mode": "Edit Custom Mode",
-    "custom_mode": "Custom Mode",
-    "custom_mode_display_name": "Display Name",
-    "custom_mode_display_name_desc": "The name displayed in the mode menu",
-    "custom_mode_dataview_code": "Dataview Query",
-    "custom_mode_dataview_code_desc": "Enter a Dataview query to get the list of files",
-    "custom_mode_sub_options": "Custom Mode Sub Options",
-    "custom_mode_fields_placeholder": "Enter frontmatter field names, separated by commas (e.g. date,category,status) (optional)",
-    "show_bookmarks_mode": "Show bookmarks mode",
-    "show_search_mode": "Show search results mode",
-    "show_backlinks_mode": "Show backlinks mode",
-    "show_outgoinglinks_mode": "Show outgoing links mode",
-    "show_all_files_mode": "Show all files mode",
-    "show_recent_files_mode": "Show recent files mode",
-    "recent_files_count": "Recent files count",
-    "show_random_note_mode": "Show random note mode",
-    "random_note_count": "Random note count",
-    "random_note_notes_only": "Notes Only",
-    "random_note_include_media_files": "Include Media Files",
-    "show_tasks_mode": "Show tasks mode",
-    "task_filter": "Task filter",
-    "uncompleted": "Uncompleted",
-    "completed": "Completed",
-    "foldernote_display_settings": "Folder note display settings",
-    "foldernote_display_settings_desc": "Set the display mode of folder notes",
-    "all": "All",
-    "default": "Default",
-    "hidden": "Hidden",
-    // Hide header elements setting
-    "hide_header_elements": "Hide header elements",
-    // Show "Parent Folder" option setting
-    "show_parent_folder_item": 'Show "Parent Folder" item',
-    "show_parent_folder_item_desc": 'Show a "Parent Folder" item as the first item in the grid',
-    "parent_folder": "Parent Folder",
-    // Default open location setting
-    "default_open_location": "Default open location",
-    "default_open_location_desc": "Set the default location to open the grid view",
-    "open_in_left_sidebar": "Open in left sidebar",
-    "open_in_right_sidebar": "Open in right sidebar",
-    "open_in_new_tab": "Open in new tab",
-    "reuse_existing_leaf": "Reuse existing view",
-    "reuse_existing_leaf_desc": "When opening Grid View, prioritize using an existing view instead of creating a new one",
-    "custom_document_extensions": "Custom Document Extensions",
-    "custom_document_extensions_desc": "Additional document extensions (comma-separated, without dots)",
-    "custom_document_extensions_placeholder": "e.g., txt,doc,docx",
-    "custom_folder_icon": "Custom Folder Icon",
-    "custom_folder_icon_desc": "Custom folder icon (use emoji)",
-    // Select Folder Dialog
-    "select_folders": "Select folder",
-    "select_folders_to_ignore": "Select folders to ignore",
-    "open_grid_view": "Open grid view",
-    "open_in_grid_view": "Open in grid view",
-    "open_note_in_grid_view": "Open note in grid view",
-    "open_backlinks_in_grid_view": "Open backlinks in grid view",
-    "open_outgoinglinks_in_grid_view": "Open outgoing links in grid view",
-    "open_recent_files_in_grid_view": "Open current note in recent files",
-    "open_settings": "Open settings",
-    "open_new_grid_view": "Open new grid view",
-    "open_in_new_grid_view": "Open in new grid view",
-    "min_mode": "Minimize mode",
-    "show_ignored_folders": "Show ignored folders",
-    "delete_note": "Delete file",
-    "open_folder_note": "Open folder note",
-    "create_folder_note": "Create folder note",
-    "delete_folder_note": "Delete folder note",
-    "edit_folder_note_settings": "Edit folder note settings",
-    "ignore_folder": "Ignore this folder",
-    "unignore_folder": "Unignore this folder",
-    "searching": "Searching...",
-    "no_files": "No files found",
-    "filter_folders": "Filter folders...",
-    // Folder Note Settings Dialog
-    "folder_note_settings": "Folder Note Settings",
-    "folder_sort_type": "Folder Sort Type",
-    "folder_sort_type_desc": "Set the default sort type for this folder",
-    "folder_color": "Folder Color",
-    "folder_color_desc": "Set the display color for this folder",
-    "folder_icon": "Folder Icon",
-    "folder_icon_desc": "Set the display icon for this folder",
-    "no_color": "No Color",
-    "color_red": "Red",
-    "color_orange": "Orange",
-    "color_yellow": "Yellow",
-    "color_green": "Green",
-    "color_cyan": "Cyan",
-    "color_blue": "Blue",
-    "color_purple": "Purple",
-    "color_pink": "Pink",
-    "confirm": "Confirm",
-    "note_attribute_settings": "Note attribute settings",
-    "note_title": "Note title",
-    "note_title_desc": "Set the display title for this note",
-    "note_summary": "Note summary",
-    "note_summary_desc": "Set the display summary for this note",
-    "note_color": "Note color",
-    "note_color_desc": "Set the display color for this note",
-    "set_note_attribute": "Set note attribute",
-    "rename_folder": "Rename folder",
-    "enter_new_folder_name": "Enter new folder name",
-    "search_selection_in_grid_view": "Search ... in grid view",
-    "show_date_dividers": "Show date dividers",
-    "show_date_dividers_desc": "Show date dividers before the first item of each different day when using date-related sorting",
-    "date_divider_format": "Date divider format",
-    "date_divider_mode": "Date divider",
-    "date_divider_mode_desc": "Select the display mode for date dividers",
-    "date_divider_mode_none": "None",
-    "date_divider_mode_year": "Year",
-    "date_divider_mode_month": "Month",
-    "date_divider_mode_day": "Day",
-    "pinned": "Pinned",
-    "pinned_desc": "Pin this file at the top",
-    "foldernote_pinned": "Folder note pinned",
-    "foldernote_pinned_desc": "Pin this folder note at the top",
-    "display_minimized": "Display minimized",
-    "display_minimized_desc": "Show this note in minimized mode",
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "Quick Access Settings",
-    "quick_access_folder_name": "Quick access folder",
-    "quick_access_folder_desc": 'Set the folder used by the "Open quick access folder" command',
-    "quick_access_mode_name": "Quick access mode",
-    "quick_access_mode_desc": 'Set the default mode used by the "Open quick access mode" command',
-    "use_quick_access_as_new_tab_view": "Use Quick Access as a new tab view",
-    "use_quick_access_as_new_tab_view_desc": 'Replace the default "New Tab" view with a Grid View of the selected Quick Access option (folder or mode). Only works if default open location is set to "Open in new tab"!',
-    "default_new_tab": "Default New Tab",
-    "use_quick_access_folder": "Use quick access folder",
-    "use_quick_access_mode": "Use quick access mode",
-    "open_quick_access_folder": "Open quick access folder",
-    "open_quick_access_mode": "Open quick access mode"
-  },
-  "zh": {
-    // 通知信息
-    "bookmarks_plugin_disabled": "\u8BF7\u5148\u542F\u7528\u4E66\u7B7E\u63D2\u4EF6",
-    // 按钮和标签
-    "sorting": "\u6392\u5E8F\u65B9\u5F0F",
-    "refresh": "\u5237\u65B0",
-    "reselect": "\u91CD\u65B0\u9009\u62E9\u4F4D\u7F6E",
-    "no_backlinks": "\u6CA1\u6709\u53CD\u5411\u94FE\u63A5",
-    "search": "\u641C\u7D22",
-    "search_placeholder": "\u641C\u7D22\u5173\u952E\u5B57",
-    "search_current_location_only": "\u4EC5\u641C\u7D22\u5F53\u524D\u4F4D\u7F6E",
-    "search_media_files": "\u641C\u7D22\u5A92\u4F53\u6587\u4EF6",
-    "cancel": "\u53D6\u6D88",
-    "new_note": "\u65B0\u5EFA\u7B14\u8BB0",
-    "new_folder": "\u65B0\u5EFA\u6587\u4EF6\u5939",
-    "new_canvas": "\u65B0\u5EFA\u753B\u5E03",
-    "delete_folder": "\u5220\u9664\u6587\u4EF6\u5939",
-    "untitled": "\u672A\u547D\u540D",
-    "files": "\u4E2A\u6587\u4EF6",
-    "add": "\u6DFB\u52A0",
-    "root": "\u6839\u76EE\u5F55",
-    "sub_folders": "\u5B50\u76EE\u5F55",
-    "parent_folders": "\u4E0A\u5C42\u76EE\u5F55",
-    "more_options": "\u66F4\u591A\u9009\u9879",
-    "add_tag_to_search": "\u52A0\u5165\u641C\u7D22",
-    "remove_tag_from_search": "\u4ECE\u641C\u7D22\u4E2D\u79FB\u9664",
-    "global_search": "\u5168\u57DF\u641C\u7D22",
-    "remove": "\u79FB\u9664",
-    "edit": "\u7F16\u8F91",
-    "delete": "\u5220\u9664",
-    "save": "\u4FDD\u5B58",
-    "option": "\u9009\u9879",
-    "add_option": "\u6DFB\u52A0\u9009\u9879",
-    // 视图标题
-    "grid_view_title": "\u7F51\u683C\u89C6\u56FE",
-    "bookmarks_mode": "\u4E66\u7B7E",
-    "folder_mode": "\u6587\u4EF6\u5939",
-    "search_results": "\u641C\u7D22\u7ED3\u679C",
-    "backlinks_mode": "\u53CD\u5411\u94FE\u63A5",
-    "outgoinglinks_mode": "\u5916\u90E8\u94FE\u63A5",
-    "all_files_mode": "\u6240\u6709\u6587\u4EF6",
-    "recent_files_mode": "\u6700\u8FD1\u6587\u4EF6",
-    "random_note_mode": "\u968F\u673A\u7B14\u8BB0",
-    "tasks_mode": "\u4EFB\u52A1",
-    // 排序选项
-    "sort_name_asc": "\u540D\u79F0 (A \u2192 Z)",
-    "sort_name_desc": "\u540D\u79F0 (Z \u2192 A)",
-    "sort_mtime_desc": "\u4FEE\u6539\u65F6\u95F4 (\u65B0 \u2192 \u65E7)",
-    "sort_mtime_asc": "\u4FEE\u6539\u65F6\u95F4 (\u65E7 \u2192 \u65B0)",
-    "sort_ctime_desc": "\u521B\u5EFA\u65F6\u95F4 (\u65B0 \u2192 \u65E7)",
-    "sort_ctime_asc": "\u521B\u5EFA\u65F6\u95F4 (\u65E7 \u2192 \u65B0)",
-    "sort_random": "\u968F\u673A\u6392\u5E8F",
-    // 设置
-    "grid_view_settings": "\u7F51\u683C\u89C6\u56FE\u8BBE\u7F6E",
-    "show_media_files": "\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
-    "show_media_files_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
-    "show_video_thumbnails": "\u663E\u793A\u89C6\u9891\u7F29\u7565\u56FE",
-    "show_video_thumbnails_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u89C6\u9891\u7684\u7F29\u7565\u56FE\uFF0C\u5173\u95ED\u65F6\u5C06\u663E\u793A\u64AD\u653E\u56FE\u6807",
-    "show_note_in_grid": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0",
-    "show_note_in_grid_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0\uFF0C\u5173\u95ED\u65F6\u9700\u8981\u6309\u4F4F Alt \u952E\u6253\u5F00\u7B14\u8BB0",
-    "show_note_tags": "\u663E\u793A\u7B14\u8BB0\u6807\u7B7E",
-    "show_note_tags_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u7B14\u8BB0\u7684\u6807\u7B7E",
-    "ignored_folders": "\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
-    "ignored_folders_desc": "\u5728\u8FD9\u91CC\u8BBE\u7F6E\u8981\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
-    "add_ignored_folder": "\u6DFB\u52A0\u5FFD\u7565\u6587\u4EF6\u5939",
-    "no_ignored_folders": "\u6CA1\u6709\u5FFD\u7565\u7684\u6587\u4EF6\u5939\u3002",
-    "ignored_folder_patterns": "\u4EE5\u5B57\u7B26\u4E32\u5FFD\u7565\u6587\u4EF6\u5939\u548C\u6587\u4EF6",
-    "ignored_folder_patterns_desc": "\u4F7F\u7528\u5B57\u7B26\u4E32\u6A21\u5F0F\u5FFD\u7565\u6587\u4EF6\u5939\u548C\u6587\u4EF6\uFF08\u652F\u6301\u6B63\u5219\u8868\u8FBE\u5F0F\uFF09",
-    "add_ignored_folder_pattern": "\u6DFB\u52A0\u5FFD\u7565\u6587\u4EF6\u5939\u6A21\u5F0F",
-    "ignored_folder_pattern_placeholder": "\u8F93\u5165\u6587\u4EF6\u5939\u540D\u79F0\u6216\u6B63\u5219\u8868\u8FBE\u5F0F",
-    "no_ignored_folder_patterns": "\u6CA1\u6709\u5FFD\u7565\u7684\u6587\u4EF6\u5939\u6A21\u5F0F\u3002",
-    "default_sort_type": "\u9ED8\u8BA4\u6392\u5E8F\u6A21\u5F0F",
-    "default_sort_type_desc": "\u8BBE\u7F6E\u6253\u5F00\u7F51\u683C\u89C6\u56FE\u65F6\u7684\u9ED8\u8BA4\u6392\u5E8F\u6A21\u5F0F",
-    "note_title_field": "\u7B14\u8BB0\u6807\u9898\u5B57\u6BB5\u540D\u79F0",
-    "note_title_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u6807\u9898\u7684\u5B57\u6BB5\u540D\u79F0",
-    "note_summary_field": "\u7B14\u8BB0\u6458\u8981\u5B57\u6BB5\u540D\u79F0",
-    "note_summary_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u6458\u8981\u7684\u5B57\u6BB5\u540D\u79F0",
-    "modified_date_field": '"\u4FEE\u6539\u65F6\u95F4"\u5B57\u6BB5\u540D\u79F0',
-    "modified_date_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u4FEE\u6539\u65F6\u95F4\u7684\u5B57\u6BB5\u540D\u79F0 (\u652F\u6301\u591A\u4E2A\u5B57\u6BB5\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694)",
-    "created_date_field": '"\u521B\u5EFA\u65F6\u95F4"\u5B57\u6BB5\u540D\u79F0',
-    "created_date_field_desc": "\u8BBE\u7F6E frontmatter \u4E2D\u7528\u4E8E\u7B14\u8BB0\u521B\u5EFA\u65F6\u95F4\u7684\u5B57\u6BB5\u540D\u79F0 (\u652F\u6301\u591A\u4E2A\u5B57\u6BB5\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694)",
-    "grid_item_width": "\u7F51\u683C\u9879\u76EE\u5BBD\u5EA6",
-    "grid_item_width_desc": "\u8BBE\u7F6E\u7F51\u683C\u9879\u76EE\u7684\u5BBD\u5EA6",
-    "grid_item_height": "\u7F51\u683C\u9879\u76EE\u9AD8\u5EA6",
-    "grid_item_height_desc": "\u8BBE\u7F6E\u7F51\u683C\u9879\u76EE\u7684\u9AD8\u5EA6 (\u8BBE\u4E3A0\u65F6\u4E3A\u81EA\u52A8\u8C03\u6574)",
-    "image_area_width": "\u56FE\u7247\u533A\u57DF\u5BBD\u5EA6",
-    "image_area_width_desc": "\u8BBE\u7F6E\u56FE\u7247\u9884\u89C8\u533A\u57DF\u7684\u5BBD\u5EA6",
-    "image_area_height": "\u56FE\u7247\u533A\u57DF\u9AD8\u5EA6",
-    "image_area_height_desc": "\u8BBE\u7F6E\u56FE\u7247\u9884\u89C8\u533A\u57DF\u7684\u9AD8\u5EA6",
-    "title_font_size": "\u6807\u9898\u5B57\u4F53\u5927\u5C0F",
-    "title_font_size_desc": "\u8BBE\u7F6E\u6807\u9898\u5B57\u4F53\u7684\u5927\u5C0F",
-    "summary_length": "\u6458\u8981\u957F\u5EA6",
-    "summary_length_desc": "\u8BBE\u7F6E\u6458\u8981\u7684\u957F\u5EA6",
-    "grid_item_style_settings": "\u7F51\u683C\u9879\u76EE\u6837\u5F0F\u8BBE\u7F6E",
-    "card_layout": "\u5361\u7247\u5E03\u5C40",
-    "card_layout_desc": "\u9009\u62E9\u9ED8\u8BA4\u5361\u7247\u5E03\u5C40",
-    "horizontal_card": "\u6C34\u5E73\u5361\u7247",
-    "vertical_card": "\u5782\u76F4\u5361\u7247",
-    "image_position": "\u56FE\u7247\u4F4D\u7F6E",
-    "image_position_desc": "\u8BBE\u7F6E\u56FE\u7247\u7684\u4F4D\u7F6E",
-    "top": "\u9876\u90E8",
-    "bottom": "\u5E95\u90E8",
-    "multi_line_title": "\u6807\u9898\u652F\u6301\u591A\u884C\u663E\u793A",
-    "multi_line_title_desc": "\u8BBE\u7F6E\u662F\u5426\u5141\u8BB8\u6807\u9898\u591A\u884C\u663E\u793A",
-    "show_code_block_in_summary": "\u6458\u8981\u4E2D\u663E\u793ACodeBlock",
-    "show_code_block_in_summary_desc": "\u8BBE\u7F6E\u662F\u5426\u5728\u6458\u8981\u4E2D\u663E\u793ACodeBlock\u7684\u5167\u5BB9",
-    "enable_file_watcher": "\u542F\u7528\u6587\u4EF6\u76D1\u63A7",
-    "enable_file_watcher_desc": "\u542F\u7528\u540E\u4F1A\u81EA\u52A8\u68C0\u6D4B\u6587\u4EF6\u53D8\u66F4\u5E76\u66F4\u65B0\u89C6\u56FE\uFF0C\u5173\u95ED\u540E\u9700\u624B\u52A8\u70B9\u51FB\u5237\u65B0\u6309\u94AE",
-    "intercept_all_tag_clicks": "\u62E6\u622A\u6240\u6709\u6807\u7B7E\u70B9\u51FB\u4E8B\u4EF6",
-    "intercept_all_tag_clicks_desc": "\u542F\u7528\u540E\u4F1A\u62E6\u622A\u6240\u6709\u6807\u7B7E\u70B9\u51FB\u4E8B\u4EF6\uFF0C\u6539\u4E3A\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u6807\u7B7E",
-    "intercept_breadcrumb_clicks": "\u62E6\u622A\u7B14\u8BB0\u5BFC\u822A\u680F\u70B9\u51FB\u4E8B\u4EF6",
-    "intercept_breadcrumb_clicks_desc": "\u542F\u7528\u540E\u4F1A\u62E6\u622A\u7B14\u8BB0\u5BFC\u822A\u680F\u70B9\u51FB\u4E8B\u4EF6\uFF0C\u5E76\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u8DEF\u5F84",
-    "reset_to_default": "\u91CD\u7F6E\u4E3A\u9ED8\u8BA4\u503C",
-    "settings_reset_notice": "\u8BBE\u7F6E\u503C\u5DF2\u91CD\u7F6E\u4E3A\u9ED8\u8BA4\u503C",
-    "config_management": "\u914D\u7F6E\u7BA1\u7406",
-    "config_management_desc": "\u7BA1\u7406\u914D\u7F6E\u7684\u91CD\u7F6E\u3001\u5BFC\u51FA\u548C\u5BFC\u5165",
-    "ignored_folders_settings": "\u5FFD\u7565\u6587\u4EF6\u5939\u8BBE\u7F6E",
-    "display_mode_settings": "\u663E\u793A\u6A21\u5F0F\u8BBE\u7F6E",
-    "custom_mode_settings": "\u81EA\u5B9A\u4E49\u6A21\u5F0F\u8BBE\u7F6E",
-    "add_custom_mode": "\u6DFB\u52A0\u81EA\u5B9A\u4E49\u6A21\u5F0F",
-    "export": "\u5BFC\u51FA",
-    "import": "\u5BFC\u5165",
-    "no_custom_modes_to_export": "\u6CA1\u6709\u53EF\u5BFC\u51FA\u7684\u81EA\u5B9A\u4E49\u6A21\u5F0F",
-    "import_success": "\u5BFC\u5165\u6210\u529F",
-    "import_error": "\u5BFC\u5165\u5931\u8D25\uFF1A\u65E0\u6548\u7684\u6587\u4EF6\u683C\u5F0F",
-    "edit_custom_mode": "\u7F16\u8F91\u81EA\u5B9A\u4E49\u6A21\u5F0F",
-    "custom_mode": "\u81EA\u5B9A\u4E49\u6A21\u5F0F",
-    "custom_mode_display_name": "\u663E\u793A\u540D\u79F0",
-    "custom_mode_display_name_desc": "\u5728\u6A21\u5F0F\u83DC\u5355\u4E2D\u663E\u793A\u7684\u540D\u79F0",
-    "custom_mode_dataview_code": "Dataviewjs \u4EE3\u7801",
-    "custom_mode_dataview_code_desc": "\u8F93\u5165 Dataviewjs \u4EE3\u7801\u4EE5\u83B7\u53D6\u6587\u4EF6\u5217\u8868",
-    "custom_mode_sub_options": "\u81EA\u5B9A\u4E49\u6A21\u5F0F\u5B50\u9009\u9879",
-    "custom_mode_fields_placeholder": "\u8F93\u5165 frontmatter \u680F\u4F4D\u540D\u79F0\uFF0C\u7528\u9017\u53F7\u5206\u9694 (\u5982: date,category,status) (\u53EF\u9009)",
-    "show_bookmarks_mode": "\u663E\u793A\u4E66\u7B7E\u6A21\u5F0F",
-    "show_search_mode": "\u663E\u793A\u641C\u7D22\u7ED3\u679C\u6A21\u5F0F",
-    "show_backlinks_mode": "\u663E\u793A\u53CD\u5411\u94FE\u63A5\u6A21\u5F0F",
-    "show_outgoinglinks_mode": "\u663E\u793A\u5916\u90E8\u94FE\u63A5\u6A21\u5F0F",
-    "show_all_files_mode": "\u663E\u793A\u6240\u6709\u6587\u4EF6\u6A21\u5F0F",
-    "show_recent_files_mode": "\u663E\u793A\u6700\u8FD1\u6587\u4EF6\u6A21\u5F0F",
-    "recent_files_count": "\u6700\u8FD1\u6587\u4EF6\u6A21\u5F0F\u663E\u793A\u7B14\u6570",
-    "show_random_note_mode": "\u663E\u793A\u968F\u673A\u7B14\u8BB0\u6A21\u5F0F",
-    "random_note_count": "\u968F\u673A\u7B14\u8BB0\u6A21\u5F0F\u663E\u793A\u7B14\u6570",
-    "random_note_notes_only": "\u4EC5\u7B14\u8BB0",
-    "random_note_include_media_files": "\u5305\u542B\u5A92\u4F53\u6587\u4EF6",
-    "show_tasks_mode": "\u663E\u793A\u4EFB\u52A1\u6A21\u5F0F",
-    "task_filter": "\u4EFB\u52A1\u5206\u7C7B",
-    "uncompleted": "\u672A\u5B8C\u6210",
-    "completed": "\u5DF2\u5B8C\u6210",
-    "foldernote_display_settings": "\u6587\u4EF6\u5939\u7B14\u8BB0\u663E\u793A\u8BBE\u7F6E",
-    "foldernote_display_settings_desc": "\u8BBE\u7F6E\u6587\u4EF6\u5939\u7B14\u8BB0\u7684\u663E\u793A\u65B9\u5F0F",
-    "all": "\u5168\u90E8",
-    "default": "\u9ED8\u8BA4",
-    "hidden": "\u9690\u85CF",
-    // 隐藏頂部元素
-    "hide_header_elements": "\u96B1\u85CF\u9802\u90E8\u5143\u7D20",
-    // 显示"返回上级文件夹"选项设置
-    "show_parent_folder_item": "\u663E\u793A\u300C\u8FD4\u56DE\u4E0A\u7EA7\u6587\u4EF6\u5939\u300D",
-    "show_parent_folder_item_desc": "\u5728\u7F51\u683C\u7684\u7B2C\u4E00\u9879\u663E\u793A\u300C\u8FD4\u56DE\u4E0A\u7EA7\u6587\u4EF6\u5939\u300D\u9009\u9879",
-    "parent_folder": "\u4E0A\u7EA7\u6587\u4EF6\u5939",
-    // 默认打开位置设置
-    "default_open_location": "\u9ED8\u8BA4\u6253\u5F00\u4F4D\u7F6E",
-    "default_open_location_desc": "\u8BBE\u7F6E\u7F51\u683C\u89C6\u56FE\u9ED8\u8BA4\u6253\u5F00\u7684\u4F4D\u7F6E",
-    "open_in_left_sidebar": "\u5728\u5DE6\u4FA7\u8FB9\u680F\u6253\u5F00",
-    "open_in_right_sidebar": "\u5728\u53F3\u4FA7\u8FB9\u680F\u6253\u5F00",
-    "open_in_new_tab": "\u5728\u65B0\u6807\u7B7E\u9875\u6253\u5F00",
-    "reuse_existing_leaf": "\u91CD\u590D\u4F7F\u7528\u5DF2\u6253\u5F00\u7684\u89C6\u56FE",
-    "reuse_existing_leaf_desc": "\u6253\u5F00\u7F51\u683C\u89C6\u56FE\u65F6\uFF0C\u4F18\u5148\u4F7F\u7528\u5DF2\u6253\u5F00\u7684\u89C6\u56FE\u800C\u975E\u521B\u5EFA\u65B0\u89C6\u56FE",
-    "custom_document_extensions": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u6269\u5C55\u540D",
-    "custom_document_extensions_desc": "\u989D\u5916\u7684\u6587\u4EF6\u6269\u5C55\u540D\uFF08\u7528\u9017\u53F7\u5206\u9694\uFF0C\u4E0D\u542B\u70B9\u53F7\uFF09",
-    "custom_document_extensions_placeholder": "\u4F8B\u5982\uFF1Atxt,doc,docx",
-    "custom_folder_icon": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u5939\u56FE\u6807",
-    "custom_folder_icon_desc": "\u81EA\u5B9A\u4E49\u6587\u4EF6\u5939\u56FE\u6807\uFF08\u4F7F\u7528Emoji\uFF09",
-    // 选择文件夹对话框
-    "select_folders": "\u9009\u62E9\u6587\u4EF6\u5939",
-    "select_folders_to_ignore": "\u9009\u62E9\u8981\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
-    "open_grid_view": "\u6253\u5F00\u7F51\u683C\u89C6\u56FE",
-    "open_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00",
-    "open_note_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u5F53\u524D\u7B14\u8BB0",
-    "open_backlinks_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u53CD\u5411\u94FE\u63A5",
-    "open_outgoinglinks_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00\u5916\u90E8\u94FE\u63A5",
-    "open_recent_files_in_grid_view": "\u5728\u6700\u8FD1\u6587\u4EF6\u4E2D\u6253\u5F00\u5F53\u524D\u7B14\u8BB0",
-    "open_settings": "\u6253\u5F00\u8BBE\u7F6E",
-    "open_new_grid_view": "\u6253\u5F00\u65B0\u7F51\u683C\u89C6\u56FE",
-    "open_in_new_grid_view": "\u5728\u65B0\u7F51\u683C\u89C6\u56FE\u4E2D\u6253\u5F00",
-    "min_mode": "\u6700\u5C0F\u5316\u6A21\u5F0F",
-    "show_ignored_folders": "\u663E\u793A\u5FFD\u7565\u7684\u6587\u4EF6\u5939",
-    "delete_note": "\u5220\u9664\u6587\u4EF6",
-    "open_folder_note": "\u6253\u5F00\u6587\u4EF6\u5939\u7B14\u8BB0",
-    "create_folder_note": "\u521B\u5EFA\u6587\u4EF6\u5939\u7B14\u8BB0",
-    "delete_folder_note": "\u5220\u9664\u6587\u4EF6\u5939\u7B14\u8BB0",
-    "edit_folder_note_settings": "\u7F16\u8F91\u6587\u4EF6\u5939\u7B14\u8BB0\u8BBE\u7F6E",
-    "ignore_folder": "\u5FFD\u7565\u6B64\u6587\u4EF6\u5939",
-    "unignore_folder": "\u53D6\u6D88\u5FFD\u7565\u6B64\u6587\u4EF6\u5939",
-    "searching": "\u641C\u7D22\u4E2D...",
-    "no_files": "\u6CA1\u6709\u627E\u5230\u4EFB\u4F55\u6587\u4EF6",
-    "filter_folders": "\u7B5B\u9009\u6587\u4EF6\u5939...",
-    // 文件夹笔记设置对话框
-    "folder_note_settings": "\u6587\u4EF6\u5939\u7B14\u8BB0\u8BBE\u7F6E",
-    "folder_sort_type": "\u6587\u4EF6\u5939\u6392\u5E8F\u65B9\u5F0F",
-    "folder_sort_type_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u9ED8\u8BA4\u6392\u5E8F\u65B9\u5F0F",
-    "folder_color": "\u6587\u4EF6\u5939\u989C\u8272",
-    "folder_color_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u663E\u793A\u989C\u8272",
-    "folder_icon": "\u6587\u4EF6\u5939\u56FE\u793A",
-    "folder_icon_desc": "\u8BBE\u7F6E\u6B64\u6587\u4EF6\u5939\u7684\u663E\u793A\u56FE\u793A",
-    "no_color": "\u65E0\u989C\u8272",
-    "color_red": "\u7EA2\u8272",
-    "color_orange": "\u6A59\u8272",
-    "color_yellow": "\u9EC4\u8272",
-    "color_green": "\u7EFF\u8272",
-    "color_cyan": "\u9752\u8272",
-    "color_blue": "\u84DD\u8272",
-    "color_purple": "\u7D2B\u8272",
-    "color_pink": "\u7C89\u8272",
-    "confirm": "\u786E\u8BA4",
-    "note_attribute_settings": "\u7B14\u8BB0\u5C5E\u6027\u8BBE\u7F6E",
-    "note_title": "\u7B14\u8BB0\u6807\u9898",
-    "note_title_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u6807\u9898",
-    "note_summary": "\u7B14\u8BB0\u6458\u8981",
-    "note_summary_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u6458\u8981",
-    "note_color": "\u7B14\u8BB0\u989C\u8272",
-    "note_color_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u989C\u8272",
-    "set_note_attribute": "\u8BBE\u7F6E\u7B14\u8BB0\u5C5E\u6027",
-    "rename_folder": "\u91CD\u65B0\u547D\u540D\u6587\u4EF6\u5939",
-    "enter_new_folder_name": "\u8F93\u5165\u65B0\u6587\u4EF6\u5939\u540D\u79F0",
-    "search_selection_in_grid_view": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u641C\u5BFB...",
-    "show_date_dividers": "\u663E\u793A\u65E5\u671F\u5206\u9694\u5668",
-    "show_date_dividers_desc": "\u5728\u65E5\u671F\u76F8\u5173\u6392\u5E8F\u65F6\uFF0C\u5728\u4E0D\u540C\u5929\u7684\u7B2C\u4E00\u6761\u4E4B\u524D\u663E\u793A\u65E5\u671F\u5206\u9694\u5668",
-    "date_divider_format": "\u65E5\u671F\u5206\u9694\u5668\u683C\u5F0F",
-    "date_divider_mode": "\u65E5\u671F\u5206\u9694\u5668",
-    "date_divider_mode_desc": "\u9009\u62E9\u65E5\u671F\u5206\u9694\u5668\u7684\u663E\u793A\u6A21\u5F0F",
-    "date_divider_mode_none": "\u4E0D\u4F7F\u7528",
-    "date_divider_mode_year": "\u5E74",
-    "date_divider_mode_month": "\u6708",
-    "date_divider_mode_day": "\u65E5",
-    "pinned": "\u7F6E\u9876",
-    "pinned_desc": "\u5C06\u6B64\u6587\u4EF6\u56FA\u5B9A\u5728\u9876\u90E8",
-    "foldernote_pinned": "\u6587\u4EF6\u5939\u7B14\u8BB0\u7F6E\u9876",
-    "foldernote_pinned_desc": "\u5C06\u6587\u4EF6\u5939\u7B14\u8BB0\u56FA\u5B9A\u5728\u9876\u90E8",
-    "display_minimized": "\u6700\u5C0F\u5316\u663E\u793A",
-    "display_minimized_desc": "\u5C06\u6B64\u7B14\u8BB0\u4EE5\u6700\u5C0F\u5316\u65B9\u5F0F\u663E\u793A",
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "\u5FEB\u901F\u8BBF\u95EE\u8BBE\u7F6E",
-    "quick_access_folder_name": "\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
-    "quick_access_folder_desc": "\u8BBE\u7F6E\u201C\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939\u201D\u547D\u4EE4\u4F7F\u7528\u7684\u6587\u4EF6\u5939",
-    "quick_access_mode_name": "\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F",
-    "quick_access_mode_desc": "\u8BBE\u7F6E\u201C\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F\u201D\u547D\u4EE4\u4F7F\u7528\u7684\u9ED8\u8BA4\u6A21\u5F0F",
-    "use_quick_access_as_new_tab_view": "\u5C06\u5FEB\u901F\u8BBF\u95EE\u7528\u4F5C\u65B0\u6807\u7B7E\u9875",
-    "use_quick_access_as_new_tab_view_desc": "\u5C06\u9ED8\u8BA4\u7684\u201C\u65B0\u6807\u7B7E\u9875\u201D\u89C6\u56FE\u66FF\u6362\u4E3A\u6240\u9009\u5FEB\u901F\u8BBF\u95EE\u9009\u9879\uFF08\u6587\u4EF6\u5939\u6216\u6A21\u5F0F\uFF09\u7684\u7F51\u683C\u89C6\u56FE\u3002\u6B64\u8BBE\u7F6E\u4EC5\u5728\u201C\u9ED8\u8BA4\u6253\u5F00\u4F4D\u7F6E\u201D\u8BBE\u4E3A\u201C\u5728\u65B0\u6807\u7B7E\u9875\u6253\u5F00\u201D\u65F6\u751F\u6548\uFF01",
-    "default_new_tab": "\u9ED8\u8BA4\u65B0\u6807\u7B7E\u9875",
-    "use_quick_access_folder": "\u4F7F\u7528\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
-    "use_quick_access_mode": "\u4F7F\u7528\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F",
-    "open_quick_access_folder": "\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6587\u4EF6\u5939",
-    "open_quick_access_mode": "\u6253\u5F00\u5FEB\u901F\u8BBF\u95EE\u6A21\u5F0F"
-  },
-  "ja": {
-    // 通知メッジ
-    "bookmarks_plugin_disabled": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF\u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u6709\u52B9\u306B\u3057\u3066\u304F\u3060\u3055\u3044",
-    // ボタンとラベル
-    "sorting": "\u4E26\u3073\u66FF\u3048",
-    "refresh": "\u66F4\u65B0",
-    "reselect": "\u518D\u9078\u629E",
-    "no_backlinks": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u306A\u3057",
-    "search": "\u691C\u7D22",
-    "search_placeholder": "\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22",
-    "search_current_location_only": "\u73FE\u5728\u306E\u5834\u6240\u306E\u307F\u691C\u7D22",
-    "search_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u691C\u7D22",
-    "cancel": "\u30AD\u30E3\u30F3\u30BB\u30EB",
-    "new_note": "\u65B0\u898F\u30CE\u30FC\u30C8",
-    "new_folder": "\u65B0\u898F\u30D5\u30A9\u30EB\u30C0",
-    "new_canvas": "\u65B0\u898F\u30AD\u30E3\u30F3\u30D0\u30B9",
-    "delete_folder": "\u524A\u9664\u30D5\u30A9\u30EB\u30C0",
-    "untitled": "\u7121\u984C",
-    "files": "\u30D5\u30A1\u30A4\u30EB",
-    "add": "\u8FFD\u52A0",
-    "root": "\u30EB\u30FC\u30C8",
-    "sub_folders": "\u5B50\u30D5\u30A9\u30EB\u30C0",
-    "parent_folders": "\u4E0A\u5C64\u30D5\u30A9\u30EB\u30C0",
-    "more_options": "\u3082\u3063\u3068\u9078\u629E\u80A2",
-    "add_tag_to_search": "\u691C\u7D22\u306B\u8FFD\u52A0",
-    "remove_tag_from_search": "\u691C\u7D22\u304B\u3089\u524A\u9664",
-    "global_search": "\u30B0\u30ED\u30FC\u30D0\u30EB\u691C\u7D22",
-    "remove": "\u524A\u9664",
-    "edit": "\u7DE8\u96C6",
-    "delete": "\u524A\u9664",
-    "save": "\u4FDD\u5B58",
-    "option": "\u9078\u629E\u80A2",
-    "add_option": "\u9078\u629E\u80A2\u3092\u8FFD\u52A0",
-    // ビュータイトル
-    "grid_view_title": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC",
-    "bookmarks_mode": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF",
-    "folder_mode": "\u30D5\u30A9\u30EB\u30C0",
-    "search_results": "\u691C\u7D22\u7D50\u679C",
-    "backlinks_mode": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF",
-    "outgoinglinks_mode": "\u30A2\u30A6\u30C8\u30B0\u30EA\u30F3\u30AF",
-    "all_files_mode": "\u3059\u3079\u3066\u306E\u30D5\u30A1\u30A4\u30EB",
-    "recent_files_mode": "\u6700\u8FD1\u306E\u30D5\u30A1\u30A4\u30EB",
-    "random_note_mode": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8",
-    "tasks_mode": "\u30BF\u30B9\u30AF",
-    // 並べ替えオプション
-    "sort_name_asc": "\u540D\u524D (A \u2192 Z)",
-    "sort_name_desc": "\u540D\u524D (Z \u2192 A)",
-    "sort_mtime_desc": "\u66F4\u65B0\u65E5\u6642 (\u65B0 \u2192 \u53E4)",
-    "sort_mtime_asc": "\u66F4\u65B0\u65E5\u6642 (\u53E4 \u2192 \u65B0)",
-    "sort_ctime_desc": "\u4F5C\u6210\u65E5\u6642 (\u65B0 \u2192 \u53E4)",
-    "sort_ctime_asc": "\u4F5C\u6210\u65E5\u6642 (\u53E4 \u2192 \u65B0)",
-    "sort_random": "\u30E9\u30F3\u30C0\u30E0",
-    // 設定
-    "grid_view_settings": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u8A2D\u5B9A",
-    "show_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A",
-    "show_media_files_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A\u3059\u308B",
-    "show_video_thumbnails": "\u52D5\u753B\u306E\u30B5\u30E0\u30CD\u30A4\u30EB\u3092\u8868\u793A",
-    "show_video_thumbnails_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u52D5\u753B\u306E\u30B5\u30E0\u30CD\u30A4\u30EB\u3092\u8868\u793A\u3059\u308B\u3001\u7121\u52B9\u306E\u5834\u5408\u306F\u518D\u751F\u30A2\u30A4\u30B3\u30F3\u3092\u8868\u793A",
-    "show_note_in_grid": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u3092\u8868\u793A",
-    "show_note_in_grid_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u3092\u8868\u793A\u3059\u308B\u3001\u7121\u52B9\u306E\u5834\u5408\u306FAlt\u30AD\u30FC\u3092\u62BC\u3057\u306A\u304C\u3089\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u958B\u304F",
-    "show_note_tags": "\u30CE\u30FC\u30C8\u306E\u30BF\u30B0\u3092\u8868\u793A",
-    "show_note_tags_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30CE\u30FC\u30C8\u306E\u30BF\u30B0\u3092\u8868\u793A\u3059\u308B",
-    "ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0",
-    "ignored_folders_desc": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u8A2D\u5B9A\u3059\u308B",
-    "add_ignored_folder": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u8FFD\u52A0",
-    "no_ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u306F\u3042\u308A\u307E\u305B\u3093\u3002",
-    "ignored_folder_patterns": "\u30D1\u30BF\u30FC\u30F3\u3067\u30D5\u30A9\u30EB\u30C0\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u7121\u8996",
-    "ignored_folder_patterns_desc": "\u6587\u5B57\u5217\u30D1\u30BF\u30FC\u30F3\u3092\u4F7F\u7528\u3057\u3066\u30D5\u30A9\u30EB\u30C0\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u7121\u8996\u3059\u308B\uFF08\u6B63\u898F\u8868\u73FE\u3092\u30B5\u30DD\u30FC\u30C8\uFF09",
-    "add_ignored_folder_pattern": "\u30D5\u30A9\u30EB\u30C0\u30D1\u30BF\u30FC\u30F3\u3092\u8FFD\u52A0",
-    "ignored_folder_pattern_placeholder": "\u30D5\u30A9\u30EB\u30C0\u540D\u307E\u305F\u306F\u6B63\u898F\u8868\u73FE\u30D1\u30BF\u30FC\u30F3\u3092\u5165\u529B",
-    "no_ignored_folder_patterns": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30D1\u30BF\u30FC\u30F3\u306F\u3042\u308A\u307E\u305B\u3093\u3002",
-    "default_sort_type": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048",
-    "default_sort_type_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u3044\u305F\u3068\u304D\u306E\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048\u65B9\u6CD5\u3092\u8A2D\u5B9A",
-    "note_title_field": "\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB\u30D5\u30A3\u30FC\u30EB\u30C9\u540D",
-    "note_title_field_desc": "frontmatter\u3067\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A",
-    "note_summary_field": "\u30CE\u30FC\u30C8\u8981\u7D04\u30D5\u30A3\u30FC\u30EB\u30C9\u540D",
-    "note_summary_field_desc": "frontmatter\u3067\u30CE\u30FC\u30C8\u8981\u7D04\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A",
-    "modified_date_field": '"\u66F4\u65B0\u65E5"\u30D5\u30A3\u30FC\u30EB\u30C9\u540D',
-    "modified_date_field_desc": "frontmatter\u3067\u66F4\u65B0\u65E5\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A (\u8907\u6570\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u6307\u5B9A\u53EF\u80FD)",
-    "created_date_field": '"\u4F5C\u6210\u65E5"\u30D5\u30A3\u30FC\u30EB\u30C9\u540D',
-    "created_date_field_desc": "frontmatter\u3067\u4F5C\u6210\u65E5\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u8A2D\u5B9A (\u8907\u6570\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u6307\u5B9A\u53EF\u80FD)",
-    "grid_item_width": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u5E45",
-    "grid_item_width_desc": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u5E45\u3092\u8A2D\u5B9A",
-    "grid_item_height": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u9AD8\u3055",
-    "grid_item_height_desc": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u306E\u9AD8\u3055\u3092\u8A2D\u5B9A\uFF080\u306B\u8A2D\u5B9A\u3059\u308B\u3068\u81EA\u52D5\u8ABF\u6574\uFF09",
-    "image_area_width": "\u753B\u50CF\u30A8\u30EA\u30A2\u306E\u5E45",
-    "image_area_width_desc": "\u753B\u50CF\u30D7\u30EC\u30D3\u30E5\u30FC\u30A8\u30EA\u30A2\u306E\u5E45\u3092\u8A2D\u5B9A",
-    "image_area_height": "\u753B\u50CF\u30A8\u30EA\u30A2\u306E\u9AD8\u3055",
-    "image_area_height_desc": "\u753B\u50CF\u30D7\u30EC\u30D3\u30E5\u30FC\u30A8\u30EA\u30A2\u306E\u9AD8\u3055\u3092\u8A2D\u5B9A",
-    "title_font_size": "\u30BF\u30A4\u30C8\u30EB\u306E\u30D5\u30A9\u30F3\u30C8\u30B5\u30A4\u30BA",
-    "title_font_size_desc": "\u30BF\u30A4\u30C8\u30EB\u306E\u30D5\u30A9\u30F3\u30C8\u30B5\u30A4\u30BA\u3092\u8A2D\u5B9A",
-    "summary_length": "\u8981\u7D04\u306E\u9577\u3055",
-    "summary_length_desc": "\u8981\u7D04\u306E\u9577\u3055\u3092\u8A2D\u5B9A",
-    "grid_item_style_settings": "\u30B0\u30EA\u30C3\u30C9\u30A2\u30A4\u30C6\u30E0\u30B9\u30BF\u30A4\u30EB\u8A2D\u5B9A",
-    "card_layout": "\u30AB\u30FC\u30C9\u30EC\u30A4\u30A2\u30A6\u30C8",
-    "card_layout_desc": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30AB\u30FC\u30C9\u30EC\u30A4\u30A2\u30A6\u30C8\u3092\u9078\u629E",
-    "horizontal_card": "\u6C34\u5E73\u30AB\u30FC\u30C9",
-    "vertical_card": "\u5782\u76F4\u30AB\u30FC\u30C9",
-    "image_position": "\u753B\u50CF\u4F4D\u7F6E",
-    "image_position_desc": "\u753B\u50CF\u306E\u4F4D\u7F6E\u3092\u8A2D\u5B9A",
-    "top": "\u4E0A\u90E8",
-    "bottom": "\u4E0B\u90E8",
-    "multi_line_title": "\u30BF\u30A4\u30C8\u30EB\u30B5\u30DD\u30FC\u30C8\u591A\u884C\u8868\u793A",
-    "multi_line_title_desc": "\u30BF\u30A4\u30C8\u30EB\u3092\u591A\u884C\u8868\u793A\u3059\u308B\u304B\u3069\u3046\u304B\u3092\u8A2D\u5B9A",
-    "show_code_block_in_summary": "\u8981\u7D04\u306BCodeBlock\u3092\u8868\u793A",
-    "show_code_block_in_summary_desc": "\u8981\u7D04\u306BCodeBlock\u3092\u8868\u793A\u3059\u308B\u304B\u3069\u3046\u304B\u3092\u8A2D\u5B9A",
-    "enable_file_watcher": "\u30D5\u30A1\u30A4\u30EB\u76E3\u8996\u3092\u6709\u52B9\u306B\u3059\u308B",
-    "enable_file_watcher_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u30D5\u30A1\u30A4\u30EB\u306E\u5909\u66F4\u3092\u81EA\u52D5\u7684\u306B\u691C\u51FA\u3057\u3066\u30D3\u30E5\u30FC\u3092\u66F4\u65B0\u3057\u307E\u3059\u3002\u7121\u52B9\u306E\u5834\u5408\u306F\u3001\u66F4\u65B0\u30DC\u30BF\u30F3\u3092\u624B\u52D5\u3067\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059",
-    "intercept_all_tag_clicks": "\u3059\u3079\u3066\u306E\u30BF\u30B0\u30AF\u30EA\u30C3\u30AF\u3092\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8",
-    "intercept_all_tag_clicks_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30BF\u30B0\u30AF\u30EA\u30C3\u30AF\u304C\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8\u3055\u308C\u3001\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304B\u308C\u307E\u3059",
-    "intercept_breadcrumb_clicks": "\u30D1\u30F3\u304F\u305A\u30EA\u30B9\u30C8\u306E\u30AF\u30EA\u30C3\u30AF\u3092\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8",
-    "intercept_breadcrumb_clicks_desc": "\u6709\u52B9\u306B\u3059\u308B\u3068\u3001\u30D1\u30F3\u304F\u305A\u30EA\u30B9\u30C8\u306E\u30AF\u30EA\u30C3\u30AF\u304C\u30A4\u30F3\u30BF\u30FC\u30BB\u30D7\u30C8\u3055\u308C\u3001\u30D1\u30B9\u304C\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304B\u308C\u307E\u3059",
-    "reset_to_default": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306B\u623B\u3059",
-    "settings_reset_notice": "\u8A2D\u5B9A\u5024\u304C\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u306B\u30EA\u30BB\u30C3\u30C8\u3055\u308C\u307E\u3057\u305F",
-    "config_management": "\u8A2D\u5B9A\u7BA1\u7406",
-    "config_management_desc": "\u7BA1\u7406\u8A2D\u5B9A\u306E\u30EA\u30BB\u30C3\u30C8\u3001\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3001\u30A4\u30F3\u30DD\u30FC\u30C8",
-    "ignored_folders_settings": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u8A2D\u5B9A",
-    "display_mode_settings": "\u8868\u793A\u30E2\u30FC\u30C9\u8A2D\u5B9A",
-    "custom_mode_settings": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u8A2D\u5B9A",
-    "add_custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u3092\u8FFD\u52A0",
-    "export": "\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-    "import": "\u30A4\u30F3\u30DD\u30FC\u30C8",
-    "no_custom_modes_to_export": "\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3059\u308B\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u304C\u3042\u308A\u307E\u305B\u3093",
-    "import_success": "\u30A4\u30F3\u30DD\u30FC\u30C8\u6210\u529F",
-    "import_error": "\u30A4\u30F3\u30DD\u30FC\u30C8\u5931\u6557\uFF1A\u7121\u52B9\u306A\u30D5\u30A1\u30A4\u30EB\u5F62\u5F0F",
-    "edit_custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u3092\u7DE8\u96C6",
-    "custom_mode": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9",
-    "custom_mode_display_name": "\u8868\u793A\u540D",
-    "custom_mode_display_name_desc": "\u30E2\u30FC\u30C9\u30E1\u30CB\u30E5\u30FC\u3067\u8868\u793A\u3059\u308B\u540D\u524D",
-    "custom_mode_dataview_code": "Dataviewjs \u30B3\u30FC\u30C9",
-    "custom_mode_dataview_code_desc": "\u30D5\u30A1\u30A4\u30EB\u30EA\u30B9\u30C8\u3092\u53D6\u5F97\u3059\u308B Dataviewjs \u30B3\u30FC\u30C9\u3092\u5165\u529B",
-    "custom_mode_sub_options": "\u30AB\u30B9\u30BF\u30E0\u30E2\u30FC\u30C9\u5B50\u9078\u629E\u80A2",
-    "custom_mode_fields_placeholder": "frontmatter\u306E\u30D5\u30A3\u30FC\u30EB\u30C9\u540D\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u5165\u529B (\u4F8B: date,category,status) (\u4EFB\u610F)",
-    "show_bookmarks_mode": "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "show_search_mode": "\u691C\u7D22\u7D50\u679C\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "show_backlinks_mode": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "show_outgoinglinks_mode": "\u30A2\u30A6\u30C8\u30B0\u30EA\u30F3\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "show_all_files_mode": "\u5168\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "show_recent_files_mode": "\u6700\u8FD1\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "recent_files_count": "\u6700\u8FD1\u30D5\u30A1\u30A4\u30EB\u30E2\u30FC\u30C9\u8868\u793A\u7B46\u6570",
-    "show_random_note_mode": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "random_note_count": "\u30E9\u30F3\u30C0\u30E0\u30CE\u30FC\u30C8\u30E2\u30FC\u30C9\u8868\u793A\u7B46\u6570",
-    "random_note_notes_only": "\u30CE\u30FC\u30C8\u306E\u307F",
-    "random_note_include_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u542B\u3080",
-    "show_tasks_mode": "\u30BF\u30B9\u30AF\u30E2\u30FC\u30C9\u3092\u8868\u793A",
-    "task_filter": "\u30BF\u30B9\u30AF\u30D5\u30A3\u30EB\u30BF",
-    "uncompleted": "\u672A\u5B8C\u4E86",
-    "completed": "\u5B8C\u4E86",
-    "foldernote_display_settings": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8A2D\u5B9A",
-    "foldernote_display_settings_desc": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u306E\u8868\u793A\u65B9\u6CD5\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
-    "all": "\u3059\u3079\u3066",
-    "default": "\u30C7\u30D5\u30A9\u30EB\u30C8",
-    "hidden": "\u96A0\u3059",
-    // 隠す頂部元素
-    "hide_header_elements": "\u9802\u90E8\u5143\u7D20\u3092\u96A0\u3059",
-    // "親フォルダ"オプション設定を表示
-    "show_parent_folder_item": "\u300C\u89AA\u30D5\u30A9\u30EB\u30C0\u300D\u9805\u76EE\u3092\u8868\u793A",
-    "show_parent_folder_item_desc": "\u30B0\u30EA\u30C3\u30C9\u306E\u6700\u521D\u306E\u9805\u76EE\u3068\u3057\u3066\u300C\u89AA\u30D5\u30A9\u30EB\u30C0\u300D\u9805\u76EE\u3092\u8868\u793A\u3057\u307E\u3059",
-    "parent_folder": "\u89AA\u30D5\u30A9\u30EB\u30C0",
-    // 開く場所設定
-    "default_open_location": "\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u958B\u304F\u5834\u6240",
-    "default_open_location_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u5834\u6240\u3092\u8A2D\u5B9A",
-    "open_in_left_sidebar": "\u5DE6\u30B5\u30A4\u30C9\u30D0\u30FC\u3067\u958B\u304F",
-    "open_in_right_sidebar": "\u53F3\u30B5\u30A4\u30C9\u30D0\u30FC\u3067\u958B\u304F",
-    "open_in_new_tab": "\u65B0\u3057\u3044\u30BF\u30D6\u3067\u958B\u304F",
-    "reuse_existing_leaf": "\u65E2\u5B58\u306E\u30D3\u30E5\u30FC\u3092\u518D\u5229\u7528",
-    "reuse_existing_leaf_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F\u3068\u304D\u3001\u65B0\u3057\u3044\u30D3\u30E5\u30FC\u3092\u4F5C\u6210\u305B\u305A\u306B\u65E2\u5B58\u306E\u30D3\u30E5\u30FC\u3092\u512A\u5148\u4F7F\u7528",
-    "custom_document_extensions": "\u30AB\u30B9\u30BF\u30E0\u6587\u66F8\u62E1\u5F35\u5B50",
-    "custom_document_extensions_desc": "\u8FFD\u52A0\u306E\u6587\u66F8\u62E1\u5F35\u5B50\uFF08\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3001\u30C9\u30C3\u30C8\u7121\u3057\uFF09",
-    "custom_document_extensions_placeholder": "\u4F8B\uFF1Atxt,doc,docx",
-    "custom_folder_icon": "\u30AB\u30B9\u30BF\u30E0\u30D5\u30A9\u30EB\u30C0\u30FC\u30A2\u30A4\u30B3\u30F3",
-    "custom_folder_icon_desc": "\u30AB\u30B9\u30BF\u30E0\u30D5\u30A9\u30EB\u30C0\u30FC\u30A2\u30A4\u30B3\u30F3\uFF08Emoji\u3092\u4F7F\u7528\uFF09",
-    // フォルダ選択ダイアログ
-    "select_folders": "\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
-    "select_folders_to_ignore": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
-    "open_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F",
-    "open_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304F",
-    "open_note_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u73FE\u5728\u306E\u30CE\u30FC\u30C8\u3092\u958B\u304F",
-    "open_backlinks_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u3092\u958B\u304F",
-    "open_outgoinglinks_in_grid_view": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u5916\u90E8\u30EA\u30F3\u30AF\u3092\u958B\u304F",
-    "open_recent_files_in_grid_view": "\u6700\u8FD1\u306E\u30D5\u30A1\u30A4\u30EB\u3067\u73FE\u5728\u306E\u30CE\u30FC\u30C8\u3092\u958B\u304F",
-    "open_settings": "\u8A2D\u5B9A\u3092\u958B\u304F",
-    "open_new_grid_view": "\u65B0\u3057\u3044\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3092\u958B\u304F",
-    "open_in_new_grid_view": "\u65B0\u3057\u3044\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u958B\u304F",
-    "min_mode": "\u6700\u5C0F\u5316\u30E2\u30FC\u30C9",
-    "show_ignored_folders": "\u7121\u8996\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u8868\u793A",
-    "delete_note": "\u30D5\u30A1\u30A4\u30EB\u3092\u524A\u9664",
-    "open_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u958B\u304F",
-    "create_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u4F5C\u6210",
-    "delete_folder_note": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u524A\u9664",
-    "edit_folder_note_settings": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u8A2D\u5B9A\u3092\u7DE8\u96C6",
-    "ignore_folder": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u7121\u8996",
-    "unignore_folder": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u7121\u8996\u89E3\u9664",
-    "searching": "\u691C\u7D22\u4E2D...",
-    "no_files": "\u30D5\u30A1\u30A4\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093",
-    "filter_folders": "\u30D5\u30A9\u30EB\u30C0\u3092\u30D5\u30A3\u30EB\u30BF\u30EA\u30F3\u30B0...",
-    // フォルダーノート設定ダイアログ
-    "folder_note_settings": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u8A2D\u5B9A",
-    "folder_sort_type": "\u30D5\u30A9\u30EB\u30C0\u306E\u4E26\u3073\u66FF\u3048",
-    "folder_sort_type_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u4E26\u3073\u66FF\u3048\u65B9\u6CD5\u3092\u8A2D\u5B9A",
-    "folder_color": "\u30D5\u30A9\u30EB\u30C0\u306E\u8272",
-    "folder_color_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u8868\u793A\u8272\u3092\u8A2D\u5B9A",
-    "folder_icon": "\u30D5\u30A9\u30EB\u30C0\u306E\u30A2\u30A4\u30B3\u30F3",
-    "folder_icon_desc": "\u3053\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u8868\u793A\u30A2\u30A4\u30B3\u30F3\u3092\u8A2D\u5B9A",
-    "no_color": "\u8272\u306A\u3057",
-    "color_red": "\u8D64",
-    "color_orange": "\u30AA\u30EC\u30F3\u30B8",
-    "color_yellow": "\u9EC4",
-    "color_green": "\u7DD1",
-    "color_cyan": "\u30B7\u30A2\u30F3",
-    "color_blue": "\u9752",
-    "color_purple": "\u7D2B",
-    "color_pink": "\u30D4\u30F3\u30AF",
-    "confirm": "\u78BA\u8A8D",
-    "note_attribute_settings": "\u30CE\u30FC\u30C8\u5C5E\u6027\u8A2D\u5B9A",
-    "note_title": "\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB",
-    "note_title_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u30BF\u30A4\u30C8\u30EB\u3092\u8A2D\u5B9A",
-    "note_summary": "\u30CE\u30FC\u30C8\u8981\u7D04",
-    "note_summary_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8981\u7D04\u3092\u8A2D\u5B9A",
-    "note_color": "\u30CE\u30FC\u30C8\u8272",
-    "note_color_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u8272\u3092\u8A2D\u5B9A",
-    "set_note_attribute": "\u30CE\u30FC\u30C8\u5C5E\u6027\u8A2D\u5B9A",
-    "rename_folder": "\u30D5\u30A9\u30EB\u30C0\u3092\u518D\u547D\u540D",
-    "enter_new_folder_name": "\u65B0\u3057\u3044\u30D5\u30A9\u30EB\u30C0\u540D\u3092\u5165\u529B",
-    "search_selection_in_grid_view": "... \u3092\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u691C\u7D22",
-    "show_date_dividers": "\u65E5\u4ED8\u533A\u5207\u308A\u3092\u8868\u793A",
-    "show_date_dividers_desc": "\u65E5\u4ED8\u95A2\u9023\u306E\u4E26\u3073\u66FF\u3048\u6642\u3001\u5404\u65E5\u306E\u6700\u521D\u306E\u30A2\u30A4\u30C6\u30E0\u306E\u524D\u306B\u65E5\u4ED8\u533A\u5207\u308A\u3092\u8868\u793A\u3059\u308B",
-    "date_divider_format": "\u65E5\u4ED8\u533A\u5207\u308A\u30D5\u30A9\u30FC\u30DE\u30C3\u30C8",
-    "date_divider_mode": "\u65E5\u4ED8\u533A\u5207\u308A",
-    "date_divider_mode_desc": "\u65E5\u4ED8\u533A\u5207\u308A\u306E\u8868\u793A\u30E2\u30FC\u30C9\u3092\u9078\u629E",
-    "date_divider_mode_none": "\u4F7F\u7528\u3057\u306A\u3044",
-    "date_divider_mode_year": "\u5E74",
-    "date_divider_mode_month": "\u6708",
-    "date_divider_mode_day": "\u65E5",
-    "pinned": "\u30D4\u30F3\u7559\u3081",
-    "pinned_desc": "\u3053\u306E\u30D5\u30A1\u30A4\u30EB\u3092\u6700\u4E0A\u90E8\u306B\u56FA\u5B9A\u3059\u308B",
-    "foldernote_pinned": "\u30D5\u30A9\u30EB\u30C0\u30CE\u30FC\u30C8\u3092\u30D4\u30F3\u7559\u3081",
-    "foldernote_pinned_desc": "\u30D5\u30A9\u30EB\u30C0\u30FC\u30CE\u30FC\u30C8\u3092\u6700\u4E0A\u90E8\u306B\u56FA\u5B9A",
-    "display_minimized": "\u6700\u5C0F\u5316\u8868\u793A",
-    "display_minimized_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u3092\u6700\u5C0F\u5316\u30E2\u30FC\u30C9\u3067\u8868\u793A",
-    //TODO: please check the translation!
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u8A2D\u5B9A",
-    "quick_access_folder_name": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30D5\u30A9\u30EB\u30C0\u30FC",
-    "quick_access_folder_desc": "\u300C\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9 \u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u958B\u304F\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u4F7F\u7528\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
-    "quick_access_mode_name": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9",
-    "quick_access_mode_desc": "\u300C\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u958B\u304F\u300D\u30B3\u30DE\u30F3\u30C9\u3067\u4F7F\u7528\u3059\u308B\u65E2\u5B9A\u306E\u30E2\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u307E\u3059",
-    "use_quick_access_as_new_tab_view": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u3092\u65B0\u3057\u3044\u30BF\u30D6\u3068\u3057\u3066\u4F7F\u7528\u3059\u308B",
-    "use_quick_access_as_new_tab_view_desc": "\u65E2\u5B9A\u306E\u300C\u65B0\u3057\u3044\u30BF\u30D6\u300D\u306E\u8868\u793A\u3092\u3001\u9078\u629E\u3057\u305F\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30AA\u30D7\u30B7\u30E7\u30F3\uFF08\u30D5\u30A9\u30EB\u30C0\u30FC\u307E\u305F\u306F\u30E2\u30FC\u30C9\uFF09\u306E\u30B0\u30EA\u30C3\u30C9\u8868\u793A\u306B\u7F6E\u304D\u63DB\u3048\u307E\u3059\u3002\u3053\u306E\u8A2D\u5B9A\u306F\u3001\u300C\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u958B\u304F\u5834\u6240\u300D\u304C\u300C\u65B0\u3057\u3044\u30BF\u30D6\u3067\u958B\u304F\u300D\u306B\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u308B\u5834\u5408\u306B\u306E\u307F\u6709\u52B9\u3067\u3059\uFF01",
-    "default_new_tab": "\u65E2\u5B9A\u306E\u65B0\u3057\u3044\u30BF\u30D6",
-    "use_quick_access_folder": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u4F7F\u7528\u3059\u308B",
-    "use_quick_access_mode": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u4F7F\u7528\u3059\u308B",
-    "open_quick_access_folder": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9 \u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u958B\u304F",
-    "open_quick_access_mode": "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30BB\u30B9\u30E2\u30FC\u30C9\u3092\u958B\u304F"
-  },
-  "ru": {
-    // Notifications
-    "bookmarks_plugin_disabled": "\u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u0441\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u043A\u043B\u044E\u0447\u0438\u0442\u0435 \u043F\u043B\u0430\u0433\u0438\u043D \u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
-    // Buttons and Labels
-    "sorting": "\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E",
-    "refresh": "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C",
-    "reselect": "\u041F\u0435\u0440\u0435\u0432\u044B\u0431\u0440\u0430\u0442\u044C",
-    "no_backlinks": "\u041D\u0435\u0442 \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
-    "search": "\u041F\u043E\u0438\u0441\u043A",
-    "search_placeholder": "\u041A\u043B\u044E\u0447\u0435\u0432\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0438\u0441\u043A\u0430",
-    "search_current_location_only": "\u0418\u0441\u043A\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0440\u0430\u0441\u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0438",
-    "search_media_files": "\u0418\u0441\u043A\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
-    "cancel": "\u041E\u0442\u043C\u0435\u043D\u0430",
-    "new_note": "\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0430",
-    "new_folder": "\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430",
-    "new_canvas": "\u041D\u043E\u0432\u044B\u0439 \u043A\u0430\u043D\u0432\u0430\u0441",
-    "delete_folder": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
-    "untitled": "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F",
-    "files": "\u0444\u0430\u0439\u043B\u044B",
-    "add": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C",
-    "root": "\u041A\u043E\u0440\u0435\u043D\u044C",
-    "sub_folders": "\u041F\u043E\u0434\u043F\u0430\u043F\u043A\u0438",
-    "parent_folders": "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0430\u043F\u043A\u0438",
-    "more_options": "\u0411\u043E\u043B\u044C\u0448\u0435 \u043E\u043F\u0446\u0438\u0439",
-    "add_tag_to_search": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u043F\u043E\u0438\u0441\u043A",
-    "remove_tag_from_search": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0438\u0437 \u043F\u043E\u0438\u0441\u043A\u0430",
-    "global_search": "\u0413\u043B\u043E\u0431\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0438\u0441\u043A",
-    "remove": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
-    "edit": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
-    "delete": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
-    "save": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C",
-    "option": "\u041E\u043F\u0446\u0438\u044F",
-    "add_option": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u043F\u0446\u0438\u044E",
-    // View Titles
-    "grid_view_title": "\u0421\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
-    "bookmarks_mode": "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
-    "folder_mode": "\u041F\u0430\u043F\u043A\u0430",
-    "search_results": "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430",
-    "backlinks_mode": "\u041E\u0431\u0440\u0430\u0442\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438",
-    "outgoinglinks_mode": "\u0418\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0441\u0441\u044B\u043B\u043A\u0438",
-    "all_files_mode": "\u0412\u0441\u0435 \u0444\u0430\u0439\u043B\u044B",
-    "recent_files_mode": "\u041D\u0435\u0434\u0430\u0432\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u044B",
-    "random_note_mode": "\u0421\u043B\u0443\u0447\u0430\u0439\u043D\u0430\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0430",
-    "tasks_mode": "\u0417\u0430\u0434\u0430\u0447\u0438",
-    // Sort Options
-    "sort_name_asc": "\u0418\u043C\u044F (\u0410 \u2192 \u042F)",
-    "sort_name_desc": "\u0418\u043C\u044F (\u042F \u2192 \u0410)",
-    "sort_mtime_desc": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E (\u041D\u043E\u0432\u043E\u0435 \u2192 \u0421\u0442\u0430\u0440\u043E\u0435)",
-    "sort_mtime_asc": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u043E\u0435 \u2192 \u041D\u043E\u0432\u043E\u0435)",
-    "sort_ctime_desc": "\u0421\u043E\u0437\u0434\u0430\u043D\u043E (\u041D\u043E\u0432\u043E\u0435 \u2192 \u0421\u0442\u0430\u0440\u043E\u0435)",
-    "sort_ctime_asc": "\u0421\u043E\u0437\u0434\u0430\u043D\u043E (\u0421\u0442\u0430\u0440\u043E\u0435 \u2192 \u041D\u043E\u0432\u043E\u0435)",
-    "sort_random": "\u0421\u043B\u0443\u0447\u0430\u0439\u043D\u043E",
-    // Settings
-    "grid_view_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430",
-    "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
-    "show_media_files_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u044B \u0432\u0438\u0434\u0435\u043E",
-    "show_video_thumbnails_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u044B \u0434\u043B\u044F \u0432\u0438\u0434\u0435\u043E \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435, \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u0437\u043D\u0430\u0447\u043E\u043A \u0432\u043E\u0441\u043F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0438\u044F, \u0435\u0441\u043B\u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E",
-    "show_note_in_grid": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "show_note_in_grid_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435, \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E - \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u043D\u0430\u0436\u0430\u0442\u044C \u0438 \u0443\u0434\u0435\u0440\u0436\u0430\u0442\u044C Alt",
-    "show_note_tags": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0442\u0435\u0433\u0438 \u0437\u0430\u043C\u0435\u0442\u043E\u043A",
-    "show_note_tags_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u0442\u0435\u0433\u0438 \u0434\u043B\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "ignored_folders": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0435 \u043F\u0430\u043F\u043A\u0438",
-    "ignored_folders_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0437\u0434\u0435\u0441\u044C",
-    "add_ignored_folder": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u0443\u044E \u043F\u0430\u043F\u043A\u0443",
-    "no_ignored_folders": "\u041D\u0435\u0442 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A.",
-    "ignored_folder_patterns": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0438 \u0444\u0430\u0439\u043B\u044B \u043F\u043E \u0448\u0430\u0431\u043B\u043E\u043D\u0443",
-    "ignored_folder_patterns_desc": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0440\u043E\u043A\u043E\u0432\u044B\u0435 \u0448\u0430\u0431\u043B\u043E\u043D\u044B \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0430\u043F\u043E\u043A \u0438 \u0444\u0430\u0439\u043B\u043E\u0432 (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F)",
-    "add_ignored_folder_pattern": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0448\u0430\u0431\u043B\u043E\u043D \u043F\u0430\u043F\u043A\u0438",
-    "ignored_folder_pattern_placeholder": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u0430\u043F\u043A\u0438 \u0438\u043B\u0438 \u0448\u0430\u0431\u043B\u043E\u043D \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0433\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "no_ignored_folder_patterns": "\u041D\u0435\u0442 \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u0432 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A.",
-    "default_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "default_sort_type_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043C\u0435\u0442\u043E\u0434 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430",
-    "note_title_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438"',
-    "note_title_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_summary_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u041A\u0440\u0430\u0442\u043A\u043E\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435"',
-    "note_summary_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
-    "modified_date_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F"',
-    "modified_date_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u0434\u0430\u0442\u044B \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043B\u0435\u0439, \u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438)",
-    "created_date_field": '\u0418\u043C\u044F \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F"',
-    "created_date_field_desc": "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u0434\u0430\u0442\u044B \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F (\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043B\u0435\u0439, \u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438)",
-    "grid_item_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
-    "grid_item_width_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0448\u0438\u0440\u0438\u043D\u0443 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u0435\u0442\u043A\u0438",
-    "grid_item_height": "\u0412\u044B\u0441\u043E\u0442\u0430 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
-    "grid_item_height_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0432\u044B\u0441\u043E\u0442\u0443 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u0435\u0442\u043A\u0438 (0 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438)",
-    "image_area_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "image_area_width_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0448\u0438\u0440\u0438\u043D\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "image_area_height": "\u0412\u044B\u0441\u043E\u0442\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "image_area_height_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0432\u044B\u0441\u043E\u0442\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "title_font_size": "\u0420\u0430\u0437\u043C\u0435\u0440 \u0448\u0440\u0438\u0444\u0442\u0430 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "title_font_size_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\u0440 \u0448\u0440\u0438\u0444\u0442\u0430 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "summary_length": "\u0414\u043B\u0438\u043D\u0430 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
-    "summary_length_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0434\u043B\u0438\u043D\u0443 \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
-    "grid_item_style_settings": "\u0421\u0442\u0438\u043B\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0435\u0442\u043A\u0438",
-    "card_layout": "\u041A\u0430\u0440\u0442\u043E\u0447\u043D\u044B\u0439 \u043C\u0430\u043A\u0435\u0442",
-    "card_layout_desc": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u0430\u043A\u0435\u0442 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "horizontal_card": "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
-    "vertical_card": "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
-    "image_position": "\u041F\u043E\u0437\u0438\u0446\u0438\u044F \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "image_position_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u043E\u0437\u0438\u0446\u0438\u044E \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "top": "\u0412\u0435\u0440\u0445",
-    "bottom": "\u041D\u0438\u0437",
-    "multi_line_title": "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u0438\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "multi_line_title_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u044C \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u0438\u0435 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "show_code_block_in_summary": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C CodeBlock \u0432 \u043A\u0440\u0430\u0442\u043A\u043E\u043C \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0438",
-    "show_code_block_in_summary_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C CodeBlock \u0432 \u043A\u0440\u0430\u0442\u043A\u043E\u043C \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0438",
-    "enable_file_watcher": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043D\u0430\u0431\u043B\u044E\u0434\u0435\u043D\u0438\u0435 \u0437\u0430 \u0444\u0430\u0439\u043B\u0430\u043C\u0438",
-    "enable_file_watcher_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0432\u0438\u0434 \u0431\u0443\u0434\u0435\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0442\u044C\u0441\u044F \u043F\u0440\u0438 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0438 \u0444\u0430\u0439\u043B\u043E\u0432. \u0415\u0441\u043B\u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043E, \u043D\u0443\u0436\u043D\u043E \u0432\u0440\u0443\u0447\u043D\u0443\u044E \u043D\u0430\u0436\u0438\u043C\u0430\u0442\u044C \u043A\u043D\u043E\u043F\u043A\u0443 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F",
-    "intercept_all_tag_clicks": "\u041F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C \u0432\u0441\u0435 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u0442\u0435\u0433\u0430\u043C",
-    "intercept_all_tag_clicks_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0432\u0441\u0435 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u0442\u0435\u0433\u0430\u043C \u0431\u0443\u0434\u0443\u0442 \u043F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0438 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0432 \u0432\u0438\u0434\u0435 \u0441\u0435\u0442\u043A\u0438",
-    "intercept_breadcrumb_clicks": "\u041F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0435",
-    "intercept_breadcrumb_clicks_desc": "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0435 \u0431\u0443\u0434\u0443\u0442 \u043F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0442\u044C\u0441\u044F, \u0438 \u043F\u0443\u0442\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0442\u044C\u0441\u044F \u0432 \u0432\u0438\u0434\u0435 \u0441\u0435\u0442\u043A\u0438",
-    "reset_to_default": "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043D\u0430 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "settings_reset_notice": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0431\u0440\u043E\u0448\u0435\u043D\u044B \u043D\u0430 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "config_management": "\u041A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044F \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-    "config_management_desc": "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u0435\u0439 (\u0441\u0431\u0440\u043E\u0441, \u044D\u043A\u0441\u043F\u043E\u0440\u0442, \u0438\u043C\u043F\u043E\u0440\u0442)",
-    "ignored_folders_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0445 \u043F\u0430\u043F\u043E\u043A",
-    "display_mode_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0440\u0435\u0436\u0438\u043C\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "custom_mode_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0440\u0435\u0436\u0438\u043C\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "add_custom_mode": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "export": "\u042D\u043A\u0441\u043F\u043E\u0440\u0442",
-    "import": "\u0418\u043C\u043F\u043E\u0440\u0442",
-    "no_custom_modes_to_export": "\u041D\u0435\u0442 \u0440\u0435\u0436\u0438\u043C\u043E\u0432 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430",
-    "import_success": "\u0418\u043C\u043F\u043E\u0440\u0442 \u0443\u0441\u043F\u0435\u0448\u043D\u043E",
-    "import_error": "\u041E\u0448\u0438\u0431\u043A\u0430 \u0438\u043C\u043F\u043E\u0440\u0442\u0430: \u043D\u0435\u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u044B\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u0444\u0430\u0439\u043B\u0430",
-    "edit_custom_mode": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "custom_mode": "\u0420\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
-    "custom_mode_display_name": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u0438\u043C\u044F",
-    "custom_mode_display_name_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u0438\u043C\u044F \u0432 \u043C\u0435\u043D\u044E \u0440\u0435\u0436\u0438\u043C\u043E\u0432",
-    "custom_mode_dataview_code": "\u041A\u043E\u0434 Dataview",
-    "custom_mode_dataview_code_desc": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0434 Dataview \u0434\u043B\u044F \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0441\u043F\u0438\u0441\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432",
-    "custom_mode_sub_options": "\u041F\u043E\u0434\u043E\u043F\u0446\u0438\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430",
-    "custom_mode_fields_placeholder": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F \u043F\u043E\u043B\u0435\u0439 frontmatter \u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u043F\u044F\u0442\u0443\u044E (\u043D\u0430\u043F\u0440.: date,category,status) (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
-    "show_bookmarks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u043A\u043B\u0430\u0434\u043E\u043A",
-    "show_search_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u043E\u0438\u0441\u043A\u0430",
-    "show_backlinks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
-    "show_outgoinglinks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0438\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
-    "show_all_files_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0441\u0435\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
-    "show_recent_files_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
-    "recent_files_count": "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u043E\u0432",
-    "show_random_note_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "random_note_count": "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u044B\u0445 \u0437\u0430\u043C\u0435\u0442\u043E\u043A",
-    "random_note_notes_only": "\u0422\u043E\u043B\u044C\u043A\u043E \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "random_note_include_media_files": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
-    "show_tasks_mode": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u0434\u0430\u0447",
-    "task_filter": "\u0424\u0438\u043B\u044C\u0442\u0440 \u0437\u0430\u0434\u0430\u0447",
-    "uncompleted": "\u041D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043D\u044B\u0435",
-    "completed": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043D\u044B\u0435",
-    "foldernote_display_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u043F\u0430\u043F\u043E\u043A",
-    "foldernote_display_settings_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0437\u0430\u043C\u0435\u0442\u043E\u043A \u043F\u0430\u043F\u043E\u043A",
-    "all": "\u0412\u0441\u0435",
-    "default": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "hidden": "\u0421\u043A\u0440\u044B\u0442\u044B\u0435",
-    // Hide header elements setting
-    "hide_header_elements": "\u0421\u043A\u0440\u044B\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    // Show "Parent Folder" option setting
-    "show_parent_folder_item": '\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442 "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0430\u044F \u043F\u0430\u043F\u043A\u0430"',
-    "show_parent_folder_item_desc": '\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442 "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0430\u044F \u043F\u0430\u043F\u043A\u0430" \u043F\u0435\u0440\u0432\u044B\u043C \u0432 \u0441\u0435\u0442\u043A\u0435',
-    "parent_folder": "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0430\u044F \u043F\u0430\u043F\u043A\u0430",
-    // Default open location setting
-    "default_open_location": "\u041C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "default_open_location_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "open_in_left_sidebar": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043B\u0435\u0432\u043E\u0439 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438",
-    "open_in_right_sidebar": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043F\u0440\u0430\u0432\u043E\u0439 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438",
-    "open_in_new_tab": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u0439 \u0432\u043A\u043B\u0430\u0434\u043A\u0435",
-    "reuse_existing_leaf": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u0432\u0438\u0434",
-    "reuse_existing_leaf_desc": "\u041F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430 \u043F\u0440\u0435\u0434\u043F\u043E\u0447\u0442\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u0432\u0438\u0434 \u0432\u043C\u0435\u0441\u0442\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043D\u043E\u0432\u043E\u0433\u043E",
-    "custom_document_extensions": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432",
-    "custom_document_extensions_desc": "\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432 (\u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u043F\u044F\u0442\u0443\u044E, \u0431\u0435\u0437 \u0442\u043E\u0447\u0435\u043A)",
-    "custom_document_extensions_placeholder": "\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, txt,doc,docx",
-    "custom_folder_icon": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439 \u0438\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
-    "custom_folder_icon_desc": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0430\u044F \u0438\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438 (\u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 Emoji)",
-    // Select Folder Dialog
-    "select_folders": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
-    "select_folders_to_ignore": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F",
-    "open_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
-    "open_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "open_note_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "open_backlinks_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "open_outgoinglinks_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0438\u0441\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u0441\u0441\u044B\u043B\u043A\u0438 \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "open_recent_files_in_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0442\u0435\u043A\u0443\u0449\u0443\u044E \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u043D\u0435\u0434\u0430\u0432\u043D\u0438\u0445 \u0444\u0430\u0439\u043B\u0430\u0445",
-    "open_settings": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "open_new_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u043E\u0432\u044B\u0439 \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434",
-    "open_in_new_grid_view": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u043C \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "min_mode": "\u041C\u0438\u043D\u0438\u043C\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u0438\u0434",
-    "show_ignored_folders": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u043C\u044B\u0435 \u043F\u0430\u043F\u043A\u0438",
-    "delete_note": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0444\u0430\u0439\u043B",
-    "open_folder_note": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "create_folder_note": "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "delete_folder_note": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "edit_folder_note_settings": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "ignore_folder": "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u044D\u0442\u0443 \u043F\u0430\u043F\u043A\u0443",
-    "unignore_folder": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
-    "searching": "\u041F\u043E\u0438\u0441\u043A...",
-    "no_files": "\u0424\u0430\u0439\u043B\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
-    "filter_folders": "\u0424\u0438\u043B\u044C\u0442\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438...",
-    // Folder Note Settings Dialog
-    "folder_note_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "folder_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "folder_sort_type_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0442\u0438\u043F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
-    "folder_color": "\u0426\u0432\u0435\u0442 \u043F\u0430\u043F\u043A\u0438",
-    "folder_color_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0446\u0432\u0435\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
-    "folder_icon": "\u0418\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
-    "folder_icon_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0438\u043A\u043E\u043D\u043A\u0443 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043F\u0430\u043F\u043A\u0438",
-    "no_color": "\u0411\u0435\u0437 \u0446\u0432\u0435\u0442\u0430",
-    "color_red": "\u041A\u0440\u0430\u0441\u043D\u044B\u0439",
-    "color_orange": "\u041E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439",
-    "color_yellow": "\u0416\u0435\u043B\u0442\u044B\u0439",
-    "color_green": "\u0417\u0435\u043B\u0435\u043D\u044B\u0439",
-    "color_cyan": "\u0413\u043E\u043B\u0443\u0431\u043E\u0439",
-    "color_blue": "\u0421\u0438\u043D\u0438\u0439",
-    "color_purple": "\u0424\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439",
-    "color_pink": "\u0420\u043E\u0437\u043E\u0432\u044B\u0439",
-    "confirm": "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C",
-    "note_attribute_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u043E\u0432 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_title": "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_title_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_summary": "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044C",
-    "note_summary_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u043A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441\u0430\u0442\u0435\u043B\u044C \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_color": "\u0426\u0432\u0435\u0442 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "note_color_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0446\u0432\u0435\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "set_note_attribute": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044B \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
-    "rename_folder": "\u041F\u0435\u0440\u0435\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
-    "enter_new_folder_name": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u043E\u0432\u043E\u0435 \u0438\u043C\u044F \u043F\u0430\u043F\u043A\u0438",
-    "search_selection_in_grid_view": "\u041F\u043E\u0438\u0441\u043A ... \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
-    "show_date_dividers": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0434\u0430\u0442",
-    "show_date_dividers_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0434\u0430\u0442 \u043F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0432\u044B\u043C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u043C \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043D\u043E\u0432\u043E\u0433\u043E \u0434\u043D\u044F \u043F\u0440\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0438 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u043E \u0434\u0430\u0442\u0435",
-    "date_divider_format": "\u0424\u043E\u0440\u043C\u0430\u0442 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u0434\u0430\u0442",
-    "date_divider_mode": "\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u0434\u0430\u0442",
-    "date_divider_mode_desc": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0440\u0435\u0436\u0438\u043C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0435\u0439 \u0434\u0430\u0442",
-    "date_divider_mode_none": "\u041D\u0435\u0442",
-    "date_divider_mode_year": "\u0413\u043E\u0434",
-    "date_divider_mode_month": "\u041C\u0435\u0441\u044F\u0446",
-    "date_divider_mode_day": "\u0414\u0435\u043D\u044C",
-    "pinned": "\u0417\u0430\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043E",
-    "pinned_desc": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u043D\u0430\u0432\u0435\u0440\u0445\u0443",
-    "foldernote_pinned": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "foldernote_pinned_desc": "\u0417\u0430\u043A\u0440\u0435\u043F\u0438\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0432\u0432\u0435\u0440\u0445\u0443",
-    "display_minimized": "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0432\u0438\u0434",
-    "display_minimized_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u044D\u0442\u0443 \u0437\u0430\u043C\u0435\u0442\u043A\u0443 \u0432 \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u043C \u0440\u0435\u0436\u0438\u043C\u0435",
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0411\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "quick_access_folder_name": "\u041F\u0430\u043F\u043A\u0430 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "quick_access_folder_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u0430\u043F\u043A\u0443, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u0443\u044E \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u0439 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430\xBB",
-    "quick_access_mode_name": "\u0420\u0435\u0436\u0438\u043C \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "quick_access_mode_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u0440\u0435\u0436\u0438\u043C \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0439 \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u0439 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043F\u043E \u0440\u0435\u0436\u0438\u043C\u0443\xBB",
-    "use_quick_access_as_new_tab_view": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0411\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043A\u0430\u043A \u043D\u043E\u0432\u0443\u044E \u0432\u043A\u043B\u0430\u0434\u043A\u0443",
-    "use_quick_access_as_new_tab_view_desc": "\u0417\u0430\u043C\u0435\u043D\u0438\u0442\u0435 \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u0432\u0438\u0434 \xAB\u041D\u043E\u0432\u0430\u044F \u0432\u043A\u043B\u0430\u0434\u043A\u0430\xBB \u043D\u0430 \u0441\u0435\u0442\u043E\u0447\u043D\u044B\u0439 \u0432\u0438\u0434 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u043E\u043F\u0446\u0438\u0438 \u0411\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430 (\u043F\u0430\u043F\u043A\u0438 \u0438\u043B\u0438 \u0440\u0435\u0436\u0438\u043C\u0430). \u0420\u0430\u0431\u043E\u0442\u0430\u0435\u0442, \u0442\u043E\u043B\u044C\u043A\u043E \u0435\u0441\u043B\u0438 \xAB\u041C\u0435\u0441\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E\xBB \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u043D\u0430 \xAB\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043D\u043E\u0432\u043E\u0439 \u0432\u043A\u043B\u0430\u0434\u043A\u0435\xBB!",
-    "default_new_tab": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "use_quick_access_folder": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "use_quick_access_mode": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "open_quick_access_folder": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043F\u043A\u0443 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
-    "open_quick_access_mode": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043F\u043E \u0440\u0435\u0436\u0438\u043C\u0443"
-  },
-  "uk": {
-    // Notifications
-    "bookmarks_plugin_disabled": "\u0411\u0443\u0434\u044C \u043B\u0430\u0441\u043A\u0430, \u0441\u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0443\u0432\u0456\u043C\u043A\u043D\u0456\u0442\u044C \u043F\u043B\u0430\u0433\u0456\u043D \u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
-    // Buttons and Labels
-    "sorting": "\u0421\u043E\u0440\u0442\u0443\u0432\u0430\u0442\u0438 \u0437\u0430",
-    "refresh": "\u041E\u043D\u043E\u0432\u0438\u0442\u0438",
-    "reselect": "\u041F\u0435\u0440\u0435\u043E\u0431\u0440\u0430\u0442\u0438",
-    "no_backlinks": "\u041D\u0435\u043C\u0430\u0454 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
-    "search": "\u041F\u043E\u0448\u0443\u043A",
-    "search_placeholder": "\u041A\u043B\u044E\u0447\u043E\u0432\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0448\u0443\u043A\u0443",
-    "search_current_location_only": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043B\u0438\u0448\u0435 \u0432 \u043F\u043E\u0442\u043E\u0447\u043D\u043E\u043C\u0443 \u0440\u043E\u0437\u0442\u0430\u0448\u0443\u0432\u0430\u043D\u043D\u0456",
-    "search_media_files": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
-    "cancel": "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438",
-    "new_note": "\u041D\u043E\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0430",
-    "new_folder": "\u041D\u043E\u0432\u0430 \u043F\u0430\u043F\u043A\u0430",
-    "new_canvas": "\u041D\u043E\u0432\u0438\u0439 \u043A\u0430\u043D\u0432\u0430\u0441",
-    "delete_folder": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
-    "untitled": "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0438",
-    "files": "\u0444\u0430\u0439\u043B\u0438",
-    "add": "\u0414\u043E\u0434\u0430\u0442\u0438",
-    "root": "\u041A\u043E\u0440\u0435\u043D\u044C",
-    "sub_folders": "\u041F\u0456\u0434\u043F\u0430\u043F\u043A\u0438",
-    "parent_folders": "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u044C\u043A\u0456 \u043F\u0430\u043F\u043A\u0438",
-    "more_options": "\u0411\u0456\u043B\u044C\u0448\u0435 \u043E\u043F\u0446\u0456\u0439",
-    "add_tag_to_search": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043F\u043E\u0448\u0443\u043A\u0443",
-    "remove_tag_from_search": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0437 \u043F\u043E\u0448\u0443\u043A\u0443",
-    "global_search": "\u0413\u043B\u043E\u0431\u0430\u043B\u044C\u043D\u0438\u0439 \u043F\u043E\u0448\u0443\u043A",
-    "remove": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438",
-    "edit": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438",
-    "delete": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438",
-    "save": "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438",
-    "option": "\u041E\u043F\u0446\u0456\u044F",
-    "add_option": "\u0414\u043E\u0434\u0430\u0442\u0438 \u043E\u043F\u0446\u0456\u044E",
-    // View Titles
-    "grid_view_title": "\u0421\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "bookmarks_mode": "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
-    "folder_mode": "\u041F\u0430\u043F\u043A\u0430",
-    "search_results": "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0438 \u043F\u043E\u0448\u0443\u043A\u0443",
-    "backlinks_mode": "\u0417\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F",
-    "outgoinglinks_mode": "\u0412\u0438\u0445\u0456\u0434\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F",
-    "all_files_mode": "\u0423\u0441\u0456 \u0444\u0430\u0439\u043B\u0438",
-    "recent_files_mode": "\u041E\u0441\u0442\u0430\u043D\u043D\u0456 \u0444\u0430\u0439\u043B\u0438",
-    "random_note_mode": "\u0412\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0430",
-    "tasks_mode": "\u0417\u0430\u0434\u0430\u0447\u0456",
-    // Sort Options
-    "sort_name_asc": "\u041D\u0430\u0437\u0432\u0430 (\u0410 \u2192 \u042F)",
-    "sort_name_desc": "\u041D\u0430\u0437\u0432\u0430 (\u042F \u2192 \u0410)",
-    "sort_mtime_desc": "\u0417\u043C\u0456\u043D\u0435\u043D\u043E (\u041D\u043E\u0432\u0435 \u2192 \u0421\u0442\u0430\u0440\u0435)",
-    "sort_mtime_asc": "\u0417\u043C\u0456\u043D\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u0435 \u2192 \u041D\u043E\u0432\u0435)",
-    "sort_ctime_desc": "\u0421\u0442\u0432\u043E\u0440\u0435\u043D\u043E (\u041D\u043E\u0432\u0435 \u2192 \u0421\u0442\u0430\u0440\u0435)",
-    "sort_ctime_asc": "\u0421\u0442\u0432\u043E\u0440\u0435\u043D\u043E (\u0421\u0442\u0430\u0440\u0435 \u2192 \u041D\u043E\u0432\u0435)",
-    "sort_random": "\u0412\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E",
-    // Settings
-    "grid_view_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443",
-    "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
-    "show_media_files_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0456\u043D\u0456\u0430\u0442\u044E\u0440\u0438 \u0432\u0456\u0434\u0435\u043E",
-    "show_video_thumbnails_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u043C\u0456\u043D\u0456\u0430\u0442\u044E\u0440\u0438 \u0434\u043B\u044F \u0432\u0456\u0434\u0435\u043E \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456, \u043F\u043E\u043A\u0430\u0437\u0443\u0454 \u0456\u043A\u043E\u043D\u043A\u0443 \u0432\u0456\u0434\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F, \u044F\u043A\u0449\u043E \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E",
-    "show_note_in_grid": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "show_note_in_grid_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456, \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E - \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u043D\u0430\u0442\u0438\u0441\u043D\u0443\u0442\u0438 \u0442\u0430 \u0442\u0440\u0438\u043C\u0430\u0442\u0438 Alt",
-    "show_note_tags": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0442\u0435\u0433\u0438 \u043D\u043E\u0442\u0430\u0442\u043E\u043A",
-    "show_note_tags_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u0442\u0435\u0433\u0438 \u0434\u043B\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "ignored_folders": "\u0406\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0456 \u043F\u0430\u043F\u043A\u0438",
-    "ignored_folders_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u0442\u0443\u0442",
-    "add_ignored_folder": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0443 \u043F\u0430\u043F\u043A\u0443",
-    "no_ignored_folders": "\u041D\u0435\u043C\u0430\u0454 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A.",
-    "ignored_folder_patterns": "\u0406\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438 \u0442\u0430 \u0444\u0430\u0439\u043B\u0438 \u0437\u0430 \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u043C",
-    "ignored_folder_patterns_desc": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0440\u044F\u0434\u043A\u043E\u0432\u0456 \u0448\u0430\u0431\u043B\u043E\u043D\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u043F\u0430\u043F\u043E\u043A \u0456 \u0444\u0430\u0439\u043B\u0456\u0432 (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u0456 \u0432\u0438\u0440\u0430\u0437\u0438)",
-    "add_ignored_folder_pattern": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0448\u0430\u0431\u043B\u043E\u043D \u043F\u0430\u043F\u043A\u0438",
-    "ignored_folder_pattern_placeholder": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u0430\u043F\u043A\u0438 \u0430\u0431\u043E \u0448\u0430\u0431\u043B\u043E\u043D \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0433\u043E \u0432\u0438\u0440\u0430\u0437\u0443",
-    "no_ignored_folder_patterns": "\u041D\u0435\u043C\u0430\u0454 \u0448\u0430\u0431\u043B\u043E\u043D\u0456\u0432 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A.",
-    "default_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
-    "default_sort_type_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043C\u0435\u0442\u043E\u0434 \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C \u043F\u0440\u0438 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u0456 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443",
-    "note_title_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u041D\u0430\u0437\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0438"',
-    "note_title_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u043D\u0430\u0437\u0432\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_summary_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441"',
-    "note_summary_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u043A\u0440\u0430\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
-    "modified_date_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0437\u043C\u0456\u043D\u0438"',
-    "modified_date_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u0434\u0430\u0442\u0438 \u0437\u043C\u0456\u043D\u0438 (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u0456\u043B\u044C\u043A\u0430 \u043D\u0430\u0437\u0432 \u043F\u043E\u043B\u0456\u0432, \u0440\u043E\u0437\u0434\u0456\u043B\u0435\u043D\u0438\u0445 \u043A\u043E\u043C\u0430\u043C\u0438)",
-    "created_date_field": '\u041D\u0430\u0437\u0432\u0430 \u043F\u043E\u043B\u044F "\u0414\u0430\u0442\u0430 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F"',
-    "created_field_desc": "\u0412\u043A\u0430\u0436\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u043F\u043E\u043B\u044F \u0432 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u044F\u043A \u0434\u0430\u0442\u0438 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F (\u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u0456\u043B\u044C\u043A\u0430 \u043D\u0430\u0437\u0432 \u043F\u043E\u043B\u0456\u0432, \u0440\u043E\u0437\u0434\u0456\u043B\u0435\u043D\u0438\u0445 \u043A\u043E\u043C\u0430\u043C\u0438)",
-    "grid_item_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
-    "grid_item_width_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0448\u0438\u0440\u0438\u043D\u0443 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0456\u0432 \u0441\u0456\u0442\u043A\u0438",
-    "grid_item_height": "\u0412\u0438\u0441\u043E\u0442\u0430 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
-    "grid_item_height_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0432\u0438\u0441\u043E\u0442\u0443 \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0456\u0432 \u0441\u0456\u0442\u043A\u0438 (0 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E\u0457 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438)",
-    "image_area_width": "\u0428\u0438\u0440\u0438\u043D\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "image_area_width_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0448\u0438\u0440\u0438\u043D\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u043F\u043E\u043F\u0435\u0440\u0435\u0434\u043D\u044C\u043E\u0433\u043E \u043F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0443 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "image_area_height": "\u0412\u0438\u0441\u043E\u0442\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "image_area_height_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0432\u0438\u0441\u043E\u0442\u0443 \u043E\u0431\u043B\u0430\u0441\u0442\u0456 \u043F\u043E\u043F\u0435\u0440\u0435\u0434\u043D\u044C\u043E\u0433\u043E \u043F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0443 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "title_font_size": "\u0420\u043E\u0437\u043C\u0456\u0440 \u0448\u0440\u0438\u0444\u0442\u0443 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "title_font_size_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u043E\u0437\u043C\u0456\u0440 \u0448\u0440\u0438\u0444\u0442\u0443 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "summary_length": "\u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
-    "summary_length_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0434\u043E\u0432\u0436\u0438\u043D\u0443 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u0433\u043E \u043E\u043F\u0438\u0441\u0443",
-    "grid_item_style_settings": "\u0421\u0442\u0438\u043B\u044C \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0441\u0456\u0442\u043A\u0438",
-    "card_layout": "\u041A\u0430\u0440\u0442\u043E\u0447\u043D\u0438\u0439 \u043C\u0430\u043A\u0435\u0442",
-    "card_layout_desc": "\u0412\u0438\u0431\u0435\u0440\u0456\u0442\u044C \u043C\u0430\u043A\u0435\u0442 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
-    "horizontal_card": "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
-    "vertical_card": "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430",
-    "image_position": "\u041F\u043E\u0437\u0438\u0446\u0456\u044F \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "image_position_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043F\u043E\u0437\u0438\u0446\u0456\u044E \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "top": "\u0412\u0435\u0440\u0445",
-    "bottom": "\u041D\u0438\u0436\u0447\u0435",
-    "multi_line_title": "\u041F\u043E\u0434\u0442\u0440\u0438\u043C\u043A\u0430 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u043D\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "multi_line_title_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C, \u0449\u043E\u0431 \u0434\u043E\u0437\u0432\u043E\u043B\u0438\u0442\u0438 \u043C\u043D\u043E\u0433\u043E\u0442\u043E\u0447\u043D\u044F \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    "show_code_block_in_summary": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 CodeBlock \u0432 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u043C\u0443 \u043E\u043F\u0438\u0441\u0456",
-    "show_code_block_in_summary_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C, \u0449\u043E\u0431 \u043F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 CodeBlock \u0432 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u043C\u0443 \u043E\u043F\u0438\u0441\u0456",
-    "enable_file_watcher": "\u0423\u0432\u0456\u043C\u043A\u043D\u0443\u0442\u0438 \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0435\u0436\u0435\u043D\u043D\u044F \u0437\u0430 \u0444\u0430\u0439\u043B\u0430\u043C\u0438",
-    "enable_file_watcher_desc": "\u041F\u0440\u0438 \u0443\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u0432\u0438\u0433\u043B\u044F\u0434 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E \u043E\u043D\u043E\u0432\u043B\u044E\u0432\u0430\u0442\u0438\u043C\u0435\u0442\u044C\u0441\u044F \u043F\u0440\u0438 \u0437\u043C\u0456\u043D\u0456 \u0444\u0430\u0439\u043B\u0456\u0432. \u042F\u043A\u0449\u043E \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E, \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0432\u0440\u0443\u0447\u043D\u0443 \u043D\u0430\u0442\u0438\u0441\u043A\u0430\u0442\u0438 \u043A\u043D\u043E\u043F\u043A\u0443 \u043E\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F",
-    "intercept_all_tag_clicks": "\u041F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438 \u0432\u0441\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u0442\u0435\u0433\u0430\u043C\u0438",
-    "intercept_all_tag_clicks_desc": "\u041F\u0440\u0438 \u0432\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u0432\u0441\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u0442\u0435\u0433\u0430\u043C\u0438 \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438\u0441\u044F \u0442\u0430 \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044F \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0441\u0456\u0442\u043A\u0438",
-    "intercept_breadcrumb_clicks": "\u041F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u043D\u0430\u0432\u0456\u0433\u0430\u0446\u0456\u0439\u043D\u0438\u043C \u043B\u0430\u043D\u0446\u044E\u0436\u043A\u043E\u043C",
-    "intercept_breadcrumb_clicks_desc": "\u041F\u0440\u0438 \u0432\u0432\u0456\u043C\u043A\u043D\u0435\u043D\u043D\u0456 \u043A\u043B\u0456\u043A\u0438 \u0437\u0430 \u043D\u0430\u0432\u0456\u0433\u0430\u0446\u0456\u0439\u043D\u0438\u043C \u043B\u0430\u043D\u0446\u044E\u0436\u043A\u043E\u043C \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u0435\u0440\u0435\u0445\u043E\u043F\u043B\u044E\u0432\u0430\u0442\u0438\u0441\u044F, \u0456 \u0448\u043B\u044F\u0445 \u0431\u0443\u0434\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u0442\u0438\u0441\u044F \u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456 \u0441\u0456\u0442\u043A\u0438",
-    "reset_to_default": "\u0421\u043A\u0438\u043D\u0443\u0442\u0438 \u0434\u043E \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u044C",
-    "settings_reset_notice": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0441\u043A\u0438\u043D\u0443\u0442\u043E \u0434\u043E \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u044C",
-    "config_management": "\u041A\u043E\u043D\u0444\u0456\u0433\u0443\u0440\u0430\u0446\u0456\u044F \u0443\u043F\u0440\u0430\u0432\u043B\u0456\u043D\u043D\u044F",
-    "config_management_desc": "\u0423\u043F\u0440\u0430\u0432\u043B\u0456\u043D\u043D\u044F \u043A\u043E\u043D\u0444\u0456\u0433\u0443\u0440\u0430\u0446\u0456\u0454\u044E (\u0441\u043A\u0438\u0434\u0430\u043D\u043D\u044F, \u0435\u043A\u0441\u043F\u043E\u0440\u0442, \u0456\u043C\u043F\u043E\u0440\u0442)",
-    "ignored_folders_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u043F\u0430\u043F\u043E\u043A",
-    "display_mode_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0440\u0435\u0436\u0438\u043C\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "custom_mode_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0440\u0435\u0436\u0438\u043C\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "add_custom_mode": "\u0414\u043E\u0434\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "export": "\u0415\u043A\u0441\u043F\u043E\u0440\u0442",
-    "import": "\u0406\u043C\u043F\u043E\u0440\u0442",
-    "no_custom_modes_to_export": "\u041D\u0435\u043C\u0430\u0454 \u0440\u0435\u0436\u0438\u043C\u0456\u0432 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0435\u043A\u0441\u043F\u043E\u0440\u0442\u0443",
-    "import_success": "\u0406\u043C\u043F\u043E\u0440\u0442 \u0443\u0441\u043F\u0456\u0448\u043D\u0438\u0439",
-    "import_error": "\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u0456\u043C\u043F\u043E\u0440\u0442\u0443: \u043D\u0435\u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u0438\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u0444\u0430\u0439\u043B\u0443",
-    "edit_custom_mode": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "custom_mode": "\u0420\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F",
-    "custom_mode_display_name": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0454\u0442\u044C\u0441\u044F \u0456\u043C`\u044F",
-    "custom_mode_display_name_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0454\u0442\u044C\u0441\u044F \u0456\u043C`\u044F \u0432 \u043C\u0435\u043D\u044E \u0440\u0435\u0436\u0438\u043C\u0456\u0432",
-    "custom_mode_dataview_code": "\u041A\u043E\u0434 Dataview",
-    "custom_mode_dataview_code_desc": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043A\u043E\u0434 Dataview \u0434\u043B\u044F \u043E\u0442\u0440\u0438\u043C\u0430\u043D\u043D\u044F \u0441\u043F\u0438\u0441\u043A\u0443 \u0444\u0430\u0439\u043B\u0456\u0432",
-    "custom_mode_sub_options": "\u041F\u0456\u0434\u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0443",
-    "custom_mode_fields_placeholder": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0438 \u043F\u043E\u043B\u0456\u0432 frontmatter \u0447\u0435\u0440\u0435\u0437 \u043A\u043E\u043C\u0443 (\u043D\u0430\u043F\u0440.: date,category,status) (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
-    "show_bookmarks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u043A\u043B\u0430\u0434\u043E\u043A",
-    "show_search_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0456\u0432 \u043F\u043E\u0448\u0443\u043A\u0443",
-    "show_backlinks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
-    "show_outgoinglinks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0438\u0445\u0456\u0434\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
-    "show_all_files_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0443\u0441\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
-    "show_recent_files_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
-    "recent_files_count": "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0456\u0432",
-    "show_random_note_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0432\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "random_note_count": "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0432\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u0438\u0445 \u043D\u043E\u0442\u0430\u0442\u043E\u043A",
-    "random_note_notes_only": "\u0422\u0456\u043B\u044C\u043A\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "random_note_include_media_files": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
-    "show_tasks_mode": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0437\u0430\u0432\u0434\u0430\u043D\u044C",
-    "task_filter": "\u0424\u0456\u043B\u044C\u0442\u0440 \u0437\u0430\u0432\u0434\u0430\u043D\u044C",
-    "uncompleted": "\u041D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0456",
-    "completed": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0456",
-    "foldernote_display_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u043F\u0430\u043F\u043A\u0438",
-    "foldernote_display_settings_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043E\u043A \u043F\u0430\u043F\u043A\u0438",
-    "all": "\u0412\u0441\u0456",
-    "default": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
-    "hidden": "\u0421\u0445\u043E\u0432\u0430\u0442\u0438",
-    // Hide header elements setting
-    "hide_header_elements": "\u0421\u043A\u0440\u044B\u0442\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
-    // Show "Parent Folder" option setting
-    "show_parent_folder_item": '\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0435\u043B\u0435\u043C\u0435\u043D\u0442 "\u0411\u0430\u0442\u044C\u043A\u0456\u0432\u0441\u044C\u043A\u0430 \u043F\u0430\u043F\u043A\u0430"',
-    "show_parent_folder_item_desc": '\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0435\u043B\u0435\u043C\u0435\u043D\u0442 "\u0411\u0430\u0442\u044C\u043A\u0456\u0432\u0441\u044C\u043A\u0430 \u043F\u0430\u043F\u043A\u0430" \u043F\u0435\u0440\u0448\u0438\u043C \u0443 \u0441\u0456\u0442\u0446\u0456',
-    "parent_folder": "\u0411\u0430\u0442\u044C\u043A\u0456\u0432\u0441\u044C\u043A\u0430 \u043F\u0430\u043F\u043A\u0430",
-    // Default open location setting
-    "default_open_location": "\u041C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
-    "default_open_location_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
-    "open_in_left_sidebar": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043B\u0456\u0432\u0456\u0439 \u0431\u0456\u0447\u043D\u0456\u0439 \u043F\u0430\u043D\u0435\u043B\u0456",
-    "open_in_right_sidebar": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043F\u0440\u0430\u0432\u0456\u0439 \u0431\u0456\u0447\u043D\u0456\u0439 \u043F\u0430\u043D\u0435\u043B\u0456",
-    "open_in_new_tab": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u0456\u0439 \u0432\u043A\u043B\u0430\u0434\u0446\u0456",
-    "reuse_existing_leaf": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u043D\u0430\u044F\u0432\u043D\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "reuse_existing_leaf_desc": "\u041F\u0440\u0438 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u0456 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u043D\u0430\u0434\u0430\u0432\u0430\u0442\u0438 \u043F\u0435\u0440\u0435\u0432\u0430\u0433\u0443 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044E \u043D\u0430\u044F\u0432\u043D\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443 \u0437\u0430\u043C\u0456\u0441\u0442\u044C \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u043D\u043E\u0432\u043E\u0433\u043E",
-    "custom_document_extensions": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0456 \u0440\u043E\u0437\u0448\u0438\u0440\u0435\u043D\u043D\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0456\u0432",
-    "custom_document_extensions_desc": "\u0414\u043E\u0434\u0430\u0442\u043A\u043E\u0432\u0456 \u0440\u043E\u0437\u0448\u0438\u0440\u0435\u043D\u043D\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0456\u0432 (\u0447\u0435\u0440\u0435\u0437 \u043A\u043E\u043C\u0443, \u0431\u0435\u0437 \u043A\u0440\u0430\u043F\u043E\u043A)",
-    "custom_document_extensions_placeholder": "\u043D\u0430\u043F\u0440\u0438\u043A\u043B\u0430\u0434, txt,doc,docx",
-    "custom_folder_icon": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0430 \u0456\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
-    "custom_folder_icon_desc": "\u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0430 \u0456\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438 (\u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 Emoji)",
-    // Select Folder Dialog
-    "select_folders": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
-    "select_folders_to_ignore": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438 \u0434\u043B\u044F \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F",
-    "open_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "open_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "open_note_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "open_backlinks_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "open_outgoinglinks_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432\u0438\u0445\u0456\u0434\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "open_recent_files_in_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u043E\u0442\u043E\u0447\u043D\u0443 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0432 \u043E\u0441\u0442\u0430\u043D\u043D\u0456\u0445 \u0444\u0430\u0439\u043B\u0430\u0445",
-    "open_settings": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F",
-    "open_new_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0432\u0438\u0439 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "open_in_new_grid_view": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u043E\u043C\u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "min_mode": "\u041C\u0456\u043D\u0456\u043C\u0456\u0437\u0443\u0432\u0430\u0442\u0438 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "show_ignored_folders": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u043E\u0432\u0430\u043D\u0456 \u043F\u0430\u043F\u043A\u0438",
-    "delete_note": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0444\u0430\u0439\u043B",
-    "open_folder_note": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "create_folder_note": "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "delete_folder_note": "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "edit_folder_note_settings": "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "ignore_folder": "\u0406\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u0442\u0438 \u0446\u044E \u043F\u0430\u043F\u043A\u0443",
-    "unignore_folder": "\u0412\u0456\u0434\u043C\u0456\u043D\u0438\u0442\u0438 \u0456\u0433\u043D\u043E\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
-    "searching": "\u041F\u043E\u0448\u0443\u043A...",
-    "no_files": "\u0424\u0430\u0439\u043B\u0438 \u043D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u043E",
-    "filter_folders": "\u0424\u0456\u043B\u044C\u0442\u0440\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438...",
-    // Folder Note Settings Dialog
-    "folder_note_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "folder_sort_type": "\u0422\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043F\u0430\u043F\u043A\u0438",
-    "folder_sort_type_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0442\u0438\u043F \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
-    "folder_color": "\u041A\u043E\u043B\u0456\u0440 \u043F\u0430\u043F\u043A\u0438",
-    "folder_color_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u043E\u043B\u0456\u0440 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
-    "folder_icon": "\u0406\u043A\u043E\u043D\u043A\u0430 \u043F\u0430\u043F\u043A\u0438",
-    "folder_icon_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0456\u043A\u043E\u043D\u043A\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043F\u0430\u043F\u043A\u0438",
-    "no_color": "\u0411\u0435\u0437 \u043A\u043E\u043B\u044C\u043E\u0440\u0443",
-    "color_red": "\u0427\u0435\u0440\u0432\u043E\u043D\u0438\u0439",
-    "color_orange": "\u041F\u043E\u043C\u0430\u0440\u0430\u043D\u0447\u0435\u0432\u0438\u0439",
-    "color_yellow": "\u0416\u043E\u0432\u0442\u0438\u0439",
-    "color_green": "\u0417\u0435\u043B\u0435\u043D\u0438\u0439",
-    "color_cyan": "\u0411\u0456\u0440\u044E\u0437\u043E\u0432\u0438\u0439",
-    "color_blue": "\u0421\u0438\u043D\u0456\u0439",
-    "color_purple": "\u0424\u0456\u043E\u043B\u0435\u0442\u043E\u0432\u0438\u0439",
-    "color_pink": "\u0420\u043E\u0436\u0435\u0432\u0438\u0439",
-    "confirm": "\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0438",
-    "note_attribute_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0456\u0432 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_title": "\u041D\u0430\u0437\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_title_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_summary": "\u041A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441",
-    "note_summary_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u0440\u0430\u0442\u043A\u0438\u0439 \u043E\u043F\u0438\u0441 \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_color": "\u041A\u043E\u043B\u0456\u0440 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "note_color_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043A\u043E\u043B\u0456\u0440 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "set_note_attribute": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0438 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
-    "rename_folder": "\u041F\u0435\u0440\u0435\u0439\u043C\u0435\u043D\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
-    "enter_new_folder_name": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u043E\u0432\u0443 \u043D\u0430\u0437\u0432\u0443 \u043F\u0430\u043F\u043A\u0438",
-    "search_selection_in_grid_view": "\u041F\u043E\u0448\u0443\u043A ... \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
-    "show_date_dividers": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0438 \u0434\u0430\u0442",
-    "show_date_dividers_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0438 \u0434\u0430\u0442 \u043F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0448\u0438\u043C \u0435\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u043C \u043A\u043E\u0436\u043D\u043E\u0433\u043E \u043D\u043E\u0432\u043E\u0433\u043E \u0434\u043D\u044F \u043F\u0440\u0438 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u0456 \u0441\u043E\u0440\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430 \u0434\u0430\u0442\u043E\u044E",
-    "date_divider_format": "\u0424\u043E\u0440\u043C\u0430\u0442 \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0430 \u0434\u0430\u0442",
-    "date_divider_mode": "\u0420\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A \u0434\u0430\u0442",
-    "date_divider_mode_desc": "\u0412\u0438\u0431\u0435\u0440\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0440\u043E\u0437\u0434\u0456\u043B\u044C\u043D\u0438\u043A\u0456\u0432 \u0434\u0430\u0442",
-    "date_divider_mode_none": "\u041D\u0435\u043C\u0430\u0454",
-    "date_divider_mode_year": "\u0420\u0456\u043A",
-    "date_divider_mode_month": "\u041C\u0456\u0441\u044F\u0446\u044C",
-    "date_divider_mode_day": "\u0414\u0435\u043D\u044C",
-    "pinned": "\u0417\u0430\u043A\u0440\u0456\u043F\u043B\u0435\u043D\u043E",
-    "pinned_desc": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u0444\u0430\u0439\u043B \u0443\u0433\u043E\u0440\u0456",
-    "foldernote_pinned": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438",
-    "foldernote_pinned_desc": "\u0417\u0430\u043A\u0440\u0456\u043F\u0438\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0443\u0433\u043E\u0440\u0456",
-    "display_minimized": "\u041C\u0456\u043D\u0456\u043C\u0456\u0437\u043E\u0432\u0430\u043D\u0438\u0439 \u0432\u0438\u0433\u043B\u044F\u0434",
-    "display_minimized_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0446\u044E \u043D\u043E\u0442\u0430\u0442\u043A\u0443 \u0443 \u043C\u0456\u043D\u0456\u043C\u0456\u0437\u043E\u0432\u0430\u043D\u043E\u043C\u0443 \u0440\u0435\u0436\u0438\u043C\u0456",
-    // Quick Access Settings and Commands
-    "quick_access_settings_title": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0428\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "quick_access_folder_name": "\u041F\u0430\u043F\u043A\u0430 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "quick_access_folder_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043F\u0430\u043F\u043A\u0443, \u0449\u043E \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u044E \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443\xBB",
-    "quick_access_mode_name": "\u0420\u0435\u0436\u0438\u043C \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "quick_access_mode_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u0440\u0435\u0436\u0438\u043C \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C, \u0449\u043E \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u0442\u044C\u0441\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u043E\u044E \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0448\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u0437\u0430 \u0440\u0435\u0436\u0438\u043C\u043E\u043C\xBB",
-    "use_quick_access_as_new_tab_view": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0428\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u044F\u043A \u043D\u043E\u0432\u0443 \u0432\u043A\u043B\u0430\u0434\u043A\u0443",
-    "use_quick_access_as_new_tab_view_desc": "\u0417\u0430\u043C\u0456\u043D\u0456\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0438\u0439 \u0432\u0438\u0434 \xAB\u041D\u043E\u0432\u0430 \u0432\u043A\u043B\u0430\u0434\u043A\u0430\xBB \u043D\u0430 \u0441\u0456\u0442\u043A\u043E\u0432\u0438\u0439 \u0432\u0438\u0434 \u043E\u0431\u0440\u0430\u043D\u043E\u0457 \u043E\u043F\u0446\u0456\u0457 \u0428\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443 (\u043F\u0430\u043F\u043A\u0438 \u0430\u0431\u043E \u0440\u0435\u0436\u0438\u043C\u0443). \u041F\u0440\u0430\u0446\u044E\u0454, \u043B\u0438\u0448\u0435 \u044F\u043A\u0449\u043E \xAB\u041C\u0456\u0441\u0446\u0435 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0442\u044F \u0437\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C\xBB \u0432\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u043D\u0430 \xAB\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0432 \u043D\u043E\u0432\u0456\u0439 \u0432\u043A\u043B\u0430\u0434\u0446\u0456\xBB!",
-    "default_new_tab": "\u0417\u0430 \u0437\u0430\u043C\u043E\u0432\u0447\u0443\u0432\u0430\u043D\u043D\u044F\u043C",
-    "use_quick_access_folder": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "use_quick_access_mode": "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0440\u0435\u0436\u0438\u043C \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "open_quick_access_folder": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043F\u0430\u043F\u043A\u0443 \u0448\u0432\u0438\u0434\u043A\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u0443",
-    "open_quick_access_mode": "\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u0448\u0432\u0438\u0434\u043A\u0438\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u0437\u0430 \u0440\u0435\u0436\u0438\u043C\u043E\u043C"
-  }
-};
-
 // src/modal/folderSelectionModal.ts
 function showFolderSelectionModal(app, plugin, activeView, buttonElement) {
   new FolderSelectionModal(app, plugin, activeView, buttonElement).open();
 }
-var FolderSelectionModal = class extends import_obsidian4.Modal {
+var FolderSelectionModal = class extends import_obsidian2.Modal {
   constructor(app, plugin, activeView, buttonElement) {
     super(app);
     this.folderOptions = [];
@@ -2388,12 +2052,12 @@ var FolderSelectionModal = class extends import_obsidian4.Modal {
       attr: {
         type: "text",
         placeholder: t("filter_folders"),
-        ...import_obsidian4.Platform.isMobile && { tabindex: "1" }
+        ...import_obsidian2.Platform.isMobile && { tabindex: "1" }
       }
     });
     this.folderOptionsContainer = contentEl.createEl("div", {
       cls: "ge-folder-options-container",
-      attr: import_obsidian4.Platform.isMobile ? { tabindex: "0" } : {}
+      attr: import_obsidian2.Platform.isMobile ? { tabindex: "0" } : {}
     });
     this.searchInput.addEventListener("input", () => {
       const searchTerm = this.searchInput.value.toLowerCase();
@@ -2576,8 +2240,12 @@ var FolderSelectionModal = class extends import_obsidian4.Modal {
     });
     this.folderOptions.push(rootFolderOption);
     const folders = this.app.vault.getAllFolders().filter((folder) => {
-      return !this.plugin.settings.ignoredFolders.some(
-        (ignoredPath) => folder.path === ignoredPath || folder.path.startsWith(ignoredPath + "/")
+      return !isFolderIgnored(
+        folder,
+        this.plugin.settings.ignoredFolders,
+        this.plugin.settings.ignoredFolderPatterns,
+        false
+        // 在選擇資料夾時不考慮 showIgnoredFolders 設置
       );
     }).sort((a, b) => a.path.localeCompare(b.path));
     folders.forEach((folder) => {
@@ -2685,6 +2353,27 @@ var FolderSelectionModal = class extends import_obsidian4.Modal {
     let hasVisibleOptions = false;
     this.folderOptions.forEach((option) => {
       var _a, _b;
+      const dataPath = option.getAttribute("data-path");
+      if (dataPath) {
+        const nameSpan = option.querySelector("span:last-child");
+        if (nameSpan) {
+          if (searchTerm !== "") {
+            nameSpan.textContent = dataPath;
+          } else {
+            nameSpan.textContent = dataPath.split("/").pop() || "/";
+          }
+        }
+        const prefixSpan = option.querySelector(".ge-folder-tree-prefix");
+        if (prefixSpan) {
+          if (searchTerm !== "") {
+            prefixSpan.textContent = "";
+          } else {
+            const depthAttr = option.getAttribute("data-depth");
+            const depth = depthAttr ? parseInt(depthAttr, 10) : 0;
+            prefixSpan.textContent = depth > 0 ? "   ".repeat(depth - 1) + "\u2514 " : "";
+          }
+        }
+      }
       const text = ((_a = option.textContent) == null ? void 0 : _a.toLowerCase()) || "";
       const fullPath = ((_b = option.getAttribute("data-path")) == null ? void 0 : _b.toLowerCase()) || "";
       if (searchTerm === "" || text.includes(searchTerm) || fullPath.includes(searchTerm)) {
@@ -2734,9 +2423,2463 @@ var FolderSelectionModal = class extends import_obsidian4.Modal {
   }
 };
 
+// src/modal/searchModal.ts
+var import_obsidian3 = require("obsidian");
+var SearchModal = class extends import_obsidian3.Modal {
+  constructor(app, gridView, defaultQuery, buttonElement) {
+    super(app);
+    this.gridView = gridView;
+    this.defaultQuery = defaultQuery;
+    this.buttonElement = buttonElement;
+  }
+  onOpen() {
+    var _a, _b;
+    const { contentEl } = this;
+    contentEl.empty();
+    if (this.buttonElement) {
+      this.modalEl.addClass("ge-popup-modal");
+      this.positionAsPopup();
+    }
+    const searchContainer = contentEl.createDiv("ge-search-container");
+    const searchInputWrapper = searchContainer.createDiv("ge-search-input-wrapper");
+    const tagDisplayArea = searchInputWrapper.createDiv("ge-search-tag-display-area");
+    const searchInput = searchInputWrapper.createEl("input", {
+      type: "text",
+      value: this.defaultQuery,
+      placeholder: t("search_placeholder"),
+      cls: "ge-search-input"
+    });
+    const inputContainer = searchInputWrapper.createDiv("ge-input-container");
+    inputContainer.appendChild(searchInput);
+    const clearButton = inputContainer.createDiv("ge-search-clear-button");
+    clearButton.style.display = this.defaultQuery ? "flex" : "none";
+    (0, import_obsidian3.setIcon)(clearButton, "x");
+    const tagSuggestionContainer = contentEl.createDiv("ge-search-tag-suggestions");
+    tagSuggestionContainer.style.display = "none";
+    const allTagsArr = Object.keys(((_b = (_a = this.app.metadataCache).getTags) == null ? void 0 : _b.call(_a)) || {}).map((t2) => t2.substring(1));
+    let tagSuggestions = [];
+    let selectedSuggestionIndex = -1;
+    const updateTagSuggestions = () => {
+      const match = searchInput.value.substring(0, searchInput.selectionStart || 0).match(/#([^#\s]*)$/);
+      if (!match) {
+        tagSuggestionContainer.style.display = "none";
+        tagSuggestionContainer.empty();
+        selectedSuggestionIndex = -1;
+        return;
+      }
+      const query = match[1].toLowerCase();
+      tagSuggestions = allTagsArr.filter((t2) => t2.toLowerCase().startsWith(query)).slice(0, 10);
+      if (tagSuggestions.length === 0) {
+        tagSuggestionContainer.style.display = "none";
+        selectedSuggestionIndex = -1;
+        return;
+      }
+      tagSuggestionContainer.empty();
+      tagSuggestions.forEach((tag, idx) => {
+        const item = tagSuggestionContainer.createDiv("ge-search-tag-suggestion-item");
+        item.textContent = `#${tag}`;
+        if (idx === selectedSuggestionIndex)
+          item.addClass("is-selected");
+        item.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          applySuggestion(idx);
+        });
+      });
+      tagSuggestionContainer.style.display = "block";
+    };
+    const applySuggestion = (index) => {
+      if (index < 0 || index >= tagSuggestions.length)
+        return;
+      const value = searchInput.value.trim();
+      const cursor = searchInput.selectionStart || 0;
+      const beforeMatch = value.substring(0, cursor).replace(/#([^#\\s]*)$/, `#${tagSuggestions[index]} `);
+      const afterCursor = value.substring(cursor);
+      searchInput.value = beforeMatch + afterCursor;
+      searchInput.value = searchInput.value.trim();
+      const newCursorPos = beforeMatch.length;
+      searchInput.setSelectionRange(newCursorPos, newCursorPos);
+      tagSuggestionContainer.style.display = "none";
+      tagSuggestionContainer.empty();
+      selectedSuggestionIndex = -1;
+      clearButton.style.display = searchInput.value ? "flex" : "none";
+      renderTagButtons();
+    };
+    searchInput.addEventListener("input", () => {
+      clearButton.style.display = searchInput.value ? "flex" : "none";
+      updateTagSuggestions();
+      renderTagButtons();
+    });
+    searchInput.addEventListener("keydown", (e) => {
+      if (tagSuggestionContainer.style.display === "none")
+        return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        selectedSuggestionIndex = (selectedSuggestionIndex + 1) % tagSuggestions.length;
+        updateTagSuggestions();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        selectedSuggestionIndex = (selectedSuggestionIndex - 1 + tagSuggestions.length) % tagSuggestions.length;
+        updateTagSuggestions();
+      } else if (e.key === "Enter") {
+        if (selectedSuggestionIndex >= 0) {
+          e.preventDefault();
+          applySuggestion(selectedSuggestionIndex);
+        }
+      }
+    });
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      clearButton.style.display = "none";
+      tagDisplayArea.empty();
+      tagDisplayArea.style.display = "none";
+      searchInput.focus();
+    });
+    const searchOptionsContainer = contentEl.createDiv("ge-search-options-container");
+    const searchScopeContainer = searchOptionsContainer.createDiv("ge-search-scope-container");
+    const searchScopeCheckbox = searchScopeContainer.createEl("input", {
+      type: "checkbox",
+      cls: "ge-search-scope-checkbox"
+    });
+    searchScopeCheckbox.checked = !this.gridView.searchAllFiles;
+    searchScopeContainer.createEl("span", {
+      text: t("search_current_location_only"),
+      cls: "ge-search-scope-label"
+    });
+    if (this.gridView.sourceMode === "random-note") {
+      searchScopeContainer.style.display = "none";
+      searchScopeCheckbox.checked = false;
+    }
+    const searchNameContainer = searchOptionsContainer.createDiv("ge-search-name-container");
+    const searchNameCheckbox = searchNameContainer.createEl("input", {
+      type: "checkbox",
+      cls: "ge-search-name-checkbox"
+    });
+    searchNameCheckbox.checked = this.gridView.searchFilesNameOnly;
+    searchNameContainer.createEl("span", {
+      text: t("search_files_name_only"),
+      cls: "ge-search-name-label"
+    });
+    const searchMediaFilesContainer = searchOptionsContainer.createDiv("ge-search-media-files-container");
+    const searchMediaFilesCheckbox = searchMediaFilesContainer.createEl("input", {
+      type: "checkbox",
+      cls: "ge-search-media-files-checkbox"
+    });
+    searchMediaFilesCheckbox.checked = this.gridView.searchMediaFiles;
+    searchMediaFilesContainer.createEl("span", {
+      text: t("search_media_files"),
+      cls: "ge-search-media-files-label"
+    });
+    if (!this.gridView.plugin.settings.showMediaFiles || this.gridView.sourceMode === "backlinks") {
+      searchMediaFilesContainer.style.display = "none";
+      searchMediaFilesCheckbox.checked = false;
+      this.gridView.searchMediaFiles = false;
+    }
+    searchScopeContainer.addEventListener("click", (e) => {
+      if (e.target !== searchScopeCheckbox) {
+        searchScopeCheckbox.checked = !searchScopeCheckbox.checked;
+        this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+      }
+    });
+    searchNameContainer.addEventListener("click", (e) => {
+      if (e.target !== searchNameCheckbox) {
+        searchNameCheckbox.checked = !searchNameCheckbox.checked;
+        this.gridView.searchFilesNameOnly = !searchNameCheckbox.checked;
+      }
+    });
+    searchMediaFilesContainer.addEventListener("click", (e) => {
+      if (e.target !== searchMediaFilesCheckbox) {
+        searchMediaFilesCheckbox.checked = !searchMediaFilesCheckbox.checked;
+        this.gridView.searchMediaFiles = !searchMediaFilesCheckbox.checked;
+      }
+    });
+    searchScopeCheckbox.addEventListener("change", () => {
+      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+    });
+    searchMediaFilesCheckbox.addEventListener("change", () => {
+      this.gridView.searchMediaFiles = !searchMediaFilesCheckbox.checked;
+    });
+    const buttonContainer = contentEl.createDiv("ge-button-container");
+    const searchButton = buttonContainer.createEl("button", {
+      text: t("search")
+    });
+    const cancelButton = buttonContainer.createEl("button", {
+      text: t("cancel")
+    });
+    const renderTagButtons = () => {
+      tagDisplayArea.empty();
+      const inputValue = searchInput.value.trim();
+      if (!inputValue) {
+        tagDisplayArea.style.display = "none";
+        return;
+      }
+      const terms = inputValue.split(/\s+/);
+      if (terms.length === 0) {
+        tagDisplayArea.style.display = "none";
+        return;
+      }
+      tagDisplayArea.style.display = "flex";
+      let currentIndex = 0;
+      const termPositions = [];
+      terms.forEach((term) => {
+        if (!term)
+          return;
+        const startIndex = inputValue.indexOf(term, currentIndex);
+        if (startIndex === -1)
+          return;
+        const endIndex = startIndex + term.length;
+        termPositions.push({
+          term,
+          startIndex,
+          endIndex
+        });
+        currentIndex = endIndex;
+      });
+      termPositions.forEach((termInfo) => {
+        const tagButton = tagDisplayArea.createDiv("ge-search-tag-button");
+        tagButton.textContent = termInfo.term;
+        if (termInfo.term.startsWith("#")) {
+          tagButton.addClass("is-tag");
+        }
+        const deleteButton = tagButton.createDiv("ge-search-tag-delete-button");
+        (0, import_obsidian3.setIcon)(deleteButton, "x");
+        deleteButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const newValue = inputValue.substring(0, termInfo.startIndex) + inputValue.substring(termInfo.endIndex);
+          searchInput.value = newValue.trim();
+          const inputEvent = new Event("input", { bubbles: true });
+          searchInput.dispatchEvent(inputEvent);
+          searchInput.focus();
+        });
+      });
+    };
+    const performSearch = () => {
+      this.gridView.searchQuery = searchInput.value;
+      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+      this.gridView.searchFilesNameOnly = searchNameCheckbox.checked;
+      this.gridView.searchMediaFiles = searchMediaFilesCheckbox.checked;
+      this.gridView.clearSelection();
+      this.gridView.app.workspace.requestSaveLayout();
+      this.gridView.render(true);
+      this.close();
+    };
+    searchButton.addEventListener("click", performSearch);
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        performSearch();
+      }
+    });
+    cancelButton.addEventListener("click", () => {
+      this.close();
+    });
+    renderTagButtons();
+    searchInput.focus();
+    searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+  positionAsPopup() {
+    if (!this.buttonElement)
+      return;
+    const modalEl = this.modalEl;
+    const contentEl = this.contentEl;
+    modalEl.addClass("ge-popup-modal-reset");
+    contentEl.addClass("ge-popup-content");
+    const buttonRect = this.buttonElement.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    let top = buttonRect.bottom + 4;
+    let left = buttonRect.left + buttonRect.width / 2 - 150;
+    if (left + 300 > viewportWidth) {
+      left = viewportWidth - 300 - 10;
+    }
+    if (left < 10) {
+      left = 10;
+    }
+    const estimatedHeight = 400;
+    if (top + estimatedHeight > viewportHeight && buttonRect.top - estimatedHeight > 0) {
+      top = buttonRect.top - estimatedHeight - 4;
+    }
+    modalEl.style.position = "fixed";
+    modalEl.style.top = `${top}px`;
+    modalEl.style.left = `${left}px`;
+    modalEl.style.transform = "none";
+  }
+};
+function showSearchModal(app, gridView, defaultQuery = "", buttonElement) {
+  new SearchModal(app, gridView, defaultQuery, buttonElement).open();
+}
+
+// src/modal/shortcutSelectionModal.ts
+var import_obsidian4 = require("obsidian");
+var ShortcutSelectionModal = class extends import_obsidian4.Modal {
+  constructor(app, plugin, onSubmit) {
+    super(app);
+    this.plugin = plugin;
+    this.onSubmit = onSubmit;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.createEl("h2", { text: t("create_shortcut") });
+    const folderButton = contentEl.createDiv("shortcut-option-button");
+    folderButton.createSpan({ text: `\u{1F4C2} ${t("select_folder")}` });
+    folderButton.addEventListener("click", () => {
+      new FolderSuggestionModal(this.app, (folder) => {
+        this.onSubmit({
+          type: "folder",
+          value: folder.path,
+          display: `\u{1F4C2} ${folder.name}`
+        });
+        this.close();
+      }).open();
+    });
+    const fileButton = contentEl.createDiv("shortcut-option-button");
+    fileButton.createSpan({ text: `\u{1F4C4} ${t("select_file")}` });
+    fileButton.addEventListener("click", () => {
+      new FileSuggestionModal(this.app, (file) => {
+        this.onSubmit({
+          type: "file",
+          value: file.path,
+          display: `\u{1F4C4} ${file.basename}`
+        });
+        this.close();
+      }).open();
+    });
+    const modeOptions = [];
+    this.plugin.settings.customModes.forEach((mode) => {
+      modeOptions.push({
+        type: "mode",
+        value: mode.internalName,
+        display: `${mode.icon} ${mode.displayName}`
+      });
+    });
+    modeOptions.push(
+      { type: "mode", value: "bookmarks", display: `\u{1F4D1} ${t("bookmarks_mode")}` },
+      { type: "mode", value: "search", display: `\u{1F50E} ${t("search_results")}` },
+      { type: "mode", value: "backlinks", display: `\u{1F517} ${t("backlinks_mode")}` },
+      { type: "mode", value: "outgoinglinks", display: `\u{1F517} ${t("outgoinglinks_mode")}` },
+      { type: "mode", value: "all-files", display: `\u{1F4D4} ${t("all_files_mode")}` },
+      { type: "mode", value: "recent-files", display: `\u{1F4C5} ${t("recent_files_mode")}` },
+      { type: "mode", value: "random-note", display: `\u{1F3B2} ${t("random_note_mode")}` },
+      { type: "mode", value: "tasks", display: `\u2611\uFE0F ${t("tasks_mode")}` }
+    );
+    if (modeOptions.length > 0) {
+      const section = contentEl.createDiv("shortcut-section");
+      modeOptions.forEach((option) => {
+        const button = section.createDiv("shortcut-option-button");
+        button.createSpan({ text: option.display });
+        button.addEventListener("click", () => {
+          this.onSubmit(option);
+          this.close();
+        });
+      });
+    }
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+var FolderSuggestionModal = class extends import_obsidian4.FuzzySuggestModal {
+  constructor(app, onChoose) {
+    super(app);
+    this.onSubmit = onChoose;
+  }
+  // 獲取所有可選的資料夾
+  getItems() {
+    return this.app.vault.getAllLoadedFiles().filter((file) => file instanceof import_obsidian4.TFolder);
+  }
+  // 獲取資料夾的顯示文本
+  getItemText(folder) {
+    return folder.path;
+  }
+  // 當選擇資料夾時調用
+  onChooseItem(folder, evt) {
+    this.onSubmit(folder);
+  }
+};
+var FileSuggestionModal = class extends import_obsidian4.FuzzySuggestModal {
+  constructor(app, onChoose) {
+    super(app);
+    this.onSubmit = onChoose;
+  }
+  // 獲取所有可選的 Markdown 檔案
+  getItems() {
+    return this.app.vault.getMarkdownFiles();
+  }
+  // 獲取檔案的顯示文本
+  getItemText(file) {
+    return file.path;
+  }
+  // 當選擇檔案時調用
+  onChooseItem(file, evt) {
+    this.onSubmit(file);
+  }
+};
+
+// src/renderHeaderButton.ts
+function renderHeaderButton(gridView) {
+  const headerButtonsDiv = gridView.containerEl.createDiv("ge-header-buttons");
+  headerButtonsDiv.addEventListener("click", (event) => {
+    if (event.target === headerButtonsDiv) {
+      event.preventDefault();
+      const gridContainer = gridView.containerEl.querySelector(".ge-grid-container");
+      if (gridContainer) {
+        gridContainer.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    }
+  });
+  const backButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("back") } });
+  (0, import_obsidian5.setIcon)(backButton, "arrow-left");
+  backButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (gridView.searchQuery !== "") {
+      gridView.searchQuery = "";
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+      return;
+    }
+    if (gridView.recentSources.length > 0) {
+      const lastSource = JSON.parse(gridView.recentSources[0]);
+      gridView.recentSources.shift();
+      gridView.setSource(
+        lastSource.mode,
+        lastSource.path || "",
+        true,
+        // 重設捲動位置
+        false
+        // 不記錄到歷史
+      );
+    }
+  });
+  backButton.addEventListener("contextmenu", (event) => {
+    if (gridView.recentSources.length > 0) {
+      event.preventDefault();
+      const menu2 = new import_obsidian5.Menu();
+      gridView.recentSources.forEach((sourceInfoStr, index) => {
+        try {
+          const sourceInfo = JSON.parse(sourceInfoStr);
+          const { mode, path } = sourceInfo;
+          let displayText = "";
+          let icon = "";
+          switch (mode) {
+            case "folder":
+              displayText = path || "/";
+              icon = "folder";
+              break;
+            case "bookmarks":
+              displayText = t("bookmarks_mode");
+              icon = "bookmark";
+              break;
+            case "search":
+              displayText = t("search_results");
+              icon = "search";
+              break;
+            case "backlinks":
+              displayText = t("backlinks_mode");
+              icon = "links-coming-in";
+              break;
+            case "outgoinglinks":
+              displayText = t("outgoinglinks_mode");
+              icon = "links-going-out";
+              break;
+            case "all-files":
+              displayText = t("all_files_mode");
+              icon = "book-text";
+              break;
+            case "recent-files":
+              displayText = t("recent_files_mode");
+              icon = "calendar-days";
+              break;
+            case "random-note":
+              displayText = t("random_note_mode");
+              icon = "dice";
+              break;
+            case "tasks":
+              displayText = t("tasks_mode");
+              icon = "square-check-big";
+              break;
+            default:
+              if (mode.startsWith("custom-")) {
+                const customMode = gridView.plugin.settings.customModes.find((m) => m.internalName === mode);
+                displayText = customMode ? customMode.displayName : t("custom_mode");
+                icon = "puzzle";
+              } else {
+                displayText = mode;
+                icon = "grid";
+              }
+          }
+          menu2.addItem((item) => {
+            item.setTitle(`${displayText}`).setIcon(`${icon}`).onClick(() => {
+              const clickedIndex = gridView.recentSources.findIndex((source) => {
+                const parsed = JSON.parse(source);
+                return parsed.mode === mode && parsed.path === path;
+              });
+              if (clickedIndex !== -1) {
+                gridView.recentSources = gridView.recentSources.slice(clickedIndex + 1);
+              }
+              gridView.setSource(mode, path, true, false);
+            });
+          });
+        } catch (error) {
+          console.error("Failed to parse source info:", error);
+        }
+      });
+      menu2.showAtMouseEvent(event);
+    }
+  });
+  const newNoteButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("new_note") } });
+  (0, import_obsidian5.setIcon)(newNoteButton, "square-pen");
+  newNoteButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    const menu2 = new import_obsidian5.Menu();
+    menu2.addItem((item) => {
+      item.setTitle(t("new_note")).setIcon("square-pen").onClick(async () => {
+        let newFileName = `${t("untitled")}.md`;
+        let newFilePath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFileName : `${gridView.sourcePath}/${newFileName}`;
+        let counter = 1;
+        while (gridView.app.vault.getAbstractFileByPath(newFilePath)) {
+          newFileName = `${t("untitled")} ${counter}.md`;
+          newFilePath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFileName : `${gridView.sourcePath}/${newFileName}`;
+          counter++;
+        }
+        try {
+          const newFile = await gridView.app.vault.create(newFilePath, "");
+          await gridView.app.workspace.getLeaf().openFile(newFile);
+        } catch (error) {
+          console.error("An error occurred while creating a new note:", error);
+        }
+      });
+    });
+    menu2.addItem((item) => {
+      item.setTitle(t("new_folder")).setIcon("folder").onClick(async () => {
+        let newFolderName = `${t("untitled")}`;
+        let newFolderPath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFolderName : `${gridView.sourcePath}/${newFolderName}`;
+        let counter = 1;
+        while (gridView.app.vault.getAbstractFileByPath(newFolderPath)) {
+          newFolderName = `${t("untitled")} ${counter}`;
+          newFolderPath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFolderName : `${gridView.sourcePath}/${newFolderName}`;
+          counter++;
+        }
+        try {
+          await gridView.app.vault.createFolder(newFolderPath);
+          gridView.render(false);
+        } catch (error) {
+          console.error("An error occurred while creating a new folder:", error);
+        }
+      });
+    });
+    menu2.addItem((item) => {
+      item.setTitle(t("new_canvas")).setIcon("layout-dashboard").onClick(async () => {
+        let newFileName = `${t("untitled")}.canvas`;
+        let newFilePath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFileName : `${gridView.sourcePath}/${newFileName}`;
+        let counter = 1;
+        while (gridView.app.vault.getAbstractFileByPath(newFilePath)) {
+          newFileName = `${t("untitled")} ${counter}.canvas`;
+          newFilePath = !gridView.sourcePath || gridView.sourcePath === "/" ? newFileName : `${gridView.sourcePath}/${newFileName}`;
+          counter++;
+        }
+        try {
+          const newFile = await gridView.app.vault.create(newFilePath, "");
+          await gridView.app.workspace.getLeaf().openFile(newFile);
+        } catch (error) {
+          console.error("An error occurred while creating a new canvas:", error);
+        }
+      });
+    });
+    menu2.addItem((item) => {
+      item.setTitle(t("new_shortcut")).setIcon("shuffle").onClick(async () => {
+        const modal = new ShortcutSelectionModal(gridView.app, gridView.plugin, async (option) => {
+          await createShortcut(gridView, option);
+        });
+        modal.open();
+      });
+    });
+    menu2.showAtMouseEvent(event);
+  });
+  const reselectButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("reselect") } });
+  reselectButton.addEventListener("click", () => {
+    showFolderSelectionModal(gridView.app, gridView.plugin, gridView, reselectButton);
+  });
+  (0, import_obsidian5.setIcon)(reselectButton, "grid");
+  const refreshButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("refresh") } });
+  refreshButton.addEventListener("click", () => {
+    if (gridView.sortType === "random") {
+      gridView.clearSelection();
+    }
+    gridView.render();
+  });
+  (0, import_obsidian5.setIcon)(refreshButton, "refresh-ccw");
+  const searchButtonContainer = headerButtonsDiv.createDiv("ge-search-button-container");
+  const searchButton = searchButtonContainer.createEl("button", {
+    cls: "search-button",
+    attr: { "aria-label": t("search") }
+  });
+  (0, import_obsidian5.setIcon)(searchButton, "search");
+  searchButton.addEventListener("click", () => {
+    showSearchModal(gridView.app, gridView, "", searchButton);
+  });
+  if (gridView.searchQuery) {
+    searchButton.style.display = "none";
+    const searchTextContainer = searchButtonContainer.createDiv("ge-search-text-container");
+    const searchText = searchTextContainer.createEl("span", { cls: "ge-search-text", text: gridView.searchQuery });
+    searchText.style.cursor = "pointer";
+    searchText.addEventListener("click", () => {
+      showSearchModal(gridView.app, gridView, gridView.searchQuery, searchText);
+    });
+    const clearButton = searchTextContainer.createDiv("ge-clear-button");
+    (0, import_obsidian5.setIcon)(clearButton, "x");
+    clearButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      gridView.searchQuery = "";
+      gridView.clearSelection();
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+    });
+  }
+  const menu = new import_obsidian5.Menu();
+  menu.addItem((item) => {
+    item.setTitle(t("open_new_grid_view")).setIcon("grid").onClick(() => {
+      const { workspace } = gridView.app;
+      let leaf = null;
+      workspace.getLeavesOfType("grid-view");
+      switch (gridView.plugin.settings.defaultOpenLocation) {
+        case "left":
+          leaf = workspace.getLeftLeaf(false);
+          break;
+        case "right":
+          leaf = workspace.getRightLeaf(false);
+          break;
+        case "tab":
+        default:
+          leaf = workspace.getLeaf("tab");
+          break;
+      }
+      if (!leaf) {
+        leaf = workspace.getLeaf("tab");
+      }
+      leaf.setViewState({ type: "grid-view", active: true });
+      if (leaf.view instanceof GridView) {
+        leaf.view.setSource("folder", "/");
+      }
+      workspace.revealLeaf(leaf);
+    });
+  });
+  menu.addSeparator();
+  menu.addItem((item) => {
+    item.setTitle(t("vertical_card")).setIcon("layout").setChecked(gridView.baseCardLayout === "vertical").onClick(() => {
+      gridView.baseCardLayout = gridView.baseCardLayout === "vertical" ? "horizontal" : "vertical";
+      gridView.cardLayout = gridView.baseCardLayout;
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+    });
+  });
+  menu.addItem((item) => {
+    item.setTitle(t("min_mode")).setIcon("minimize-2").setChecked(gridView.minMode).onClick(() => {
+      gridView.minMode = !gridView.minMode;
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+    });
+  });
+  if (gridView.plugin.settings.dateDividerMode !== "none") {
+    menu.addItem((item) => {
+      item.setTitle(t("show_date_dividers")).setIcon("calendar").setChecked(gridView.showDateDividers).onClick(() => {
+        gridView.showDateDividers = !gridView.showDateDividers;
+        gridView.app.workspace.requestSaveLayout();
+        gridView.render();
+      });
+    });
+  }
+  menu.addItem((item) => {
+    item.setTitle(t("show_note_tags")).setIcon("tag").setChecked(gridView.showNoteTags).onClick(() => {
+      gridView.showNoteTags = !gridView.showNoteTags;
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+    });
+  });
+  menu.addItem((item) => {
+    item.setTitle(t("show_ignored_folders")).setIcon("folder-open-dot").setChecked(gridView.showIgnoredFolders).onClick(() => {
+      gridView.showIgnoredFolders = !gridView.showIgnoredFolders;
+      gridView.app.workspace.requestSaveLayout();
+      gridView.render();
+    });
+  });
+  menu.addSeparator();
+  menu.addItem((item) => {
+    item.setTitle(t("open_settings")).setIcon("settings").onClick(() => {
+      gridView.app.setting.open();
+      gridView.app.setting.openTabById(gridView.plugin.manifest.id);
+    });
+  });
+  if (gridView.searchQuery === "") {
+    const moreOptionsButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("more_options") } });
+    (0, import_obsidian5.setIcon)(moreOptionsButton, "ellipsis-vertical");
+    moreOptionsButton.addEventListener("click", (event) => {
+      menu.showAtMouseEvent(event);
+    });
+  }
+  headerButtonsDiv.addEventListener("contextmenu", (event) => {
+    if (event.target === headerButtonsDiv) {
+      event.preventDefault();
+      menu.showAtMouseEvent(event);
+    }
+  });
+}
+async function createShortcut(gridView, option) {
+  try {
+    let counter = 0;
+    let shortcutName = `${option.display}`;
+    let newPath = `${shortcutName}.md`;
+    while (gridView.app.vault.getAbstractFileByPath(newPath)) {
+      counter++;
+      shortcutName = `${option.display} ${counter}`;
+      newPath = `${shortcutName}.md`;
+    }
+    const newFile = await gridView.app.vault.create(newPath, "");
+    await gridView.app.fileManager.processFrontMatter(newFile, (frontmatter) => {
+      if (option.type === "mode") {
+        frontmatter.type = "mode";
+        frontmatter.redirect = option.value;
+      } else if (option.type === "folder") {
+        frontmatter.type = "folder";
+        frontmatter.redirect = option.value;
+      } else if (option.type === "file") {
+        const link = gridView.app.fileManager.generateMarkdownLink(
+          gridView.app.vault.getAbstractFileByPath(option.value),
+          ""
+        );
+        frontmatter.type = "file";
+        frontmatter.redirect = link;
+      }
+    });
+    new import_obsidian5.Notice(`${t("shortcut_created")}: ${shortcutName}`);
+  } catch (error) {
+    console.error("Create shortcut error", error);
+    new import_obsidian5.Notice(t("Failed to create shortcut"));
+  }
+}
+
+// src/renderModePath.ts
+var import_obsidian8 = require("obsidian");
+
+// src/modal/folderNoteSettingsModal.ts
+var import_obsidian6 = require("obsidian");
+function showFolderNoteSettingsModal(app, plugin, folder, gridView) {
+  new FolderNoteSettingsModal(app, plugin, folder, gridView).open();
+}
+var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
+  constructor(app, plugin, folder, gridView) {
+    super(app);
+    this.settings = {
+      sort: "",
+      color: "",
+      icon: "\u{1F4C1}",
+      isPinned: false,
+      cardLayout: ""
+    };
+    this.existingFile = null;
+    this.plugin = plugin;
+    this.folder = folder;
+    this.gridView = gridView;
+    const notePath = `${folder.path}/${folder.name}.md`;
+    const noteFile = this.app.vault.getAbstractFileByPath(notePath);
+    if (noteFile instanceof import_obsidian6.TFile) {
+      this.existingFile = noteFile;
+    }
+  }
+  async onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    if (this.existingFile) {
+      await this.loadExistingSettings();
+    }
+    new import_obsidian6.Setting(contentEl).setName(t("folder_note_settings")).setHeading();
+    new import_obsidian6.Setting(contentEl).setName(t("folder_sort_type")).setDesc(t("folder_sort_type_desc")).addDropdown((dropdown) => {
+      dropdown.addOption("", t("default")).addOption("name-asc", t("sort_name_asc")).addOption("name-desc", t("sort_name_desc")).addOption("mtime-desc", t("sort_mtime_desc")).addOption("mtime-asc", t("sort_mtime_asc")).addOption("ctime-desc", t("sort_ctime_desc")).addOption("ctime-asc", t("sort_ctime_asc")).addOption("random", t("sort_random")).setValue(this.settings.sort).onChange((value) => {
+        this.settings.sort = value;
+      });
+    });
+    new import_obsidian6.Setting(contentEl).setName(t("folder_color")).setDesc(t("folder_color_desc")).addDropdown((dropdown) => {
+      dropdown.addOption("", t("no_color")).addOption("red", t("color_red")).addOption("orange", t("color_orange")).addOption("yellow", t("color_yellow")).addOption("green", t("color_green")).addOption("cyan", t("color_cyan")).addOption("blue", t("color_blue")).addOption("purple", t("color_purple")).addOption("pink", t("color_pink")).setValue(this.settings.color).onChange((value) => {
+        this.settings.color = value;
+      });
+    });
+    const customFolderIcon = this.plugin.settings.customFolderIcon;
+    new import_obsidian6.Setting(contentEl).setName(t("folder_icon")).setDesc(t("folder_icon_desc")).addText((text) => {
+      text.setPlaceholder(customFolderIcon).setValue(this.settings.icon || customFolderIcon).onChange((value) => {
+        this.settings.icon = value || customFolderIcon;
+      });
+    });
+    new import_obsidian6.Setting(contentEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
+      drop.addOption("", t("default"));
+      drop.addOption("horizontal", t("horizontal_card"));
+      drop.addOption("vertical", t("vertical_card"));
+      drop.setValue(this.settings.cardLayout);
+      drop.onChange(async (value) => {
+        this.settings.cardLayout = value;
+      });
+    });
+    new import_obsidian6.Setting(contentEl).setName(t("foldernote_pinned")).setDesc(t("foldernote_pinned_desc")).addToggle((toggle) => {
+      toggle.setValue(this.settings.isPinned).onChange((value) => {
+        this.settings.isPinned = value;
+      });
+    });
+    const buttonSetting = new import_obsidian6.Setting(contentEl);
+    buttonSetting.addButton((button) => {
+      button.setButtonText(t("confirm")).setCta().onClick(() => {
+        this.saveFolderNote();
+        this.close();
+      });
+    });
+  }
+  // 讀取現有筆記的設定
+  async loadExistingSettings() {
+    var _a;
+    if (!this.existingFile)
+      return;
+    try {
+      const fileCache = this.app.metadataCache.getFileCache(this.existingFile);
+      if (fileCache && fileCache.frontmatter) {
+        if ("sort" in fileCache.frontmatter) {
+          this.settings.sort = fileCache.frontmatter.sort || "";
+        }
+        if ("color" in fileCache.frontmatter) {
+          this.settings.color = fileCache.frontmatter.color || "";
+        }
+        if ("icon" in fileCache.frontmatter) {
+          this.settings.icon = fileCache.frontmatter.icon || "\u{1F4C1}";
+        }
+        if ("cardLayout" in fileCache.frontmatter) {
+          this.settings.cardLayout = fileCache.frontmatter.cardLayout || "default";
+        }
+        if (((_a = fileCache.frontmatter) == null ? void 0 : _a.pinned) && Array.isArray(fileCache.frontmatter.pinned)) {
+          this.settings.isPinned = fileCache.frontmatter.pinned.some((item) => {
+            if (!item)
+              return false;
+            const pinnedName = item.toString();
+            const pinnedNameWithoutExt = pinnedName.replace(/\.\w+$/, "");
+            return pinnedNameWithoutExt === this.folder.name;
+          });
+        }
+      }
+    } catch (error) {
+      console.error("\u7121\u6CD5\u8B80\u53D6\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A", error);
+    }
+  }
+  // 儲存或更新資料夾筆記
+  async saveFolderNote() {
+    const notePath = `${this.folder.path}/${this.folder.name}.md`;
+    try {
+      let file;
+      if (this.existingFile) {
+        file = this.existingFile;
+      } else {
+        file = await this.app.vault.create(notePath, "");
+        await this.app.workspace.getLeaf().openFile(file);
+      }
+      await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
+        if (this.settings.sort) {
+          frontmatter["sort"] = this.settings.sort;
+        } else {
+          delete frontmatter["sort"];
+        }
+        if (this.settings.color) {
+          frontmatter["color"] = this.settings.color;
+        } else {
+          delete frontmatter["color"];
+        }
+        if (this.settings.icon && this.settings.icon !== "\u{1F4C1}") {
+          frontmatter["icon"] = this.settings.icon;
+        } else {
+          delete frontmatter["icon"];
+        }
+        if (this.settings.cardLayout) {
+          frontmatter["cardLayout"] = this.settings.cardLayout;
+        } else {
+          delete frontmatter["cardLayout"];
+        }
+        const folderName = `${this.folder.name}.md`;
+        if (this.settings.isPinned) {
+          if (Array.isArray(frontmatter["pinned"])) {
+            if (!frontmatter["pinned"].includes(folderName)) {
+              frontmatter["pinned"] = [folderName, ...frontmatter["pinned"]];
+            }
+          } else {
+            frontmatter["pinned"] = [folderName];
+          }
+        } else if (Array.isArray(frontmatter["pinned"])) {
+          frontmatter["pinned"] = frontmatter["pinned"].filter(
+            (item) => item !== folderName
+          );
+          if (frontmatter["pinned"].length === 0) {
+            delete frontmatter["pinned"];
+          }
+        }
+      });
+      this.app.metadataCache.getFileCache(file);
+      setTimeout(() => {
+        this.app.workspace.getLeavesOfType("grid-view").forEach((leaf) => {
+          if (leaf.view instanceof GridView) {
+            leaf.view.render();
+          }
+        });
+      }, 200);
+    } catch (error) {
+      console.error("\u7121\u6CD5\u5132\u5B58\u8CC7\u6599\u593E\u7B46\u8A18", error);
+    }
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+
+// src/modal/customModeModal.ts
+var import_obsidian7 = require("obsidian");
+var CustomModeModal = class extends import_obsidian7.Modal {
+  constructor(app, plugin, mode, onSubmit) {
+    super(app);
+    this.plugin = plugin;
+    this.mode = mode;
+    this.onSubmit = onSubmit;
+  }
+  onOpen() {
+    var _a, _b;
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.createEl("h2", { text: this.mode ? t("edit_custom_mode") : t("add_custom_mode") });
+    let icon = this.mode ? this.mode.icon : "\u{1F9E9}";
+    let displayName = this.mode ? this.mode.displayName : "";
+    let name = this.mode && this.mode.name ? this.mode.name : t("default");
+    let options = ((_a = this.mode) == null ? void 0 : _a.options) ? this.mode.options.map((opt) => ({ ...opt })) : [];
+    let dataviewCode = this.mode ? this.mode.dataviewCode : "";
+    let enabled = this.mode ? (_b = this.mode.enabled) != null ? _b : true : true;
+    let fields = this.mode ? this.mode.fields : "";
+    new import_obsidian7.Setting(contentEl).setName(t("custom_mode_display_name")).setDesc(t("custom_mode_display_name_desc")).addText((text) => {
+      text.setValue(icon).onChange((value) => {
+        icon = value || "\u{1F9E9}";
+      });
+      text.inputEl.style.width = "3em";
+      text.inputEl.style.minWidth = "3em";
+    }).addText((text) => {
+      text.setValue(displayName).onChange((value) => {
+        displayName = value;
+      });
+    });
+    const dvSetting = new import_obsidian7.Setting(contentEl).setName(t("custom_mode_dataview_code")).setDesc(t("custom_mode_dataview_code_desc"));
+    dvSetting.settingEl.style.flexDirection = "column";
+    dvSetting.settingEl.style.alignItems = "stretch";
+    dvSetting.settingEl.style.gap = "0.5rem";
+    dvSetting.addText((text) => {
+      text.setValue(name).setPlaceholder(t("default")).onChange((v) => name = v);
+    });
+    dvSetting.addTextArea((text) => {
+      text.setValue(dataviewCode).onChange((value) => {
+        dataviewCode = value;
+      }).setPlaceholder("Dataview JS code");
+      text.inputEl.setAttr("rows", 6);
+      text.inputEl.style.width = "100%";
+    });
+    dvSetting.addText((text) => {
+      text.setValue(fields || "").setPlaceholder(t("custom_mode_fields_placeholder")).onChange((value) => {
+        fields = value;
+      });
+    });
+    dvSetting.controlEl.style.display = "flex";
+    dvSetting.controlEl.style.flexDirection = "column";
+    dvSetting.controlEl.style.alignItems = "stretch";
+    dvSetting.controlEl.style.gap = "0.5rem";
+    contentEl.createEl("h3", { text: t("custom_mode_sub_options") });
+    const optionsContainer = contentEl.createDiv();
+    const renderOptions = () => {
+      optionsContainer.empty();
+      options.forEach((opt, idx) => {
+        const optionContainer = optionsContainer.createDiv("ge-custommode-option-container");
+        const optSetting = new import_obsidian7.Setting(optionContainer);
+        optSetting.addText((text) => {
+          text.setPlaceholder(t("option_name")).setValue(opt.name).onChange((val) => {
+            opt.name = val;
+          });
+        }).addTextArea((text) => {
+          text.setPlaceholder("Dataview JS code").setValue(opt.dataviewCode).onChange((val) => {
+            opt.dataviewCode = val;
+          });
+          text.inputEl.setAttr("rows", 6);
+          text.inputEl.style.width = "100%";
+        }).addText((text) => {
+          text.setPlaceholder(t("custom_mode_fields_placeholder")).setValue(opt.fields || "").onChange((val) => {
+            opt.fields = val;
+          });
+        });
+        if (options.length > 0) {
+          optSetting.addExtraButton((btn) => {
+            btn.setIcon("trash").setTooltip(t("remove")).onClick(() => {
+              options.splice(idx, 1);
+              renderOptions();
+            });
+          });
+        }
+      });
+    };
+    new import_obsidian7.Setting(contentEl).addButton((btn) => {
+      btn.setButtonText(t("add_option")).onClick(() => {
+        options.push({ name: `${t("option")} ${options.length + 1}`, dataviewCode: "" });
+        renderOptions();
+      });
+    });
+    renderOptions();
+    const saveSetting = new import_obsidian7.Setting(contentEl);
+    saveSetting.settingEl.classList.add("ge-save-footer");
+    saveSetting.addButton((button) => {
+      button.setButtonText(t("save")).setCta().onClick(() => {
+        if (!displayName.trim())
+          displayName = t("untitled");
+        const internalName = this.mode ? this.mode.internalName : `custom-${Date.now()}`;
+        this.onSubmit({
+          internalName,
+          icon,
+          displayName,
+          name,
+          dataviewCode,
+          options,
+          enabled,
+          fields
+        });
+        this.close();
+      });
+    });
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+
+// src/renderModePath.ts
+function renderModePath(gridView) {
+  var _a, _b;
+  const modeHeaderContainer = gridView.containerEl.createDiv("ge-mode-header-container");
+  const modenameContainer = modeHeaderContainer.createDiv("ge-modename-content");
+  const rightActions = modeHeaderContainer.createDiv("ge-right-actions");
+  if (gridView.sourceMode !== "bookmarks" && gridView.sourceMode !== "recent-files" && gridView.sourceMode !== "random-note") {
+    const sortButton = rightActions.createEl("a", {
+      cls: "ge-sort-button",
+      attr: {
+        "aria-label": t("sorting"),
+        "href": "#"
+      }
+    });
+    (0, import_obsidian8.setIcon)(sortButton, "arrow-up-narrow-wide");
+    sortButton.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      const menu = new import_obsidian8.Menu();
+      const sortOptions = [
+        { value: "name-asc", label: t("sort_name_asc"), icon: "a-arrow-up" },
+        { value: "name-desc", label: t("sort_name_desc"), icon: "a-arrow-down" },
+        { value: "mtime-desc", label: t("sort_mtime_desc"), icon: "clock" },
+        { value: "mtime-asc", label: t("sort_mtime_asc"), icon: "clock" },
+        { value: "ctime-desc", label: t("sort_ctime_desc"), icon: "calendar" },
+        { value: "ctime-asc", label: t("sort_ctime_asc"), icon: "calendar" },
+        { value: "random", label: t("sort_random"), icon: "dice" }
+      ];
+      sortOptions.forEach((option) => {
+        menu.addItem((item) => {
+          item.setTitle(option.label).setIcon(option.icon).setChecked((gridView.folderSortType || gridView.sortType) === option.value).onClick(() => {
+            gridView.sortType = option.value;
+            gridView.folderSortType = "";
+            gridView.app.workspace.requestSaveLayout();
+            gridView.render();
+          });
+        });
+      });
+      menu.showAtMouseEvent(evt);
+    });
+  }
+  modenameContainer.addEventListener("click", (event) => {
+    if (event.target === modenameContainer) {
+      event.preventDefault();
+      const gridContainer = gridView.containerEl.querySelector(".ge-grid-container");
+      if (gridContainer) {
+        gridContainer.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    }
+  });
+  if (gridView.sourceMode === "folder" && (gridView.searchQuery === "" || gridView.searchQuery && !gridView.searchAllFiles) && gridView.sourcePath !== "/") {
+    const pathParts = gridView.sourcePath.split("/").filter((part) => part.trim() !== "");
+    const paths = [];
+    let pathAccumulator = "";
+    paths.push({
+      name: t("root"),
+      path: "/",
+      isLast: pathParts.length === 0
+    });
+    pathParts.forEach((part, index) => {
+      pathAccumulator = pathAccumulator ? `${pathAccumulator}/${part}` : part;
+      paths.push({
+        name: part,
+        path: pathAccumulator,
+        isLast: index === pathParts.length - 1
+      });
+    });
+    const pathContainer = modenameContainer.createDiv({ cls: "ge-path-container" });
+    const customFolderIcon = gridView.plugin.settings.customFolderIcon;
+    const pathElements = [];
+    paths.forEach((path, index) => {
+      const isLast = index === paths.length - 1;
+      let pathEl;
+      if (isLast) {
+        pathEl = modenameContainer.createEl("a", {
+          text: `${customFolderIcon} ${path.name}`.trim(),
+          cls: "ge-current-folder"
+        });
+      } else {
+        pathEl = modenameContainer.createEl("a", {
+          text: path.name,
+          cls: "ge-parent-folder-link"
+        });
+      }
+      (0, import_obsidian8.setTooltip)(pathEl, path.name);
+      pathElements.push(pathEl);
+    });
+    for (let i = 0; i < pathElements.length; i++) {
+      const el = pathElements[i];
+      pathContainer.appendChild(el);
+      if (el.className === "ge-parent-folder-link") {
+        const pathIndex = i;
+        if (pathIndex < paths.length) {
+          const path = paths[pathIndex];
+          el.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            gridView.setSource("folder", path.path, true);
+            gridView.clearSelection();
+          });
+          el.addEventListener("contextmenu", async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const menu = new import_obsidian8.Menu();
+            menu.addItem((item) => {
+              item.setTitle(path.name).setIcon("folder").onClick(() => {
+                gridView.setSource("folder", path.path, true);
+                gridView.clearSelection();
+              });
+            });
+            const currentFolder = gridView.app.vault.getAbstractFileByPath(path.path);
+            if (currentFolder && currentFolder instanceof import_obsidian8.TFolder) {
+              const subFolders = currentFolder.children.filter((child) => {
+                if (!(child instanceof import_obsidian8.TFolder))
+                  return false;
+                return !isFolderIgnored(
+                  child,
+                  gridView.plugin.settings.ignoredFolders,
+                  gridView.plugin.settings.ignoredFolderPatterns,
+                  gridView.showIgnoredFolders
+                );
+              }).sort((a, b) => a.name.localeCompare(b.name));
+              if (subFolders.length > 0) {
+                menu.addSeparator();
+                menu.addItem(
+                  (item) => item.setTitle(t("sub_folders")).setIcon("folder-symlink").setDisabled(true)
+                );
+                subFolders.forEach((folder) => {
+                  menu.addItem((item) => {
+                    item.setTitle(folder.name).setIcon("folder").onClick(() => {
+                      gridView.setSource("folder", folder.path, true);
+                      gridView.clearSelection();
+                    });
+                  });
+                });
+              }
+            }
+            if (pathIndex > 0) {
+              menu.addSeparator();
+              menu.addItem(
+                (item) => item.setTitle(t("parent_folders")).setIcon("arrow-up").setDisabled(true)
+              );
+              for (let i2 = pathIndex - 1; i2 >= 0; i2--) {
+                const p = paths[i2];
+                menu.addItem((item) => {
+                  item.setTitle(p.name).setIcon(p.path === "/" ? "folder-root" : "folder").onClick(() => {
+                    gridView.setSource("folder", p.path, true);
+                    gridView.clearSelection();
+                  });
+                });
+              }
+            }
+            menu.showAtMouseEvent(event);
+          });
+          if (!path.isLast && import_obsidian8.Platform.isDesktop) {
+            el.addEventListener("dragover", (event) => {
+              event.preventDefault();
+              event.dataTransfer.dropEffect = "move";
+              el.addClass("ge-dragover");
+            });
+            el.addEventListener("dragleave", () => {
+              el.removeClass("ge-dragover");
+            });
+            el.addEventListener("drop", async (event) => {
+              var _a2, _b2;
+              event.preventDefault();
+              el.removeClass("ge-dragover");
+              if (!path.path)
+                return;
+              const folder = gridView.app.vault.getAbstractFileByPath(path.path);
+              if (!(folder instanceof import_obsidian8.TFolder))
+                return;
+              const filesData = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
+              if (filesData) {
+                try {
+                  const filePaths = JSON.parse(filesData);
+                  for (const filePath2 of filePaths) {
+                    const file2 = gridView.app.vault.getAbstractFileByPath(filePath2);
+                    if (file2 instanceof import_obsidian8.TFile) {
+                      const newPath = (0, import_obsidian8.normalizePath)(`${path.path}/${file2.name}`);
+                      await gridView.app.fileManager.renameFile(file2, newPath);
+                    }
+                  }
+                } catch (error) {
+                  console.error("An error occurred while moving multiple files to folder:", error);
+                }
+                return;
+              }
+              const filePath = (_b2 = event.dataTransfer) == null ? void 0 : _b2.getData("text/plain");
+              if (!filePath)
+                return;
+              const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
+              const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
+              if (file instanceof import_obsidian8.TFile) {
+                try {
+                  const newPath = (0, import_obsidian8.normalizePath)(`${path.path}/${file.name}`);
+                  await gridView.app.fileManager.renameFile(file, newPath);
+                  gridView.render();
+                } catch (error) {
+                  console.error("An error occurred while moving the file to folder:", error);
+                }
+              }
+            });
+          }
+        }
+      }
+      if (el.className === "ge-current-folder") {
+        const showFolderMenu = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const folder = gridView.app.vault.getAbstractFileByPath(gridView.sourcePath);
+          const folderName = gridView.sourcePath.split("/").pop() || "";
+          const notePath = `${gridView.sourcePath}/${folderName}.md`;
+          const noteFile = gridView.app.vault.getAbstractFileByPath(notePath);
+          const menu = new import_obsidian8.Menu();
+          if (noteFile instanceof import_obsidian8.TFile) {
+            menu.addItem((item) => {
+              item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
+                gridView.app.workspace.getLeaf().openFile(noteFile);
+              });
+            });
+            menu.addItem((item) => {
+              item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
+                if (folder instanceof import_obsidian8.TFolder) {
+                  showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
+                }
+              });
+            });
+            menu.addItem((item) => {
+              item.setTitle(t("delete_folder_note")).setIcon("folder-x").onClick(() => {
+                gridView.app.fileManager.trashFile(noteFile);
+              });
+            });
+          } else {
+            menu.addItem((item) => {
+              item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
+                if (folder instanceof import_obsidian8.TFolder) {
+                  showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
+                }
+              });
+            });
+          }
+          menu.showAtMouseEvent(event);
+        };
+        el.addEventListener("click", showFolderMenu);
+        el.addEventListener("contextmenu", showFolderMenu);
+      }
+    }
+  } else if (!(gridView.searchQuery !== "" && gridView.searchAllFiles)) {
+    let modeName = "";
+    let modeIcon = "";
+    switch (gridView.sourceMode) {
+      case "bookmarks":
+        modeIcon = "\u{1F4D1}";
+        modeName = t("bookmarks_mode");
+        break;
+      case "search":
+        modeIcon = "\u{1F50D}";
+        modeName = t("search_results");
+        const searchLeaf = gridView.app.workspace.getLeavesOfType("search")[0];
+        if (searchLeaf) {
+          const searchView = searchLeaf.view;
+          const searchInputEl = searchView.searchComponent ? searchView.searchComponent.inputEl : null;
+          const currentQuery = searchInputEl == null ? void 0 : searchInputEl.value.trim();
+          if (currentQuery && currentQuery.length > 0) {
+            modeName += `: ${currentQuery}`;
+          } else if (gridView.searchQuery) {
+            modeName += `: ${gridView.searchQuery}`;
+          }
+        }
+        break;
+      case "backlinks":
+        modeIcon = "\u{1F517}";
+        modeName = t("backlinks_mode");
+        const activeFile = gridView.app.workspace.getActiveFile();
+        if (activeFile) {
+          modeName += `: ${activeFile.basename}`;
+        }
+        break;
+      case "outgoinglinks":
+        modeIcon = "\u{1F517}";
+        modeName = t("outgoinglinks_mode");
+        const currentFile = gridView.app.workspace.getActiveFile();
+        if (currentFile) {
+          modeName += `: ${currentFile.basename}`;
+        }
+        break;
+      case "recent-files":
+        modeIcon = "\u{1F4C5}";
+        modeName = t("recent_files_mode");
+        break;
+      case "all-files":
+        modeIcon = "\u{1F4D4}";
+        modeName = t("all_files_mode");
+        break;
+      case "random-note":
+        modeIcon = "\u{1F3B2}";
+        modeName = t("random_note_mode");
+        break;
+      case "tasks":
+        modeIcon = "\u2611\uFE0F";
+        modeName = t("tasks_mode");
+        break;
+      default:
+        if (gridView.sourceMode.startsWith("custom-")) {
+          const mode = gridView.plugin.settings.customModes.find((m) => m.internalName === gridView.sourceMode);
+          modeIcon = mode ? mode.icon : "\u{1F9E9}";
+          modeName = mode ? mode.displayName : t("custom_mode");
+        } else {
+          modeIcon = "\u{1F4C1}";
+          if (gridView.sourcePath && gridView.sourcePath !== "/") {
+            modeName = gridView.sourcePath.split("/").pop() || gridView.sourcePath;
+          } else {
+            modeName = t("root");
+          }
+        }
+    }
+    let modeTitleEl;
+    if (gridView.sourceMode.startsWith("custom-")) {
+      modeTitleEl = modenameContainer.createEl("a", {
+        text: `${modeIcon} ${modeName}`.trim(),
+        cls: "ge-mode-title"
+      });
+      modeTitleEl.addEventListener("click", (evt) => {
+        const menu = new import_obsidian8.Menu();
+        gridView.plugin.settings.customModes.filter((m) => {
+          var _a2;
+          return (_a2 = m.enabled) != null ? _a2 : true;
+        }).forEach((m) => {
+          menu.addItem((item) => {
+            item.setTitle(`${m.icon || "\u{1F9E9}"} ${m.displayName}`).setChecked(m.internalName === gridView.sourceMode).onClick(() => {
+              gridView.setSource(m.internalName, "", true);
+            });
+          });
+        });
+        menu.showAtMouseEvent(evt);
+      });
+    } else {
+      modeTitleEl = modenameContainer.createEl("span", {
+        text: `${modeIcon} ${modeName}`.trim(),
+        cls: "ge-mode-title"
+      });
+    }
+    switch (gridView.sourceMode) {
+      case "random-note":
+      case "recent-files":
+      case "all-files":
+        if (gridView.plugin.settings.showMediaFiles && gridView.searchQuery === "") {
+          const showTypeName = gridView.randomNoteIncludeMedia ? t("random_note_include_media_files") : t("random_note_notes_only");
+          const showTypeSpan = modenameContainer.createEl("a", { text: showTypeName, cls: "ge-sub-option" });
+          showTypeSpan.addEventListener("click", (evt) => {
+            const menu = new import_obsidian8.Menu();
+            menu.addItem((item) => {
+              item.setTitle(t("random_note_notes_only")).setIcon("file-text").setChecked(!gridView.randomNoteIncludeMedia).onClick(() => {
+                gridView.randomNoteIncludeMedia = false;
+                gridView.render();
+              });
+            });
+            menu.addItem((item) => {
+              item.setTitle(t("random_note_include_media_files")).setIcon("file-image").setChecked(gridView.randomNoteIncludeMedia).onClick(() => {
+                gridView.randomNoteIncludeMedia = true;
+                gridView.render();
+              });
+            });
+            menu.showAtMouseEvent(evt);
+          });
+        }
+        break;
+      case "tasks":
+        const taskFilterSpan = modenameContainer.createEl("a", { text: t(`${gridView.taskFilter}`), cls: "ge-sub-option" });
+        taskFilterSpan.addEventListener("click", (evt) => {
+          const menu = new import_obsidian8.Menu();
+          menu.addItem((item) => {
+            item.setTitle(t("uncompleted")).setChecked(gridView.taskFilter === "uncompleted").setIcon("square").onClick(() => {
+              gridView.taskFilter = "uncompleted";
+              gridView.render();
+            });
+          });
+          menu.addItem((item) => {
+            item.setTitle(t("completed")).setChecked(gridView.taskFilter === "completed").setIcon("square-check-big").onClick(() => {
+              gridView.taskFilter = "completed";
+              gridView.render();
+            });
+          });
+          menu.addItem((item) => {
+            item.setTitle(t("all")).setChecked(gridView.taskFilter === "all").setIcon("square-asterisk").onClick(() => {
+              gridView.taskFilter = "all";
+              gridView.render();
+            });
+          });
+          menu.addSeparator();
+          menu.showAtMouseEvent(evt);
+        });
+        break;
+      default:
+        if (gridView.sourceMode.startsWith("custom-")) {
+          const mode = gridView.plugin.settings.customModes.find((m) => m.internalName === gridView.sourceMode);
+          if (mode) {
+            const hasOptions = mode.options && mode.options.length > 0;
+            if (hasOptions && mode.options) {
+              if (gridView.customOptionIndex >= mode.options.length || gridView.customOptionIndex < -1) {
+                gridView.customOptionIndex = -1;
+              }
+              let subName;
+              if (gridView.customOptionIndex === -1) {
+                subName = ((_a = mode.name) == null ? void 0 : _a.trim()) || t("default");
+              } else if (gridView.customOptionIndex >= 0 && gridView.customOptionIndex < mode.options.length) {
+                const opt = mode.options[gridView.customOptionIndex];
+                subName = ((_b = opt.name) == null ? void 0 : _b.trim()) || `${t("option")} ${gridView.customOptionIndex + 1}`;
+              }
+              const subSpan = modenameContainer.createEl("a", { text: subName != null ? subName : "-", cls: "ge-sub-option" });
+              subSpan.addEventListener("click", (evt) => {
+                var _a2;
+                const menu = new import_obsidian8.Menu();
+                const defaultName = ((_a2 = mode.name) == null ? void 0 : _a2.trim()) || t("default");
+                menu.addItem((item) => {
+                  item.setTitle(defaultName).setIcon("puzzle").setChecked(gridView.customOptionIndex === -1).onClick(() => {
+                    gridView.customOptionIndex = -1;
+                    gridView.render(true);
+                  });
+                });
+                mode.options.forEach((opt, idx) => {
+                  menu.addItem((item) => {
+                    var _a3;
+                    item.setTitle(((_a3 = opt.name) == null ? void 0 : _a3.trim()) || t("option") + " " + (idx + 1)).setIcon("puzzle").setChecked(idx === gridView.customOptionIndex).onClick(() => {
+                      gridView.customOptionIndex = idx;
+                      gridView.render(true);
+                    });
+                  });
+                });
+                menu.showAtMouseEvent(evt);
+              });
+            }
+            const gearIcon = modenameContainer.createEl("a", { cls: "ge-settings-gear" });
+            (0, import_obsidian8.setIcon)(gearIcon, "settings");
+            gearIcon.addEventListener("click", () => {
+              const modeIndex = gridView.plugin.settings.customModes.findIndex((m) => m.internalName === mode.internalName);
+              if (modeIndex === -1)
+                return;
+              new CustomModeModal(gridView.app, gridView.plugin, gridView.plugin.settings.customModes[modeIndex], (result) => {
+                gridView.plugin.settings.customModes[modeIndex] = result;
+                gridView.plugin.saveSettings();
+                gridView.render(true);
+              }).open();
+            });
+          }
+        }
+        break;
+    }
+  } else if (gridView.searchQuery !== "" && gridView.searchAllFiles) {
+    modenameContainer.createEl("span", {
+      text: `\u{1F50D} ${t("global_search")}`,
+      cls: "ge-mode-title"
+    });
+  }
+}
+
+// src/renderFolder.ts
+var import_obsidian11 = require("obsidian");
+
+// src/modal/folderRenameModal.ts
+var import_obsidian9 = require("obsidian");
+function showFolderRenameModal(app, plugin, folder, gridView) {
+  new FolderRenameModal(app, plugin, folder, gridView).open();
+}
+var FolderRenameModal = class extends import_obsidian9.Modal {
+  constructor(app, plugin, folder, gridView) {
+    super(app);
+    this.plugin = plugin;
+    this.folder = folder;
+    this.gridView = gridView;
+    this.newName = folder.name;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    new import_obsidian9.Setting(contentEl).setName(t("rename_folder")).setDesc(t("enter_new_folder_name")).addText((text) => {
+      text.setValue(this.folder.name).onChange((value) => {
+        this.newName = value;
+      });
+    });
+    new import_obsidian9.Setting(contentEl).addButton((button) => {
+      button.setButtonText(t("confirm")).setCta().onClick(() => {
+        this.renameFolder();
+        this.close();
+      });
+    }).addButton((button) => {
+      button.setButtonText(t("cancel")).onClick(() => {
+        this.close();
+      });
+    });
+  }
+  async renameFolder() {
+    try {
+      const parentPath = this.folder.parent ? this.folder.parent.path : "";
+      const newPath = (0, import_obsidian9.normalizePath)(parentPath ? `${parentPath}/${this.newName}` : this.newName);
+      await this.app.fileManager.renameFile(this.folder, newPath);
+      setTimeout(() => {
+        this.gridView.render();
+      }, 100);
+    } catch (error) {
+      console.error("Failed to rename folder", error);
+    }
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+
+// src/modal/moveFolderSuggestModal.ts
+var import_obsidian10 = require("obsidian");
+var moveFolderSuggestModal = class extends import_obsidian10.SuggestModal {
+  constructor(plugin, folder, view) {
+    super(plugin.app);
+    this.plugin = plugin;
+    this.folder = folder;
+    this.view = view;
+    this.allPaths = this.app.vault.getAllFolders().map((f) => f.path).sort((a, b) => a.localeCompare(b));
+    this.setPlaceholder("/");
+    this.inputEl.focus();
+  }
+  getSuggestions(query) {
+    const lower = query.toLowerCase();
+    const filtered = this.allPaths.filter((p) => p.toLowerCase().includes(lower));
+    if ("/".includes(lower) && !filtered.includes("/")) {
+      filtered.unshift("/");
+    }
+    return filtered;
+  }
+  renderSuggestion(value, el) {
+    el.setText(value);
+  }
+  async onChooseSuggestion(value) {
+    try {
+      const dest = value === "/" ? "" : value.replace(/\/$/, "");
+      const newPath = (0, import_obsidian10.normalizePath)(dest ? `${dest}/${this.folder.name}` : this.folder.name);
+      if (newPath === this.folder.path)
+        return;
+      await this.app.fileManager.renameFile(this.folder, newPath);
+      setTimeout(() => this.view.render(), 100);
+    } catch (err) {
+      console.error("Failed to move folder", err);
+    }
+  }
+};
+
+// src/renderFolder.ts
+async function renderFolder(gridView, container) {
+  var _a;
+  if (gridView.sourceMode === "folder" && gridView.searchQuery === "") {
+    const currentFolder = gridView.app.vault.getAbstractFileByPath(gridView.sourcePath || "/");
+    if (currentFolder instanceof import_obsidian11.TFolder) {
+      if (import_obsidian11.Platform.isDesktop) {
+        container.addEventListener("dragover", (event) => {
+          if (event.target.closest(".ge-folder-item")) {
+            return;
+          }
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          container.addClass("ge-dragover");
+        }, true);
+        container.addEventListener("dragleave", (event) => {
+          if (container.contains(event.relatedTarget)) {
+            return;
+          }
+          container.removeClass("ge-dragover");
+        });
+        container.addEventListener("drop", async (event) => {
+          var _a2, _b;
+          if (event.target.closest(".ge-folder-item")) {
+            return;
+          }
+          event.preventDefault();
+          container.removeClass("ge-dragover");
+          const filesDataString = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
+          if (filesDataString) {
+            try {
+              const filePaths = JSON.parse(filesDataString);
+              const folderPath = currentFolder.path;
+              if (!folderPath)
+                return;
+              for (const path of filePaths) {
+                const file2 = gridView.app.vault.getAbstractFileByPath(path);
+                if (file2 instanceof import_obsidian11.TFile) {
+                  try {
+                    const newPath = (0, import_obsidian11.normalizePath)(`${folderPath}/${file2.name}`);
+                    if (path === newPath) {
+                      continue;
+                    }
+                    await gridView.app.fileManager.renameFile(file2, newPath);
+                  } catch (error) {
+                    console.error(`An error occurred while moving the file ${file2.path}:`, error);
+                  }
+                }
+              }
+              return;
+            } catch (error) {
+              console.error("Error parsing dragged files data:", error);
+            }
+          }
+          const filePath = (_b = event.dataTransfer) == null ? void 0 : _b.getData("text/plain");
+          if (!filePath)
+            return;
+          const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
+          const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
+          if (file instanceof import_obsidian11.TFile) {
+            try {
+              const newPath = (0, import_obsidian11.normalizePath)(`${currentFolder.path}/${file.name}`);
+              if (file.path !== newPath) {
+                await gridView.app.fileManager.renameFile(file, newPath);
+              }
+            } catch (error) {
+              console.error("An error occurred while moving the file:", error);
+            }
+          }
+        });
+      }
+      const subfolders = currentFolder.children.filter((child) => {
+        if (!(child instanceof import_obsidian11.TFolder))
+          return false;
+        return !isFolderIgnored(
+          child,
+          gridView.plugin.settings.ignoredFolders,
+          gridView.plugin.settings.ignoredFolderPatterns,
+          gridView.showIgnoredFolders
+        );
+      }).sort((a, b) => a.name.localeCompare(b.name));
+      for (const folder of subfolders) {
+        const folderEl = container.createDiv("ge-grid-item ge-folder-item");
+        gridView.gridItems.push(folderEl);
+        folderEl.dataset.folderPath = folder.path;
+        const contentArea = folderEl.createDiv("ge-content-area");
+        const titleContainer = contentArea.createDiv("ge-title-container");
+        const customFolderIcon = gridView.plugin.settings.customFolderIcon;
+        titleContainer.createEl("span", { cls: "ge-title", text: `${customFolderIcon} ${folder.name}`.trim() });
+        (0, import_obsidian11.setTooltip)(folderEl, folder.name, { placement: gridView.cardLayout === "vertical" ? "bottom" : "right" });
+        const notePath = `${folder.path}/${folder.name}.md`;
+        const noteFile = gridView.app.vault.getAbstractFileByPath(notePath);
+        if (noteFile instanceof import_obsidian11.TFile) {
+          const noteIcon = titleContainer.createEl("span", {
+            cls: "ge-foldernote-button"
+          });
+          (0, import_obsidian11.setIcon)(noteIcon, "panel-left-open");
+          noteIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+            gridView.app.workspace.getLeaf().openFile(noteFile);
+          });
+          const metadata = (_a = gridView.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
+          const colorValue = metadata == null ? void 0 : metadata.color;
+          if (colorValue) {
+            folderEl.addClass(`ge-folder-color-${colorValue}`);
+          }
+          const iconValue = metadata == null ? void 0 : metadata.icon;
+          if (iconValue) {
+            const title = folderEl.querySelector(".ge-title");
+            if (title) {
+              title.textContent = `${iconValue} ${folder.name}`;
+            }
+          }
+        }
+        folderEl.addEventListener("click", (event) => {
+          if (event.ctrlKey || event.metaKey) {
+            event.preventDefault();
+            event.stopPropagation();
+            openFolderInNewView(gridView, folder.path);
+          } else {
+            gridView.setSource("folder", folder.path, true);
+            gridView.clearSelection();
+          }
+        });
+        folderEl.addEventListener("contextmenu", (event) => {
+          event.preventDefault();
+          const menu = new import_obsidian11.Menu();
+          menu.addItem((item) => {
+            item.setTitle(t("open_in_new_grid_view")).setIcon("grid").onClick(() => {
+              openFolderInNewView(gridView, folder.path);
+            });
+          });
+          menu.addSeparator();
+          const notePath2 = `${folder.path}/${folder.name}.md`;
+          let noteFile2 = gridView.app.vault.getAbstractFileByPath(notePath2);
+          if (noteFile2 instanceof import_obsidian11.TFile) {
+            menu.addItem((item) => {
+              item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
+                gridView.app.workspace.getLeaf().openFile(noteFile2);
+              });
+            });
+            menu.addItem((item) => {
+              item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
+                if (folder instanceof import_obsidian11.TFolder) {
+                  showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
+                }
+              });
+            });
+            menu.addItem((item) => {
+              item.setTitle(t("delete_folder_note")).setIcon("folder-x").onClick(() => {
+                gridView.app.fileManager.trashFile(noteFile2);
+              });
+            });
+          } else {
+            menu.addItem((item) => {
+              item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
+                if (folder instanceof import_obsidian11.TFolder) {
+                  showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
+                }
+              });
+            });
+          }
+          menu.addSeparator();
+          if (!gridView.plugin.settings.ignoredFolders.includes(folder.path)) {
+            menu.addItem((item) => {
+              item.setTitle(t("ignore_folder")).setIcon("folder-x").onClick(() => {
+                gridView.plugin.settings.ignoredFolders.push(folder.path);
+                gridView.plugin.saveSettings();
+              });
+            });
+          } else {
+            menu.addItem((item) => {
+              item.setTitle(t("unignore_folder")).setIcon("folder-up").onClick(() => {
+                gridView.plugin.settings.ignoredFolders = gridView.plugin.settings.ignoredFolders.filter((path) => path !== folder.path);
+                gridView.plugin.saveSettings();
+              });
+            });
+          }
+          menu.addItem((item) => {
+            item.setTitle(t("move_folder")).setIcon("folder-cog").onClick(() => {
+              if (folder instanceof import_obsidian11.TFolder) {
+                new moveFolderSuggestModal(gridView.plugin, folder, gridView).open();
+              }
+            });
+          });
+          menu.addItem((item) => {
+            item.setTitle(t("rename_folder")).setIcon("file-cog").onClick(() => {
+              if (folder instanceof import_obsidian11.TFolder) {
+                showFolderRenameModal(gridView.app, gridView.plugin, folder, gridView);
+              }
+            });
+          });
+          menu.addItem((item) => {
+            item.setWarning(true);
+            item.setTitle(t("delete_folder")).setIcon("trash").onClick(async () => {
+              if (folder instanceof import_obsidian11.TFolder) {
+                await gridView.app.fileManager.trashFile(folder);
+                setTimeout(() => {
+                  gridView.render();
+                }, 100);
+              }
+            });
+          });
+          menu.showAtMouseEvent(event);
+        });
+      }
+      if (subfolders.length > 0) {
+        container.createDiv("ge-break");
+      }
+    }
+  }
+  if (import_obsidian11.Platform.isDesktop) {
+    const folderItems = gridView.containerEl.querySelectorAll(".ge-folder-item");
+    folderItems.forEach((folderItem) => {
+      folderItem.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        folderItem.addClass("ge-dragover");
+      });
+      folderItem.addEventListener("dragleave", () => {
+        folderItem.removeClass("ge-dragover");
+      });
+      folderItem.addEventListener("drop", async (event) => {
+        var _a2, _b;
+        event.preventDefault();
+        folderItem.removeClass("ge-dragover");
+        const filesDataString = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
+        if (filesDataString) {
+          try {
+            const filePaths = JSON.parse(filesDataString);
+            const folderPath2 = folderItem.dataset.folderPath;
+            if (!folderPath2)
+              return;
+            const folder2 = gridView.app.vault.getAbstractFileByPath(folderPath2);
+            if (!(folder2 instanceof import_obsidian11.TFolder))
+              return;
+            for (const path of filePaths) {
+              const file2 = gridView.app.vault.getAbstractFileByPath(path);
+              if (file2 instanceof import_obsidian11.TFile) {
+                try {
+                  const newPath = (0, import_obsidian11.normalizePath)(`${folderPath2}/${file2.name}`);
+                  await gridView.app.fileManager.renameFile(file2, newPath);
+                } catch (error) {
+                  console.error(`An error occurred while moving the file ${file2.path}:`, error);
+                }
+              }
+            }
+            return;
+          } catch (error) {
+            console.error("Error parsing dragged files data:", error);
+          }
+        }
+        const filePath = (_b = event.dataTransfer) == null ? void 0 : _b.getData("text/plain");
+        if (!filePath)
+          return;
+        const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
+        const folderPath = folderItem.dataset.folderPath;
+        if (!folderPath)
+          return;
+        const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
+        const folder = gridView.app.vault.getAbstractFileByPath(folderPath);
+        if (file instanceof import_obsidian11.TFile && folder instanceof import_obsidian11.TFolder) {
+          try {
+            const newPath = (0, import_obsidian11.normalizePath)(`${folderPath}/${file.name}`);
+            await gridView.app.fileManager.renameFile(file, newPath);
+          } catch (error) {
+            console.error("An error occurred while moving the file:", error);
+          }
+        }
+      });
+    });
+  }
+}
+function openFolderInNewView(gridview, folderPath) {
+  const { workspace } = gridview.app;
+  let leaf = null;
+  workspace.getLeavesOfType("grid-view");
+  switch (gridview.plugin.settings.defaultOpenLocation) {
+    case "left":
+      leaf = workspace.getLeftLeaf(false);
+      break;
+    case "right":
+      leaf = workspace.getRightLeaf(false);
+      break;
+    case "tab":
+    default:
+      leaf = workspace.getLeaf("tab");
+      break;
+  }
+  if (!leaf) {
+    leaf = workspace.getLeaf("tab");
+  }
+  leaf.setViewState({ type: "grid-view", active: true });
+  if (leaf.view instanceof GridView) {
+    leaf.view.setSource("folder", folderPath);
+  }
+  workspace.revealLeaf(leaf);
+}
+
+// src/renderFiles.ts
+async function renderFiles(gridView, container) {
+  let loadingDiv = null;
+  if (gridView.searchQuery || gridView.sourceMode === "tasks") {
+    loadingDiv = container.createDiv({ text: t("searching"), cls: "ge-loading-indicator" });
+  }
+  let files = [];
+  let fileIndexMap = /* @__PURE__ */ new Map();
+  if (gridView.searchQuery) {
+    let allFiles = [];
+    if (gridView.searchAllFiles) {
+      allFiles = gridView.app.vault.getFiles().filter(
+        (file) => isDocumentFile(file) || isMediaFile(file) && gridView.searchMediaFiles
+      );
+    } else {
+      allFiles = await getFiles(gridView, gridView.searchMediaFiles);
+      if (gridView.sourceMode === "bookmarks") {
+        allFiles = allFiles.filter(
+          (file) => isDocumentFile(file) || isMediaFile(file) && gridView.searchMediaFiles
+        );
+        allFiles.forEach((file, index) => {
+          fileIndexMap.set(file, index);
+        });
+      } else if (gridView.sourceMode === "search") {
+        allFiles = allFiles.filter(
+          (file) => isDocumentFile(file) || isMediaFile(file) && gridView.searchMediaFiles
+        );
+      } else if (gridView.sourceMode === "recent-files") {
+        allFiles = ignoredFiles(allFiles, gridView).slice(0, gridView.plugin.settings.recentFilesCount);
+      } else if (gridView.sourceMode.startsWith("custom-")) {
+        allFiles.forEach((file, index) => {
+          fileIndexMap.set(file, index);
+        });
+      }
+    }
+    const searchTerms = gridView.searchQuery.toLowerCase().split(/\s+/).filter((term) => term.trim() !== "");
+    const tagTerms = [];
+    const linkTerms = [];
+    const normalTerms = [];
+    for (const term of searchTerms) {
+      if (term.startsWith("#")) {
+        tagTerms.push(term.substring(1));
+      } else if (term.startsWith("[[") && term.endsWith("]]")) {
+        linkTerms.push(term.slice(2, -2));
+      } else {
+        normalTerms.push(term);
+      }
+    }
+    let linkTargetFileSets = [];
+    const hasLinkSearch = linkTerms.length > 0;
+    if (hasLinkSearch) {
+      for (const linkTarget of linkTerms) {
+        let targetFile = gridView.app.vault.getAbstractFileByPath(linkTarget + ".md");
+        if (!targetFile) {
+          targetFile = gridView.app.metadataCache.getFirstLinkpathDest(linkTarget, "");
+        }
+        if (targetFile && "extension" in targetFile) {
+          const backlinks = gridView.app.metadataCache.getBacklinksForFile(targetFile);
+          const currentLinkFiles = /* @__PURE__ */ new Set();
+          if (backlinks) {
+            for (const [filePath, links] of backlinks.data.entries()) {
+              currentLinkFiles.add(filePath);
+            }
+          }
+          linkTargetFileSets.push(currentLinkFiles);
+        } else {
+          linkTargetFileSets.push(/* @__PURE__ */ new Set());
+        }
+      }
+    }
+    await Promise.all(
+      allFiles.map(async (file) => {
+        if (hasLinkSearch) {
+          const isInAllLinkTargets = linkTargetFileSets.every((linkSet) => linkSet.has(file.path));
+          if (!isInAllLinkTargets) {
+            return;
+          }
+        }
+        const fileName = file.name.toLowerCase();
+        let matchesNormalTerms = true;
+        let matchesTags = true;
+        if (normalTerms.length > 0) {
+          if (gridView.searchFilesNameOnly) {
+            matchesNormalTerms = normalTerms.every((term) => fileName.includes(term));
+          } else {
+            matchesNormalTerms = true;
+            let contentLower = null;
+            for (const term of normalTerms) {
+              if (fileName.includes(term)) {
+                continue;
+              }
+              if (file.extension === "md") {
+                if (contentLower === null) {
+                  contentLower = (await gridView.app.vault.cachedRead(file)).toLowerCase();
+                }
+                if (contentLower.includes(term)) {
+                  continue;
+                }
+              }
+              matchesNormalTerms = false;
+              break;
+            }
+          }
+        }
+        if (tagTerms.length > 0) {
+          if (file.extension !== "md") {
+            matchesTags = false;
+          } else {
+            const fileCache = gridView.app.metadataCache.getFileCache(file);
+            matchesTags = false;
+            if (fileCache) {
+              const collectedTags = [];
+              if (Array.isArray(fileCache.tags)) {
+                for (const t2 of fileCache.tags) {
+                  if (t2 && t2.tag) {
+                    const clean = t2.tag.toLowerCase().replace(/^#/, "");
+                    collectedTags.push(...clean.split(/\s+/).filter((st) => st.trim() !== ""));
+                  }
+                }
+              }
+              if (fileCache.frontmatter && fileCache.frontmatter.tags) {
+                const fmTags = fileCache.frontmatter.tags;
+                if (typeof fmTags === "string") {
+                  collectedTags.push(
+                    ...fmTags.split(/[,\s]+/).map((t2) => t2.toLowerCase().replace(/^#/, "")).filter((t2) => t2.trim() !== "")
+                  );
+                } else if (Array.isArray(fmTags)) {
+                  for (const t2 of fmTags) {
+                    if (typeof t2 === "string") {
+                      const clean = t2.toLowerCase().replace(/^#/, "");
+                      collectedTags.push(...clean.split(/\s+/).filter((st) => st.trim() !== ""));
+                    }
+                  }
+                }
+              }
+              matchesTags = tagTerms.every((tag) => collectedTags.includes(tag));
+            }
+          }
+        }
+        if (matchesNormalTerms && matchesTags) {
+          files.push(file);
+        }
+      })
+    );
+    if (gridView.searchAllFiles) {
+      files = sortFiles(files, gridView);
+    } else {
+      if (gridView.sourceMode === "bookmarks") {
+        files.sort((a, b) => {
+          var _a, _b;
+          const indexA = (_a = fileIndexMap.get(a)) != null ? _a : Number.MAX_SAFE_INTEGER;
+          const indexB = (_b = fileIndexMap.get(b)) != null ? _b : Number.MAX_SAFE_INTEGER;
+          return indexA - indexB;
+        });
+      } else if (gridView.sourceMode === "recent-files") {
+        const sortType = gridView.sortType;
+        gridView.sortType = "mtime-desc";
+        files = sortFiles(files, gridView);
+        gridView.sortType = sortType;
+      } else if (gridView.sourceMode === "random-note") {
+        const sortType = gridView.sortType;
+        gridView.sortType = "random";
+        files = sortFiles(files, gridView);
+        gridView.sortType = sortType;
+      } else if (gridView.sourceMode.startsWith("custom-")) {
+        files.sort((a, b) => {
+          var _a, _b;
+          const indexA = (_a = fileIndexMap.get(a)) != null ? _a : Number.MAX_SAFE_INTEGER;
+          const indexB = (_b = fileIndexMap.get(b)) != null ? _b : Number.MAX_SAFE_INTEGER;
+          return indexA - indexB;
+        });
+      } else {
+        files = sortFiles(files, gridView);
+      }
+    }
+    files = ignoredFiles(files, gridView);
+  } else {
+    files = await getFiles(gridView, gridView.randomNoteIncludeMedia);
+    files = ignoredFiles(files, gridView);
+    if (gridView.sourceMode === "recent-files") {
+      files = files.slice(0, gridView.plugin.settings.recentFilesCount);
+    }
+    if (gridView.sourceMode === "random-note") {
+      files = files.slice(0, gridView.plugin.settings.randomNoteCount);
+    }
+  }
+  if (loadingDiv) {
+    loadingDiv.remove();
+  }
+  return files;
+}
+
+// src/handleKeyDown.ts
+function handleKeyDown(gridView, event) {
+  if (gridView.gridItems.length === 0 || gridView.isShowingNote)
+    return;
+  if (document.querySelector(".modal-container"))
+    return;
+  let newIndex = gridView.selectedItemIndex;
+  if (gridView.selectedItemIndex === -1 && ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+    gridView.hasKeyboardFocus = true;
+    gridView.selectItem(0);
+    event.preventDefault();
+    return;
+  }
+  switch (event.key) {
+    case "ArrowRight":
+      if (event.altKey) {
+        if (gridView.selectedItemIndex >= 0 && gridView.selectedItemIndex < gridView.gridItems.length) {
+          gridView.gridItems[gridView.selectedItemIndex].click();
+        }
+      }
+      newIndex = Math.min(gridView.gridItems.length - 1, gridView.selectedItemIndex + 1);
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "ArrowLeft":
+      if (event.altKey) {
+        if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
+          const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
+          gridView.setSource("folder", parentPath, true);
+          gridView.clearSelection();
+          event.preventDefault();
+        }
+        break;
+      }
+      newIndex = Math.max(0, gridView.selectedItemIndex - 1);
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "ArrowDown":
+      if (gridView.selectedItemIndex >= 0) {
+        const currentItem = gridView.gridItems[gridView.selectedItemIndex];
+        const currentRect = currentItem.getBoundingClientRect();
+        const currentCenterX = currentRect.left + currentRect.width / 2;
+        const currentBottom = currentRect.bottom;
+        let closestItem = -1;
+        let minDistance = Number.MAX_VALUE;
+        let minVerticalDistance = Number.MAX_VALUE;
+        for (let i = 0; i < gridView.gridItems.length; i++) {
+          if (i === gridView.selectedItemIndex)
+            continue;
+          const itemRect = gridView.gridItems[i].getBoundingClientRect();
+          const itemCenterX = itemRect.left + itemRect.width / 2;
+          const itemTop = itemRect.top;
+          if (itemTop <= currentBottom)
+            continue;
+          const horizontalDistance = Math.abs(itemCenterX - currentCenterX);
+          const verticalDistance = itemTop - currentBottom;
+          if (verticalDistance < minVerticalDistance || verticalDistance === minVerticalDistance && horizontalDistance < minDistance) {
+            minVerticalDistance = verticalDistance;
+            minDistance = horizontalDistance;
+            closestItem = i;
+          }
+        }
+        if (closestItem !== -1) {
+          newIndex = closestItem;
+        } else {
+          newIndex = gridView.gridItems.length - 1;
+        }
+      } else {
+        newIndex = 0;
+      }
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "ArrowUp":
+      if (event.altKey) {
+        if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
+          const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
+          gridView.setSource("folder", parentPath, true);
+          gridView.clearSelection();
+          event.preventDefault();
+        }
+        break;
+      }
+      if (gridView.selectedItemIndex >= 0) {
+        const currentItem = gridView.gridItems[gridView.selectedItemIndex];
+        const currentRect = currentItem.getBoundingClientRect();
+        const currentCenterX = currentRect.left + currentRect.width / 2;
+        const currentTop = currentRect.top;
+        let closestItem = -1;
+        let minDistance = Number.MAX_VALUE;
+        let minVerticalDistance = Number.MAX_VALUE;
+        for (let i = 0; i < gridView.gridItems.length; i++) {
+          if (i === gridView.selectedItemIndex)
+            continue;
+          const itemRect = gridView.gridItems[i].getBoundingClientRect();
+          const itemCenterX = itemRect.left + itemRect.width / 2;
+          const itemBottom = itemRect.bottom;
+          if (itemBottom >= currentTop)
+            continue;
+          const horizontalDistance = Math.abs(itemCenterX - currentCenterX);
+          const verticalDistance = currentTop - itemBottom;
+          if (verticalDistance < minVerticalDistance || verticalDistance === minVerticalDistance && horizontalDistance < minDistance) {
+            minVerticalDistance = verticalDistance;
+            minDistance = horizontalDistance;
+            closestItem = i;
+          }
+        }
+        if (closestItem !== -1) {
+          newIndex = closestItem;
+        } else {
+          newIndex = 0;
+        }
+      } else {
+        newIndex = 0;
+      }
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "Home":
+      newIndex = 0;
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "End":
+      newIndex = gridView.gridItems.length - 1;
+      gridView.hasKeyboardFocus = true;
+      event.preventDefault();
+      break;
+    case "Enter":
+      if (gridView.selectedItemIndex >= 0 && gridView.selectedItemIndex < gridView.gridItems.length) {
+        gridView.gridItems[gridView.selectedItemIndex].click();
+      }
+      gridView.clearSelection();
+      event.preventDefault();
+      break;
+    case "Backspace":
+      if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
+        const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
+        gridView.setSource("folder", parentPath, true);
+        gridView.clearSelection();
+        event.preventDefault();
+      }
+      break;
+    case "Escape":
+      if (gridView.selectedItemIndex >= 0) {
+        gridView.hasKeyboardFocus = false;
+        gridView.clearSelection();
+        event.preventDefault();
+      }
+      break;
+  }
+  if (newIndex !== gridView.selectedItemIndex) {
+    gridView.selectItem(newIndex);
+  }
+}
+
+// src/fileWatcher.ts
+var import_obsidian12 = require("obsidian");
+var FileWatcher = class {
+  // 用於去抖動 render()
+  constructor(plugin, gridView) {
+    this.renderTimer = null;
+    // 以 200ms 去抖動的方式排程 render，避免短時間內大量重繪
+    this.scheduleRender = (delay = 200) => {
+      if (this.gridView.isPinned() || this.gridView.isShowingNote) {
+        return;
+      }
+      if (this.gridView.sourceMode === "recent-files" && this.gridView.containerEl.offsetParent === null) {
+        return;
+      }
+      if (this.renderTimer !== null) {
+        clearTimeout(this.renderTimer);
+      }
+      this.renderTimer = window.setTimeout(() => {
+        this.gridView.render();
+        this.renderTimer = null;
+      }, delay);
+    };
+    this.plugin = plugin;
+    this.gridView = gridView;
+    this.app = plugin.app;
+  }
+  registerFileWatcher() {
+    if (!this.plugin.settings.enableFileWatcher) {
+      return;
+    }
+    this.plugin.registerEvent(
+      this.app.vault.on("modify", (file) => {
+        if (file instanceof import_obsidian12.TFile) {
+          if (this.gridView.sourceMode === "recent-files") {
+            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
+              this.scheduleRender(5e3);
+            }
+          }
+        }
+      })
+    );
+    this.plugin.registerEvent(
+      this.app.vault.on("create", (file) => {
+        if (file instanceof import_obsidian12.TFile) {
+          if (this.gridView.searchQuery !== "" && this.gridView.searchAllFiles) {
+            this.scheduleRender(2e3);
+            return;
+          }
+          if (this.gridView.sourceMode === "random-note") {
+            return;
+          } else if (this.gridView.sourceMode === "recent-files") {
+            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
+              this.scheduleRender(2e3);
+            }
+          } else if (this.gridView.sourceMode === "folder") {
+            if (this.gridView.sourcePath) {
+              const fileDirPath = file.path.split("/").slice(0, -1).join("/") || "/";
+              if (fileDirPath === this.gridView.sourcePath) {
+                this.scheduleRender();
+              }
+            }
+          } else if (this.gridView.sourceMode === "backlinks") {
+            if (isDocumentFile(file)) {
+              this.scheduleRender();
+            }
+          } else {
+            this.scheduleRender();
+          }
+        }
+      })
+    );
+    this.plugin.registerEvent(
+      this.app.vault.on("delete", (file) => {
+        if (file instanceof import_obsidian12.TFile) {
+          if (this.gridView) {
+            const gridItemIndex = this.gridView.gridItems.findIndex(
+              (item) => item.dataset.filePath === file.path
+            );
+            if (gridItemIndex >= 0) {
+              this.gridView.gridItems[gridItemIndex].remove();
+              this.gridView.gridItems.splice(gridItemIndex, 1);
+              const gridContainer = this.gridView.containerEl.querySelector(".ge-grid-container");
+              this.cleanupDateDividers(gridContainer);
+            }
+          }
+        }
+      })
+    );
+    this.plugin.registerEvent(
+      this.app.vault.on("rename", (file, oldPath) => {
+        if (file instanceof import_obsidian12.TFile) {
+          const fileDirPath = file.path.split("/").slice(0, -1).join("/") || "/";
+          const oldDirPath = oldPath.split("/").slice(0, -1).join("/") || "/";
+          if (fileDirPath !== oldDirPath) {
+            if (this.gridView.sourceMode === "folder") {
+              if (this.gridView.sourcePath && this.gridView.searchQuery === "") {
+                if (fileDirPath === this.gridView.sourcePath || oldDirPath === this.gridView.sourcePath) {
+                  this.scheduleRender();
+                  return;
+                }
+              }
+            }
+          }
+          if (this.gridView) {
+            const gridItemIndex = this.gridView.gridItems.findIndex(
+              (item) => item.dataset.filePath === oldPath
+            );
+            if (gridItemIndex >= 0) {
+              const getitle = this.gridView.gridItems[gridItemIndex].querySelector(".ge-grid-item .ge-title");
+              if (getitle) {
+                this.gridView.gridItems[gridItemIndex].dataset.filePath = file.path;
+                getitle.textContent = file.basename;
+                getitle.setAttribute("title", file.basename);
+              }
+            }
+          }
+        }
+      })
+    );
+    this.plugin.registerEvent(
+      this.app.internalPlugins.plugins.bookmarks.instance.on("changed", () => {
+        if (this.gridView.sourceMode === "bookmarks") {
+          this.scheduleRender();
+        }
+      })
+    );
+    this.plugin.registerEvent(
+      this.app.workspace.on("file-open", (file) => {
+        if (file instanceof import_obsidian12.TFile && this.gridView.searchQuery === "") {
+          const sourceMode = this.gridView.sourceMode;
+          if (sourceMode === "backlinks" || sourceMode === "outgoinglinks") {
+            this.scheduleRender();
+            return;
+          }
+          if (sourceMode.startsWith("custom-")) {
+            const mode = this.plugin.settings.customModes.find((m) => m.internalName === sourceMode);
+            if (mode && mode.dataviewCode.includes("dv.current")) {
+              this.scheduleRender();
+            }
+          }
+        }
+      })
+    );
+  }
+  // 清理日期分隔線
+  cleanupDateDividers(container) {
+    if (!container)
+      return;
+    const dateDividers = Array.from(container.querySelectorAll(".ge-date-divider"));
+    for (let i = dateDividers.length - 1; i >= 0; i--) {
+      const currentDivider = dateDividers[i];
+      const nextDivider = dateDividers[i + 1];
+      let nextElement = currentDivider.nextElementSibling;
+      let hasItemsBetween = false;
+      while (nextElement && (!nextDivider || nextElement !== nextDivider)) {
+        if (!nextElement.classList.contains("ge-date-divider")) {
+          hasItemsBetween = true;
+          break;
+        }
+        nextElement = nextElement.nextElementSibling;
+      }
+      if (!nextDivider) {
+        hasItemsBetween = currentDivider.nextElementSibling !== null;
+      }
+      if (!hasItemsBetween) {
+        currentDivider.remove();
+      }
+    }
+  }
+};
+
+// src/mediaUtils.ts
+var import_obsidian13 = require("obsidian");
+async function findFirstImageInNote(app, content) {
+  try {
+    const internalStyle = /!?\[\[(.*?\.(?:jpg|jpeg|png|gif|webp))(?:\|.*?)?\]\]/;
+    const markdownStyle = /!\[(.*?)\]\(\s*(\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s)]*)\s*(?:\s+["'][^"']*["'])?\s*\)/;
+    const frontmatterUrl = /^[\w\-_]+:\s*(https?:\/\/\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s]*)\s*$/;
+    const internalMatch = content.match(new RegExp(`(?:${internalStyle.source}|${markdownStyle.source}|${frontmatterUrl.source})`, "im"));
+    if (internalMatch) {
+      return processMediaLink(app, internalMatch);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error finding image in note:", error);
+    return null;
+  }
+}
+function processMediaLink(app, internalMatch) {
+  if (internalMatch[4]) {
+    return internalMatch[4];
+  }
+  if (internalMatch[1]) {
+    const file = app.metadataCache.getFirstLinkpathDest(internalMatch[1], "");
+    if (file) {
+      return app.vault.getResourcePath(file);
+    }
+  }
+  if (internalMatch[3]) {
+    const url = internalMatch[3];
+    if (url.startsWith("http")) {
+      return url;
+    } else {
+      const file = app.metadataCache.getFirstLinkpathDest(url, "");
+      if (!file) {
+        const fileByPath = app.vault.getAbstractFileByPath(url);
+        if (fileByPath instanceof import_obsidian13.TFile) {
+          return app.vault.getResourcePath(fileByPath);
+        }
+      } else {
+        return app.vault.getResourcePath(file);
+      }
+    }
+  }
+  return null;
+}
+
 // src/modal/mediaModal.ts
-var import_obsidian5 = require("obsidian");
-var MediaModal = class extends import_obsidian5.Modal {
+var import_obsidian14 = require("obsidian");
+var MediaModal = class extends import_obsidian14.Modal {
   // 最大滑動時間（毫秒）
   constructor(app, file, mediaFiles, gridView) {
     super(app);
@@ -2766,7 +4909,7 @@ var MediaModal = class extends import_obsidian5.Modal {
     contentEl.addClass("ge-media-modal-content");
     const mediaView = contentEl.createDiv("ge-media-view");
     const closeButton = contentEl.createDiv("ge-media-close-button");
-    (0, import_obsidian5.setIcon)(closeButton, "x");
+    (0, import_obsidian14.setIcon)(closeButton, "x");
     closeButton.addEventListener("click", (e) => {
       e.stopPropagation();
       this.close();
@@ -3050,184 +5193,12 @@ var MediaModal = class extends import_obsidian5.Modal {
   }
 };
 
-// src/modal/folderNoteSettingsModal.ts
-var import_obsidian6 = require("obsidian");
-function showFolderNoteSettingsModal(app, plugin, folder, gridView) {
-  new FolderNoteSettingsModal(app, plugin, folder, gridView).open();
-}
-var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
-  constructor(app, plugin, folder, gridView) {
-    super(app);
-    this.settings = {
-      sort: "",
-      color: "",
-      icon: "\u{1F4C1}",
-      isPinned: false,
-      cardLayout: ""
-    };
-    this.existingFile = null;
-    this.plugin = plugin;
-    this.folder = folder;
-    this.gridView = gridView;
-    const notePath = `${folder.path}/${folder.name}.md`;
-    const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-    if (noteFile instanceof import_obsidian6.TFile) {
-      this.existingFile = noteFile;
-    }
-  }
-  async onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    if (this.existingFile) {
-      await this.loadExistingSettings();
-    }
-    new import_obsidian6.Setting(contentEl).setName(t("folder_note_settings")).setHeading();
-    new import_obsidian6.Setting(contentEl).setName(t("folder_sort_type")).setDesc(t("folder_sort_type_desc")).addDropdown((dropdown) => {
-      dropdown.addOption("", t("default")).addOption("name-asc", t("sort_name_asc")).addOption("name-desc", t("sort_name_desc")).addOption("mtime-desc", t("sort_mtime_desc")).addOption("mtime-asc", t("sort_mtime_asc")).addOption("ctime-desc", t("sort_ctime_desc")).addOption("ctime-asc", t("sort_ctime_asc")).addOption("random", t("sort_random")).setValue(this.settings.sort).onChange((value) => {
-        this.settings.sort = value;
-      });
-    });
-    new import_obsidian6.Setting(contentEl).setName(t("folder_color")).setDesc(t("folder_color_desc")).addDropdown((dropdown) => {
-      dropdown.addOption("", t("no_color")).addOption("red", t("color_red")).addOption("orange", t("color_orange")).addOption("yellow", t("color_yellow")).addOption("green", t("color_green")).addOption("cyan", t("color_cyan")).addOption("blue", t("color_blue")).addOption("purple", t("color_purple")).addOption("pink", t("color_pink")).setValue(this.settings.color).onChange((value) => {
-        this.settings.color = value;
-      });
-    });
-    const customFolderIcon = this.plugin.settings.customFolderIcon;
-    new import_obsidian6.Setting(contentEl).setName(t("folder_icon")).setDesc(t("folder_icon_desc")).addText((text) => {
-      text.setPlaceholder(customFolderIcon).setValue(this.settings.icon || customFolderIcon).onChange((value) => {
-        this.settings.icon = value || customFolderIcon;
-      });
-    });
-    new import_obsidian6.Setting(contentEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
-      drop.addOption("", t("default"));
-      drop.addOption("horizontal", t("horizontal_card"));
-      drop.addOption("vertical", t("vertical_card"));
-      drop.setValue(this.settings.cardLayout);
-      drop.onChange(async (value) => {
-        this.settings.cardLayout = value;
-      });
-    });
-    new import_obsidian6.Setting(contentEl).setName(t("foldernote_pinned")).setDesc(t("foldernote_pinned_desc")).addToggle((toggle) => {
-      toggle.setValue(this.settings.isPinned).onChange((value) => {
-        this.settings.isPinned = value;
-      });
-    });
-    const buttonSetting = new import_obsidian6.Setting(contentEl);
-    buttonSetting.addButton((button) => {
-      button.setButtonText(t("confirm")).setCta().onClick(() => {
-        this.saveFolderNote();
-        this.close();
-      });
-    });
-  }
-  // 讀取現有筆記的設定
-  async loadExistingSettings() {
-    var _a;
-    if (!this.existingFile)
-      return;
-    try {
-      const fileCache = this.app.metadataCache.getFileCache(this.existingFile);
-      if (fileCache && fileCache.frontmatter) {
-        if ("sort" in fileCache.frontmatter) {
-          this.settings.sort = fileCache.frontmatter.sort || "";
-        }
-        if ("color" in fileCache.frontmatter) {
-          this.settings.color = fileCache.frontmatter.color || "";
-        }
-        if ("icon" in fileCache.frontmatter) {
-          this.settings.icon = fileCache.frontmatter.icon || "\u{1F4C1}";
-        }
-        if ("cardLayout" in fileCache.frontmatter) {
-          this.settings.cardLayout = fileCache.frontmatter.cardLayout || "default";
-        }
-        if (((_a = fileCache.frontmatter) == null ? void 0 : _a.pinned) && Array.isArray(fileCache.frontmatter.pinned)) {
-          this.settings.isPinned = fileCache.frontmatter.pinned.some((item) => {
-            if (!item)
-              return false;
-            const pinnedName = item.toString();
-            const pinnedNameWithoutExt = pinnedName.replace(/\.\w+$/, "");
-            return pinnedNameWithoutExt === this.folder.name;
-          });
-        }
-      }
-    } catch (error) {
-      console.error("\u7121\u6CD5\u8B80\u53D6\u8CC7\u6599\u593E\u7B46\u8A18\u8A2D\u5B9A", error);
-    }
-  }
-  // 儲存或更新資料夾筆記
-  async saveFolderNote() {
-    const notePath = `${this.folder.path}/${this.folder.name}.md`;
-    try {
-      let file;
-      if (this.existingFile) {
-        file = this.existingFile;
-      } else {
-        file = await this.app.vault.create(notePath, "");
-        await this.app.workspace.getLeaf().openFile(file);
-      }
-      await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
-        if (this.settings.sort) {
-          frontmatter["sort"] = this.settings.sort;
-        } else {
-          delete frontmatter["sort"];
-        }
-        if (this.settings.color) {
-          frontmatter["color"] = this.settings.color;
-        } else {
-          delete frontmatter["color"];
-        }
-        if (this.settings.icon && this.settings.icon !== "\u{1F4C1}") {
-          frontmatter["icon"] = this.settings.icon;
-        } else {
-          delete frontmatter["icon"];
-        }
-        if (this.settings.cardLayout) {
-          frontmatter["cardLayout"] = this.settings.cardLayout;
-        } else {
-          delete frontmatter["cardLayout"];
-        }
-        const folderName = `${this.folder.name}.md`;
-        if (this.settings.isPinned) {
-          if (Array.isArray(frontmatter["pinned"])) {
-            if (!frontmatter["pinned"].includes(folderName)) {
-              frontmatter["pinned"] = [folderName, ...frontmatter["pinned"]];
-            }
-          } else {
-            frontmatter["pinned"] = [folderName];
-          }
-        } else if (Array.isArray(frontmatter["pinned"])) {
-          frontmatter["pinned"] = frontmatter["pinned"].filter(
-            (item) => item !== folderName
-          );
-          if (frontmatter["pinned"].length === 0) {
-            delete frontmatter["pinned"];
-          }
-        }
-      });
-      this.app.metadataCache.getFileCache(file);
-      setTimeout(() => {
-        this.app.workspace.getLeavesOfType("grid-view").forEach((leaf) => {
-          if (leaf.view instanceof GridView) {
-            leaf.view.render();
-          }
-        });
-      }, 200);
-    } catch (error) {
-      console.error("\u7121\u6CD5\u5132\u5B58\u8CC7\u6599\u593E\u7B46\u8A18", error);
-    }
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-
 // src/modal/noteSettingsModal.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 function showNoteSettingsModal(app, plugin, file) {
   new NoteSettingsModal(app, plugin, file).open();
 }
-var NoteSettingsModal = class extends import_obsidian7.Modal {
+var NoteSettingsModal = class extends import_obsidian15.Modal {
   // 記錄初始的 isPinned 狀態
   constructor(app, plugin, file) {
     super(app);
@@ -3247,18 +5218,18 @@ var NoteSettingsModal = class extends import_obsidian7.Modal {
     contentEl.empty();
     await this.loadAttributes();
     if (this.files.length > 1) {
-      new import_obsidian7.Setting(contentEl).setName(t("note_attribute_settings") + ` (${this.files.length} ${t("files")})`).setHeading();
+      new import_obsidian15.Setting(contentEl).setName(t("note_attribute_settings") + ` (${this.files.length} ${t("files")})`).setHeading();
     } else {
-      new import_obsidian7.Setting(contentEl).setName(t("note_attribute_settings") + `: ${this.files[0].basename}`).setHeading();
+      new import_obsidian15.Setting(contentEl).setName(t("note_attribute_settings") + `: ${this.files[0].basename}`).setHeading();
     }
     if (this.files.length === 1 && this.files[0].extension === "md") {
-      new import_obsidian7.Setting(contentEl).setName(t("note_title")).setDesc(t("note_title_desc")).addText((text) => {
+      new import_obsidian15.Setting(contentEl).setName(t("note_title")).setDesc(t("note_title_desc")).addText((text) => {
         text.setValue(this.settings.title);
         text.onChange((value) => {
           this.settings.title = value;
         });
       });
-      new import_obsidian7.Setting(contentEl).setName(t("note_summary")).setDesc(t("note_summary_desc")).addText((text) => {
+      new import_obsidian15.Setting(contentEl).setName(t("note_summary")).setDesc(t("note_summary_desc")).addText((text) => {
         text.setValue(this.settings.summary);
         text.onChange((value) => {
           this.settings.summary = value;
@@ -3266,33 +5237,67 @@ var NoteSettingsModal = class extends import_obsidian7.Modal {
       });
     }
     if (this.files[0].extension === "md") {
-      new import_obsidian7.Setting(contentEl).setName(t("note_color")).setDesc(t("note_color_desc")).addDropdown((dropdown) => {
+      new import_obsidian15.Setting(contentEl).setName(t("note_color")).setDesc(t("note_color_desc")).addDropdown((dropdown) => {
         dropdown.addOption("", t("no_color")).addOption("red", t("color_red")).addOption("orange", t("color_orange")).addOption("yellow", t("color_yellow")).addOption("green", t("color_green")).addOption("cyan", t("color_cyan")).addOption("blue", t("color_blue")).addOption("purple", t("color_purple")).addOption("pink", t("color_pink")).setValue(this.settings.color).onChange((value) => {
           this.settings.color = value;
         });
       });
     }
     if (this.files[0].parent && this.files[0].parent !== this.app.vault.getRoot()) {
-      new import_obsidian7.Setting(contentEl).setName(t("pinned")).setDesc(t("pinned_desc")).addToggle((toggle) => {
+      new import_obsidian15.Setting(contentEl).setName(t("pinned")).setDesc(t("pinned_desc")).addToggle((toggle) => {
         toggle.setValue(this.settings.isPinned).onChange((value) => {
           this.settings.isPinned = value;
         });
       });
     }
     if (this.files[0].extension === "md") {
-      new import_obsidian7.Setting(contentEl).setName(t("display_minimized")).setDesc(t("display_minimized_desc")).addToggle((toggle) => {
+      new import_obsidian15.Setting(contentEl).setName(t("display_minimized")).setDesc(t("display_minimized_desc")).addToggle((toggle) => {
         toggle.setValue(this.settings.isMinimized).onChange((value) => {
           this.settings.isMinimized = value;
         });
       });
     }
-    const buttonSetting = new import_obsidian7.Setting(contentEl);
+    const buttonSetting = new import_obsidian15.Setting(contentEl);
+    buttonSetting.addButton((button) => {
+      button.setButtonText(t("create_shortcut")).onClick(async () => {
+        await this.createShortcut();
+      });
+    });
     buttonSetting.addButton((button) => {
       button.setButtonText(t("confirm")).setCta().onClick(() => {
         this.saveAttributes();
         this.close();
       });
     });
+  }
+  // 創建重定向筆記
+  async createShortcut() {
+    var _a, _b;
+    try {
+      for (const originalFile of this.files) {
+        const originalName = originalFile.basename;
+        const extension = originalFile.extension;
+        let counter = 0;
+        let redirectName = `\u{1F4C4} ${originalName}`;
+        let newPath = `${((_a = originalFile.parent) == null ? void 0 : _a.path) || ""}/${redirectName}.${extension}`;
+        while (this.app.vault.getAbstractFileByPath(newPath)) {
+          counter++;
+          redirectName = `${originalName} ${counter}`;
+          newPath = `${((_b = originalFile.parent) == null ? void 0 : _b.path) || ""}/${redirectName}.${extension}`;
+        }
+        const newFile = await this.app.vault.create(newPath, "");
+        await this.app.fileManager.processFrontMatter(newFile, (frontmatter) => {
+          const link = this.app.fileManager.generateMarkdownLink(originalFile, "");
+          frontmatter.type = "file";
+          frontmatter.redirect = link;
+        });
+      }
+      setTimeout(() => {
+      }, 200);
+      this.close();
+    } catch (error) {
+      console.error("Create redirect note error", error);
+    }
   }
   // 讀取現有筆記的設定
   async loadAttributes() {
@@ -3326,7 +5331,7 @@ var NoteSettingsModal = class extends import_obsidian7.Modal {
       if (folder && folder !== this.app.vault.getRoot()) {
         const notePath = `${folder.path}/${folder.name}.md`;
         const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-        if (noteFile instanceof import_obsidian7.TFile) {
+        if (noteFile instanceof import_obsidian15.TFile) {
           const fm = (_a = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
           if (fm && Array.isArray(fm["pinned"])) {
             this.settings.isPinned = fm["pinned"].includes(this.files[0].name);
@@ -3396,7 +5401,7 @@ var NoteSettingsModal = class extends import_obsidian7.Modal {
             continue;
           const notePath = `${folder.path}/${folder.name}.md`;
           let noteFile = this.app.vault.getAbstractFileByPath(notePath);
-          if (!(noteFile instanceof import_obsidian7.TFile)) {
+          if (!(noteFile instanceof import_obsidian15.TFile)) {
             const initialFrontmatter = this.settings.isPinned ? `pinned:
   - ${file.name}
 ` : "";
@@ -3434,485 +5439,8 @@ ${initialFrontmatter}---
   }
 };
 
-// src/modal/folderRenameModal.ts
-var import_obsidian8 = require("obsidian");
-function showFolderRenameModal(app, plugin, folder, gridView) {
-  new FolderRenameModal(app, plugin, folder, gridView).open();
-}
-var FolderRenameModal = class extends import_obsidian8.Modal {
-  constructor(app, plugin, folder, gridView) {
-    super(app);
-    this.plugin = plugin;
-    this.folder = folder;
-    this.gridView = gridView;
-    this.newName = folder.name;
-  }
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    new import_obsidian8.Setting(contentEl).setName(t("rename_folder")).setDesc(t("enter_new_folder_name")).addText((text) => {
-      text.setValue(this.folder.name).onChange((value) => {
-        this.newName = value;
-      });
-    });
-    new import_obsidian8.Setting(contentEl).addButton((button) => {
-      button.setButtonText(t("confirm")).setCta().onClick(() => {
-        this.renameFolder();
-        this.close();
-      });
-    }).addButton((button) => {
-      button.setButtonText(t("cancel")).onClick(() => {
-        this.close();
-      });
-    });
-  }
-  async renameFolder() {
-    try {
-      const parentPath = this.folder.parent ? this.folder.parent.path : "";
-      const newPath = (0, import_obsidian8.normalizePath)(parentPath ? `${parentPath}/${this.newName}` : this.newName);
-      await this.app.fileManager.renameFile(this.folder, newPath);
-      setTimeout(() => {
-        this.gridView.render();
-      }, 100);
-    } catch (error) {
-      console.error("Failed to rename folder", error);
-    }
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-
-// src/modal/moveFolderSuggestModal.ts
-var import_obsidian9 = require("obsidian");
-var moveFolderSuggestModal = class extends import_obsidian9.SuggestModal {
-  constructor(plugin, folder, view) {
-    super(plugin.app);
-    this.plugin = plugin;
-    this.folder = folder;
-    this.view = view;
-    this.allPaths = this.app.vault.getAllFolders().map((f) => f.path).sort((a, b) => a.localeCompare(b));
-    this.setPlaceholder("/");
-    this.inputEl.focus();
-  }
-  getSuggestions(query) {
-    const lower = query.toLowerCase();
-    const filtered = this.allPaths.filter((p) => p.toLowerCase().includes(lower));
-    if ("/".includes(lower) && !filtered.includes("/")) {
-      filtered.unshift("/");
-    }
-    return filtered;
-  }
-  renderSuggestion(value, el) {
-    el.setText(value);
-  }
-  async onChooseSuggestion(value) {
-    try {
-      const dest = value === "/" ? "" : value.replace(/\/$/, "");
-      const newPath = (0, import_obsidian9.normalizePath)(dest ? `${dest}/${this.folder.name}` : this.folder.name);
-      if (newPath === this.folder.path)
-        return;
-      await this.app.fileManager.renameFile(this.folder, newPath);
-      setTimeout(() => this.view.render(), 100);
-    } catch (err) {
-      console.error("Failed to move folder", err);
-    }
-  }
-};
-
-// src/modal/searchModal.ts
-var import_obsidian10 = require("obsidian");
-var SearchModal = class extends import_obsidian10.Modal {
-  constructor(app, gridView, defaultQuery, buttonElement) {
-    super(app);
-    this.gridView = gridView;
-    this.defaultQuery = defaultQuery;
-    this.buttonElement = buttonElement;
-  }
-  onOpen() {
-    var _a, _b;
-    const { contentEl } = this;
-    contentEl.empty();
-    if (this.buttonElement) {
-      this.modalEl.addClass("ge-popup-modal");
-      this.positionAsPopup();
-    }
-    const searchContainer = contentEl.createDiv("ge-search-container");
-    const searchInputWrapper = searchContainer.createDiv("ge-search-input-wrapper");
-    const tagDisplayArea = searchInputWrapper.createDiv("ge-search-tag-display-area");
-    const searchInput = searchInputWrapper.createEl("input", {
-      type: "text",
-      value: this.defaultQuery,
-      placeholder: t("search_placeholder"),
-      cls: "ge-search-input"
-    });
-    const inputContainer = searchInputWrapper.createDiv("ge-input-container");
-    inputContainer.appendChild(searchInput);
-    const clearButton = inputContainer.createDiv("ge-search-clear-button");
-    clearButton.style.display = this.defaultQuery ? "flex" : "none";
-    (0, import_obsidian10.setIcon)(clearButton, "x");
-    const tagSuggestionContainer = contentEl.createDiv("ge-search-tag-suggestions");
-    tagSuggestionContainer.style.display = "none";
-    const allTagsArr = Object.keys(((_b = (_a = this.app.metadataCache).getTags) == null ? void 0 : _b.call(_a)) || {}).map((t2) => t2.substring(1));
-    let tagSuggestions = [];
-    let selectedSuggestionIndex = -1;
-    const updateTagSuggestions = () => {
-      const match = searchInput.value.substring(0, searchInput.selectionStart || 0).match(/#([^#\s]*)$/);
-      if (!match) {
-        tagSuggestionContainer.style.display = "none";
-        tagSuggestionContainer.empty();
-        selectedSuggestionIndex = -1;
-        return;
-      }
-      const query = match[1].toLowerCase();
-      tagSuggestions = allTagsArr.filter((t2) => t2.toLowerCase().startsWith(query)).slice(0, 10);
-      if (tagSuggestions.length === 0) {
-        tagSuggestionContainer.style.display = "none";
-        selectedSuggestionIndex = -1;
-        return;
-      }
-      tagSuggestionContainer.empty();
-      tagSuggestions.forEach((tag, idx) => {
-        const item = tagSuggestionContainer.createDiv("ge-search-tag-suggestion-item");
-        item.textContent = `#${tag}`;
-        if (idx === selectedSuggestionIndex)
-          item.addClass("is-selected");
-        item.addEventListener("mousedown", (e) => {
-          e.preventDefault();
-          applySuggestion(idx);
-        });
-      });
-      tagSuggestionContainer.style.display = "block";
-    };
-    const applySuggestion = (index) => {
-      if (index < 0 || index >= tagSuggestions.length)
-        return;
-      const value = searchInput.value.trim();
-      const cursor = searchInput.selectionStart || 0;
-      const beforeMatch = value.substring(0, cursor).replace(/#([^#\\s]*)$/, `#${tagSuggestions[index]} `);
-      const afterCursor = value.substring(cursor);
-      searchInput.value = beforeMatch + afterCursor;
-      searchInput.value = searchInput.value.trim();
-      const newCursorPos = beforeMatch.length;
-      searchInput.setSelectionRange(newCursorPos, newCursorPos);
-      tagSuggestionContainer.style.display = "none";
-      tagSuggestionContainer.empty();
-      selectedSuggestionIndex = -1;
-      clearButton.style.display = searchInput.value ? "flex" : "none";
-      renderTagButtons();
-    };
-    searchInput.addEventListener("input", () => {
-      clearButton.style.display = searchInput.value ? "flex" : "none";
-      updateTagSuggestions();
-      renderTagButtons();
-    });
-    searchInput.addEventListener("keydown", (e) => {
-      if (tagSuggestionContainer.style.display === "none")
-        return;
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        selectedSuggestionIndex = (selectedSuggestionIndex + 1) % tagSuggestions.length;
-        updateTagSuggestions();
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        selectedSuggestionIndex = (selectedSuggestionIndex - 1 + tagSuggestions.length) % tagSuggestions.length;
-        updateTagSuggestions();
-      } else if (e.key === "Enter") {
-        if (selectedSuggestionIndex >= 0) {
-          e.preventDefault();
-          applySuggestion(selectedSuggestionIndex);
-        }
-      }
-    });
-    clearButton.addEventListener("click", () => {
-      searchInput.value = "";
-      clearButton.style.display = "none";
-      tagDisplayArea.empty();
-      tagDisplayArea.style.display = "none";
-      searchInput.focus();
-    });
-    const searchOptionsContainer = contentEl.createDiv("ge-search-options-container");
-    const searchScopeContainer = searchOptionsContainer.createDiv("ge-search-scope-container");
-    const searchScopeCheckbox = searchScopeContainer.createEl("input", {
-      type: "checkbox",
-      cls: "ge-search-scope-checkbox"
-    });
-    searchScopeCheckbox.checked = !this.gridView.searchAllFiles;
-    searchScopeContainer.createEl("span", {
-      text: t("search_current_location_only"),
-      cls: "ge-search-scope-label"
-    });
-    if (this.gridView.sourceMode === "random-note") {
-      searchScopeContainer.style.display = "none";
-      searchScopeCheckbox.checked = false;
-    }
-    const searchMediaFilesContainer = searchOptionsContainer.createDiv("ge-search-media-files-container");
-    const searchMediaFilesCheckbox = searchMediaFilesContainer.createEl("input", {
-      type: "checkbox",
-      cls: "ge-search-media-files-checkbox"
-    });
-    searchMediaFilesCheckbox.checked = this.gridView.searchMediaFiles;
-    searchMediaFilesContainer.createEl("span", {
-      text: t("search_media_files"),
-      cls: "ge-search-media-files-label"
-    });
-    if (!this.gridView.plugin.settings.showMediaFiles || this.gridView.sourceMode === "backlinks") {
-      searchMediaFilesContainer.style.display = "none";
-      searchMediaFilesCheckbox.checked = false;
-      this.gridView.searchMediaFiles = false;
-    }
-    searchScopeContainer.addEventListener("click", (e) => {
-      if (e.target !== searchScopeCheckbox) {
-        searchScopeCheckbox.checked = !searchScopeCheckbox.checked;
-        this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
-      }
-    });
-    searchMediaFilesContainer.addEventListener("click", (e) => {
-      if (e.target !== searchMediaFilesCheckbox) {
-        searchMediaFilesCheckbox.checked = !searchMediaFilesCheckbox.checked;
-        this.gridView.searchMediaFiles = !searchMediaFilesCheckbox.checked;
-      }
-    });
-    searchScopeCheckbox.addEventListener("change", () => {
-      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
-    });
-    searchMediaFilesCheckbox.addEventListener("change", () => {
-      this.gridView.searchMediaFiles = !searchMediaFilesCheckbox.checked;
-    });
-    const buttonContainer = contentEl.createDiv("ge-button-container");
-    const searchButton = buttonContainer.createEl("button", {
-      text: t("search")
-    });
-    const cancelButton = buttonContainer.createEl("button", {
-      text: t("cancel")
-    });
-    const renderTagButtons = () => {
-      tagDisplayArea.empty();
-      const inputValue = searchInput.value.trim();
-      if (!inputValue) {
-        tagDisplayArea.style.display = "none";
-        return;
-      }
-      const terms = inputValue.split(/\s+/);
-      if (terms.length === 0) {
-        tagDisplayArea.style.display = "none";
-        return;
-      }
-      tagDisplayArea.style.display = "flex";
-      let currentIndex = 0;
-      const termPositions = [];
-      terms.forEach((term) => {
-        if (!term)
-          return;
-        const startIndex = inputValue.indexOf(term, currentIndex);
-        if (startIndex === -1)
-          return;
-        const endIndex = startIndex + term.length;
-        termPositions.push({
-          term,
-          startIndex,
-          endIndex
-        });
-        currentIndex = endIndex;
-      });
-      termPositions.forEach((termInfo) => {
-        const tagButton = tagDisplayArea.createDiv("ge-search-tag-button");
-        tagButton.textContent = termInfo.term;
-        if (termInfo.term.startsWith("#")) {
-          tagButton.addClass("is-tag");
-        }
-        const deleteButton = tagButton.createDiv("ge-search-tag-delete-button");
-        (0, import_obsidian10.setIcon)(deleteButton, "x");
-        deleteButton.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const newValue = inputValue.substring(0, termInfo.startIndex) + inputValue.substring(termInfo.endIndex);
-          searchInput.value = newValue.trim();
-          const inputEvent = new Event("input", { bubbles: true });
-          searchInput.dispatchEvent(inputEvent);
-          searchInput.focus();
-        });
-      });
-    };
-    const performSearch = () => {
-      this.gridView.searchQuery = searchInput.value;
-      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
-      this.gridView.searchMediaFiles = searchMediaFilesCheckbox.checked;
-      this.gridView.clearSelection();
-      this.gridView.app.workspace.requestSaveLayout();
-      this.gridView.render(true);
-      this.close();
-    };
-    searchButton.addEventListener("click", performSearch);
-    searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        performSearch();
-      }
-    });
-    cancelButton.addEventListener("click", () => {
-      this.close();
-    });
-    renderTagButtons();
-    searchInput.focus();
-    searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-  positionAsPopup() {
-    if (!this.buttonElement)
-      return;
-    const modalEl = this.modalEl;
-    const contentEl = this.contentEl;
-    modalEl.addClass("ge-popup-modal-reset");
-    contentEl.addClass("ge-popup-content");
-    const buttonRect = this.buttonElement.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    let top = buttonRect.bottom + 4;
-    let left = buttonRect.left + buttonRect.width / 2 - 150;
-    if (left + 300 > viewportWidth) {
-      left = viewportWidth - 300 - 10;
-    }
-    if (left < 10) {
-      left = 10;
-    }
-    const estimatedHeight = 400;
-    if (top + estimatedHeight > viewportHeight && buttonRect.top - estimatedHeight > 0) {
-      top = buttonRect.top - estimatedHeight - 4;
-    }
-    modalEl.style.position = "fixed";
-    modalEl.style.top = `${top}px`;
-    modalEl.style.left = `${left}px`;
-    modalEl.style.transform = "none";
-  }
-};
-function showSearchModal(app, gridView, defaultQuery = "", buttonElement) {
-  new SearchModal(app, gridView, defaultQuery, buttonElement).open();
-}
-
-// src/modal/customModeModal.ts
-var import_obsidian11 = require("obsidian");
-var CustomModeModal = class extends import_obsidian11.Modal {
-  constructor(app, plugin, mode, onSubmit) {
-    super(app);
-    this.plugin = plugin;
-    this.mode = mode;
-    this.onSubmit = onSubmit;
-  }
-  onOpen() {
-    var _a, _b;
-    const { contentEl } = this;
-    contentEl.empty();
-    contentEl.createEl("h2", { text: this.mode ? t("edit_custom_mode") : t("add_custom_mode") });
-    let icon = this.mode ? this.mode.icon : "\u{1F9E9}";
-    let displayName = this.mode ? this.mode.displayName : "";
-    let name = this.mode && this.mode.name ? this.mode.name : t("default");
-    let options = ((_a = this.mode) == null ? void 0 : _a.options) ? this.mode.options.map((opt) => ({ ...opt })) : [];
-    let dataviewCode = this.mode ? this.mode.dataviewCode : "";
-    let enabled = this.mode ? (_b = this.mode.enabled) != null ? _b : true : true;
-    let fields = this.mode ? this.mode.fields : "";
-    new import_obsidian11.Setting(contentEl).setName(t("custom_mode_display_name")).setDesc(t("custom_mode_display_name_desc")).addText((text) => {
-      text.setValue(icon).onChange((value) => {
-        icon = value || "\u{1F9E9}";
-      });
-      text.inputEl.style.width = "3em";
-      text.inputEl.style.minWidth = "3em";
-    }).addText((text) => {
-      text.setValue(displayName).onChange((value) => {
-        displayName = value;
-      });
-    });
-    const dvSetting = new import_obsidian11.Setting(contentEl).setName(t("custom_mode_dataview_code")).setDesc(t("custom_mode_dataview_code_desc"));
-    dvSetting.settingEl.style.flexDirection = "column";
-    dvSetting.settingEl.style.alignItems = "stretch";
-    dvSetting.settingEl.style.gap = "0.5rem";
-    dvSetting.addText((text) => {
-      text.setValue(name).setPlaceholder(t("default")).onChange((v) => name = v);
-    });
-    dvSetting.addTextArea((text) => {
-      text.setValue(dataviewCode).onChange((value) => {
-        dataviewCode = value;
-      }).setPlaceholder("Dataview JS code");
-      text.inputEl.setAttr("rows", 6);
-      text.inputEl.style.width = "100%";
-    });
-    dvSetting.addText((text) => {
-      text.setValue(fields || "").setPlaceholder(t("custom_mode_fields_placeholder")).onChange((value) => {
-        fields = value;
-      });
-    });
-    dvSetting.controlEl.style.display = "flex";
-    dvSetting.controlEl.style.flexDirection = "column";
-    dvSetting.controlEl.style.alignItems = "stretch";
-    dvSetting.controlEl.style.gap = "0.5rem";
-    contentEl.createEl("h3", { text: t("custom_mode_sub_options") });
-    const optionsContainer = contentEl.createDiv();
-    const renderOptions = () => {
-      optionsContainer.empty();
-      options.forEach((opt, idx) => {
-        const optionContainer = optionsContainer.createDiv("ge-custommode-option-container");
-        const optSetting = new import_obsidian11.Setting(optionContainer);
-        optSetting.addText((text) => {
-          text.setPlaceholder(t("option_name")).setValue(opt.name).onChange((val) => {
-            opt.name = val;
-          });
-        }).addTextArea((text) => {
-          text.setPlaceholder("Dataview JS code").setValue(opt.dataviewCode).onChange((val) => {
-            opt.dataviewCode = val;
-          });
-          text.inputEl.setAttr("rows", 6);
-          text.inputEl.style.width = "100%";
-        }).addText((text) => {
-          text.setPlaceholder(t("custom_mode_fields_placeholder")).setValue(opt.fields || "").onChange((val) => {
-            opt.fields = val;
-          });
-        });
-        if (options.length > 0) {
-          optSetting.addExtraButton((btn) => {
-            btn.setIcon("trash").setTooltip(t("remove")).onClick(() => {
-              options.splice(idx, 1);
-              renderOptions();
-            });
-          });
-        }
-      });
-    };
-    new import_obsidian11.Setting(contentEl).addButton((btn) => {
-      btn.setButtonText(t("add_option")).onClick(() => {
-        options.push({ name: `${t("option")} ${options.length + 1}`, dataviewCode: "" });
-        renderOptions();
-      });
-    });
-    renderOptions();
-    new import_obsidian11.Setting(contentEl).addButton((button) => {
-      button.setButtonText(t("save")).setCta().onClick(() => {
-        if (!displayName.trim())
-          displayName = t("untitled");
-        const internalName = this.mode ? this.mode.internalName : `custom-${Date.now()}`;
-        this.onSubmit({
-          internalName,
-          icon,
-          displayName,
-          name,
-          dataviewCode,
-          options,
-          enabled,
-          fields
-        });
-        this.close();
-      });
-    });
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-
 // src/floatingAudioPlayer.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 var _FloatingAudioPlayer = class {
   constructor(app, file) {
     this.isDragging = false;
@@ -3962,7 +5490,7 @@ var _FloatingAudioPlayer = class {
     this.titleEl.textContent = this.currentFile.basename;
     this.closeButtonEl = document.createElement("div");
     this.closeButtonEl.className = "ge-audio-close-button";
-    (0, import_obsidian12.setIcon)(this.closeButtonEl, "x");
+    (0, import_obsidian16.setIcon)(this.closeButtonEl, "x");
     this.closeButtonEl.addEventListener("click", this.boundClose);
     this.handleEl = document.createElement("div");
     this.handleEl.className = "ge-audio-handle";
@@ -4070,7 +5598,8 @@ var FloatingAudioPlayer = _FloatingAudioPlayer;
 FloatingAudioPlayer.players = /* @__PURE__ */ new Map();
 
 // src/GridView.ts
-var GridView = class extends import_obsidian13.ItemView {
+var GridView = class extends import_obsidian17.ItemView {
+  // 筆記檢視容器
   constructor(leaf, plugin) {
     super(leaf);
     this.sourceMode = "";
@@ -4083,6 +5612,8 @@ var GridView = class extends import_obsidian13.ItemView {
     // 搜尋關鍵字
     this.searchAllFiles = true;
     // 是否搜尋所有筆記
+    this.searchFilesNameOnly = false;
+    // 是否只搜尋筆記名稱
     this.searchMediaFiles = false;
     // 是否搜尋媒體檔案
     this.randomNoteIncludeMedia = false;
@@ -4094,6 +5625,7 @@ var GridView = class extends import_obsidian13.ItemView {
     this.gridItems = [];
     // 存儲所有網格項目的引用
     this.hasKeyboardFocus = false;
+    // 檔案監聽器
     this.recentSources = [];
     // 歷史記錄
     this.minMode = false;
@@ -4118,8 +5650,8 @@ var GridView = class extends import_obsidian13.ItemView {
     // 目前實際使用的卡片樣式（可能被資料夾 metadata 臨時覆蓋）
     this.renderToken = 0;
     // 用於取消尚未完成之批次排程的遞增令牌
-    // 筆記檢視相關
     this.isShowingNote = false;
+    // 是否正在顯示筆記
     this.noteViewContainer = null;
     this.plugin = plugin;
     this.containerEl.addClass("ge-grid-view-container");
@@ -4137,6 +5669,13 @@ var GridView = class extends import_obsidian13.ItemView {
         return handleKeyDown(this, event);
       }
     });
+    this.registerEvent(
+      this.app.metadataCache.on("dataview:index-ready", () => {
+        if (this.sourceMode.startsWith("custom-")) {
+          this.render();
+        }
+      })
+    );
   }
   getViewType() {
     return "grid-view";
@@ -4219,7 +5758,8 @@ var GridView = class extends import_obsidian13.ItemView {
       this.recentSources.length = limit;
     }
   }
-  // 當 resetScroll 為 true 時，會將捲動位置重置到最頂部
+  // resetScroll 為 true 時，會將捲動位置重置到最頂部
+  // recordHistory 為 false 時，不會將當前狀態加入歷史記錄
   async setSource(mode, path = "", resetScroll = false, recordHistory = true) {
     var _a;
     if (this.sourceMode === mode && this.sourcePath === path) {
@@ -4231,14 +5771,22 @@ var GridView = class extends import_obsidian13.ItemView {
     if (this.searchQuery !== "" && this.searchAllFiles) {
       this.searchQuery = "";
     }
+    if (mode !== "")
+      this.sourceMode = mode;
+    if (path !== "")
+      this.sourcePath = path;
+    if (this.sourceMode === "")
+      this.sourceMode = "folder";
+    if (this.sourcePath === "")
+      this.sourcePath = "/";
     this.folderSortType = "";
     this.pinnedList = [];
-    if (mode === "folder") {
-      const folderName = path.split("/").pop() || "";
-      const mdFilePath = `${path}/${folderName}.md`;
+    if (this.sourceMode === "folder") {
+      const folderName = this.sourcePath.split("/").pop() || "";
+      const mdFilePath = `${this.sourcePath}/${folderName}.md`;
       const mdFile = this.app.vault.getAbstractFileByPath(mdFilePath);
       let tempLayout = this.baseCardLayout;
-      if (mdFile instanceof import_obsidian13.TFile) {
+      if (mdFile instanceof import_obsidian17.TFile) {
         const metadata = (_a = this.app.metadataCache.getFileCache(mdFile)) == null ? void 0 : _a.frontmatter;
         this.folderSortType = metadata == null ? void 0 : metadata.sort;
         if ((metadata == null ? void 0 : metadata.cardLayout) === "horizontal" || (metadata == null ? void 0 : metadata.cardLayout) === "vertical") {
@@ -4248,27 +5796,17 @@ var GridView = class extends import_obsidian13.ItemView {
       this.cardLayout = tempLayout;
     } else {
       this.cardLayout = this.baseCardLayout;
-    }
-    if (mode.startsWith("custom-")) {
-      this.customOptionIndex = -1;
-      this.folderSortType = "none";
-    }
-    if (mode !== "")
-      this.sourceMode = mode;
-    if (path !== "")
-      this.sourcePath = path;
-    if (this.sourceMode === "")
-      this.sourceMode = "folder";
-    if (this.sourcePath === "")
       this.sourcePath = "/";
-    if (this.sourceMode !== "folder") {
-      this.sourcePath = "/";
+      if (this.sourceMode.startsWith("custom-")) {
+        this.customOptionIndex = -1;
+        this.folderSortType = "none";
+      }
     }
     this.app.workspace.requestSaveLayout();
     this.render(resetScroll);
   }
   async render(resetScroll = false) {
-    var _a, _b, _c;
+    var _a;
     const scrollContainer = this.containerEl.children[1];
     const scrollTop = resetScroll ? 0 : scrollContainer ? scrollContainer.scrollTop : 0;
     let selectedFilePath = null;
@@ -4277,767 +5815,8 @@ var GridView = class extends import_obsidian13.ItemView {
       selectedFilePath = selectedItem.dataset.filePath || null;
     }
     this.containerEl.empty();
-    const headerButtonsDiv = this.containerEl.createDiv("ge-header-buttons");
-    headerButtonsDiv.addEventListener("click", (event) => {
-      if (event.target === headerButtonsDiv) {
-        event.preventDefault();
-        const gridContainer = this.containerEl.querySelector(".ge-grid-container");
-        if (gridContainer) {
-          gridContainer.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }
-      }
-    });
-    const backButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("back") } });
-    (0, import_obsidian13.setIcon)(backButton, "arrow-left");
-    backButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (this.searchQuery !== "") {
-        this.searchQuery = "";
-        this.app.workspace.requestSaveLayout();
-        this.render();
-        return;
-      }
-      if (this.recentSources.length > 0) {
-        const lastSource = JSON.parse(this.recentSources[0]);
-        this.recentSources.shift();
-        this.setSource(
-          lastSource.mode,
-          lastSource.path || "",
-          true,
-          // 重設捲動位置
-          false
-          // 不記錄到歷史
-        );
-      }
-    });
-    backButton.addEventListener("contextmenu", (event) => {
-      if (this.recentSources.length > 0) {
-        event.preventDefault();
-        const menu2 = new import_obsidian13.Menu();
-        this.recentSources.forEach((sourceInfoStr, index) => {
-          try {
-            const sourceInfo = JSON.parse(sourceInfoStr);
-            const { mode, path } = sourceInfo;
-            let displayText = "";
-            let icon = "";
-            switch (mode) {
-              case "folder":
-                displayText = path || "/";
-                icon = "folder";
-                break;
-              case "bookmarks":
-                displayText = t("bookmarks_mode");
-                icon = "bookmark";
-                break;
-              case "search":
-                displayText = t("search_results");
-                icon = "search";
-                break;
-              case "backlinks":
-                displayText = t("backlinks_mode");
-                icon = "links-coming-in";
-                break;
-              case "outgoinglinks":
-                displayText = t("outgoinglinks_mode");
-                icon = "links-going-out";
-                break;
-              case "all-files":
-                displayText = t("all_files_mode");
-                icon = "book-text";
-                break;
-              case "recent-files":
-                displayText = t("recent_files_mode");
-                icon = "calendar-days";
-                break;
-              case "random-note":
-                displayText = t("random_note_mode");
-                icon = "dice";
-                break;
-              case "tasks":
-                displayText = t("tasks_mode");
-                icon = "square-check-big";
-                break;
-              default:
-                if (mode.startsWith("custom-")) {
-                  const customMode = this.plugin.settings.customModes.find((m) => m.internalName === mode);
-                  displayText = customMode ? customMode.displayName : t("custom_mode");
-                  icon = "puzzle";
-                } else {
-                  displayText = mode;
-                  icon = "grid";
-                }
-            }
-            menu2.addItem((item) => {
-              item.setTitle(`${displayText}`).setIcon(`${icon}`).onClick(() => {
-                const clickedIndex = this.recentSources.findIndex((source) => {
-                  const parsed = JSON.parse(source);
-                  return parsed.mode === mode && parsed.path === path;
-                });
-                if (clickedIndex !== -1) {
-                  this.recentSources = this.recentSources.slice(clickedIndex + 1);
-                }
-                this.setSource(mode, path, true, false);
-              });
-            });
-          } catch (error) {
-            console.error("Failed to parse source info:", error);
-          }
-        });
-        menu2.showAtMouseEvent(event);
-      }
-    });
-    const newNoteButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("new_note") } });
-    (0, import_obsidian13.setIcon)(newNoteButton, "square-pen");
-    newNoteButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      const menu2 = new import_obsidian13.Menu();
-      menu2.addItem((item) => {
-        item.setTitle(t("new_note")).setIcon("square-pen").onClick(async () => {
-          let newFileName = `${t("untitled")}.md`;
-          let newFilePath = !this.sourcePath || this.sourcePath === "/" ? newFileName : `${this.sourcePath}/${newFileName}`;
-          let counter = 1;
-          while (this.app.vault.getAbstractFileByPath(newFilePath)) {
-            newFileName = `${t("untitled")} ${counter}.md`;
-            newFilePath = !this.sourcePath || this.sourcePath === "/" ? newFileName : `${this.sourcePath}/${newFileName}`;
-            counter++;
-          }
-          try {
-            const newFile = await this.app.vault.create(newFilePath, "");
-            await this.app.workspace.getLeaf().openFile(newFile);
-          } catch (error) {
-            console.error("An error occurred while creating a new note:", error);
-          }
-        });
-      });
-      menu2.addItem((item) => {
-        item.setTitle(t("new_folder")).setIcon("folder").onClick(async () => {
-          let newFolderName = `${t("untitled")}`;
-          let newFolderPath = !this.sourcePath || this.sourcePath === "/" ? newFolderName : `${this.sourcePath}/${newFolderName}`;
-          let counter = 1;
-          while (this.app.vault.getAbstractFileByPath(newFolderPath)) {
-            newFolderName = `${t("untitled")} ${counter}`;
-            newFolderPath = !this.sourcePath || this.sourcePath === "/" ? newFolderName : `${this.sourcePath}/${newFolderName}`;
-            counter++;
-          }
-          try {
-            await this.app.vault.createFolder(newFolderPath);
-            this.render(false);
-          } catch (error) {
-            console.error("An error occurred while creating a new folder:", error);
-          }
-        });
-      });
-      menu2.addItem((item) => {
-        item.setTitle(t("new_canvas")).setIcon("layout-dashboard").onClick(async () => {
-          let newFileName = `${t("untitled")}.canvas`;
-          let newFilePath = !this.sourcePath || this.sourcePath === "/" ? newFileName : `${this.sourcePath}/${newFileName}`;
-          let counter = 1;
-          while (this.app.vault.getAbstractFileByPath(newFilePath)) {
-            newFileName = `${t("untitled")} ${counter}.canvas`;
-            newFilePath = !this.sourcePath || this.sourcePath === "/" ? newFileName : `${this.sourcePath}/${newFileName}`;
-            counter++;
-          }
-          try {
-            const newFile = await this.app.vault.create(newFilePath, "");
-            await this.app.workspace.getLeaf().openFile(newFile);
-          } catch (error) {
-            console.error("An error occurred while creating a new canvas:", error);
-          }
-        });
-      });
-      menu2.showAtMouseEvent(event);
-    });
-    const reselectButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("reselect") } });
-    reselectButton.addEventListener("click", () => {
-      showFolderSelectionModal(this.app, this.plugin, this, reselectButton);
-    });
-    (0, import_obsidian13.setIcon)(reselectButton, "grid");
-    const refreshButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("refresh") } });
-    refreshButton.addEventListener("click", () => {
-      if (this.sortType === "random") {
-        this.clearSelection();
-      }
-      this.render();
-    });
-    (0, import_obsidian13.setIcon)(refreshButton, "refresh-ccw");
-    const searchButtonContainer = headerButtonsDiv.createDiv("ge-search-button-container");
-    const searchButton = searchButtonContainer.createEl("button", {
-      cls: "search-button",
-      attr: { "aria-label": t("search") }
-    });
-    (0, import_obsidian13.setIcon)(searchButton, "search");
-    searchButton.addEventListener("click", () => {
-      showSearchModal(this.app, this, "", searchButton);
-    });
-    if (this.searchQuery) {
-      searchButton.style.display = "none";
-      const searchTextContainer = searchButtonContainer.createDiv("ge-search-text-container");
-      const searchText = searchTextContainer.createEl("span", { cls: "ge-search-text", text: this.searchQuery });
-      searchText.style.cursor = "pointer";
-      searchText.addEventListener("click", () => {
-        showSearchModal(this.app, this, this.searchQuery, searchText);
-      });
-      const clearButton = searchTextContainer.createDiv("ge-clear-button");
-      (0, import_obsidian13.setIcon)(clearButton, "x");
-      clearButton.addEventListener("click", (e) => {
-        e.stopPropagation();
-        this.searchQuery = "";
-        this.clearSelection();
-        this.app.workspace.requestSaveLayout();
-        this.render();
-      });
-    }
-    const menu = new import_obsidian13.Menu();
-    menu.addItem((item) => {
-      item.setTitle(t("open_new_grid_view")).setIcon("grid").onClick(() => {
-        const { workspace } = this.app;
-        let leaf = null;
-        workspace.getLeavesOfType("grid-view");
-        switch (this.plugin.settings.defaultOpenLocation) {
-          case "left":
-            leaf = workspace.getLeftLeaf(false);
-            break;
-          case "right":
-            leaf = workspace.getRightLeaf(false);
-            break;
-          case "tab":
-          default:
-            leaf = workspace.getLeaf("tab");
-            break;
-        }
-        if (!leaf) {
-          leaf = workspace.getLeaf("tab");
-        }
-        leaf.setViewState({ type: "grid-view", active: true });
-        if (leaf.view instanceof GridView) {
-          leaf.view.setSource("folder", "/");
-        }
-        workspace.revealLeaf(leaf);
-      });
-    });
-    menu.addSeparator();
-    if ((this.sourceMode === "all-files" || this.sourceMode === "recent-files" || this.sourceMode === "random-note") && this.plugin.settings.showMediaFiles && this.searchQuery === "") {
-      menu.addItem((item) => {
-        item.setTitle(t("random_note_notes_only")).setIcon("file-text").setChecked(!this.randomNoteIncludeMedia).onClick(() => {
-          this.randomNoteIncludeMedia = false;
-          this.render();
-        });
-      });
-      menu.addItem((item) => {
-        item.setTitle(t("random_note_include_media_files")).setIcon("file-image").setChecked(this.randomNoteIncludeMedia).onClick(() => {
-          this.randomNoteIncludeMedia = true;
-          this.render();
-        });
-      });
-      menu.addSeparator();
-    }
-    menu.addItem((item) => {
-      item.setTitle(t("vertical_card")).setIcon("layout").setChecked(this.baseCardLayout === "vertical").onClick(() => {
-        this.baseCardLayout = this.baseCardLayout === "vertical" ? "horizontal" : "vertical";
-        this.cardLayout = this.baseCardLayout;
-        this.app.workspace.requestSaveLayout();
-        this.render();
-      });
-    });
-    menu.addItem((item) => {
-      item.setTitle(t("min_mode")).setIcon("minimize-2").setChecked(this.minMode).onClick(() => {
-        this.minMode = !this.minMode;
-        this.app.workspace.requestSaveLayout();
-        this.render();
-      });
-    });
-    if (this.plugin.settings.dateDividerMode !== "none") {
-      menu.addItem((item) => {
-        item.setTitle(t("show_date_dividers")).setIcon("calendar").setChecked(this.showDateDividers).onClick(() => {
-          this.showDateDividers = !this.showDateDividers;
-          this.app.workspace.requestSaveLayout();
-          this.render();
-        });
-      });
-    }
-    menu.addItem((item) => {
-      item.setTitle(t("show_note_tags")).setIcon("tag").setChecked(this.showNoteTags).onClick(() => {
-        this.showNoteTags = !this.showNoteTags;
-        this.app.workspace.requestSaveLayout();
-        this.render();
-      });
-    });
-    menu.addItem((item) => {
-      item.setTitle(t("show_ignored_folders")).setIcon("folder-open-dot").setChecked(this.showIgnoredFolders).onClick(() => {
-        this.showIgnoredFolders = !this.showIgnoredFolders;
-        this.app.workspace.requestSaveLayout();
-        this.render();
-      });
-    });
-    menu.addSeparator();
-    menu.addItem((item) => {
-      item.setTitle(t("open_settings")).setIcon("settings").onClick(() => {
-        this.app.setting.open();
-        this.app.setting.openTabById(this.plugin.manifest.id);
-      });
-    });
-    if (this.searchQuery === "") {
-      const moreOptionsButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("more_options") } });
-      (0, import_obsidian13.setIcon)(moreOptionsButton, "ellipsis-vertical");
-      moreOptionsButton.addEventListener("click", (event) => {
-        menu.showAtMouseEvent(event);
-      });
-    }
-    headerButtonsDiv.addEventListener("contextmenu", (event) => {
-      if (event.target === headerButtonsDiv) {
-        event.preventDefault();
-        menu.showAtMouseEvent(event);
-      }
-    });
-    const modeHeaderContainer = this.containerEl.createDiv("ge-mode-header-container");
-    const modenameContainer = modeHeaderContainer.createDiv("ge-modename-content");
-    const rightActions = modeHeaderContainer.createDiv("ge-right-actions");
-    if (this.sourceMode !== "bookmarks" && this.sourceMode !== "recent-files" && this.sourceMode !== "random-note") {
-      const sortButton = rightActions.createEl("a", {
-        cls: "ge-sort-button",
-        attr: {
-          "aria-label": t("sorting"),
-          "href": "#"
-        }
-      });
-      (0, import_obsidian13.setIcon)(sortButton, "arrow-up-narrow-wide");
-      sortButton.addEventListener("click", (evt) => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        const menu2 = new import_obsidian13.Menu();
-        const sortOptions = [
-          { value: "name-asc", label: t("sort_name_asc"), icon: "a-arrow-up" },
-          { value: "name-desc", label: t("sort_name_desc"), icon: "a-arrow-down" },
-          { value: "mtime-desc", label: t("sort_mtime_desc"), icon: "clock" },
-          { value: "mtime-asc", label: t("sort_mtime_asc"), icon: "clock" },
-          { value: "ctime-desc", label: t("sort_ctime_desc"), icon: "calendar" },
-          { value: "ctime-asc", label: t("sort_ctime_asc"), icon: "calendar" },
-          { value: "random", label: t("sort_random"), icon: "dice" }
-        ];
-        sortOptions.forEach((option) => {
-          menu2.addItem((item) => {
-            item.setTitle(option.label).setIcon(option.icon).setChecked((this.folderSortType || this.sortType) === option.value).onClick(() => {
-              this.sortType = option.value;
-              this.folderSortType = "";
-              this.app.workspace.requestSaveLayout();
-              this.render();
-            });
-          });
-        });
-        menu2.showAtMouseEvent(evt);
-      });
-    }
-    modenameContainer.addEventListener("click", (event) => {
-      if (event.target === modenameContainer) {
-        event.preventDefault();
-        const gridContainer = this.containerEl.querySelector(".ge-grid-container");
-        if (gridContainer) {
-          gridContainer.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }
-      }
-    });
-    if (this.sourceMode === "folder" && (this.searchQuery === "" || this.searchQuery && !this.searchAllFiles) && this.sourcePath !== "/") {
-      const pathParts = this.sourcePath.split("/").filter((part) => part.trim() !== "");
-      const paths = [];
-      let pathAccumulator = "";
-      paths.push({
-        name: t("root"),
-        path: "/",
-        isLast: pathParts.length === 0
-      });
-      pathParts.forEach((part, index) => {
-        pathAccumulator = pathAccumulator ? `${pathAccumulator}/${part}` : part;
-        paths.push({
-          name: part,
-          path: pathAccumulator,
-          isLast: index === pathParts.length - 1
-        });
-      });
-      const pathContainer = modenameContainer.createDiv({ cls: "ge-path-container" });
-      const customFolderIcon = this.plugin.settings.customFolderIcon;
-      const pathElements = [];
-      paths.forEach((path, index) => {
-        const isLast = index === paths.length - 1;
-        let pathEl;
-        if (isLast) {
-          pathEl = modenameContainer.createEl("a", {
-            text: `${customFolderIcon} ${path.name}`.trim(),
-            cls: "ge-current-folder"
-          });
-        } else {
-          pathEl = modenameContainer.createEl("a", {
-            text: path.name,
-            cls: "ge-parent-folder-link"
-          });
-        }
-        (0, import_obsidian13.setTooltip)(pathEl, path.name);
-        pathElements.push(pathEl);
-      });
-      for (let i = 0; i < pathElements.length; i++) {
-        const el = pathElements[i];
-        pathContainer.appendChild(el);
-        if (el.className === "ge-parent-folder-link") {
-          const pathIndex = i;
-          if (pathIndex < paths.length) {
-            const path = paths[pathIndex];
-            el.addEventListener("click", (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              this.setSource("folder", path.path, true);
-              this.clearSelection();
-            });
-            el.addEventListener("contextmenu", async (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              const menu2 = new import_obsidian13.Menu();
-              menu2.addItem((item) => {
-                item.setTitle(path.name).setIcon("folder").onClick(() => {
-                  this.setSource("folder", path.path, true);
-                  this.clearSelection();
-                });
-              });
-              const currentFolder = this.app.vault.getAbstractFileByPath(path.path);
-              if (currentFolder && currentFolder instanceof import_obsidian13.TFolder) {
-                const subFolders = currentFolder.children.filter((child) => {
-                  if (!(child instanceof import_obsidian13.TFolder))
-                    return false;
-                  return !isFolderIgnored(
-                    child,
-                    this.plugin.settings.ignoredFolders,
-                    this.plugin.settings.ignoredFolderPatterns,
-                    this.showIgnoredFolders
-                  );
-                }).sort((a, b) => a.name.localeCompare(b.name));
-                if (subFolders.length > 0) {
-                  menu2.addSeparator();
-                  menu2.addItem(
-                    (item) => item.setTitle(t("sub_folders")).setIcon("folder-symlink").setDisabled(true)
-                  );
-                  subFolders.forEach((folder) => {
-                    menu2.addItem((item) => {
-                      item.setTitle(folder.name).setIcon("folder").onClick(() => {
-                        this.setSource("folder", folder.path, true);
-                        this.clearSelection();
-                      });
-                    });
-                  });
-                }
-              }
-              if (pathIndex > 0) {
-                menu2.addSeparator();
-                menu2.addItem(
-                  (item) => item.setTitle(t("parent_folders")).setIcon("arrow-up").setDisabled(true)
-                );
-                for (let i2 = pathIndex - 1; i2 >= 0; i2--) {
-                  const p = paths[i2];
-                  menu2.addItem((item) => {
-                    item.setTitle(p.name).setIcon(p.path === "/" ? "folder-root" : "folder").onClick(() => {
-                      this.setSource("folder", p.path, true);
-                      this.clearSelection();
-                    });
-                  });
-                }
-              }
-              menu2.showAtMouseEvent(event);
-            });
-            if (!path.isLast && import_obsidian13.Platform.isDesktop) {
-              el.addEventListener("dragover", (event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect = "move";
-                el.addClass("ge-dragover");
-              });
-              el.addEventListener("dragleave", () => {
-                el.removeClass("ge-dragover");
-              });
-              el.addEventListener("drop", async (event) => {
-                var _a2, _b2;
-                event.preventDefault();
-                el.removeClass("ge-dragover");
-                if (!path.path)
-                  return;
-                const folder = this.app.vault.getAbstractFileByPath(path.path);
-                if (!(folder instanceof import_obsidian13.TFolder))
-                  return;
-                const filesData = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
-                if (filesData) {
-                  try {
-                    const filePaths = JSON.parse(filesData);
-                    for (const filePath2 of filePaths) {
-                      const file2 = this.app.vault.getAbstractFileByPath(filePath2);
-                      if (file2 instanceof import_obsidian13.TFile) {
-                        const newPath = (0, import_obsidian13.normalizePath)(`${path.path}/${file2.name}`);
-                        await this.app.fileManager.renameFile(file2, newPath);
-                      }
-                    }
-                  } catch (error) {
-                    console.error("An error occurred while moving multiple files to folder:", error);
-                  }
-                  return;
-                }
-                const filePath = (_b2 = event.dataTransfer) == null ? void 0 : _b2.getData("text/plain");
-                if (!filePath)
-                  return;
-                const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
-                const file = this.app.vault.getAbstractFileByPath(cleanedFilePath);
-                if (file instanceof import_obsidian13.TFile) {
-                  try {
-                    const newPath = (0, import_obsidian13.normalizePath)(`${path.path}/${file.name}`);
-                    await this.app.fileManager.renameFile(file, newPath);
-                    this.render();
-                  } catch (error) {
-                    console.error("An error occurred while moving the file to folder:", error);
-                  }
-                }
-              });
-            }
-          }
-        }
-        if (el.className === "ge-current-folder") {
-          const showFolderMenu = (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            const folder = this.app.vault.getAbstractFileByPath(this.sourcePath);
-            const folderName = this.sourcePath.split("/").pop() || "";
-            const notePath = `${this.sourcePath}/${folderName}.md`;
-            const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-            const menu2 = new import_obsidian13.Menu();
-            if (noteFile instanceof import_obsidian13.TFile) {
-              menu2.addItem((item) => {
-                item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
-                  this.app.workspace.getLeaf().openFile(noteFile);
-                });
-              });
-              menu2.addItem((item) => {
-                item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
-                  if (folder instanceof import_obsidian13.TFolder) {
-                    showFolderNoteSettingsModal(this.app, this.plugin, folder, this);
-                  }
-                });
-              });
-              menu2.addItem((item) => {
-                item.setTitle(t("delete_folder_note")).setIcon("folder-x").onClick(() => {
-                  this.app.fileManager.trashFile(noteFile);
-                });
-              });
-            } else {
-              menu2.addItem((item) => {
-                item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
-                  if (folder instanceof import_obsidian13.TFolder) {
-                    showFolderNoteSettingsModal(this.app, this.plugin, folder, this);
-                  }
-                });
-              });
-            }
-            menu2.showAtMouseEvent(event);
-          };
-          el.addEventListener("click", showFolderMenu);
-          el.addEventListener("contextmenu", showFolderMenu);
-        }
-      }
-    } else if (!(this.searchQuery !== "" && this.searchAllFiles)) {
-      let modeName = "";
-      let modeIcon = "";
-      switch (this.sourceMode) {
-        case "bookmarks":
-          modeIcon = "\u{1F4D1}";
-          modeName = t("bookmarks_mode");
-          break;
-        case "search":
-          modeIcon = "\u{1F50D}";
-          modeName = t("search_results");
-          const searchLeaf = this.app.workspace.getLeavesOfType("search")[0];
-          if (searchLeaf) {
-            const searchView = searchLeaf.view;
-            const searchInputEl = searchView.searchComponent ? searchView.searchComponent.inputEl : null;
-            const currentQuery = searchInputEl == null ? void 0 : searchInputEl.value.trim();
-            if (currentQuery && currentQuery.length > 0) {
-              modeName += `: ${currentQuery}`;
-            } else if (this.searchQuery) {
-              modeName += `: ${this.searchQuery}`;
-            }
-          }
-          break;
-        case "backlinks":
-          modeIcon = "\u{1F517}";
-          modeName = t("backlinks_mode");
-          const activeFile = this.app.workspace.getActiveFile();
-          if (activeFile) {
-            modeName += `: ${activeFile.basename}`;
-          }
-          break;
-        case "outgoinglinks":
-          modeIcon = "\u{1F517}";
-          modeName = t("outgoinglinks_mode");
-          const currentFile = this.app.workspace.getActiveFile();
-          if (currentFile) {
-            modeName += `: ${currentFile.basename}`;
-          }
-          break;
-        case "recent-files":
-          modeIcon = "\u{1F4C5}";
-          modeName = t("recent_files_mode");
-          break;
-        case "all-files":
-          modeIcon = "\u{1F4D4}";
-          modeName = t("all_files_mode");
-          break;
-        case "random-note":
-          modeIcon = "\u{1F3B2}";
-          modeName = t("random_note_mode");
-          break;
-        case "tasks":
-          modeIcon = "\u2611\uFE0F";
-          modeName = t("tasks_mode");
-          break;
-        default:
-          if (this.sourceMode.startsWith("custom-")) {
-            const mode = this.plugin.settings.customModes.find((m) => m.internalName === this.sourceMode);
-            modeIcon = mode ? mode.icon : "\u{1F9E9}";
-            modeName = mode ? mode.displayName : t("custom_mode");
-          } else {
-            modeIcon = "\u{1F4C1}";
-            if (this.sourcePath && this.sourcePath !== "/") {
-              modeName = this.sourcePath.split("/").pop() || this.sourcePath;
-            } else {
-              modeName = t("root");
-            }
-          }
-      }
-      let modeTitleEl;
-      if (this.sourceMode.startsWith("custom-")) {
-        modeTitleEl = modenameContainer.createEl("a", {
-          text: `${modeIcon} ${modeName}`.trim(),
-          cls: "ge-mode-title"
-        });
-        modeTitleEl.addEventListener("click", (evt) => {
-          const menu2 = new import_obsidian13.Menu();
-          this.plugin.settings.customModes.filter((m) => {
-            var _a2;
-            return (_a2 = m.enabled) != null ? _a2 : true;
-          }).forEach((m) => {
-            menu2.addItem((item) => {
-              item.setTitle(`${m.icon || "\u{1F9E9}"} ${m.displayName}`).setChecked(m.internalName === this.sourceMode).onClick(() => {
-                this.setSource(m.internalName, "", true);
-              });
-            });
-          });
-          menu2.showAtMouseEvent(evt);
-        });
-      } else {
-        modeTitleEl = modenameContainer.createEl("span", {
-          text: `${modeIcon} ${modeName}`.trim(),
-          cls: "ge-mode-title"
-        });
-      }
-      switch (this.sourceMode) {
-        case "tasks":
-          const taskFilterSpan = modenameContainer.createEl("a", { text: t(`${this.taskFilter}`), cls: "ge-sub-option" });
-          taskFilterSpan.addEventListener("click", (evt) => {
-            const menu2 = new import_obsidian13.Menu();
-            menu2.addItem((item) => {
-              item.setTitle(t("uncompleted")).setChecked(this.taskFilter === "uncompleted").setIcon("square").onClick(() => {
-                this.taskFilter = "uncompleted";
-                this.render();
-              });
-            });
-            menu2.addItem((item) => {
-              item.setTitle(t("completed")).setChecked(this.taskFilter === "completed").setIcon("square-check-big").onClick(() => {
-                this.taskFilter = "completed";
-                this.render();
-              });
-            });
-            menu2.addItem((item) => {
-              item.setTitle(t("all")).setChecked(this.taskFilter === "all").setIcon("square-asterisk").onClick(() => {
-                this.taskFilter = "all";
-                this.render();
-              });
-            });
-            menu2.addSeparator();
-            menu2.showAtMouseEvent(evt);
-          });
-          break;
-        default:
-          if (this.sourceMode.startsWith("custom-")) {
-            const mode = this.plugin.settings.customModes.find((m) => m.internalName === this.sourceMode);
-            if (mode) {
-              const hasOptions = mode.options && mode.options.length > 0;
-              if (hasOptions && mode.options) {
-                if (this.customOptionIndex >= mode.options.length || this.customOptionIndex < -1) {
-                  this.customOptionIndex = -1;
-                }
-                let subName;
-                if (this.customOptionIndex === -1) {
-                  subName = ((_a = mode.name) == null ? void 0 : _a.trim()) || t("default");
-                } else if (this.customOptionIndex >= 0 && this.customOptionIndex < mode.options.length) {
-                  const opt = mode.options[this.customOptionIndex];
-                  subName = ((_b = opt.name) == null ? void 0 : _b.trim()) || `${t("option")} ${this.customOptionIndex + 1}`;
-                }
-                const subSpan = modenameContainer.createEl("a", { text: subName != null ? subName : "-", cls: "ge-sub-option" });
-                subSpan.addEventListener("click", (evt) => {
-                  var _a2;
-                  const menu2 = new import_obsidian13.Menu();
-                  const defaultName = ((_a2 = mode.name) == null ? void 0 : _a2.trim()) || t("default");
-                  menu2.addItem((item) => {
-                    item.setTitle(defaultName).setIcon("puzzle").setChecked(this.customOptionIndex === -1).onClick(() => {
-                      this.customOptionIndex = -1;
-                      this.render(true);
-                    });
-                  });
-                  mode.options.forEach((opt, idx) => {
-                    menu2.addItem((item) => {
-                      var _a3;
-                      item.setTitle(((_a3 = opt.name) == null ? void 0 : _a3.trim()) || t("option") + " " + (idx + 1)).setIcon("puzzle").setChecked(idx === this.customOptionIndex).onClick(() => {
-                        this.customOptionIndex = idx;
-                        this.render(true);
-                      });
-                    });
-                  });
-                  menu2.addSeparator();
-                  menu2.addItem((item) => {
-                    item.setTitle(t("edit")).setIcon("settings").onClick(() => {
-                      const modeIndex = this.plugin.settings.customModes.findIndex((m) => m.internalName === mode.internalName);
-                      if (modeIndex === -1)
-                        return;
-                      new CustomModeModal(this.app, this.plugin, this.plugin.settings.customModes[modeIndex], (result) => {
-                        this.plugin.settings.customModes[modeIndex] = result;
-                        this.plugin.saveSettings();
-                        this.render(true);
-                      }).open();
-                    });
-                  });
-                  menu2.showAtMouseEvent(evt);
-                });
-              } else {
-                const gearIcon = modenameContainer.createEl("a", { cls: "ge-sub-option" });
-                (0, import_obsidian13.setIcon)(gearIcon, "settings");
-                gearIcon.addEventListener("click", () => {
-                  const modeIndex = this.plugin.settings.customModes.findIndex((m) => m.internalName === mode.internalName);
-                  if (modeIndex === -1)
-                    return;
-                  new CustomModeModal(this.app, this.plugin, this.plugin.settings.customModes[modeIndex], (result) => {
-                    this.plugin.settings.customModes[modeIndex] = result;
-                    this.plugin.saveSettings();
-                    this.render(true);
-                  }).open();
-                });
-              }
-            }
-          }
-          break;
-      }
-    } else if (this.searchQuery !== "" && this.searchAllFiles) {
-      modenameContainer.createEl("span", {
-        text: `\u{1F50D} ${t("global_search")}`,
-        cls: "ge-mode-title"
-      });
-    }
+    renderHeaderButton(this);
+    renderModePath(this);
     const contentEl = this.containerEl.createDiv("view-content");
     if (this.sourceMode === "folder" && this.sourcePath !== "/") {
       this.pinnedList = [];
@@ -5047,8 +5826,8 @@ var GridView = class extends import_obsidian13.ItemView {
       const folderName = folderPath.split("/").pop() || "";
       const notePath = `${folderPath}/${folderName}.md`;
       const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-      if (noteFile instanceof import_obsidian13.TFile) {
-        const metadata = (_c = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _c.frontmatter;
+      if (noteFile instanceof import_obsidian17.TFile) {
+        const metadata = (_a = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
         if (metadata) {
           if (Array.isArray(metadata["pinned"])) {
             if (this.plugin.settings.folderNoteDisplaySettings === "pinned") {
@@ -5077,7 +5856,7 @@ var GridView = class extends import_obsidian13.ItemView {
     }
   }
   async grid_render() {
-    var _a, _b;
+    var _a;
     const container = this.containerEl.querySelector(".view-content");
     container.empty();
     container.addClass("ge-grid-container");
@@ -5144,7 +5923,7 @@ var GridView = class extends import_obsidian13.ItemView {
     }
     this.gridItems = [];
     if (this.sourceMode === "bookmarks" && !((_a = this.app.internalPlugins.plugins.bookmarks) == null ? void 0 : _a.enabled)) {
-      new import_obsidian13.Notice(t("bookmarks_plugin_disabled"));
+      new import_obsidian17.Notice(t("bookmarks_plugin_disabled"));
       return;
     }
     if (this.sourceMode === "backlinks" && !this.app.workspace.getActiveFile()) {
@@ -5155,417 +5934,8 @@ var GridView = class extends import_obsidian13.ItemView {
       }
       return;
     }
-    if (this.sourceMode === "folder" && this.searchQuery === "") {
-      const currentFolder = this.app.vault.getAbstractFileByPath(this.sourcePath || "/");
-      if (currentFolder instanceof import_obsidian13.TFolder) {
-        if (import_obsidian13.Platform.isDesktop) {
-          container.addEventListener("dragover", (event) => {
-            if (event.target.closest(".ge-folder-item")) {
-              return;
-            }
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
-            container.addClass("ge-dragover");
-          }, true);
-          container.addEventListener("dragleave", (event) => {
-            if (container.contains(event.relatedTarget)) {
-              return;
-            }
-            container.removeClass("ge-dragover");
-          });
-          container.addEventListener("drop", async (event) => {
-            var _a2, _b2;
-            if (event.target.closest(".ge-folder-item")) {
-              return;
-            }
-            event.preventDefault();
-            container.removeClass("ge-dragover");
-            const filesDataString = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
-            if (filesDataString) {
-              try {
-                const filePaths = JSON.parse(filesDataString);
-                const folderPath = currentFolder.path;
-                if (!folderPath)
-                  return;
-                for (const path of filePaths) {
-                  const file2 = this.app.vault.getAbstractFileByPath(path);
-                  if (file2 instanceof import_obsidian13.TFile) {
-                    try {
-                      const newPath = (0, import_obsidian13.normalizePath)(`${folderPath}/${file2.name}`);
-                      if (path === newPath) {
-                        continue;
-                      }
-                      await this.app.fileManager.renameFile(file2, newPath);
-                    } catch (error) {
-                      console.error(`An error occurred while moving the file ${file2.path}:`, error);
-                    }
-                  }
-                }
-                return;
-              } catch (error) {
-                console.error("Error parsing dragged files data:", error);
-              }
-            }
-            const filePath = (_b2 = event.dataTransfer) == null ? void 0 : _b2.getData("text/plain");
-            if (!filePath)
-              return;
-            const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
-            const file = this.app.vault.getAbstractFileByPath(cleanedFilePath);
-            if (file instanceof import_obsidian13.TFile) {
-              try {
-                const newPath = (0, import_obsidian13.normalizePath)(`${currentFolder.path}/${file.name}`);
-                if (file.path !== newPath) {
-                  await this.app.fileManager.renameFile(file, newPath);
-                }
-              } catch (error) {
-                console.error("An error occurred while moving the file:", error);
-              }
-            }
-          });
-        }
-        const subfolders = currentFolder.children.filter((child) => {
-          if (!(child instanceof import_obsidian13.TFolder))
-            return false;
-          return !isFolderIgnored(
-            child,
-            this.plugin.settings.ignoredFolders,
-            this.plugin.settings.ignoredFolderPatterns,
-            this.showIgnoredFolders
-          );
-        }).sort((a, b) => a.name.localeCompare(b.name));
-        for (const folder of subfolders) {
-          const folderEl = container.createDiv("ge-grid-item ge-folder-item");
-          this.gridItems.push(folderEl);
-          folderEl.dataset.folderPath = folder.path;
-          const contentArea = folderEl.createDiv("ge-content-area");
-          const titleContainer = contentArea.createDiv("ge-title-container");
-          const customFolderIcon = this.plugin.settings.customFolderIcon;
-          titleContainer.createEl("span", { cls: "ge-title", text: `${customFolderIcon} ${folder.name}`.trim() });
-          (0, import_obsidian13.setTooltip)(folderEl, folder.name, { placement: this.cardLayout === "vertical" ? "bottom" : "right" });
-          const notePath = `${folder.path}/${folder.name}.md`;
-          const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-          if (noteFile instanceof import_obsidian13.TFile) {
-            const noteIcon = titleContainer.createEl("span", {
-              cls: "ge-foldernote-button"
-            });
-            (0, import_obsidian13.setIcon)(noteIcon, "panel-left-open");
-            noteIcon.addEventListener("click", (e) => {
-              e.stopPropagation();
-              this.app.workspace.getLeaf().openFile(noteFile);
-            });
-            const metadata = (_b = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _b.frontmatter;
-            const colorValue = metadata == null ? void 0 : metadata.color;
-            if (colorValue) {
-              folderEl.addClass(`ge-folder-color-${colorValue}`);
-            }
-            const iconValue = metadata == null ? void 0 : metadata.icon;
-            if (iconValue) {
-              const title = folderEl.querySelector(".ge-title");
-              if (title) {
-                title.textContent = `${iconValue} ${folder.name}`;
-              }
-            }
-          }
-          folderEl.addEventListener("click", (event) => {
-            if (event.ctrlKey || event.metaKey) {
-              event.preventDefault();
-              event.stopPropagation();
-              this.openFolderInNewView(folder.path);
-            } else {
-              this.setSource("folder", folder.path, true);
-              this.clearSelection();
-            }
-          });
-          folderEl.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-            const menu = new import_obsidian13.Menu();
-            menu.addItem((item) => {
-              item.setTitle(t("open_in_new_grid_view")).setIcon("grid").onClick(() => {
-                this.openFolderInNewView(folder.path);
-              });
-            });
-            menu.addSeparator();
-            const notePath2 = `${folder.path}/${folder.name}.md`;
-            let noteFile2 = this.app.vault.getAbstractFileByPath(notePath2);
-            if (noteFile2 instanceof import_obsidian13.TFile) {
-              menu.addItem((item) => {
-                item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
-                  this.app.workspace.getLeaf().openFile(noteFile2);
-                });
-              });
-              menu.addItem((item) => {
-                item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
-                  if (folder instanceof import_obsidian13.TFolder) {
-                    showFolderNoteSettingsModal(this.app, this.plugin, folder, this);
-                  }
-                });
-              });
-              menu.addItem((item) => {
-                item.setTitle(t("delete_folder_note")).setIcon("folder-x").onClick(() => {
-                  this.app.fileManager.trashFile(noteFile2);
-                });
-              });
-            } else {
-              menu.addItem((item) => {
-                item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
-                  if (folder instanceof import_obsidian13.TFolder) {
-                    showFolderNoteSettingsModal(this.app, this.plugin, folder, this);
-                  }
-                });
-              });
-            }
-            menu.addSeparator();
-            if (!this.plugin.settings.ignoredFolders.includes(folder.path)) {
-              menu.addItem((item) => {
-                item.setTitle(t("ignore_folder")).setIcon("folder-x").onClick(() => {
-                  this.plugin.settings.ignoredFolders.push(folder.path);
-                  this.plugin.saveSettings();
-                });
-              });
-            } else {
-              menu.addItem((item) => {
-                item.setTitle(t("unignore_folder")).setIcon("folder-up").onClick(() => {
-                  this.plugin.settings.ignoredFolders = this.plugin.settings.ignoredFolders.filter((path) => path !== folder.path);
-                  this.plugin.saveSettings();
-                });
-              });
-            }
-            menu.addItem((item) => {
-              item.setTitle(t("move_folder")).setIcon("folder-cog").onClick(() => {
-                if (folder instanceof import_obsidian13.TFolder) {
-                  new moveFolderSuggestModal(this.plugin, folder, this).open();
-                }
-              });
-            });
-            menu.addItem((item) => {
-              item.setTitle(t("rename_folder")).setIcon("file-cog").onClick(() => {
-                if (folder instanceof import_obsidian13.TFolder) {
-                  showFolderRenameModal(this.app, this.plugin, folder, this);
-                }
-              });
-            });
-            menu.addItem((item) => {
-              item.setWarning(true);
-              item.setTitle(t("delete_folder")).setIcon("trash").onClick(async () => {
-                if (folder instanceof import_obsidian13.TFolder) {
-                  await this.app.fileManager.trashFile(folder);
-                  setTimeout(() => {
-                    this.render();
-                  }, 100);
-                }
-              });
-            });
-            menu.showAtMouseEvent(event);
-          });
-        }
-        if (subfolders.length > 0) {
-          container.createDiv("ge-break");
-        }
-      }
-    }
-    if (import_obsidian13.Platform.isDesktop) {
-      const folderItems = this.containerEl.querySelectorAll(".ge-folder-item");
-      folderItems.forEach((folderItem) => {
-        folderItem.addEventListener("dragover", (event) => {
-          event.preventDefault();
-          event.dataTransfer.dropEffect = "move";
-          folderItem.addClass("ge-dragover");
-        });
-        folderItem.addEventListener("dragleave", () => {
-          folderItem.removeClass("ge-dragover");
-        });
-        folderItem.addEventListener("drop", async (event) => {
-          var _a2, _b2;
-          event.preventDefault();
-          folderItem.removeClass("ge-dragover");
-          const filesDataString = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
-          if (filesDataString) {
-            try {
-              const filePaths = JSON.parse(filesDataString);
-              const folderPath2 = folderItem.dataset.folderPath;
-              if (!folderPath2)
-                return;
-              const folder2 = this.app.vault.getAbstractFileByPath(folderPath2);
-              if (!(folder2 instanceof import_obsidian13.TFolder))
-                return;
-              for (const path of filePaths) {
-                const file2 = this.app.vault.getAbstractFileByPath(path);
-                if (file2 instanceof import_obsidian13.TFile) {
-                  try {
-                    const newPath = (0, import_obsidian13.normalizePath)(`${folderPath2}/${file2.name}`);
-                    await this.app.fileManager.renameFile(file2, newPath);
-                  } catch (error) {
-                    console.error(`An error occurred while moving the file ${file2.path}:`, error);
-                  }
-                }
-              }
-              return;
-            } catch (error) {
-              console.error("Error parsing dragged files data:", error);
-            }
-          }
-          const filePath = (_b2 = event.dataTransfer) == null ? void 0 : _b2.getData("text/plain");
-          if (!filePath)
-            return;
-          const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
-          const folderPath = folderItem.dataset.folderPath;
-          if (!folderPath)
-            return;
-          const file = this.app.vault.getAbstractFileByPath(cleanedFilePath);
-          const folder = this.app.vault.getAbstractFileByPath(folderPath);
-          if (file instanceof import_obsidian13.TFile && folder instanceof import_obsidian13.TFolder) {
-            try {
-              const newPath = (0, import_obsidian13.normalizePath)(`${folderPath}/${file.name}`);
-              await this.app.fileManager.renameFile(file, newPath);
-            } catch (error) {
-              console.error("An error occurred while moving the file:", error);
-            }
-          }
-        });
-      });
-    }
-    let loadingDiv = null;
-    if (this.searchQuery || this.sourceMode === "tasks") {
-      loadingDiv = container.createDiv({ text: t("searching"), cls: "ge-loading-indicator" });
-    }
-    let files = [];
-    let fileIndexMap = /* @__PURE__ */ new Map();
-    if (this.searchQuery) {
-      let allFiles = [];
-      if (this.searchAllFiles) {
-        allFiles = this.app.vault.getFiles().filter(
-          (file) => isDocumentFile(file) || isMediaFile(file) && this.searchMediaFiles
-        );
-      } else {
-        allFiles = await getFiles(this, this.searchMediaFiles);
-        if (this.sourceMode === "bookmarks") {
-          allFiles = allFiles.filter(
-            (file) => isDocumentFile(file) || isMediaFile(file) && this.searchMediaFiles
-          );
-          allFiles.forEach((file, index) => {
-            fileIndexMap.set(file, index);
-          });
-        } else if (this.sourceMode === "search") {
-          allFiles = allFiles.filter(
-            (file) => isDocumentFile(file) || isMediaFile(file) && this.searchMediaFiles
-          );
-        } else if (this.sourceMode === "recent-files") {
-          allFiles = ignoredFiles(allFiles, this).slice(0, this.plugin.settings.recentFilesCount);
-        } else if (this.sourceMode.startsWith("custom-")) {
-          allFiles.forEach((file, index) => {
-            fileIndexMap.set(file, index);
-          });
-        }
-      }
-      const searchTerms = this.searchQuery.toLowerCase().split(/\s+/).filter((term) => term.trim() !== "");
-      const tagTerms = searchTerms.filter((term) => term.startsWith("#")).map((term) => term.substring(1));
-      const normalTerms = searchTerms.filter((term) => !term.startsWith("#"));
-      await Promise.all(
-        allFiles.map(async (file) => {
-          const fileName = file.name.toLowerCase();
-          const matchesFileName = normalTerms.length === 0 || normalTerms.every((term) => fileName.includes(term));
-          if (tagTerms.length > 0 && normalTerms.length === 0 && file.extension !== "md") {
-            return;
-          }
-          if (tagTerms.length === 0) {
-            if (matchesFileName) {
-              files.push(file);
-            } else if (file.extension === "md") {
-              const content = (await this.app.vault.cachedRead(file)).toLowerCase();
-              const matchesContent = normalTerms.every((term) => content.includes(term));
-              if (matchesContent) {
-                files.push(file);
-              }
-            }
-            return;
-          }
-          if (file.extension === "md") {
-            const fileCache = this.app.metadataCache.getFileCache(file);
-            let matchesTags = false;
-            if (fileCache) {
-              const collectedTags = [];
-              if (Array.isArray(fileCache.tags)) {
-                for (const t2 of fileCache.tags) {
-                  if (t2 && t2.tag) {
-                    const clean = t2.tag.toLowerCase().replace(/^#/, "");
-                    collectedTags.push(...clean.split(/\s+/).filter((st) => st.trim() !== ""));
-                  }
-                }
-              }
-              if (fileCache.frontmatter && fileCache.frontmatter.tags) {
-                const fmTags = fileCache.frontmatter.tags;
-                if (typeof fmTags === "string") {
-                  collectedTags.push(
-                    ...fmTags.split(/[,\s]+/).map((t2) => t2.toLowerCase().replace(/^#/, "")).filter((t2) => t2.trim() !== "")
-                  );
-                } else if (Array.isArray(fmTags)) {
-                  for (const t2 of fmTags) {
-                    if (typeof t2 === "string") {
-                      const clean = t2.toLowerCase().replace(/^#/, "");
-                      collectedTags.push(...clean.split(/\s+/).filter((st) => st.trim() !== ""));
-                    }
-                  }
-                }
-              }
-              matchesTags = tagTerms.every((tag) => collectedTags.includes(tag));
-            }
-            if (matchesTags) {
-              if (matchesFileName) {
-                files.push(file);
-              } else if (normalTerms.length > 0) {
-                const content = (await this.app.vault.cachedRead(file)).toLowerCase();
-                const matchesContent = normalTerms.every((term) => content.includes(term));
-                if (matchesContent) {
-                  files.push(file);
-                }
-              } else {
-                files.push(file);
-              }
-            }
-          }
-        })
-      );
-      if (this.sourceMode === "bookmarks") {
-        files.sort((a, b) => {
-          var _a2, _b2;
-          const indexA = (_a2 = fileIndexMap.get(a)) != null ? _a2 : Number.MAX_SAFE_INTEGER;
-          const indexB = (_b2 = fileIndexMap.get(b)) != null ? _b2 : Number.MAX_SAFE_INTEGER;
-          return indexA - indexB;
-        });
-      } else if (this.sourceMode === "recent-files") {
-        const sortType = this.sortType;
-        this.sortType = "mtime-desc";
-        files = sortFiles(files, this);
-        this.sortType = sortType;
-      } else if (this.sourceMode === "random-note") {
-        const sortType = this.sortType;
-        this.sortType = "random";
-        files = sortFiles(files, this);
-        this.sortType = sortType;
-      } else if (this.sourceMode.startsWith("custom-")) {
-        files.sort((a, b) => {
-          var _a2, _b2;
-          const indexA = (_a2 = fileIndexMap.get(a)) != null ? _a2 : Number.MAX_SAFE_INTEGER;
-          const indexB = (_b2 = fileIndexMap.get(b)) != null ? _b2 : Number.MAX_SAFE_INTEGER;
-          return indexA - indexB;
-        });
-      } else {
-        files = sortFiles(files, this);
-      }
-      files = ignoredFiles(files, this);
-    } else {
-      files = await getFiles(this, this.randomNoteIncludeMedia);
-      files = ignoredFiles(files, this);
-      if (this.sourceMode === "recent-files") {
-        files = files.slice(0, this.plugin.settings.recentFilesCount);
-      }
-      if (this.sourceMode === "random-note") {
-        files = files.slice(0, this.plugin.settings.randomNoteCount);
-      }
-    }
-    if (loadingDiv) {
-      loadingDiv.remove();
-    }
+    renderFolder(this, container);
+    let files = await renderFiles(this, container);
     if (files.length === 0) {
       const noFilesDiv = container.createDiv("ge-no-files");
       if (this.sourceMode !== "backlinks") {
@@ -5587,7 +5957,7 @@ var GridView = class extends import_obsidian13.ItemView {
     if (this.sourceMode === "folder" && this.sourcePath !== "/") {
       if (this.plugin.settings.folderNoteDisplaySettings === "hidden") {
         const currentFolder = this.app.vault.getAbstractFileByPath(this.sourcePath);
-        if (currentFolder instanceof import_obsidian13.TFolder) {
+        if (currentFolder instanceof import_obsidian17.TFolder) {
           const folderName = currentFolder.name;
           files = files.filter((f) => f.name !== `${folderName}.md`);
         }
@@ -5595,14 +5965,14 @@ var GridView = class extends import_obsidian13.ItemView {
     }
     const observer = new IntersectionObserver((entries, observer2) => {
       entries.forEach(async (entry) => {
-        var _a2, _b2, _c;
+        var _a2, _b, _c;
         if (entry.isIntersecting) {
           const fileEl = entry.target;
           const filePath = fileEl.dataset.filePath;
           if (!filePath)
             return;
           const file = this.app.vault.getAbstractFileByPath(filePath);
-          if (!(file instanceof import_obsidian13.TFile))
+          if (!(file instanceof import_obsidian17.TFile))
             return;
           let imageUrl = "";
           const contentArea = fileEl.querySelector(".ge-content-area");
@@ -5615,7 +5985,7 @@ var GridView = class extends import_obsidian13.ItemView {
                 this.plugin.saveSettings();
               }
               const content = await this.app.vault.cachedRead(file);
-              const frontMatterInfo = (0, import_obsidian13.getFrontMatterInfo)(content);
+              const frontMatterInfo = (0, import_obsidian17.getFrontMatterInfo)(content);
               let metadata = void 0;
               if (frontMatterInfo.exists) {
                 metadata = (_a2 = this.app.metadataCache.getFileCache(file)) == null ? void 0 : _a2.frontmatter;
@@ -5635,15 +6005,43 @@ var GridView = class extends import_obsidian13.ItemView {
                     if (fields) {
                       const fieldList = fields.split(",").map((f) => f.trim()).filter(Boolean);
                       const fieldValues = [];
-                      fieldList.forEach((field) => {
-                        if ((metadata == null ? void 0 : metadata[field]) !== void 0 && (metadata == null ? void 0 : metadata[field]) !== "" && (metadata == null ? void 0 : metadata[field]) !== null) {
-                          if (typeof metadata[field] === "number") {
-                            metadata[field] = metadata[field].toLocaleString();
+                      fieldList.forEach((fieldEntry) => {
+                        var _a3;
+                        let raw = fieldEntry.trim();
+                        let calcExpr = null;
+                        const calcMatch = raw.match(/\{\{(.*?)\}\}/);
+                        if (calcMatch) {
+                          calcExpr = calcMatch[1];
+                          raw = raw.substring(0, calcMatch.index).trim();
+                        }
+                        const aliasIdx = raw.lastIndexOf("|");
+                        let fieldKey;
+                        let labelName;
+                        if (aliasIdx !== -1) {
+                          fieldKey = raw.substring(0, aliasIdx).trim();
+                          labelName = raw.substring(aliasIdx + 1).trim() || fieldKey;
+                        } else {
+                          fieldKey = raw;
+                          labelName = fieldKey;
+                        }
+                        if ((metadata == null ? void 0 : metadata[fieldKey]) !== void 0 && (metadata == null ? void 0 : metadata[fieldKey]) !== "" && (metadata == null ? void 0 : metadata[fieldKey]) !== null) {
+                          if (typeof metadata[fieldKey] === "number") {
+                            metadata[fieldKey] = metadata[fieldKey].toLocaleString();
                           }
-                          if (Array.isArray(metadata[field])) {
-                            metadata[field] = metadata[field].join(", ");
+                          if (Array.isArray(metadata[fieldKey])) {
+                            metadata[fieldKey] = metadata[fieldKey].join(", ");
                           }
-                          fieldValues.push(`${field}: ${metadata[field]}`);
+                          let outputValue = metadata[fieldKey];
+                          if (calcExpr) {
+                            try {
+                              const fn = new Function("value", "metadata", "app", "dv", `return (${calcExpr});`);
+                              const dvApi = (_a3 = this.app.plugins.plugins.dataview) == null ? void 0 : _a3.api;
+                              outputValue = fn(metadata[fieldKey], metadata, this.app, dvApi);
+                            } catch (error) {
+                              console.error("GridExplorer: evaluate displayName error", error);
+                            }
+                          }
+                          fieldValues.push(`${labelName}: ${outputValue}`);
                         }
                       });
                       if (fieldValues.length > 0) {
@@ -5691,7 +6089,7 @@ var GridView = class extends import_obsidian13.ItemView {
               }
               const titleEl = fileEl.querySelector(".ge-title");
               if (titleEl) {
-                (0, import_obsidian13.setTooltip)(contentArea, `${titleEl.textContent}`);
+                (0, import_obsidian17.setTooltip)(contentArea, `${titleEl.textContent}`);
               }
               if (frontMatterInfo.exists) {
                 const colorValue = metadata == null ? void 0 : metadata.color;
@@ -5719,17 +6117,24 @@ var GridView = class extends import_obsidian13.ItemView {
                   }
                   fileEl.style.height = "100%";
                 }
+                const redirectValue = metadata == null ? void 0 : metadata.redirect;
+                if (redirectValue) {
+                  const iconContainer = fileEl.querySelector(".ge-icon-container");
+                  if (iconContainer) {
+                    (0, import_obsidian17.setIcon)(iconContainer, "shuffle");
+                  }
+                }
               }
               imageUrl = await findFirstImageInNote(this.app, content);
             } else {
               if (!this.minMode) {
                 contentArea.createEl("p", { text: file.extension.toUpperCase() });
               }
-              (0, import_obsidian13.setTooltip)(fileEl, `${file.name}`, { delay: 2e3 });
+              (0, import_obsidian17.setTooltip)(fileEl, `${file.name}`, { delay: 2e3 });
             }
             if (file.extension === "md" && this.showNoteTags && !this.minMode) {
               const fileCache = this.app.metadataCache.getFileCache(file);
-              const displaySetting = (_b2 = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b2.display;
+              const displaySetting = (_b = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b.display;
               if (displaySetting !== "minimized") {
                 const allTags = /* @__PURE__ */ new Set();
                 let frontmatterTags = ((_c = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _c.tags) || [];
@@ -5763,7 +6168,7 @@ var GridView = class extends import_obsidian13.ItemView {
                       e.preventDefault();
                       e.stopPropagation();
                       const tagText = tag.startsWith("#") ? tag : `#${tag}`;
-                      const menu = new import_obsidian13.Menu();
+                      const menu = new import_obsidian17.Menu();
                       if (!this.searchQuery.includes(tagText)) {
                         menu.addItem(
                           (item) => item.setTitle(t("add_tag_to_search")).setIcon("circle-plus").onClick(() => {
@@ -5817,7 +6222,7 @@ var GridView = class extends import_obsidian13.ItemView {
                   video.src = this.app.vault.getResourcePath(file);
                 } else {
                   const videoThumb = imageArea.createDiv("ge-video-thumbnail");
-                  (0, import_obsidian13.setIcon)(videoThumb, "play-circle");
+                  (0, import_obsidian17.setIcon)(videoThumb, "play-circle");
                 }
                 imageArea.setAttribute("data-loaded", "true");
               } else if (file.extension === "md") {
@@ -5853,7 +6258,7 @@ var GridView = class extends import_obsidian13.ItemView {
       const state = { lastDateString, pinDividerAdded, blankDividerAdded };
       const paramsBase = { container, observer, files, dateDividerMode, sortType, shouldShowDateDividers, state };
       const selfRef = this;
-      if (import_obsidian13.Platform.isIosApp) {
+      if (import_obsidian17.Platform.isIosApp) {
         const TIME_BUDGET_MS = 6;
         const processChunk = (start) => {
           if (currentToken !== this.renderToken)
@@ -5904,7 +6309,7 @@ var GridView = class extends import_obsidian13.ItemView {
       const pinDivider = container.createDiv("ge-pin-divider");
       pinDivider.textContent = t("pinned");
       state.pinDividerAdded = true;
-      if (import_obsidian13.Platform.isIosApp) {
+      if (import_obsidian17.Platform.isIosApp) {
         pinDivider.style.width = "calc(100% - 16px)";
       }
     }
@@ -5955,7 +6360,7 @@ var GridView = class extends import_obsidian13.ItemView {
         state.lastDateString = currentDateString;
         const dateDivider = container.createDiv("ge-date-divider");
         dateDivider.textContent = currentDateString;
-        if (import_obsidian13.Platform.isIosApp) {
+        if (import_obsidian17.Platform.isIosApp) {
           dateDivider.style.width = "calc(100% - 16px)";
         }
       }
@@ -5979,28 +6384,28 @@ var GridView = class extends import_obsidian13.ItemView {
     }
     if (isImageFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-img");
-      (0, import_obsidian13.setIcon)(iconContainer, "image");
+      (0, import_obsidian17.setIcon)(iconContainer, "image");
     } else if (isVideoFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-video");
-      (0, import_obsidian13.setIcon)(iconContainer, "play-circle");
+      (0, import_obsidian17.setIcon)(iconContainer, "play-circle");
     } else if (isAudioFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-audio");
-      (0, import_obsidian13.setIcon)(iconContainer, "music");
+      (0, import_obsidian17.setIcon)(iconContainer, "music");
     } else if (extension === "pdf") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-pdf");
-      (0, import_obsidian13.setIcon)(iconContainer, "paperclip");
+      (0, import_obsidian17.setIcon)(iconContainer, "paperclip");
     } else if (extension === "canvas") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-canvas");
-      (0, import_obsidian13.setIcon)(iconContainer, "layout-dashboard");
+      (0, import_obsidian17.setIcon)(iconContainer, "layout-dashboard");
     } else if (extension === "base") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-base");
-      (0, import_obsidian13.setIcon)(iconContainer, "layout-list");
+      (0, import_obsidian17.setIcon)(iconContainer, "layout-list");
     } else if (extension === "md" || extension === "txt") {
       const iconContainer = titleContainer.createDiv("ge-icon-container");
-      (0, import_obsidian13.setIcon)(iconContainer, "file-text");
+      (0, import_obsidian17.setIcon)(iconContainer, "file-text");
     } else {
       const iconContainer = titleContainer.createDiv("ge-icon-container");
-      (0, import_obsidian13.setIcon)(iconContainer, "file");
+      (0, import_obsidian17.setIcon)(iconContainer, "file");
     }
     const shouldShowExtension = this.minMode && extension !== "md";
     const displayText = shouldShowExtension ? `${file.basename}.${file.extension}` : file.basename;
@@ -6012,6 +6417,7 @@ var GridView = class extends import_obsidian13.ItemView {
     }
     observer.observe(fileEl);
     fileEl.addEventListener("click", (event) => {
+      var _a2, _b;
       const index = this.gridItems.indexOf(fileEl);
       if (index < 0)
         return;
@@ -6046,6 +6452,8 @@ var GridView = class extends import_obsidian13.ItemView {
           } else {
             this.openMediaFile(file, files);
           }
+        } else if (file.extension === "pdf" || file.extension === "canvas" || file.extension === "base") {
+          this.app.workspace.getLeaf(true).openFile(file);
         } else {
           this.showNoteInGrid(file);
         }
@@ -6061,7 +6469,71 @@ var GridView = class extends import_obsidian13.ItemView {
             this.openMediaFile(file, files);
           }
         } else {
-          this.app.workspace.getLeaf().openFile(file);
+          const fileCache = this.app.metadataCache.getFileCache(file);
+          const redirectType = (_a2 = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a2.type;
+          const redirectPath = (_b = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b.redirect;
+          if (redirectType && typeof redirectPath === "string" && redirectPath.trim() !== "") {
+            let target;
+            if (redirectType === "file") {
+              if (redirectPath.startsWith("[[") && redirectPath.endsWith("]]")) {
+                const noteName = redirectPath.slice(2, -2);
+                target = this.app.metadataCache.getFirstLinkpathDest(noteName, file.path);
+              } else {
+                target = this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath));
+              }
+              if (target instanceof import_obsidian17.TFile) {
+                this.app.workspace.getLeaf().openFile(target);
+              } else {
+                new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+              }
+            } else if (redirectType === "folder") {
+              if (this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath)) instanceof import_obsidian17.TFolder) {
+                this.setSource("folder", redirectPath, true);
+                this.clearSelection();
+              } else {
+                new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+              }
+            } else if (redirectType === "mode") {
+              this.setSource(redirectPath, "", true);
+              this.clearSelection();
+            } else {
+              new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+            }
+          } else {
+            const leaf = this.app.workspace.getLeaf();
+            if (this.searchQuery !== "") {
+              this.app.vault.cachedRead(file).then((content) => {
+                const searchQuery = this.searchQuery;
+                const lowerContent = content.toLowerCase();
+                let idx = -1;
+                let lineNumber = 0;
+                idx = lowerContent.indexOf(searchQuery.toLowerCase());
+                if (idx === -1 && searchQuery.includes(" ")) {
+                  const keywords = searchQuery.split(/\s+/).filter((k) => k.trim() !== "");
+                  if (keywords.length > 1) {
+                    for (const keyword of keywords) {
+                      const keywordIdx = lowerContent.indexOf(keyword.toLowerCase());
+                      if (keywordIdx !== -1) {
+                        idx = keywordIdx;
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (idx !== -1) {
+                  lineNumber = content.substring(0, idx).split("\n").length - 1;
+                  leaf.openFile(file, { eState: { line: lineNumber } }).then(() => {
+                    var _a3, _b2, _c;
+                    (_c = (_b2 = (_a3 = this.app) == null ? void 0 : _a3.commands) == null ? void 0 : _b2.executeCommandById) == null ? void 0 : _c.call(_b2, "editor:focus");
+                  });
+                  return;
+                }
+                leaf.openFile(file);
+              });
+            } else {
+              leaf.openFile(file);
+            }
+          }
         }
       }
     });
@@ -6078,7 +6550,7 @@ var GridView = class extends import_obsidian13.ItemView {
         }
       }
     });
-    if (import_obsidian13.Platform.isDesktop) {
+    if (import_obsidian17.Platform.isDesktop) {
       fileEl.setAttribute("draggable", "true");
       fileEl.addEventListener("dragstart", (event) => {
         var _a2, _b, _c, _d;
@@ -6128,7 +6600,7 @@ var GridView = class extends import_obsidian13.ItemView {
     }
     fileEl.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      const menu = new import_obsidian13.Menu();
+      const menu = new import_obsidian17.Menu();
       const index = this.gridItems.indexOf(fileEl);
       if (index >= 0) {
         if (!this.selectedItems.has(index)) {
@@ -6197,32 +6669,6 @@ var GridView = class extends import_obsidian13.ItemView {
       });
     });
   }
-  // 在新視窗中開啟資料夾
-  openFolderInNewView(folderPath) {
-    const { workspace } = this.app;
-    let leaf = null;
-    workspace.getLeavesOfType("grid-view");
-    switch (this.plugin.settings.defaultOpenLocation) {
-      case "left":
-        leaf = workspace.getLeftLeaf(false);
-        break;
-      case "right":
-        leaf = workspace.getRightLeaf(false);
-        break;
-      case "tab":
-      default:
-        leaf = workspace.getLeaf("tab");
-        break;
-    }
-    if (!leaf) {
-      leaf = workspace.getLeaf("tab");
-    }
-    leaf.setViewState({ type: "grid-view", active: true });
-    if (leaf.view instanceof GridView) {
-      leaf.view.setSource("folder", folderPath);
-    }
-    workspace.revealLeaf(leaf);
-  }
   // 清除選中狀態
   clearSelection() {
     this.gridItems.forEach((item) => {
@@ -6283,7 +6729,7 @@ var GridView = class extends import_obsidian13.ItemView {
       const filePath = fileEl.dataset.filePath;
       if (filePath) {
         const file = this.app.vault.getAbstractFileByPath(filePath);
-        if (file instanceof import_obsidian13.TFile) {
+        if (file instanceof import_obsidian17.TFile) {
           files.push(file);
         }
       }
@@ -6303,6 +6749,44 @@ var GridView = class extends import_obsidian13.ItemView {
   }
   // 在 grid container 中顯示筆記
   async showNoteInGrid(file) {
+    var _a, _b;
+    const fileCache = this.app.metadataCache.getFileCache(file);
+    const redirectType = (_a = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a.type;
+    const redirectPath = (_b = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b.redirect;
+    if (redirectType && typeof redirectPath === "string" && redirectPath.trim() !== "") {
+      let target;
+      if (redirectType === "file") {
+        if (redirectPath.startsWith("[[") && redirectPath.endsWith("]]")) {
+          const noteName = redirectPath.slice(2, -2);
+          target = this.app.metadataCache.getFirstLinkpathDest(noteName, file.path);
+        } else {
+          target = this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath));
+        }
+        if (target instanceof import_obsidian17.TFile) {
+          this.showNoteInGrid(target);
+          return;
+        } else {
+          new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+          return;
+        }
+      } else if (redirectType === "folder") {
+        if (this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath)) instanceof import_obsidian17.TFolder) {
+          this.setSource("folder", redirectPath, true);
+          this.clearSelection();
+          return;
+        } else {
+          new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+          return;
+        }
+      } else if (redirectType === "mode") {
+        this.setSource(redirectPath, "", true);
+        this.clearSelection();
+        return;
+      } else {
+        new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
+        return;
+      }
+    }
     if (this.isShowingNote) {
       this.hideNoteInGrid();
     }
@@ -6316,23 +6800,31 @@ var GridView = class extends import_obsidian13.ItemView {
     const rightBar = topBar.createDiv("ge-note-top-right");
     const noteTitle = leftBar.createDiv("ge-note-title");
     noteTitle.textContent = file.basename;
-    (0, import_obsidian13.setTooltip)(noteTitle, file.basename);
+    (0, import_obsidian17.setTooltip)(noteTitle, file.basename);
     const editButton = rightBar.createEl("button", { cls: "ge-note-edit-button" });
-    (0, import_obsidian13.setIcon)(editButton, "pencil");
+    (0, import_obsidian17.setIcon)(editButton, "pencil");
     editButton.addEventListener("click", () => {
       this.app.workspace.getLeaf().openFile(file);
     });
     const closeButton = rightBar.createEl("button", { cls: "ge-note-close-button" });
-    (0, import_obsidian13.setIcon)(closeButton, "x");
+    (0, import_obsidian17.setIcon)(closeButton, "x");
     closeButton.addEventListener("click", () => {
       this.hideNoteInGrid();
     });
     const scrollContainer = this.noteViewContainer.createDiv("ge-note-scroll-container");
+    const isInSidebar = this.leaf.getRoot() === this.app.workspace.leftSplit || this.leaf.getRoot() === this.app.workspace.rightSplit;
+    if (isInSidebar) {
+      scrollContainer.style.fontSize = "1em";
+      scrollContainer.style.backgroundColor = "var(--background-secondary)";
+    }
     const noteContent = scrollContainer.createDiv("ge-note-content-container");
+    if (isInSidebar) {
+      noteContent.style.padding = "15px";
+    }
     const noteContentArea = noteContent.createDiv("ge-note-content");
     try {
       const content = await this.app.vault.read(file);
-      await import_obsidian13.MarkdownRenderer.render(
+      await import_obsidian17.MarkdownRenderer.render(
         this.app,
         content,
         noteContentArea,
@@ -6408,13 +6900,14 @@ var GridView = class extends import_obsidian13.ItemView {
         cardLayout: this.cardLayout,
         hideHeaderElements: this.hideHeaderElements,
         showDateDividers: this.showDateDividers,
-        showNoteTags: this.showNoteTags
+        showNoteTags: this.showNoteTags,
+        recentSources: this.recentSources
       }
     };
   }
   // 讀取視圖狀態
   async setState(state) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
     if (state.state) {
       this.sourceMode = state.state.sourceMode || "folder";
       this.sourcePath = state.state.sourcePath || "/";
@@ -6431,13 +6924,14 @@ var GridView = class extends import_obsidian13.ItemView {
       this.hideHeaderElements = (_h = state.state.hideHeaderElements) != null ? _h : false;
       this.showDateDividers = (_i = state.state.showDateDividers) != null ? _i : this.plugin.settings.dateDividerMode !== "none";
       this.showNoteTags = (_j = state.state.showNoteTags) != null ? _j : this.plugin.settings.showNoteTags;
+      this.recentSources = (_k = state.state.recentSources) != null ? _k : [];
       this.render();
     }
   }
 };
 
 // src/settings.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian18 = require("obsidian");
 var DEFAULT_SETTINGS = {
   ignoredFolders: [],
   ignoredFolderPatterns: [],
@@ -6519,10 +7013,10 @@ var DEFAULT_SETTINGS = {
   // 預設不在摘要中顯示程式碼區塊
   folderNoteDisplaySettings: "default",
   // 預設不處理資料夾筆記
-  interceptAllTagClicks: false,
-  // 預設不攔截所有tag點擊事件
-  interceptBreadcrumbClicks: false,
-  // 預設不攔截Breadcrumb點擊事件
+  interceptAllTagClicks: true,
+  // 預設攔截所有tag點擊事件
+  interceptBreadcrumbClicks: true,
+  // 預設攔截Breadcrumb點擊事件
   customModes: [
     {
       internalName: "custom-1750837329297",
@@ -6541,7 +7035,7 @@ var DEFAULT_SETTINGS = {
   showNoteInGrid: false
   // 預設不在 grid container 中顯示筆記
 };
-var FolderSuggest = class extends import_obsidian14.AbstractInputSuggest {
+var FolderSuggest = class extends import_obsidian18.AbstractInputSuggest {
   constructor(app, inputEl) {
     super(app, inputEl);
     this.inputEl = inputEl;
@@ -6566,7 +7060,7 @@ var FolderSuggest = class extends import_obsidian14.AbstractInputSuggest {
     this.close();
   }
 };
-var IgnoredFolderSuggest = class extends import_obsidian14.AbstractInputSuggest {
+var IgnoredFolderSuggest = class extends import_obsidian18.AbstractInputSuggest {
   constructor(app, inputEl, plugin, settingTab) {
     super(app, inputEl);
     this.plugin = plugin;
@@ -6598,7 +7092,7 @@ var IgnoredFolderSuggest = class extends import_obsidian14.AbstractInputSuggest 
     this.close();
   }
 };
-var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
+var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -6609,7 +7103,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
     containerEl.createEl("h3", { text: t("custom_mode_settings") });
     const customModesContainer = containerEl.createDiv();
     this.plugin.settings.customModes.forEach((mode, index) => {
-      const setting = new import_obsidian14.Setting(customModesContainer).setName(`${mode.icon} ${mode.displayName}`).addToggle((toggle) => {
+      const setting = new import_obsidian18.Setting(customModesContainer).setName(`${mode.icon} ${mode.displayName}`).addToggle((toggle) => {
         var _a;
         toggle.setValue((_a = mode.enabled) != null ? _a : true).onChange(async (value) => {
           mode.enabled = value;
@@ -6669,7 +7163,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         });
       });
     });
-    new import_obsidian14.Setting(containerEl).addButton((button) => {
+    new import_obsidian18.Setting(containerEl).addButton((button) => {
       button.setButtonText(t("add_custom_mode")).setCta().setTooltip(t("add_custom_mode")).onClick(() => {
         new CustomModeModal(this.app, this.plugin, null, async (result) => {
           this.plugin.settings.customModes.push(result);
@@ -6680,7 +7174,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
     }).addButton((button) => {
       button.setButtonText(t("export")).setTooltip(t("export")).onClick(() => {
         if (this.plugin.settings.customModes.length === 0) {
-          new import_obsidian14.Notice(t("no_custom_modes_to_export"));
+          new import_obsidian18.Notice(t("no_custom_modes_to_export"));
           return;
         }
         const data = JSON.stringify(this.plugin.settings.customModes, null, 2);
@@ -6706,7 +7200,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
           const reader = new FileReader();
           reader.onload = async (e2) => {
             if (!e2.target || typeof e2.target.result !== "string") {
-              new import_obsidian14.Notice(t("import_error"));
+              new import_obsidian18.Notice(t("import_error"));
               return;
             }
             try {
@@ -6727,15 +7221,15 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
                   });
                   await this.plugin.saveSettings();
                   this.display();
-                  new import_obsidian14.Notice(t("import_success"));
+                  new import_obsidian18.Notice(t("import_success"));
                 } else {
-                  new import_obsidian14.Notice(t("import_error"));
+                  new import_obsidian18.Notice(t("import_error"));
                 }
               } else {
-                new import_obsidian14.Notice(t("import_error"));
+                new import_obsidian18.Notice(t("import_error"));
               }
             } catch (error) {
-              new import_obsidian14.Notice(t("import_error"));
+              new import_obsidian18.Notice(t("import_error"));
               console.error("Grid Explorer: Error importing custom modes", error);
             }
           };
@@ -6745,37 +7239,37 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
       });
     });
     containerEl.createEl("h3", { text: t("display_mode_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(`\u{1F4D1} ${t("show_bookmarks_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u{1F4D1} ${t("show_bookmarks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showBookmarksMode).onChange(async (value) => {
         this.plugin.settings.showBookmarksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(`\u{1F50D} ${t("show_search_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u{1F50D} ${t("show_search_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showSearchMode).onChange(async (value) => {
         this.plugin.settings.showSearchMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(`\u{1F517} ${t("show_backlinks_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u{1F517} ${t("show_backlinks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showBacklinksMode).onChange(async (value) => {
         this.plugin.settings.showBacklinksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(`\u{1F517} ${t("show_outgoinglinks_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u{1F517} ${t("show_outgoinglinks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showOutgoinglinksMode).onChange(async (value) => {
         this.plugin.settings.showOutgoinglinksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(`\u{1F4D4} ${t("show_all_files_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u{1F4D4} ${t("show_all_files_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showAllFilesMode).onChange(async (value) => {
         this.plugin.settings.showAllFilesMode = value;
         await this.plugin.saveSettings();
       });
     });
-    const recentFilesSetting = new import_obsidian14.Setting(containerEl).setName(`\u{1F4C5} ${t("show_recent_files_mode")}`);
+    const recentFilesSetting = new import_obsidian18.Setting(containerEl).setName(`\u{1F4C5} ${t("show_recent_files_mode")}`);
     recentFilesSetting.addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showRecentFilesMode).onChange(async (value) => {
         this.plugin.settings.showRecentFilesMode = value;
@@ -6799,7 +7293,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         target.value = this.plugin.settings.recentFilesCount.toString();
       }
     });
-    const randomNoteSetting = new import_obsidian14.Setting(containerEl).setName(`\u{1F3B2} ${t("show_random_note_mode")}`);
+    const randomNoteSetting = new import_obsidian18.Setting(containerEl).setName(`\u{1F3B2} ${t("show_random_note_mode")}`);
     randomNoteSetting.addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showRandomNoteMode).onChange(async (value) => {
         this.plugin.settings.showRandomNoteMode = value;
@@ -6823,103 +7317,103 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         target.value = this.plugin.settings.randomNoteCount.toString();
       }
     });
-    new import_obsidian14.Setting(containerEl).setName(`\u2611\uFE0F ${t("show_tasks_mode")}`).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(`\u2611\uFE0F ${t("show_tasks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showTasksMode).onChange(async (value) => {
         this.plugin.settings.showTasksMode = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("grid_view_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(t("reuse_existing_leaf")).setDesc(t("reuse_existing_leaf_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("reuse_existing_leaf")).setDesc(t("reuse_existing_leaf_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.reuseExistingLeaf).onChange(async (value) => {
         this.plugin.settings.reuseExistingLeaf = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("default_open_location")).setDesc(t("default_open_location_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("default_open_location")).setDesc(t("default_open_location_desc")).addDropdown((dropdown) => {
       dropdown.addOption("tab", t("open_in_new_tab")).addOption("left", t("open_in_left_sidebar")).addOption("right", t("open_in_right_sidebar")).setValue(this.plugin.settings.defaultOpenLocation).onChange(async (value) => {
         this.plugin.settings.defaultOpenLocation = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("default_sort_type")).setDesc(t("default_sort_type_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("default_sort_type")).setDesc(t("default_sort_type_desc")).addDropdown((dropdown) => {
       dropdown.addOption("name-asc", t("sort_name_asc")).addOption("name-desc", t("sort_name_desc")).addOption("mtime-desc", t("sort_mtime_desc")).addOption("mtime-asc", t("sort_mtime_asc")).addOption("ctime-desc", t("sort_ctime_desc")).addOption("ctime-asc", t("sort_ctime_asc")).addOption("random", t("sort_random")).setValue(this.plugin.settings.defaultSortType).onChange(async (value) => {
         this.plugin.settings.defaultSortType = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("date_divider_mode")).setDesc(t("date_divider_mode_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("date_divider_mode")).setDesc(t("date_divider_mode_desc")).addDropdown((dropdown) => {
       dropdown.addOption("none", t("date_divider_mode_none")).addOption("year", t("date_divider_mode_year")).addOption("month", t("date_divider_mode_month")).addOption("day", t("date_divider_mode_day")).setValue(this.plugin.settings.dateDividerMode).onChange(async (value) => {
         this.plugin.settings.dateDividerMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("show_media_files")).setDesc(t("show_media_files_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("show_media_files")).setDesc(t("show_media_files_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showMediaFiles).onChange(async (value) => {
         this.plugin.settings.showMediaFiles = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("show_video_thumbnails")).setDesc(t("show_video_thumbnails_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("show_video_thumbnails")).setDesc(t("show_video_thumbnails_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showVideoThumbnails).onChange(async (value) => {
         this.plugin.settings.showVideoThumbnails = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("show_note_in_grid")).setDesc(t("show_note_in_grid_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("show_note_in_grid")).setDesc(t("show_note_in_grid_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showNoteInGrid).onChange(async (value) => {
         this.plugin.settings.showNoteInGrid = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("note_title_field")).setDesc(t("note_title_field_desc")).addText((text) => text.setPlaceholder("title").setValue(this.plugin.settings.noteTitleField).onChange(async (value) => {
+    new import_obsidian18.Setting(containerEl).setName(t("note_title_field")).setDesc(t("note_title_field_desc")).addText((text) => text.setPlaceholder("title").setValue(this.plugin.settings.noteTitleField).onChange(async (value) => {
       this.plugin.settings.noteTitleField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian14.Setting(containerEl).setName(t("note_summary_field")).setDesc(t("note_summary_field_desc")).addText((text) => text.setPlaceholder("summary").setValue(this.plugin.settings.noteSummaryField).onChange(async (value) => {
+    new import_obsidian18.Setting(containerEl).setName(t("note_summary_field")).setDesc(t("note_summary_field_desc")).addText((text) => text.setPlaceholder("summary").setValue(this.plugin.settings.noteSummaryField).onChange(async (value) => {
       this.plugin.settings.noteSummaryField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian14.Setting(containerEl).setName(t("modified_date_field")).setDesc(t("modified_date_field_desc")).addText((text) => text.setPlaceholder("modified_date").setValue(this.plugin.settings.modifiedDateField).onChange(async (value) => {
+    new import_obsidian18.Setting(containerEl).setName(t("modified_date_field")).setDesc(t("modified_date_field_desc")).addText((text) => text.setPlaceholder("modified_date").setValue(this.plugin.settings.modifiedDateField).onChange(async (value) => {
       this.plugin.settings.modifiedDateField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian14.Setting(containerEl).setName(t("created_date_field")).setDesc(t("created_date_field_desc")).addText((text) => text.setPlaceholder("created_date").setValue(this.plugin.settings.createdDateField).onChange(async (value) => {
+    new import_obsidian18.Setting(containerEl).setName(t("created_date_field")).setDesc(t("created_date_field_desc")).addText((text) => text.setPlaceholder("created_date").setValue(this.plugin.settings.createdDateField).onChange(async (value) => {
       this.plugin.settings.createdDateField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian14.Setting(containerEl).setName(t("custom_document_extensions")).setDesc(t("custom_document_extensions_desc")).addText((text) => {
+    new import_obsidian18.Setting(containerEl).setName(t("custom_document_extensions")).setDesc(t("custom_document_extensions_desc")).addText((text) => {
       text.setPlaceholder(t("custom_document_extensions_placeholder")).setValue(this.plugin.settings.customDocumentExtensions).onChange(async (value) => {
         this.plugin.settings.customDocumentExtensions = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("custom_folder_icon")).setDesc(t("custom_folder_icon_desc")).addText((text) => {
+    new import_obsidian18.Setting(containerEl).setName(t("custom_folder_icon")).setDesc(t("custom_folder_icon_desc")).addText((text) => {
       text.setValue(this.plugin.settings.customFolderIcon).onChange(async (value) => {
         this.plugin.settings.customFolderIcon = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("enable_file_watcher")).setDesc(t("enable_file_watcher_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("enable_file_watcher")).setDesc(t("enable_file_watcher_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.enableFileWatcher).onChange(async (value) => {
         this.plugin.settings.enableFileWatcher = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("intercept_all_tag_clicks")).setDesc(t("intercept_all_tag_clicks_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("intercept_all_tag_clicks")).setDesc(t("intercept_all_tag_clicks_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.interceptAllTagClicks).onChange(async (value) => {
         this.plugin.settings.interceptAllTagClicks = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("intercept_breadcrumb_clicks")).setDesc(t("intercept_breadcrumb_clicks_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("intercept_breadcrumb_clicks")).setDesc(t("intercept_breadcrumb_clicks_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.interceptBreadcrumbClicks).onChange(async (value) => {
         this.plugin.settings.interceptBreadcrumbClicks = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("grid_item_style_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
+    new import_obsidian18.Setting(containerEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
       drop.addOption("horizontal", t("horizontal_card"));
       drop.addOption("vertical", t("vertical_card"));
       drop.setValue(this.plugin.settings.cardLayout);
@@ -6928,62 +7422,62 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("show_note_tags")).setDesc(t("show_note_tags_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("show_note_tags")).setDesc(t("show_note_tags_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showNoteTags).onChange(async (value) => {
         this.plugin.settings.showNoteTags = value;
         await this.plugin.saveSettings();
       });
     });
-    const gridItemWidthSetting = new import_obsidian14.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.gridItemWidth}px)`).addSlider((slider) => {
+    const gridItemWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.gridItemWidth}px)`).addSlider((slider) => {
       slider.setLimits(200, 600, 10).setValue(this.plugin.settings.gridItemWidth).setDynamicTooltip().onChange(async (value) => {
         gridItemWidthSetting.setDesc(`${t("grid_item_width_desc")} (now: ${value}px)`);
         this.plugin.settings.gridItemWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const gridItemHeightSetting = new import_obsidian14.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.gridItemHeight === 0 ? "auto" : this.plugin.settings.gridItemHeight})`).addSlider((slider) => {
+    const gridItemHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.gridItemHeight === 0 ? "auto" : this.plugin.settings.gridItemHeight})`).addSlider((slider) => {
       slider.setLimits(0, 600, 10).setValue(this.plugin.settings.gridItemHeight).setDynamicTooltip().onChange(async (value) => {
         gridItemHeightSetting.setDesc(`${t("grid_item_height_desc")} (now: ${value === 0 ? "auto" : value})`);
         this.plugin.settings.gridItemHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const imageAreaWidthSetting = new import_obsidian14.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_width")}`).setDesc(`${t("image_area_width_desc")} (now: ${this.plugin.settings.imageAreaWidth}px)`).addSlider((slider) => {
+    const imageAreaWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_width")}`).setDesc(`${t("image_area_width_desc")} (now: ${this.plugin.settings.imageAreaWidth}px)`).addSlider((slider) => {
       slider.setLimits(50, 300, 10).setValue(this.plugin.settings.imageAreaWidth).setDynamicTooltip().onChange(async (value) => {
         imageAreaWidthSetting.setDesc(`${t("image_area_width_desc")} (now: ${value}px)`);
         this.plugin.settings.imageAreaWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const imageAreaHeightSetting = new import_obsidian14.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.imageAreaHeight}px)`).addSlider((slider) => {
+    const imageAreaHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.imageAreaHeight}px)`).addSlider((slider) => {
       slider.setLimits(50, 300, 10).setValue(this.plugin.settings.imageAreaHeight).setDynamicTooltip().onChange(async (value) => {
         imageAreaHeightSetting.setDesc(`${t("image_area_height_desc")} (now: ${value}px)`);
         this.plugin.settings.imageAreaHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const vGridItemWidthSetting = new import_obsidian14.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.verticalGridItemWidth}px)`).addSlider((slider) => {
+    const vGridItemWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.verticalGridItemWidth}px)`).addSlider((slider) => {
       slider.setLimits(100, 600, 10).setValue(this.plugin.settings.verticalGridItemWidth).setDynamicTooltip().onChange(async (value) => {
         vGridItemWidthSetting.setDesc(`${t("grid_item_width_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalGridItemWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const vGridItemHeightSetting = new import_obsidian14.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.verticalGridItemHeight}px)`).addSlider((slider) => {
+    const vGridItemHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.verticalGridItemHeight}px)`).addSlider((slider) => {
       slider.setLimits(0, 600, 10).setValue(this.plugin.settings.verticalGridItemHeight).setDynamicTooltip().onChange(async (value) => {
         vGridItemHeightSetting.setDesc(`${t("grid_item_height_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalGridItemHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const vImageAreaHeightSetting = new import_obsidian14.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.verticalImageAreaHeight}px)`).addSlider((slider) => {
+    const vImageAreaHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.verticalImageAreaHeight}px)`).addSlider((slider) => {
       slider.setLimits(50, 400, 10).setValue(this.plugin.settings.verticalImageAreaHeight).setDynamicTooltip().onChange(async (value) => {
         vImageAreaHeightSetting.setDesc(`${t("image_area_height_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalImageAreaHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_position")}`).setDesc(t("image_position_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_position")}`).setDesc(t("image_position_desc")).addDropdown((dropdown) => {
       dropdown.addOption("top", t("top"));
       dropdown.addOption("bottom", t("bottom"));
       dropdown.setValue(this.plugin.settings.verticalCardImagePosition);
@@ -6992,46 +7486,46 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    const titleFontSizeSetting = new import_obsidian14.Setting(containerEl).setName(t("title_font_size")).setDesc(`${t("title_font_size_desc")} (now: ${this.plugin.settings.titleFontSize.toFixed(2)})`).addSlider((slider) => {
+    const titleFontSizeSetting = new import_obsidian18.Setting(containerEl).setName(t("title_font_size")).setDesc(`${t("title_font_size_desc")} (now: ${this.plugin.settings.titleFontSize.toFixed(2)})`).addSlider((slider) => {
       slider.setLimits(0.8, 1.5, 0.05).setValue(this.plugin.settings.titleFontSize).setDynamicTooltip().onChange(async (value) => {
         titleFontSizeSetting.setDesc(`${t("title_font_size_desc")} (now: ${value.toFixed(2)})`);
         this.plugin.settings.titleFontSize = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("multi_line_title")).setDesc(t("multi_line_title_desc")).addToggle((toggle) => {
+    new import_obsidian18.Setting(containerEl).setName(t("multi_line_title")).setDesc(t("multi_line_title_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.multiLineTitle).onChange(async (value) => {
         this.plugin.settings.multiLineTitle = value;
         await this.plugin.saveSettings();
       });
     });
-    const summaryLengthSetting = new import_obsidian14.Setting(containerEl).setName(t("summary_length")).setDesc(`${t("summary_length_desc")} (now: ${this.plugin.settings.summaryLength})`).addSlider((slider) => {
+    const summaryLengthSetting = new import_obsidian18.Setting(containerEl).setName(t("summary_length")).setDesc(`${t("summary_length_desc")} (now: ${this.plugin.settings.summaryLength})`).addSlider((slider) => {
       slider.setLimits(50, 600, 25).setValue(this.plugin.settings.summaryLength).setDynamicTooltip().onChange(async (value) => {
         summaryLengthSetting.setDesc(`${t("summary_length_desc")} (now: ${value})`);
         this.plugin.settings.summaryLength = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("show_code_block_in_summary")).setDesc(t("show_code_block_in_summary_desc")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCodeBlocksInSummary).onChange(async (value) => {
+    new import_obsidian18.Setting(containerEl).setName(t("show_code_block_in_summary")).setDesc(t("show_code_block_in_summary_desc")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCodeBlocksInSummary).onChange(async (value) => {
       this.plugin.settings.showCodeBlocksInSummary = value;
       await this.plugin.saveSettings();
     }));
     containerEl.createEl("h3", { text: t("folder_note_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(t("foldernote_display_settings")).setDesc(t("foldernote_display_settings_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("foldernote_display_settings")).setDesc(t("foldernote_display_settings_desc")).addDropdown((dropdown) => {
       dropdown.addOption("default", t("default")).addOption("pinned", t("pinned")).addOption("hidden", t("hidden")).setValue(this.plugin.settings.folderNoteDisplaySettings).onChange(async (value) => {
         this.plugin.settings.folderNoteDisplaySettings = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("quick_access_settings_title"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(t("quick_access_folder_name")).setDesc(t("quick_access_folder_desc")).addText((text) => {
+    new import_obsidian18.Setting(containerEl).setName(t("quick_access_folder_name")).setDesc(t("quick_access_folder_desc")).addText((text) => {
       new FolderSuggest(this.app, text.inputEl);
       text.setPlaceholder(t("select_folders")).setValue(this.plugin.settings.quickAccessCommandPath).onChange(async (value) => {
         this.plugin.settings.quickAccessCommandPath = value;
         await this.plugin.saveSettings(false);
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("quick_access_mode_name")).setDesc(t("quick_access_mode_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("quick_access_mode_name")).setDesc(t("quick_access_mode_desc")).addDropdown((dropdown) => {
       for (let i = 0; i < this.plugin.settings.customModes.length; i++) {
         dropdown.addOption(this.plugin.settings.customModes[i].internalName, `\u{1F9E9} ${this.plugin.settings.customModes[i].displayName}`);
       }
@@ -7040,7 +7534,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         await this.plugin.saveSettings(false);
       });
     });
-    new import_obsidian14.Setting(containerEl).setName(t("use_quick_access_as_new_tab_view")).setDesc(t("use_quick_access_as_new_tab_view_desc")).addDropdown((dropdown) => {
+    new import_obsidian18.Setting(containerEl).setName(t("use_quick_access_as_new_tab_view")).setDesc(t("use_quick_access_as_new_tab_view_desc")).addDropdown((dropdown) => {
       dropdown.addOption("default", t("default_new_tab")).addOption("folder", t("use_quick_access_folder")).addOption("mode", t("use_quick_access_mode")).setValue(this.plugin.settings.useQuickAccessAsNewTabMode).onChange(async (value) => {
         this.plugin.settings.useQuickAccessAsNewTabMode = value;
         await this.plugin.saveSettings(false);
@@ -7048,8 +7542,8 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
     });
     containerEl.createEl("h3", { text: t("ignored_folders_settings"), attr: { style: "margin-top: 40px;" } });
     const ignoredFoldersContainer = containerEl.createDiv("ignored-folders-container");
-    new import_obsidian14.Setting(containerEl).setName(t("ignored_folders")).setDesc(t("ignored_folders_desc")).setHeading();
-    new import_obsidian14.Setting(ignoredFoldersContainer).setName(t("add_ignored_folder")).addText((text) => {
+    new import_obsidian18.Setting(containerEl).setName(t("ignored_folders")).setDesc(t("ignored_folders_desc")).setHeading();
+    new import_obsidian18.Setting(ignoredFoldersContainer).setName(t("add_ignored_folder")).addText((text) => {
       new IgnoredFolderSuggest(this.app, text.inputEl, this.plugin, this);
       text.setPlaceholder(t("select_folders_to_ignore"));
     });
@@ -7057,8 +7551,8 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
     this.renderIgnoredFoldersList(ignoredFoldersList);
     containerEl.appendChild(ignoredFoldersContainer);
     const ignoredFolderPatternsContainer = containerEl.createDiv("ignored-folder-patterns-container");
-    new import_obsidian14.Setting(containerEl).setName(t("ignored_folder_patterns")).setDesc(t("ignored_folder_patterns_desc")).setHeading();
-    const patternSetting = new import_obsidian14.Setting(ignoredFolderPatternsContainer).setName(t("add_ignored_folder_pattern")).addText((text) => {
+    new import_obsidian18.Setting(containerEl).setName(t("ignored_folder_patterns")).setDesc(t("ignored_folder_patterns_desc")).setHeading();
+    const patternSetting = new import_obsidian18.Setting(ignoredFolderPatternsContainer).setName(t("add_ignored_folder_pattern")).addText((text) => {
       text.setPlaceholder(t("ignored_folder_pattern_placeholder")).onChange(() => {
       });
       return text;
@@ -7079,11 +7573,11 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
     this.renderIgnoredFolderPatternsList(ignoredFolderPatternsList);
     containerEl.appendChild(ignoredFolderPatternsContainer);
     containerEl.createEl("h3", { text: t("config_management"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian14.Setting(containerEl).setName(t("config_management")).setDesc(t("config_management_desc")).addButton((button) => button.setButtonText(t("reset_to_default")).setWarning().onClick(async () => {
+    new import_obsidian18.Setting(containerEl).setName(t("config_management")).setDesc(t("config_management_desc")).addButton((button) => button.setButtonText(t("reset_to_default")).setWarning().onClick(async () => {
       this.plugin.settings = { ...DEFAULT_SETTINGS };
       await this.plugin.saveSettings();
       this.display();
-      new import_obsidian14.Notice(t("settings_reset_notice"));
+      new import_obsidian18.Notice(t("settings_reset_notice"));
     })).addButton((button) => button.setButtonText(t("export")).setTooltip(t("export")).onClick(() => {
       const data = JSON.stringify(this.plugin.settings, null, 2);
       const blob = new Blob([data], { type: "application/json" });
@@ -7106,7 +7600,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
         const reader = new FileReader();
         reader.onload = async (evt) => {
           if (!evt.target || typeof evt.target.result !== "string") {
-            new import_obsidian14.Notice(t("import_failed"));
+            new import_obsidian18.Notice(t("import_failed"));
             return;
           }
           try {
@@ -7116,13 +7610,13 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
               this.plugin.settings = { ...DEFAULT_SETTINGS, ...importedSettings };
               await this.plugin.saveSettings();
               this.display();
-              new import_obsidian14.Notice(t("import_success"));
+              new import_obsidian18.Notice(t("import_success"));
             } else {
-              new import_obsidian14.Notice(t("import_failed"));
+              new import_obsidian18.Notice(t("import_failed"));
             }
           } catch (error) {
             console.error("Grid Explorer: Error importing settings", error);
-            new import_obsidian14.Notice(t("import_failed"));
+            new import_obsidian18.Notice(t("import_failed"));
           }
         };
         reader.readAsText(file);
@@ -7178,7 +7672,7 @@ var GridExplorerSettingTab = class extends import_obsidian14.PluginSettingTab {
 };
 
 // src/main.ts
-var GridExplorerPlugin = class extends import_obsidian15.Plugin {
+var GridExplorerPlugin = class extends import_obsidian19.Plugin {
   async onload() {
     await this.loadSettings();
     this.registerView(
@@ -7250,7 +7744,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
           targetPath = this.app.vault.getRoot().path;
         }
         const targetFile = this.app.vault.getAbstractFileByPath(targetPath);
-        if (targetFile instanceof import_obsidian15.TFolder) {
+        if (targetFile instanceof import_obsidian19.TFolder) {
           this.openNoteInFolder(targetFile);
         } else {
           this.openNoteInFolder(this.app.vault.getRoot());
@@ -7270,7 +7764,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
     this.statusBarItem = this.addStatusBarItem();
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file) => {
-        if (file instanceof import_obsidian15.TFolder) {
+        if (file instanceof import_obsidian19.TFolder) {
           menu.addItem((item) => {
             var _a, _b;
             (_b = (_a = item.setTitle(t("open_in_grid_view")).setIcon("grid")).setSection) == null ? void 0 : _b.call(_a, "open").onClick(() => {
@@ -7278,7 +7772,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
             });
           });
         }
-        if (file instanceof import_obsidian15.TFile) {
+        if (file instanceof import_obsidian19.TFile) {
           menu.addItem((item) => {
             var _a;
             item.setTitle(t("open_in_grid_view"));
@@ -7306,13 +7800,26 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
                 }, 100);
               });
             });
-            if (this.settings.showRecentFilesMode && file instanceof import_obsidian15.TFile) {
+            if (this.settings.showRecentFilesMode && file instanceof import_obsidian19.TFile) {
               ogSubmenu.addItem((item2) => {
                 item2.setTitle(t("open_recent_files_in_grid_view")).setIcon("calendar-days").onClick(() => {
                   this.openNoteInRecentFiles(file);
                 });
               });
             }
+          });
+          const link = this.app.fileManager.generateMarkdownLink(file, "");
+          const truncatedText = file.basename.length > 8 ? file.basename.substring(0, 8) + "..." : file.basename;
+          const menuItemTitle = t("search_selection_in_grid_view").replace("...", ` [[${truncatedText}]]`);
+          menu.addItem((item) => {
+            var _a, _b;
+            (_b = (_a = item.setTitle(menuItemTitle).setIcon("search")).setSection) == null ? void 0 : _b.call(_a, "view").onClick(async () => {
+              const view = await this.activateView("", "");
+              if (view instanceof GridView) {
+                view.searchQuery = link;
+                view.render(true);
+              }
+            });
           });
           menu.addItem((item) => {
             item.setTitle(t("set_note_attribute")).setIcon("palette").onClick(() => {
@@ -7326,7 +7833,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
       this.app.workspace.on("editor-menu", (menu, editor) => {
         if (editor.somethingSelected()) {
           const selectedText = editor.getSelection();
-          const truncatedText = selectedText.length > 20 ? selectedText.substring(0, 20) + "..." : selectedText;
+          const truncatedText = selectedText.length > 15 ? selectedText.substring(0, 15) + "..." : selectedText;
           const menuItemTitle = t("search_selection_in_grid_view").replace("...", `\u300C${truncatedText}\u300D`);
           menu.addItem((item) => {
             var _a, _b;
@@ -7344,7 +7851,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
     );
     this.registerEvent(
       this.app.workspace.on("tag-wrangler:contextmenu", (menu, tagName) => {
-        const truncatedText = tagName.length > 20 ? tagName.substring(0, 20) + "..." : tagName;
+        const truncatedText = tagName.length > 15 ? tagName.substring(0, 15) + "..." : tagName;
         const menuItemTitle = t("search_selection_in_grid_view").replace("...", `\u300C#${truncatedText}\u300D`);
         menu.addItem((item) => {
           var _a, _b;
@@ -7432,7 +7939,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
       }
       const folderPath = pathParts.join("/");
       const folder = this.app.vault.getAbstractFileByPath(folderPath);
-      if (folder instanceof import_obsidian15.TFolder) {
+      if (folder instanceof import_obsidian19.TFolder) {
         const view = await this.activateView("folder", folderPath);
         if (view instanceof GridView) {
           view.searchQuery = "";
@@ -7535,7 +8042,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
             return;
           }
           const tfile = this.app.vault.getAbstractFileByPath(filePath);
-          if (!(tfile instanceof import_obsidian15.TFile)) {
+          if (!(tfile instanceof import_obsidian19.TFile)) {
             console.warn("GridExplorer: Dropped item is not a TFile or could not be found.", filePath);
             return;
           }
@@ -7565,7 +8072,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
   // 打開最近文件
   async openNoteInRecentFiles(file) {
     const view = await this.activateView("recent-files");
-    if (file instanceof import_obsidian15.TFile) {
+    if (file instanceof import_obsidian19.TFile) {
       setTimeout(() => {
         const gridContainer = view.containerEl.querySelector(".ge-grid-container");
         if (!gridContainer)
@@ -7586,9 +8093,9 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
   // 打開筆記到資料夾模式
   async openNoteInFolder(file = this.app.vault.getRoot()) {
     var _a;
-    const folderPath = file ? file instanceof import_obsidian15.TFile ? (_a = file.parent) == null ? void 0 : _a.path : file.path : "/";
+    const folderPath = file ? file instanceof import_obsidian19.TFile ? (_a = file.parent) == null ? void 0 : _a.path : file.path : "/";
     const view = await this.activateView("folder", folderPath);
-    if (file instanceof import_obsidian15.TFile) {
+    if (file instanceof import_obsidian19.TFile) {
       setTimeout(() => {
         const gridContainer = view.containerEl.querySelector(".ge-grid-container");
         if (!gridContainer)
@@ -7658,7 +8165,7 @@ var GridExplorerPlugin = class extends import_obsidian15.Plugin {
       if (openInFolder) {
         path = this.settings.quickAccessCommandPath || this.app.vault.getRoot().path;
         const targetFile = this.app.vault.getAbstractFileByPath(path);
-        if (!(targetFile instanceof import_obsidian15.TFolder)) {
+        if (!(targetFile instanceof import_obsidian19.TFolder)) {
           path = this.app.vault.getRoot().path;
         }
       }

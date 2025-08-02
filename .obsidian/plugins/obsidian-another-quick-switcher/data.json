@@ -9,6 +9,7 @@
   "showFullPathOfDirectory": false,
   "showAliasesOnTop": true,
   "displayAliaseAsTitle": true,
+  "displayDescriptionBelowTitle": false,
   "showExistingFilesOnly": true,
   "hideGutterIcons": false,
   "hideHotkeyGuides": true,
@@ -212,6 +213,9 @@
         }
       ],
       "close if opened": [],
+      "copy file vault path": [],
+      "copy absolute file path": [],
+      "launch grep": [],
       "dismiss": [
         {
           "modifiers": [],
@@ -558,6 +562,7 @@
           "hideHotkeyGuide": false
         }
       ],
+      "insert to editor": [],
       "show all results": [
         {
           "modifiers": [
@@ -631,6 +636,7 @@
           "key": "c"
         }
       ],
+      "toggle input": [],
       "open": [
         {
           "modifiers": [],
@@ -722,6 +728,7 @@
         "md",
         "canvas"
       ],
+      "includeCurrentFile": false,
       "floating": false,
       "showFrontMatter": false,
       "excludeFrontMatterKeys": [
@@ -747,6 +754,7 @@
       "expand": false
     }
   ],
+  "searchesExcludePrefix": "-",
   "searchesAutoAliasTransform": {
     "enabled": false,
     "aliasPattern": "",
@@ -758,11 +766,22 @@
   "autoPreviewInFloatingInFileSearch": true,
   "inFileMaxDisplayLengthAroundMatchedWord": 64,
   "ripgrepCommand": "rg",
+  "grepSearchDelayMilliSeconds": 200,
+  "grepMinQueryLength": 1,
   "grepExtensions": [
     "md"
   ],
   "maxDisplayLengthAroundMatchedWord": 64,
+  "includeFilenameInGrepSearch": false,
+  "defaultGrepFolder": "",
+  "autoPreviewInGrepSearch": true,
+  "grepAutoPreviewDelayMilliSeconds": 300,
+  "autoPreviewInBacklinkSearch": true,
+  "backlinkAutoPreviewDelayMilliSeconds": 300,
   "moveFileExcludePrefixPathPatterns": [],
+  "moveFolderSortPriority": "Recently used",
+  "moveFileRecentlyUsedFilePath": "",
+  "moveFileMaxRecentlyUsedFolders": 10,
   "showLogAboutPerformanceInConsole": false,
   "showFuzzyMatchScore": false
 }

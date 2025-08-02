@@ -434,7 +434,7 @@
   "devMode": false,
   "templateFolderPath": "Template",
   "announceUpdates": false,
-  "version": "1.17.0",
+  "version": "1.18.1",
   "disableOnlineFeatures": true,
   "enableRibbonIcon": false,
   "ai": {
