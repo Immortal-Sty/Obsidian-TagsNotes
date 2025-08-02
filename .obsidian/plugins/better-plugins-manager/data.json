@@ -22,57 +22,57 @@
     {
       "id": "searching",
       "name": "搜索",
-      "color": "#d553bd"
+      "color": "#d45487"
     },
     {
       "id": "style",
       "name": "样式",
-      "color": "#7561db"
+      "color": "#a53bba"
     },
     {
       "id": "editing",
       "name": "编辑",
-      "color": "#438bf3"
+      "color": "#6647ff"
     },
     {
       "id": "synchrony",
       "name": "同步",
-      "color": "#2cc4e2"
+      "color": "#4e68d0"
     },
     {
       "id": "grammar",
       "name": "语法",
-      "color": "#32ec95"
+      "color": "#469dd2"
     },
     {
       "id": "outline",
       "name": "大纲",
-      "color": "#a2cd2d"
+      "color": "#3bceb6"
     },
     {
       "id": "plugin",
       "name": "插件",
-      "color": "#e3be3b"
+      "color": "#3dc253"
     },
     {
       "id": "transfer",
       "name": "调用",
-      "color": "#000000"
+      "color": "#96ce5f"
     },
     {
       "id": "comment",
       "name": "评论",
-      "color": "#000000"
+      "color": "#eaed35"
     },
     {
       "id": "Script",
       "name": "脚本",
-      "color": "#000000"
+      "color": "#c79c00"
     },
     {
       "id": "ai",
       "name": "AI",
-      "color": "#000000"
+      "color": "#d46021"
     }
   ],
   "DELAYS": [
@@ -1135,7 +1135,7 @@
       "tags": [
         "outline"
       ],
-      "enabled": false,
+      "enabled": true,
       "delay": "",
       "note": ""
     },
