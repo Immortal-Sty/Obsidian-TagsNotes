@@ -28,7 +28,7 @@
   "hiddenTags": [],
   "defaultFolderSort": "title-asc",
   "groupByDate": false,
-  "showNotesFromSubfolders": true,
+  "showNotesFromSubfolders": false,
   "showParentFolderNames": true,
   "dateFormat": "yyyy年M月d日",
   "timeFormat": "HH:mm",

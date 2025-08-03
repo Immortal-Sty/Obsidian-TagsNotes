@@ -870,7 +870,7 @@
       "desc": "Show tags as folder. 用文件目录的形式显示标签及文件，可用于把标签当文件夹用。",
       "group": "",
       "tags": [],
-      "enabled": true,
+      "enabled": false,
       "delay": "immediately",
       "note": ""
     },
