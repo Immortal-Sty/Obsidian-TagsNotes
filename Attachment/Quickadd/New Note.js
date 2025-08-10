@@ -27,6 +27,7 @@ module.exports = async (params) => {
             }
         }
     } else {
-        variables["myTags"] = await suggester(item => item, Object.keys(app.metadataCache.getTags()).map(x => x.replace("#", "  - ")), "请输入标签：", true);
+        allTags = await suggester(item => "🏷" + item, Object.keys(app.metadataCache.getTags()).map(x => x.replace("#", "")), "请输入标签：", true);
+        variables["myTags"] = "  - " + allTags.replace("\n", "\n  - ");
     }
 };
