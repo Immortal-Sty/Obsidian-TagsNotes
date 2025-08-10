@@ -5496,7 +5496,11 @@ function matchQuery(item, query, options) {
       meta: prefixNameMatchedAliases.map((x) => x.value),
       alias: bestMatch.value,
       query,
-      ranges: bestMatch.ranges
+      ranges: bestMatch.ranges,
+      allAliasRanges: prefixNameMatchedAliases.map((x) => ({
+        alias: x.value,
+        ranges: x.ranges || []
+      }))
     });
   }
   if (nameMatchedAliases.length > 0) {
@@ -5506,7 +5510,11 @@ function matchQuery(item, query, options) {
       meta: nameMatchedAliases.map((x) => x.value),
       alias: bestMatch.value,
       query,
-      ranges: bestMatch.ranges
+      ranges: bestMatch.ranges,
+      allAliasRanges: nameMatchedAliases.map((x) => ({
+        alias: x.value,
+        ranges: x.ranges || []
+      }))
     });
   }
   if (options.fuzzyTarget && fuzzyNameMatchedAliases.length > 0) {
@@ -5517,7 +5525,11 @@ function matchQuery(item, query, options) {
       alias: bestMatch.value,
       score: bestMatch.score,
       query,
-      ranges: bestMatch.ranges
+      ranges: bestMatch.ranges,
+      allAliasRanges: fuzzyNameMatchedAliases.map((x) => ({
+        alias: x.value,
+        ranges: x.ranges || []
+      }))
     });
   }
   if (smartIncludes((_a = item.file.parent) == null ? void 0 : _a.path, query, isNormalizeAccentsDiacritics)) {
@@ -7205,7 +7217,8 @@ function createHighlightedText(text, ranges) {
     if (range2.start > lastEnd + 1) {
       const beforeText = text.slice(lastEnd + 1, range2.start);
       if (beforeText) {
-        fragment.appendChild(document.createTextNode(beforeText));
+        const textSpan = createSpan({ text: beforeText });
+        fragment.appendChild(textSpan);
       }
     }
     const highlightedText = text.slice(range2.start, range2.end + 1);
@@ -7221,7 +7234,8 @@ function createHighlightedText(text, ranges) {
   if (lastEnd + 1 < text.length) {
     const remainingText = text.slice(lastEnd + 1);
     if (remainingText) {
-      fragment.appendChild(document.createTextNode(remainingText));
+      const textSpan = createSpan({ text: remainingText });
+      fragment.appendChild(textSpan);
     }
   }
   return fragment;
@@ -7244,8 +7258,10 @@ function createItemDiv(item, aliasesDisplayedAsTitle, options) {
   });
   const shouldShowAliasAsTitle = aliasesDisplayedAsTitle.length > 0 && (options.displayAliaseAsTitle || options.displayAliasAsTitleOnKeywordMatched);
   const titleText = shouldShowAliasAsTitle ? aliasesDisplayedAsTitle.join(" / ") : item.file.basename;
-  const titleMatchResults = item.matchResults.filter(
-    (result) => result.type === "name" || result.type === "prefix-name" || result.type === "fuzzy-name"
+  const titleMatchResults = shouldShowAliasAsTitle ? item.matchResults.filter(
+    (result) => (result.type === "name" || result.type === "prefix-name" || result.type === "fuzzy-name") && result.alias
+  ) : item.matchResults.filter(
+    (result) => (result.type === "name" || result.type === "prefix-name" || result.type === "fuzzy-name") && !result.alias
   );
   const titleDiv = createDiv({
     cls: [
@@ -7365,7 +7381,8 @@ function createDescriptionDiv(args) {
     countByHeader,
     linkResultsNum,
     headerResultsNum,
-    options
+    options,
+    aliasMatchDetails
   } = args;
   const descriptionDiv = createDiv({
     cls: "another-quick-switcher__item__descriptions"
@@ -7380,7 +7397,18 @@ function createDescriptionDiv(args) {
         cls: "another-quick-switcher__item__description__alias"
       });
       aliasSpan.insertAdjacentHTML("beforeend", ALIAS);
-      aliasSpan.appendText(x);
+      const ranges = [];
+      for (const result of item.matchResults) {
+        if (result.allAliasRanges) {
+          for (const aliasRange of result.allAliasRanges) {
+            if (aliasRange.alias === x) {
+              ranges.push(...aliasRange.ranges);
+            }
+          }
+        }
+      }
+      const highlightedContent = createHighlightedText(x, ranges);
+      aliasSpan.appendChild(highlightedContent);
       aliasDiv.appendChild(aliasSpan);
     }
     descriptionDiv.appendChild(aliasDiv);
@@ -7489,6 +7517,7 @@ function createElements(item, options) {
       return uniq((_a2 = xs.meta) != null ? _a2 : []);
     })
   );
+  const aliasMatchDetails = item.matchResults.filter((result) => result.allAliasRanges).flatMap((result) => result.allAliasRanges);
   const descriptionDiv = aliases.length !== 0 || tags.length !== 0 || Object.keys(countByLink).length !== 0 || Object.keys(countByHeader).length !== 0 ? createDescriptionDiv({
     item,
     aliases: matchedAliasesOnly,
@@ -7497,7 +7526,8 @@ function createElements(item, options) {
     countByHeader,
     linkResultsNum,
     headerResultsNum,
-    options
+    options,
+    aliasMatchDetails
   }) : void 0;
   return {
     itemDiv,

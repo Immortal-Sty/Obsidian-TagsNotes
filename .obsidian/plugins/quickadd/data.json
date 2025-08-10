@@ -5,35 +5,155 @@
       "name": "New Note",
       "type": "Macro",
       "command": true,
-      "macroId": "130b23f0-044f-4917-99bb-6d65eabbce90"
+      "macro": {
+        "id": "130b23f0-044f-4917-99bb-6d65eabbce90",
+        "name": "NewNote",
+        "commands": [
+          {
+            "name": "New Note",
+            "type": "UserScript",
+            "id": "edf9fcc5-8791-43d9-bf7d-40d1efddc96e",
+            "path": "Attachment/Quickadd/New Note.js",
+            "settings": {}
+          },
+          {
+            "name": "将焦点切换至编辑区",
+            "type": "Obsidian",
+            "id": "db8e9c6c-762c-45bd-970e-d8980c9cc96c",
+            "commandId": "editor:focus"
+          },
+          {
+            "name": "Untitled Template Choice",
+            "type": "NestedChoice",
+            "id": "28059e9c-1512-4003-91c6-526b72bb42d0",
+            "choice": {
+              "id": "c642b918-3b7f-4730-8118-b994d0cc3601",
+              "name": "Untitled Template Choice",
+              "type": "Template",
+              "command": false,
+              "templatePath": "Template/New Note.md",
+              "fileNameFormat": {
+                "enabled": true,
+                "format": "{{VALUE:myDate}}"
+              },
+              "folder": {
+                "enabled": true,
+                "folders": [
+                  "Notes"
+                ],
+                "chooseWhenCreatingNote": false,
+                "createInSameFolderAsActiveFile": false,
+                "chooseFromSubfolders": false
+              },
+              "appendLink": false,
+              "openFileInNewTab": {
+                "enabled": false,
+                "direction": "vertical",
+                "focus": true
+              },
+              "openFile": true,
+              "openFileInMode": "source",
+              "fileExistsMode": "Increment the file name",
+              "setFileExistsBehavior": true
+            }
+          },
+          {
+            "name": "将焦点切换至编辑区",
+            "type": "Obsidian",
+            "id": "44139f74-4043-493e-b1a1-38b8ae0be7d1",
+            "commandId": "editor:focus"
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "8fa2bc82-060a-452d-93cd-9e09ce4b98cd",
       "name": "Hide Status Bar",
       "type": "Macro",
       "command": true,
-      "macroId": "38222a40-737b-4d3a-a3c3-893b34f226fb"
+      "macro": {
+        "id": "38222a40-737b-4d3a-a3c3-893b34f226fb",
+        "name": "Hide Status Bar",
+        "commands": [
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "09f00ba9-88da-41f5-b6b2-1ebfa50c7f2c",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "状态栏自动隐藏_外部"
+            }
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "4bf80663-0d47-406b-a234-4ecfa5657c30",
       "name": "Hide Title Bar",
       "type": "Macro",
       "command": true,
-      "macroId": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04"
+      "macro": {
+        "id": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04",
+        "name": "Hide Title Bar",
+        "commands": [
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "492f7b14-ec1a-4529-af7c-8d6397dff3e1",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "标题栏自动隐藏_外部"
+            }
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "cf2eaf10-d353-4bbe-9ef2-1a7d7bc35b95",
       "name": "Hide Tab Bar",
       "type": "Macro",
       "command": true,
-      "macroId": "e716715d-b07c-41c9-9572-32f42649730d"
+      "macro": {
+        "id": "e716715d-b07c-41c9-9572-32f42649730d",
+        "name": "Hide Tab Bar",
+        "commands": [
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "51355894-4e1c-4683-b7c5-1067951d9d9a",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "标签页隐藏_外部"
+            }
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "1de98e3d-0fc6-40e0-b9a7-61031fdf84c2",
       "name": "Auto Hide Sidebar",
       "type": "Macro",
       "command": true,
-      "macroId": "794852aa-5260-4b37-800d-b293920e0a4b"
+      "macro": {
+        "id": "794852aa-5260-4b37-800d-b293920e0a4b",
+        "name": "Auto Hide Sidebar",
+        "commands": [
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "62f1c040-bbbe-4f1f-b14a-6f2e19a381ba",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
+            }
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "2763e489-04f4-4451-a0d9-3f416fa66f3b",
@@ -68,7 +188,13 @@
         "focus": true
       },
       "openFile": false,
-      "openFileInMode": "default"
+      "openFileInMode": "default",
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
     },
     {
       "id": "0e0f17f3-fa70-4643-aef6-2d9c50d69799",
@@ -103,7 +229,13 @@
         "focus": true
       },
       "openFile": false,
-      "openFileInMode": "default"
+      "openFileInMode": "default",
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
     },
     {
       "id": "dfe12ee5-1512-476b-a1da-ebba62319afd",
@@ -138,295 +270,169 @@
         "focus": true
       },
       "openFile": false,
-      "openFileInMode": "default"
+      "openFileInMode": "default",
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
     },
     {
       "id": "875ccb15-29d6-46de-90d5-c63ee0d85bae",
       "name": "Format and Save",
       "type": "Macro",
       "command": true,
-      "macroId": "e0db8676-b74c-4e84-9a8e-cbcbf587b774"
+      "macro": {
+        "id": "e0db8676-b74c-4e84-9a8e-cbcbf587b774",
+        "name": "Format and Save",
+        "commands": [
+          {
+            "name": "Linter: 格式化当前文件",
+            "type": "Obsidian",
+            "id": "1a6575df-e519-4475-9782-46a43746cb0f",
+            "commandId": "obsidian-linter:lint-file"
+          },
+          {
+            "name": "Wait",
+            "type": "Wait",
+            "id": "3e90c00c-6bc8-4abb-95a9-41b1c189f639",
+            "time": 100
+          },
+          {
+            "name": "保存当前文件",
+            "type": "Obsidian",
+            "id": "0e8b528e-0749-4853-afe4-f62435963c88",
+            "commandId": "editor:save-file"
+          },
+          {
+            "name": "Janitor: Scan Files (with prompt)",
+            "type": "Obsidian",
+            "id": "02e98cd5-734c-4671-b85e-cf0e0bda12ad",
+            "commandId": "janitor:scan-files-with-prompt"
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "6c3fe175-e24b-40f0-a31e-d50dd36f7801",
       "name": "FS and Close",
       "type": "Macro",
       "command": true,
-      "macroId": "1aadc963-170f-42b4-8e87-9d17267587bb"
+      "macro": {
+        "id": "1aadc963-170f-42b4-8e87-9d17267587bb",
+        "name": "FS and Close",
+        "commands": [
+          {
+            "name": "Format and Save",
+            "type": "Choice",
+            "id": "721bd7b7-480f-4c0c-887b-fc5840ac1d0e",
+            "choiceId": "875ccb15-29d6-46de-90d5-c63ee0d85bae"
+          },
+          {
+            "name": "Wait",
+            "type": "Wait",
+            "id": "8d4031d8-ae33-47f1-b0a0-aa2686058d40",
+            "time": 200
+          },
+          {
+            "name": "关闭当前标签页",
+            "type": "Obsidian",
+            "id": "ca16fbf7-037e-4b80-a08f-47a1f82853e4",
+            "commandId": "workspace:close"
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "589fae9b-a7be-4192-ac67-3936d974fce6",
       "name": "Open File in Browser",
       "type": "Macro",
       "command": true,
-      "macroId": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba"
+      "macro": {
+        "id": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba",
+        "name": "Open File in Browser",
+        "commands": [
+          {
+            "name": "Open File in Browser",
+            "type": "UserScript",
+            "id": "4bfb88ca-0903-4ecd-ad09-465c783d9648",
+            "path": "Attachment/Quickadd/Open File in Browser.js",
+            "settings": {}
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "d5ae4239-8486-4906-9e09-7b3e22e717ad",
       "name": "All Hide",
       "type": "Macro",
       "command": false,
-      "macroId": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83"
+      "macro": {
+        "id": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83",
+        "name": "All Hide",
+        "commands": [
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "d4c845e6-3ed4-42dd-a7a2-50fe6a12386d",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "状态栏自动隐藏_外部"
+            }
+          },
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "0f581a33-6750-49b2-b5c7-7b0268c9a34b",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "标题栏自动隐藏_外部"
+            }
+          },
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "24ed2f74-39a8-457d-963c-7e05428a6d54",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "标签页隐藏_外部"
+            }
+          },
+          {
+            "name": "Toggle Snippets",
+            "type": "UserScript",
+            "id": "d9323c5f-cec3-4289-a48c-7220cfbe8a98",
+            "path": "Attachment/Quickadd/Toggle Snippets.js",
+            "settings": {
+              "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
+            }
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "0a307652-81b0-4cfa-9ed7-a85e0ec2dd2d",
       "name": "Search Folder to Focus",
       "type": "Macro",
       "command": true,
-      "macroId": "291d3eb9-2264-4b56-b7b8-f1571ad805e1"
-    }
-  ],
-  "macros": [
-    {
-      "name": "NewNote",
-      "id": "130b23f0-044f-4917-99bb-6d65eabbce90",
-      "commands": [
-        {
-          "name": "New Note",
-          "type": "UserScript",
-          "id": "edf9fcc5-8791-43d9-bf7d-40d1efddc96e",
-          "path": "Attachment/Quickadd/New Note.js",
-          "settings": {}
-        },
-        {
-          "name": "将焦点切换至编辑区",
-          "type": "Obsidian",
-          "id": "db8e9c6c-762c-45bd-970e-d8980c9cc96c",
-          "commandId": "editor:focus"
-        },
-        {
-          "name": "Untitled Template Choice",
-          "type": "NestedChoice",
-          "id": "28059e9c-1512-4003-91c6-526b72bb42d0",
-          "choice": {
-            "id": "c642b918-3b7f-4730-8118-b994d0cc3601",
-            "name": "Untitled Template Choice",
-            "type": "Template",
-            "command": false,
-            "templatePath": "Template/New Note.md",
-            "fileNameFormat": {
-              "enabled": true,
-              "format": "{{VALUE:myDate}}"
-            },
-            "folder": {
-              "enabled": true,
-              "folders": [
-                "Notes"
-              ],
-              "chooseWhenCreatingNote": false,
-              "createInSameFolderAsActiveFile": false,
-              "chooseFromSubfolders": false
-            },
-            "appendLink": false,
-            "openFileInNewTab": {
-              "enabled": false,
-              "direction": "vertical",
-              "focus": true
-            },
-            "openFile": true,
-            "openFileInMode": "source",
-            "fileExistsMode": "Increment the file name",
-            "setFileExistsBehavior": true
+      "macro": {
+        "id": "291d3eb9-2264-4b56-b7b8-f1571ad805e1",
+        "name": "Search Folder to Focus",
+        "commands": [
+          {
+            "name": "Search Folder",
+            "type": "UserScript",
+            "id": "ff010a26-3b56-4d04-b0d8-4773e937a87a",
+            "path": "Attachment/Quickadd/Search Folder.js",
+            "settings": {}
           }
-        },
-        {
-          "name": "将焦点切换至编辑区",
-          "type": "Obsidian",
-          "id": "44139f74-4043-493e-b1a1-38b8ae0be7d1",
-          "commandId": "editor:focus"
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Hide Status Bar",
-      "id": "38222a40-737b-4d3a-a3c3-893b34f226fb",
-      "commands": [
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "09f00ba9-88da-41f5-b6b2-1ebfa50c7f2c",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "状态栏自动隐藏_外部"
-          }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Hide Title Bar",
-      "id": "c3bd364f-21a1-4646-a5b5-bfaf12aa5e04",
-      "commands": [
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "492f7b14-ec1a-4529-af7c-8d6397dff3e1",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "标题栏自动隐藏_外部"
-          }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Hide Tab Bar",
-      "id": "e716715d-b07c-41c9-9572-32f42649730d",
-      "commands": [
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "51355894-4e1c-4683-b7c5-1067951d9d9a",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "标签页隐藏_外部"
-          }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Format and Save",
-      "id": "e0db8676-b74c-4e84-9a8e-cbcbf587b774",
-      "commands": [
-        {
-          "name": "Linter: 格式化当前文件",
-          "type": "Obsidian",
-          "id": "1a6575df-e519-4475-9782-46a43746cb0f",
-          "commandId": "obsidian-linter:lint-file"
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "3e90c00c-6bc8-4abb-95a9-41b1c189f639",
-          "time": 100
-        },
-        {
-          "name": "保存当前文件",
-          "type": "Obsidian",
-          "id": "0e8b528e-0749-4853-afe4-f62435963c88",
-          "commandId": "editor:save-file"
-        },
-        {
-          "name": "Janitor: Scan Files (with prompt)",
-          "type": "Obsidian",
-          "id": "02e98cd5-734c-4671-b85e-cf0e0bda12ad",
-          "commandId": "janitor:scan-files-with-prompt"
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "FS and Close",
-      "id": "1aadc963-170f-42b4-8e87-9d17267587bb",
-      "commands": [
-        {
-          "name": "Format and Save",
-          "type": "Choice",
-          "id": "721bd7b7-480f-4c0c-887b-fc5840ac1d0e",
-          "choiceId": "875ccb15-29d6-46de-90d5-c63ee0d85bae"
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "8d4031d8-ae33-47f1-b0a0-aa2686058d40",
-          "time": 200
-        },
-        {
-          "name": "关闭当前标签页",
-          "type": "Obsidian",
-          "id": "ca16fbf7-037e-4b80-a08f-47a1f82853e4",
-          "commandId": "workspace:close"
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Open File in Browser",
-      "id": "5cf7d9eb-5913-4f0d-b195-3ba0242891ba",
-      "commands": [
-        {
-          "name": "Open File in Browser",
-          "type": "UserScript",
-          "id": "4bfb88ca-0903-4ecd-ad09-465c783d9648",
-          "path": "Attachment/Quickadd/Open File in Browser.js",
-          "settings": {}
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Auto Hide Sidebar",
-      "id": "794852aa-5260-4b37-800d-b293920e0a4b",
-      "commands": [
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "62f1c040-bbbe-4f1f-b14a-6f2e19a381ba",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
-          }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "All Hide",
-      "id": "c17cd351-aeae-4e1e-8bf8-4a5cd5f37d83",
-      "commands": [
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "d4c845e6-3ed4-42dd-a7a2-50fe6a12386d",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "状态栏自动隐藏_外部"
-          }
-        },
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "0f581a33-6750-49b2-b5c7-7b0268c9a34b",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "标题栏自动隐藏_外部"
-          }
-        },
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "24ed2f74-39a8-457d-963c-7e05428a6d54",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "标签页隐藏_外部"
-          }
-        },
-        {
-          "name": "Toggle Snippets",
-          "type": "UserScript",
-          "id": "d9323c5f-cec3-4289-a48c-7220cfbe8a98",
-          "path": "Attachment/Quickadd/Toggle Snippets.js",
-          "settings": {
-            "CSS 片段文件名": "自动悬浮两侧菜单栏_外部"
-          }
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "Search Folder to Focus",
-      "id": "291d3eb9-2264-4b56-b7b8-f1571ad805e1",
-      "commands": [
-        {
-          "name": "Search Folder",
-          "type": "UserScript",
-          "id": "ff010a26-3b56-4d04-b0d8-4773e937a87a",
-          "path": "Attachment/Quickadd/Search Folder.js",
-          "settings": {}
-        }
-      ],
+        ]
+      },
       "runOnStartup": false
     }
   ],
@@ -434,9 +440,10 @@
   "devMode": false,
   "templateFolderPath": "Template",
   "announceUpdates": false,
-  "version": "1.18.1",
+  "version": "2.1.0",
   "disableOnlineFeatures": true,
   "enableRibbonIcon": false,
+  "showCaptureNotification": true,
   "ai": {
     "defaultModel": "Ask me",
     "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",
@@ -486,6 +493,8 @@
     "incrementFileNameSettingMoveToDefaultBehavior": true,
     "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
     "setVersionAfterUpdateModalRelease": true,
-    "addDefaultAIProviders": true
+    "addDefaultAIProviders": true,
+    "removeMacroIndirection": true,
+    "migrateFileOpeningSettings": true
   }
 }

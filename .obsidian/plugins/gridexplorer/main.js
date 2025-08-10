@@ -27,13 +27,13 @@ __export(main_exports, {
   default: () => GridExplorerPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian19 = require("obsidian");
+var import_obsidian20 = require("obsidian");
 
 // src/GridView.ts
-var import_obsidian17 = require("obsidian");
+var import_obsidian18 = require("obsidian");
 
 // src/renderHeaderButton.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/modal/folderSelectionModal.ts
 var import_obsidian2 = require("obsidian");
@@ -53,7 +53,9 @@ var TRANSLATIONS = {
     "refresh": "\u91CD\u65B0\u6574\u7406",
     "reselect": "\u91CD\u65B0\u9078\u64C7\u4F4D\u7F6E",
     "no_backlinks": "\u6C92\u6709\u53CD\u5411\u9023\u7D50",
+    "back": "\u8FD4\u56DE",
     "search": "\u641C\u5C0B",
+    "default_search_option": "\u9810\u8A2D\u641C\u5C0B\u9078\u9805",
     "search_placeholder": "\u641C\u5C0B\u95DC\u9375\u5B57",
     "search_current_location_only": "\u50C5\u641C\u5C0B\u76EE\u524D\u4F4D\u7F6E",
     "search_files_name_only": "\u50C5\u641C\u5C0B\u6A94\u540D",
@@ -103,6 +105,8 @@ var TRANSLATIONS = {
     "sort_random": "\u96A8\u6A5F\u6392\u5E8F",
     // 設定
     "grid_view_settings": "\u7DB2\u683C\u8996\u5716\u8A2D\u5B9A",
+    "show_folder": "\u986F\u793A\u8CC7\u6599\u593E",
+    "show_folder_desc": "\u76F4\u63A5\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u8CC7\u6599\u593E\uFF0C\u95DC\u9589\u6642\u5C07\u4EE5\u9078\u55AE\u65B9\u5F0F\u986F\u793A\u8CC7\u6599\u593E",
     "show_media_files": "\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
     "show_media_files_desc": "\u5728\u7DB2\u683C\u8996\u5716\u4E2D\u986F\u793A\u5A92\u9AD4\u6A94\u6848",
     "show_video_thumbnails": "\u986F\u793A\u5F71\u7247\u7E2E\u5716",
@@ -242,6 +246,7 @@ var TRANSLATIONS = {
     "searching": "\u641C\u5C0B\u4E2D...",
     "no_files": "\u6C92\u6709\u627E\u5230\u4EFB\u4F55\u6A94\u6848",
     "filter_folders": "\u7BE9\u9078\u8CC7\u6599\u593E...",
+    "search_for": "\u641C\u5C0B",
     // 快捷方式選擇對話框
     "create_shortcut": "\u5EFA\u7ACB\u6377\u5F91",
     "select_folder": "\u9078\u64C7\u8CC7\u6599\u593E",
@@ -267,6 +272,10 @@ var TRANSLATIONS = {
     "color_purple": "\u7D2B\u8272",
     "color_pink": "\u7C89\u8272",
     "confirm": "\u78BA\u8A8D",
+    "search_text": "\u641C\u5C0B\u6587\u5B57",
+    "enter_search_text": "\u8F38\u5165\u641C\u5C0B\u6587\u5B57",
+    "enter_uri": "\u8F38\u5165\u7DB2\u5740",
+    "enter_uri_placeholder": "\u8F38\u5165\u7DB2\u5740\u6216 obsidian:// \u5354\u8B70",
     "note_attribute_settings": "\u7B46\u8A18\u5C6C\u6027\u8A2D\u5B9A",
     "note_title": "\u7B46\u8A18\u6A19\u984C",
     "note_title_desc": "\u8A2D\u5B9A\u6B64\u7B46\u8A18\u7684\u986F\u793A\u6A19\u984C",
@@ -315,7 +324,9 @@ var TRANSLATIONS = {
     "refresh": "Refresh",
     "reselect": "Reselect",
     "no_backlinks": "No backlinks",
+    "back": "Back",
     "search": "Search",
+    "default_search_option": "Default search option",
     "search_placeholder": "Search keyword",
     "search_current_location_only": "Search current location only",
     "search_files_name_only": "Search files name only",
@@ -365,14 +376,16 @@ var TRANSLATIONS = {
     "sort_random": "Random",
     // Settings
     "grid_view_settings": "Grid view settings",
+    "show_folder": "Show folder",
+    "show_folder_desc": "Directly display folders in the grid view. When disabled, folders will be shown in a dropdown menu.",
     "show_media_files": "Show media files",
-    "show_media_files_desc": "Display media files in the grid view",
+    "show_media_files_desc": "Display media files in the grid view.",
     "show_video_thumbnails": "Show video thumbnails",
-    "show_video_thumbnails_desc": "Display thumbnails for videos in the grid view, shows a play icon when disabled",
+    "show_video_thumbnails_desc": "Display thumbnails for videos in the grid view, shows a play icon when disabled.",
     "show_note_in_grid": "Show note in grid",
     "show_note_in_grid_desc": "Display note in grid container when clicked. If disabled, you need to hold down the Alt key to display the note.",
     "show_note_tags": "Show note tags",
-    "show_note_tags_desc": "Display tags for notes in the grid view",
+    "show_note_tags_desc": "Display tags for notes in the grid view.",
     "ignored_folders": "Ignored folders",
     "ignored_folders_desc": "Set folders to ignore here",
     "add_ignored_folder": "Add ignored folder",
@@ -504,6 +517,7 @@ var TRANSLATIONS = {
     "searching": "Searching...",
     "no_files": "No files found",
     "filter_folders": "Filter folders...",
+    "search_for": "Search for",
     // Shortcut Selection Dialog
     "create_shortcut": "Create Shortcut",
     "select_folder": "Select Folder",
@@ -529,6 +543,10 @@ var TRANSLATIONS = {
     "color_purple": "Purple",
     "color_pink": "Pink",
     "confirm": "Confirm",
+    "search_text": "Search Text",
+    "enter_search_text": "Enter search text",
+    "enter_uri": "Enter URI",
+    "enter_uri_placeholder": "Enter URL or obsidian:// protocol",
     "note_attribute_settings": "Note attribute settings",
     "note_title": "Note title",
     "note_title_desc": "Set the display title for this note",
@@ -577,7 +595,9 @@ var TRANSLATIONS = {
     "refresh": "\u5237\u65B0",
     "reselect": "\u91CD\u65B0\u9009\u62E9\u4F4D\u7F6E",
     "no_backlinks": "\u6CA1\u6709\u53CD\u5411\u94FE\u63A5",
+    "back": "\u8FD4\u56DE",
     "search": "\u641C\u7D22",
+    "default_search_option": "\u9ED8\u8BA4\u641C\u7D22\u9009\u9879",
     "search_placeholder": "\u641C\u7D22\u5173\u952E\u5B57",
     "search_current_location_only": "\u4EC5\u641C\u7D22\u5F53\u524D\u4F4D\u7F6E",
     "search_files_name_only": "\u4EC5\u641C\u7D22\u6587\u4EF6\u540D",
@@ -625,6 +645,8 @@ var TRANSLATIONS = {
     "sort_random": "\u968F\u673A\u6392\u5E8F",
     // 设置
     "grid_view_settings": "\u7F51\u683C\u89C6\u56FE\u8BBE\u7F6E",
+    "show_folder": "\u663E\u793A\u6587\u4EF6\u5939",
+    "show_folder_desc": "\u76F4\u63A5\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u6587\u4EF6\u5939\uFF0C\u5173\u95ED\u65F6\u5C06\u4EE5\u4E0B\u62C9\u83DC\u5355\u65B9\u5F0F\u663E\u793A\u6587\u4EF6\u5939",
     "show_media_files": "\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
     "show_media_files_desc": "\u5728\u7F51\u683C\u89C6\u56FE\u4E2D\u663E\u793A\u5A92\u4F53\u6587\u4EF6",
     "show_video_thumbnails": "\u663E\u793A\u89C6\u9891\u7F29\u7565\u56FE",
@@ -764,6 +786,7 @@ var TRANSLATIONS = {
     "searching": "\u641C\u7D22\u4E2D...",
     "no_files": "\u6CA1\u6709\u627E\u5230\u4EFB\u4F55\u6587\u4EF6",
     "filter_folders": "\u7B5B\u9009\u6587\u4EF6\u5939...",
+    "search_for": "\u641C\u7D22",
     // 快捷方式选择对话框
     "create_shortcut": "\u521B\u5EFA\u5FEB\u6377\u65B9\u5F0F",
     "select_folder": "\u9009\u62E9\u6587\u4EF6\u5939",
@@ -789,6 +812,10 @@ var TRANSLATIONS = {
     "color_purple": "\u7D2B\u8272",
     "color_pink": "\u7C89\u8272",
     "confirm": "\u786E\u8BA4",
+    "search_text": "\u641C\u7D22\u6587\u5B57",
+    "enter_search_text": "\u8F93\u5165\u641C\u7D22\u6587\u5B57",
+    "enter_uri": "\u8F93\u5165\u7F51\u5740",
+    "enter_uri_placeholder": "\u8F93\u5165\u7F51\u5740\u6216 obsidian:// \u534F\u8BAE",
     "note_attribute_settings": "\u7B14\u8BB0\u5C5E\u6027\u8BBE\u7F6E",
     "note_title": "\u7B14\u8BB0\u6807\u9898",
     "note_title_desc": "\u8BBE\u7F6E\u6B64\u7B14\u8BB0\u7684\u663E\u793A\u6807\u9898",
@@ -837,7 +864,9 @@ var TRANSLATIONS = {
     "refresh": "\u66F4\u65B0",
     "reselect": "\u518D\u9078\u629E",
     "no_backlinks": "\u30D0\u30C3\u30AF\u30EA\u30F3\u30AF\u306A\u3057",
+    "back": "\u623B\u308B",
     "search": "\u691C\u7D22",
+    "default_search_option": "\u30C7\u30D5\u30A9\u30EB\u30C8\u691C\u7D22\u30AA\u30D7\u30B7\u30E7\u30F3",
     "search_placeholder": "\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22",
     "search_current_location_only": "\u73FE\u5728\u306E\u5834\u6240\u306E\u307F\u691C\u7D22",
     "search_files_name_only": "\u30D5\u30A1\u30A4\u30EB\u540D\u306E\u307F\u691C\u7D22",
@@ -885,6 +914,8 @@ var TRANSLATIONS = {
     "sort_random": "\u30E9\u30F3\u30C0\u30E0",
     // 設定
     "grid_view_settings": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u8A2D\u5B9A",
+    "show_folder": "\u30D5\u30A9\u30EB\u30C0\u3092\u8868\u793A",
+    "show_folder_desc": "\u30D5\u30A9\u30EB\u30C0\u3092\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u306B\u76F4\u63A5\u8868\u793A\u3057\u307E\u3059\u3002\u7121\u52B9\u306B\u3059\u308B\u3068\u3001\u30C9\u30ED\u30C3\u30D7\u30C0\u30A6\u30F3\u30E1\u30CB\u30E5\u30FC\u3067\u8868\u793A\u3055\u308C\u307E\u3059",
     "show_media_files": "\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A",
     "show_media_files_desc": "\u30B0\u30EA\u30C3\u30C9\u30D3\u30E5\u30FC\u3067\u30E1\u30C7\u30A3\u30A2\u30D5\u30A1\u30A4\u30EB\u3092\u8868\u793A\u3059\u308B",
     "show_video_thumbnails": "\u52D5\u753B\u306E\u30B5\u30E0\u30CD\u30A4\u30EB\u3092\u8868\u793A",
@@ -1024,6 +1055,7 @@ var TRANSLATIONS = {
     "searching": "\u691C\u7D22\u4E2D...",
     "no_files": "\u30D5\u30A1\u30A4\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093",
     "filter_folders": "\u30D5\u30A9\u30EB\u30C0\u3092\u30D5\u30A3\u30EB\u30BF\u30EA\u30F3\u30B0...",
+    "search_for": "\u691C\u7D22",
     // ショートカット選択ダイアログ
     "create_shortcut": "\u30B7\u30E7\u30FC\u30C8\u30AB\u30C3\u30C8\u3092\u4F5C\u6210",
     "select_folder": "\u30D5\u30A9\u30EB\u30C0\u3092\u9078\u629E",
@@ -1049,6 +1081,10 @@ var TRANSLATIONS = {
     "color_purple": "\u7D2B",
     "color_pink": "\u30D4\u30F3\u30AF",
     "confirm": "\u78BA\u8A8D",
+    "search_text": "\u691C\u7D22\u30C6\u30AD\u30B9\u30C8",
+    "enter_search_text": "\u691C\u7D22\u30C6\u30AD\u30B9\u30C8\u3092\u5165\u529B",
+    "enter_uri": "URI\u3092\u5165\u529B",
+    "enter_uri_placeholder": "URL\u307E\u305F\u306Fobsidian://\u30D7\u30ED\u30C8\u30B3\u30EB\u3092\u5165\u529B",
     "note_attribute_settings": "\u30CE\u30FC\u30C8\u5C5E\u6027\u8A2D\u5B9A",
     "note_title": "\u30CE\u30FC\u30C8\u30BF\u30A4\u30C8\u30EB",
     "note_title_desc": "\u3053\u306E\u30CE\u30FC\u30C8\u306E\u8868\u793A\u30BF\u30A4\u30C8\u30EB\u3092\u8A2D\u5B9A",
@@ -1098,7 +1134,9 @@ var TRANSLATIONS = {
     "refresh": "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C",
     "reselect": "\u041F\u0435\u0440\u0435\u0432\u044B\u0431\u0440\u0430\u0442\u044C",
     "no_backlinks": "\u041D\u0435\u0442 \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0445 \u0441\u0441\u044B\u043B\u043E\u043A",
+    "back": "\u041D\u0430\u0437\u0430\u0434",
     "search": "\u041F\u043E\u0438\u0441\u043A",
+    "default_search_option": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
     "search_placeholder": "\u041A\u043B\u044E\u0447\u0435\u0432\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0438\u0441\u043A\u0430",
     "search_current_location_only": "\u0418\u0441\u043A\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0440\u0430\u0441\u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0438",
     "search_files_name_only": "\u0418\u0441\u043A\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0438 \u0444\u0430\u0439\u043B\u043E\u0432",
@@ -1146,6 +1184,8 @@ var TRANSLATIONS = {
     "sort_random": "\u0421\u043B\u0443\u0447\u0430\u0439\u043D\u043E",
     // Settings
     "grid_view_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0432\u0438\u0434\u0430",
+    "show_folder": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0444\u0430\u0439\u043B\u044B",
+    "show_folder_desc": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438 \u0432 \u0432\u0438\u0434\u0435 \u0441\u0435\u0442\u043A\u0438. \u041F\u0440\u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u043F\u0430\u043F\u043A\u0438 \u0431\u0443\u0434\u0443\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F \u0432 \u0432\u044B\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u043C \u043C\u0435\u043D\u044E",
     "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B",
     "show_media_files_desc": "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0435\u0434\u0438\u0430\u0444\u0430\u0439\u043B\u044B \u0432 \u0441\u0435\u0442\u043E\u0447\u043D\u043E\u043C \u0432\u0438\u0434\u0435",
     "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u044B \u0432\u0438\u0434\u0435\u043E",
@@ -1285,6 +1325,7 @@ var TRANSLATIONS = {
     "searching": "\u041F\u043E\u0438\u0441\u043A...",
     "no_files": "\u0424\u0430\u0439\u043B\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
     "filter_folders": "\u0424\u0438\u043B\u044C\u0442\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0438...",
+    "search_for": "\u041F\u043E\u0438\u0441\u043A",
     //
     "create_shortcut": "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u044F\u0440\u043B\u0438\u043A",
     "select_folder": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0430\u043F\u043A\u0443",
@@ -1310,6 +1351,10 @@ var TRANSLATIONS = {
     "color_purple": "\u0424\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439",
     "color_pink": "\u0420\u043E\u0437\u043E\u0432\u044B\u0439",
     "confirm": "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C",
+    "search_text": "\u041F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0439 \u0442\u0435\u043A\u0441\u0442",
+    "enter_search_text": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0439 \u0442\u0435\u043A\u0441\u0442",
+    "enter_uri": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 URI",
+    "enter_uri_placeholder": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 URL \u0438\u043B\u0438 \u043F\u0440\u043E\u0442\u043E\u043A\u043E\u043B obsidian://",
     "note_attribute_settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u043E\u0432 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
     "note_title": "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
     "note_title_desc": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u043C\u043E\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
@@ -1358,7 +1403,9 @@ var TRANSLATIONS = {
     "refresh": "\u041E\u043D\u043E\u0432\u0438\u0442\u0438",
     "reselect": "\u041F\u0435\u0440\u0435\u043E\u0431\u0440\u0430\u0442\u0438",
     "no_backlinks": "\u041D\u0435\u043C\u0430\u0454 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C",
+    "back": "\u041D\u0430\u0437\u0430\u0434",
     "search": "\u041F\u043E\u0448\u0443\u043A",
+    "default_search_option": "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
     "search_placeholder": "\u041A\u043B\u044E\u0447\u043E\u0432\u0435 \u0441\u043B\u043E\u0432\u043E \u0434\u043B\u044F \u043F\u043E\u0448\u0443\u043A\u0443",
     "search_current_location_only": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043B\u0438\u0448\u0435 \u0432 \u043F\u043E\u0442\u043E\u0447\u043D\u043E\u043C\u0443 \u0440\u043E\u0437\u0442\u0430\u0448\u0443\u0432\u0430\u043D\u043D\u0456",
     "search_files_name_only": "\u0428\u0443\u043A\u0430\u0442\u0438 \u043B\u0438\u0448\u0435 \u0432 \u043D\u0430\u0437\u0432\u0456 \u0444\u0430\u0439\u043B\u0456\u0432",
@@ -1406,6 +1453,8 @@ var TRANSLATIONS = {
     "sort_random": "\u0412\u0438\u043F\u0430\u0434\u043A\u043E\u0432\u043E",
     // Settings
     "grid_view_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u0433\u043E \u0432\u0438\u0433\u043B\u044F\u0434\u0443",
+    "show_folder": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438",
+    "show_folder_desc": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456. \u042F\u043A\u0449\u043E \u0432\u0438\u043C\u043A\u043D\u0435\u043D\u043E \u2014 \u043F\u0430\u043F\u043A\u0438 \u0431\u0443\u0434\u0443\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u043D\u0456 \u0443 \u0432\u0438\u043F\u0430\u0434\u0430\u044E\u0447\u043E\u043C\u0443 \u043C\u0435\u043D\u044E",
     "show_media_files": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438",
     "show_media_files_desc": "\u0412\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u0438 \u043C\u0435\u0434\u0456\u0430\u0444\u0430\u0439\u043B\u0438 \u0443 \u0441\u0456\u0442\u043A\u043E\u0432\u043E\u043C\u0443 \u0432\u0438\u0433\u043B\u044F\u0434\u0456",
     "show_video_thumbnails": "\u041F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u043C\u0456\u043D\u0456\u0430\u0442\u044E\u0440\u0438 \u0432\u0456\u0434\u0435\u043E",
@@ -1545,6 +1594,7 @@ var TRANSLATIONS = {
     "searching": "\u041F\u043E\u0448\u0443\u043A...",
     "no_files": "\u0424\u0430\u0439\u043B\u0438 \u043D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u043E",
     "filter_folders": "\u0424\u0456\u043B\u044C\u0442\u0440\u0443\u0432\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0438...",
+    "search_for": "\u041F\u043E\u0448\u0443\u043A",
     // Shortcut Selection Dialog
     "create_shortcut": "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u044F\u0440\u043B\u0438\u043A",
     "select_folder": "\u0412\u0438\u0431\u0440\u0430\u0442\u0438 \u043F\u0430\u043F\u043A\u0443",
@@ -1570,6 +1620,10 @@ var TRANSLATIONS = {
     "color_purple": "\u0424\u0456\u043E\u043B\u0435\u0442\u043E\u0432\u0438\u0439",
     "color_pink": "\u0420\u043E\u0436\u0435\u0432\u0438\u0439",
     "confirm": "\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0438",
+    "search_text": "\u041F\u043E\u0448\u0443\u043A\u043E\u0432\u0438\u0439 \u0442\u0435\u043A\u0441\u0442",
+    "enter_search_text": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043F\u043E\u0448\u0443\u043A\u043E\u0432\u0438\u0439 \u0442\u0435\u043A\u0441\u0442",
+    "enter_uri": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C URI",
+    "enter_uri_placeholder": "\u0412\u0432\u0435\u0434\u0456\u0442\u044C URL \u0430\u0431\u043E \u043F\u0440\u043E\u0442\u043E\u043A\u043E\u043B obsidian://",
     "note_attribute_settings": "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0456\u0432 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
     "note_title": "\u041D\u0430\u0437\u0432\u0430 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
     "note_title_desc": "\u0412\u0441\u0442\u0430\u043D\u043E\u0432\u0456\u0442\u044C \u043D\u0430\u0437\u0432\u0443 \u0432\u0456\u0434\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0446\u0456\u0454\u0457 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
@@ -1642,10 +1696,10 @@ function isAudioFile(file) {
 function isMediaFile(file) {
   return isImageFile(file) || isVideoFile(file) || isAudioFile(file);
 }
-function sortFiles(files, gridView) {
+function sortFiles(files, gridView, overrideSortType) {
   const app = gridView.app;
   const settings = gridView.plugin.settings;
-  const sortType = gridView.folderSortType ? gridView.folderSortType : gridView.sortType;
+  const sortType = overrideSortType != null ? overrideSortType : gridView.sortType;
   const isNonDateSort = ["name-asc", "name-desc", "random"].includes(sortType);
   const hasModifiedField = !!settings.modifiedDateField;
   const hasCreatedField = !!settings.createdDateField;
@@ -1964,11 +2018,7 @@ async function getFiles(gridView, includeMediaFiles) {
       }
       return false;
     });
-    const sortType = gridView.sortType;
-    gridView.sortType = "mtime-desc";
-    const sortedFiles = sortFiles(recentFiles, gridView);
-    gridView.sortType = sortType;
-    return sortedFiles;
+    return sortFiles(recentFiles, gridView, "mtime-desc");
   } else if (sourceMode === "random-note") {
     const randomFiles = app.vault.getFiles().filter((file) => {
       if (isDocumentFile(file) || settings.showMediaFiles && includeMediaFiles && isMediaFile(file)) {
@@ -2029,10 +2079,12 @@ function showFolderSelectionModal(app, plugin, activeView, buttonElement) {
   new FolderSelectionModal(app, plugin, activeView, buttonElement).open();
 }
 var FolderSelectionModal = class extends import_obsidian2.Modal {
+  // 搜尋選項元素
   constructor(app, plugin, activeView, buttonElement) {
     super(app);
     this.folderOptions = [];
     this.selectedIndex = -1;
+    this.searchOption = null;
     this.plugin = plugin;
     this.activeView = activeView;
     this.buttonElement = buttonElement;
@@ -2062,6 +2114,7 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
     this.searchInput.addEventListener("input", () => {
       const searchTerm = this.searchInput.value.toLowerCase();
       this.filterFolderOptions(searchTerm);
+      this.updateSearchOption(this.searchInput.value.trim());
     });
     this.searchInput.addEventListener("keydown", this.handleKeyDown.bind(this));
     const enabledCustomModes = this.plugin.settings.customModes.filter((m) => {
@@ -2074,11 +2127,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
           cls: "ge-grid-view-folder-option",
           text: `${mode.icon} ${mode.displayName}`
         });
-        customOption.addEventListener("click", () => {
+        customOption.addEventListener("click", async () => {
           if (this.activeView) {
-            this.activeView.setSource(mode.internalName, "", true);
+            await this.activeView.setSource(mode.internalName);
           } else {
-            this.plugin.activateView(mode.internalName);
+            const view = await this.plugin.activateView();
+            if (view instanceof GridView) {
+              await view.setSource(mode.internalName);
+            }
           }
           this.close();
         });
@@ -2092,11 +2148,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
           cls: "ge-grid-view-folder-option",
           text: `\u{1F4D1} ${t("bookmarks_mode")}`
         });
-        bookmarkOption.addEventListener("click", () => {
+        bookmarkOption.addEventListener("click", async () => {
           if (this.activeView) {
-            this.activeView.setSource("bookmarks", "", true);
+            await this.activeView.setSource("bookmarks");
           } else {
-            this.plugin.activateView("bookmarks");
+            const view = await this.plugin.activateView();
+            if (view instanceof GridView) {
+              await view.setSource("bookmarks");
+            }
           }
           this.close();
         });
@@ -2114,11 +2173,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
               cls: "ge-grid-view-folder-option",
               text: `\u{1F50D} ${t("search_results")}: ${searchInputEl.value}`
             });
-            searchOption.addEventListener("click", () => {
+            searchOption.addEventListener("click", async () => {
               if (this.activeView) {
-                this.activeView.setSource("search", "", true);
+                await this.activeView.setSource("search");
               } else {
-                this.plugin.activateView("search");
+                const view = await this.plugin.activateView();
+                if (view instanceof GridView) {
+                  await view.setSource("search");
+                }
               }
               this.close();
             });
@@ -2135,11 +2197,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
           cls: "ge-grid-view-folder-option",
           text: `\u{1F517} ${t("backlinks_mode")}${activeFileName}`
         });
-        backlinksOption.addEventListener("click", () => {
+        backlinksOption.addEventListener("click", async () => {
           if (this.activeView) {
-            this.activeView.setSource("backlinks", "", true);
+            await this.activeView.setSource("backlinks");
           } else {
-            this.plugin.activateView("backlinks");
+            const view = await this.plugin.activateView();
+            if (view instanceof GridView) {
+              await view.setSource("backlinks");
+            }
           }
           this.close();
         });
@@ -2154,11 +2219,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
           cls: "ge-grid-view-folder-option",
           text: `\u{1F517} ${t("outgoinglinks_mode")}${activeFileName}`
         });
-        outgoinglinksOption.addEventListener("click", () => {
+        outgoinglinksOption.addEventListener("click", async () => {
           if (this.activeView) {
-            this.activeView.setSource("outgoinglinks", "", true);
+            await this.activeView.setSource("outgoinglinks");
           } else {
-            this.plugin.activateView("outgoinglinks");
+            const view = await this.plugin.activateView();
+            if (view instanceof GridView) {
+              await view.setSource("outgoinglinks");
+            }
           }
           this.close();
         });
@@ -2170,11 +2238,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
         cls: "ge-grid-view-folder-option",
         text: `\u{1F4C5} ${t("recent_files_mode")}`
       });
-      recentFilesOption.addEventListener("click", () => {
+      recentFilesOption.addEventListener("click", async () => {
         if (this.activeView) {
-          this.activeView.setSource("recent-files", "", true);
+          await this.activeView.setSource("recent-files");
         } else {
-          this.plugin.activateView("recent-files");
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("recent-files");
+          }
         }
         this.close();
       });
@@ -2185,11 +2256,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
         cls: "ge-grid-view-folder-option",
         text: `\u{1F4D4} ${t("all_files_mode")}`
       });
-      allFilesOption.addEventListener("click", () => {
+      allFilesOption.addEventListener("click", async () => {
         if (this.activeView) {
-          this.activeView.setSource("all-files", "", true);
+          await this.activeView.setSource("all-files");
         } else {
-          this.plugin.activateView("all-files");
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("all-files");
+          }
         }
         this.close();
       });
@@ -2200,11 +2274,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
         cls: "ge-grid-view-folder-option",
         text: `\u{1F3B2} ${t("random_note_mode")}`
       });
-      randomNoteOption.addEventListener("click", () => {
+      randomNoteOption.addEventListener("click", async () => {
         if (this.activeView) {
-          this.activeView.setSource("random-note", "", true);
+          await this.activeView.setSource("random-note");
         } else {
-          this.plugin.activateView("random-note");
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("random-note");
+          }
         }
         this.close();
       });
@@ -2215,11 +2292,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
         cls: "ge-grid-view-folder-option",
         text: `\u2611\uFE0F ${t("tasks_mode")}`
       });
-      tasksOption.addEventListener("click", () => {
+      tasksOption.addEventListener("click", async () => {
         if (this.activeView) {
-          this.activeView.setSource("tasks", "", true);
+          await this.activeView.setSource("tasks");
         } else {
-          this.plugin.activateView("tasks");
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("tasks");
+          }
         }
         this.close();
       });
@@ -2230,11 +2310,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
       cls: "ge-grid-view-folder-option",
       text: `${customFolderIcon} /`
     });
-    rootFolderOption.addEventListener("click", () => {
+    rootFolderOption.addEventListener("click", async () => {
       if (this.activeView) {
-        this.activeView.setSource("folder", "/", true);
+        await this.activeView.setSource("folder", "/");
       } else {
-        this.plugin.activateView("folder", "/");
+        const view = await this.plugin.activateView();
+        if (view instanceof GridView) {
+          await view.setSource("folder", "/");
+        }
       }
       this.close();
     });
@@ -2268,11 +2351,14 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
       const nameSpan = document.createElement("span");
       nameSpan.textContent = displayName;
       folderOption.appendChild(nameSpan);
-      folderOption.addEventListener("click", () => {
+      folderOption.addEventListener("click", async () => {
         if (this.activeView) {
-          this.activeView.setSource("folder", folder.path, true);
+          await this.activeView.setSource("folder", folder.path);
         } else {
-          this.plugin.activateView("folder", folder.path);
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("folder", folder.path);
+          }
         }
         this.close();
       });
@@ -2283,6 +2369,39 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
         this.updateSelection(index);
       });
     });
+  }
+  // 更新搜尋選項
+  updateSearchOption(searchTerm) {
+    if (this.searchOption) {
+      this.searchOption.remove();
+      const index = this.folderOptions.indexOf(this.searchOption);
+      if (index > -1) {
+        this.folderOptions.splice(index, 1);
+      }
+      this.searchOption = null;
+    }
+    if (searchTerm.length > 0) {
+      this.searchOption = this.folderOptionsContainer.createEl("div", {
+        cls: "ge-grid-view-folder-option ge-search-option",
+        text: `\u{1F50D} ${t("search_for")} "${searchTerm}"`
+      });
+      this.searchOption.addEventListener("click", async () => {
+        if (this.activeView) {
+          await this.activeView.setSource("folder", "/", true, searchTerm);
+        } else {
+          const view = await this.plugin.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("folder", "/", true, searchTerm);
+          }
+        }
+        this.close();
+      });
+      this.searchOption.addEventListener("mouseenter", () => {
+        const index = this.folderOptions.length;
+        this.updateSelection(index);
+      });
+      this.folderOptions.push(this.searchOption);
+    }
   }
   // 處理鍵盤事件
   handleKeyDown(event) {
@@ -2353,6 +2472,9 @@ var FolderSelectionModal = class extends import_obsidian2.Modal {
     let hasVisibleOptions = false;
     this.folderOptions.forEach((option) => {
       var _a, _b;
+      if (option === this.searchOption) {
+        return;
+      }
       const dataPath = option.getAttribute("data-path");
       if (dataPath) {
         const nameSpan = option.querySelector("span:last-child");
@@ -2540,7 +2662,7 @@ var SearchModal = class extends import_obsidian3.Modal {
       type: "checkbox",
       cls: "ge-search-scope-checkbox"
     });
-    searchScopeCheckbox.checked = !this.gridView.searchAllFiles;
+    searchScopeCheckbox.checked = this.gridView.searchCurrentLocationOnly;
     searchScopeContainer.createEl("span", {
       text: t("search_current_location_only"),
       cls: "ge-search-scope-label"
@@ -2577,7 +2699,7 @@ var SearchModal = class extends import_obsidian3.Modal {
     searchScopeContainer.addEventListener("click", (e) => {
       if (e.target !== searchScopeCheckbox) {
         searchScopeCheckbox.checked = !searchScopeCheckbox.checked;
-        this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+        this.gridView.searchCurrentLocationOnly = !searchScopeCheckbox.checked;
       }
     });
     searchNameContainer.addEventListener("click", (e) => {
@@ -2593,7 +2715,7 @@ var SearchModal = class extends import_obsidian3.Modal {
       }
     });
     searchScopeCheckbox.addEventListener("change", () => {
-      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+      this.gridView.searchCurrentLocationOnly = !searchScopeCheckbox.checked;
     });
     searchMediaFilesCheckbox.addEventListener("change", () => {
       this.gridView.searchMediaFiles = !searchMediaFilesCheckbox.checked;
@@ -2652,14 +2774,26 @@ var SearchModal = class extends import_obsidian3.Modal {
         });
       });
     };
+    const originalSearchQuery = this.gridView.searchQuery;
+    const originalsearchCurrentLocationOnly = this.gridView.searchCurrentLocationOnly;
+    const originalSearchFilesNameOnly = this.gridView.searchFilesNameOnly;
+    const originalSearchMediaFiles = this.gridView.searchMediaFiles;
     const performSearch = () => {
+      this.gridView.pushHistory(
+        this.gridView.sourceMode,
+        this.gridView.sourcePath,
+        originalSearchQuery,
+        originalsearchCurrentLocationOnly,
+        originalSearchFilesNameOnly,
+        originalSearchMediaFiles
+      );
       this.gridView.searchQuery = searchInput.value;
-      this.gridView.searchAllFiles = !searchScopeCheckbox.checked;
+      this.gridView.searchCurrentLocationOnly = searchScopeCheckbox.checked;
       this.gridView.searchFilesNameOnly = searchNameCheckbox.checked;
       this.gridView.searchMediaFiles = searchMediaFilesCheckbox.checked;
       this.gridView.clearSelection();
       this.gridView.app.workspace.requestSaveLayout();
-      this.gridView.render(true);
+      this.gridView.render();
       this.close();
     };
     searchButton.addEventListener("click", performSearch);
@@ -2712,8 +2846,135 @@ function showSearchModal(app, gridView, defaultQuery = "", buttonElement) {
 }
 
 // src/modal/shortcutSelectionModal.ts
+var import_obsidian5 = require("obsidian");
+
+// src/modal/inputModal.ts
 var import_obsidian4 = require("obsidian");
-var ShortcutSelectionModal = class extends import_obsidian4.Modal {
+var InputModal = class extends import_obsidian4.Modal {
+  constructor(app, options) {
+    super(app);
+    this.options = options;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.createEl("h2", { text: this.options.title });
+    const inputContainer = contentEl.createDiv("ge-input-field-container");
+    const input = inputContainer.createEl("input", {
+      type: this.options.inputType || "text",
+      value: this.options.defaultValue || "",
+      placeholder: this.options.placeholder,
+      cls: "ge-input-field"
+    });
+    let searchOptions = {
+      searchCurrentLocationOnly: false,
+      searchFilesNameOnly: false,
+      searchMediaFiles: false
+    };
+    if (this.options.showSearchOptions || this.options.title === t("search_text")) {
+      const searchOptionsContainer = contentEl.createDiv("ge-search-options");
+      const searchScopeContainer = searchOptionsContainer.createDiv("ge-search-option");
+      const searchScopeCheckbox = searchScopeContainer.createEl("input", {
+        type: "checkbox",
+        attr: {
+          id: "searchCurrentLocationOnly"
+        }
+      });
+      if (searchOptions.searchCurrentLocationOnly) {
+        searchScopeCheckbox.checked = true;
+      }
+      const searchScopeLabel = searchScopeContainer.createEl("label", { text: t("search_current_location_only") });
+      searchScopeLabel.setAttribute("for", "searchCurrentLocationOnly");
+      const searchNameContainer = searchOptionsContainer.createDiv("ge-search-option");
+      const searchNameCheckbox = searchNameContainer.createEl("input", {
+        type: "checkbox",
+        attr: {
+          id: "searchFilesNameOnly"
+        }
+      });
+      if (searchOptions.searchFilesNameOnly) {
+        searchNameCheckbox.checked = true;
+      }
+      const searchNameLabel = searchNameContainer.createEl("label", { text: t("search_files_name_only") });
+      searchNameLabel.setAttribute("for", "searchFilesNameOnly");
+      const searchMediaFilesContainer = searchOptionsContainer.createDiv("ge-search-option");
+      const searchMediaFilesCheckbox = searchMediaFilesContainer.createEl("input", {
+        type: "checkbox",
+        attr: {
+          id: "searchMediaFiles"
+        }
+      });
+      if (searchOptions.searchMediaFiles) {
+        searchMediaFilesCheckbox.checked = true;
+      }
+      const searchMediaFilesLabel = searchMediaFilesContainer.createEl("label", { text: t("search_media_files") });
+      searchMediaFilesLabel.setAttribute("for", "searchMediaFiles");
+      const updateSearchOptions = () => {
+        searchOptions = {
+          searchCurrentLocationOnly: searchScopeCheckbox.checked,
+          searchFilesNameOnly: searchNameCheckbox.checked,
+          searchMediaFiles: searchMediaFilesCheckbox.checked
+        };
+      };
+      searchScopeCheckbox.addEventListener("change", updateSearchOptions);
+      searchNameCheckbox.addEventListener("change", updateSearchOptions);
+      searchMediaFilesCheckbox.addEventListener("change", updateSearchOptions);
+    }
+    const buttonContainer = contentEl.createDiv("ge-button-container");
+    const submitButton = buttonContainer.createEl("button", {
+      text: t("confirm"),
+      cls: "mod-cta"
+    });
+    const cancelButton = buttonContainer.createEl("button", {
+      text: t("cancel")
+    });
+    const performSubmit = () => {
+      const value = input.value.trim();
+      if (value) {
+        if (this.options.showSearchOptions || this.options.title === t("search_text")) {
+          this.options.onSubmit(value, searchOptions);
+        } else {
+          this.options.onSubmit(value);
+        }
+        this.close();
+      }
+    };
+    submitButton.addEventListener("click", performSubmit);
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        performSubmit();
+      }
+    });
+    cancelButton.addEventListener("click", () => {
+      this.close();
+    });
+    input.focus();
+    input.select();
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+function showSearchInputModal(app, onSubmit) {
+  new InputModal(app, {
+    title: t("search_text"),
+    placeholder: t("enter_search_text"),
+    onSubmit,
+    showSearchOptions: true
+  }).open();
+}
+function showUriInputModal(app, onSubmit) {
+  new InputModal(app, {
+    title: t("enter_uri"),
+    placeholder: t("enter_uri_placeholder"),
+    inputType: "url",
+    onSubmit
+  }).open();
+}
+
+// src/modal/shortcutSelectionModal.ts
+var ShortcutSelectionModal = class extends import_obsidian5.Modal {
   constructor(app, plugin, onSubmit) {
     super(app);
     this.plugin = plugin;
@@ -2747,6 +3008,62 @@ var ShortcutSelectionModal = class extends import_obsidian4.Modal {
         this.close();
       }).open();
     });
+    const searchButton = contentEl.createDiv("shortcut-option-button");
+    searchButton.createSpan({ text: `\u{1F50E} ${t("search_text")}` });
+    searchButton.addEventListener("click", () => {
+      showSearchInputModal(this.app, (searchText, searchOptions) => {
+        this.onSubmit({
+          type: "search",
+          value: searchText,
+          display: `\u{1F50E} ${searchText}`,
+          searchOptions
+        });
+        this.close();
+      });
+    });
+    const uriButton = contentEl.createDiv("shortcut-option-button");
+    uriButton.createSpan({ text: `\u{1F310} ${t("enter_uri")}` });
+    uriButton.addEventListener("click", () => {
+      showUriInputModal(this.app, (uri) => {
+        let displayName;
+        try {
+          if (uri.startsWith("obsidian://")) {
+            const vaultMatch = uri.match(/[?&]vault=([^&]+)/);
+            if (vaultMatch) {
+              const vaultName = decodeURIComponent(vaultMatch[1]);
+              displayName = `\u{1F310} Obsidian Link (${vaultName})`;
+            } else {
+              displayName = "\u{1F310} Obsidian Link";
+            }
+          } else if (uri.startsWith("http://") || uri.startsWith("https://")) {
+            const url = new URL(uri);
+            let domain = url.hostname;
+            if (domain.startsWith("www.")) {
+              domain = domain.substring(4);
+            }
+            displayName = `\u{1F310} ${domain}`;
+          } else if (uri.startsWith("file://")) {
+            displayName = "\u{1F310} Local File";
+          } else {
+            const protocolMatch = uri.match(/^([^:]+):/);
+            if (protocolMatch) {
+              displayName = `\u{1F310} ${protocolMatch[1].toUpperCase()} Link`;
+            } else {
+              displayName = `\u{1F310} ${uri.substring(0, 20)}${uri.length > 20 ? "..." : ""}`;
+            }
+          }
+        } catch (error) {
+          displayName = `\u{1F310} ${uri.substring(0, 20)}${uri.length > 20 ? "..." : ""}`;
+        }
+        this.onSubmit({
+          type: "uri",
+          value: uri,
+          display: displayName
+        });
+        this.close();
+      });
+    });
+    contentEl.createEl("p");
     const modeOptions = [];
     this.plugin.settings.customModes.forEach((mode) => {
       modeOptions.push({
@@ -2757,7 +3074,7 @@ var ShortcutSelectionModal = class extends import_obsidian4.Modal {
     });
     modeOptions.push(
       { type: "mode", value: "bookmarks", display: `\u{1F4D1} ${t("bookmarks_mode")}` },
-      { type: "mode", value: "search", display: `\u{1F50E} ${t("search_results")}` },
+      { type: "mode", value: "search", display: `\u{1F50D} ${t("search_results")}` },
       { type: "mode", value: "backlinks", display: `\u{1F517} ${t("backlinks_mode")}` },
       { type: "mode", value: "outgoinglinks", display: `\u{1F517} ${t("outgoinglinks_mode")}` },
       { type: "mode", value: "all-files", display: `\u{1F4D4} ${t("all_files_mode")}` },
@@ -2782,14 +3099,14 @@ var ShortcutSelectionModal = class extends import_obsidian4.Modal {
     contentEl.empty();
   }
 };
-var FolderSuggestionModal = class extends import_obsidian4.FuzzySuggestModal {
+var FolderSuggestionModal = class extends import_obsidian5.FuzzySuggestModal {
   constructor(app, onChoose) {
     super(app);
     this.onSubmit = onChoose;
   }
   // 獲取所有可選的資料夾
   getItems() {
-    return this.app.vault.getAllLoadedFiles().filter((file) => file instanceof import_obsidian4.TFolder);
+    return this.app.vault.getAllLoadedFiles().filter((file) => file instanceof import_obsidian5.TFolder);
   }
   // 獲取資料夾的顯示文本
   getItemText(folder) {
@@ -2800,7 +3117,7 @@ var FolderSuggestionModal = class extends import_obsidian4.FuzzySuggestModal {
     this.onSubmit(folder);
   }
 };
-var FileSuggestionModal = class extends import_obsidian4.FuzzySuggestModal {
+var FileSuggestionModal = class extends import_obsidian5.FuzzySuggestModal {
   constructor(app, onChoose) {
     super(app);
     this.onSubmit = onChoose;
@@ -2835,33 +3152,77 @@ function renderHeaderButton(gridView) {
     }
   });
   const backButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("back") } });
-  (0, import_obsidian5.setIcon)(backButton, "arrow-left");
-  backButton.addEventListener("click", (event) => {
+  (0, import_obsidian6.setIcon)(backButton, "arrow-left");
+  backButton.addEventListener("click", async (event) => {
+    var _a, _b, _c;
     event.preventDefault();
     event.stopPropagation();
-    if (gridView.searchQuery !== "") {
-      gridView.searchQuery = "";
-      gridView.app.workspace.requestSaveLayout();
-      gridView.render();
-      return;
-    }
     if (gridView.recentSources.length > 0) {
+      const currentKey = JSON.stringify({
+        mode: gridView.sourceMode,
+        path: gridView.sourcePath,
+        searchQuery: gridView.searchQuery,
+        searchCurrentLocationOnly: gridView.searchCurrentLocationOnly,
+        searchFilesNameOnly: gridView.searchFilesNameOnly,
+        searchMediaFiles: gridView.searchMediaFiles
+      });
+      gridView.futureSources.unshift(currentKey);
+      if (gridView.futureSources.length > 10) {
+        gridView.futureSources.length = 10;
+      }
       const lastSource = JSON.parse(gridView.recentSources[0]);
       gridView.recentSources.shift();
-      gridView.setSource(
+      await gridView.setSource(
         lastSource.mode,
         lastSource.path || "",
-        true,
-        // 重設捲動位置
-        false
+        false,
         // 不記錄到歷史
+        lastSource.searchQuery || "",
+        (_a = lastSource.searchCurrentLocationOnly) != null ? _a : false,
+        (_b = lastSource.searchFilesNameOnly) != null ? _b : false,
+        (_c = lastSource.searchMediaFiles) != null ? _c : false
       );
+      updateNavButtons();
+    }
+  });
+  const forwardButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("forward") } });
+  (0, import_obsidian6.setIcon)(forwardButton, "arrow-right");
+  forwardButton.addEventListener("click", async (event) => {
+    var _a, _b, _c;
+    event.preventDefault();
+    event.stopPropagation();
+    if (gridView.futureSources.length > 0) {
+      const currentKey = JSON.stringify({
+        mode: gridView.sourceMode,
+        path: gridView.sourcePath,
+        searchQuery: gridView.searchQuery,
+        searchCurrentLocationOnly: gridView.searchCurrentLocationOnly,
+        searchFilesNameOnly: gridView.searchFilesNameOnly,
+        searchMediaFiles: gridView.searchMediaFiles
+      });
+      gridView.recentSources.unshift(currentKey);
+      if (gridView.recentSources.length > 10) {
+        gridView.recentSources.length = 10;
+      }
+      const nextSource = JSON.parse(gridView.futureSources[0]);
+      gridView.futureSources.shift();
+      await gridView.setSource(
+        nextSource.mode,
+        nextSource.path || "",
+        false,
+        // 不記錄到歷史
+        nextSource.searchQuery || "",
+        (_a = nextSource.searchCurrentLocationOnly) != null ? _a : false,
+        (_b = nextSource.searchFilesNameOnly) != null ? _b : false,
+        (_c = nextSource.searchMediaFiles) != null ? _c : false
+      );
+      updateNavButtons();
     }
   });
   backButton.addEventListener("contextmenu", (event) => {
     if (gridView.recentSources.length > 0) {
       event.preventDefault();
-      const menu2 = new import_obsidian5.Menu();
+      const menu2 = new import_obsidian6.Menu();
       gridView.recentSources.forEach((sourceInfoStr, index) => {
         try {
           const sourceInfo = JSON.parse(sourceInfoStr);
@@ -2915,16 +3276,45 @@ function renderHeaderButton(gridView) {
                 icon = "grid";
               }
           }
+          if (sourceInfo.searchQuery) {
+            if (!sourceInfo.searchCurrentLocationOnly) {
+              displayText = '"' + (sourceInfo.searchQuery || t("search_results")) + '"';
+            } else {
+              displayText += `: "${sourceInfo.searchQuery}"`;
+            }
+          }
           menu2.addItem((item) => {
-            item.setTitle(`${displayText}`).setIcon(`${icon}`).onClick(() => {
-              const clickedIndex = gridView.recentSources.findIndex((source) => {
-                const parsed = JSON.parse(source);
-                return parsed.mode === mode && parsed.path === path;
+            item.setTitle(`${displayText}`).setIcon(`${icon}`).onClick(async () => {
+              var _a, _b, _c;
+              const currentKey = JSON.stringify({
+                mode: gridView.sourceMode,
+                path: gridView.sourcePath,
+                searchQuery: gridView.searchQuery,
+                searchCurrentLocationOnly: gridView.searchCurrentLocationOnly,
+                searchFilesNameOnly: gridView.searchFilesNameOnly,
+                searchMediaFiles: gridView.searchMediaFiles
               });
+              const clickedIndex = index;
               if (clickedIndex !== -1) {
+                const newerHistory = gridView.recentSources.slice(0, clickedIndex);
+                const forwardStack = [...newerHistory].reverse();
+                gridView.futureSources = [...forwardStack, currentKey, ...gridView.futureSources];
+                if (gridView.futureSources.length > 10) {
+                  gridView.futureSources.length = 10;
+                }
                 gridView.recentSources = gridView.recentSources.slice(clickedIndex + 1);
               }
-              gridView.setSource(mode, path, true, false);
+              await gridView.setSource(
+                mode,
+                path,
+                false,
+                // 不記錄到歷史
+                sourceInfo.searchQuery || "",
+                (_a = sourceInfo.searchCurrentLocationOnly) != null ? _a : false,
+                (_b = sourceInfo.searchFilesNameOnly) != null ? _b : false,
+                (_c = sourceInfo.searchMediaFiles) != null ? _c : false
+              );
+              updateNavButtons();
             });
           });
         } catch (error) {
@@ -2934,11 +3324,121 @@ function renderHeaderButton(gridView) {
       menu2.showAtMouseEvent(event);
     }
   });
+  forwardButton.addEventListener("contextmenu", (event) => {
+    if (gridView.futureSources.length > 0) {
+      event.preventDefault();
+      const menu2 = new import_obsidian6.Menu();
+      gridView.futureSources.forEach((sourceInfoStr, index) => {
+        try {
+          const sourceInfo = JSON.parse(sourceInfoStr);
+          const { mode, path } = sourceInfo;
+          let displayText = "";
+          let icon = "";
+          switch (mode) {
+            case "folder":
+              displayText = path || "/";
+              icon = "folder";
+              break;
+            case "bookmarks":
+              displayText = t("bookmarks_mode");
+              icon = "bookmark";
+              break;
+            case "search":
+              displayText = t("search_results");
+              icon = "search";
+              break;
+            case "backlinks":
+              displayText = t("backlinks_mode");
+              icon = "links-coming-in";
+              break;
+            case "outgoinglinks":
+              displayText = t("outgoinglinks_mode");
+              icon = "links-going-out";
+              break;
+            case "all-files":
+              displayText = t("all_files_mode");
+              icon = "book-text";
+              break;
+            case "recent-files":
+              displayText = t("recent_files_mode");
+              icon = "calendar-days";
+              break;
+            case "random-note":
+              displayText = t("random_note_mode");
+              icon = "dice";
+              break;
+            case "tasks":
+              displayText = t("tasks_mode");
+              icon = "square-check-big";
+              break;
+            default:
+              if (mode.startsWith("custom-")) {
+                const customMode = gridView.plugin.settings.customModes.find((m) => m.internalName === mode);
+                displayText = customMode ? customMode.displayName : t("custom_mode");
+                icon = "puzzle";
+              } else {
+                displayText = mode;
+                icon = "grid";
+              }
+          }
+          if (sourceInfo.searchQuery) {
+            if (!sourceInfo.searchCurrentLocationOnly) {
+              displayText = '"' + (sourceInfo.searchQuery || t("search_results")) + '"';
+            } else {
+              displayText += `: "${sourceInfo.searchQuery}"`;
+            }
+          }
+          menu2.addItem((item) => {
+            item.setTitle(`${displayText}`).setIcon(`${icon}`).onClick(async () => {
+              var _a, _b, _c;
+              const currentKey = JSON.stringify({
+                mode: gridView.sourceMode,
+                path: gridView.sourcePath,
+                searchQuery: gridView.searchQuery,
+                searchCurrentLocationOnly: gridView.searchCurrentLocationOnly,
+                searchFilesNameOnly: gridView.searchFilesNameOnly,
+                searchMediaFiles: gridView.searchMediaFiles
+              });
+              const clickedIndex = index;
+              let olderFuture = [];
+              if (clickedIndex !== -1) {
+                olderFuture = gridView.futureSources.slice(0, clickedIndex);
+                gridView.futureSources = gridView.futureSources.slice(clickedIndex + 1);
+              }
+              const backStack = [...olderFuture].reverse();
+              gridView.recentSources = [...backStack, currentKey, ...gridView.recentSources];
+              if (gridView.recentSources.length > 10) {
+                gridView.recentSources.length = 10;
+              }
+              await gridView.setSource(
+                mode,
+                path,
+                false,
+                sourceInfo.searchQuery || "",
+                (_a = sourceInfo.searchCurrentLocationOnly) != null ? _a : false,
+                (_b = sourceInfo.searchFilesNameOnly) != null ? _b : false,
+                (_c = sourceInfo.searchMediaFiles) != null ? _c : false
+              );
+              updateNavButtons();
+            });
+          });
+        } catch (error) {
+          console.error("Failed to parse source info:", error);
+        }
+      });
+      menu2.showAtMouseEvent(event);
+    }
+  });
+  const updateNavButtons = () => {
+    backButton.disabled = gridView.recentSources.length === 0;
+    forwardButton.disabled = gridView.futureSources.length === 0;
+  };
+  updateNavButtons();
   const newNoteButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("new_note") } });
-  (0, import_obsidian5.setIcon)(newNoteButton, "square-pen");
+  (0, import_obsidian6.setIcon)(newNoteButton, "square-pen");
   newNoteButton.addEventListener("click", (event) => {
     event.preventDefault();
-    const menu2 = new import_obsidian5.Menu();
+    const menu2 = new import_obsidian6.Menu();
     menu2.addItem((item) => {
       item.setTitle(t("new_note")).setIcon("square-pen").onClick(async () => {
         let newFileName = `${t("untitled")}.md`;
@@ -2969,7 +3469,9 @@ function renderHeaderButton(gridView) {
         }
         try {
           await gridView.app.vault.createFolder(newFolderPath);
-          gridView.render(false);
+          requestAnimationFrame(() => {
+            gridView.render();
+          });
         } catch (error) {
           console.error("An error occurred while creating a new folder:", error);
         }
@@ -3007,7 +3509,7 @@ function renderHeaderButton(gridView) {
   reselectButton.addEventListener("click", () => {
     showFolderSelectionModal(gridView.app, gridView.plugin, gridView, reselectButton);
   });
-  (0, import_obsidian5.setIcon)(reselectButton, "grid");
+  (0, import_obsidian6.setIcon)(reselectButton, "grid");
   const refreshButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("refresh") } });
   refreshButton.addEventListener("click", () => {
     if (gridView.sortType === "random") {
@@ -3015,13 +3517,13 @@ function renderHeaderButton(gridView) {
     }
     gridView.render();
   });
-  (0, import_obsidian5.setIcon)(refreshButton, "refresh-ccw");
+  (0, import_obsidian6.setIcon)(refreshButton, "refresh-ccw");
   const searchButtonContainer = headerButtonsDiv.createDiv("ge-search-button-container");
   const searchButton = searchButtonContainer.createEl("button", {
     cls: "search-button",
     attr: { "aria-label": t("search") }
   });
-  (0, import_obsidian5.setIcon)(searchButton, "search");
+  (0, import_obsidian6.setIcon)(searchButton, "search");
   searchButton.addEventListener("click", () => {
     showSearchModal(gridView.app, gridView, "", searchButton);
   });
@@ -3033,17 +3535,29 @@ function renderHeaderButton(gridView) {
     searchText.addEventListener("click", () => {
       showSearchModal(gridView.app, gridView, gridView.searchQuery, searchText);
     });
+    const originalSearchQuery = gridView.searchQuery;
+    const originalsearchCurrentLocationOnly = gridView.searchCurrentLocationOnly;
+    const originalSearchFilesNameOnly = gridView.searchFilesNameOnly;
+    const originalSearchMediaFiles = gridView.searchMediaFiles;
     const clearButton = searchTextContainer.createDiv("ge-clear-button");
-    (0, import_obsidian5.setIcon)(clearButton, "x");
+    (0, import_obsidian6.setIcon)(clearButton, "x");
     clearButton.addEventListener("click", (e) => {
       e.stopPropagation();
+      gridView.pushHistory(
+        gridView.sourceMode,
+        gridView.sourcePath,
+        originalSearchQuery,
+        originalsearchCurrentLocationOnly,
+        originalSearchFilesNameOnly,
+        originalSearchMediaFiles
+      );
       gridView.searchQuery = "";
       gridView.clearSelection();
       gridView.app.workspace.requestSaveLayout();
       gridView.render();
     });
   }
-  const menu = new import_obsidian5.Menu();
+  const menu = new import_obsidian6.Menu();
   menu.addItem((item) => {
     item.setTitle(t("open_new_grid_view")).setIcon("grid").onClick(() => {
       const { workspace } = gridView.app;
@@ -3119,7 +3633,7 @@ function renderHeaderButton(gridView) {
   });
   if (gridView.searchQuery === "") {
     const moreOptionsButton = headerButtonsDiv.createEl("button", { attr: { "aria-label": t("more_options") } });
-    (0, import_obsidian5.setIcon)(moreOptionsButton, "ellipsis-vertical");
+    (0, import_obsidian6.setIcon)(moreOptionsButton, "ellipsis-vertical");
     moreOptionsButton.addEventListener("click", (event) => {
       menu.showAtMouseEvent(event);
     });
@@ -3131,15 +3645,84 @@ function renderHeaderButton(gridView) {
     }
   });
 }
+function generateFilenameFromUri(uri) {
+  try {
+    if (uri.startsWith("obsidian://")) {
+      const match = uri.match(/obsidian:\/\/([^?]+)/);
+      let vaultName = "";
+      const vaultMatch = uri.match(/[?&]vault=([^&]+)/);
+      if (vaultMatch) {
+        vaultName = decodeURIComponent(vaultMatch[1]);
+        vaultName = vaultName.replace(/[<>:"/\\|?*]/g, "_");
+      }
+      if (match) {
+        const action = match[1];
+        const vaultSuffix = vaultName ? ` (${vaultName})` : "";
+        switch (action) {
+          case "open":
+            return `\u{1F310} Obsidian Open${vaultSuffix}`;
+          case "new":
+            return `\u{1F310} Obsidian New${vaultSuffix}`;
+          case "search":
+            return `\u{1F310} Obsidian Search${vaultSuffix}`;
+          case "hook-get-address":
+            return `\u{1F310} Obsidian Hook${vaultSuffix}`;
+          default:
+            return `\u{1F310} Obsidian ${action}${vaultSuffix}`;
+        }
+      }
+      return vaultName ? `\u{1F310} Obsidian Link (${vaultName})` : "\u{1F310} Obsidian Link";
+    }
+    if (uri.startsWith("file://")) {
+      const filename = uri.split("/").pop() || "Local File";
+      return `\u{1F310} ${filename}`;
+    }
+    if (uri.startsWith("http://") || uri.startsWith("https://")) {
+      const url = new URL(uri);
+      let domain = url.hostname;
+      if (domain.startsWith("www.")) {
+        domain = domain.substring(4);
+      }
+      if (url.pathname && url.pathname !== "/") {
+        const pathParts = url.pathname.split("/").filter((part) => part.length > 0);
+        if (pathParts.length > 0) {
+          const lastPart = pathParts[pathParts.length - 1];
+          if (lastPart.length < 50 && !lastPart.includes("?")) {
+            return `\u{1F310} ${domain} - ${lastPart}`;
+          }
+        }
+      }
+      return `\u{1F310} ${domain}`;
+    }
+    const protocolMatch = uri.match(/^([^:]+):/);
+    if (protocolMatch) {
+      const protocol = protocolMatch[1].toUpperCase();
+      return `\u{1F310} ${protocol} Link`;
+    }
+    const cleanUri = uri.replace(/[<>:"/\\|?*]/g, "_").substring(0, 30);
+    return `\u{1F310} ${cleanUri}`;
+  } catch (error) {
+    const cleanUri = uri.replace(/[<>:"/\\|?*]/g, "_").substring(0, 30);
+    return `\u{1F310} ${cleanUri}`;
+  }
+}
 async function createShortcut(gridView, option) {
   try {
     let counter = 0;
-    let shortcutName = `${option.display}`;
-    let newPath = `${shortcutName}.md`;
+    let shortcutName;
+    if (option.type === "uri") {
+      shortcutName = generateFilenameFromUri(option.value);
+    } else {
+      shortcutName = `${option.display}`;
+    }
+    let newName = `${shortcutName}.md`;
+    let newPath = !gridView.sourcePath || gridView.sourcePath === "/" ? newName : `${gridView.sourcePath}/${newName}`;
     while (gridView.app.vault.getAbstractFileByPath(newPath)) {
       counter++;
-      shortcutName = `${option.display} ${counter}`;
-      newPath = `${shortcutName}.md`;
+      const baseName = option.type === "uri" ? generateFilenameFromUri(option.value) : option.display;
+      shortcutName = `${baseName} ${counter}`;
+      newName = `${shortcutName}.md`;
+      newPath = !gridView.sourcePath || gridView.sourcePath === "/" ? newName : `${gridView.sourcePath}/${newName}`;
     }
     const newFile = await gridView.app.vault.create(newPath, "");
     await gridView.app.fileManager.processFrontMatter(newFile, (frontmatter) => {
@@ -3156,24 +3739,35 @@ async function createShortcut(gridView, option) {
         );
         frontmatter.type = "file";
         frontmatter.redirect = link;
+      } else if (option.type === "search") {
+        frontmatter.type = "search";
+        frontmatter.redirect = option.value;
+        if (option.searchOptions) {
+          frontmatter.searchCurrentLocationOnly = option.searchOptions.searchCurrentLocationOnly;
+          frontmatter.searchFilesNameOnly = option.searchOptions.searchFilesNameOnly;
+          frontmatter.searchMediaFiles = option.searchOptions.searchMediaFiles;
+        }
+      } else if (option.type === "uri") {
+        frontmatter.type = "uri";
+        frontmatter.redirect = option.value;
       }
     });
-    new import_obsidian5.Notice(`${t("shortcut_created")}: ${shortcutName}`);
+    new import_obsidian6.Notice(`${t("shortcut_created")}: ${shortcutName}`);
   } catch (error) {
     console.error("Create shortcut error", error);
-    new import_obsidian5.Notice(t("Failed to create shortcut"));
+    new import_obsidian6.Notice(t("failed_to_create_shortcut"));
   }
 }
 
 // src/renderModePath.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 
 // src/modal/folderNoteSettingsModal.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 function showFolderNoteSettingsModal(app, plugin, folder, gridView) {
   new FolderNoteSettingsModal(app, plugin, folder, gridView).open();
 }
-var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
+var FolderNoteSettingsModal = class extends import_obsidian7.Modal {
   constructor(app, plugin, folder, gridView) {
     super(app);
     this.settings = {
@@ -3189,7 +3783,7 @@ var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
     this.gridView = gridView;
     const notePath = `${folder.path}/${folder.name}.md`;
     const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-    if (noteFile instanceof import_obsidian6.TFile) {
+    if (noteFile instanceof import_obsidian7.TFile) {
       this.existingFile = noteFile;
     }
   }
@@ -3199,24 +3793,24 @@ var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
     if (this.existingFile) {
       await this.loadExistingSettings();
     }
-    new import_obsidian6.Setting(contentEl).setName(t("folder_note_settings")).setHeading();
-    new import_obsidian6.Setting(contentEl).setName(t("folder_sort_type")).setDesc(t("folder_sort_type_desc")).addDropdown((dropdown) => {
+    new import_obsidian7.Setting(contentEl).setName(t("folder_note_settings")).setHeading();
+    new import_obsidian7.Setting(contentEl).setName(t("folder_sort_type")).setDesc(t("folder_sort_type_desc")).addDropdown((dropdown) => {
       dropdown.addOption("", t("default")).addOption("name-asc", t("sort_name_asc")).addOption("name-desc", t("sort_name_desc")).addOption("mtime-desc", t("sort_mtime_desc")).addOption("mtime-asc", t("sort_mtime_asc")).addOption("ctime-desc", t("sort_ctime_desc")).addOption("ctime-asc", t("sort_ctime_asc")).addOption("random", t("sort_random")).setValue(this.settings.sort).onChange((value) => {
         this.settings.sort = value;
       });
     });
-    new import_obsidian6.Setting(contentEl).setName(t("folder_color")).setDesc(t("folder_color_desc")).addDropdown((dropdown) => {
+    new import_obsidian7.Setting(contentEl).setName(t("folder_color")).setDesc(t("folder_color_desc")).addDropdown((dropdown) => {
       dropdown.addOption("", t("no_color")).addOption("red", t("color_red")).addOption("orange", t("color_orange")).addOption("yellow", t("color_yellow")).addOption("green", t("color_green")).addOption("cyan", t("color_cyan")).addOption("blue", t("color_blue")).addOption("purple", t("color_purple")).addOption("pink", t("color_pink")).setValue(this.settings.color).onChange((value) => {
         this.settings.color = value;
       });
     });
     const customFolderIcon = this.plugin.settings.customFolderIcon;
-    new import_obsidian6.Setting(contentEl).setName(t("folder_icon")).setDesc(t("folder_icon_desc")).addText((text) => {
+    new import_obsidian7.Setting(contentEl).setName(t("folder_icon")).setDesc(t("folder_icon_desc")).addText((text) => {
       text.setPlaceholder(customFolderIcon).setValue(this.settings.icon || customFolderIcon).onChange((value) => {
         this.settings.icon = value || customFolderIcon;
       });
     });
-    new import_obsidian6.Setting(contentEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
+    new import_obsidian7.Setting(contentEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
       drop.addOption("", t("default"));
       drop.addOption("horizontal", t("horizontal_card"));
       drop.addOption("vertical", t("vertical_card"));
@@ -3225,12 +3819,12 @@ var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
         this.settings.cardLayout = value;
       });
     });
-    new import_obsidian6.Setting(contentEl).setName(t("foldernote_pinned")).setDesc(t("foldernote_pinned_desc")).addToggle((toggle) => {
+    new import_obsidian7.Setting(contentEl).setName(t("foldernote_pinned")).setDesc(t("foldernote_pinned_desc")).addToggle((toggle) => {
       toggle.setValue(this.settings.isPinned).onChange((value) => {
         this.settings.isPinned = value;
       });
     });
-    const buttonSetting = new import_obsidian6.Setting(contentEl);
+    const buttonSetting = new import_obsidian7.Setting(contentEl);
     buttonSetting.addButton((button) => {
       button.setButtonText(t("confirm")).setCta().onClick(() => {
         this.saveFolderNote();
@@ -3340,9 +3934,108 @@ var FolderNoteSettingsModal = class extends import_obsidian6.Modal {
   }
 };
 
+// src/modal/folderRenameModal.ts
+var import_obsidian8 = require("obsidian");
+function showFolderRenameModal(app, plugin, folder, gridView) {
+  new FolderRenameModal(app, plugin, folder, gridView).open();
+}
+var FolderRenameModal = class extends import_obsidian8.Modal {
+  constructor(app, plugin, folder, gridView) {
+    super(app);
+    this.plugin = plugin;
+    this.folder = folder;
+    this.gridView = gridView;
+    this.newName = folder.name;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    new import_obsidian8.Setting(contentEl).setName(t("rename_folder")).setDesc(t("enter_new_folder_name")).addText((text) => {
+      text.setValue(this.folder.name).onChange((value) => {
+        this.newName = value;
+      });
+    });
+    new import_obsidian8.Setting(contentEl).addButton((button) => {
+      button.setButtonText(t("confirm")).setCta().onClick(() => {
+        this.renameFolder();
+        this.close();
+      });
+    }).addButton((button) => {
+      button.setButtonText(t("cancel")).onClick(() => {
+        this.close();
+      });
+    });
+  }
+  async renameFolder() {
+    try {
+      const parentPath = this.folder.parent ? this.folder.parent.path : "";
+      const newPath = (0, import_obsidian8.normalizePath)(parentPath ? `${parentPath}/${this.newName}` : this.newName);
+      await this.app.fileManager.renameFile(this.folder, newPath);
+      setTimeout(() => {
+        if (!this.plugin.settings.showFolder) {
+          this.gridView.setSource("folder", newPath || "/");
+        } else {
+          this.gridView.render();
+        }
+      }, 100);
+    } catch (error) {
+      new import_obsidian8.Notice("Failed to rename folder");
+      console.error("Failed to rename folder", error);
+    }
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+
+// src/modal/folderMoveModal.ts
+var import_obsidian9 = require("obsidian");
+var showFolderMoveModal = class extends import_obsidian9.SuggestModal {
+  constructor(plugin, folder, gridView) {
+    super(plugin.app);
+    this.plugin = plugin;
+    this.folder = folder;
+    this.gridView = gridView;
+    this.allPaths = this.app.vault.getAllFolders().map((f) => f.path).sort((a, b) => a.localeCompare(b));
+    this.setPlaceholder("/");
+    this.inputEl.focus();
+  }
+  getSuggestions(query) {
+    const lower = query.toLowerCase();
+    const filtered = this.allPaths.filter((p) => p.toLowerCase().includes(lower));
+    if ("/".includes(lower) && !filtered.includes("/")) {
+      filtered.unshift("/");
+    }
+    return filtered;
+  }
+  renderSuggestion(value, el) {
+    el.setText(value);
+  }
+  async onChooseSuggestion(value) {
+    try {
+      const dest = value === "/" ? "" : value.replace(/\/$/, "");
+      const newPath = (0, import_obsidian9.normalizePath)(dest ? `${dest}/${this.folder.name}` : this.folder.name);
+      if (newPath === this.folder.path)
+        return;
+      await this.app.fileManager.renameFile(this.folder, newPath);
+      setTimeout(() => {
+        if (!this.plugin.settings.showFolder) {
+          this.gridView.setSource("folder", newPath || "/");
+        } else {
+          this.gridView.render();
+        }
+      }, 100);
+    } catch (err) {
+      new import_obsidian9.Notice("Failed to move folder");
+      console.error("Failed to move folder", err);
+    }
+  }
+};
+
 // src/modal/customModeModal.ts
-var import_obsidian7 = require("obsidian");
-var CustomModeModal = class extends import_obsidian7.Modal {
+var import_obsidian10 = require("obsidian");
+var CustomModeModal = class extends import_obsidian10.Modal {
   constructor(app, plugin, mode, onSubmit) {
     super(app);
     this.plugin = plugin;
@@ -3361,7 +4054,7 @@ var CustomModeModal = class extends import_obsidian7.Modal {
     let dataviewCode = this.mode ? this.mode.dataviewCode : "";
     let enabled = this.mode ? (_b = this.mode.enabled) != null ? _b : true : true;
     let fields = this.mode ? this.mode.fields : "";
-    new import_obsidian7.Setting(contentEl).setName(t("custom_mode_display_name")).setDesc(t("custom_mode_display_name_desc")).addText((text) => {
+    new import_obsidian10.Setting(contentEl).setName(t("custom_mode_display_name")).setDesc(t("custom_mode_display_name_desc")).addText((text) => {
       text.setValue(icon).onChange((value) => {
         icon = value || "\u{1F9E9}";
       });
@@ -3372,7 +4065,7 @@ var CustomModeModal = class extends import_obsidian7.Modal {
         displayName = value;
       });
     });
-    const dvSetting = new import_obsidian7.Setting(contentEl).setName(t("custom_mode_dataview_code")).setDesc(t("custom_mode_dataview_code_desc"));
+    const dvSetting = new import_obsidian10.Setting(contentEl).setName(t("custom_mode_dataview_code")).setDesc(t("custom_mode_dataview_code_desc"));
     dvSetting.settingEl.style.flexDirection = "column";
     dvSetting.settingEl.style.alignItems = "stretch";
     dvSetting.settingEl.style.gap = "0.5rem";
@@ -3401,7 +4094,7 @@ var CustomModeModal = class extends import_obsidian7.Modal {
       optionsContainer.empty();
       options.forEach((opt, idx) => {
         const optionContainer = optionsContainer.createDiv("ge-custommode-option-container");
-        const optSetting = new import_obsidian7.Setting(optionContainer);
+        const optSetting = new import_obsidian10.Setting(optionContainer);
         optSetting.addText((text) => {
           text.setPlaceholder(t("option_name")).setValue(opt.name).onChange((val) => {
             opt.name = val;
@@ -3427,14 +4120,14 @@ var CustomModeModal = class extends import_obsidian7.Modal {
         }
       });
     };
-    new import_obsidian7.Setting(contentEl).addButton((btn) => {
+    new import_obsidian10.Setting(contentEl).addButton((btn) => {
       btn.setButtonText(t("add_option")).onClick(() => {
         options.push({ name: `${t("option")} ${options.length + 1}`, dataviewCode: "" });
         renderOptions();
       });
     });
     renderOptions();
-    const saveSetting = new import_obsidian7.Setting(contentEl);
+    const saveSetting = new import_obsidian10.Setting(contentEl);
     saveSetting.settingEl.classList.add("ge-save-footer");
     saveSetting.addButton((button) => {
       button.setButtonText(t("save")).setCta().onClick(() => {
@@ -3475,11 +4168,11 @@ function renderModePath(gridView) {
         "href": "#"
       }
     });
-    (0, import_obsidian8.setIcon)(sortButton, "arrow-up-narrow-wide");
+    (0, import_obsidian11.setIcon)(sortButton, "arrow-up-narrow-wide");
     sortButton.addEventListener("click", (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
-      const menu = new import_obsidian8.Menu();
+      const menu = new import_obsidian11.Menu();
       const sortOptions = [
         { value: "name-asc", label: t("sort_name_asc"), icon: "a-arrow-up" },
         { value: "name-desc", label: t("sort_name_desc"), icon: "a-arrow-down" },
@@ -3491,9 +4184,9 @@ function renderModePath(gridView) {
       ];
       sortOptions.forEach((option) => {
         menu.addItem((item) => {
-          item.setTitle(option.label).setIcon(option.icon).setChecked((gridView.folderSortType || gridView.sortType) === option.value).onClick(() => {
+          item.setTitle(option.label).setIcon(option.icon).setChecked(gridView.sortType === option.value).onClick(() => {
+            gridView.baseSortType = option.value;
             gridView.sortType = option.value;
-            gridView.folderSortType = "";
             gridView.app.workspace.requestSaveLayout();
             gridView.render();
           });
@@ -3514,7 +4207,7 @@ function renderModePath(gridView) {
       }
     }
   });
-  if (gridView.sourceMode === "folder" && (gridView.searchQuery === "" || gridView.searchQuery && !gridView.searchAllFiles) && gridView.sourcePath !== "/") {
+  if (gridView.sourceMode === "folder" && (gridView.searchQuery === "" || gridView.searchQuery && gridView.searchCurrentLocationOnly)) {
     const pathParts = gridView.sourcePath.split("/").filter((part) => part.trim() !== "");
     const paths = [];
     let pathAccumulator = "";
@@ -3538,17 +4231,24 @@ function renderModePath(gridView) {
       const isLast = index === paths.length - 1;
       let pathEl;
       if (isLast) {
-        pathEl = modenameContainer.createEl("a", {
-          text: `${customFolderIcon} ${path.name}`.trim(),
-          cls: "ge-current-folder"
-        });
+        if (path.path === "/" && gridView.plugin.settings.showFolder) {
+          pathEl = modenameContainer.createEl("span", {
+            text: `${customFolderIcon} ${path.name}`.trim(),
+            cls: "ge-mode-title"
+          });
+        } else {
+          pathEl = modenameContainer.createEl("a", {
+            text: `${customFolderIcon} ${path.name}`.trim(),
+            cls: "ge-current-folder"
+          });
+        }
       } else {
         pathEl = modenameContainer.createEl("a", {
           text: path.name,
           cls: "ge-parent-folder-link"
         });
       }
-      (0, import_obsidian8.setTooltip)(pathEl, path.name);
+      (0, import_obsidian11.setTooltip)(pathEl, path.name);
       pathElements.push(pathEl);
     });
     for (let i = 0; i < pathElements.length; i++) {
@@ -3558,67 +4258,47 @@ function renderModePath(gridView) {
         const pathIndex = i;
         if (pathIndex < paths.length) {
           const path = paths[pathIndex];
-          el.addEventListener("click", (event) => {
+          el.addEventListener("click", async (event) => {
             event.preventDefault();
             event.stopPropagation();
-            gridView.setSource("folder", path.path, true);
-            gridView.clearSelection();
-          });
-          el.addEventListener("contextmenu", async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            const menu = new import_obsidian8.Menu();
-            menu.addItem((item) => {
-              item.setTitle(path.name).setIcon("folder").onClick(() => {
-                gridView.setSource("folder", path.path, true);
-                gridView.clearSelection();
+            if (!gridView.plugin.settings.showFolder) {
+              const menu = new import_obsidian11.Menu();
+              menu.addItem((item) => {
+                item.setTitle(`${customFolderIcon} ${path.name}`).onClick(() => {
+                  gridView.setSource("folder", path.path);
+                  gridView.clearSelection();
+                });
               });
-            });
-            const currentFolder = gridView.app.vault.getAbstractFileByPath(path.path);
-            if (currentFolder && currentFolder instanceof import_obsidian8.TFolder) {
-              const subFolders = currentFolder.children.filter((child) => {
-                if (!(child instanceof import_obsidian8.TFolder))
-                  return false;
-                return !isFolderIgnored(
+              const currentFolder = gridView.app.vault.getAbstractFileByPath(path.path);
+              if (currentFolder && currentFolder instanceof import_obsidian11.TFolder) {
+                const subFolders = currentFolder.children.filter((child) => child instanceof import_obsidian11.TFolder && !isFolderIgnored(
                   child,
                   gridView.plugin.settings.ignoredFolders,
                   gridView.plugin.settings.ignoredFolderPatterns,
                   gridView.showIgnoredFolders
-                );
-              }).sort((a, b) => a.name.localeCompare(b.name));
-              if (subFolders.length > 0) {
-                menu.addSeparator();
-                menu.addItem(
-                  (item) => item.setTitle(t("sub_folders")).setIcon("folder-symlink").setDisabled(true)
-                );
-                subFolders.forEach((folder) => {
-                  menu.addItem((item) => {
-                    item.setTitle(folder.name).setIcon("folder").onClick(() => {
-                      gridView.setSource("folder", folder.path, true);
-                      gridView.clearSelection();
+                )).sort((a, b) => a.name.localeCompare(b.name));
+                if (subFolders.length > 0) {
+                  menu.addSeparator();
+                  menu.addItem(
+                    (item) => item.setTitle(t("sub_folders")).setIcon("folder-symlink").setDisabled(true)
+                  );
+                  subFolders.forEach((folder) => {
+                    menu.addItem((item) => {
+                      item.setTitle(`${customFolderIcon} ${folder.name}`).setIcon("corner-down-right").onClick(() => {
+                        gridView.setSource("folder", folder.path);
+                        gridView.clearSelection();
+                      });
                     });
                   });
-                });
+                }
               }
+              menu.showAtMouseEvent(event);
+            } else {
+              gridView.setSource("folder", path.path);
+              gridView.clearSelection();
             }
-            if (pathIndex > 0) {
-              menu.addSeparator();
-              menu.addItem(
-                (item) => item.setTitle(t("parent_folders")).setIcon("arrow-up").setDisabled(true)
-              );
-              for (let i2 = pathIndex - 1; i2 >= 0; i2--) {
-                const p = paths[i2];
-                menu.addItem((item) => {
-                  item.setTitle(p.name).setIcon(p.path === "/" ? "folder-root" : "folder").onClick(() => {
-                    gridView.setSource("folder", p.path, true);
-                    gridView.clearSelection();
-                  });
-                });
-              }
-            }
-            menu.showAtMouseEvent(event);
           });
-          if (!path.isLast && import_obsidian8.Platform.isDesktop) {
+          if (!path.isLast && import_obsidian11.Platform.isDesktop) {
             el.addEventListener("dragover", (event) => {
               event.preventDefault();
               event.dataTransfer.dropEffect = "move";
@@ -3634,7 +4314,7 @@ function renderModePath(gridView) {
               if (!path.path)
                 return;
               const folder = gridView.app.vault.getAbstractFileByPath(path.path);
-              if (!(folder instanceof import_obsidian8.TFolder))
+              if (!(folder instanceof import_obsidian11.TFolder))
                 return;
               const filesData = (_a2 = event.dataTransfer) == null ? void 0 : _a2.getData("application/obsidian-grid-explorer-files");
               if (filesData) {
@@ -3642,8 +4322,8 @@ function renderModePath(gridView) {
                   const filePaths = JSON.parse(filesData);
                   for (const filePath2 of filePaths) {
                     const file2 = gridView.app.vault.getAbstractFileByPath(filePath2);
-                    if (file2 instanceof import_obsidian8.TFile) {
-                      const newPath = (0, import_obsidian8.normalizePath)(`${path.path}/${file2.name}`);
+                    if (file2 instanceof import_obsidian11.TFile) {
+                      const newPath = (0, import_obsidian11.normalizePath)(`${path.path}/${file2.name}`);
                       await gridView.app.fileManager.renameFile(file2, newPath);
                     }
                   }
@@ -3657,9 +4337,9 @@ function renderModePath(gridView) {
                 return;
               const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
               const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
-              if (file instanceof import_obsidian8.TFile) {
+              if (file instanceof import_obsidian11.TFile) {
                 try {
-                  const newPath = (0, import_obsidian8.normalizePath)(`${path.path}/${file.name}`);
+                  const newPath = (0, import_obsidian11.normalizePath)(`${path.path}/${file.name}`);
                   await gridView.app.fileManager.renameFile(file, newPath);
                   gridView.render();
                 } catch (error) {
@@ -3671,15 +4351,52 @@ function renderModePath(gridView) {
         }
       }
       if (el.className === "ge-current-folder") {
-        const showFolderMenu = (event) => {
+        el.addEventListener("click", (event) => {
           event.preventDefault();
           event.stopPropagation();
           const folder = gridView.app.vault.getAbstractFileByPath(gridView.sourcePath);
           const folderName = gridView.sourcePath.split("/").pop() || "";
+          const parentFolder = folder == null ? void 0 : folder.parent;
+          const menu = new import_obsidian11.Menu();
+          let current = null;
+          if (!gridView.plugin.settings.showFolder) {
+            current = folder instanceof import_obsidian11.TFolder ? folder : null;
+            if (gridView.sourcePath === "/") {
+              current = gridView.app.vault.getRoot();
+            }
+          } else {
+            if (gridView.sourcePath === "/") {
+              current = gridView.app.vault.getRoot();
+            } else {
+              current = null;
+            }
+          }
+          if (current) {
+            const subFolders = current.children.filter((child) => child instanceof import_obsidian11.TFolder && !isFolderIgnored(
+              child,
+              gridView.plugin.settings.ignoredFolders,
+              gridView.plugin.settings.ignoredFolderPatterns,
+              gridView.showIgnoredFolders
+            ));
+            if (subFolders.length > 0) {
+              menu.addSeparator();
+              menu.addItem(
+                (item) => item.setTitle(t("sub_folders")).setIcon("folder-symlink").setDisabled(true)
+              );
+              subFolders.sort((a, b) => a.name.localeCompare(b.name)).forEach((sf) => {
+                menu.addItem((item) => {
+                  item.setTitle(`${customFolderIcon} ${sf.name}`).setIcon("corner-down-right").onClick(() => {
+                    gridView.setSource("folder", sf.path);
+                    gridView.clearSelection();
+                  });
+                });
+              });
+            }
+          }
           const notePath = `${gridView.sourcePath}/${folderName}.md`;
           const noteFile = gridView.app.vault.getAbstractFileByPath(notePath);
-          const menu = new import_obsidian8.Menu();
-          if (noteFile instanceof import_obsidian8.TFile) {
+          menu.addSeparator();
+          if (noteFile instanceof import_obsidian11.TFile) {
             menu.addItem((item) => {
               item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
                 gridView.app.workspace.getLeaf().openFile(noteFile);
@@ -3687,7 +4404,7 @@ function renderModePath(gridView) {
             });
             menu.addItem((item) => {
               item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
-                if (folder instanceof import_obsidian8.TFolder) {
+                if (folder instanceof import_obsidian11.TFolder) {
                   showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
                 }
               });
@@ -3698,21 +4415,72 @@ function renderModePath(gridView) {
               });
             });
           } else {
-            menu.addItem((item) => {
-              item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
-                if (folder instanceof import_obsidian8.TFolder) {
-                  showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
-                }
+            if (gridView.sourcePath !== "/") {
+              menu.addItem((item) => {
+                item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
+                  if (folder instanceof import_obsidian11.TFolder) {
+                    showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
+                  }
+                });
               });
-            });
+            }
+          }
+          if (!gridView.plugin.settings.showFolder && gridView.sourcePath !== "/") {
+            menu.addSeparator();
+            if (folder) {
+              if (!gridView.plugin.settings.ignoredFolders.includes(folder.path)) {
+                menu.addItem((item) => {
+                  item.setTitle(t("ignore_folder")).setIcon("folder-x").onClick(() => {
+                    gridView.plugin.settings.ignoredFolders.push(folder.path);
+                    gridView.plugin.saveSettings();
+                    requestAnimationFrame(() => {
+                      gridView.setSource("folder", (parentFolder == null ? void 0 : parentFolder.path) || "/");
+                    });
+                  });
+                });
+              } else {
+                menu.addItem((item) => {
+                  item.setTitle(t("unignore_folder")).setIcon("folder-up").onClick(() => {
+                    gridView.plugin.settings.ignoredFolders = gridView.plugin.settings.ignoredFolders.filter((path) => path !== folder.path);
+                    gridView.plugin.saveSettings();
+                    requestAnimationFrame(() => {
+                      gridView.setSource("folder", (parentFolder == null ? void 0 : parentFolder.path) || "/");
+                    });
+                  });
+                });
+              }
+              menu.addItem((item) => {
+                item.setTitle(t("move_folder")).setIcon("folder-cog").onClick(() => {
+                  if (folder instanceof import_obsidian11.TFolder) {
+                    new showFolderMoveModal(gridView.plugin, folder, gridView).open();
+                  }
+                });
+              });
+              menu.addItem((item) => {
+                item.setTitle(t("rename_folder")).setIcon("file-cog").onClick(() => {
+                  if (folder instanceof import_obsidian11.TFolder) {
+                    showFolderRenameModal(gridView.app, gridView.plugin, folder, gridView);
+                  }
+                });
+              });
+              menu.addItem((item) => {
+                item.setWarning(true);
+                item.setTitle(t("delete_folder")).setIcon("trash").onClick(async () => {
+                  if (folder instanceof import_obsidian11.TFolder) {
+                    await gridView.app.fileManager.trashFile(folder);
+                    requestAnimationFrame(() => {
+                      gridView.setSource("folder", (parentFolder == null ? void 0 : parentFolder.path) || "/");
+                    });
+                  }
+                });
+              });
+            }
           }
           menu.showAtMouseEvent(event);
-        };
-        el.addEventListener("click", showFolderMenu);
-        el.addEventListener("contextmenu", showFolderMenu);
+        });
       }
     }
-  } else if (!(gridView.searchQuery !== "" && gridView.searchAllFiles)) {
+  } else if (!(gridView.searchQuery && !gridView.searchCurrentLocationOnly)) {
     let modeName = "";
     let modeIcon = "";
     switch (gridView.sourceMode) {
@@ -3788,14 +4556,14 @@ function renderModePath(gridView) {
         cls: "ge-mode-title"
       });
       modeTitleEl.addEventListener("click", (evt) => {
-        const menu = new import_obsidian8.Menu();
+        const menu = new import_obsidian11.Menu();
         gridView.plugin.settings.customModes.filter((m) => {
           var _a2;
           return (_a2 = m.enabled) != null ? _a2 : true;
         }).forEach((m) => {
           menu.addItem((item) => {
             item.setTitle(`${m.icon || "\u{1F9E9}"} ${m.displayName}`).setChecked(m.internalName === gridView.sourceMode).onClick(() => {
-              gridView.setSource(m.internalName, "", true);
+              gridView.setSource(m.internalName);
             });
           });
         });
@@ -3812,19 +4580,19 @@ function renderModePath(gridView) {
       case "recent-files":
       case "all-files":
         if (gridView.plugin.settings.showMediaFiles && gridView.searchQuery === "") {
-          const showTypeName = gridView.randomNoteIncludeMedia ? t("random_note_include_media_files") : t("random_note_notes_only");
+          const showTypeName = gridView.includeMedia ? t("random_note_include_media_files") : t("random_note_notes_only");
           const showTypeSpan = modenameContainer.createEl("a", { text: showTypeName, cls: "ge-sub-option" });
           showTypeSpan.addEventListener("click", (evt) => {
-            const menu = new import_obsidian8.Menu();
+            const menu = new import_obsidian11.Menu();
             menu.addItem((item) => {
-              item.setTitle(t("random_note_notes_only")).setIcon("file-text").setChecked(!gridView.randomNoteIncludeMedia).onClick(() => {
-                gridView.randomNoteIncludeMedia = false;
+              item.setTitle(t("random_note_notes_only")).setIcon("file-text").setChecked(!gridView.includeMedia).onClick(() => {
+                gridView.includeMedia = false;
                 gridView.render();
               });
             });
             menu.addItem((item) => {
-              item.setTitle(t("random_note_include_media_files")).setIcon("file-image").setChecked(gridView.randomNoteIncludeMedia).onClick(() => {
-                gridView.randomNoteIncludeMedia = true;
+              item.setTitle(t("random_note_include_media_files")).setIcon("file-image").setChecked(gridView.includeMedia).onClick(() => {
+                gridView.includeMedia = true;
                 gridView.render();
               });
             });
@@ -3835,7 +4603,7 @@ function renderModePath(gridView) {
       case "tasks":
         const taskFilterSpan = modenameContainer.createEl("a", { text: t(`${gridView.taskFilter}`), cls: "ge-sub-option" });
         taskFilterSpan.addEventListener("click", (evt) => {
-          const menu = new import_obsidian8.Menu();
+          const menu = new import_obsidian11.Menu();
           menu.addItem((item) => {
             item.setTitle(t("uncompleted")).setChecked(gridView.taskFilter === "uncompleted").setIcon("square").onClick(() => {
               gridView.taskFilter = "uncompleted";
@@ -3877,12 +4645,12 @@ function renderModePath(gridView) {
               const subSpan = modenameContainer.createEl("a", { text: subName != null ? subName : "-", cls: "ge-sub-option" });
               subSpan.addEventListener("click", (evt) => {
                 var _a2;
-                const menu = new import_obsidian8.Menu();
+                const menu = new import_obsidian11.Menu();
                 const defaultName = ((_a2 = mode.name) == null ? void 0 : _a2.trim()) || t("default");
                 menu.addItem((item) => {
                   item.setTitle(defaultName).setIcon("puzzle").setChecked(gridView.customOptionIndex === -1).onClick(() => {
                     gridView.customOptionIndex = -1;
-                    gridView.render(true);
+                    gridView.render();
                   });
                 });
                 mode.options.forEach((opt, idx) => {
@@ -3890,7 +4658,7 @@ function renderModePath(gridView) {
                     var _a3;
                     item.setTitle(((_a3 = opt.name) == null ? void 0 : _a3.trim()) || t("option") + " " + (idx + 1)).setIcon("puzzle").setChecked(idx === gridView.customOptionIndex).onClick(() => {
                       gridView.customOptionIndex = idx;
-                      gridView.render(true);
+                      gridView.render();
                     });
                   });
                 });
@@ -3898,7 +4666,7 @@ function renderModePath(gridView) {
               });
             }
             const gearIcon = modenameContainer.createEl("a", { cls: "ge-settings-gear" });
-            (0, import_obsidian8.setIcon)(gearIcon, "settings");
+            (0, import_obsidian11.setIcon)(gearIcon, "settings");
             gearIcon.addEventListener("click", () => {
               const modeIndex = gridView.plugin.settings.customModes.findIndex((m) => m.internalName === mode.internalName);
               if (modeIndex === -1)
@@ -3906,14 +4674,14 @@ function renderModePath(gridView) {
               new CustomModeModal(gridView.app, gridView.plugin, gridView.plugin.settings.customModes[modeIndex], (result) => {
                 gridView.plugin.settings.customModes[modeIndex] = result;
                 gridView.plugin.saveSettings();
-                gridView.render(true);
+                gridView.render();
               }).open();
             });
           }
         }
         break;
     }
-  } else if (gridView.searchQuery !== "" && gridView.searchAllFiles) {
+  } else if (gridView.searchQuery && !gridView.searchCurrentLocationOnly) {
     modenameContainer.createEl("span", {
       text: `\u{1F50D} ${t("global_search")}`,
       cls: "ge-mode-title"
@@ -3922,102 +4690,13 @@ function renderModePath(gridView) {
 }
 
 // src/renderFolder.ts
-var import_obsidian11 = require("obsidian");
-
-// src/modal/folderRenameModal.ts
-var import_obsidian9 = require("obsidian");
-function showFolderRenameModal(app, plugin, folder, gridView) {
-  new FolderRenameModal(app, plugin, folder, gridView).open();
-}
-var FolderRenameModal = class extends import_obsidian9.Modal {
-  constructor(app, plugin, folder, gridView) {
-    super(app);
-    this.plugin = plugin;
-    this.folder = folder;
-    this.gridView = gridView;
-    this.newName = folder.name;
-  }
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    new import_obsidian9.Setting(contentEl).setName(t("rename_folder")).setDesc(t("enter_new_folder_name")).addText((text) => {
-      text.setValue(this.folder.name).onChange((value) => {
-        this.newName = value;
-      });
-    });
-    new import_obsidian9.Setting(contentEl).addButton((button) => {
-      button.setButtonText(t("confirm")).setCta().onClick(() => {
-        this.renameFolder();
-        this.close();
-      });
-    }).addButton((button) => {
-      button.setButtonText(t("cancel")).onClick(() => {
-        this.close();
-      });
-    });
-  }
-  async renameFolder() {
-    try {
-      const parentPath = this.folder.parent ? this.folder.parent.path : "";
-      const newPath = (0, import_obsidian9.normalizePath)(parentPath ? `${parentPath}/${this.newName}` : this.newName);
-      await this.app.fileManager.renameFile(this.folder, newPath);
-      setTimeout(() => {
-        this.gridView.render();
-      }, 100);
-    } catch (error) {
-      console.error("Failed to rename folder", error);
-    }
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-
-// src/modal/moveFolderSuggestModal.ts
-var import_obsidian10 = require("obsidian");
-var moveFolderSuggestModal = class extends import_obsidian10.SuggestModal {
-  constructor(plugin, folder, view) {
-    super(plugin.app);
-    this.plugin = plugin;
-    this.folder = folder;
-    this.view = view;
-    this.allPaths = this.app.vault.getAllFolders().map((f) => f.path).sort((a, b) => a.localeCompare(b));
-    this.setPlaceholder("/");
-    this.inputEl.focus();
-  }
-  getSuggestions(query) {
-    const lower = query.toLowerCase();
-    const filtered = this.allPaths.filter((p) => p.toLowerCase().includes(lower));
-    if ("/".includes(lower) && !filtered.includes("/")) {
-      filtered.unshift("/");
-    }
-    return filtered;
-  }
-  renderSuggestion(value, el) {
-    el.setText(value);
-  }
-  async onChooseSuggestion(value) {
-    try {
-      const dest = value === "/" ? "" : value.replace(/\/$/, "");
-      const newPath = (0, import_obsidian10.normalizePath)(dest ? `${dest}/${this.folder.name}` : this.folder.name);
-      if (newPath === this.folder.path)
-        return;
-      await this.app.fileManager.renameFile(this.folder, newPath);
-      setTimeout(() => this.view.render(), 100);
-    } catch (err) {
-      console.error("Failed to move folder", err);
-    }
-  }
-};
-
-// src/renderFolder.ts
+var import_obsidian12 = require("obsidian");
 async function renderFolder(gridView, container) {
   var _a;
   if (gridView.sourceMode === "folder" && gridView.searchQuery === "") {
     const currentFolder = gridView.app.vault.getAbstractFileByPath(gridView.sourcePath || "/");
-    if (currentFolder instanceof import_obsidian11.TFolder) {
-      if (import_obsidian11.Platform.isDesktop) {
+    if (currentFolder instanceof import_obsidian12.TFolder) {
+      if (import_obsidian12.Platform.isDesktop) {
         container.addEventListener("dragover", (event) => {
           if (event.target.closest(".ge-folder-item")) {
             return;
@@ -4048,9 +4727,9 @@ async function renderFolder(gridView, container) {
                 return;
               for (const path of filePaths) {
                 const file2 = gridView.app.vault.getAbstractFileByPath(path);
-                if (file2 instanceof import_obsidian11.TFile) {
+                if (file2 instanceof import_obsidian12.TFile) {
                   try {
-                    const newPath = (0, import_obsidian11.normalizePath)(`${folderPath}/${file2.name}`);
+                    const newPath = (0, import_obsidian12.normalizePath)(`${folderPath}/${file2.name}`);
                     if (path === newPath) {
                       continue;
                     }
@@ -4070,9 +4749,9 @@ async function renderFolder(gridView, container) {
             return;
           const cleanedFilePath = filePath.replace(/!?\[\[(.*?)\]\]/, "$1");
           const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
-          if (file instanceof import_obsidian11.TFile) {
+          if (file instanceof import_obsidian12.TFile) {
             try {
-              const newPath = (0, import_obsidian11.normalizePath)(`${currentFolder.path}/${file.name}`);
+              const newPath = (0, import_obsidian12.normalizePath)(`${currentFolder.path}/${file.name}`);
               if (file.path !== newPath) {
                 await gridView.app.fileManager.renameFile(file, newPath);
               }
@@ -4082,8 +4761,10 @@ async function renderFolder(gridView, container) {
           }
         });
       }
+      if (!gridView.plugin.settings.showFolder)
+        return;
       const subfolders = currentFolder.children.filter((child) => {
-        if (!(child instanceof import_obsidian11.TFolder))
+        if (!(child instanceof import_obsidian12.TFolder))
           return false;
         return !isFolderIgnored(
           child,
@@ -4100,17 +4781,19 @@ async function renderFolder(gridView, container) {
         const titleContainer = contentArea.createDiv("ge-title-container");
         const customFolderIcon = gridView.plugin.settings.customFolderIcon;
         titleContainer.createEl("span", { cls: "ge-title", text: `${customFolderIcon} ${folder.name}`.trim() });
-        (0, import_obsidian11.setTooltip)(folderEl, folder.name, { placement: gridView.cardLayout === "vertical" ? "bottom" : "right" });
+        (0, import_obsidian12.setTooltip)(folderEl, folder.name, { placement: gridView.cardLayout === "vertical" ? "bottom" : "right" });
         const notePath = `${folder.path}/${folder.name}.md`;
         const noteFile = gridView.app.vault.getAbstractFileByPath(notePath);
-        if (noteFile instanceof import_obsidian11.TFile) {
+        if (noteFile instanceof import_obsidian12.TFile) {
           const noteIcon = titleContainer.createEl("span", {
             cls: "ge-foldernote-button"
           });
-          (0, import_obsidian11.setIcon)(noteIcon, "panel-left-open");
+          (0, import_obsidian12.setIcon)(noteIcon, "panel-left-open");
           noteIcon.addEventListener("click", (e) => {
             e.stopPropagation();
-            gridView.app.workspace.getLeaf().openFile(noteFile);
+            if (!gridView.openShortcutFile(noteFile)) {
+              gridView.app.workspace.getLeaf().openFile(noteFile);
+            }
           });
           const metadata = (_a = gridView.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
           const colorValue = metadata == null ? void 0 : metadata.color;
@@ -4131,13 +4814,13 @@ async function renderFolder(gridView, container) {
             event.stopPropagation();
             openFolderInNewView(gridView, folder.path);
           } else {
-            gridView.setSource("folder", folder.path, true);
+            gridView.setSource("folder", folder.path);
             gridView.clearSelection();
           }
         });
         folderEl.addEventListener("contextmenu", (event) => {
           event.preventDefault();
-          const menu = new import_obsidian11.Menu();
+          const menu = new import_obsidian12.Menu();
           menu.addItem((item) => {
             item.setTitle(t("open_in_new_grid_view")).setIcon("grid").onClick(() => {
               openFolderInNewView(gridView, folder.path);
@@ -4146,15 +4829,19 @@ async function renderFolder(gridView, container) {
           menu.addSeparator();
           const notePath2 = `${folder.path}/${folder.name}.md`;
           let noteFile2 = gridView.app.vault.getAbstractFileByPath(notePath2);
-          if (noteFile2 instanceof import_obsidian11.TFile) {
+          if (noteFile2 instanceof import_obsidian12.TFile) {
             menu.addItem((item) => {
               item.setTitle(t("open_folder_note")).setIcon("panel-left-open").onClick(() => {
-                gridView.app.workspace.getLeaf().openFile(noteFile2);
+                if (noteFile2 instanceof import_obsidian12.TFile) {
+                  if (!gridView.openShortcutFile(noteFile2)) {
+                    gridView.app.workspace.getLeaf().openFile(noteFile2);
+                  }
+                }
               });
             });
             menu.addItem((item) => {
               item.setTitle(t("edit_folder_note_settings")).setIcon("settings-2").onClick(() => {
-                if (folder instanceof import_obsidian11.TFolder) {
+                if (folder instanceof import_obsidian12.TFolder) {
                   showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
                 }
               });
@@ -4167,7 +4854,7 @@ async function renderFolder(gridView, container) {
           } else {
             menu.addItem((item) => {
               item.setTitle(t("create_folder_note")).setIcon("file-cog").onClick(() => {
-                if (folder instanceof import_obsidian11.TFolder) {
+                if (folder instanceof import_obsidian12.TFolder) {
                   showFolderNoteSettingsModal(gridView.app, gridView.plugin, folder, gridView);
                 }
               });
@@ -4191,14 +4878,14 @@ async function renderFolder(gridView, container) {
           }
           menu.addItem((item) => {
             item.setTitle(t("move_folder")).setIcon("folder-cog").onClick(() => {
-              if (folder instanceof import_obsidian11.TFolder) {
-                new moveFolderSuggestModal(gridView.plugin, folder, gridView).open();
+              if (folder instanceof import_obsidian12.TFolder) {
+                new showFolderMoveModal(gridView.plugin, folder, gridView).open();
               }
             });
           });
           menu.addItem((item) => {
             item.setTitle(t("rename_folder")).setIcon("file-cog").onClick(() => {
-              if (folder instanceof import_obsidian11.TFolder) {
+              if (folder instanceof import_obsidian12.TFolder) {
                 showFolderRenameModal(gridView.app, gridView.plugin, folder, gridView);
               }
             });
@@ -4206,11 +4893,11 @@ async function renderFolder(gridView, container) {
           menu.addItem((item) => {
             item.setWarning(true);
             item.setTitle(t("delete_folder")).setIcon("trash").onClick(async () => {
-              if (folder instanceof import_obsidian11.TFolder) {
+              if (folder instanceof import_obsidian12.TFolder) {
                 await gridView.app.fileManager.trashFile(folder);
-                setTimeout(() => {
+                requestAnimationFrame(() => {
                   gridView.render();
-                }, 100);
+                });
               }
             });
           });
@@ -4222,7 +4909,7 @@ async function renderFolder(gridView, container) {
       }
     }
   }
-  if (import_obsidian11.Platform.isDesktop) {
+  if (import_obsidian12.Platform.isDesktop) {
     const folderItems = gridView.containerEl.querySelectorAll(".ge-folder-item");
     folderItems.forEach((folderItem) => {
       folderItem.addEventListener("dragover", (event) => {
@@ -4245,13 +4932,13 @@ async function renderFolder(gridView, container) {
             if (!folderPath2)
               return;
             const folder2 = gridView.app.vault.getAbstractFileByPath(folderPath2);
-            if (!(folder2 instanceof import_obsidian11.TFolder))
+            if (!(folder2 instanceof import_obsidian12.TFolder))
               return;
             for (const path of filePaths) {
               const file2 = gridView.app.vault.getAbstractFileByPath(path);
-              if (file2 instanceof import_obsidian11.TFile) {
+              if (file2 instanceof import_obsidian12.TFile) {
                 try {
-                  const newPath = (0, import_obsidian11.normalizePath)(`${folderPath2}/${file2.name}`);
+                  const newPath = (0, import_obsidian12.normalizePath)(`${folderPath2}/${file2.name}`);
                   await gridView.app.fileManager.renameFile(file2, newPath);
                 } catch (error) {
                   console.error(`An error occurred while moving the file ${file2.path}:`, error);
@@ -4272,9 +4959,9 @@ async function renderFolder(gridView, container) {
           return;
         const file = gridView.app.vault.getAbstractFileByPath(cleanedFilePath);
         const folder = gridView.app.vault.getAbstractFileByPath(folderPath);
-        if (file instanceof import_obsidian11.TFile && folder instanceof import_obsidian11.TFolder) {
+        if (file instanceof import_obsidian12.TFile && folder instanceof import_obsidian12.TFolder) {
           try {
-            const newPath = (0, import_obsidian11.normalizePath)(`${folderPath}/${file.name}`);
+            const newPath = (0, import_obsidian12.normalizePath)(`${folderPath}/${file.name}`);
             await gridView.app.fileManager.renameFile(file, newPath);
           } catch (error) {
             console.error("An error occurred while moving the file:", error);
@@ -4320,7 +5007,7 @@ async function renderFiles(gridView, container) {
   let fileIndexMap = /* @__PURE__ */ new Map();
   if (gridView.searchQuery) {
     let allFiles = [];
-    if (gridView.searchAllFiles) {
+    if (!gridView.searchCurrentLocationOnly) {
       allFiles = gridView.app.vault.getFiles().filter(
         (file) => isDocumentFile(file) || isMediaFile(file) && gridView.searchMediaFiles
       );
@@ -4454,7 +5141,7 @@ async function renderFiles(gridView, container) {
         }
       })
     );
-    if (gridView.searchAllFiles) {
+    if (!gridView.searchCurrentLocationOnly) {
       files = sortFiles(files, gridView);
     } else {
       if (gridView.sourceMode === "bookmarks") {
@@ -4465,15 +5152,9 @@ async function renderFiles(gridView, container) {
           return indexA - indexB;
         });
       } else if (gridView.sourceMode === "recent-files") {
-        const sortType = gridView.sortType;
-        gridView.sortType = "mtime-desc";
-        files = sortFiles(files, gridView);
-        gridView.sortType = sortType;
+        files = sortFiles(files, gridView, "mtime-desc");
       } else if (gridView.sourceMode === "random-note") {
-        const sortType = gridView.sortType;
-        gridView.sortType = "random";
-        files = sortFiles(files, gridView);
-        gridView.sortType = sortType;
+        files = sortFiles(files, gridView, "random");
       } else if (gridView.sourceMode.startsWith("custom-")) {
         files.sort((a, b) => {
           var _a, _b;
@@ -4487,7 +5168,7 @@ async function renderFiles(gridView, container) {
     }
     files = ignoredFiles(files, gridView);
   } else {
-    files = await getFiles(gridView, gridView.randomNoteIncludeMedia);
+    files = await getFiles(gridView, gridView.includeMedia);
     files = ignoredFiles(files, gridView);
     if (gridView.sourceMode === "recent-files") {
       files = files.slice(0, gridView.plugin.settings.recentFilesCount);
@@ -4530,7 +5211,7 @@ function handleKeyDown(gridView, event) {
       if (event.altKey) {
         if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
           const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-          gridView.setSource("folder", parentPath, true);
+          gridView.setSource("folder", parentPath);
           gridView.clearSelection();
           event.preventDefault();
         }
@@ -4580,7 +5261,7 @@ function handleKeyDown(gridView, event) {
       if (event.altKey) {
         if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
           const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-          gridView.setSource("folder", parentPath, true);
+          gridView.setSource("folder", parentPath);
           gridView.clearSelection();
           event.preventDefault();
         }
@@ -4641,7 +5322,7 @@ function handleKeyDown(gridView, event) {
     case "Backspace":
       if (gridView.sourceMode === "folder" && gridView.sourcePath && gridView.sourcePath !== "/") {
         const parentPath = gridView.sourcePath.split("/").slice(0, -1).join("/") || "/";
-        gridView.setSource("folder", parentPath, true);
+        gridView.setSource("folder", parentPath);
         gridView.clearSelection();
         event.preventDefault();
       }
@@ -4660,7 +5341,7 @@ function handleKeyDown(gridView, event) {
 }
 
 // src/fileWatcher.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 var FileWatcher = class {
   // 用於去抖動 render()
   constructor(plugin, gridView) {
@@ -4691,9 +5372,9 @@ var FileWatcher = class {
     }
     this.plugin.registerEvent(
       this.app.vault.on("modify", (file) => {
-        if (file instanceof import_obsidian12.TFile) {
+        if (file instanceof import_obsidian13.TFile) {
           if (this.gridView.sourceMode === "recent-files") {
-            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
+            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.includeMedia) {
               this.scheduleRender(5e3);
             }
           }
@@ -4702,15 +5383,15 @@ var FileWatcher = class {
     );
     this.plugin.registerEvent(
       this.app.vault.on("create", (file) => {
-        if (file instanceof import_obsidian12.TFile) {
-          if (this.gridView.searchQuery !== "" && this.gridView.searchAllFiles) {
+        if (file instanceof import_obsidian13.TFile) {
+          if (this.gridView.searchQuery && !this.gridView.searchCurrentLocationOnly) {
             this.scheduleRender(2e3);
             return;
           }
           if (this.gridView.sourceMode === "random-note") {
             return;
           } else if (this.gridView.sourceMode === "recent-files") {
-            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.randomNoteIncludeMedia) {
+            if (isDocumentFile(file) || isMediaFile(file) && this.gridView.includeMedia) {
               this.scheduleRender(2e3);
             }
           } else if (this.gridView.sourceMode === "folder") {
@@ -4732,7 +5413,7 @@ var FileWatcher = class {
     );
     this.plugin.registerEvent(
       this.app.vault.on("delete", (file) => {
-        if (file instanceof import_obsidian12.TFile) {
+        if (file instanceof import_obsidian13.TFile) {
           if (this.gridView) {
             const gridItemIndex = this.gridView.gridItems.findIndex(
               (item) => item.dataset.filePath === file.path
@@ -4749,7 +5430,7 @@ var FileWatcher = class {
     );
     this.plugin.registerEvent(
       this.app.vault.on("rename", (file, oldPath) => {
-        if (file instanceof import_obsidian12.TFile) {
+        if (file instanceof import_obsidian13.TFile) {
           const fileDirPath = file.path.split("/").slice(0, -1).join("/") || "/";
           const oldDirPath = oldPath.split("/").slice(0, -1).join("/") || "/";
           if (fileDirPath !== oldDirPath) {
@@ -4787,7 +5468,7 @@ var FileWatcher = class {
     );
     this.plugin.registerEvent(
       this.app.workspace.on("file-open", (file) => {
-        if (file instanceof import_obsidian12.TFile && this.gridView.searchQuery === "") {
+        if (file instanceof import_obsidian13.TFile && this.gridView.searchQuery === "") {
           const sourceMode = this.gridView.sourceMode;
           if (sourceMode === "backlinks" || sourceMode === "outgoinglinks") {
             this.scheduleRender();
@@ -4831,12 +5512,12 @@ var FileWatcher = class {
 };
 
 // src/mediaUtils.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 async function findFirstImageInNote(app, content) {
   try {
-    const internalStyle = /!?\[\[(.*?\.(?:jpg|jpeg|png|gif|webp))(?:\|.*?)?\]\]/;
-    const markdownStyle = /!\[(.*?)\]\(\s*(\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s)]*)\s*(?:\s+["'][^"']*["'])?\s*\)/;
-    const frontmatterUrl = /^[\w\-_]+:\s*(https?:\/\/\S+?(?:\.(?:jpg|jpeg|png|gif|webp)|format=(?:jpg|jpeg|png|gif|webp))[^\s]*)\s*$/;
+    const internalStyle = /!?\[\[(.*?\.(?:jpg|jpeg|png|gif|webp|avif))(?:\|.*?)?\]\]/;
+    const markdownStyle = /!\[(.*?)\]\(\s*(\S+?(?:\.(?:jpg|jpeg|png|gif|webp|avif)|format=(?:jpg|jpeg|png|gif|webp))[^\s)]*)\s*(?:\s+["'][^"']*["'])?\s*\)/;
+    const frontmatterUrl = /^[\w\-_]+:\s*(https?:\/\/\S+?(?:\.(?:jpg|jpeg|png|gif|webp|avif)|format=(?:jpg|jpeg|png|gif|webp))[^\s]*)\s*$/;
     const internalMatch = content.match(new RegExp(`(?:${internalStyle.source}|${markdownStyle.source}|${frontmatterUrl.source})`, "im"));
     if (internalMatch) {
       return processMediaLink(app, internalMatch);
@@ -4866,7 +5547,7 @@ function processMediaLink(app, internalMatch) {
       const file = app.metadataCache.getFirstLinkpathDest(url, "");
       if (!file) {
         const fileByPath = app.vault.getAbstractFileByPath(url);
-        if (fileByPath instanceof import_obsidian13.TFile) {
+        if (fileByPath instanceof import_obsidian14.TFile) {
           return app.vault.getResourcePath(fileByPath);
         }
       } else {
@@ -4878,8 +5559,8 @@ function processMediaLink(app, internalMatch) {
 }
 
 // src/modal/mediaModal.ts
-var import_obsidian14 = require("obsidian");
-var MediaModal = class extends import_obsidian14.Modal {
+var import_obsidian15 = require("obsidian");
+var MediaModal = class extends import_obsidian15.Modal {
   // 最大滑動時間（毫秒）
   constructor(app, file, mediaFiles, gridView) {
     super(app);
@@ -4909,7 +5590,7 @@ var MediaModal = class extends import_obsidian14.Modal {
     contentEl.addClass("ge-media-modal-content");
     const mediaView = contentEl.createDiv("ge-media-view");
     const closeButton = contentEl.createDiv("ge-media-close-button");
-    (0, import_obsidian14.setIcon)(closeButton, "x");
+    (0, import_obsidian15.setIcon)(closeButton, "x");
     closeButton.addEventListener("click", (e) => {
       e.stopPropagation();
       this.close();
@@ -5194,11 +5875,11 @@ var MediaModal = class extends import_obsidian14.Modal {
 };
 
 // src/modal/noteSettingsModal.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 function showNoteSettingsModal(app, plugin, file) {
   new NoteSettingsModal(app, plugin, file).open();
 }
-var NoteSettingsModal = class extends import_obsidian15.Modal {
+var NoteSettingsModal = class extends import_obsidian16.Modal {
   // 記錄初始的 isPinned 狀態
   constructor(app, plugin, file) {
     super(app);
@@ -5218,18 +5899,18 @@ var NoteSettingsModal = class extends import_obsidian15.Modal {
     contentEl.empty();
     await this.loadAttributes();
     if (this.files.length > 1) {
-      new import_obsidian15.Setting(contentEl).setName(t("note_attribute_settings") + ` (${this.files.length} ${t("files")})`).setHeading();
+      new import_obsidian16.Setting(contentEl).setName(t("note_attribute_settings") + ` (${this.files.length} ${t("files")})`).setHeading();
     } else {
-      new import_obsidian15.Setting(contentEl).setName(t("note_attribute_settings") + `: ${this.files[0].basename}`).setHeading();
+      new import_obsidian16.Setting(contentEl).setName(t("note_attribute_settings") + `: ${this.files[0].basename}`).setHeading();
     }
     if (this.files.length === 1 && this.files[0].extension === "md") {
-      new import_obsidian15.Setting(contentEl).setName(t("note_title")).setDesc(t("note_title_desc")).addText((text) => {
+      new import_obsidian16.Setting(contentEl).setName(t("note_title")).setDesc(t("note_title_desc")).addText((text) => {
         text.setValue(this.settings.title);
         text.onChange((value) => {
           this.settings.title = value;
         });
       });
-      new import_obsidian15.Setting(contentEl).setName(t("note_summary")).setDesc(t("note_summary_desc")).addText((text) => {
+      new import_obsidian16.Setting(contentEl).setName(t("note_summary")).setDesc(t("note_summary_desc")).addText((text) => {
         text.setValue(this.settings.summary);
         text.onChange((value) => {
           this.settings.summary = value;
@@ -5237,27 +5918,27 @@ var NoteSettingsModal = class extends import_obsidian15.Modal {
       });
     }
     if (this.files[0].extension === "md") {
-      new import_obsidian15.Setting(contentEl).setName(t("note_color")).setDesc(t("note_color_desc")).addDropdown((dropdown) => {
+      new import_obsidian16.Setting(contentEl).setName(t("note_color")).setDesc(t("note_color_desc")).addDropdown((dropdown) => {
         dropdown.addOption("", t("no_color")).addOption("red", t("color_red")).addOption("orange", t("color_orange")).addOption("yellow", t("color_yellow")).addOption("green", t("color_green")).addOption("cyan", t("color_cyan")).addOption("blue", t("color_blue")).addOption("purple", t("color_purple")).addOption("pink", t("color_pink")).setValue(this.settings.color).onChange((value) => {
           this.settings.color = value;
         });
       });
     }
     if (this.files[0].parent && this.files[0].parent !== this.app.vault.getRoot()) {
-      new import_obsidian15.Setting(contentEl).setName(t("pinned")).setDesc(t("pinned_desc")).addToggle((toggle) => {
+      new import_obsidian16.Setting(contentEl).setName(t("pinned")).setDesc(t("pinned_desc")).addToggle((toggle) => {
         toggle.setValue(this.settings.isPinned).onChange((value) => {
           this.settings.isPinned = value;
         });
       });
     }
     if (this.files[0].extension === "md") {
-      new import_obsidian15.Setting(contentEl).setName(t("display_minimized")).setDesc(t("display_minimized_desc")).addToggle((toggle) => {
+      new import_obsidian16.Setting(contentEl).setName(t("display_minimized")).setDesc(t("display_minimized_desc")).addToggle((toggle) => {
         toggle.setValue(this.settings.isMinimized).onChange((value) => {
           this.settings.isMinimized = value;
         });
       });
     }
-    const buttonSetting = new import_obsidian15.Setting(contentEl);
+    const buttonSetting = new import_obsidian16.Setting(contentEl);
     buttonSetting.addButton((button) => {
       button.setButtonText(t("create_shortcut")).onClick(async () => {
         await this.createShortcut();
@@ -5331,7 +6012,7 @@ var NoteSettingsModal = class extends import_obsidian15.Modal {
       if (folder && folder !== this.app.vault.getRoot()) {
         const notePath = `${folder.path}/${folder.name}.md`;
         const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-        if (noteFile instanceof import_obsidian15.TFile) {
+        if (noteFile instanceof import_obsidian16.TFile) {
           const fm = (_a = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
           if (fm && Array.isArray(fm["pinned"])) {
             this.settings.isPinned = fm["pinned"].includes(this.files[0].name);
@@ -5401,7 +6082,7 @@ var NoteSettingsModal = class extends import_obsidian15.Modal {
             continue;
           const notePath = `${folder.path}/${folder.name}.md`;
           let noteFile = this.app.vault.getAbstractFileByPath(notePath);
-          if (!(noteFile instanceof import_obsidian15.TFile)) {
+          if (!(noteFile instanceof import_obsidian16.TFile)) {
             const initialFrontmatter = this.settings.isPinned ? `pinned:
   - ${file.name}
 ` : "";
@@ -5440,7 +6121,7 @@ ${initialFrontmatter}---
 };
 
 // src/floatingAudioPlayer.ts
-var import_obsidian16 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 var _FloatingAudioPlayer = class {
   constructor(app, file) {
     this.isDragging = false;
@@ -5490,7 +6171,7 @@ var _FloatingAudioPlayer = class {
     this.titleEl.textContent = this.currentFile.basename;
     this.closeButtonEl = document.createElement("div");
     this.closeButtonEl.className = "ge-audio-close-button";
-    (0, import_obsidian16.setIcon)(this.closeButtonEl, "x");
+    (0, import_obsidian17.setIcon)(this.closeButtonEl, "x");
     this.closeButtonEl.addEventListener("click", this.boundClose);
     this.handleEl = document.createElement("div");
     this.handleEl.className = "ge-audio-handle";
@@ -5598,26 +6279,24 @@ var FloatingAudioPlayer = _FloatingAudioPlayer;
 FloatingAudioPlayer.players = /* @__PURE__ */ new Map();
 
 // src/GridView.ts
-var GridView = class extends import_obsidian17.ItemView {
+var GridView = class extends import_obsidian18.ItemView {
   // 筆記檢視容器
   constructor(leaf, plugin) {
     super(leaf);
     this.sourceMode = "";
     // 模式選擇
     this.sourcePath = "";
-    // 排序模式
-    this.folderSortType = "";
-    // 資料夾排序模式
+    // 目前實際使用的排序模式（可能被資料夾 metadata 臨時覆蓋）
     this.searchQuery = "";
     // 搜尋關鍵字
-    this.searchAllFiles = true;
-    // 是否搜尋所有筆記
+    this.searchCurrentLocationOnly = false;
+    // 是否只搜尋當前位置
     this.searchFilesNameOnly = false;
     // 是否只搜尋筆記名稱
     this.searchMediaFiles = false;
     // 是否搜尋媒體檔案
-    this.randomNoteIncludeMedia = false;
-    // 隨機筆記是否包含圖片和影片
+    this.includeMedia = false;
+    // 是否包含媒體檔案
     this.selectedItemIndex = -1;
     // 當前選中的項目索引
     this.selectedItems = /* @__PURE__ */ new Set();
@@ -5628,6 +6307,8 @@ var GridView = class extends import_obsidian17.ItemView {
     // 檔案監聽器
     this.recentSources = [];
     // 歷史記錄
+    this.futureSources = [];
+    // 未來紀錄（前進堆疊）
     this.minMode = false;
     // 最小模式
     this.showIgnoredFolders = false;
@@ -5655,11 +6336,15 @@ var GridView = class extends import_obsidian17.ItemView {
     this.noteViewContainer = null;
     this.plugin = plugin;
     this.containerEl.addClass("ge-grid-view-container");
-    this.sortType = this.plugin.settings.defaultSortType;
+    this.baseSortType = this.plugin.settings.defaultSortType;
+    this.sortType = this.baseSortType;
     this.baseCardLayout = this.plugin.settings.cardLayout;
     this.cardLayout = this.baseCardLayout;
     this.showDateDividers = this.plugin.settings.dateDividerMode !== "none";
     this.showNoteTags = this.plugin.settings.showNoteTags;
+    this.searchCurrentLocationOnly = this.plugin.settings.searchCurrentLocationOnly;
+    this.searchFilesNameOnly = this.plugin.settings.searchFilesNameOnly;
+    this.searchMediaFiles = this.plugin.settings.searchMediaFiles;
     if (this.plugin.settings.enableFileWatcher) {
       this.fileWatcher = new FileWatcher(plugin, this);
       this.fileWatcher.registerFileWatcher();
@@ -5741,34 +6426,43 @@ var GridView = class extends import_obsidian17.ItemView {
     var _a, _b;
     return (_b = (_a = this.leaf) == null ? void 0 : _a.pinned) != null ? _b : false;
   }
-  // 將來源加入歷史記錄（LRU 去重）
-  // 1. 若已有相同紀錄先移除，確保唯一
-  // 2. 插入到陣列開頭，代表最新使用
-  // 3. 超過上限時裁切
-  pushHistory(mode, path) {
+  // 將來源加入歷史記錄
+  // 1. 插入到陣列開頭，代表最新使用
+  // 2. 超過上限時裁切
+  pushHistory(mode, path, searchQuery = "", searchCurrentLocationOnly = false, searchFilesNameOnly = false, searchMediaFiles = false) {
     const sanitizedPath = path != null ? path : "";
-    const key = JSON.stringify({ mode, path: sanitizedPath });
-    const existingIndex = this.recentSources.indexOf(key);
-    if (existingIndex !== -1) {
-      this.recentSources.splice(existingIndex, 1);
-    }
+    const key = JSON.stringify({
+      mode,
+      path: sanitizedPath,
+      searchQuery,
+      searchCurrentLocationOnly,
+      searchFilesNameOnly,
+      searchMediaFiles
+    });
     this.recentSources.unshift(key);
-    const limit = 15;
+    this.futureSources = [];
+    const limit = 10;
     if (this.recentSources.length > limit) {
       this.recentSources.length = limit;
     }
   }
-  // resetScroll 為 true 時，會將捲動位置重置到最頂部
-  // recordHistory 為 false 時，不會將當前狀態加入歷史記錄
-  async setSource(mode, path = "", resetScroll = false, recordHistory = true) {
+  // 設定來源模式
+  async setSource(mode, path = "", recordHistory = true, searchQuery, searchCurrentLocationOnly, searchFilesNameOnly, searchMediaFiles) {
     var _a;
-    if (this.sourceMode === mode && this.sourcePath === path) {
+    if (this.sourceMode === mode && this.sourcePath === path && this.searchQuery === searchQuery && this.searchCurrentLocationOnly === searchCurrentLocationOnly && this.searchFilesNameOnly === searchFilesNameOnly && this.searchMediaFiles === searchMediaFiles) {
       return;
     }
     if (this.sourceMode && recordHistory) {
-      this.pushHistory(this.sourceMode, this.sourcePath);
+      this.pushHistory(
+        this.sourceMode,
+        this.sourcePath,
+        this.searchQuery,
+        this.searchCurrentLocationOnly,
+        this.searchFilesNameOnly,
+        this.searchMediaFiles
+      );
     }
-    if (this.searchQuery !== "" && this.searchAllFiles) {
+    if (this.searchQuery && !this.searchCurrentLocationOnly) {
       this.searchQuery = "";
     }
     if (mode !== "")
@@ -5779,36 +6473,50 @@ var GridView = class extends import_obsidian17.ItemView {
       this.sourceMode = "folder";
     if (this.sourcePath === "")
       this.sourcePath = "/";
-    this.folderSortType = "";
     this.pinnedList = [];
     if (this.sourceMode === "folder") {
       const folderName = this.sourcePath.split("/").pop() || "";
       const mdFilePath = `${this.sourcePath}/${folderName}.md`;
       const mdFile = this.app.vault.getAbstractFileByPath(mdFilePath);
       let tempLayout = this.baseCardLayout;
-      if (mdFile instanceof import_obsidian17.TFile) {
+      let folderSort;
+      if (mdFile instanceof import_obsidian18.TFile) {
         const metadata = (_a = this.app.metadataCache.getFileCache(mdFile)) == null ? void 0 : _a.frontmatter;
-        this.folderSortType = metadata == null ? void 0 : metadata.sort;
+        folderSort = metadata == null ? void 0 : metadata.sort;
         if ((metadata == null ? void 0 : metadata.cardLayout) === "horizontal" || (metadata == null ? void 0 : metadata.cardLayout) === "vertical") {
           tempLayout = metadata.cardLayout;
         }
       }
       this.cardLayout = tempLayout;
+      this.sortType = folderSort && typeof folderSort === "string" && folderSort.trim() !== "" ? folderSort : this.baseSortType;
     } else {
       this.cardLayout = this.baseCardLayout;
       this.sourcePath = "/";
       if (this.sourceMode.startsWith("custom-")) {
         this.customOptionIndex = -1;
-        this.folderSortType = "none";
+        this.sortType = "none";
+      } else {
+        this.sortType = this.baseSortType;
       }
     }
+    if (searchQuery !== void 0) {
+      this.searchQuery = searchQuery;
+    }
+    if (searchCurrentLocationOnly !== void 0) {
+      this.searchCurrentLocationOnly = searchCurrentLocationOnly;
+    }
+    if (searchFilesNameOnly !== void 0) {
+      this.searchFilesNameOnly = searchFilesNameOnly;
+    }
+    if (searchMediaFiles !== void 0) {
+      this.searchMediaFiles = searchMediaFiles;
+    }
     this.app.workspace.requestSaveLayout();
-    this.render(resetScroll);
+    await this.render();
   }
-  async render(resetScroll = false) {
+  // 渲染網格
+  async render() {
     var _a;
-    const scrollContainer = this.containerEl.children[1];
-    const scrollTop = resetScroll ? 0 : scrollContainer ? scrollContainer.scrollTop : 0;
     let selectedFilePath = null;
     if (this.selectedItemIndex >= 0 && this.selectedItemIndex < this.gridItems.length) {
       const selectedItem = this.gridItems[this.selectedItemIndex];
@@ -5826,7 +6534,7 @@ var GridView = class extends import_obsidian17.ItemView {
       const folderName = folderPath.split("/").pop() || "";
       const notePath = `${folderPath}/${folderName}.md`;
       const noteFile = this.app.vault.getAbstractFileByPath(notePath);
-      if (noteFile instanceof import_obsidian17.TFile) {
+      if (noteFile instanceof import_obsidian18.TFile) {
         const metadata = (_a = this.app.metadataCache.getFileCache(noteFile)) == null ? void 0 : _a.frontmatter;
         if (metadata) {
           if (Array.isArray(metadata["pinned"])) {
@@ -5845,9 +6553,6 @@ var GridView = class extends import_obsidian17.ItemView {
     ;
     await this.grid_render();
     this.leaf.updateHeader();
-    if (scrollContainer && !resetScroll) {
-      contentEl.scrollTop = scrollTop;
-    }
     if (selectedFilePath && this.hasKeyboardFocus) {
       const newIndex = this.gridItems.findIndex((item) => item.dataset.filePath === selectedFilePath);
       if (newIndex >= 0) {
@@ -5855,6 +6560,7 @@ var GridView = class extends import_obsidian17.ItemView {
       }
     }
   }
+  // 渲染網格內容
   async grid_render() {
     var _a;
     const container = this.containerEl.querySelector(".view-content");
@@ -5923,7 +6629,7 @@ var GridView = class extends import_obsidian17.ItemView {
     }
     this.gridItems = [];
     if (this.sourceMode === "bookmarks" && !((_a = this.app.internalPlugins.plugins.bookmarks) == null ? void 0 : _a.enabled)) {
-      new import_obsidian17.Notice(t("bookmarks_plugin_disabled"));
+      new import_obsidian18.Notice(t("bookmarks_plugin_disabled"));
       return;
     }
     if (this.sourceMode === "backlinks" && !this.app.workspace.getActiveFile()) {
@@ -5957,7 +6663,7 @@ var GridView = class extends import_obsidian17.ItemView {
     if (this.sourceMode === "folder" && this.sourcePath !== "/") {
       if (this.plugin.settings.folderNoteDisplaySettings === "hidden") {
         const currentFolder = this.app.vault.getAbstractFileByPath(this.sourcePath);
-        if (currentFolder instanceof import_obsidian17.TFolder) {
+        if (currentFolder instanceof import_obsidian18.TFolder) {
           const folderName = currentFolder.name;
           files = files.filter((f) => f.name !== `${folderName}.md`);
         }
@@ -5972,7 +6678,7 @@ var GridView = class extends import_obsidian17.ItemView {
           if (!filePath)
             return;
           const file = this.app.vault.getAbstractFileByPath(filePath);
-          if (!(file instanceof import_obsidian17.TFile))
+          if (!(file instanceof import_obsidian18.TFile))
             return;
           let imageUrl = "";
           const contentArea = fileEl.querySelector(".ge-content-area");
@@ -5985,7 +6691,7 @@ var GridView = class extends import_obsidian17.ItemView {
                 this.plugin.saveSettings();
               }
               const content = await this.app.vault.cachedRead(file);
-              const frontMatterInfo = (0, import_obsidian17.getFrontMatterInfo)(content);
+              const frontMatterInfo = (0, import_obsidian18.getFrontMatterInfo)(content);
               let metadata = void 0;
               if (frontMatterInfo.exists) {
                 metadata = (_a2 = this.app.metadataCache.getFileCache(file)) == null ? void 0 : _a2.frontmatter;
@@ -6089,7 +6795,7 @@ var GridView = class extends import_obsidian17.ItemView {
               }
               const titleEl = fileEl.querySelector(".ge-title");
               if (titleEl) {
-                (0, import_obsidian17.setTooltip)(contentArea, `${titleEl.textContent}`);
+                (0, import_obsidian18.setTooltip)(contentArea, `${titleEl.textContent}`);
               }
               if (frontMatterInfo.exists) {
                 const colorValue = metadata == null ? void 0 : metadata.color;
@@ -6121,7 +6827,7 @@ var GridView = class extends import_obsidian17.ItemView {
                 if (redirectValue) {
                   const iconContainer = fileEl.querySelector(".ge-icon-container");
                   if (iconContainer) {
-                    (0, import_obsidian17.setIcon)(iconContainer, "shuffle");
+                    (0, import_obsidian18.setIcon)(iconContainer, "shuffle");
                   }
                 }
               }
@@ -6130,7 +6836,7 @@ var GridView = class extends import_obsidian17.ItemView {
               if (!this.minMode) {
                 contentArea.createEl("p", { text: file.extension.toUpperCase() });
               }
-              (0, import_obsidian17.setTooltip)(fileEl, `${file.name}`, { delay: 2e3 });
+              (0, import_obsidian18.setTooltip)(fileEl, `${file.name}`, { delay: 2e3 });
             }
             if (file.extension === "md" && this.showNoteTags && !this.minMode) {
               const fileCache = this.app.metadataCache.getFileCache(file);
@@ -6168,12 +6874,12 @@ var GridView = class extends import_obsidian17.ItemView {
                       e.preventDefault();
                       e.stopPropagation();
                       const tagText = tag.startsWith("#") ? tag : `#${tag}`;
-                      const menu = new import_obsidian17.Menu();
+                      const menu = new import_obsidian18.Menu();
                       if (!this.searchQuery.includes(tagText)) {
                         menu.addItem(
                           (item) => item.setTitle(t("add_tag_to_search")).setIcon("circle-plus").onClick(() => {
-                            this.searchQuery += ` ${tagText}`;
-                            this.render(true);
+                            const searchQuery = this.searchQuery + ` ${tagText}`;
+                            this.setSource("", "", true, searchQuery);
                             return false;
                           })
                         );
@@ -6181,8 +6887,8 @@ var GridView = class extends import_obsidian17.ItemView {
                       if (this.searchQuery.includes(tagText)) {
                         menu.addItem(
                           (item) => item.setTitle(t("remove_tag_from_search")).setIcon("circle-minus").onClick(() => {
-                            this.searchQuery = this.searchQuery.replace(tagText, "");
-                            this.render(true);
+                            const searchQuery = this.searchQuery.replace(tagText, "");
+                            this.setSource("", "", true, searchQuery);
                             return false;
                           })
                         );
@@ -6196,11 +6902,9 @@ var GridView = class extends import_obsidian17.ItemView {
                       e.preventDefault();
                       e.stopPropagation();
                       const tagText = tag.startsWith("#") ? tag : `#${tag}`;
-                      if (this.searchQuery === tagText) {
-                        return;
+                      if (this.searchQuery !== tagText) {
+                        this.setSource("", "", true, tagText);
                       }
-                      this.searchQuery = tagText;
-                      this.render(true);
                       return false;
                     });
                   });
@@ -6222,7 +6926,7 @@ var GridView = class extends import_obsidian17.ItemView {
                   video.src = this.app.vault.getResourcePath(file);
                 } else {
                   const videoThumb = imageArea.createDiv("ge-video-thumbnail");
-                  (0, import_obsidian17.setIcon)(videoThumb, "play-circle");
+                  (0, import_obsidian18.setIcon)(videoThumb, "play-circle");
                 }
                 imageArea.setAttribute("data-loaded", "true");
               } else if (file.extension === "md") {
@@ -6249,7 +6953,7 @@ var GridView = class extends import_obsidian17.ItemView {
     });
     if (files.length > 0) {
       const dateDividerMode = this.plugin.settings.dateDividerMode || "none";
-      const sortType = this.folderSortType ? this.folderSortType : this.sortType;
+      const sortType = this.sortType;
       const shouldShowDateDividers = dateDividerMode !== "none" && (sortType.startsWith("mtime-") || sortType.startsWith("ctime-")) && this.sourceMode !== "random-note" && this.sourceMode !== "bookmarks" && this.showDateDividers;
       let lastDateString = "";
       let pinDividerAdded = false;
@@ -6258,7 +6962,7 @@ var GridView = class extends import_obsidian17.ItemView {
       const state = { lastDateString, pinDividerAdded, blankDividerAdded };
       const paramsBase = { container, observer, files, dateDividerMode, sortType, shouldShowDateDividers, state };
       const selfRef = this;
-      if (import_obsidian17.Platform.isIosApp) {
+      if (import_obsidian18.Platform.isIosApp) {
         const TIME_BUDGET_MS = 6;
         const processChunk = (start) => {
           if (currentToken !== this.renderToken)
@@ -6309,7 +7013,7 @@ var GridView = class extends import_obsidian17.ItemView {
       const pinDivider = container.createDiv("ge-pin-divider");
       pinDivider.textContent = t("pinned");
       state.pinDividerAdded = true;
-      if (import_obsidian17.Platform.isIosApp) {
+      if (import_obsidian18.Platform.isIosApp) {
         pinDivider.style.width = "calc(100% - 16px)";
       }
     }
@@ -6360,7 +7064,7 @@ var GridView = class extends import_obsidian17.ItemView {
         state.lastDateString = currentDateString;
         const dateDivider = container.createDiv("ge-date-divider");
         dateDivider.textContent = currentDateString;
-        if (import_obsidian17.Platform.isIosApp) {
+        if (import_obsidian18.Platform.isIosApp) {
           dateDivider.style.width = "calc(100% - 16px)";
         }
       }
@@ -6384,28 +7088,28 @@ var GridView = class extends import_obsidian17.ItemView {
     }
     if (isImageFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-img");
-      (0, import_obsidian17.setIcon)(iconContainer, "image");
+      (0, import_obsidian18.setIcon)(iconContainer, "image");
     } else if (isVideoFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-video");
-      (0, import_obsidian17.setIcon)(iconContainer, "play-circle");
+      (0, import_obsidian18.setIcon)(iconContainer, "play-circle");
     } else if (isAudioFile(file)) {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-audio");
-      (0, import_obsidian17.setIcon)(iconContainer, "music");
+      (0, import_obsidian18.setIcon)(iconContainer, "music");
     } else if (extension === "pdf") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-pdf");
-      (0, import_obsidian17.setIcon)(iconContainer, "paperclip");
+      (0, import_obsidian18.setIcon)(iconContainer, "paperclip");
     } else if (extension === "canvas") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-canvas");
-      (0, import_obsidian17.setIcon)(iconContainer, "layout-dashboard");
+      (0, import_obsidian18.setIcon)(iconContainer, "layout-dashboard");
     } else if (extension === "base") {
       const iconContainer = titleContainer.createDiv("ge-icon-container ge-base");
-      (0, import_obsidian17.setIcon)(iconContainer, "layout-list");
+      (0, import_obsidian18.setIcon)(iconContainer, "layout-list");
     } else if (extension === "md" || extension === "txt") {
       const iconContainer = titleContainer.createDiv("ge-icon-container");
-      (0, import_obsidian17.setIcon)(iconContainer, "file-text");
+      (0, import_obsidian18.setIcon)(iconContainer, "file-text");
     } else {
       const iconContainer = titleContainer.createDiv("ge-icon-container");
-      (0, import_obsidian17.setIcon)(iconContainer, "file");
+      (0, import_obsidian18.setIcon)(iconContainer, "file");
     }
     const shouldShowExtension = this.minMode && extension !== "md";
     const displayText = shouldShowExtension ? `${file.basename}.${file.extension}` : file.basename;
@@ -6417,7 +7121,6 @@ var GridView = class extends import_obsidian17.ItemView {
     }
     observer.observe(fileEl);
     fileEl.addEventListener("click", (event) => {
-      var _a2, _b;
       const index = this.gridItems.indexOf(fileEl);
       if (index < 0)
         return;
@@ -6455,7 +7158,9 @@ var GridView = class extends import_obsidian17.ItemView {
         } else if (file.extension === "pdf" || file.extension === "canvas" || file.extension === "base") {
           this.app.workspace.getLeaf(true).openFile(file);
         } else {
-          this.showNoteInGrid(file);
+          if (!this.openShortcutFile(file)) {
+            this.showNoteInGrid(file);
+          }
         }
         event.preventDefault();
         return;
@@ -6469,39 +7174,9 @@ var GridView = class extends import_obsidian17.ItemView {
             this.openMediaFile(file, files);
           }
         } else {
-          const fileCache = this.app.metadataCache.getFileCache(file);
-          const redirectType = (_a2 = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a2.type;
-          const redirectPath = (_b = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b.redirect;
-          if (redirectType && typeof redirectPath === "string" && redirectPath.trim() !== "") {
-            let target;
-            if (redirectType === "file") {
-              if (redirectPath.startsWith("[[") && redirectPath.endsWith("]]")) {
-                const noteName = redirectPath.slice(2, -2);
-                target = this.app.metadataCache.getFirstLinkpathDest(noteName, file.path);
-              } else {
-                target = this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath));
-              }
-              if (target instanceof import_obsidian17.TFile) {
-                this.app.workspace.getLeaf().openFile(target);
-              } else {
-                new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-              }
-            } else if (redirectType === "folder") {
-              if (this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath)) instanceof import_obsidian17.TFolder) {
-                this.setSource("folder", redirectPath, true);
-                this.clearSelection();
-              } else {
-                new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-              }
-            } else if (redirectType === "mode") {
-              this.setSource(redirectPath, "", true);
-              this.clearSelection();
-            } else {
-              new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-            }
-          } else {
+          if (!this.openShortcutFile(file)) {
             const leaf = this.app.workspace.getLeaf();
-            if (this.searchQuery !== "") {
+            if (this.searchQuery) {
               this.app.vault.cachedRead(file).then((content) => {
                 const searchQuery = this.searchQuery;
                 const lowerContent = content.toLowerCase();
@@ -6523,8 +7198,8 @@ var GridView = class extends import_obsidian17.ItemView {
                 if (idx !== -1) {
                   lineNumber = content.substring(0, idx).split("\n").length - 1;
                   leaf.openFile(file, { eState: { line: lineNumber } }).then(() => {
-                    var _a3, _b2, _c;
-                    (_c = (_b2 = (_a3 = this.app) == null ? void 0 : _a3.commands) == null ? void 0 : _b2.executeCommandById) == null ? void 0 : _c.call(_b2, "editor:focus");
+                    var _a2, _b, _c;
+                    (_c = (_b = (_a2 = this.app) == null ? void 0 : _a2.commands) == null ? void 0 : _b.executeCommandById) == null ? void 0 : _c.call(_b, "editor:focus");
                   });
                   return;
                 }
@@ -6550,7 +7225,7 @@ var GridView = class extends import_obsidian17.ItemView {
         }
       }
     });
-    if (import_obsidian17.Platform.isDesktop) {
+    if (import_obsidian18.Platform.isDesktop) {
       fileEl.setAttribute("draggable", "true");
       fileEl.addEventListener("dragstart", (event) => {
         var _a2, _b, _c, _d;
@@ -6600,7 +7275,7 @@ var GridView = class extends import_obsidian17.ItemView {
     }
     fileEl.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      const menu = new import_obsidian17.Menu();
+      const menu = new import_obsidian18.Menu();
       const index = this.gridItems.indexOf(fileEl);
       if (index >= 0) {
         if (!this.selectedItems.has(index)) {
@@ -6655,7 +7330,7 @@ var GridView = class extends import_obsidian17.ItemView {
       item.setTitle(t("hide_header_elements")).setIcon("archive-restore").setChecked(this.hideHeaderElements).onClick(() => {
         this.hideHeaderElements = !this.hideHeaderElements;
         this.app.workspace.requestSaveLayout();
-        this.render(true);
+        this.render();
       });
     });
     menu.addItem((item) => {
@@ -6665,7 +7340,7 @@ var GridView = class extends import_obsidian17.ItemView {
     });
     menu.addItem((item) => {
       item.setTitle(t("refresh")).setIcon("refresh-cw").onClick(() => {
-        this.render(true);
+        this.render();
       });
     });
   }
@@ -6729,7 +7404,7 @@ var GridView = class extends import_obsidian17.ItemView {
       const filePath = fileEl.dataset.filePath;
       if (filePath) {
         const file = this.app.vault.getAbstractFileByPath(filePath);
-        if (file instanceof import_obsidian17.TFile) {
+        if (file instanceof import_obsidian18.TFile) {
           files.push(file);
         }
       }
@@ -6738,7 +7413,7 @@ var GridView = class extends import_obsidian17.ItemView {
   }
   // 開啟媒體檔案
   openMediaFile(file, mediaFiles) {
-    const getMediaFilesPromise = mediaFiles ? Promise.resolve(mediaFiles.filter((f) => isMediaFile(f))) : getFiles(this, this.randomNoteIncludeMedia).then((allFiles) => allFiles.filter((f) => isMediaFile(f)));
+    const getMediaFilesPromise = mediaFiles ? Promise.resolve(mediaFiles.filter((f) => isMediaFile(f))) : getFiles(this, this.includeMedia).then((allFiles) => allFiles.filter((f) => isMediaFile(f)));
     getMediaFilesPromise.then((filteredMediaFiles) => {
       const currentIndex = filteredMediaFiles.findIndex((f) => f.path === file.path);
       if (currentIndex === -1)
@@ -6747,10 +7422,12 @@ var GridView = class extends import_obsidian17.ItemView {
       mediaModal.open();
     });
   }
-  // 在 grid container 中顯示筆記
-  async showNoteInGrid(file) {
-    var _a, _b;
+  // 開啟捷徑檔案
+  openShortcutFile(file) {
+    var _a, _b, _c, _d, _e;
     const fileCache = this.app.metadataCache.getFileCache(file);
+    if (!(fileCache == null ? void 0 : fileCache.frontmatter))
+      return false;
     const redirectType = (_a = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a.type;
     const redirectPath = (_b = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _b.redirect;
     if (redirectType && typeof redirectPath === "string" && redirectPath.trim() !== "") {
@@ -6760,33 +7437,69 @@ var GridView = class extends import_obsidian17.ItemView {
           const noteName = redirectPath.slice(2, -2);
           target = this.app.metadataCache.getFirstLinkpathDest(noteName, file.path);
         } else {
-          target = this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath));
+          target = this.app.vault.getAbstractFileByPath((0, import_obsidian18.normalizePath)(redirectPath));
         }
-        if (target instanceof import_obsidian17.TFile) {
-          this.showNoteInGrid(target);
-          return;
+        if (!target)
+          return false;
+        if (target instanceof import_obsidian18.TFile) {
+          this.app.workspace.getLeaf().openFile(target);
+          return true;
         } else {
-          new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-          return;
+          new import_obsidian18.Notice(`${t("target_not_found")}: ${redirectPath}`);
         }
       } else if (redirectType === "folder") {
-        if (this.app.vault.getAbstractFileByPath((0, import_obsidian17.normalizePath)(redirectPath)) instanceof import_obsidian17.TFolder) {
-          this.setSource("folder", redirectPath, true);
+        target = this.app.vault.getAbstractFileByPath((0, import_obsidian18.normalizePath)(redirectPath));
+        if (!target)
+          return false;
+        if (target instanceof import_obsidian18.TFolder) {
+          this.setSource("folder", redirectPath);
           this.clearSelection();
-          return;
+          requestAnimationFrame(async () => {
+            var _a2;
+            const cardLayout = (_a2 = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a2.cardLayout;
+            if (cardLayout && cardLayout !== this.cardLayout) {
+              this.cardLayout = cardLayout;
+              this.render();
+            }
+          });
+          return true;
         } else {
-          new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-          return;
+          new import_obsidian18.Notice(`${t("target_not_found")}: ${redirectPath}`);
         }
       } else if (redirectType === "mode") {
-        this.setSource(redirectPath, "", true);
+        this.setSource(redirectPath);
         this.clearSelection();
-        return;
+        requestAnimationFrame(async () => {
+          var _a2;
+          const cardLayout = (_a2 = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _a2.cardLayout;
+          if (cardLayout && cardLayout !== this.cardLayout) {
+            this.cardLayout = cardLayout;
+            this.render();
+          }
+        });
+        return true;
+      } else if (redirectType === "search") {
+        const searchCurrentLocationOnly = ((_c = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _c.searchCurrentLocationOnly) || false;
+        const searchFilesNameOnly = ((_d = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _d.searchFilesNameOnly) || false;
+        const searchMediaFiles = ((_e = fileCache == null ? void 0 : fileCache.frontmatter) == null ? void 0 : _e.searchMediaFiles) || false;
+        this.setSource("", "", true, redirectPath, searchCurrentLocationOnly, searchFilesNameOnly, searchMediaFiles);
+        this.clearSelection();
+        return true;
+      } else if (redirectType === "uri") {
+        if (redirectPath.startsWith("http://") || redirectPath.startsWith("https://") || redirectPath.startsWith("obsidian://") || redirectPath.startsWith("file://")) {
+          window.open(redirectPath, "_blank");
+          return true;
+        } else {
+          new import_obsidian18.Notice(`${t("target_not_found")}: ${redirectPath}`);
+        }
       } else {
-        new import_obsidian17.Notice(`${t("target_not_found")}: ${redirectPath}`);
-        return;
+        new import_obsidian18.Notice(`${t("target_not_found")}: ${redirectPath}`);
       }
     }
+    return false;
+  }
+  // 在網格視圖中直接顯示筆記
+  async showNoteInGrid(file) {
     if (this.isShowingNote) {
       this.hideNoteInGrid();
     }
@@ -6800,14 +7513,14 @@ var GridView = class extends import_obsidian17.ItemView {
     const rightBar = topBar.createDiv("ge-note-top-right");
     const noteTitle = leftBar.createDiv("ge-note-title");
     noteTitle.textContent = file.basename;
-    (0, import_obsidian17.setTooltip)(noteTitle, file.basename);
+    (0, import_obsidian18.setTooltip)(noteTitle, file.basename);
     const editButton = rightBar.createEl("button", { cls: "ge-note-edit-button" });
-    (0, import_obsidian17.setIcon)(editButton, "pencil");
+    (0, import_obsidian18.setIcon)(editButton, "pencil");
     editButton.addEventListener("click", () => {
       this.app.workspace.getLeaf().openFile(file);
     });
     const closeButton = rightBar.createEl("button", { cls: "ge-note-close-button" });
-    (0, import_obsidian17.setIcon)(closeButton, "x");
+    (0, import_obsidian18.setIcon)(closeButton, "x");
     closeButton.addEventListener("click", () => {
       this.hideNoteInGrid();
     });
@@ -6824,7 +7537,7 @@ var GridView = class extends import_obsidian17.ItemView {
     const noteContentArea = noteContent.createDiv("ge-note-content");
     try {
       const content = await this.app.vault.read(file);
-      await import_obsidian17.MarkdownRenderer.render(
+      await import_obsidian18.MarkdownRenderer.render(
         this.app,
         content,
         noteContentArea,
@@ -6888,12 +7601,13 @@ var GridView = class extends import_obsidian17.ItemView {
       state: {
         sourceMode: this.sourceMode,
         sourcePath: this.sourcePath,
+        baseSortType: this.baseSortType,
         sortType: this.sortType,
-        folderSortType: this.folderSortType,
         searchQuery: this.searchQuery,
-        searchAllFiles: this.searchAllFiles,
+        searchCurrentLocationOnly: this.searchCurrentLocationOnly,
+        searchFilesNameOnly: this.searchFilesNameOnly,
         searchMediaFiles: this.searchMediaFiles,
-        randomNoteIncludeMedia: this.randomNoteIncludeMedia,
+        includeMedia: this.includeMedia,
         minMode: this.minMode,
         showIgnoredFolders: this.showIgnoredFolders,
         baseCardLayout: this.baseCardLayout,
@@ -6901,37 +7615,40 @@ var GridView = class extends import_obsidian17.ItemView {
         hideHeaderElements: this.hideHeaderElements,
         showDateDividers: this.showDateDividers,
         showNoteTags: this.showNoteTags,
-        recentSources: this.recentSources
+        recentSources: this.recentSources,
+        futureSources: this.futureSources
       }
     };
   }
   // 讀取視圖狀態
   async setState(state) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
-    if (state.state) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+    if (state == null ? void 0 : state.state) {
       this.sourceMode = state.state.sourceMode || "folder";
       this.sourcePath = state.state.sourcePath || "/";
-      this.sortType = state.state.sortType || this.plugin.settings.defaultSortType;
-      this.folderSortType = state.state.folderSortType || "";
+      this.baseSortType = state.state.baseSortType || this.plugin.settings.defaultSortType;
+      this.sortType = state.state.sortType || this.baseSortType;
       this.searchQuery = state.state.searchQuery || "";
-      this.searchAllFiles = (_a = state.state.searchAllFiles) != null ? _a : true;
-      this.searchMediaFiles = (_b = state.state.searchMediaFiles) != null ? _b : false;
-      this.randomNoteIncludeMedia = (_c = state.state.randomNoteIncludeMedia) != null ? _c : false;
-      this.minMode = (_d = state.state.minMode) != null ? _d : false;
-      this.showIgnoredFolders = (_e = state.state.showIgnoredFolders) != null ? _e : false;
-      this.baseCardLayout = (_f = state.state.baseCardLayout) != null ? _f : "horizontal";
-      this.cardLayout = (_g = state.state.cardLayout) != null ? _g : this.baseCardLayout;
-      this.hideHeaderElements = (_h = state.state.hideHeaderElements) != null ? _h : false;
-      this.showDateDividers = (_i = state.state.showDateDividers) != null ? _i : this.plugin.settings.dateDividerMode !== "none";
-      this.showNoteTags = (_j = state.state.showNoteTags) != null ? _j : this.plugin.settings.showNoteTags;
-      this.recentSources = (_k = state.state.recentSources) != null ? _k : [];
-      this.render();
+      this.searchCurrentLocationOnly = (_a = state.state.searchCurrentLocationOnly) != null ? _a : false;
+      this.searchFilesNameOnly = (_b = state.state.searchFilesNameOnly) != null ? _b : false;
+      this.searchMediaFiles = (_c = state.state.searchMediaFiles) != null ? _c : false;
+      this.includeMedia = (_d = state.state.includeMedia) != null ? _d : false;
+      this.minMode = (_e = state.state.minMode) != null ? _e : false;
+      this.showIgnoredFolders = (_f = state.state.showIgnoredFolders) != null ? _f : false;
+      this.baseCardLayout = (_g = state.state.baseCardLayout) != null ? _g : "horizontal";
+      this.cardLayout = (_h = state.state.cardLayout) != null ? _h : this.baseCardLayout;
+      this.hideHeaderElements = (_i = state.state.hideHeaderElements) != null ? _i : false;
+      this.showDateDividers = (_j = state.state.showDateDividers) != null ? _j : this.plugin.settings.dateDividerMode !== "none";
+      this.showNoteTags = (_k = state.state.showNoteTags) != null ? _k : this.plugin.settings.showNoteTags;
+      this.recentSources = (_l = state.state.recentSources) != null ? _l : [];
+      this.futureSources = (_m = state.state.futureSources) != null ? _m : [];
+      await this.render();
     }
   }
 };
 
 // src/settings.ts
-var import_obsidian18 = require("obsidian");
+var import_obsidian19 = require("obsidian");
 var DEFAULT_SETTINGS = {
   ignoredFolders: [],
   ignoredFolderPatterns: [],
@@ -6961,6 +7678,8 @@ var DEFAULT_SETTINGS = {
   // 筆記摘要的字數，預設 100
   enableFileWatcher: true,
   // 預設啟用檔案監控
+  showFolder: true,
+  // 預設顯示資料夾
   showMediaFiles: true,
   // 預設顯示圖片和影片
   showVideoThumbnails: true,
@@ -7032,10 +7751,16 @@ var DEFAULT_SETTINGS = {
   useQuickAccessAsNewTabMode: "default",
   quickAccessModeType: "all-files",
   // Default quick access view type
-  showNoteInGrid: false
+  showNoteInGrid: false,
   // 預設不在 grid container 中顯示筆記
+  searchCurrentLocationOnly: false,
+  // 預設搜尋所有筆記
+  searchFilesNameOnly: false,
+  // 預設不只搜尋筆記名稱
+  searchMediaFiles: false
+  // 預設不搜尋媒體檔案
 };
-var FolderSuggest = class extends import_obsidian18.AbstractInputSuggest {
+var FolderSuggest = class extends import_obsidian19.AbstractInputSuggest {
   constructor(app, inputEl) {
     super(app, inputEl);
     this.inputEl = inputEl;
@@ -7060,7 +7785,7 @@ var FolderSuggest = class extends import_obsidian18.AbstractInputSuggest {
     this.close();
   }
 };
-var IgnoredFolderSuggest = class extends import_obsidian18.AbstractInputSuggest {
+var IgnoredFolderSuggest = class extends import_obsidian19.AbstractInputSuggest {
   constructor(app, inputEl, plugin, settingTab) {
     super(app, inputEl);
     this.plugin = plugin;
@@ -7092,7 +7817,7 @@ var IgnoredFolderSuggest = class extends import_obsidian18.AbstractInputSuggest 
     this.close();
   }
 };
-var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
+var GridExplorerSettingTab = class extends import_obsidian19.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -7103,7 +7828,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
     containerEl.createEl("h3", { text: t("custom_mode_settings") });
     const customModesContainer = containerEl.createDiv();
     this.plugin.settings.customModes.forEach((mode, index) => {
-      const setting = new import_obsidian18.Setting(customModesContainer).setName(`${mode.icon} ${mode.displayName}`).addToggle((toggle) => {
+      const setting = new import_obsidian19.Setting(customModesContainer).setName(`${mode.icon} ${mode.displayName}`).addToggle((toggle) => {
         var _a;
         toggle.setValue((_a = mode.enabled) != null ? _a : true).onChange(async (value) => {
           mode.enabled = value;
@@ -7163,7 +7888,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         });
       });
     });
-    new import_obsidian18.Setting(containerEl).addButton((button) => {
+    new import_obsidian19.Setting(containerEl).addButton((button) => {
       button.setButtonText(t("add_custom_mode")).setCta().setTooltip(t("add_custom_mode")).onClick(() => {
         new CustomModeModal(this.app, this.plugin, null, async (result) => {
           this.plugin.settings.customModes.push(result);
@@ -7174,7 +7899,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
     }).addButton((button) => {
       button.setButtonText(t("export")).setTooltip(t("export")).onClick(() => {
         if (this.plugin.settings.customModes.length === 0) {
-          new import_obsidian18.Notice(t("no_custom_modes_to_export"));
+          new import_obsidian19.Notice(t("no_custom_modes_to_export"));
           return;
         }
         const data = JSON.stringify(this.plugin.settings.customModes, null, 2);
@@ -7200,7 +7925,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
           const reader = new FileReader();
           reader.onload = async (e2) => {
             if (!e2.target || typeof e2.target.result !== "string") {
-              new import_obsidian18.Notice(t("import_error"));
+              new import_obsidian19.Notice(t("import_error"));
               return;
             }
             try {
@@ -7221,15 +7946,15 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
                   });
                   await this.plugin.saveSettings();
                   this.display();
-                  new import_obsidian18.Notice(t("import_success"));
+                  new import_obsidian19.Notice(t("import_success"));
                 } else {
-                  new import_obsidian18.Notice(t("import_error"));
+                  new import_obsidian19.Notice(t("import_error"));
                 }
               } else {
-                new import_obsidian18.Notice(t("import_error"));
+                new import_obsidian19.Notice(t("import_error"));
               }
             } catch (error) {
-              new import_obsidian18.Notice(t("import_error"));
+              new import_obsidian19.Notice(t("import_error"));
               console.error("Grid Explorer: Error importing custom modes", error);
             }
           };
@@ -7239,37 +7964,37 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
       });
     });
     containerEl.createEl("h3", { text: t("display_mode_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(`\u{1F4D1} ${t("show_bookmarks_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u{1F4D1} ${t("show_bookmarks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showBookmarksMode).onChange(async (value) => {
         this.plugin.settings.showBookmarksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(`\u{1F50D} ${t("show_search_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u{1F50D} ${t("show_search_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showSearchMode).onChange(async (value) => {
         this.plugin.settings.showSearchMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(`\u{1F517} ${t("show_backlinks_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u{1F517} ${t("show_backlinks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showBacklinksMode).onChange(async (value) => {
         this.plugin.settings.showBacklinksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(`\u{1F517} ${t("show_outgoinglinks_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u{1F517} ${t("show_outgoinglinks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showOutgoinglinksMode).onChange(async (value) => {
         this.plugin.settings.showOutgoinglinksMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(`\u{1F4D4} ${t("show_all_files_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u{1F4D4} ${t("show_all_files_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showAllFilesMode).onChange(async (value) => {
         this.plugin.settings.showAllFilesMode = value;
         await this.plugin.saveSettings();
       });
     });
-    const recentFilesSetting = new import_obsidian18.Setting(containerEl).setName(`\u{1F4C5} ${t("show_recent_files_mode")}`);
+    const recentFilesSetting = new import_obsidian19.Setting(containerEl).setName(`\u{1F4C5} ${t("show_recent_files_mode")}`);
     recentFilesSetting.addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showRecentFilesMode).onChange(async (value) => {
         this.plugin.settings.showRecentFilesMode = value;
@@ -7293,7 +8018,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         target.value = this.plugin.settings.recentFilesCount.toString();
       }
     });
-    const randomNoteSetting = new import_obsidian18.Setting(containerEl).setName(`\u{1F3B2} ${t("show_random_note_mode")}`);
+    const randomNoteSetting = new import_obsidian19.Setting(containerEl).setName(`\u{1F3B2} ${t("show_random_note_mode")}`);
     randomNoteSetting.addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showRandomNoteMode).onChange(async (value) => {
         this.plugin.settings.showRandomNoteMode = value;
@@ -7317,103 +8042,109 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         target.value = this.plugin.settings.randomNoteCount.toString();
       }
     });
-    new import_obsidian18.Setting(containerEl).setName(`\u2611\uFE0F ${t("show_tasks_mode")}`).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(`\u2611\uFE0F ${t("show_tasks_mode")}`).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showTasksMode).onChange(async (value) => {
         this.plugin.settings.showTasksMode = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("grid_view_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(t("reuse_existing_leaf")).setDesc(t("reuse_existing_leaf_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("reuse_existing_leaf")).setDesc(t("reuse_existing_leaf_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.reuseExistingLeaf).onChange(async (value) => {
         this.plugin.settings.reuseExistingLeaf = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("default_open_location")).setDesc(t("default_open_location_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("default_open_location")).setDesc(t("default_open_location_desc")).addDropdown((dropdown) => {
       dropdown.addOption("tab", t("open_in_new_tab")).addOption("left", t("open_in_left_sidebar")).addOption("right", t("open_in_right_sidebar")).setValue(this.plugin.settings.defaultOpenLocation).onChange(async (value) => {
         this.plugin.settings.defaultOpenLocation = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("default_sort_type")).setDesc(t("default_sort_type_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("default_sort_type")).setDesc(t("default_sort_type_desc")).addDropdown((dropdown) => {
       dropdown.addOption("name-asc", t("sort_name_asc")).addOption("name-desc", t("sort_name_desc")).addOption("mtime-desc", t("sort_mtime_desc")).addOption("mtime-asc", t("sort_mtime_asc")).addOption("ctime-desc", t("sort_ctime_desc")).addOption("ctime-asc", t("sort_ctime_asc")).addOption("random", t("sort_random")).setValue(this.plugin.settings.defaultSortType).onChange(async (value) => {
         this.plugin.settings.defaultSortType = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("date_divider_mode")).setDesc(t("date_divider_mode_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("date_divider_mode")).setDesc(t("date_divider_mode_desc")).addDropdown((dropdown) => {
       dropdown.addOption("none", t("date_divider_mode_none")).addOption("year", t("date_divider_mode_year")).addOption("month", t("date_divider_mode_month")).addOption("day", t("date_divider_mode_day")).setValue(this.plugin.settings.dateDividerMode).onChange(async (value) => {
         this.plugin.settings.dateDividerMode = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("show_media_files")).setDesc(t("show_media_files_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("show_folder")).setDesc(t("show_folder_desc")).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.showFolder).onChange(async (value) => {
+        this.plugin.settings.showFolder = value;
+        await this.plugin.saveSettings();
+      });
+    });
+    new import_obsidian19.Setting(containerEl).setName(t("show_media_files")).setDesc(t("show_media_files_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showMediaFiles).onChange(async (value) => {
         this.plugin.settings.showMediaFiles = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("show_video_thumbnails")).setDesc(t("show_video_thumbnails_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("show_video_thumbnails")).setDesc(t("show_video_thumbnails_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showVideoThumbnails).onChange(async (value) => {
         this.plugin.settings.showVideoThumbnails = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("show_note_in_grid")).setDesc(t("show_note_in_grid_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("show_note_in_grid")).setDesc(t("show_note_in_grid_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showNoteInGrid).onChange(async (value) => {
         this.plugin.settings.showNoteInGrid = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("note_title_field")).setDesc(t("note_title_field_desc")).addText((text) => text.setPlaceholder("title").setValue(this.plugin.settings.noteTitleField).onChange(async (value) => {
+    new import_obsidian19.Setting(containerEl).setName(t("note_title_field")).setDesc(t("note_title_field_desc")).addText((text) => text.setPlaceholder("title").setValue(this.plugin.settings.noteTitleField).onChange(async (value) => {
       this.plugin.settings.noteTitleField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian18.Setting(containerEl).setName(t("note_summary_field")).setDesc(t("note_summary_field_desc")).addText((text) => text.setPlaceholder("summary").setValue(this.plugin.settings.noteSummaryField).onChange(async (value) => {
+    new import_obsidian19.Setting(containerEl).setName(t("note_summary_field")).setDesc(t("note_summary_field_desc")).addText((text) => text.setPlaceholder("summary").setValue(this.plugin.settings.noteSummaryField).onChange(async (value) => {
       this.plugin.settings.noteSummaryField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian18.Setting(containerEl).setName(t("modified_date_field")).setDesc(t("modified_date_field_desc")).addText((text) => text.setPlaceholder("modified_date").setValue(this.plugin.settings.modifiedDateField).onChange(async (value) => {
+    new import_obsidian19.Setting(containerEl).setName(t("modified_date_field")).setDesc(t("modified_date_field_desc")).addText((text) => text.setPlaceholder("modified_date").setValue(this.plugin.settings.modifiedDateField).onChange(async (value) => {
       this.plugin.settings.modifiedDateField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian18.Setting(containerEl).setName(t("created_date_field")).setDesc(t("created_date_field_desc")).addText((text) => text.setPlaceholder("created_date").setValue(this.plugin.settings.createdDateField).onChange(async (value) => {
+    new import_obsidian19.Setting(containerEl).setName(t("created_date_field")).setDesc(t("created_date_field_desc")).addText((text) => text.setPlaceholder("created_date").setValue(this.plugin.settings.createdDateField).onChange(async (value) => {
       this.plugin.settings.createdDateField = value;
       await this.plugin.saveSettings(false);
     }));
-    new import_obsidian18.Setting(containerEl).setName(t("custom_document_extensions")).setDesc(t("custom_document_extensions_desc")).addText((text) => {
+    new import_obsidian19.Setting(containerEl).setName(t("custom_document_extensions")).setDesc(t("custom_document_extensions_desc")).addText((text) => {
       text.setPlaceholder(t("custom_document_extensions_placeholder")).setValue(this.plugin.settings.customDocumentExtensions).onChange(async (value) => {
         this.plugin.settings.customDocumentExtensions = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("custom_folder_icon")).setDesc(t("custom_folder_icon_desc")).addText((text) => {
+    new import_obsidian19.Setting(containerEl).setName(t("custom_folder_icon")).setDesc(t("custom_folder_icon_desc")).addText((text) => {
       text.setValue(this.plugin.settings.customFolderIcon).onChange(async (value) => {
         this.plugin.settings.customFolderIcon = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("enable_file_watcher")).setDesc(t("enable_file_watcher_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("enable_file_watcher")).setDesc(t("enable_file_watcher_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.enableFileWatcher).onChange(async (value) => {
         this.plugin.settings.enableFileWatcher = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("intercept_all_tag_clicks")).setDesc(t("intercept_all_tag_clicks_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("intercept_all_tag_clicks")).setDesc(t("intercept_all_tag_clicks_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.interceptAllTagClicks).onChange(async (value) => {
         this.plugin.settings.interceptAllTagClicks = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("intercept_breadcrumb_clicks")).setDesc(t("intercept_breadcrumb_clicks_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("intercept_breadcrumb_clicks")).setDesc(t("intercept_breadcrumb_clicks_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.interceptBreadcrumbClicks).onChange(async (value) => {
         this.plugin.settings.interceptBreadcrumbClicks = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("grid_item_style_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
+    new import_obsidian19.Setting(containerEl).setName(t("card_layout")).setDesc(t("card_layout_desc")).addDropdown((drop) => {
       drop.addOption("horizontal", t("horizontal_card"));
       drop.addOption("vertical", t("vertical_card"));
       drop.setValue(this.plugin.settings.cardLayout);
@@ -7422,62 +8153,62 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("show_note_tags")).setDesc(t("show_note_tags_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("show_note_tags")).setDesc(t("show_note_tags_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.showNoteTags).onChange(async (value) => {
         this.plugin.settings.showNoteTags = value;
         await this.plugin.saveSettings();
       });
     });
-    const gridItemWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.gridItemWidth}px)`).addSlider((slider) => {
+    const gridItemWidthSetting = new import_obsidian19.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.gridItemWidth}px)`).addSlider((slider) => {
       slider.setLimits(200, 600, 10).setValue(this.plugin.settings.gridItemWidth).setDynamicTooltip().onChange(async (value) => {
         gridItemWidthSetting.setDesc(`${t("grid_item_width_desc")} (now: ${value}px)`);
         this.plugin.settings.gridItemWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const gridItemHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.gridItemHeight === 0 ? "auto" : this.plugin.settings.gridItemHeight})`).addSlider((slider) => {
+    const gridItemHeightSetting = new import_obsidian19.Setting(containerEl).setName(`${t("horizontal_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.gridItemHeight === 0 ? "auto" : this.plugin.settings.gridItemHeight})`).addSlider((slider) => {
       slider.setLimits(0, 600, 10).setValue(this.plugin.settings.gridItemHeight).setDynamicTooltip().onChange(async (value) => {
         gridItemHeightSetting.setDesc(`${t("grid_item_height_desc")} (now: ${value === 0 ? "auto" : value})`);
         this.plugin.settings.gridItemHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const imageAreaWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_width")}`).setDesc(`${t("image_area_width_desc")} (now: ${this.plugin.settings.imageAreaWidth}px)`).addSlider((slider) => {
+    const imageAreaWidthSetting = new import_obsidian19.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_width")}`).setDesc(`${t("image_area_width_desc")} (now: ${this.plugin.settings.imageAreaWidth}px)`).addSlider((slider) => {
       slider.setLimits(50, 300, 10).setValue(this.plugin.settings.imageAreaWidth).setDynamicTooltip().onChange(async (value) => {
         imageAreaWidthSetting.setDesc(`${t("image_area_width_desc")} (now: ${value}px)`);
         this.plugin.settings.imageAreaWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const imageAreaHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.imageAreaHeight}px)`).addSlider((slider) => {
+    const imageAreaHeightSetting = new import_obsidian19.Setting(containerEl).setName(`${t("horizontal_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.imageAreaHeight}px)`).addSlider((slider) => {
       slider.setLimits(50, 300, 10).setValue(this.plugin.settings.imageAreaHeight).setDynamicTooltip().onChange(async (value) => {
         imageAreaHeightSetting.setDesc(`${t("image_area_height_desc")} (now: ${value}px)`);
         this.plugin.settings.imageAreaHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const vGridItemWidthSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.verticalGridItemWidth}px)`).addSlider((slider) => {
+    const vGridItemWidthSetting = new import_obsidian19.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_width")}`).setDesc(`${t("grid_item_width_desc")} (now: ${this.plugin.settings.verticalGridItemWidth}px)`).addSlider((slider) => {
       slider.setLimits(100, 600, 10).setValue(this.plugin.settings.verticalGridItemWidth).setDynamicTooltip().onChange(async (value) => {
         vGridItemWidthSetting.setDesc(`${t("grid_item_width_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalGridItemWidth = value;
         await this.plugin.saveSettings();
       });
     });
-    const vGridItemHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.verticalGridItemHeight}px)`).addSlider((slider) => {
+    const vGridItemHeightSetting = new import_obsidian19.Setting(containerEl).setName(`${t("vertical_card")} ${t("grid_item_height")}`).setDesc(`${t("grid_item_height_desc")} (now: ${this.plugin.settings.verticalGridItemHeight}px)`).addSlider((slider) => {
       slider.setLimits(0, 600, 10).setValue(this.plugin.settings.verticalGridItemHeight).setDynamicTooltip().onChange(async (value) => {
         vGridItemHeightSetting.setDesc(`${t("grid_item_height_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalGridItemHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    const vImageAreaHeightSetting = new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.verticalImageAreaHeight}px)`).addSlider((slider) => {
+    const vImageAreaHeightSetting = new import_obsidian19.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_area_height")}`).setDesc(`${t("image_area_height_desc")} (now: ${this.plugin.settings.verticalImageAreaHeight}px)`).addSlider((slider) => {
       slider.setLimits(50, 400, 10).setValue(this.plugin.settings.verticalImageAreaHeight).setDynamicTooltip().onChange(async (value) => {
         vImageAreaHeightSetting.setDesc(`${t("image_area_height_desc")} (now: ${value}px)`);
         this.plugin.settings.verticalImageAreaHeight = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_position")}`).setDesc(t("image_position_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(`${t("vertical_card")} ${t("image_position")}`).setDesc(t("image_position_desc")).addDropdown((dropdown) => {
       dropdown.addOption("top", t("top"));
       dropdown.addOption("bottom", t("bottom"));
       dropdown.setValue(this.plugin.settings.verticalCardImagePosition);
@@ -7486,46 +8217,65 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    const titleFontSizeSetting = new import_obsidian18.Setting(containerEl).setName(t("title_font_size")).setDesc(`${t("title_font_size_desc")} (now: ${this.plugin.settings.titleFontSize.toFixed(2)})`).addSlider((slider) => {
+    const titleFontSizeSetting = new import_obsidian19.Setting(containerEl).setName(t("title_font_size")).setDesc(`${t("title_font_size_desc")} (now: ${this.plugin.settings.titleFontSize.toFixed(2)})`).addSlider((slider) => {
       slider.setLimits(0.8, 1.5, 0.05).setValue(this.plugin.settings.titleFontSize).setDynamicTooltip().onChange(async (value) => {
         titleFontSizeSetting.setDesc(`${t("title_font_size_desc")} (now: ${value.toFixed(2)})`);
         this.plugin.settings.titleFontSize = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("multi_line_title")).setDesc(t("multi_line_title_desc")).addToggle((toggle) => {
+    new import_obsidian19.Setting(containerEl).setName(t("multi_line_title")).setDesc(t("multi_line_title_desc")).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.multiLineTitle).onChange(async (value) => {
         this.plugin.settings.multiLineTitle = value;
         await this.plugin.saveSettings();
       });
     });
-    const summaryLengthSetting = new import_obsidian18.Setting(containerEl).setName(t("summary_length")).setDesc(`${t("summary_length_desc")} (now: ${this.plugin.settings.summaryLength})`).addSlider((slider) => {
+    const summaryLengthSetting = new import_obsidian19.Setting(containerEl).setName(t("summary_length")).setDesc(`${t("summary_length_desc")} (now: ${this.plugin.settings.summaryLength})`).addSlider((slider) => {
       slider.setLimits(50, 600, 25).setValue(this.plugin.settings.summaryLength).setDynamicTooltip().onChange(async (value) => {
         summaryLengthSetting.setDesc(`${t("summary_length_desc")} (now: ${value})`);
         this.plugin.settings.summaryLength = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("show_code_block_in_summary")).setDesc(t("show_code_block_in_summary_desc")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCodeBlocksInSummary).onChange(async (value) => {
+    new import_obsidian19.Setting(containerEl).setName(t("show_code_block_in_summary")).setDesc(t("show_code_block_in_summary_desc")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCodeBlocksInSummary).onChange(async (value) => {
       this.plugin.settings.showCodeBlocksInSummary = value;
       await this.plugin.saveSettings();
     }));
+    containerEl.createEl("h3", { text: t("default_search_option"), attr: { style: "margin-top: 40px;" } });
+    new import_obsidian19.Setting(containerEl).setName(t("search_current_location_only")).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.searchCurrentLocationOnly).onChange(async (value) => {
+        this.plugin.settings.searchCurrentLocationOnly = value;
+        await this.plugin.saveSettings();
+      });
+    });
+    new import_obsidian19.Setting(containerEl).setName(t("search_files_name_only")).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.searchFilesNameOnly).onChange(async (value) => {
+        this.plugin.settings.searchFilesNameOnly = value;
+        await this.plugin.saveSettings();
+      });
+    });
+    new import_obsidian19.Setting(containerEl).setName(t("search_media_files")).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.searchMediaFiles).onChange(async (value) => {
+        this.plugin.settings.searchMediaFiles = value;
+        await this.plugin.saveSettings();
+      });
+    });
     containerEl.createEl("h3", { text: t("folder_note_settings"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(t("foldernote_display_settings")).setDesc(t("foldernote_display_settings_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("foldernote_display_settings")).setDesc(t("foldernote_display_settings_desc")).addDropdown((dropdown) => {
       dropdown.addOption("default", t("default")).addOption("pinned", t("pinned")).addOption("hidden", t("hidden")).setValue(this.plugin.settings.folderNoteDisplaySettings).onChange(async (value) => {
         this.plugin.settings.folderNoteDisplaySettings = value;
         await this.plugin.saveSettings();
       });
     });
     containerEl.createEl("h3", { text: t("quick_access_settings_title"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(t("quick_access_folder_name")).setDesc(t("quick_access_folder_desc")).addText((text) => {
+    new import_obsidian19.Setting(containerEl).setName(t("quick_access_folder_name")).setDesc(t("quick_access_folder_desc")).addText((text) => {
       new FolderSuggest(this.app, text.inputEl);
       text.setPlaceholder(t("select_folders")).setValue(this.plugin.settings.quickAccessCommandPath).onChange(async (value) => {
         this.plugin.settings.quickAccessCommandPath = value;
         await this.plugin.saveSettings(false);
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("quick_access_mode_name")).setDesc(t("quick_access_mode_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("quick_access_mode_name")).setDesc(t("quick_access_mode_desc")).addDropdown((dropdown) => {
       for (let i = 0; i < this.plugin.settings.customModes.length; i++) {
         dropdown.addOption(this.plugin.settings.customModes[i].internalName, `\u{1F9E9} ${this.plugin.settings.customModes[i].displayName}`);
       }
@@ -7534,7 +8284,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         await this.plugin.saveSettings(false);
       });
     });
-    new import_obsidian18.Setting(containerEl).setName(t("use_quick_access_as_new_tab_view")).setDesc(t("use_quick_access_as_new_tab_view_desc")).addDropdown((dropdown) => {
+    new import_obsidian19.Setting(containerEl).setName(t("use_quick_access_as_new_tab_view")).setDesc(t("use_quick_access_as_new_tab_view_desc")).addDropdown((dropdown) => {
       dropdown.addOption("default", t("default_new_tab")).addOption("folder", t("use_quick_access_folder")).addOption("mode", t("use_quick_access_mode")).setValue(this.plugin.settings.useQuickAccessAsNewTabMode).onChange(async (value) => {
         this.plugin.settings.useQuickAccessAsNewTabMode = value;
         await this.plugin.saveSettings(false);
@@ -7542,8 +8292,8 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
     });
     containerEl.createEl("h3", { text: t("ignored_folders_settings"), attr: { style: "margin-top: 40px;" } });
     const ignoredFoldersContainer = containerEl.createDiv("ignored-folders-container");
-    new import_obsidian18.Setting(containerEl).setName(t("ignored_folders")).setDesc(t("ignored_folders_desc")).setHeading();
-    new import_obsidian18.Setting(ignoredFoldersContainer).setName(t("add_ignored_folder")).addText((text) => {
+    new import_obsidian19.Setting(containerEl).setName(t("ignored_folders")).setDesc(t("ignored_folders_desc")).setHeading();
+    new import_obsidian19.Setting(ignoredFoldersContainer).setName(t("add_ignored_folder")).addText((text) => {
       new IgnoredFolderSuggest(this.app, text.inputEl, this.plugin, this);
       text.setPlaceholder(t("select_folders_to_ignore"));
     });
@@ -7551,8 +8301,8 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
     this.renderIgnoredFoldersList(ignoredFoldersList);
     containerEl.appendChild(ignoredFoldersContainer);
     const ignoredFolderPatternsContainer = containerEl.createDiv("ignored-folder-patterns-container");
-    new import_obsidian18.Setting(containerEl).setName(t("ignored_folder_patterns")).setDesc(t("ignored_folder_patterns_desc")).setHeading();
-    const patternSetting = new import_obsidian18.Setting(ignoredFolderPatternsContainer).setName(t("add_ignored_folder_pattern")).addText((text) => {
+    new import_obsidian19.Setting(containerEl).setName(t("ignored_folder_patterns")).setDesc(t("ignored_folder_patterns_desc")).setHeading();
+    const patternSetting = new import_obsidian19.Setting(ignoredFolderPatternsContainer).setName(t("add_ignored_folder_pattern")).addText((text) => {
       text.setPlaceholder(t("ignored_folder_pattern_placeholder")).onChange(() => {
       });
       return text;
@@ -7573,11 +8323,11 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
     this.renderIgnoredFolderPatternsList(ignoredFolderPatternsList);
     containerEl.appendChild(ignoredFolderPatternsContainer);
     containerEl.createEl("h3", { text: t("config_management"), attr: { style: "margin-top: 40px;" } });
-    new import_obsidian18.Setting(containerEl).setName(t("config_management")).setDesc(t("config_management_desc")).addButton((button) => button.setButtonText(t("reset_to_default")).setWarning().onClick(async () => {
+    new import_obsidian19.Setting(containerEl).setName(t("config_management")).setDesc(t("config_management_desc")).addButton((button) => button.setButtonText(t("reset_to_default")).setWarning().onClick(async () => {
       this.plugin.settings = { ...DEFAULT_SETTINGS };
       await this.plugin.saveSettings();
       this.display();
-      new import_obsidian18.Notice(t("settings_reset_notice"));
+      new import_obsidian19.Notice(t("settings_reset_notice"));
     })).addButton((button) => button.setButtonText(t("export")).setTooltip(t("export")).onClick(() => {
       const data = JSON.stringify(this.plugin.settings, null, 2);
       const blob = new Blob([data], { type: "application/json" });
@@ -7600,7 +8350,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
         const reader = new FileReader();
         reader.onload = async (evt) => {
           if (!evt.target || typeof evt.target.result !== "string") {
-            new import_obsidian18.Notice(t("import_failed"));
+            new import_obsidian19.Notice(t("import_failed"));
             return;
           }
           try {
@@ -7610,13 +8360,13 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
               this.plugin.settings = { ...DEFAULT_SETTINGS, ...importedSettings };
               await this.plugin.saveSettings();
               this.display();
-              new import_obsidian18.Notice(t("import_success"));
+              new import_obsidian19.Notice(t("import_success"));
             } else {
-              new import_obsidian18.Notice(t("import_failed"));
+              new import_obsidian19.Notice(t("import_failed"));
             }
           } catch (error) {
             console.error("Grid Explorer: Error importing settings", error);
-            new import_obsidian18.Notice(t("import_failed"));
+            new import_obsidian19.Notice(t("import_failed"));
           }
         };
         reader.readAsText(file);
@@ -7672,7 +8422,7 @@ var GridExplorerSettingTab = class extends import_obsidian18.PluginSettingTab {
 };
 
 // src/main.ts
-var GridExplorerPlugin = class extends import_obsidian19.Plugin {
+var GridExplorerPlugin = class extends import_obsidian20.Plugin {
   async onload() {
     await this.loadSettings();
     this.registerView(
@@ -7702,10 +8452,13 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
     this.addCommand({
       id: "view-backlinks-in-grid-view",
       name: t("open_backlinks_in_grid_view"),
-      callback: () => {
+      callback: async () => {
         const activeFile = this.app.workspace.getActiveFile();
         if (activeFile) {
-          this.activateView("backlinks");
+          const view = await this.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("backlinks");
+          }
         } else {
           this.openNoteInFolder(this.app.vault.getRoot());
         }
@@ -7714,10 +8467,13 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
     this.addCommand({
       id: "view-outgoinglinks-in-grid-view",
       name: t("open_outgoinglinks_in_grid_view"),
-      callback: () => {
+      callback: async () => {
         const activeFile = this.app.workspace.getActiveFile();
         if (activeFile) {
-          this.activateView("outgoinglinks");
+          const view = await this.activateView();
+          if (view instanceof GridView) {
+            await view.setSource("outgoinglinks");
+          }
         } else {
           this.openNoteInFolder(this.app.vault.getRoot());
         }
@@ -7744,7 +8500,7 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
           targetPath = this.app.vault.getRoot().path;
         }
         const targetFile = this.app.vault.getAbstractFileByPath(targetPath);
-        if (targetFile instanceof import_obsidian19.TFolder) {
+        if (targetFile instanceof import_obsidian20.TFolder) {
           this.openNoteInFolder(targetFile);
         } else {
           this.openNoteInFolder(this.app.vault.getRoot());
@@ -7755,7 +8511,10 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
       id: "open-quick-access-mode",
       name: t("open_quick_access_mode"),
       callback: async () => {
-        this.activateView(this.settings.quickAccessModeType);
+        const view = await this.activateView();
+        if (view instanceof GridView) {
+          await view.setSource(this.settings.quickAccessModeType);
+        }
       }
     });
     this.addRibbonIcon("grid", t("open_grid_view"), () => {
@@ -7764,7 +8523,7 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
     this.statusBarItem = this.addStatusBarItem();
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file) => {
-        if (file instanceof import_obsidian19.TFolder) {
+        if (file instanceof import_obsidian20.TFolder) {
           menu.addItem((item) => {
             var _a, _b;
             (_b = (_a = item.setTitle(t("open_in_grid_view")).setIcon("grid")).setSection) == null ? void 0 : _b.call(_a, "open").onClick(() => {
@@ -7772,7 +8531,7 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
             });
           });
         }
-        if (file instanceof import_obsidian19.TFile) {
+        if (file instanceof import_obsidian20.TFile) {
           menu.addItem((item) => {
             var _a;
             item.setTitle(t("open_in_grid_view"));
@@ -7785,22 +8544,24 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
               });
             });
             ogSubmenu.addItem((item2) => {
-              item2.setTitle(t("open_backlinks_in_grid_view")).setIcon("links-coming-in").onClick(() => {
+              item2.setTitle(t("open_backlinks_in_grid_view")).setIcon("links-coming-in").onClick(async () => {
                 this.app.workspace.getLeaf().openFile(file);
-                setTimeout(() => {
-                  this.activateView("backlinks");
-                }, 100);
+                const view = await this.activateView();
+                if (view instanceof GridView) {
+                  await view.setSource("backlinks");
+                }
               });
             });
             ogSubmenu.addItem((item2) => {
-              item2.setTitle(t("open_outgoinglinks_in_grid_view")).setIcon("links-going-out").onClick(() => {
+              item2.setTitle(t("open_outgoinglinks_in_grid_view")).setIcon("links-going-out").onClick(async () => {
                 this.app.workspace.getLeaf().openFile(file);
-                setTimeout(() => {
-                  this.activateView("outgoinglinks");
-                }, 100);
+                const view = await this.activateView();
+                if (view instanceof GridView) {
+                  await view.setSource("outgoinglinks");
+                }
               });
             });
-            if (this.settings.showRecentFilesMode && file instanceof import_obsidian19.TFile) {
+            if (this.settings.showRecentFilesMode && file instanceof import_obsidian20.TFile) {
               ogSubmenu.addItem((item2) => {
                 item2.setTitle(t("open_recent_files_in_grid_view")).setIcon("calendar-days").onClick(() => {
                   this.openNoteInRecentFiles(file);
@@ -7814,10 +8575,9 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
           menu.addItem((item) => {
             var _a, _b;
             (_b = (_a = item.setTitle(menuItemTitle).setIcon("search")).setSection) == null ? void 0 : _b.call(_a, "view").onClick(async () => {
-              const view = await this.activateView("", "");
+              const view = await this.activateView();
               if (view instanceof GridView) {
-                view.searchQuery = link;
-                view.render(true);
+                await view.setSource("", "", true, link);
               }
             });
           });
@@ -7839,10 +8599,9 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
             var _a, _b;
             (_b = (_a = item.setTitle(menuItemTitle).setIcon("search")).setSection) == null ? void 0 : _b.call(_a, "view").onClick(async () => {
               const selectedText2 = editor.getSelection();
-              const view = await this.activateView("", "");
+              const view = await this.activateView();
               if (view instanceof GridView) {
-                view.searchQuery = selectedText2;
-                view.render(true);
+                await view.setSource("", "", true, selectedText2);
               }
             });
           });
@@ -7856,10 +8615,9 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
         menu.addItem((item) => {
           var _a, _b;
           (_b = (_a = item.setTitle(menuItemTitle).setIcon("search")).setSection) == null ? void 0 : _b.call(_a, "view").onClick(async () => {
-            const view = await this.activateView("", "");
+            const view = await this.activateView();
             if (view instanceof GridView) {
-              view.searchQuery = `#${tagName}`;
-              view.render(true);
+              await view.setSource("", "", true, `#${tagName}`);
             }
           });
         });
@@ -7907,10 +8665,9 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
         return;
       evt.preventDefault();
       evt.stopPropagation();
-      const view = await this.activateView("", "");
+      const view = await this.activateView();
       if (view instanceof GridView) {
-        view.searchQuery = `#${tagName}`;
-        view.render(true);
+        await view.setSource("", "", true, `#${tagName}`);
       }
     }, true);
     this.registerDomEvent(document, "click", async (evt) => {
@@ -7939,11 +8696,10 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
       }
       const folderPath = pathParts.join("/");
       const folder = this.app.vault.getAbstractFileByPath(folderPath);
-      if (folder instanceof import_obsidian19.TFolder) {
-        const view = await this.activateView("folder", folderPath);
+      if (folder instanceof import_obsidian20.TFolder) {
+        const view = await this.activateView();
         if (view instanceof GridView) {
-          view.searchQuery = "";
-          view.render(true);
+          await view.setSource("folder", folderPath, true, "");
         }
       }
     }, true);
@@ -8042,7 +8798,7 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
             return;
           }
           const tfile = this.app.vault.getAbstractFileByPath(filePath);
-          if (!(tfile instanceof import_obsidian19.TFile)) {
+          if (!(tfile instanceof import_obsidian20.TFile)) {
             console.warn("GridExplorer: Dropped item is not a TFile or could not be found.", filePath);
             return;
           }
@@ -8071,50 +8827,56 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
   }
   // 打開最近文件
   async openNoteInRecentFiles(file) {
-    const view = await this.activateView("recent-files");
-    if (file instanceof import_obsidian19.TFile) {
-      setTimeout(() => {
-        const gridContainer = view.containerEl.querySelector(".ge-grid-container");
-        if (!gridContainer)
-          return;
-        const gridItem = Array.from(gridContainer.querySelectorAll(".ge-grid-item")).find(
-          (item) => item.dataset.filePath === file.path
-        );
-        if (gridItem) {
-          gridItem.scrollIntoView({ block: "nearest" });
-          const itemIndex = view.gridItems.indexOf(gridItem);
-          if (itemIndex >= 0) {
-            view.selectItem(itemIndex);
+    const view = await this.activateView();
+    if (view instanceof GridView) {
+      await view.setSource("recent-files");
+      if (file instanceof import_obsidian20.TFile) {
+        requestAnimationFrame(() => {
+          const gridContainer = view.containerEl.querySelector(".ge-grid-container");
+          if (!gridContainer)
+            return;
+          const gridItem = Array.from(gridContainer.querySelectorAll(".ge-grid-item")).find(
+            (item) => item.dataset.filePath === file.path
+          );
+          if (gridItem) {
+            gridItem.scrollIntoView({ block: "nearest" });
+            const itemIndex = view.gridItems.indexOf(gridItem);
+            if (itemIndex >= 0) {
+              view.selectItem(itemIndex);
+            }
           }
-        }
-      }, 100);
+        });
+      }
     }
   }
   // 打開筆記到資料夾模式
   async openNoteInFolder(file = this.app.vault.getRoot()) {
     var _a;
-    const folderPath = file ? file instanceof import_obsidian19.TFile ? (_a = file.parent) == null ? void 0 : _a.path : file.path : "/";
-    const view = await this.activateView("folder", folderPath);
-    if (file instanceof import_obsidian19.TFile) {
-      setTimeout(() => {
-        const gridContainer = view.containerEl.querySelector(".ge-grid-container");
-        if (!gridContainer)
-          return;
-        const gridItem = Array.from(gridContainer.querySelectorAll(".ge-grid-item")).find(
-          (item) => item.dataset.filePath === file.path
-        );
-        if (gridItem) {
-          gridItem.scrollIntoView({ block: "nearest" });
-          const itemIndex = view.gridItems.indexOf(gridItem);
-          if (itemIndex >= 0) {
-            view.selectItem(itemIndex);
+    const folderPath = file ? file instanceof import_obsidian20.TFile ? (_a = file.parent) == null ? void 0 : _a.path : file.path : "/";
+    const view = await this.activateView();
+    if (view instanceof GridView) {
+      await view.setSource("folder", folderPath);
+      if (file instanceof import_obsidian20.TFile) {
+        requestAnimationFrame(() => {
+          const gridContainer = view.containerEl.querySelector(".ge-grid-container");
+          if (!gridContainer)
+            return;
+          const gridItem = Array.from(gridContainer.querySelectorAll(".ge-grid-item")).find(
+            (item) => item.dataset.filePath === file.path
+          );
+          if (gridItem) {
+            gridItem.scrollIntoView({ block: "nearest" });
+            const itemIndex = view.gridItems.indexOf(gridItem);
+            if (itemIndex >= 0) {
+              view.selectItem(itemIndex);
+            }
           }
-        }
-      }, 100);
+        });
+      }
     }
   }
   // 激活視圖
-  async activateView(mode = "folder", path = "") {
+  async activateView() {
     const { workspace } = this.app;
     let leaf = null;
     const leaves = workspace.getLeavesOfType("grid-view");
@@ -8138,9 +8900,6 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
       leaf = workspace.getLeaf("tab");
     }
     await leaf.setViewState({ type: "grid-view", active: true });
-    if (leaf.view instanceof GridView) {
-      await leaf.view.setSource(mode, path);
-    }
     workspace.revealLeaf(leaf);
     return leaf.view;
   }
@@ -8165,7 +8924,7 @@ var GridExplorerPlugin = class extends import_obsidian19.Plugin {
       if (openInFolder) {
         path = this.settings.quickAccessCommandPath || this.app.vault.getRoot().path;
         const targetFile = this.app.vault.getAbstractFileByPath(path);
-        if (!(targetFile instanceof import_obsidian19.TFolder)) {
+        if (!(targetFile instanceof import_obsidian20.TFolder)) {
           path = this.app.vault.getRoot().path;
         }
       }

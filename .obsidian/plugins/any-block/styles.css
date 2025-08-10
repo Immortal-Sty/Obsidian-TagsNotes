@@ -1133,7 +1133,37 @@ table.ab-table-fc th[col_index="0"], table.ab-table-fc td[col_index="0"] {
   margin-left: calc((100% - var(--ab-width-outer)) / 2);
 }
 
+/**************** CM Style *******************/
+.ab-line-brace {
+  -webkit-text-decoration: underline 1px red;
+          text-decoration: underline 1px red;
+}
+
+.ab-line-list {
+  -webkit-text-decoration: underline 1px cyan;
+          text-decoration: underline 1px cyan;
+}
+
+.ab-line-yellow {
+  -webkit-text-decoration: solid underline 1px rgba(0, 255, 0, 0.2);
+          text-decoration: solid underline 1px rgba(0, 255, 0, 0.2);
+}
+
+.ab-line-blue {
+  -webkit-text-decoration: underline 1px blue;
+          text-decoration: underline 1px blue;
+}
+
+.bright-color {
+  color: var(--ab-bright-color);
+  border-color: var(--ab-bright-color);
+}
+
 /**************** 兼容性补充 ******************/
+.markmap-foreign [aria-hidden=true] {
+  display: none;
+}
+
 :is(.markdown-preview-view, .markdown-rendered).is-readable-line-width:not(.matrix) .ab-note :is(.markdown-rendered) {
   width: auto !important;
 }

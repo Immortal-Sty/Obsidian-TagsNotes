@@ -8,12 +8,14 @@
  * .scrolling-visibility-hide
  * .scrolling-visibility-scroll
  * .scrolling-filetree-horizontal
+ * .scrolling-linewidth-enabled
  *
  * Classes for elements supporting scrolling:
  * .scrolling-transparent
  *
  * Variables:
  * --scrolling-scrollbar-width
+ * --scrolling-line-width
  *
  */
 

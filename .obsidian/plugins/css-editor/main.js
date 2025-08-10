@@ -10449,15 +10449,14 @@ var CssSnippetFuzzySuggestModal = class extends import_obsidian7.FuzzySuggestMod
     });
     this.scope.register([], "Tab", (evt) => {
       if (this.chooser) {
-        const selItem = this.chooser.selectedItem;
-        const selSnippet = this.chooser.values[selItem].item;
-        const isEnabled = toggleSnippetFileState(this.app, selSnippet);
-        const selEl = this.chooser.suggestions[selItem].querySelector(
+        const selectedItem = this.chooser.selectedItem;
+        const file = this.chooser.values[selectedItem].item;
+        const isEnabled = toggleSnippetFileState(this.app, file);
+        const buttonEl = this.chooser.suggestions[selectedItem].querySelector(
           ".css-editor-status"
         );
-        selEl == null ? void 0 : selEl.setText(isEnabled ? "enabled" : "disabled");
-        selEl == null ? void 0 : selEl.removeClass(isEnabled ? "disabled" : "enabled");
-        selEl == null ? void 0 : selEl.addClass(isEnabled ? "enabled" : "disabled");
+        buttonEl == null ? void 0 : buttonEl.setText(isEnabled ? "enabled" : "disabled");
+        buttonEl == null ? void 0 : buttonEl.toggleClass("mod-cta", isEnabled);
       }
       return false;
     });
@@ -10528,18 +10527,22 @@ var CssSnippetFuzzySuggestModal = class extends import_obsidian7.FuzzySuggestMod
       const isEnabled = this.isEnabled(item.item);
       const isNewElement = this.inputEl.value.trim().length > 0 && item.match.score === 0;
       if (!isNewElement) {
-        el.appendChild(
-          createDiv(
-            {
-              cls: [
-                "suggestion-aux",
-                "css-editor-status",
-                isEnabled ? "enabled" : "disabled"
-              ]
-            },
-            (el2) => el2.appendText(isEnabled ? "enabled" : "disabled")
-          )
-        );
+        const button = new import_obsidian7.ButtonComponent(el).setButtonText(isEnabled ? "enabled" : "disabled").setClass("css-editor-status").onClick(async (e) => {
+          e.stopPropagation();
+          const newState = toggleSnippetFileState(
+            this.app,
+            item.item
+          );
+          button.setButtonText(newState ? "enabled" : "disabled");
+          if (newState) {
+            button.setCta();
+          } else {
+            button.removeCta();
+          }
+        });
+        if (isEnabled) {
+          button.setCta();
+        }
       }
     }
     if (this.inputEl.value.trim().length > 0 && item.match.score === 0) {

@@ -54,7 +54,7 @@ var require_plantuml_encoder = __commonJS({
     })(function() {
       var define2, module3, exports2;
       return function() {
-        function r(e, n, t) {
+        function r(e, n, t2) {
           function o(i2, f) {
             if (!n[i2]) {
               if (!e[i2]) {
@@ -70,12 +70,12 @@ var require_plantuml_encoder = __commonJS({
               e[i2][0].call(p.exports, function(r2) {
                 var n2 = e[i2][1][r2];
                 return o(n2 || r2);
-              }, p, p.exports, r, e, n, t);
+              }, p, p.exports, r, e, n, t2);
             }
             return n[i2].exports;
           }
-          for (var u = "function" == typeof require && require, i = 0; i < t.length; i++)
-            o(t[i]);
+          for (var u = "function" == typeof require && require, i = 0; i < t2.length; i++)
+            o(t2[i]);
           return o;
         }
         return r;
@@ -554,10 +554,10 @@ var require_plantuml_encoder = __commonJS({
         }
         var crcTable = makeTable();
         function crc32(crc, buf, len, pos) {
-          var t = crcTable, end2 = pos + len;
+          var t2 = crcTable, end2 = pos + len;
           crc ^= -1;
           for (var i = pos; i < end2; i++) {
-            crc = crc >>> 8 ^ t[(crc ^ buf[i]) & 255];
+            crc = crc >>> 8 ^ t2[(crc ^ buf[i]) & 255];
           }
           return crc ^ -1;
         }
@@ -2252,7 +2252,7 @@ var require_plantuml_decoder = __commonJS({
     })(function() {
       var define2, module3, exports2;
       return function() {
-        function r(e, n, t) {
+        function r(e, n, t2) {
           function o(i2, f) {
             if (!n[i2]) {
               if (!e[i2]) {
@@ -2268,12 +2268,12 @@ var require_plantuml_decoder = __commonJS({
               e[i2][0].call(p.exports, function(r2) {
                 var n2 = e[i2][1][r2];
                 return o(n2 || r2);
-              }, p, p.exports, r, e, n, t);
+              }, p, p.exports, r, e, n, t2);
             }
             return n[i2].exports;
           }
-          for (var u = "function" == typeof require && require, i = 0; i < t.length; i++)
-            o(t[i]);
+          for (var u = "function" == typeof require && require, i = 0; i < t2.length; i++)
+            o(t2[i]);
           return o;
         }
         return r;
@@ -2313,10 +2313,10 @@ var require_plantuml_decoder = __commonJS({
           var r = "";
           var i = 0;
           for (i = 0; i < data2.length; i += 4) {
-            var t = extract3bytes(data2.substring(i, i + 4));
-            r = r + String.fromCharCode(t[0]);
-            r = r + String.fromCharCode(t[1]);
-            r = r + String.fromCharCode(t[2]);
+            var t2 = extract3bytes(data2.substring(i, i + 4));
+            r = r + String.fromCharCode(t2[0]);
+            r = r + String.fromCharCode(t2[1]);
+            r = r + String.fromCharCode(t2[2]);
           }
           return r;
         };
@@ -2781,10 +2781,10 @@ var require_plantuml_decoder = __commonJS({
         }
         var crcTable = makeTable();
         function crc32(crc, buf, len, pos) {
-          var t = crcTable, end2 = pos + len;
+          var t2 = crcTable, end2 = pos + len;
           crc ^= -1;
           for (var i = pos; i < end2; i++) {
-            crc = crc >>> 8 ^ t[(crc ^ buf[i]) & 255];
+            crc = crc >>> 8 ^ t2[(crc ^ buf[i]) & 255];
           }
           return crc ^ -1;
         }
@@ -15051,21 +15051,21 @@ var require_katex = __commonJS({
             builtinMacros[name2] = body;
           }
           defineMacro("\\noexpand", function(context) {
-            var t = context.popToken();
-            if (context.isExpandable(t.text)) {
-              t.noexpand = true;
-              t.treatAsRelax = true;
+            var t2 = context.popToken();
+            if (context.isExpandable(t2.text)) {
+              t2.noexpand = true;
+              t2.treatAsRelax = true;
             }
             return {
-              tokens: [t],
+              tokens: [t2],
               numArgs: 0
             };
           });
           defineMacro("\\expandafter", function(context) {
-            var t = context.popToken();
+            var t2 = context.popToken();
             context.expandOnce(true);
             return {
-              tokens: [t],
+              tokens: [t2],
               numArgs: 0
             };
           });
@@ -17158,64 +17158,64 @@ var require_markdown_it_katex = __commonJS({
 // ../../node_modules/.pnpm/html-to-md@0.8.8/node_modules/html-to-md/dist/index.js
 var require_dist = __commonJS({
   "../../node_modules/.pnpm/html-to-md@0.8.8/node_modules/html-to-md/dist/index.js"(exports, module2) {
-    !function(t, e) {
-      "object" === typeof exports && "object" === typeof module2 ? module2.exports = e() : "function" === typeof define && define.amd ? define([], e) : "object" === typeof exports ? exports.html2md = e() : t.html2md = e();
+    !function(t2, e) {
+      "object" === typeof exports && "object" === typeof module2 ? module2.exports = e() : "function" === typeof define && define.amd ? define([], e) : "object" === typeof exports ? exports.html2md = e() : t2.html2md = e();
     }(exports, function() {
-      return function(t) {
+      return function(t2) {
         var e = {};
         function r(n) {
           if (e[n])
             return e[n].exports;
           var o = e[n] = { i: n, l: false, exports: {} };
-          return t[n].call(o.exports, o, o.exports, r), o.l = true, o.exports;
+          return t2[n].call(o.exports, o, o.exports, r), o.l = true, o.exports;
         }
-        return r.m = t, r.c = e, r.d = function(t2, e2, n) {
-          r.o(t2, e2) || Object.defineProperty(t2, e2, { enumerable: true, get: n });
-        }, r.r = function(t2) {
-          "undefined" !== typeof Symbol && Symbol.toStringTag && Object.defineProperty(t2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t2, "__esModule", { value: true });
-        }, r.t = function(t2, e2) {
-          if (1 & e2 && (t2 = r(t2)), 8 & e2)
-            return t2;
-          if (4 & e2 && "object" === typeof t2 && t2 && t2.__esModule)
-            return t2;
+        return r.m = t2, r.c = e, r.d = function(t3, e2, n) {
+          r.o(t3, e2) || Object.defineProperty(t3, e2, { enumerable: true, get: n });
+        }, r.r = function(t3) {
+          "undefined" !== typeof Symbol && Symbol.toStringTag && Object.defineProperty(t3, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t3, "__esModule", { value: true });
+        }, r.t = function(t3, e2) {
+          if (1 & e2 && (t3 = r(t3)), 8 & e2)
+            return t3;
+          if (4 & e2 && "object" === typeof t3 && t3 && t3.__esModule)
+            return t3;
           var n = /* @__PURE__ */ Object.create(null);
-          if (r.r(n), Object.defineProperty(n, "default", { enumerable: true, value: t2 }), 2 & e2 && "string" != typeof t2)
-            for (var o in t2)
+          if (r.r(n), Object.defineProperty(n, "default", { enumerable: true, value: t3 }), 2 & e2 && "string" != typeof t3)
+            for (var o in t3)
               r.d(n, o, function(e3) {
-                return t2[e3];
+                return t3[e3];
               }.bind(null, o));
           return n;
-        }, r.n = function(t2) {
-          var e2 = t2 && t2.__esModule ? function() {
-            return t2.default;
+        }, r.n = function(t3) {
+          var e2 = t3 && t3.__esModule ? function() {
+            return t3.default;
           } : function() {
-            return t2;
+            return t3;
           };
           return r.d(e2, "a", e2), e2;
-        }, r.o = function(t2, e2) {
-          return Object.prototype.hasOwnProperty.call(t2, e2);
+        }, r.o = function(t3, e2) {
+          return Object.prototype.hasOwnProperty.call(t3, e2);
         }, r.p = "", r(r.s = 46);
-      }([function(t, e, r) {
+      }([function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(1), o = r(12), i = r(6), a = r(7), c = r(2), u = function() {
-          function t2(t3, e2, r2) {
+          function t3(t4, e2, r2) {
             var o2 = void 0 === r2 ? {} : r2, i2 = o2.keepSpace, a2 = void 0 !== i2 && i2, c2 = o2.prevTagName, u2 = void 0 === c2 ? "" : c2, s = o2.nextTagName, p = void 0 === s ? "" : s, l = o2.prevTagStr, f = void 0 === l ? "" : l, h2 = o2.nextTagStr, d = void 0 === h2 ? "" : h2, _ = o2.parentTag, y = void 0 === _ ? "" : _, v = o2.isFirstSubTag, g = void 0 === v || v, b = o2.calcLeading, m = void 0 !== b && b, O = o2.leadingSpace, S = void 0 === O ? "" : O, T = o2.layer, x = void 0 === T ? 1 : T, j = o2.noWrap, w = void 0 !== j && j, P = o2.prevHasEndSpace, M = void 0 !== P && P, E = o2.prevHasStartSpace, N = void 0 !== E && E, C = o2.match, L = void 0 === C ? null : C, k = o2.indentSpace, A = void 0 === k ? "" : k, H = o2.language, W = void 0 === H ? "" : H, V = o2.count, R = void 0 === V ? 1 : V, I = o2.tableColumnCount, q = void 0 === I ? 0 : I, D = o2.noExtraLine, U = void 0 !== D && D, B = o2.inTable, F = void 0 !== B && B;
-            if (this.tagName = e2, this.rawStr = t3, this.parentTag = y, this.prevTagName = u2, this.nextTagName = p, this.prevTagStr = f, this.nextTagStr = d, this.isFirstSubTag = g, this.calcLeading = m, this.leadingSpace = S, this.layer = x, this.noWrap = w, this.match = L, this.indentSpace = A, this.language = W, this.count = R, this.inTable = F, this.tableColumnCount = q, this.noExtraLine = U, this.prevHasEndSpace = M, this.prevHasStartSpace = N, this.hasStartSpace = false, this.hasEndSpace = false, this.keepSpace = a2, !this.__detectStr__(t3, this.tagName))
+            if (this.tagName = e2, this.rawStr = t4, this.parentTag = y, this.prevTagName = u2, this.nextTagName = p, this.prevTagStr = f, this.nextTagStr = d, this.isFirstSubTag = g, this.calcLeading = m, this.leadingSpace = S, this.layer = x, this.noWrap = w, this.match = L, this.indentSpace = A, this.language = W, this.count = R, this.inTable = F, this.tableColumnCount = q, this.noExtraLine = U, this.prevHasEndSpace = M, this.prevHasStartSpace = N, this.hasStartSpace = false, this.hasEndSpace = false, this.keepSpace = a2, !this.__detectStr__(t4, this.tagName))
               return this.attrs = {}, void (this.innerHTML = "");
-            var G = this.__fetchTagAttrAndInnerHTML__(t3), $2 = G.attr, J = G.innerHTML;
+            var G = this.__fetchTagAttrAndInnerHTML__(t4), $2 = G.attr, J = G.innerHTML;
             J.startsWith(" ") && (0, n.isSpacePassingTag)(e2) && (this.hasStartSpace = true), J.endsWith(" ") && (0, n.isSpacePassingTag)(e2) && (this.hasEndSpace = true), this.attrs = $2, this.innerHTML = J;
           }
-          return t2.prototype.__detectStr__ = function(t3, e2) {
-            if ("<" !== t3[0])
-              return "Not a valid tag, current tag name: ".concat(this.tagName, ", tag content: ").concat(t3), false;
-            for (var r2 = "", n2 = false, o2 = 1; o2 < t3.length && ">" !== t3[o2]; o2++)
-              !n2 && /(\s|\/)/.test(t3[o2]) && (n2 = true), n2 || (r2 += t3[o2]);
+          return t3.prototype.__detectStr__ = function(t4, e2) {
+            if ("<" !== t4[0])
+              return "Not a valid tag, current tag name: ".concat(this.tagName, ", tag content: ").concat(t4), false;
+            for (var r2 = "", n2 = false, o2 = 1; o2 < t4.length && ">" !== t4[o2]; o2++)
+              !n2 && /(\s|\/)/.test(t4[o2]) && (n2 = true), n2 || (r2 += t4[o2]);
             return r2 === e2;
-          }, t2.prototype.__fetchTagAttrAndInnerHTML__ = function(t3) {
-            for (var e2 = "", r2 = 1; r2 < t3.length && ">" !== t3[r2]; r2++)
-              e2 += t3[r2];
-            for (var o2 = t3.slice(r2 + 1), i2 = "", a2 = -1, c2 = o2.length - 1; c2 >= 0; c2--)
+          }, t3.prototype.__fetchTagAttrAndInnerHTML__ = function(t4) {
+            for (var e2 = "", r2 = 1; r2 < t4.length && ">" !== t4[r2]; r2++)
+              e2 += t4[r2];
+            for (var o2 = t4.slice(r2 + 1), i2 = "", a2 = -1, c2 = o2.length - 1; c2 >= 0; c2--)
               if ((i2 = o2[c2] + i2).startsWith("</")) {
                 i2.startsWith("</" + this.tagName + ">") && (a2 = c2);
                 break;
@@ -17223,43 +17223,43 @@ var require_dist = __commonJS({
             -1 === a2 && (0, n.isSelfClosing)(this.tagName) && this.tagName;
             var u2 = (0, n.getTagAttributes)(e2);
             return this.tagName && delete u2[this.tagName], { attr: u2, innerHTML: o2.slice(0, a2) };
-          }, t2.prototype.__onlyLeadingSpace__ = function(t3) {
-            t3 = t3.trim();
-            for (var e2 = 0; e2 < t3.length; e2++)
-              if (t3[e2] !== i.SINGLE)
+          }, t3.prototype.__onlyLeadingSpace__ = function(t4) {
+            t4 = t4.trim();
+            for (var e2 = 0; e2 < t4.length; e2++)
+              if (t4[e2] !== i.SINGLE)
                 return false;
             return true;
-          }, t2.prototype.__isEmpty__ = function(t3) {
-            return !this.keepSpace && ("" === t3 && "td" !== this.tagName || this.calcLeading && this.__onlyLeadingSpace__(t3));
-          }, t2.prototype.getValidSubTagName = function(t3) {
-            return t3;
-          }, t2.prototype.beforeParse = function() {
-            var t3 = c.default.get().tagListener;
-            if (t3) {
-              var e2 = t3(this.tagName, { parentTag: this.parentTag, prevTagName: this.prevTagName, nextTagName: this.nextTagName, isFirstSubTag: this.isFirstSubTag, attrs: this.attrs, innerHTML: this.innerHTML, language: this.language, match: this.match, isSelfClosing: false }), r2 = e2.attrs, n2 = e2.language, o2 = e2.match;
+          }, t3.prototype.__isEmpty__ = function(t4) {
+            return !this.keepSpace && ("" === t4 && "td" !== this.tagName || this.calcLeading && this.__onlyLeadingSpace__(t4));
+          }, t3.prototype.getValidSubTagName = function(t4) {
+            return t4;
+          }, t3.prototype.beforeParse = function() {
+            var t4 = c.default.get().tagListener;
+            if (t4) {
+              var e2 = t4(this.tagName, { parentTag: this.parentTag, prevTagName: this.prevTagName, nextTagName: this.nextTagName, isFirstSubTag: this.isFirstSubTag, attrs: this.attrs, innerHTML: this.innerHTML, language: this.language, match: this.match, isSelfClosing: false }), r2 = e2.attrs, n2 = e2.language, o2 = e2.match;
               this.attrs = r2, "string" === typeof n2 && (this.language = n2), "undefined" !== typeof o2 && (this.match = o2);
             }
             return "";
-          }, t2.prototype.parseValidSubTag = function(t3, e2, r2) {
-            var o2 = new ((0, n.getTagConstructor)(e2))(t3, e2, r2);
+          }, t3.prototype.parseValidSubTag = function(t4, e2, r2) {
+            var o2 = new ((0, n.getTagConstructor)(e2))(t4, e2, r2);
             return [o2.exec(), o2];
-          }, t2.prototype.parseOnlyString = function(t3, e2, r2) {
-            var n2 = new o.default(t3, e2, r2);
+          }, t3.prototype.parseOnlyString = function(t4, e2, r2) {
+            var n2 = new o.default(t4, e2, r2);
             return [n2.exec(), n2];
-          }, t2.prototype.afterParsed = function(t3) {
-            return t3;
-          }, t2.prototype.slim = function(t3) {
-            return this.keepSpace ? t3 : t3.trim();
-          }, t2.prototype.beforeMergeSpace = function(t3) {
-            return t3;
-          }, t2.prototype.mergeSpace = function(t3, e2, r2) {
-            return this.keepSpace && "pre" !== this.tagName ? t3.endsWith("\n") ? t3 : t3 + r2.replace(/\n+/g, "\n") : e2 + t3 + r2;
-          }, t2.prototype.afterMergeSpace = function(t3) {
-            return t3;
-          }, t2.prototype.beforeReturn = function(t3) {
-            return !((0, n.isSpacePassingTag)(this.prevTagName) && this.prevHasEndSpace || (0, n.isSpacePassingTag)(this.tagName) && this.hasStartSpace) || /^\s+/.test(t3) || /\s+$/.test(this.prevTagStr) ? t3 : " " + t3;
-          }, t2.prototype.exec = function(t3, e2) {
-            void 0 === t3 && (t3 = ""), void 0 === e2 && (e2 = "");
+          }, t3.prototype.afterParsed = function(t4) {
+            return t4;
+          }, t3.prototype.slim = function(t4) {
+            return this.keepSpace ? t4 : t4.trim();
+          }, t3.prototype.beforeMergeSpace = function(t4) {
+            return t4;
+          }, t3.prototype.mergeSpace = function(t4, e2, r2) {
+            return this.keepSpace && "pre" !== this.tagName ? t4.endsWith("\n") ? t4 : t4 + r2.replace(/\n+/g, "\n") : e2 + t4 + r2;
+          }, t3.prototype.afterMergeSpace = function(t4) {
+            return t4;
+          }, t3.prototype.beforeReturn = function(t4) {
+            return !((0, n.isSpacePassingTag)(this.prevTagName) && this.prevHasEndSpace || (0, n.isSpacePassingTag)(this.tagName) && this.hasStartSpace) || /^\s+/.test(t4) || /\s+$/.test(this.prevTagStr) ? t4 : " " + t4;
+          }, t3.prototype.exec = function(t4, e2) {
+            void 0 === t4 && (t4 = ""), void 0 === e2 && (e2 = "");
             for (var r2 = this.beforeParse(), o2 = (0, n.generateGetNextValidTag)(this.innerHTML), i2 = o2(), c2 = i2[0], u2 = i2[1], s = null, p = false, l = false; "" !== u2; ) {
               var f, h2 = o2(), d = h2[0], _ = h2[1], y = { parentTag: this.tagName, nextTagName: d, nextTagStr: _, prevTagName: s, prevTagStr: r2, prevHasEndSpace: l, prevHasStartSpace: p, leadingSpace: this.leadingSpace, layer: this.layer, keepSpace: this.keepSpace, inTable: this.inTable, calcLeading: ("li" === this.tagName || "ol" === this.tagName || "ul" === this.tagName) && this.calcLeading }, v = void 0, g = void 0;
               if (null != c2)
@@ -17270,11 +17270,11 @@ var require_dist = __commonJS({
               var b = this.getValidSubTagName(c2);
               c2 = d, u2 = _, null == b && this.__isEmpty__(v) || (!this.keepSpace && (0, a.default)(s) && (0, a.default)(b) && (r2 = r2.replace(/\n+$/, "\n"), v = v.replace(/^\n+/, "\n")), s = b, this.isFirstSubTag = false, r2 += v);
             }
-            return r2 = this.afterParsed(r2), r2 = this.slim(r2), this.__isEmpty__(r2) ? "" : (r2 = this.beforeMergeSpace(r2), !this.noExtraLine && (0, a.default)(this.tagName) && this.prevTagName && !r2.startsWith("\n") && !(0, a.default)(this.prevTagName) && this.parentTag && (t3 = "\n\n"), r2 = this.mergeSpace(r2, t3, e2), this.noWrap && !this.keepSpace && (r2 = r2.replace(/\s+/g, " ")), r2 = this.afterMergeSpace(r2), r2 = this.beforeReturn(r2));
-          }, t2;
+            return r2 = this.afterParsed(r2), r2 = this.slim(r2), this.__isEmpty__(r2) ? "" : (r2 = this.beforeMergeSpace(r2), !this.noExtraLine && (0, a.default)(this.tagName) && this.prevTagName && !r2.startsWith("\n") && !(0, a.default)(this.prevTagName) && this.parentTag && (t4 = "\n\n"), r2 = this.mergeSpace(r2, t4, e2), this.noWrap && !this.keepSpace && (r2 = r2.replace(/\s+/g, " ")), r2 = this.afterMergeSpace(r2), r2 = this.beforeReturn(r2));
+          }, t3;
         }();
         e.default = u;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true }), e.isSpacePassingTag = e.isIndependentTag = e.clearComment = e.getLanguage = e.getTableAlign = e.getTagAttributes = e.isSelfClosing = e.generateGetNextValidTag = e.getTagConstructor = e.getRealTagName = e.unescapeStr = e.extraEscape = void 0;
         var n = r(18);
@@ -17303,47 +17303,47 @@ var require_dist = __commonJS({
         e.isSpacePassingTag = f.default;
         var h2 = r(55);
         e.getTableAlign = h2.default;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = function() {
-          function t2(t3) {
-            var e2 = void 0 === t3 ? {} : t3, r2 = e2.skipTags, n2 = void 0 === r2 ? [] : r2, o2 = e2.emptyTags, i2 = void 0 === o2 ? [] : o2, a = e2.ignoreTags, c = void 0 === a ? [] : a, u = e2.aliasTags, s = void 0 === u ? {} : u, p = e2.renderCustomTags, l = void 0 === p || p, f = e2.tagListener, h2 = void 0 === f ? function(t4, e3) {
+          function t3(t4) {
+            var e2 = void 0 === t4 ? {} : t4, r2 = e2.skipTags, n2 = void 0 === r2 ? [] : r2, o2 = e2.emptyTags, i2 = void 0 === o2 ? [] : o2, a = e2.ignoreTags, c = void 0 === a ? [] : a, u = e2.aliasTags, s = void 0 === u ? {} : u, p = e2.renderCustomTags, l = void 0 === p || p, f = e2.tagListener, h2 = void 0 === f ? function(t5, e3) {
               return e3;
             } : f;
             this.options = { skipTags: n2, emptyTags: i2, ignoreTags: c, aliasTags: s, renderCustomTags: l, tagListener: h2 };
           }
-          return t2.prototype.get = function() {
+          return t3.prototype.get = function() {
             return this.options;
-          }, t2.prototype.clear = function() {
+          }, t3.prototype.clear = function() {
             this.options = {};
-          }, t2.prototype.set = function(t3, e2) {
+          }, t3.prototype.set = function(t4, e2) {
             var r2 = this;
-            t3 && "[object Object]" === Object.prototype.toString.call(t3) && Object.keys(t3).forEach(function(n2) {
-              e2 ? r2.options[n2] = t3[n2] : function(t4, e3, r3) {
-                if (!(r3 in t4))
-                  return void (t4[r3] = e3[r3]);
-                var n3 = Array.isArray(t4[r3]), o2 = "[object Object]" === Object.prototype.toString.call(t4[r3]);
-                t4[r3] = n3 ? t4[r3].concat(e3[r3]) : o2 ? Object.assign(t4[r3], e3[r3]) : e3[r3];
-              }(r2.options, t3, n2);
+            t4 && "[object Object]" === Object.prototype.toString.call(t4) && Object.keys(t4).forEach(function(n2) {
+              e2 ? r2.options[n2] = t4[n2] : function(t5, e3, r3) {
+                if (!(r3 in t5))
+                  return void (t5[r3] = e3[r3]);
+                var n3 = Array.isArray(t5[r3]), o2 = "[object Object]" === Object.prototype.toString.call(t5[r3]);
+                t5[r3] = n3 ? t5[r3].concat(e3[r3]) : o2 ? Object.assign(t5[r3], e3[r3]) : e3[r3];
+              }(r2.options, t4, n2);
             });
-          }, t2.prototype.reset = function() {
-            this.options = JSON.parse(JSON.stringify(o)), this.options.tagListener = function(t3, e2) {
+          }, t3.prototype.reset = function() {
+            this.options = JSON.parse(JSON.stringify(o)), this.options.tagListener = function(t4, e2) {
               return e2;
             };
-          }, t2;
+          }, t3;
         }();
         var o = { ignoreTags: ["", "style", "head", "!doctype", "form", "svg", "noscript", "script", "meta"], skipTags: ["div", "html", "body", "nav", "section", "footer", "main", "aside", "article", "header"], emptyTags: [], aliasTags: { figure: "p", dl: "p", dd: "p", dt: "p", figcaption: "p" }, renderCustomTags: true }, i = new n();
         i.reset(), e.default = i;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17352,101 +17352,101 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h1");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "#", n2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.match + " " + t3;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.match + " " + t4;
           }, e2.prototype.exec = function(e3, r2) {
-            return e3 || (e3 = "\n"), r2 || (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return e3 || (e3 = "\n"), r2 || (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(1), o = r(2), i = function() {
-          function t2(t3, e2, r2) {
+          function t3(t4, e2, r2) {
             var n2 = void 0 === r2 ? {} : r2, o2 = n2.parentTag, i2 = void 0 === o2 ? "" : o2, a = n2.leadingSpace, c = void 0 === a ? "" : a, u = n2.layer, s = void 0 === u ? 1 : u, p = n2.isFirstSubTag, l = void 0 !== p && p, f = n2.inTable, h2 = void 0 !== f && f, d = n2.match, _ = void 0 === d ? null : d, y = n2.prevTagName, v = void 0 === y ? "" : y, g = n2.nextTagName, b = void 0 === g ? "" : g;
-            if (this.tagName = e2, this.rawStr = t3, this.parentTag = i2, this.isFirstSubTag = l, this.prevTagName = v, this.nextTagName = b, this.leadingSpace = c, this.layer = s, this.innerHTML = "", this.match = _, this.inTable = h2, this.__detectStr__(t3, this.tagName)) {
-              var m = this.__fetchTagAttr__(t3).attr;
+            if (this.tagName = e2, this.rawStr = t4, this.parentTag = i2, this.isFirstSubTag = l, this.prevTagName = v, this.nextTagName = b, this.leadingSpace = c, this.layer = s, this.innerHTML = "", this.match = _, this.inTable = h2, this.__detectStr__(t4, this.tagName)) {
+              var m = this.__fetchTagAttr__(t4).attr;
               this.attrs = m;
             } else
               this.attrs = {};
           }
-          return t2.prototype.__detectStr__ = function(t3, e2) {
-            if ("<" !== t3[0])
-              return "Not a valid tag, current tag name: ".concat(this.tagName, ", tag content: ").concat(t3), false;
-            for (var r2 = "", n2 = false, o2 = 1; o2 < t3.length && ">" !== t3[o2]; o2++)
-              !n2 && /(\s|\/)/.test(t3[o2]) && (n2 = true), n2 || (r2 += t3[o2]);
+          return t3.prototype.__detectStr__ = function(t4, e2) {
+            if ("<" !== t4[0])
+              return "Not a valid tag, current tag name: ".concat(this.tagName, ", tag content: ").concat(t4), false;
+            for (var r2 = "", n2 = false, o2 = 1; o2 < t4.length && ">" !== t4[o2]; o2++)
+              !n2 && /(\s|\/)/.test(t4[o2]) && (n2 = true), n2 || (r2 += t4[o2]);
             return r2 === e2;
-          }, t2.prototype.__fetchTagAttr__ = function(t3) {
-            for (var e2 = "", r2 = 1; r2 < t3.length && ">" !== t3[r2]; r2++)
-              e2 += t3[r2];
+          }, t3.prototype.__fetchTagAttr__ = function(t4) {
+            for (var e2 = "", r2 = 1; r2 < t4.length && ">" !== t4[r2]; r2++)
+              e2 += t4[r2];
             return { attr: (0, n.getTagAttributes)(e2) };
-          }, t2.prototype.beforeParse = function() {
-            var t3 = o.default.get().tagListener;
-            if (t3) {
-              var e2 = t3(this.tagName, { parentTag: this.parentTag, prevTagName: this.prevTagName, nextTagName: this.nextTagName, isFirstSubTag: this.isFirstSubTag, attrs: this.attrs, innerHTML: this.innerHTML, match: this.match, isSelfClosing: true }), r2 = e2.attrs, n2 = e2.match;
+          }, t3.prototype.beforeParse = function() {
+            var t4 = o.default.get().tagListener;
+            if (t4) {
+              var e2 = t4(this.tagName, { parentTag: this.parentTag, prevTagName: this.prevTagName, nextTagName: this.nextTagName, isFirstSubTag: this.isFirstSubTag, attrs: this.attrs, innerHTML: this.innerHTML, match: this.match, isSelfClosing: true }), r2 = e2.attrs, n2 = e2.match;
               this.attrs = r2, this.match = n2;
             }
             return "";
-          }, t2.prototype.beforeMergeSpace = function(t3) {
-            return t3;
-          }, t2.prototype.afterMergeSpace = function(t3) {
-            return t3;
-          }, t2.prototype.beforeReturn = function(t3) {
-            return t3;
-          }, t2.prototype.exec = function(t3, e2) {
-            void 0 === t3 && (t3 = ""), void 0 === e2 && (e2 = "");
+          }, t3.prototype.beforeMergeSpace = function(t4) {
+            return t4;
+          }, t3.prototype.afterMergeSpace = function(t4) {
+            return t4;
+          }, t3.prototype.beforeReturn = function(t4) {
+            return t4;
+          }, t3.prototype.exec = function(t4, e2) {
+            void 0 === t4 && (t4 = ""), void 0 === e2 && (e2 = "");
             var r2 = this.beforeParse();
-            return r2 = t3 + (r2 = this.beforeMergeSpace(r2)) + e2, r2 = this.afterMergeSpace(r2), r2 = this.beforeReturn(r2);
-          }, t2;
+            return r2 = t4 + (r2 = this.beforeMergeSpace(r2)) + e2, r2 = this.afterMergeSpace(r2), r2 = this.beforeReturn(r2);
+          }, t3;
         }();
         e.default = i;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = function() {
-          function t2() {
+          function t3() {
           }
-          return t2.prototype.exec = function() {
+          return t3.prototype.exec = function() {
             return "";
-          }, t2;
+          }, t3;
         }();
         e.default = n;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true }), e.TRIPLE = e.DOUBLE = e.SINGLE = void 0;
         e.SINGLE = "\u2608";
         e.DOUBLE = "\u2608\u2608";
         e.TRIPLE = "\u2608\u2608\u2608";
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(13), o = { html: true, body: true, p: true, div: true, pre: true, section: true, blockquote: true, aside: true, li: true, ul: true, ol: true, form: true, hr: true, h1: true, h2: true, h3: true, h4: true, h5: true, h6: true, dl: true, dd: true, dt: true, br: true, table: true };
-        e.default = function(t2) {
-          if (!t2)
+        e.default = function(t3) {
+          if (!t3)
             return false;
-          var e2 = (0, n.default)(t2);
+          var e2 = (0, n.default)(t3);
           return !!e2 && !!o[e2];
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17455,55 +17455,55 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true }), e.__EmptySelfClose__ = e.__Empty__ = void 0;
-        var i = r(0), a = r(4), c = function(t2) {
+        var i = r(0), a = r(4), c = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "__empty__"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "__empty__"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.slim = function(t3) {
-            return t3;
+          return n(e2, t3), e2.prototype.slim = function(t4) {
+            return t4;
           }, e2.prototype.parseValidSubTag = function(r2, n2, i2) {
             if ("__skip__" === this.tagName)
-              return t2.prototype.parseValidSubTag.call(this, r2, n2, i2);
+              return t3.prototype.parseValidSubTag.call(this, r2, n2, i2);
             var a2 = new e2(r2, n2, o({}, i2));
             return [a2.exec(), a2];
           }, e2.prototype.parseOnlyString = function(e3, r2, n2) {
-            return "__skip__" === this.tagName ? t2.prototype.parseOnlyString.call(this, e3, r2, n2) : [e3, null];
+            return "__skip__" === this.tagName ? t3.prototype.parseOnlyString.call(this, e3, r2, n2) : [e3, null];
           }, e2.prototype.exec = function() {
-            return t2.prototype.exec.call(this, "", "");
+            return t3.prototype.exec.call(this, "", "");
           }, e2;
         }(i.default);
         e.__Empty__ = c;
-        var u = function(t2) {
+        var u = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "__emptyselfclose__");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.tagName = r2, n2;
           }
-          return n(e2, t2), e2.prototype.exec = function() {
-            return t2.prototype.exec.call(this, "", "");
+          return n(e2, t3), e2.prototype.exec = function() {
+            return t3.prototype.exec.call(this, "", "");
           }, e2;
         }(a.default);
         e.__EmptySelfClose__ = u;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17512,40 +17512,40 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true }), e.__SkipSelfClose__ = e.__Skip__ = void 0;
-        var o = r(0), i = r(4), a = r(1), c = function(t2) {
+        var o = r(0), i = r(4), a = r(1), c = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "__skip__");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.noNeedWrap = ["td", "th"], o2;
           }
-          return n(e2, t2), e2.prototype.exec = function() {
+          return n(e2, t3), e2.prototype.exec = function() {
             var e3 = (0, a.isIndependentTag)((0, a.getRealTagName)(this.tagName)) && (!this.parentTag || !this.noNeedWrap.includes(this.parentTag)), r2 = e3 ? "\n" : "", n2 = e3 ? "\n" : "";
-            return t2.prototype.exec.call(this, r2, n2);
+            return t3.prototype.exec.call(this, r2, n2);
           }, e2;
         }(o.default);
         e.__Skip__ = c;
-        var u = function(t2) {
+        var u = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "__skipselfclose__"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "__skipselfclose__"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function() {
+          return n(e2, t3), e2.prototype.exec = function() {
             return "";
           }, e2;
         }(i.default);
         e.__SkipSelfClose__ = u;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17554,83 +17554,83 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true }), e.__NoMatchSelfClose__ = e.__NoMatch__ = void 0;
-        var o = r(0), i = r(4), a = function(t2) {
+        var o = r(0), i = r(4), a = function(t3) {
           function e2(e3, r2) {
-            return void 0 === r2 && (r2 = "__nomatch__"), t2.call(this, e3, r2) || this;
+            return void 0 === r2 && (r2 = "__nomatch__"), t3.call(this, e3, r2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return "<".concat(this.tagName, ">").concat(t3, "</").concat(this.tagName, ">");
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return "<".concat(this.tagName, ">").concat(t4, "</").concat(this.tagName, ">");
           }, e2.prototype.exec = function() {
-            return t2.prototype.exec.call(this, "", "");
+            return t3.prototype.exec.call(this, "", "");
           }, e2;
         }(o.default);
         e.__NoMatch__ = a;
-        var c = function(t2) {
+        var c = function(t3) {
           function e2(e3, r2) {
-            return void 0 === r2 && (r2 = "__nomatchselfclose__"), t2.call(this, e3, r2) || this;
+            return void 0 === r2 && (r2 = "__nomatchselfclose__"), t3.call(this, e3, r2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function() {
+          return n(e2, t3), e2.prototype.exec = function() {
             return "<".concat(this.tagName, " />");
           }, e2;
         }(i.default);
         e.__NoMatchSelfClose__ = c;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = { img: true, hr: true, input: true, br: true, meta: true, link: true, "!doctype": true, base: true, col: true, area: true, param: true, object: true, embed: true, keygen: true, source: true };
-        e.default = function(t2) {
-          return null != t2 && !!n[t2.toLowerCase()];
+        e.default = function(t3) {
+          return null != t3 && !!n[t3.toLowerCase()];
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(1), o = r(7), i = function() {
-          function t2(t3, e2, r2) {
+          function t3(t4, e2, r2) {
             void 0 === e2 && (e2 = "__nomatch__");
             var n2 = void 0 === r2 ? {} : r2, o2 = n2.keepSpace, i2 = void 0 !== o2 && o2, a = n2.prevTagName, c = void 0 === a ? "" : a, u = n2.nextTagName, s = void 0 === u ? "" : u, p = n2.prevTagStr, l = void 0 === p ? "" : p, f = n2.prevHasEndSpace, h2 = void 0 !== f && f, d = n2.prevHasStartSpace, _ = void 0 !== d && d, y = n2.parentTag, v = void 0 === y ? "" : y, g = n2.calcLeading, b = void 0 !== g && g, m = n2.layer, O = void 0 === m ? 1 : m, S = n2.leadingSpace, T = void 0 === S ? "" : S, x = n2.inTable, j = void 0 !== x && x;
-            this.tagName = e2, this.nextTagName = s, this.prevTagName = c, this.parentTag = v, this.prevTagStr = l, this.keepSpace = i2, this.calcLeading = b, this.leadingSpace = T, this.layer = O, this.rawStr = t3, this.inTable = j, this.prevHasEndSpace = h2, this.prevHasStartSpace = _, this.hasEndSpace = false, this.hasStartSpace = false, t3.startsWith(" ") && (this.hasStartSpace = true), t3.endsWith(" ") && (this.hasEndSpace = true);
+            this.tagName = e2, this.nextTagName = s, this.prevTagName = c, this.parentTag = v, this.prevTagStr = l, this.keepSpace = i2, this.calcLeading = b, this.leadingSpace = T, this.layer = O, this.rawStr = t4, this.inTable = j, this.prevHasEndSpace = h2, this.prevHasStartSpace = _, this.hasEndSpace = false, this.hasStartSpace = false, t4.startsWith(" ") && (this.hasStartSpace = true), t4.endsWith(" ") && (this.hasEndSpace = true);
           }
-          return t2.prototype.slim = function(t3) {
+          return t3.prototype.slim = function(t4) {
             if (this.keepSpace)
-              return t3;
-            var e2 = t3.replace(/\s+/g, " ");
+              return t4;
+            var e2 = t4.replace(/\s+/g, " ");
             return (0, o.default)(this.prevTagName) && (e2 = e2.trimLeft()), (0, o.default)(this.nextTagName) && (e2 = e2.trimRight()), e2;
-          }, t2.prototype.beforeReturn = function(t3) {
+          }, t3.prototype.beforeReturn = function(t4) {
             if (this.keepSpace)
-              return t3;
+              return t4;
             if (this.calcLeading)
-              return this.leadingSpace + (0, n.extraEscape)(t3);
-            var e2 = (0, n.extraEscape)(t3);
-            return this.inTable && (e2 = e2.replace(/\|/g, "\\|")), this.prevTagName, this.prevHasEndSpace, this.prevTagStr, (0, n.isSpacePassingTag)(this.prevTagName) && this.prevHasEndSpace && !/^\s+/.test(t3) && !/\s+$/.test(this.prevTagStr) ? " " + t3 : e2;
-          }, t2.prototype.exec = function() {
-            var t3 = this.rawStr;
-            return t3 = this.slim(t3), t3 = this.beforeReturn(t3);
-          }, t2;
+              return this.leadingSpace + (0, n.extraEscape)(t4);
+            var e2 = (0, n.extraEscape)(t4);
+            return this.inTable && (e2 = e2.replace(/\|/g, "\\|")), this.prevTagName, this.prevHasEndSpace, this.prevTagStr, (0, n.isSpacePassingTag)(this.prevTagName) && this.prevHasEndSpace && !/^\s+/.test(t4) && !/\s+$/.test(this.prevTagStr) ? " " + t4 : e2;
+          }, t3.prototype.exec = function() {
+            var t4 = this.rawStr;
+            return t4 = this.slim(t4), t4 = this.beforeReturn(t4);
+          }, t3;
         }();
         e.default = i;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(2);
-        e.default = function(t2) {
-          if (!t2)
-            return t2;
+        e.default = function(t3) {
+          if (!t3)
+            return t3;
           var e2 = n.default.get().aliasTags;
-          return null != (null === e2 || void 0 === e2 ? void 0 : e2[t2]) ? e2[t2] : t2;
+          return null != (null === e2 || void 0 === e2 ? void 0 : e2[t3]) ? e2[t3] : t3;
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17639,32 +17639,32 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "strong");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.layer = 1, o2.match = o2.match || "**", o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.match + t3 + this.match;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.match + t4 + this.match;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), null != this.match && this.prevTagStr && !this.prevTagStr.endsWith("\\" + this.match[0]) && this.prevTagStr.endsWith(this.match[0]) && (e3 = " "), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), null != this.match && this.prevTagStr && !this.prevTagStr.endsWith("\\" + this.match[0]) && this.prevTagStr.endsWith(this.match[0]) && (e3 = " "), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17673,32 +17673,32 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "del");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = n2.match || "~~", n2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.match + t3 + this.match;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.match + t4 + this.match;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17707,32 +17707,32 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "em");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.match = o2.match || "*", o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.match + t3 + this.match;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.match + t4 + this.match;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), "strong" === this.parentTag && this.nextTagStr && (r2 = " "), null != this.match && this.prevTagStr && !this.prevTagStr.endsWith("\\" + this.match) && this.prevTagStr.endsWith(this.match) && (e3 = " "), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), "strong" === this.parentTag && this.nextTagStr && (r2 = " "), null != this.match && this.prevTagStr && !this.prevTagStr.endsWith("\\" + this.match) && this.prevTagStr.endsWith(this.match) && (e3 = " "), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17741,51 +17741,51 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "th");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.tagName = r2, o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return t3 + "|";
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return t4 + "|";
           }, e2.prototype.parseValidSubTag = function(e3, r2, n2) {
-            return "ul" === r2 || "ol" === r2 || "table" === r2 || "pre" === r2 ? [e3.replace(/([\n\r])/g, ""), null] : t2.prototype.parseValidSubTag.call(this, e3, r2, n2);
+            return "ul" === r2 || "ol" === r2 || "table" === r2 || "pre" === r2 ? [e3.replace(/([\n\r])/g, ""), null] : t3.prototype.parseValidSubTag.call(this, e3, r2, n2);
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true }), e.unescapeStr = e.extraEscape = e.escapeStr = void 0;
         var n = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&apos;": "'", "&#x60;": "`", "&ldquo;": "\u201C", "&rdquo;": "\u201D" }, o = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;", "`": "&#x60;", "\u201C": "&ldquo;", "\u201D": "&rdquo;" }, i = /[&<>"'`\u201c\u201d]/g, a = RegExp(i.source), c = /&(?:amp|lt|gt|quot|#39|apos|#x60|ldquo|rdquo);/g, u = RegExp(c.source), s = [[/\\/g, "\\\\"], [/\*/g, "\\*"], [/^-/g, "\\-"], [/^\+ /g, "\\+ "], [/^(=+)/g, "\\$1"], [/^(#{1,6}) /g, "\\$1 "], [/`/g, "\\`"], [/^~~~/g, "\\~~~"], [/\[/g, "\\["], [/\]/g, "\\]"], [/^>/g, "\\>"], [/_/g, "\\_"], [/^(\d+)\. /g, "$1\\. "]];
-        e.escapeStr = function(t2) {
-          return t2 && a.test(t2) ? t2.replace(i, function(t3) {
-            return o[t3];
-          }) : t2;
-        }, e.unescapeStr = function(t2) {
-          return t2 = t2 && u.test(t2) ? t2.replace(c, function(t3) {
-            return n[t3];
-          }) : t2;
-        }, e.extraEscape = function(t2) {
-          return s.reduce(function(t3, e2) {
-            return t3.replace(e2[0], e2[1]);
-          }, t2);
+        e.escapeStr = function(t3) {
+          return t3 && a.test(t3) ? t3.replace(i, function(t4) {
+            return o[t4];
+          }) : t3;
+        }, e.unescapeStr = function(t3) {
+          return t3 = t3 && u.test(t3) ? t3.replace(c, function(t4) {
+            return n[t4];
+          }) : t3;
+        }, e.extraEscape = function(t3) {
+          return s.reduce(function(t4, e2) {
+            return t4.replace(e2[0], e2[1]);
+          }, t3);
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17794,33 +17794,33 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "a"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "a"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
             var e3 = this.attrs, r2 = e3.href, n2 = e3.title, o2 = r2 || "";
-            return n2 ? "[".concat(t3, "](").concat(o2, ' "').concat(n2, '")') : "[".concat(t3, "](").concat(o2, ")");
+            return n2 ? "[".concat(t4, "](").concat(o2, ' "').concat(n2, '")') : "[".concat(t4, "](").concat(o2, ")");
           }, e2.prototype.parseOnlyString = function(e3, r2, n2) {
-            return "tbody" === this.parentTag || "thead" === this.parentTag ? [e3, null] : t2.prototype.parseOnlyString.call(this, e3, r2, n2);
+            return "tbody" === this.parentTag || "thead" === this.parentTag ? [e3, null] : t3.prototype.parseOnlyString.call(this, e3, r2, n2);
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17829,28 +17829,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "b"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "b"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(14).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17859,64 +17859,64 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(7), a = r(0), c = r(1), u = function(t2) {
+        var i = r(7), a = r(0), c = r(1), u = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "blockquote");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.match = o2.match || ">", o2.fillPerLine = o2.fillPerLine.bind(o2), o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            if ("" === t3.trim())
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            if ("" === t4.trim())
               return "";
-            var e3 = this.match + " " + t3;
+            var e3 = this.match + " " + t4;
             return this.calcLeading ? this.leadingSpace + e3 : e3;
-          }, e2.prototype.afterMergeSpace = function(t3) {
-            for (var e3 = this, r2 = t3.split("\n"), n2 = r2.length - 1; n2 >= 0; n2--)
+          }, e2.prototype.afterMergeSpace = function(t4) {
+            for (var e3 = this, r2 = t4.split("\n"), n2 = r2.length - 1; n2 >= 0; n2--)
               n2 < r2.length - 1 && ">" === r2[n2].trim() && ">" === r2[n2 + 1].trim() && r2.splice(n2, 1);
-            return (r2 = r2.map(function(t4) {
-              return "" === t4 ? "" : e3.fillPerLine(t4);
+            return (r2 = r2.map(function(t5) {
+              return "" === t5 ? "" : e3.fillPerLine(t5);
             })).join("\n");
-          }, e2.prototype.beforeReturn = function(t3) {
-            return t3.replace("\n\n", "\n");
-          }, e2.prototype.fillPerLine = function(t3) {
+          }, e2.prototype.beforeReturn = function(t4) {
+            return t4.replace("\n\n", "\n");
+          }, e2.prototype.fillPerLine = function(t4) {
             var e3 = ">";
-            if (this.calcLeading && (e3 = this.leadingSpace + ">"), !t3.startsWith(e3)) {
-              var r2 = this.match + " " + t3;
+            if (this.calcLeading && (e3 = this.leadingSpace + ">"), !t4.startsWith(e3)) {
+              var r2 = this.match + " " + t4;
               return this.calcLeading ? this.leadingSpace + r2 : r2;
             }
-            return t3;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+            return t4;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             var n2;
-            "blockquote" === e3 ? n2 = new ((0, c.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { calcLeading: this.calcLeading, match: this.match + ">", noExtraLine: true })) : n2 = new ((0, c.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { noExtraLine: true }));
+            "blockquote" === e3 ? n2 = new ((0, c.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { calcLeading: this.calcLeading, match: this.match + ">", noExtraLine: true })) : n2 = new ((0, c.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { noExtraLine: true }));
             var a2 = n2.exec(), u2 = "";
             this.calcLeading && (u2 = this.leadingSpace);
             var s = (0, i.default)(r2.prevTagName) && "br" !== r2.prevTagName, p = (0, i.default)(r2.nextTagName) && "br" !== r2.nextTagName, l = (0, i.default)(e3) && "br" !== e3;
             return this.isFirstSubTag ? [a2.trimLeft().replace(u2, ""), n2] : l ? (a2 = u2 + this.match + a2, s || (a2 = "\n" + a2), !p && r2.nextTagStr && r2.nextTagStr.trim() && (a2 += this.match + "\n"), [a2, n2]) : s ? [u2 + this.match + "\n" + a2, n2] : [a2, n2];
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(a.default);
         e.default = u;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17925,28 +17925,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = r(4), i = r(18), a = function(t2) {
+        var o = r(4), i = r(18), a = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "b"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "b"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(t3, e3) {
+          return n(e2, t3), e2.prototype.exec = function(t4, e3) {
             return void 0 === e3 && (e3 = "\n"), this.inTable ? (0, i.escapeStr)("<br />") : "  " + e3;
           }, e2;
         }(o.default);
         e.default = a;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -17955,51 +17955,51 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(0), a = r(1), c = function(t2) {
+        var i = r(0), a = r(1), c = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "code");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.match = null == o2.match ? "`" : o2.match, o2.noWrap = "`" === o2.match, o2.layer = 1, o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
             var e3, r2;
-            return "" !== this.match && "`" !== this.match ? (e3 = this.match + " ", r2 = " " + this.match) : (e3 = this.match, r2 = this.match), e3 + t3 + r2;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+            return "" !== this.match && "`" !== this.match ? (e3 = this.match + " ", r2 = " " + this.match) : (e3 = this.match, r2 = this.match), e3 + t4 + r2;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             var n2;
-            return "pre" === e3 ? [(n2 = new ((0, a.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { language: "", match: "" }))).exec("", "\n"), n2] : [(n2 = new ((0, a.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { keepSpace: this.keepSpace, noWrap: this.noWrap }))).exec("", ""), n2];
-          }, e2.prototype.parseOnlyString = function(t3) {
-            if ("" !== this.match && t3) {
+            return "pre" === e3 ? [(n2 = new ((0, a.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { language: "", match: "" }))).exec("", "\n"), n2] : [(n2 = new ((0, a.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { keepSpace: this.keepSpace, noWrap: this.noWrap }))).exec("", ""), n2];
+          }, e2.prototype.parseOnlyString = function(t4) {
+            if ("" !== this.match && t4) {
               var e3 = 1;
-              (t3.startsWith("`") || t3.endsWith("`")) && (e3 = 2, (t3.startsWith("``") || t3.endsWith("``")) && (e3 = 3)), this.match = "`".repeat(e3);
+              (t4.startsWith("`") || t4.endsWith("`")) && (e3 = 2, (t4.startsWith("``") || t4.endsWith("``")) && (e3 = 3)), this.match = "`".repeat(e3);
             }
-            return [(0, a.unescapeStr)(t3), null];
-          }, e2.prototype.slim = function(t3) {
-            return this.keepSpace ? t3 : t3.trim();
+            return [(0, a.unescapeStr)(t4), null];
+          }, e2.prototype.slim = function(t4) {
+            return this.keepSpace ? t4 : t4.trim();
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = c;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18008,30 +18008,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h1");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "#", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18040,30 +18040,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h2");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "##", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18072,30 +18072,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h3");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "###", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18104,30 +18104,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h4");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "####", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18136,30 +18136,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h5");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "#####", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18168,30 +18168,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
             void 0 === r2 && (r2 = "h6");
-            var n2 = t2.call(this, e3, r2) || this;
+            var n2 = t3.call(this, e3, r2) || this;
             return n2.match = "######", n2;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(3).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18200,34 +18200,34 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "hr");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.match = "---", o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function() {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function() {
             return this.leadingSpace + this.match;
-          }, e2.prototype.beforeReturn = function(t3) {
-            return t3.replace(/^(?:\n\s*)/, "\n\n").replace(/(?:\n\s*)$/, "\n\n"), t3;
+          }, e2.prototype.beforeReturn = function(t4) {
+            return t4.replace(/^(?:\n\s*)/, "\n\n").replace(/(?:\n\s*)$/, "\n\n"), t4;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(4).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18236,28 +18236,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "i"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "i"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(16).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18266,31 +18266,31 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "img"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "img"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function() {
-            var t3 = this.attrs, e3 = t3.src, r2 = t3.alt;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function() {
+            var t4 = this.attrs, e3 = t4.src, r2 = t4.alt;
             return r2 || (r2 = ""), e3 || (e3 = ""), "![".concat(r2, "](").concat(e3, ")");
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(4).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18299,31 +18299,31 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "input"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "input"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function() {
-            var t3 = this.attrs, e3 = t3.type, r2 = t3.checked;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function() {
+            var t4 = this.attrs, e3 = t4.type, r2 = t4.checked;
             return "li" === this.parentTag && "checkbox" === e3 ? null != r2 ? "[x] " : "[ ] " : "";
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(4).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18332,52 +18332,52 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(0), a = r(1), c = r(7), u = r(6), s = function(t2) {
+        var i = r(0), a = r(1), c = r(7), u = r(6), s = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "li");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.match = o2.match || "*", o2.extraGap = "", o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.extraGap + this.leadingSpace + this.match + " " + t3;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.extraGap + this.leadingSpace + this.match + " " + t4;
           }, e2.prototype.__calcNextLeading__ = function() {
-            var t3, e3, r2;
-            return 1 === (null === (t3 = this.match) || void 0 === t3 ? void 0 : t3.length) ? u.DOUBLE : 2 === (null === (e3 = this.match) || void 0 === e3 ? void 0 : e3.length) ? u.TRIPLE : 3 === (null === (r2 = this.match) || void 0 === r2 ? void 0 : r2.length) ? u.DOUBLE : u.TRIPLE + u.DOUBLE;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
-            var n2 = (0, a.getTagConstructor)(e3), i2 = this.__calcNextLeading__(), c2 = new n2(t3, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace + i2, layer: this.layer + 1 })), u2 = c2.exec();
+            var t4, e3, r2;
+            return 1 === (null === (t4 = this.match) || void 0 === t4 ? void 0 : t4.length) ? u.DOUBLE : 2 === (null === (e3 = this.match) || void 0 === e3 ? void 0 : e3.length) ? u.TRIPLE : 3 === (null === (r2 = this.match) || void 0 === r2 ? void 0 : r2.length) ? u.DOUBLE : u.TRIPLE + u.DOUBLE;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
+            var n2 = (0, a.getTagConstructor)(e3), i2 = this.__calcNextLeading__(), c2 = new n2(t4, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace + i2, layer: this.layer + 1 })), u2 = c2.exec();
             return "p" === e3 && (this.extraGap = "\n"), this.isFirstSubTag ? [u2.trimLeft().replace(this.leadingSpace + i2, ""), c2] : [u2, c2];
           }, e2.prototype.parseOnlyString = function(e3, r2, n2) {
             var i2 = false;
             (0, c.default)(n2.prevTagName) && (i2 = true);
-            var a2 = this.__calcNextLeading__(), u2 = t2.prototype.parseOnlyString.call(this, e3, r2, o(o({}, n2), { calcLeading: i2, leadingSpace: this.leadingSpace + a2, layer: this.layer + 1 })), s2 = u2[0], p = u2[1];
+            var a2 = this.__calcNextLeading__(), u2 = t3.prototype.parseOnlyString.call(this, e3, r2, o(o({}, n2), { calcLeading: i2, leadingSpace: this.leadingSpace + a2, layer: this.layer + 1 })), s2 = u2[0], p = u2[1];
             return this.isFirstSubTag ? [s2.replace(this.leadingSpace + a2, ""), p] : [s2, p];
           }, e2.prototype.beforeReturn = function(e3) {
-            return t2.prototype.beforeReturn.call(this, e3);
+            return t3.prototype.beforeReturn.call(this, e3);
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = s;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18386,55 +18386,55 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(0), a = r(5), c = r(1), u = r(2), s = function(t2) {
+        var i = r(0), a = r(5), c = r(1), u = r(2), s = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "ol");
             var o2, i2 = this;
-            i2 = t2.call(this, e3, r2, n2) || this;
+            i2 = t3.call(this, e3, r2, n2) || this;
             var a2 = parseInt(null === (o2 = null === i2 || void 0 === i2 ? void 0 : i2.attrs) || void 0 === o2 ? void 0 : o2.start, 10);
             return i2.count = isNaN(a2) ? 1 : a2, i2;
           }
-          return n(e2, t2), e2.prototype.__isValidSubTag__ = function(t3) {
-            if (!t3)
+          return n(e2, t3), e2.prototype.__isValidSubTag__ = function(t4) {
+            if (!t4)
               return false;
-            var e3 = u.default.get().aliasTags, r2 = (0, c.getTagConstructor)(t3);
-            return "li" === t3 || "li" == (null === e3 || void 0 === e3 ? void 0 : e3[t3]) || r2 === a.default;
-          }, e2.prototype.getValidSubTagName = function(t3) {
-            return t3 && this.__isValidSubTag__(t3) ? t3 : null;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+            var e3 = u.default.get().aliasTags, r2 = (0, c.getTagConstructor)(t4);
+            return "li" === t4 || "li" == (null === e3 || void 0 === e3 ? void 0 : e3[t4]) || r2 === a.default;
+          }, e2.prototype.getValidSubTagName = function(t4) {
+            return t4 && this.__isValidSubTag__(t4) ? t4 : null;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             var n2 = (0, c.getTagConstructor)(e3);
             if (this.__isValidSubTag__(e3)) {
-              var i2 = this.count + ".", a2 = new n2(t3, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace, layer: this.layer, match: i2 }));
+              var i2 = this.count + ".", a2 = new n2(t4, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace, layer: this.layer, match: i2 }));
               return this.count++, [a2.exec("", "\n"), a2];
             }
             return ["", null];
           }, e2.prototype.parseOnlyString = function() {
             return ["", null];
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = s;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18443,30 +18443,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "p"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "p"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.calcLeading ? this.leadingSpace + t3 : t3;
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.calcLeading ? this.leadingSpace + t4 : t4;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), this.prevTagName || !this.prevTagStr || this.prevTagStr.endsWith("\n") || (e3 = "\n\n"), this.nextTagName || !this.nextTagStr || this.nextTagStr.startsWith("\n") || (r2 = "\n\n"), this.inTable && (e3 = "", r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), this.prevTagName || !this.prevTagStr || this.prevTagStr.endsWith("\n") || (e3 = "\n\n"), this.nextTagName || !this.nextTagStr || this.nextTagStr.startsWith("\n") || (r2 = "\n\n"), this.inTable && (e3 = "", r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18475,59 +18475,59 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(0), a = r(8), c = r(1), u = r(6), s = function(t2) {
+        var i = r(0), a = r(8), c = r(1), u = r(6), s = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "pre");
-            var o2 = t2.call(this, e3, r2, n2) || this;
+            var o2 = t3.call(this, e3, r2, n2) || this;
             return o2.indentSpace = u.DOUBLE + u.DOUBLE, o2.isIndent = o2.innerHTML.includes("```"), o2.match = o2.isIndent ? "" : "```", o2.language = o2.language || (0, c.getLanguage)(e3), o2.keepSpace = true, o2;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
             var e3 = this.isIndent || "code" === this.parentTag ? "" : this.match + this.language + "\n", r2 = "";
-            return t3.endsWith("\n") || (r2 = "\n"), e3 + t3 + (this.isIndent || "code" === this.parentTag ? "" : r2 + this.match);
-          }, e2.prototype.fillPerLine = function(t3) {
+            return t4.endsWith("\n") || (r2 = "\n"), e3 + t4 + (this.isIndent || "code" === this.parentTag ? "" : r2 + this.match);
+          }, e2.prototype.fillPerLine = function(t4) {
             var e3 = "";
-            return this.calcLeading && (e3 = this.leadingSpace), this.isIndent ? e3 + this.indentSpace + t3 : e3 + t3;
-          }, e2.prototype.afterMergeSpace = function(t3) {
-            var e3 = this, r2 = t3.split("\n");
-            return (r2 = r2.map(function(t4) {
-              return "" === t4 ? "" : e3.fillPerLine(t4);
+            return this.calcLeading && (e3 = this.leadingSpace), this.isIndent ? e3 + this.indentSpace + t4 : e3 + t4;
+          }, e2.prototype.afterMergeSpace = function(t4) {
+            var e3 = this, r2 = t4.split("\n");
+            return (r2 = r2.map(function(t5) {
+              return "" === t5 ? "" : e3.fillPerLine(t5);
             })).join("\n");
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             if ("code" === e3) {
-              var n2 = new ((0, c.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { match: "", language: this.language, keepSpace: true }));
+              var n2 = new ((0, c.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { match: "", language: this.language, keepSpace: true }));
               return [n2.exec("", ""), n2];
             }
             var i2 = void 0;
-            return [(i2 = (0, c.isSelfClosing)(e3) ? new a.__EmptySelfClose__(t3, e3) : new a.__Empty__(t3, e3, o(o({}, r2), { keepSpace: true }))).exec(), i2];
-          }, e2.prototype.parseOnlyString = function(t3) {
-            return [t3, null];
-          }, e2.prototype.slim = function(t3) {
-            return t3;
+            return [(i2 = (0, c.isSelfClosing)(e3) ? new a.__EmptySelfClose__(t4, e3) : new a.__Empty__(t4, e3, o(o({}, r2), { keepSpace: true }))).exec(), i2];
+          }, e2.prototype.parseOnlyString = function(t4) {
+            return [t4, null];
+          }, e2.prototype.slim = function(t4) {
+            return t4;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = s;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18536,28 +18536,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2) {
-            return void 0 === r2 && (r2 = "s"), t2.call(this, e3, r2) || this;
+            return void 0 === r2 && (r2 = "s"), t3.call(this, e3, r2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(15).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18566,28 +18566,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "span"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "span"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18596,35 +18596,35 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
         var i = r(0), a = r(1);
-        var c = function(t2) {
+        var c = function(t3) {
           function e2(e3, r2, n2) {
             void 0 === r2 && (r2 = "table");
-            var o2 = t2.call(this, e3, r2, n2) || this;
-            return o2.exist_thead = false, o2.exist_tbody = false, o2.empty_tbody = true, o2.tableColumnCount = function(t3) {
-              for (var e4 = "", r3 = 0; r3 < t3.length && !e4.endsWith("</tr>"); r3++)
-                e4 += t3[r3];
+            var o2 = t3.call(this, e3, r2, n2) || this;
+            return o2.exist_thead = false, o2.exist_tbody = false, o2.empty_tbody = true, o2.tableColumnCount = function(t4) {
+              for (var e4 = "", r3 = 0; r3 < t4.length && !e4.endsWith("</tr>"); r3++)
+                e4 += t4[r3];
               return Math.max(e4.split("</td>").length - 1, e4.split("</th>").length - 1);
             }(o2.innerHTML), o2;
           }
-          return n(e2, t2), e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+          return n(e2, t3), e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             "thead" === e3 && (this.exist_thead = true), "tbody" === e3 && (this.exist_tbody = true, this.empty_tbody = false), "tr" === e3 && (this.empty_tbody = false);
-            var n2 = new ((0, a.getTagConstructor)(e3))(t3, e3, o(o({}, r2), { tableColumnCount: this.tableColumnCount, inTable: true }));
+            var n2 = new ((0, a.getTagConstructor)(e3))(t4, e3, o(o({}, r2), { tableColumnCount: this.tableColumnCount, inTable: true }));
             return [n2.exec("", "\n"), n2];
           }, e2.prototype.parseOnlyString = function() {
             return ["", null];
-          }, e2.prototype.beforeReturn = function(t3) {
+          }, e2.prototype.beforeReturn = function(t4) {
             if (!this.exist_thead && !this.exist_tbody && this.empty_tbody)
               return "";
             if (0 === this.tableColumnCount)
@@ -18632,23 +18632,23 @@ var require_dist = __commonJS({
             if (!this.exist_tbody) {
               for (var e3 = (0, a.getTableAlign)(this.innerHTML, this.tableColumnCount), r2 = this.leadingSpace + "|", n2 = 0; n2 < e3.length; n2++)
                 r2 += e3[n2];
-              t3 = this.empty_tbody ? t3 + r2 + "\n" : r2 + "" + t3;
+              t4 = this.empty_tbody ? t4 + r2 + "\n" : r2 + "" + t4;
             }
-            return this.exist_thead || (t3 = "\n" + this.leadingSpace + "|".repeat(this.tableColumnCount + 1) + (t3.startsWith("\n") ? "" : "\n") + t3), t3;
+            return this.exist_thead || (t4 = "\n" + this.leadingSpace + "|".repeat(this.tableColumnCount + 1) + (t4.startsWith("\n") ? "" : "\n") + t4), t4;
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = c;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18657,34 +18657,34 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = r(0), i = r(1), a = function(t2) {
+        var o = r(0), i = r(1), a = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "tbody"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "tbody"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
             for (var e3 = (0, i.getTableAlign)(this.innerHTML, this.tableColumnCount), r2 = this.leadingSpace + "|", n2 = 0; n2 < e3.length; n2++)
               r2 += e3[n2];
-            return r2 + "\n" + t3;
+            return r2 + "\n" + t4;
           }, e2.prototype.parseOnlyString = function() {
             return ["", null];
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(o.default);
         e.default = a;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18693,30 +18693,30 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "td"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "td"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.parseValidSubTag = function(e3, r2, n2) {
-            return "ul" === r2 || "ol" === r2 || "table" === r2 || "pre" === r2 ? [e3.replace(/([\n\r])/g, ""), null] : t2.prototype.parseValidSubTag.call(this, e3, r2, n2);
+          return n(e2, t3), e2.prototype.parseValidSubTag = function(e3, r2, n2) {
+            return "ul" === r2 || "ol" === r2 || "table" === r2 || "pre" === r2 ? [e3.replace(/([\n\r])/g, ""), null] : t3.prototype.parseValidSubTag.call(this, e3, r2, n2);
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(17).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18725,28 +18725,28 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = function(t2) {
+        var o = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "thead"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "thead"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t2.prototype.exec.call(this, e3, r2);
+          return n(e2, t3), e2.prototype.exec = function(e3, r2) {
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = ""), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(r(0).default);
         e.default = o;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18755,38 +18755,38 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }();
         Object.defineProperty(e, "__esModule", { value: true });
-        var o = r(0), i = r(5), a = r(1), c = r(2), u = function(t2) {
+        var o = r(0), i = r(5), a = r(1), c = r(2), u = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "tr"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "tr"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.beforeMergeSpace = function(t3) {
-            return this.leadingSpace + "|" + t3;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+          return n(e2, t3), e2.prototype.beforeMergeSpace = function(t4) {
+            return this.leadingSpace + "|" + t4;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             var n2 = c.default.get().aliasTags, o2 = (0, a.getTagConstructor)(e3);
             if ("td" !== e3 && "th" !== e3 && "td" !== (null === n2 || void 0 === n2 ? void 0 : n2[e3]) && "th" !== (null === n2 || void 0 === n2 ? void 0 : n2[e3]) && o2 !== i.default)
               return "Should not have tags except <td> or <th> inside <tr>, current tag is ".concat(e3, " have been ignore."), ["", null];
-            var u2 = new o2(t3, e3, r2);
+            var u2 = new o2(t4, e3, r2);
             return [u2.exec("", ""), u2];
           }, e2.prototype.parseOnlyString = function() {
             return ["", null];
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = ""), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(o.default);
         e.default = u;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         var n = this && this.__extends || function() {
-          var t2 = function(e2, r2) {
-            return (t2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t3, e3) {
-              t3.__proto__ = e3;
-            } || function(t3, e3) {
+          var t3 = function(e2, r2) {
+            return (t3 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(t4, e3) {
+              t4.__proto__ = e3;
+            } || function(t4, e3) {
               for (var r3 in e3)
-                Object.prototype.hasOwnProperty.call(e3, r3) && (t3[r3] = e3[r3]);
+                Object.prototype.hasOwnProperty.call(e3, r3) && (t4[r3] = e3[r3]);
             })(e2, r2);
           };
           return function(e2, r2) {
@@ -18795,96 +18795,96 @@ var require_dist = __commonJS({
             function n2() {
               this.constructor = e2;
             }
-            t2(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
+            t3(e2, r2), e2.prototype = null === r2 ? Object.create(r2) : (n2.prototype = r2.prototype, new n2());
           };
         }(), o = this && this.__assign || function() {
-          return (o = Object.assign || function(t2) {
+          return (o = Object.assign || function(t3) {
             for (var e2, r2 = 1, n2 = arguments.length; r2 < n2; r2++)
               for (var o2 in e2 = arguments[r2])
-                Object.prototype.hasOwnProperty.call(e2, o2) && (t2[o2] = e2[o2]);
-            return t2;
+                Object.prototype.hasOwnProperty.call(e2, o2) && (t3[o2] = e2[o2]);
+            return t3;
           }).apply(this, arguments);
         };
         Object.defineProperty(e, "__esModule", { value: true });
-        var i = r(0), a = r(5), c = r(1), u = r(2).default.get().aliasTags, s = function(t2) {
+        var i = r(0), a = r(5), c = r(1), u = r(2).default.get().aliasTags, s = function(t3) {
           function e2(e3, r2, n2) {
-            return void 0 === r2 && (r2 = "ul"), t2.call(this, e3, r2, n2) || this;
+            return void 0 === r2 && (r2 = "ul"), t3.call(this, e3, r2, n2) || this;
           }
-          return n(e2, t2), e2.prototype.__isValidSubTag__ = function(t3) {
-            if (!t3)
+          return n(e2, t3), e2.prototype.__isValidSubTag__ = function(t4) {
+            if (!t4)
               return false;
-            var e3 = (0, c.getTagConstructor)(t3);
-            return "li" === t3 || "li" == (null === u || void 0 === u ? void 0 : u[t3]) || e3 === a.default;
-          }, e2.prototype.getValidSubTagName = function(t3) {
-            return t3 && this.__isValidSubTag__(t3) ? t3 : null;
-          }, e2.prototype.parseValidSubTag = function(t3, e3, r2) {
+            var e3 = (0, c.getTagConstructor)(t4);
+            return "li" === t4 || "li" == (null === u || void 0 === u ? void 0 : u[t4]) || e3 === a.default;
+          }, e2.prototype.getValidSubTagName = function(t4) {
+            return t4 && this.__isValidSubTag__(t4) ? t4 : null;
+          }, e2.prototype.parseValidSubTag = function(t4, e3, r2) {
             var n2 = (0, c.getTagConstructor)(e3);
             if (this.__isValidSubTag__(e3)) {
-              var i2 = new n2(t3, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace, layer: this.layer, match: "*" }));
+              var i2 = new n2(t4, e3, o(o({}, r2), { calcLeading: true, leadingSpace: this.leadingSpace, layer: this.layer, match: "*" }));
               return [i2.exec("", "\n"), i2];
             }
             return ["", null];
           }, e2.prototype.parseOnlyString = function() {
             return ["", null];
           }, e2.prototype.exec = function(e3, r2) {
-            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t2.prototype.exec.call(this, e3, r2);
+            return void 0 === e3 && (e3 = "\n"), void 0 === r2 && (r2 = "\n"), t3.prototype.exec.call(this, e3, r2);
           }, e2;
         }(i.default);
         e.default = s;
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(1), o = r(2), i = r(6);
-        e.default = function(t2, e2, r2) {
-          void 0 === r2 && (r2 = false), o.default.reset(), o.default.set(e2, r2), t2 = (t2 = (t2 = (0, n.clearComment)(t2)).trim()).replace(/(\r\n)/g, "").replace(/&nbsp;/g, " "), t2 = "<".concat(i.DOUBLE, "skip").concat(i.DOUBLE, ">").concat(t2, "</").concat(i.DOUBLE, "skip").concat(i.DOUBLE, ">");
-          var a = "", c = "".concat(i.DOUBLE, "skip").concat(i.DOUBLE), u = t2;
-          return a += new ((0, n.getTagConstructor)(c))(u, c, { parentTag: null, prevTagName: null, prevTagStr: a }).exec(), function(t3) {
-            return t3 = (t3 = (t3 = t3.replace(/^\s+/, "")).replace(/\s+$/, "")).replace(/\u2608/g, " ");
+        e.default = function(t3, e2, r2) {
+          void 0 === r2 && (r2 = false), o.default.reset(), o.default.set(e2, r2), t3 = (t3 = (t3 = (0, n.clearComment)(t3)).trim()).replace(/(\r\n)/g, "").replace(/&nbsp;/g, " "), t3 = "<".concat(i.DOUBLE, "skip").concat(i.DOUBLE, ">").concat(t3, "</").concat(i.DOUBLE, "skip").concat(i.DOUBLE, ">");
+          var a = "", c = "".concat(i.DOUBLE, "skip").concat(i.DOUBLE), u = t3;
+          return a += new ((0, n.getTagConstructor)(c))(u, c, { parentTag: null, prevTagName: null, prevTagStr: a }).exec(), function(t4) {
+            return t4 = (t4 = (t4 = t4.replace(/^\s+/, "")).replace(/\s+$/, "")).replace(/\u2608/g, " ");
           }((0, n.unescapeStr)(a));
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(11);
-        function o(t2, e2) {
-          for (var r2 = ""; e2 < t2.length && /[a-zA-Z0-9!\-_]/.test(t2[e2]); )
-            r2 += t2[e2++];
+        function o(t3, e2) {
+          for (var r2 = ""; e2 < t3.length && /[a-zA-Z0-9!\-_]/.test(t3[e2]); )
+            r2 += t3[e2++];
           return r2.toLowerCase();
         }
-        e.default = function(t2) {
+        e.default = function(t3) {
           var e2 = 0;
           return function() {
             var r2 = "", i = null, a = 0, c = null, u = false;
-            if (e2 >= t2.length)
+            if (e2 >= t3.length)
               return [i, r2];
-            for (var s = e2; s < t2.length; s++) {
-              if ("<" === t2[s] && "/" !== t2[s + 1]) {
+            for (var s = e2; s < t3.length; s++) {
+              if ("<" === t3[s] && "/" !== t3[s + 1]) {
                 if ("" !== r2 && null == i && !u)
                   return e2 = s, [i, r2];
-                var p = o(t2, s + 1);
+                var p = o(t3, s + 1);
                 null == i && (i = p), i === p && a++, (0, n.default)(i) && (0 === --a && (u = true), a < 0 && "Tag ".concat(i, " is abnormal"));
-              } else if ("<" === t2[s] && "/" === t2[s + 1]) {
+              } else if ("<" === t3[s] && "/" === t3[s + 1]) {
                 if (null == i) {
-                  "Tag is not integrity, current tagStr is ".concat(t2.slice(e2));
-                  for (var l = s; l < t2.length && ">" !== t2[l]; )
+                  "Tag is not integrity, current tagStr is ".concat(t3.slice(e2));
+                  for (var l = s; l < t3.length && ">" !== t3[l]; )
                     l++;
                   s = l;
                   continue;
                 }
-                i === (c = o(t2, s + 2)) && a--, a <= 0 && (u = true);
+                i === (c = o(t3, s + 2)) && a--, a <= 0 && (u = true);
               }
-              if (r2 += t2[s], ">" === t2[s] && u)
+              if (r2 += t3[s], ">" === t3[s] && u)
                 return e2 = s + 1, [i, r2];
-              s === t2.length - 1 && i !== c && (null != c && null != i && (r2 = r2.replace("<".concat(i, ">"), "").replace("</".concat(c, ">"), "")), i = null);
+              s === t3.length - 1 && i !== c && (null != c && null != i && (r2 = r2.replace("<".concat(i, ">"), "").replace("</".concat(c, ">"), "")), i = null);
             }
-            return e2 = t2.length, [i, r2];
+            return e2 = t3.length, [i, r2];
           };
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(2), o = r(6), i = r(11), a = r(49);
-        e.default = function t2(e2) {
+        e.default = function t3(e2) {
           var c, u = n.default.get(), s = u.skipTags, p = u.emptyTags, l = u.ignoreTags, f = u.aliasTags, h2 = u.renderCustomTags, d = (0, i.default)(e2);
           if ((null === s || void 0 === s ? void 0 : s.includes(e2)) || e2 === "".concat(o.DOUBLE, "skip").concat(o.DOUBLE)) {
             var _ = r(9);
@@ -18897,7 +18897,7 @@ var require_dist = __commonJS({
           if (null === l || void 0 === l ? void 0 : l.includes(e2))
             return r(5).default;
           if (null != (null === f || void 0 === f ? void 0 : f[e2]))
-            return t2(f[e2]);
+            return t3(f[e2]);
           var v = e2.toLowerCase();
           if (true !== h2 && !(0, a.default)(v)) {
             if (false === h2 || "SKIP" === h2)
@@ -18914,83 +18914,83 @@ var require_dist = __commonJS({
           }
           return c;
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = ["!doctype", "a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "circle", "cite", "clipPath", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "defs", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "ellipse", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "foreignObject", "form", "frame", "frameset", "g", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "line", "linearGradient", "link", "listing", "main", "map", "mark", "marquee", "mask", "math", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "path", "pattern", "picture", "plaintext", "polygon", "polyline", "pre", "progress", "q", "radialGradient", "rb", "rbc", "rect", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "stop", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "text", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tspan", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
-        e.default = function(t2) {
-          return "string" === typeof t2 && n.includes(t2.toLowerCase());
+        e.default = function(t3) {
+          return "string" === typeof t3 && n.includes(t3.toLowerCase());
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         var n = { "./__Heading__": 3, "./__Heading__.ts": 3, "./__empty__": 8, "./__empty__.ts": 8, "./__ignore__": 5, "./__ignore__.ts": 5, "./__nomatch__": 10, "./__nomatch__.ts": 10, "./__rawString__": 12, "./__rawString__.ts": 12, "./__skip__": 9, "./__skip__.ts": 9, "./a": 19, "./a.ts": 19, "./b": 20, "./b.ts": 20, "./blockquote": 21, "./blockquote.ts": 21, "./br": 22, "./br.ts": 22, "./code": 23, "./code.ts": 23, "./del": 15, "./del.ts": 15, "./em": 16, "./em.ts": 16, "./h1": 24, "./h1.ts": 24, "./h2": 25, "./h2.ts": 25, "./h3": 26, "./h3.ts": 26, "./h4": 27, "./h4.ts": 27, "./h5": 28, "./h5.ts": 28, "./h6": 29, "./h6.ts": 29, "./hr": 30, "./hr.ts": 30, "./i": 31, "./i.ts": 31, "./img": 32, "./img.ts": 32, "./input": 33, "./input.ts": 33, "./li": 34, "./li.ts": 34, "./ol": 35, "./ol.ts": 35, "./p": 36, "./p.ts": 36, "./pre": 37, "./pre.ts": 37, "./s": 38, "./s.ts": 38, "./span": 39, "./span.ts": 39, "./strong": 14, "./strong.ts": 14, "./table": 40, "./table.ts": 40, "./tbody": 41, "./tbody.ts": 41, "./td": 42, "./td.ts": 42, "./th": 17, "./th.ts": 17, "./thead": 43, "./thead.ts": 43, "./tr": 44, "./tr.ts": 44, "./ul": 45, "./ul.ts": 45 };
-        function o(t2) {
-          var e2 = i(t2);
+        function o(t3) {
+          var e2 = i(t3);
           return r(e2);
         }
-        function i(t2) {
-          if (!r.o(n, t2)) {
-            var e2 = new Error("Cannot find module '" + t2 + "'");
+        function i(t3) {
+          if (!r.o(n, t3)) {
+            var e2 = new Error("Cannot find module '" + t3 + "'");
             throw e2.code = "MODULE_NOT_FOUND", e2;
           }
-          return n[t2];
+          return n[t3];
         }
         o.keys = function() {
           return Object.keys(n);
-        }, o.resolve = i, t.exports = o, o.id = 50;
-      }, function(t, e, r) {
+        }, o.resolve = i, t2.exports = o, o.id = 50;
+      }, function(t2, e, r) {
         "use strict";
-        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t2) {
-          for (var e2 = {}, r2 = false, n = "", o = "", i = null, a = 0; a <= t2.length; a++) {
-            if (a === t2.length || /\s/.test(t2[a])) {
-              if (a === t2.length || !r2) {
+        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t3) {
+          for (var e2 = {}, r2 = false, n = "", o = "", i = null, a = 0; a <= t3.length; a++) {
+            if (a === t3.length || /\s/.test(t3[a])) {
+              if (a === t3.length || !r2) {
                 var c = n.trim();
                 "/" === c[c.length - 1] && (c = c.slice(0, c.length - 1)), c && (e2[c] = o.trim()), n = "", o = "";
               }
             } else {
-              if (/['"]/.test(t2[a]) && (!i || t2[a] === i)) {
-                (r2 = !r2) && (i = t2[a]);
+              if (/['"]/.test(t3[a]) && (!i || t3[a] === i)) {
+                (r2 = !r2) && (i = t3[a]);
                 continue;
               }
-              if ("=" === t2[a] && !r2)
+              if ("=" === t3[a] && !r2)
                 continue;
             }
-            if (a === t2.length)
+            if (a === t3.length)
               break;
-            r2 ? o += t2[a] : n += t2[a];
+            r2 ? o += t3[a] : n += t3[a];
           }
           return e2;
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = "javascript";
-        e.default = function(t2) {
-          var e2 = t2.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/);
-          return e2 ? e2[1] || "" : t2.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/) ? n : "";
+        e.default = function(t3) {
+          var e2 = t3.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/);
+          return e2 ? e2[1] || "" : t3.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/) ? n : "";
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
-        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t2) {
-          return t2.replace(/<!--(?:[\s\S]*?)-->/g, "");
+        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t3) {
+          return t3.replace(/<!--(?:[\s\S]*?)-->/g, "");
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
         Object.defineProperty(e, "__esModule", { value: true });
         var n = r(13), o = { b: true, a: true, del: true, em: true, i: true, s: true, span: true, strong: true };
-        e.default = function(t2) {
-          if (null === t2)
+        e.default = function(t3) {
+          if (null === t3)
             return true;
-          if (!t2)
+          if (!t3)
             return false;
-          var e2 = (0, n.default)(t2);
+          var e2 = (0, n.default)(t3);
           return !!e2 && !!o[e2];
         };
-      }, function(t, e, r) {
+      }, function(t2, e, r) {
         "use strict";
-        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t2, e2) {
-          var r2 = { _default_: "---|", center: ":---:|", left: ":---|", right: "---:|", start: ":---|", end: "---:|" }, n = Array(e2).fill(r2._default_), o = t2.match(/<(td|th)(.*?)>/g);
-          return o ? n = (n = o.slice(0, e2)).map(function(t3) {
-            var e3 = t3.match(/align\s*=\s*['"]\s*(center|left|right|start|end)/), n2 = t3.match(/text-align\s*:\s*(center|left|right|start|end)/);
+        Object.defineProperty(e, "__esModule", { value: true }), e.default = function(t3, e2) {
+          var r2 = { _default_: "---|", center: ":---:|", left: ":---|", right: "---:|", start: ":---|", end: "---:|" }, n = Array(e2).fill(r2._default_), o = t3.match(/<(td|th)(.*?)>/g);
+          return o ? n = (n = o.slice(0, e2)).map(function(t4) {
+            var e3 = t4.match(/align\s*=\s*['"]\s*(center|left|right|start|end)/), n2 = t4.match(/text-align\s*:\s*(center|left|right|start|end)/);
             return e3 || n2 ? e3 && !n2 ? r2[e3[1]] || r2._default_ : n2 ? r2[n2[1]] || r2._default_ : void 0 : r2._default_;
           }) : n;
         };
@@ -19005,7 +19005,7 @@ __export(main_exports, {
   default: () => AnyBlockPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian6 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // ../ABConverter/converter/ABConvert.ts
 var ABConvert = class {
@@ -19250,7 +19250,7 @@ var ABConvertManager = class {
     this.list_abConvert = [];
     this.m_renderMarkdownFn = (markdown, el) => {
       el.classList.add("markdown-rendered");
-      console.error("AnyBlockError: \u8BF7\u5148\u5236\u5B9A/\u91CD\u5B9A\u4E49md\u6E32\u67D3\u5668");
+      console.error("Please use renderMarkdownFn redefine render function");
     };
     if (typeof obsidian == "undefined" && typeof app == "undefined") {
       console.log("[environment]: markdown-it, without obsidian");
@@ -21402,7 +21402,7 @@ var abc_transposition = ABConvert.factory({
   id: "transposition",
   name: "\u8868\u683C\u8F6C\u7F6E",
   match: "transposition",
-  detail: "\u5C06\u8868\u683C\u8FDB\u884C\u8F6C\u7F6E\uFF0C\u5C31\u50CF\u77E9\u9635\u8F6C\u7F6E\u90A3\u6837\u3002\u8BE5\u7248\u672C\u4E0D\u652F\u6301\u6709\u8DE8\u884C\u8DE8\u5217\u5355\u5143\u683C",
+  detail: "\u5C06\u8868\u683C\u8FDB\u884C\u8F6C\u7F6E\uFF0C\u5C31\u50CF\u77E9\u9635\u8F6C\u7F6E\u90A3\u6837\u3002\u8BE5\u7248\u672C\u4E0D\u652F\u6301\u6709\u8DE8\u884C\u8DE8\u5217\u5355\u5143\u683C\u3002\u82E5\u590D\u6742\u8868\u683C\uFF0C\u8BF7\u6362\u7528trs\u7248\u672C",
   process_param: "HTMLElement" /* el */,
   process_return: "HTMLElement" /* el */,
   process: (el, header, content) => {
@@ -21444,76 +21444,24 @@ var abc_transpose = ABConvert.factory({
     const origi_table = content.querySelector("table");
     if (!origi_table)
       return content;
-    const origi_rows = origi_table.rows;
-    const origi_rowCount = origi_rows.length;
-    let origi_colCount = 0;
-    for (let relRow = 0; relRow < origi_rowCount; relRow++) {
-      let colCount = 0;
-      for (const cell of origi_rows[relRow].cells) {
-        colCount += cell.colSpan || 1;
-      }
-      if (colCount > origi_colCount) {
-        origi_colCount = colCount;
-      }
-    }
-    const map_table = new Array(origi_rowCount).fill(null).map(() => new Array(origi_colCount).fill(null));
-    for (let relRow = 0; relRow < origi_rowCount; relRow++) {
-      for (let relCol = 0; relCol < origi_rows[relRow].cells.length; relCol++) {
-        const cell = origi_rows[relRow].cells[relCol];
-        const rowIndex = relRow;
-        let colIndex = relCol;
-        while (true) {
-          if (colIndex >= map_table[rowIndex].length) {
-            console.error("\u8868\u683C\u89E3\u6790\u9519\u8BEF: colIndex\u8D85\u51FA\u8303\u56F4", map_table, rowIndex, colIndex, relRow, relCol);
-            return content;
-          }
-          if (!map_table[rowIndex][colIndex]) {
-            break;
-          } else
-            colIndex++;
-        }
-        if (cell.rowSpan > 1) {
-          for (let i = 1; i < cell.rowSpan; i++) {
-            if (rowIndex + i >= map_table.length) {
-              break;
-            }
-            map_table[rowIndex + i][colIndex] = "^";
-          }
-        }
-        if (cell.colSpan > 1) {
-          for (let i = 1; i < cell.rowSpan; i++) {
-            if (colIndex + i >= map_table[rowIndex].length) {
-              break;
-            }
-            map_table[rowIndex][colIndex + i] = "<";
-          }
-        }
-        map_table[rowIndex][colIndex] = {
-          html: cell,
-          rowSpan: cell.rowSpan,
-          colSpan: cell.colSpan,
-          rowIndex,
-          colIndex
-        };
-      }
-    }
-    const map_table2 = new Array(origi_colCount).fill(null).map(() => new Array(origi_rowCount).fill(null));
+    let { tableMap, origi_rowCount, origi_colCount } = table2tableMap(origi_table);
+    const tableMap2 = new Array(origi_colCount).fill(null).map(() => new Array(origi_rowCount).fill(null));
     for (let i = 0; i < origi_rowCount; i++) {
       for (let j = 0; j < origi_colCount; j++) {
-        const origi_cell = map_table[i][j];
+        const origi_cell = tableMap[i][j];
         if (!origi_cell)
           continue;
         else if (origi_cell == "<") {
-          map_table2[j][i] = "^";
+          tableMap2[j][i] = "^";
         } else if (origi_cell == "^") {
-          map_table2[j][i] = "<";
+          tableMap2[j][i] = "<";
         } else {
           let content2 = origi_cell.html;
           if (content2.innerHTML == "<" || content2.innerHTML == "&lt;")
             content2.innerHTML = "^";
           else if (content2.innerHTML == "^")
             content2.innerHTML = "<";
-          map_table2[j][i] = {
+          tableMap2[j][i] = {
             html: origi_cell.html,
             rowSpan: origi_cell.colSpan || 1,
             colSpan: origi_cell.rowSpan || 1,
@@ -21523,29 +21471,14 @@ var abc_transpose = ABConvert.factory({
         }
       }
     }
-    const trans_table = document.createElement("table");
-    origi_table.classList.add("ab-transposition", "ab-table");
+    const tmp = origi_colCount;
+    origi_colCount = origi_rowCount;
+    origi_rowCount = tmp;
+    const trans_table = tableMap2table(tableMap2, origi_rowCount, origi_colCount);
     origi_table.classList.forEach((className) => {
       trans_table.classList.add(className);
     });
-    const trans_body = document.createElement("tbody");
-    trans_table.appendChild(trans_body);
-    for (let i = 0; i < origi_colCount; i++) {
-      const newRow = trans_body.insertRow();
-      for (let j = 0; j < origi_rowCount; j++) {
-        const cell = map_table2[i][j];
-        if (!cell)
-          continue;
-        if (cell == "<" || cell == "^")
-          continue;
-        const newCell = newRow.insertCell();
-        newCell.innerHTML = cell.html.innerHTML;
-        newCell.rowSpan = cell.rowSpan;
-        newCell.colSpan = cell.colSpan;
-        newCell.setAttribute("rowIndex", String(cell.rowIndex));
-        newCell.setAttribute("colIndex", String(cell.colIndex));
-      }
-    }
+    trans_table.classList.add("ab-transposition", "ab-table");
     origi_table.innerHTML = trans_table.innerHTML;
     return content;
   }
@@ -21561,54 +21494,112 @@ var abc_exTable = ABConvert.factory({
     const origi_table = content.querySelector("table");
     if (!origi_table)
       return content;
-    const origi_rows = origi_table.rows;
-    const origi_rowCount = origi_rows.length;
-    let origi_colCount = 0;
-    for (let relRow = 0; relRow < origi_rowCount; relRow++) {
-      let colCount = 0;
-      for (const cell of origi_rows[relRow].cells) {
-        colCount += cell.colSpan || 1;
-      }
-      if (colCount > origi_colCount) {
-        origi_colCount = colCount;
+    let { tableMap, origi_rowCount, origi_colCount } = table2tableMap(origi_table, true);
+    const map_table2 = tableMap;
+    const trans_table = tableMap2table(map_table2, origi_rowCount, origi_colCount);
+    origi_table.classList.forEach((className) => {
+      trans_table.classList.add(className);
+    });
+    trans_table.classList.add("ab-extable", "ab-table");
+    origi_table.innerHTML = trans_table.innerHTML;
+    return content;
+  }
+});
+var abc_strictTable = ABConvert.factory({
+  id: "strictTable",
+  name: "\u6B63\u89C4\u5316\u8868\u683C",
+  match: "strictTable",
+  detail: "\u8865\u5168\u8868\u683C\u7684\u5C3E\u4E22\u5931\u9879\uFF0Clist2table|trs\u65F6\uFF0C\u53EF\u4EE5\u6709\u6548\u907F\u514Dbug",
+  process_param: "HTMLElement" /* el */,
+  process_return: "HTMLElement" /* el */,
+  process: (el, header, content) => {
+    const origi_table = content.querySelector("table");
+    if (!origi_table)
+      return content;
+    let { tableMap, origi_rowCount, origi_colCount } = table2tableMap(origi_table);
+    tableMapPrint(tableMap);
+    for (let i = 0; i < origi_rowCount; i++) {
+      for (let j = 0; j < origi_colCount; j++) {
+        const origi_cell = tableMap[i][j];
+        if (!origi_cell) {
+          tableMap[i][j] = {
+            html: document.createElement("td"),
+            rowSpan: 1,
+            colSpan: 1,
+            rowIndex: i,
+            colIndex: j
+          };
+        }
       }
     }
-    const map_table = new Array(origi_rowCount).fill(null).map(() => new Array(origi_colCount).fill(null));
+    tableMapPrint(tableMap);
+    const trans_table = tableMap2table(tableMap, origi_rowCount, origi_colCount);
+    origi_table.classList.forEach((className) => {
+      trans_table.classList.add(className);
+    });
+    trans_table.classList.add("ab-extable", "ab-table");
+    origi_table.innerHTML = trans_table.innerHTML;
+    return content;
+  }
+});
+function table2tableMap(origi_table, useMergeFlag = false) {
+  const origi_rows = origi_table.rows;
+  let origi_rowCount = origi_rows.length;
+  let origi_colCount = 0;
+  {
+    let map_colCount = [];
     for (let relRow = 0; relRow < origi_rowCount; relRow++) {
-      for (let relCol = 0; relCol < origi_rows[relRow].cells.length; relCol++) {
-        const cell = origi_rows[relRow].cells[relCol];
-        const rowIndex = relRow;
-        let colIndex = relCol;
-        while (true) {
-          if (colIndex >= map_table[rowIndex].length) {
-            console.error("\u8868\u683C\u89E3\u6790\u9519\u8BEF: colIndex\u8D85\u51FA\u8303\u56F4", map_table, rowIndex, colIndex, relRow, relCol);
-            return content;
-          }
-          if (!map_table[rowIndex][colIndex]) {
+      for (const cell of origi_rows[relRow].cells) {
+        const colSpan = cell.colSpan || 1;
+        const rowSpan = cell.rowSpan || 1;
+        for (let relRowSpan = relRow; relRowSpan < relRow + rowSpan; relRowSpan++) {
+          if (!map_colCount[relRowSpan])
+            map_colCount[relRowSpan] = colSpan;
+          else
+            map_colCount[relRowSpan] += colSpan;
+        }
+      }
+    }
+    origi_rowCount = map_colCount.length;
+    origi_colCount = Math.max(...map_colCount);
+  }
+  const tableMap = new Array(origi_rowCount).fill(null).map(() => new Array(origi_colCount).fill(null));
+  for (let relRow = 0; relRow < origi_rowCount; relRow++) {
+    for (let relCol = 0; relCol < origi_rows[relRow].cells.length; relCol++) {
+      const cell = origi_rows[relRow].cells[relCol];
+      const rowIndex = relRow;
+      let colIndex = relCol;
+      while (true) {
+        if (colIndex >= tableMap[rowIndex].length) {
+          console.error(`\u8868\u683C\u89E3\u6790\u9519\u8BEF: colIndex\u8D85\u51FA\u8303\u56F4: [${rowIndex}][${colIndex}] overflow tableMap[${origi_rowCount - 1}][${origi_colCount - 1}]`, tableMap);
+          throw new Error("\u8868\u683C\u89E3\u6790\u9519\u8BEF: colIndex\u8D85\u51FA\u8303\u56F4");
+        }
+        if (!tableMap[rowIndex][colIndex]) {
+          break;
+        } else
+          colIndex++;
+      }
+      if (cell.rowSpan > 1) {
+        for (let i = 1; i < cell.rowSpan; i++) {
+          if (rowIndex + i >= tableMap.length) {
             break;
-          } else
-            colIndex++;
-        }
-        if (cell.rowSpan > 1) {
-          for (let i = 1; i < cell.rowSpan; i++) {
-            if (rowIndex + i >= map_table.length) {
-              break;
-            }
-            map_table[rowIndex + i][colIndex] = "^";
           }
+          tableMap[rowIndex + i][colIndex] = "^";
         }
-        if (cell.colSpan > 1) {
-          for (let i = 1; i < cell.rowSpan; i++) {
-            if (colIndex + i >= map_table[rowIndex].length) {
-              break;
-            }
-            map_table[rowIndex][colIndex + i] = "<";
+      }
+      if (cell.colSpan > 1) {
+        for (let i = 1; i < cell.rowSpan; i++) {
+          if (colIndex + i >= tableMap[rowIndex].length) {
+            break;
           }
+          tableMap[rowIndex][colIndex + i] = "<";
         }
+      }
+      if (useMergeFlag) {
         if (cell.rowSpan == 1 && cell.colSpan == 1 && cell.textContent == "^") {
-          map_table[rowIndex][colIndex] = "^";
+          tableMap[rowIndex][colIndex] = "^";
           for (let i = rowIndex - 1; i >= 0; i--) {
-            const item = map_table[i][colIndex];
+            const item = tableMap[i][colIndex];
             if (!item)
               break;
             if (item == "<")
@@ -21623,9 +21614,9 @@ var abc_exTable = ABConvert.factory({
             }
           }
         } else if (cell.rowSpan == 1 && cell.colSpan == 1 && cell.textContent == "<") {
-          map_table[rowIndex][colIndex] = "<";
+          tableMap[rowIndex][colIndex] = "<";
           for (let j = colIndex - 1; j >= 0; j--) {
-            const item = map_table[rowIndex][j];
+            const item = tableMap[rowIndex][j];
             if (!item)
               break;
             if (item == "^")
@@ -21640,7 +21631,7 @@ var abc_exTable = ABConvert.factory({
             }
           }
         } else {
-          map_table[rowIndex][colIndex] = {
+          tableMap[rowIndex][colIndex] = {
             html: cell,
             rowSpan: cell.rowSpan,
             colSpan: cell.colSpan,
@@ -21648,36 +21639,65 @@ var abc_exTable = ABConvert.factory({
             colIndex
           };
         }
+      } else {
+        tableMap[rowIndex][colIndex] = {
+          html: cell,
+          rowSpan: cell.rowSpan,
+          colSpan: cell.colSpan,
+          rowIndex,
+          colIndex
+        };
       }
     }
-    const map_table2 = map_table;
-    const trans_table = document.createElement("table");
-    origi_table.classList.add("ab-transposition", "ab-table");
-    origi_table.classList.forEach((className) => {
-      trans_table.classList.add(className);
-    });
-    const trans_body = document.createElement("tbody");
-    trans_table.appendChild(trans_body);
-    for (let i = 0; i < origi_rowCount; i++) {
-      const newRow = trans_body.insertRow();
-      for (let j = 0; j < origi_colCount; j++) {
-        const cell = map_table2[i][j];
-        if (!cell)
-          continue;
-        if (cell == "<" || cell == "^")
-          continue;
-        const newCell = newRow.insertCell();
-        newCell.innerHTML = cell.html.innerHTML;
-        newCell.rowSpan = cell.rowSpan;
-        newCell.colSpan = cell.colSpan;
-        newCell.setAttribute("rowIndex", String(cell.rowIndex));
-        newCell.setAttribute("colIndex", String(cell.colIndex));
-      }
-    }
-    origi_table.innerHTML = trans_table.innerHTML;
-    return content;
   }
-});
+  return {
+    tableMap,
+    origi_rowCount,
+    origi_colCount
+  };
+}
+function tableMap2table(tableMap, origi_rowCount, origi_colCount) {
+  const trans_table = document.createElement("table");
+  const trans_body = document.createElement("tbody");
+  trans_table.appendChild(trans_body);
+  for (let i = 0; i < origi_rowCount; i++) {
+    const newRow = trans_body.insertRow();
+    for (let j = 0; j < origi_colCount; j++) {
+      const cell = tableMap[i][j];
+      if (!cell)
+        continue;
+      if (cell == "<" || cell == "^")
+        continue;
+      const newCell = newRow.insertCell();
+      newCell.innerHTML = cell.html.innerHTML;
+      newCell.rowSpan = cell.rowSpan;
+      newCell.colSpan = cell.colSpan;
+      newCell.setAttribute("rowIndex", String(cell.rowIndex));
+      newCell.setAttribute("colIndex", String(cell.colIndex));
+    }
+  }
+  return trans_table;
+}
+function tableMapPrint(tableMap) {
+  var _a3;
+  let content = "";
+  for (let i = 0; i < tableMap.length; i++) {
+    let row = i + "|";
+    for (let j = 0; j < tableMap[i].length; j++) {
+      const cell = tableMap[i][j];
+      if (cell === null)
+        row += " . |";
+      else if (cell === "<")
+        row += " < |";
+      else if (cell === "^")
+        row += " ^ |";
+      else
+        row += ` ${((_a3 = cell.html.textContent) == null ? void 0 : _a3.trim()) || ""} |`;
+    }
+    content += row + "\n";
+  }
+  console.log("tableMap\n" + content);
+}
 
 // ../ABConverter/converter/abc_ex.ts
 var abc_faq = ABConvert.factory({
@@ -21998,8 +22018,9 @@ var KEYWORD_WHILE = "while ";
 var KEYWORD_GROUP = "group ";
 var KEYWORD_PARTITION = "partition ";
 var KEYWORD_LANE = "lane ";
-var KEYWORD_ELSE = "else";
 var KEYWORD_ELIF = "elif ";
+var KEYWORD_ELSEIF = "else if ";
+var KEYWORD_ELSE = "else";
 var KEYWORD_DEFAULT = "default";
 var KEYWORD_DEFAULT2 = "case _";
 var KEYWORD_CASE = "case ";
@@ -22043,7 +22064,7 @@ function processBlock(stats, index2, parentLevel) {
     let processed = false;
     for (const [statType, processor] of Object.entries(statementTypes)) {
       if (stat.isStatementOfType(statType)) {
-        const { result: processedResult, nextIndex: nextNext } = processor(stats, next2);
+        const { result: processedResult, nextIndex: nextNext } = processor(stats, next2, statType);
         result += processedResult;
         next2 = nextNext;
         processed = true;
@@ -22072,9 +22093,13 @@ function processIfStatement(stats, index2) {
     result += indentContent(result2);
     nextIndex = nextIndex2;
   }
-  while (nextIndex < stats.length && stats[nextIndex].level === stat.level && stats[nextIndex].isStatementOfType(KEYWORD_ELIF, KEYWORD_ELSE)) {
+  while (nextIndex < stats.length && stats[nextIndex].level === stat.level && stats[nextIndex].isStatementOfType(KEYWORD_ELIF, KEYWORD_ELSEIF, KEYWORD_ELSE)) {
     const branch = stats[nextIndex];
-    if (branch.isStatementOfType(KEYWORD_ELIF)) {
+    if (branch.isStatementOfType(KEYWORD_ELSEIF)) {
+      const condition2 = branch.takeTagOfStat(KEYWORD_ELSEIF);
+      result += `else if(${condition2}) then (yes)
+`;
+    } else if (branch.isStatementOfType(KEYWORD_ELIF)) {
       const condition2 = branch.takeTagOfStat(KEYWORD_ELIF);
       result += `else if(${condition2}) then (yes)
 `;
@@ -22089,10 +22114,10 @@ function processIfStatement(stats, index2) {
   result += "endif\n";
   return { result, nextIndex };
 }
-function processSwitchStatement(stats, index2) {
-  let result = KEYWORD_SWITCH;
+function processSwitchStatement(stats, index2, statType) {
+  let result = `switch `;
   const stat = stats[index2];
-  const condition = stat.takeTagOfStat(KEYWORD_SWITCH);
+  const condition = stat.takeTagOfStat(statType);
   let nextIndex = index2 + 1;
   result += `(${condition})
 `;
@@ -26329,8 +26354,8 @@ function compileUnsafe(selector, options, context) {
   const token = typeof selector === "string" ? parse(selector) : selector;
   return compileToken(token, options, context);
 }
-function includesScopePseudo(t) {
-  return t.type === SelectorType.Pseudo && (t.name === "scope" || Array.isArray(t.data) && t.data.some((data2) => data2.some(includesScopePseudo)));
+function includesScopePseudo(t2) {
+  return t2.type === SelectorType.Pseudo && (t2.name === "scope" || Array.isArray(t2.data) && t2.data.some((data2) => data2.some(includesScopePseudo)));
 }
 var DESCENDANT_TOKEN = { type: SelectorType.Descendant };
 var FLEXIBLE_DESCENDANT_TOKEN = {
@@ -26346,14 +26371,14 @@ function absolutize(token, { adapter: adapter2 }, context) {
     const parent2 = adapter2.isTag(e) && adapter2.getParent(e);
     return e === PLACEHOLDER_ELEMENT || parent2 && adapter2.isTag(parent2);
   }));
-  for (const t of token) {
-    if (t.length > 0 && isTraversal2(t[0]) && t[0].type !== SelectorType.Descendant) {
-    } else if (hasContext && !t.some(includesScopePseudo)) {
-      t.unshift(DESCENDANT_TOKEN);
+  for (const t2 of token) {
+    if (t2.length > 0 && isTraversal2(t2[0]) && t2[0].type !== SelectorType.Descendant) {
+    } else if (hasContext && !t2.some(includesScopePseudo)) {
+      t2.unshift(DESCENDANT_TOKEN);
     } else {
       continue;
     }
-    t.unshift(SCOPE_TOKEN);
+    t2.unshift(SCOPE_TOKEN);
   }
 }
 function compileToken(token, options, context) {
@@ -26364,7 +26389,7 @@ function compileToken(token, options, context) {
   const finalContext = context && (Array.isArray(context) ? context : [context]);
   if (options.relativeSelector !== false) {
     absolutize(token, options, finalContext);
-  } else if (token.some((t) => t.length > 0 && isTraversal2(t[0]))) {
+  } else if (token.some((t2) => t2.length > 0 && isTraversal2(t2[0]))) {
     throw new Error("Relative selectors are not allowed when the `relativeSelector` option is disabled");
   }
   let shouldTestNextSiblings = false;
@@ -38079,17 +38104,17 @@ function process_inlines(tokens, state) {
     OUTER:
       while (pos < max) {
         QUOTE_RE.lastIndex = pos;
-        const t = QUOTE_RE.exec(text4);
-        if (!t) {
+        const t2 = QUOTE_RE.exec(text4);
+        if (!t2) {
           break;
         }
         let canOpen = true;
         let canClose = true;
-        pos = t.index + 1;
-        const isSingle = t[0] === "'";
+        pos = t2.index + 1;
+        const isSingle = t2[0] === "'";
         let lastChar = 32;
-        if (t.index - 1 >= 0) {
-          lastChar = text4.charCodeAt(t.index - 1);
+        if (t2.index - 1 >= 0) {
+          lastChar = text4.charCodeAt(t2.index - 1);
         } else {
           for (j = i - 1; j >= 0; j--) {
             if (tokens[j].type === "softbreak" || tokens[j].type === "hardbreak")
@@ -38131,7 +38156,7 @@ function process_inlines(tokens, state) {
             canClose = false;
           }
         }
-        if (nextChar === 34 && t[0] === '"') {
+        if (nextChar === 34 && t2[0] === '"') {
           if (lastChar >= 48 && lastChar <= 57) {
             canClose = canOpen = false;
           }
@@ -38142,7 +38167,7 @@ function process_inlines(tokens, state) {
         }
         if (!canOpen && !canClose) {
           if (isSingle) {
-            token.content = replaceAt(token.content, t.index, APOSTROPHE);
+            token.content = replaceAt(token.content, t2.index, APOSTROPHE);
           }
           continue;
         }
@@ -38163,7 +38188,7 @@ function process_inlines(tokens, state) {
                 openQuote = state.md.options.quotes[0];
                 closeQuote = state.md.options.quotes[1];
               }
-              token.content = replaceAt(token.content, t.index, closeQuote);
+              token.content = replaceAt(token.content, t2.index, closeQuote);
               tokens[item.token].content = replaceAt(
                 tokens[item.token].content,
                 item.pos,
@@ -38183,12 +38208,12 @@ function process_inlines(tokens, state) {
         if (canOpen) {
           stack.push({
             token: i,
-            pos: t.index,
+            pos: t2.index,
             single: isSingle,
             level: thisLevel
           });
         } else if (canClose && isSingle) {
-          token.content = replaceAt(token.content, t.index, APOSTROPHE);
+          token.content = replaceAt(token.content, t2.index, APOSTROPHE);
         }
       }
   }
@@ -38493,20 +38518,20 @@ function table(state, startLine, endLine, silent) {
   let columns = lineText.split("|");
   const aligns = [];
   for (let i = 0; i < columns.length; i++) {
-    const t = columns[i].trim();
-    if (!t) {
+    const t2 = columns[i].trim();
+    if (!t2) {
       if (i === 0 || i === columns.length - 1) {
         continue;
       } else {
         return false;
       }
     }
-    if (!/^:?-+:?$/.test(t)) {
+    if (!/^:?-+:?$/.test(t2)) {
       return false;
     }
-    if (t.charCodeAt(t.length - 1) === 58) {
-      aligns.push(t.charCodeAt(0) === 58 ? "center" : "right");
-    } else if (t.charCodeAt(0) === 58) {
+    if (t2.charCodeAt(t2.length - 1) === 58) {
+      aligns.push(t2.charCodeAt(0) === 58 ? "center" : "right");
+    } else if (t2.charCodeAt(0) === 58) {
       aligns.push("left");
     } else {
       aligns.push("");
@@ -41162,11 +41187,11 @@ var decode2 = function(input) {
         error("overflow");
       }
       i += digit * w;
-      const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-      if (digit < t) {
+      const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+      if (digit < t2) {
         break;
       }
-      const baseMinusT = base - t;
+      const baseMinusT = base - t2;
       if (w > floor(maxInt / baseMinusT)) {
         error("overflow");
       }
@@ -41220,14 +41245,14 @@ var encode2 = function(input) {
       if (currentValue === n) {
         let q = delta;
         for (let k = base; ; k += base) {
-          const t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-          if (q < t) {
+          const t2 = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+          if (q < t2) {
             break;
           }
-          const qMinusT = q - t;
-          const baseMinusT = base - t;
+          const qMinusT = q - t2;
+          const baseMinusT = base - t2;
           output.push(
-            stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+            stringFromCharCode(digitToBasic(t2 + qMinusT % baseMinusT, 0))
           );
           q = floor(qMinusT / baseMinusT);
         }
@@ -42425,15 +42450,15 @@ var defaultTagPrefix = "tag:yaml.org,2002:";
 function findTagObject(value, tagName, tags) {
   var _a3;
   if (tagName) {
-    const match2 = tags.filter((t) => t.tag === tagName);
-    const tagObj = (_a3 = match2.find((t) => !t.format)) != null ? _a3 : match2[0];
+    const match2 = tags.filter((t2) => t2.tag === tagName);
+    const tagObj = (_a3 = match2.find((t2) => !t2.format)) != null ? _a3 : match2[0];
     if (!tagObj)
       throw new Error(`Tag ${tagName} not found`);
     return tagObj;
   }
-  return tags.find((t) => {
+  return tags.find((t2) => {
     var _a4;
-    return ((_a4 = t.identify) == null ? void 0 : _a4.call(t, value)) && !t.format;
+    return ((_a4 = t2.identify) == null ? void 0 : _a4.call(t2, value)) && !t2.format;
   });
 }
 function createNode(value, tagName, ctx) {
@@ -43004,10 +43029,10 @@ function stringifyString(item, ctx, onComment, onChompKeep) {
   let res = _stringify(type);
   if (res === null) {
     const { defaultKeyType, defaultStringType } = ctx.options;
-    const t = implicitKey && defaultKeyType || defaultStringType;
-    res = _stringify(t);
+    const t2 = implicitKey && defaultKeyType || defaultStringType;
+    res = _stringify(t2);
     if (res === null)
-      throw new Error(`Unsupported default string type ${t}`);
+      throw new Error(`Unsupported default string type ${t2}`);
   }
   return res;
 }
@@ -43057,27 +43082,27 @@ function createStringifyContext(doc, options) {
 function getTagObject(tags, item) {
   var _a3, _b, _c, _d;
   if (item.tag) {
-    const match2 = tags.filter((t) => t.tag === item.tag);
+    const match2 = tags.filter((t2) => t2.tag === item.tag);
     if (match2.length > 0)
-      return (_a3 = match2.find((t) => t.format === item.format)) != null ? _a3 : match2[0];
+      return (_a3 = match2.find((t2) => t2.format === item.format)) != null ? _a3 : match2[0];
   }
   let tagObj = void 0;
   let obj;
   if (isScalar(item)) {
     obj = item.value;
-    let match2 = tags.filter((t) => {
+    let match2 = tags.filter((t2) => {
       var _a4;
-      return (_a4 = t.identify) == null ? void 0 : _a4.call(t, obj);
+      return (_a4 = t2.identify) == null ? void 0 : _a4.call(t2, obj);
     });
     if (match2.length > 1) {
-      const testMatch = match2.filter((t) => t.test);
+      const testMatch = match2.filter((t2) => t2.test);
       if (testMatch.length > 0)
         match2 = testMatch;
     }
-    tagObj = (_b = match2.find((t) => t.format === item.format)) != null ? _b : match2.find((t) => !t.format);
+    tagObj = (_b = match2.find((t2) => t2.format === item.format)) != null ? _b : match2.find((t2) => !t2.format);
   } else {
     obj = item;
-    tagObj = tags.find((t) => t.nodeClass && obj instanceof t.nodeClass);
+    tagObj = tags.find((t2) => t2.nodeClass && obj instanceof t2.nodeClass);
   }
   if (!tagObj) {
     const name2 = (_d = (_c = obj == null ? void 0 : obj.constructor) == null ? void 0 : _c.name) != null ? _d : typeof obj;
@@ -45460,7 +45485,7 @@ function composeCollection(CN2, ctx, token, props, onError) {
   if (!tagToken || !tagName || tagName === "!" || tagName === YAMLMap.tagName && expType === "map" || tagName === YAMLSeq.tagName && expType === "seq") {
     return resolveCollection(CN2, ctx, token, onError, tagName);
   }
-  let tag = ctx.schema.tags.find((t) => t.tag === tagName && t.collection === expType);
+  let tag = ctx.schema.tags.find((t2) => t2.tag === tagName && t2.collection === expType);
   if (!tag) {
     const kt = ctx.schema.knownTags[tagName];
     if (kt && kt.collection === expType) {
@@ -48348,9 +48373,10 @@ function list2markmap(markdown, div) {
 ABCSetting.env = "obsidian";
 
 // ab_manager/abm_code/ABReplacer_CodeBlock.ts
-var import_obsidian = require("obsidian");
+var import_obsidian2 = require("obsidian");
 
 // ab_manager/abm_cm/ABReplacer_Widget.ts
+var import_obsidian = require("obsidian");
 var import_view = require("@codemirror/view");
 var _ABReplacer_Widget = class extends import_view.WidgetType {
   constructor(rangeSpec, editor) {
@@ -48362,14 +48388,20 @@ var _ABReplacer_Widget = class extends import_view.WidgetType {
     this.div = document.createElement("div");
     this.div.setAttribute("type_header", this.rangeSpec.header);
     this.div.addClasses(["ab-replace", "cm-embed-block"]);
-    let dom_note = this.div.createEl("div", { cls: ["ab-note", "drop-shadow"] });
+    let dom_note = document.createElement("div");
+    this.div.appendChild(dom_note);
+    dom_note.classList.add("ab-note", "drop-shadow");
     ABConvertManager.autoABConvert(dom_note, this.rangeSpec.header, this.rangeSpec.content, this.rangeSpec.selector);
     if (this.global_editor) {
       let dom_edit = this.div.createEl("div", {
         cls: ["ab-button", "ab-button-1", "edit-block-button"],
         attr: { "aria-label": "Edit the block - " + this.rangeSpec.header }
       });
-      dom_edit.innerHTML = _ABReplacer_Widget.str_icon_code2;
+      if (import_obsidian.Platform.isMobileApp || import_obsidian.Platform.isPhone || import_obsidian.Platform.isTablet) {
+        dom_edit.classList.remove("edit-block-button");
+      }
+      dom_edit.empty();
+      dom_edit.appendChild((0, import_obsidian.sanitizeHTMLToDom)(_ABReplacer_Widget.STR_ICON_CODE2));
       dom_edit.onclick = () => {
         this.moveCursor();
       };
@@ -48379,7 +48411,8 @@ var _ABReplacer_Widget = class extends import_view.WidgetType {
         cls: ["ab-button", "ab-button-2", "edit-block-button"],
         attr: { "aria-label": "Refresh the block" }
       });
-      dom_edit.innerHTML = _ABReplacer_Widget.str_icon_refresh;
+      dom_edit.empty();
+      dom_edit.appendChild((0, import_obsidian.sanitizeHTMLToDom)(_ABReplacer_Widget.STR_ICON_REFRESH));
       dom_edit.onclick = () => {
         abConvertEvent(this.div);
         this.moveCursor(-1);
@@ -48417,16 +48450,16 @@ var _ABReplacer_Widget = class extends import_view.WidgetType {
   }
 };
 var ABReplacer_Widget = _ABReplacer_Widget;
-ABReplacer_Widget.str_icon_code2 = `<svg xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+ABReplacer_Widget.STR_ICON_CODE2 = `<svg xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
       stroke-linejoin="round" data-darkreader-inline-stroke="" stroke-width="2"
       viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" style="--darkreader-inline-stroke:currentColor;">
     <path d="m18 16 4-4-4-4"></path>
     <path d="m6 8-4 4 4 4"></path>
     <path d="m14.5 4-5 16"></path>
   </svg>`;
-ABReplacer_Widget.str_icon_refresh = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+ABReplacer_Widget.STR_ICON_REFRESH = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
       xml:space="preserve"
-      viewBox="-80 -80 650 650" height="24" width="24" fill="currentColor" stroke="currentColor" style="--darkreader-inline-stroke:currentColor;">
+      viewBox="-80 -80 650 650" width="24" height="24" fill="currentColor" stroke="currentColor" style="--darkreader-inline-stroke:currentColor;">
     <g>
       <g>
         <path d="M468.999,227.774c-11.4,0-20.8,8.3-20.8,19.8c-1,74.9-44.2,142.6-110.3,178.9c-99.6,54.7-216,5.6-260.6-61l62.9,13.1
@@ -48444,19 +48477,25 @@ ABReplacer_Widget.str_icon_refresh = `<svg version="1.1" id="Capa_1" xmlns="http
 // ab_manager/abm_code/ABReplacer_CodeBlock.ts
 var ABReplacer_CodeBlock = class {
   static processor(src, blockEl, ctx) {
-    var _a3, _b, _c, _d;
     ABCSetting.global_ctx = ctx;
     const root_div = document.createElement("div");
     blockEl.appendChild(root_div);
     root_div.classList.add("ab-replace");
     const list_src = src.split("\n");
     let header = "";
+    let header_indent_prefix = "";
     if (list_src.length) {
       const match2 = list_src[0].match(ABReg.reg_header_noprefix);
       if (match2 && match2[5]) {
         header = match2[5];
+        header_indent_prefix = match2[1];
       }
     }
+    const src_without_indent = list_src.slice(1).map(
+      (line) => line.startsWith(header_indent_prefix) ? line.substring(header_indent_prefix.length) : line
+    ).join("\n");
+    const calc_margin = header_indent_prefix.replace(/\t/g, "    ").length;
+    root_div.setAttribute("style", "margin-left: " + calc_margin * 0.5 + "rem;");
     const dom_note = root_div.createDiv({
       cls: ["ab-note", "drop-shadow"]
     });
@@ -48464,17 +48503,16 @@ var ABReplacer_CodeBlock = class {
       cls: ["ab-replaceEl"]
     });
     if (header != "") {
-      ABConvertManager.autoABConvert(dom_replaceEl, header, list_src.slice(1).join("\n").trimStart());
+      ABConvertManager.autoABConvert(dom_replaceEl, header, src_without_indent);
     } else {
-      const mdrc = new import_obsidian.MarkdownRenderChild(dom_replaceEl);
-      ctx.addChild(mdrc);
-      import_obsidian.MarkdownRenderer.render(app, src, dom_replaceEl, (_d = (_c = (_b = (_a3 = app.workspace.activeLeaf) == null ? void 0 : _a3.view) == null ? void 0 : _b.file) == null ? void 0 : _c.path) != null ? _d : "", mdrc);
+      ABConvertManager.getInstance().m_renderMarkdownFn(src, dom_replaceEl, ctx);
     }
     let dom_edit = root_div.createEl("div", {
       cls: ["ab-button", "ab-button-2", "edit-block-button"],
       attr: { "aria-label": "Refresh the block" }
     });
-    dom_edit.innerHTML = ABReplacer_Widget.str_icon_refresh;
+    dom_edit.empty();
+    dom_edit.appendChild((0, import_obsidian2.sanitizeHTMLToDom)(ABReplacer_Widget.STR_ICON_REFRESH));
     dom_edit.onclick = () => {
       abConvertEvent(root_div);
     };
@@ -48493,12 +48531,12 @@ var ABReplacer_CodeBlock = class {
 };
 
 // ab_manager/abm_cm/ABStateManager.ts
-var import_view3 = require("@codemirror/view");
+var import_view2 = require("@codemirror/view");
 var import_state = require("@codemirror/state");
-var import_obsidian3 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // config/ABSettingTab.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // ab_manager/abm_cm/ABSelector_Md.ts
 function autoMdSelector(mdText = "") {
@@ -48856,6 +48894,100 @@ var mdSelector_heading = {
 };
 registerMdSelector(mdSelector_heading);
 
+// locales/helper.ts
+var import_obsidian3 = require("obsidian");
+
+// locales/en.ts
+var en_default = {
+  "see website for detail": `See 
+    <a href="https://lincdocs.github.io/AnyBlock/README.show.html">website</a>
+    /
+    <a href="https://github.com/LincZero/obsidian-any-block">github</a>
+    for more details`,
+  "Selector manager": "Selector manager",
+  "Selector manager2": "This section is for query only and cannot be edited",
+  "AliasSystem manager": "Alias system manager",
+  "AliasSystem manager2": "It can be viewed in the main page using the `[info_alias]` processor",
+  "AliasSystem manager3": "This section can also be modified by opening the `data.json` file in the plugin folder",
+  "AliasSystem manager4": "Add a new registration instruction",
+  "AliasSystem manager5": "Add a new registration instructionAdd a new registration instruction (old, will not be used)",
+  "Convertor manager": "Convertor manager",
+  "Convertor manager2": "It can be viewed in the main page using the `[info_converter]` processor",
+  "Convertor manager3": "This section is for query only and cannot be edited",
+  "Custom alias": "Custom alias",
+  "Custom alias2": "Alias matching rule",
+  "Custom alias3": "If `/` is used to enclose it, it indicates a regular expression.",
+  "Custom alias4": "Alias replacement",
+  "Custom alias5": "The parameter-based replacement function is currently not available. It will be enabled only when there is a need for multiple users.",
+  "Custom processor": "Custom processor - deprecated",
+  "Custom processor2": "Processor id",
+  "Custom processor3": "Without conflicting with other processors",
+  "Custom processor4": "Processor name",
+  "Custom processor5": "You can fill it in freely. It's for your own reference",
+  "Custom processor6": "Processor matching rule",
+  "Custom processor7": "Using `/` including it indicates a regular expression",
+  "Custom processor8": "Processor replacement",
+  "Custom processor9": "Using `/` including it indicates a regular expression",
+  "Submit": "Submit",
+  "Edit": "Edit",
+  "Refresh": "Refresh",
+  "Delete": "Delete",
+  "Save": "Save",
+  "Cancel": "Cancel",
+  "Close": "Close"
+};
+
+// locales/zh-cn.ts
+var zh_cn_default = {
+  "see website for detail": `\u67E5\u770B 
+    <a href="https://lincdocs.github.io/AnyBlock/README.show.html">website</a>
+    /
+    <a href="https://github.com/LincZero/obsidian-any-block">github</a>
+    \u6587\u6863\u4EE5\u83B7\u53D6\u66F4\u591A\u7EC6\u8282`,
+  "Selector manager": "\u9009\u62E9\u5668\u7684\u7BA1\u7406",
+  "Selector manager2": "\u8FD9\u4E00\u90E8\u5206\u4EC5\u4F9B\u67E5\u8BE2\u4E0D\u53EF\u7F16\u8F91",
+  "AliasSystem manager": "Alias system manager",
+  "AliasSystem manager2": "\u8FD9\u90E8\u5206\u5185\u5BB9\u53EF\u4EE5\u4F7F\u7528 `[info_alias]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B",
+  "AliasSystem manager3": "\u8FD9\u90E8\u5206\u4E5F\u53EF\u4EE5\u6253\u5F00\u63D2\u4EF6\u6587\u4EF6\u5939\u4E2D\u7684 `data.json` \u6587\u4EF6\u4FEE\u6539",
+  "AliasSystem manager4": "\u6DFB\u52A0\u65B0\u7684\u6CE8\u518C\u6307\u4EE4",
+  "AliasSystem manager5": "\u6DFB\u52A0\u65B0\u7684\u6CE8\u518C\u6307\u4EE4 - \u65E7\u7248\uFF0C\u5C06\u5F03\u7528",
+  "Convertor manager": "\u8F6C\u6362\u5668/\u5904\u7406\u5668\u7684\u7BA1\u7406",
+  "Convertor manager2": "\u8FD9\u90E8\u5206\u5185\u5BB9\u53EF\u4EE5\u4F7F\u7528 `[info_converter]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B",
+  "Convertor manager3": "\u8FD9\u4E00\u90E8\u5206\u4EC5\u4F9B\u67E5\u8BE2\u4E0D\u53EF\u7F16\u8F91",
+  "Custom alias": "\u81EA\u5B9A\u4E49\u522B\u540D",
+  "Custom alias2": "\u522B\u540D\u5339\u914D\u89C4\u5219",
+  "Custom alias3": "\u82E5\u7528`/`\u5305\u62EC\u8D77\u6765\u5219\u8868\u793A\u6B63\u5219",
+  "Custom alias4": "\u522B\u540D\u66FF\u6362\u4E3A",
+  "Custom alias5": "\u6682\u4E0D\u5F00\u653E\u5E26\u53C2\u6570\u7684\u66FF\u6362\u529F\u80FD\uFF0C\u5982\u591A\u4EBA\u9700\u8981\u624D\u5F00\u653E",
+  "Custom processor": "\u81EA\u5B9A\u4E49\u5904\u7406\u5668 - \u5C06\u5E9F\u5F03",
+  "Custom processor2": "\u5904\u7406\u5668\u552F\u4E00id",
+  "Custom processor3": "\u4E0D\u4E0E\u5176\u4ED6\u5904\u7406\u5668\u51B2\u7A81\u5373\u53EF",
+  "Custom processor4": "\u6CE8\u518C\u5668\u540D",
+  "Custom processor5": "\u53EF\u4EE5\u968F\u4FBF\u586B\uFF0C\u7ED9\u81EA\u5DF1\u770B\u7684",
+  "Custom processor6": "\u6CE8\u518C\u5668\u5339\u914D\u540D",
+  "Custom processor7": "\u7528 `/` \u5305\u62EC\u8D77\u6765\u5219\u8868\u793A\u6B63\u5219",
+  "Custom processor8": "\u6CE8\u518C\u5668\u66FF\u6362\u4E3A",
+  "Custom processor9": "\u7528 `/` \u5305\u62EC\u8D77\u6765\u5219\u8868\u793A\u6B63\u5219",
+  "Submit": "\u63D0\u4EA4",
+  "Edit": "\u7F16\u8F91",
+  "Refresh": "\u5237\u65B0",
+  "Delete": "\u5220\u9664",
+  "Save": "\u4FDD\u5B58",
+  "Cancel": "\u53D6\u6D88",
+  "Close": "\u5173\u95ED"
+};
+
+// locales/helper.ts
+var localeMap = {
+  en: en_default,
+  "zh": zh_cn_default,
+  "zh-TW": zh_cn_default
+};
+var locale = localeMap[(0, import_obsidian3.getLanguage)()];
+function t(str) {
+  return locale && locale[str] || en_default[str];
+}
+
 // config/ABSettingTab.ts
 var AB_SETTINGS = {
   select_list: "ifhead" /* ifhead */,
@@ -48888,7 +49020,7 @@ var AB_SETTINGS = {
   enhance_refresh_time: 2e3,
   inline_split: "/\\| |,  |\uFF0C |\\.  |\u3002 |:  |\uFF1A /"
 };
-var ABSettingTab = class extends import_obsidian2.PluginSettingTab {
+var ABSettingTab = class extends import_obsidian4.PluginSettingTab {
   constructor(app2, plugin2) {
     super(app2, plugin2);
     this.plugin = plugin2;
@@ -48917,23 +49049,18 @@ var ABSettingTab = class extends import_obsidian2.PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
     let settings = this.plugin.settings;
-    containerEl.createEl("h1", { text: "AnyBlock" });
     const div_url = containerEl.createEl("div");
-    div_url.innerHTML = `See 
-    <a href="https://linczero.github.io/MdNote_Public/ProductDoc/AnyBlock/README.show.html">website</a>
-    /
-    <a href="https://github.com/LincZero/obsidian-any-block">github</a>
-    for more details (\u66F4\u591A\u4F7F\u7528\u65B9\u6CD5\u8BE6\u89C1Github\u53CA\u7F51\u7AD9)
-    `;
-    containerEl.createEl("hr", { attr: { "style": "border-color:#9999ff" } });
-    containerEl.createEl("h2", { text: "Selector Manager (\u9009\u62E9\u5668\u7684\u7BA1\u7406)" });
-    containerEl.createEl("p", { text: "This section is for query only and cannot be edited (\u8FD9\u4E00\u90E8\u5206\u4EC5\u4F9B\u67E5\u8BE2\u4E0D\u53EF\u7F16\u8F91)" });
+    div_url.empty();
+    div_url.appendChild((0, import_obsidian4.sanitizeHTMLToDom)(t("see website for detail")));
+    containerEl.createEl("hr", { cls: "bright-color" });
+    new import_obsidian4.Setting(containerEl).setName(t("Selector manager")).setHeading();
+    containerEl.createEl("p", { text: t("Selector manager2") });
     this.selectorPanel = generateSelectorInfoTable(containerEl);
-    containerEl.createEl("hr", { attr: { "style": "border-color:#9999ff" } });
-    containerEl.createEl("h2", { text: "AliasSystem Manager (\u522B\u540D\u7CFB\u7EDF\u7684\u7BA1\u7406)" });
-    containerEl.createEl("p", { text: "It can also be viewed in the main page using the `[info_alias]` processor (\u8FD9\u90E8\u5206\u5185\u5BB9\u4E5F\u53EF\u4EE5\u4F7F\u7528 `[info_alias]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B)" });
-    containerEl.createEl("p", { text: "This section can also be modified by opening the `data.json` file in the plugin folder (\u8FD9\u90E8\u5206\u4E5F\u53EF\u4EE5\u6253\u5F00\u63D2\u4EF6\u6587\u4EF6\u5939\u4E2D\u7684 `data.json` \u6587\u4EF6\u4FEE\u6539)" });
-    new import_obsidian2.Setting(containerEl).setName("Add a new registration instruction").setDesc(`\u6DFB\u52A0\u65B0\u7684\u6CE8\u518C\u6307\u4EE4`).addButton((component) => {
+    containerEl.createEl("hr", { cls: "bright-color" });
+    new import_obsidian4.Setting(containerEl).setName(t("AliasSystem manager")).setHeading();
+    containerEl.createEl("p", { text: t("AliasSystem manager2") });
+    containerEl.createEl("p", { text: t("AliasSystem manager3") });
+    new import_obsidian4.Setting(containerEl).setName(t("AliasSystem manager4")).addButton((component) => {
       component.setIcon("plus-circle").onClick((e) => {
         new ABModal_alias(this.app, async (result) => {
           let newReg;
@@ -48950,7 +49077,7 @@ var ABSettingTab = class extends import_obsidian2.PluginSettingTab {
         }).open();
       });
     });
-    new import_obsidian2.Setting(containerEl).setName("Add a new registration instruction (old, will not be used)").setDesc(`\u6DFB\u52A0\u65B0\u7684\u6CE8\u518C\u6307\u4EE4 - \u65E7\u7248\uFF0C\u5C06\u5F03\u7528`).addButton((component) => {
+    new import_obsidian4.Setting(containerEl).setName(t("AliasSystem manager5")).addButton((component) => {
       component.setIcon("plus-circle").onClick((e) => {
         new ABProcessorModal(this.app, async (result) => {
           ABConvert.factory(result);
@@ -48963,17 +49090,17 @@ var ABSettingTab = class extends import_obsidian2.PluginSettingTab {
         }).open();
       });
     });
-    containerEl.createEl("hr", { attr: { "style": "border-color:#9999ff" } });
-    containerEl.createEl("h2", { text: "Convertor Manager (\u8F6C\u6362\u5668\u7684\u7BA1\u7406)" });
-    containerEl.createEl("p", { text: "It can also be viewed in the main page using the `[info_converter]` processor (\u8FD9\u90E8\u5206\u5185\u5BB9\u4E5F\u53EF\u4EE5\u4F7F\u7528 `[info_converter]` \u5904\u7406\u5668\u5728\u4E3B\u9875\u9762\u4E2D\u67E5\u770B)" });
-    containerEl.createEl("p", { text: "This section is for query only and cannot be edited (\u8FD9\u4E00\u90E8\u5206\u4EC5\u4F9B\u67E5\u8BE2\u4E0D\u53EF\u7F16\u8F91)" });
-    containerEl.createEl("p", { text: "" });
+    containerEl.createEl("hr", { cls: "bright-color" });
+    new import_obsidian4.Setting(containerEl).setName("").setHeading();
+    containerEl.createEl("p", { text: t("Convertor manager") });
+    containerEl.createEl("p", { text: t("Convertor manager2") });
+    containerEl.createEl("p", { text: t("Convertor manager3") });
     const div = containerEl.createEl("div");
     ABConvertManager.autoABConvert(div, "info_converter", "", "null_content");
     this.processorPanel = div;
   }
 };
-var ABProcessorModal = class extends import_obsidian2.Modal {
+var ABProcessorModal = class extends import_obsidian4.Modal {
   constructor(app2, onSubmit) {
     super(app2);
     this.args = {
@@ -48986,30 +49113,30 @@ var ABProcessorModal = class extends import_obsidian2.Modal {
   }
   onOpen() {
     let { contentEl } = this;
-    contentEl.setText("Custom processor (\u81EA\u5B9A\u4E49\u5904\u7406\u5668)");
+    contentEl.setText(t("Custom processor"));
     contentEl.createEl("p", { text: "" });
-    new import_obsidian2.Setting(contentEl).setName("ProcessorId").setDesc("\u5904\u7406\u5668\u552F\u4E00id, \u4E0D\u4E0E\u5176\u4ED6\u5904\u7406\u5668\u51B2\u7A81\u5373\u53EF").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom processor2")).setDesc(t("Custom processor3")).addText((text4) => {
       text4.onChange((value) => {
         this.args.id = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).setName("ProcessorName").setDesc("\u6CE8\u518C\u5668\u540D\uFF0C\u53EF\u4EE5\u4E71\u586B\uFF0C\u7ED9\u81EA\u5DF1\u770B\u7684").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom processor4")).setDesc(t("Custom processor5")).addText((text4) => {
       text4.onChange((value) => {
         this.args.name = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).setName("Processor matching rule").setDesc("\u6CE8\u518C\u5668\u5339\u914D\u540D (\u7528/\u5305\u62EC\u8D77\u6765\u5219\u8868\u793A\u6B63\u5219)").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom processor6")).setDesc(t("Custom processor7")).addText((text4) => {
       text4.onChange((value) => {
         this.args.match = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).setName("Processor replacement").setDesc("\u6CE8\u518C\u5668\u66FF\u6362\u4E3A (\u7528/\u5305\u62EC\u8D77\u6765\u5219\u5224\u65AD\u4E3A\u6B63\u5219)").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom processor8")).setDesc(t("Custom processor9")).addText((text4) => {
       text4.onChange((value) => {
         this.args.process_alias = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).addButton((btn) => {
-      btn.setButtonText("Submit (\u63D0\u4EA4)").setCta().onClick(() => {
+    new import_obsidian4.Setting(contentEl).addButton((btn) => {
+      btn.setButtonText(t("Submit")).setCta().onClick(() => {
         if (this.args.id && this.args.name && this.args.match && this.args.process_alias) {
           this.close();
           this.onSubmit(this.args);
@@ -49022,7 +49149,7 @@ var ABProcessorModal = class extends import_obsidian2.Modal {
     contentEl.empty();
   }
 };
-var ABModal_alias = class extends import_obsidian2.Modal {
+var ABModal_alias = class extends import_obsidian4.Modal {
   constructor(app2, onSubmit) {
     super(app2);
     this.args = {
@@ -49033,20 +49160,20 @@ var ABModal_alias = class extends import_obsidian2.Modal {
   }
   onOpen() {
     let { contentEl } = this;
-    contentEl.setText("Custom alias (\u81EA\u5B9A\u4E49\u522B\u540D)");
+    contentEl.setText(t("Custom alias"));
     contentEl.createEl("p", { text: "" });
-    new import_obsidian2.Setting(contentEl).setName("Alias matching rule").setDesc("\u522B\u540D\u5339\u914D\u89C4\u5219 (\u82E5\u7528/\u5305\u62EC\u8D77\u6765\u5219\u8868\u793A\u6B63\u5219)").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom alias2")).setDesc(t("Custom alias3")).addText((text4) => {
       text4.onChange((value) => {
         this.args.regex = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).setName("Alias replacement").setDesc("\u522B\u540D\u66FF\u6362\u4E3A").addText((text4) => {
+    new import_obsidian4.Setting(contentEl).setName(t("Custom alias4")).setDesc(t("Custom alias5")).addText((text4) => {
       text4.onChange((value) => {
         this.args.replacement = value;
       });
     });
-    new import_obsidian2.Setting(contentEl).addButton((btn) => {
-      btn.setButtonText("Submit (\u63D0\u4EA4)").setCta().onClick(() => {
+    new import_obsidian4.Setting(contentEl).addButton((btn) => {
+      btn.setButtonText(t("Submit")).setCta().onClick(() => {
         if (this.args.regex && this.args.replacement) {
           this.close();
           this.onSubmit(this.args);
@@ -49060,66 +49187,19 @@ var ABModal_alias = class extends import_obsidian2.Modal {
   }
 };
 
-// ab_manager/abm_cm/ABDecorationManager.ts
-var import_view2 = require("@codemirror/view");
-var ABDecorationManager = class {
-  constructor(r_this, rangeSpec, cursorSpec) {
-    this.rangeSpec = rangeSpec;
-    this.cursorSpec = cursorSpec;
-    this.r_this = r_this;
-    let from = rangeSpec.from_ch;
-    let to = rangeSpec.to_ch;
-    let cfrom = cursorSpec.from;
-    let cto = cursorSpec.to;
-    if (cfrom >= from && cfrom <= to || cto >= from && cto <= to) {
-      this.isBlock = false;
-    } else {
-      this.isBlock = true;
-    }
-    this.decoration = this.initDecorationSet();
-  }
-  initDecorationSet() {
-    if (!this.isBlock) {
-      return import_view2.Decoration.mark({ class: "ab-line-brace" });
-    } else {
-      return import_view2.Decoration.replace({ widget: new ABReplacer_Widget(
-        this.rangeSpec,
-        this.r_this.editor
-      ) });
-    }
-  }
-  static decoration_theme() {
-    return [
-      import_view2.EditorView.baseTheme({
-        ".ab-line-brace": { textDecoration: "underline 1px red" }
-      }),
-      import_view2.EditorView.baseTheme({
-        ".ab-line-list": { textDecoration: "underline 1px cyan" }
-      }),
-      import_view2.EditorView.baseTheme({
-        ".ab-line-yellow": { textDecoration: "solid underline 1px rgba(0, 255, 0, 0.2)" }
-      }),
-      import_view2.EditorView.baseTheme({
-        ".ab-line-blue": { textDecoration: "underline 1px blue" }
-      })
-    ];
-  }
-};
-
 // ab_manager/abm_cm/ABStateManager.ts
-var once_flag = false;
 var global_timer = null;
 var ABStateManager = class {
   constructor(plugin_this) {
     this.replace_this = this;
     this.decorationField = import_state.StateField.define({
       create: (editorState) => {
-        return import_view3.Decoration.none;
+        return import_view2.Decoration.none;
       },
       update: (decorationSet, tr) => {
         return this.onUpdate(decorationSet, tr);
       },
-      provide: (f) => import_view3.EditorView.decorations.from(f)
+      provide: (f) => import_view2.EditorView.decorations.from(f)
     });
     this.plugin_this = plugin_this;
     let ret = this.constructor_init();
@@ -49129,13 +49209,13 @@ var ABStateManager = class {
       this.setStateEffects();
     {
       if (global_timer !== null) {
-        clearInterval(global_timer);
+        window.clearInterval(global_timer);
         global_timer = null;
       }
       if (plugin_this.settings.enhance_refresh_time > 0) {
-        if (plugin_this.settings.enhance_refresh_time < 1e3)
-          plugin_this.settings.enhance_refresh_time = 1e3;
-        global_timer = setInterval(() => {
+        if (plugin_this.settings.enhance_refresh_time < 500)
+          plugin_this.settings.enhance_refresh_time = 500;
+        global_timer = window.setInterval(() => {
           if (plugin_this.settings.is_debug)
             console.log("    auto refresh event:", this.initialFileName);
           abConvertEvent(document, true);
@@ -49145,11 +49225,12 @@ var ABStateManager = class {
     abConvertEvent(document);
   }
   constructor_init() {
-    const view = this.plugin_this.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView);
+    var _a3;
+    const view = this.plugin_this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
     if (!view)
       return false;
     this.view = view;
-    this.initialFileName = this.view.file.basename;
+    this.initialFileName = (_a3 = this.view.file) == null ? void 0 : _a3.basename;
     this.editor = this.view.editor;
     this.editorView = this.editor.cm;
     this.editorState = this.editorView.state;
@@ -49162,7 +49243,7 @@ var ABStateManager = class {
     if (this.plugin_this.settings.is_debug)
       console.log("<<< ABStateManager, initialFileName:", this.initialFileName);
     if (global_timer !== null) {
-      clearInterval(global_timer);
+      window.clearInterval(global_timer);
       global_timer = null;
     }
   }
@@ -49172,12 +49253,6 @@ var ABStateManager = class {
       stateEffects.push(import_state.StateEffect.appendConfig.of(
         [this.decorationField]
       ));
-      if (!once_flag) {
-        once_flag = true;
-        stateEffects.push(import_state.StateEffect.appendConfig.of(
-          [ABDecorationManager.decoration_theme()]
-        ));
-      }
     }
     this.editorView.dispatch({ effects: stateEffects });
     return true;
@@ -49219,7 +49294,6 @@ var ABStateManager = class {
     let list_decoration_change = [];
     const cursorSpec = this.getCursorCh(tr);
     const cursorSpec_last = this.getCursorCh();
-    let cursorSepc_correct = null;
     let is_current_cursor_in = false;
     for (let rangeSpec of list_rangeSpec) {
       let isCursorIn = false;
@@ -49232,15 +49306,15 @@ var ABStateManager = class {
       }
       if (isCursorIn) {
         is_current_cursor_in = true;
-        const decoration = import_view3.Decoration.mark({ class: "ab-line-yellow" });
+        const decoration = import_view2.Decoration.mark({ class: "ab-line-yellow" });
         list_decoration_change.push(decoration.range(rangeSpec.from_ch, rangeSpec.to_ch));
       } else if (isCursonIn_last) {
-        const decoration = import_view3.Decoration.replace({
+        const decoration = import_view2.Decoration.replace({
           widget: new ABReplacer_Widget(rangeSpec, this.editor)
         });
         list_decoration_change.push(decoration.range(rangeSpec.from_ch, rangeSpec.to_ch));
       } else {
-        const decoration = import_view3.Decoration.replace({
+        const decoration = import_view2.Decoration.replace({
           widget: new ABReplacer_Widget(rangeSpec, this.editor)
         });
         list_decoration_nochange.push(decoration.range(rangeSpec.from_ch, rangeSpec.to_ch));
@@ -49285,13 +49359,11 @@ var ABStateManager = class {
     return decorationSet;
   }
   getEditorMode() {
-    let editor_dom;
-    editor_dom = this.plugin_this.app.workspace.activeLeaf.containerEl;
+    var _a3;
+    let editor_dom = (_a3 = this.plugin_this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView)) == null ? void 0 : _a3.containerEl;
     if (!editor_dom) {
-      console.warn("\u65E0\u6CD5\u83B7\u53D6dom\u6765\u5F97\u77E5\u7F16\u8F91\u5668\u6A21\u5F0F");
       return 0 /* NONE */;
     }
-    editor_dom = editor_dom == null ? void 0 : editor_dom.getElementsByClassName("workspace-leaf-content")[0];
     let str = editor_dom == null ? void 0 : editor_dom.getAttribute("data-mode");
     if (str == "source") {
       editor_dom = editor_dom == null ? void 0 : editor_dom.getElementsByClassName("markdown-source-view")[0];
@@ -49341,7 +49413,7 @@ var ABStateManager = class {
     return this.editor.getValue();
   }
   setPos(cursorSepc) {
-    setTimeout(() => {
+    window.setTimeout(() => {
       const newSelection = import_state.EditorSelection.create([
         import_state.EditorSelection.range(cursorSepc, cursorSepc)
       ]);
@@ -49354,11 +49426,11 @@ var ABStateManager = class {
 
 // ab_manager/abm_html/ABSelector_PostHtml.ts
 var import_html_to_md = __toESM(require_dist());
-var import_obsidian5 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // ab_manager/abm_html/ABReplacer_Render.ts
-var import_obsidian4 = require("obsidian");
-var ABReplacer_Render = class extends import_obsidian4.MarkdownRenderChild {
+var import_obsidian6 = require("obsidian");
+var ABReplacer_Render = class extends import_obsidian6.MarkdownRenderChild {
   constructor(containerEl, header, content, selectorName = "replacer_default") {
     super(containerEl);
     this.header = header;
@@ -49382,7 +49454,8 @@ var ABReplacer_Render = class extends import_obsidian4.MarkdownRenderChild {
       cls: ["ab-button", "ab-button-1", "edit-block-button"],
       attr: { "aria-label": "Refresh the block" }
     });
-    dom_edit2.innerHTML = ABReplacer_Widget.str_icon_refresh;
+    dom_edit2.empty();
+    dom_edit2.appendChild((0, import_obsidian6.sanitizeHTMLToDom)(ABReplacer_Widget.STR_ICON_REFRESH));
     dom_edit2.onclick = () => {
       abConvertEvent(div);
     };
@@ -49390,7 +49463,8 @@ var ABReplacer_Render = class extends import_obsidian4.MarkdownRenderChild {
       cls: ["ab-button", "ab-button-2", "edit-block-button", "ab-button-select"]
     });
     const dom_edit_mask = dom_edit.createEl("button", {});
-    dom_edit_mask.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>`;
+    dom_edit_mask.empty();
+    dom_edit_mask.appendChild((0, import_obsidian6.sanitizeHTMLToDom)(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>`));
     const dom_edit_select = dom_edit.createEl("select", {
       attr: { "aria-label": "Change the block - " + this.header }
     });
@@ -49443,7 +49517,7 @@ ABReplacer_Render.str_icon_code2 = `<svg xmlns="http://www.w3.org/2000/svg" widt
 // ab_manager/abm_html/ABSelector_PostHtml.ts
 var ABSelector_PostHtml = class {
   static processor(el, ctx) {
-    var _a3, _b, _c, _d, _e, _f;
+    var _a3, _b, _c, _d, _e, _f, _g;
     ABCSetting.global_ctx = ctx;
     if (this.settings.decoration_render == "none" /* none */)
       return;
@@ -49465,34 +49539,40 @@ var ABSelector_PostHtml = class {
       const is_end = mdSrc.to_line == mdSrc.to_line_all;
       let is_newContent = false;
       let is_subContent = false;
-      let cache_item = null;
+      let cache_item = {
+        name: ctx.sourcePath,
+        content: mdSrc.content_all
+      };
+      ;
       (() => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian5.MarkdownView);
-        const path = view == null ? void 0 : view.file.path;
+        var _a4, _b2, _c2;
+        const ppEl = (_b2 = (_a4 = el.parentElement) == null ? void 0 : _a4.parentElement) == null ? void 0 : _b2.parentElement;
+        if (!ppEl) {
+          is_newContent = false;
+          is_subContent = true;
+          return;
+        } else if (ppEl.classList.contains("markdown-embed-content")) {
+          is_newContent = false;
+          is_subContent = true;
+          return;
+        }
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian7.MarkdownView);
+        const path = (_c2 = view == null ? void 0 : view.file) == null ? void 0 : _c2.path;
+        if (path && path !== ctx.sourcePath) {
+          if (this.settings.is_debug)
+            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] `);
+          is_newContent = false;
+          is_subContent = true;
+          return;
+        }
         const containerEl = view == null ? void 0 : view.containerEl;
         if (!containerEl || containerEl.getAttribute("data-mode") != "preview" || containerEl.getAttribute("data-type") != "markdown") {
           if (this.settings.is_debug)
             console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] in no readmode`, containerEl);
-          cache_item = {
-            name: ctx.sourcePath,
-            content: mdSrc.content_all
-          };
           is_newContent = false;
           is_subContent = true;
           return;
         }
-        if (path && path !== ctx.sourcePath) {
-          if (this.settings.is_debug)
-            console.log(` !! Cache check: [${path}] use ![[${ctx.sourcePath}]] in readmode`);
-          cache_item = {
-            name: ctx.sourcePath,
-            content: mdSrc.content_all
-          };
-          is_newContent = false;
-          is_subContent = true;
-          return;
-        }
-        getFileContentByPath(this.app.vault, ctx.sourcePath);
         for (let item of cache_map) {
           if (item.name == ctx.sourcePath) {
             cache_item = item;
@@ -49500,7 +49580,6 @@ var ABSelector_PostHtml = class {
           }
         }
         if (!cache_item) {
-          cache_item = { name: ctx.sourcePath, content: mdSrc.content_all };
           cache_map.push(cache_item);
           is_newContent = true;
           if (this.settings.is_debug)
@@ -49510,16 +49589,7 @@ var ABSelector_PostHtml = class {
             cache_item.content = mdSrc.content_all;
             is_newContent = true;
             if (this.settings.is_debug)
-              console.log(
-                " !! \u6709\u7F13\u5B58, \u5185\u5BB9\u53D8 -> \u6709\u4FEE\u6539, perform a global refresh (rebuildView): ",
-                cache_item,
-                ctx,
-                mdSrc,
-                ctx.getSectionInfo(el),
-                ctx.docId,
-                ctx.frontmatter,
-                ctx.sourcePath
-              );
+              console.log(" !! \u6709\u7F13\u5B58, \u5185\u5BB9\u53D8 -> \u6709\u4FEE\u6539, perform a global refresh (rebuildView): ", cache_item, ctx);
           } else {
             is_newContent = false;
           }
@@ -49536,7 +49606,7 @@ var ABSelector_PostHtml = class {
       }
       if (!is_subContent && is_newContent) {
         if (/\n((\s|>\s|-\s|\*\s|\+\s)*)(%%)?(\[((?!toc)(?!TOC)[0-9a-zA-Z\u4e00-\u9fa5].*)\]):?(%%)?\s*\n/.test(cache_item.content) || /\n((\s|>\s|-\s|\*\s|\+\s)*)(:::)\s?(\S*)\n/.test(cache_item.content)) {
-          const leaf = app.workspace.activeLeaf;
+          const leaf = (_g = this.app.workspace.getActiveViewOfType(import_obsidian7.MarkdownView)) == null ? void 0 : _g.leaf;
           if (!leaf) {
             return;
           }
@@ -49774,36 +49844,23 @@ function getSourceMarkdown(sectionEl, ctx) {
   }
   return range;
 }
-async function getFileContentByPath(vault, filePath) {
-  const file = vault.getAbstractFileByPath(filePath);
-  if (!(file instanceof import_obsidian5.TFile)) {
-    console.error(`\u672A\u627E\u5230\u6587\u4EF6: ${filePath}`);
-    return null;
-  }
-  try {
-    return await vault.read(file);
-  } catch (error2) {
-    console.error(`\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25: ${filePath}`, error2);
-    return null;
-  }
-}
 
 // main.ts
-var AnyBlockPlugin = class extends import_obsidian6.Plugin {
+var AnyBlockPlugin = class extends import_obsidian8.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new ABSettingTab(this.app, this));
     ABConvertManager.getInstance().redefine_renderMarkdown((markdown, el, ctx) => {
-      var _a3, _b, _c, _d;
+      var _a3, _b, _c;
       el.classList.add("markdown-rendered");
-      const mdrc = new import_obsidian6.MarkdownRenderChild(el);
+      const mdrc = new import_obsidian8.MarkdownRenderChild(el);
       if (ctx)
         ctx.addChild(mdrc);
       else if (ABCSetting.global_ctx)
         ABCSetting.global_ctx.addChild(mdrc);
-      import_obsidian6.MarkdownRenderer.render(app, markdown, el, (_d = (_c = (_b = (_a3 = app.workspace.activeLeaf) == null ? void 0 : _a3.view) == null ? void 0 : _b.file) == null ? void 0 : _c.path) != null ? _d : "", mdrc);
+      import_obsidian8.MarkdownRenderer.render(this.app, markdown, el, (_c = (_b = (_a3 = this.app.workspace.getActiveViewOfType(import_obsidian8.MarkdownView)) == null ? void 0 : _a3.file) == null ? void 0 : _b.path) != null ? _c : "", mdrc);
     });
-    ABCSetting.mermaid = (0, import_obsidian6.loadMermaid)();
+    ABCSetting.mermaid = (0, import_obsidian8.loadMermaid)();
     ABCSetting.mermaid.then((mermaid) => {
       const isDarkTheme = document.body.classList.contains("theme-dark");
       const theme = isDarkTheme ? "dark" : "light";
@@ -49847,3 +49904,5 @@ var AnyBlockPlugin = class extends import_obsidian6.Plugin {
   }
 };
 /*! @gera2ld/jsx-dom v2.2.2 | ISC License */
+
+/* nosourcemap */
