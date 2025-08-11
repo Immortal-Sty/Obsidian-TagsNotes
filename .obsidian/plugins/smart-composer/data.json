@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "providers": [
     {
       "type": "openai",
@@ -62,17 +62,20 @@
     {
       "providerType": "anthropic",
       "providerId": "anthropic",
-      "id": "claude-3.7-sonnet",
-      "model": "claude-3-7-sonnet-latest"
+      "id": "claude-sonnet-4.0",
+      "model": "claude-sonnet-4-0"
     },
     {
       "providerType": "anthropic",
       "providerId": "anthropic",
-      "id": "claude-3.7-sonnet-thinking",
-      "model": "claude-3-7-sonnet-latest",
-      "thinking": {
-        "budget_tokens": 8192
-      }
+      "id": "claude-opus-4.1",
+      "model": "claude-opus-4-1"
+    },
+    {
+      "providerType": "anthropic",
+      "providerId": "anthropic",
+      "id": "claude-3.7-sonnet",
+      "model": "claude-3-7-sonnet-latest"
     },
     {
       "providerType": "anthropic",
@@ -85,6 +88,24 @@
       "providerId": "anthropic",
       "id": "claude-3.5-haiku",
       "model": "claude-3-5-haiku-latest"
+    },
+    {
+      "providerType": "openai",
+      "providerId": "openai",
+      "id": "gpt-5",
+      "model": "gpt-5"
+    },
+    {
+      "providerType": "openai",
+      "providerId": "openai",
+      "id": "gpt-5-mini",
+      "model": "gpt-5-mini"
+    },
+    {
+      "providerType": "openai",
+      "providerId": "openai",
+      "id": "gpt-5-nano",
+      "model": "gpt-5-nano"
     },
     {
       "providerType": "openai",
@@ -121,20 +142,38 @@
       "providerId": "openai",
       "id": "o4-mini",
       "model": "o4-mini",
-      "reasoning_effort": "medium"
+      "reasoning": {
+        "enabled": true,
+        "reasoning_effort": "medium"
+      }
     },
     {
       "providerType": "openai",
       "providerId": "openai",
       "id": "o3",
       "model": "o3",
-      "reasoning_effort": "medium"
+      "reasoning": {
+        "enabled": true,
+        "reasoning_effort": "medium"
+      }
     },
     {
       "providerType": "gemini",
       "providerId": "gemini",
       "id": "gemini-2.5-pro",
-      "model": "gemini-2.5-pro-exp-03-25"
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "providerType": "gemini",
+      "providerId": "gemini",
+      "id": "gemini-2.5-flash",
+      "model": "gemini-2.5-flash"
+    },
+    {
+      "providerType": "gemini",
+      "providerId": "gemini",
+      "id": "gemini-2.5-flash-lite",
+      "model": "gemini-2.5-flash-lite"
     },
     {
       "providerType": "gemini",
@@ -145,26 +184,8 @@
     {
       "providerType": "gemini",
       "providerId": "gemini",
-      "id": "gemini-2.0-flash-thinking",
-      "model": "gemini-2.0-flash-thinking-exp"
-    },
-    {
-      "providerType": "gemini",
-      "providerId": "gemini",
       "id": "gemini-2.0-flash-lite",
       "model": "gemini-2.0-flash-lite"
-    },
-    {
-      "providerType": "gemini",
-      "providerId": "gemini",
-      "id": "gemini-1.5-pro",
-      "model": "gemini-1.5-pro"
-    },
-    {
-      "providerType": "gemini",
-      "providerId": "gemini",
-      "id": "gemini-1.5-flash",
-      "model": "gemini-1.5-flash"
     },
     {
       "providerType": "deepseek",
@@ -230,18 +251,52 @@
       "model": "morph-v0"
     },
     {
+      "providerType": "anthropic",
+      "providerId": "anthropic",
+      "id": "claude-3.7-sonnet-thinking",
+      "model": "claude-3-7-sonnet-latest",
+      "thinking": {
+        "enabled": true,
+        "budget_tokens": 8192
+      }
+    },
+    {
+      "providerType": "gemini",
+      "providerId": "gemini",
+      "id": "gemini-2.0-flash-thinking",
+      "model": "gemini-2.0-flash-thinking-exp"
+    },
+    {
+      "providerType": "gemini",
+      "providerId": "gemini",
+      "id": "gemini-1.5-pro",
+      "model": "gemini-1.5-pro"
+    },
+    {
+      "providerType": "gemini",
+      "providerId": "gemini",
+      "id": "gemini-1.5-flash",
+      "model": "gemini-1.5-flash"
+    },
+    {
       "providerType": "openai",
       "providerId": "openai",
       "id": "o3-mini",
       "model": "o3-mini",
-      "reasoning_effort": "medium"
+      "reasoning": {
+        "enabled": true,
+        "reasoning_effort": "medium"
+      }
     },
     {
       "providerType": "openai",
       "providerId": "openai",
       "id": "o1",
       "model": "o1",
-      "reasoning_effort": "medium"
+      "reasoning": {
+        "enabled": true,
+        "reasoning_effort": "medium"
+      }
     },
     {
       "providerType": "gemini",
