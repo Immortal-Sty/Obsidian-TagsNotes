@@ -90,11 +90,15 @@
     {trigger: "[ ", replacement: "\\left [ $0\\right ]$1", options: "mA"},
     {trigger: "{ ", replacement: "{ $0}$1", options: "mA"},
     {trigger: "\\{ ", replacement: "\\left \\{ $0\\right \\}$1", options: "mA"},
-    {trigger: "floor", replacement: "\\left \\lfloor $0 \\right \\rfloor $1", options: "mA"},
-    {trigger: "ceil", replacement: "\\left \\lceil $0 \\right \\rceil $1", options: "mA"},
+    {trigger: "| ", replacement: "\\left | $0\\right |$1", options: "mA"},
+    {trigger: "floor ", replacement: "\\left \\lfloor $0\\right \\rfloor $1", options: "mA"},
+    {trigger: "ceil ", replacement: "\\left \\lceil $0\\right \\rceil $1", options: "mA"},
 
     // 环境
     {trigger: "\\beg", replacement: "\\begin{$0}\n$1\n\\end{$0}", options: "mA"},
+
+    // 字体
+    {trigger: "rm", replacement: "\\mathrm{ $0}$1", options: "mA"},
 
     // ====================
     // === Obsidian 开始 ===
