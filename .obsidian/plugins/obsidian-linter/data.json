@@ -225,7 +225,7 @@
     },
     "trailing-spaces": {
       "enabled": true,
-      "twp-space-line-break": true
+      "two-space-line-break": true
     },
     "add-blockquote-indentation-on-paste": {
       "enabled": true

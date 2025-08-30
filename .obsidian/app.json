@@ -3,7 +3,7 @@
   "propertiesInDocument": "source",
   "showLineNumber": true,
   "spellcheck": false,
-  "autoPairBrackets": true,
+  "autoPairBrackets": false,
   "autoPairMarkdown": true,
   "vimMode": true,
   "trashOption": "local",

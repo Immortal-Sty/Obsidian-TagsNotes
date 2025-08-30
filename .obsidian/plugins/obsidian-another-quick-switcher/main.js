@@ -7359,13 +7359,17 @@ function createMetaDiv(args) {
         title: key,
         text: key
       });
+      const frontMatterValueDiv = createDiv({
+        cls: "another-quick-switcher__item__meta__front_matter__values"
+      });
       for (const v of [value].flat().filter(isPresent)) {
-        frontMatterDiv.createSpan({
+        frontMatterValueDiv.createSpan({
           cls: "another-quick-switcher__item__meta__front_matter__value",
           title: v.toString(),
           text: v.toString()
         });
       }
+      frontMatterDiv.appendChild(frontMatterValueDiv);
       frontMattersDiv.appendChild(frontMatterDiv);
     }
     metaDiv.appendChild(frontMattersDiv);
@@ -7408,7 +7412,11 @@ function createDescriptionDiv(args) {
         }
       }
       const highlightedContent = createHighlightedText(x, ranges);
-      aliasSpan.appendChild(highlightedContent);
+      const aliasInnerSpan = createSpan({
+        cls: "another-quick-switcher__item__description__alias__inner"
+      });
+      aliasInnerSpan.appendChild(highlightedContent);
+      aliasSpan.appendChild(aliasInnerSpan);
       aliasDiv.appendChild(aliasSpan);
     }
     descriptionDiv.appendChild(aliasDiv);

@@ -3,20 +3,6 @@
  * name: Scrolling
  * id: scrolling
  *
- * Classes for document body:
- * .scrolling-scrollbar-width
- * .scrolling-visibility-hide
- * .scrolling-visibility-scroll
- * .scrolling-filetree-horizontal
- * .scrolling-linewidth-enabled
- *
- * Classes for elements supporting scrolling:
- * .scrolling-transparent
- *
- * Variables:
- * --scrolling-scrollbar-width
- * --scrolling-line-width
- *
  */
 
 /* Hide specific scrollbars in files */
@@ -49,7 +35,36 @@
     min-height: max-content;
 }
 
-.scrolling-filetree-horizontal .tree-item-self .nav-file-title,
-.scrolling-filetree-horizontal .tree-item-self .nav-folder-title {
+.scrolling-filetree-horizontal .tree-item-self.nav-file-title,
+.scrolling-filetree-horizontal .tree-item-self.nav-folder-title {
     flex-shrink: 0;
+}
+
+/* Scrollable code in editing view */
+.scrolling-horizontal-code-blocks .HyperMD-codeblock.HyperMD-codeblock-bg.cm-line:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end) {
+    overflow-x: auto;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+
+.scrolling-horizontal-code-blocks .HyperMD-codeblock.HyperMD-codeblock-bg.cm-line:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end)::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: var(--scrolling-extra-line-length);
+    height: 1px;
+}
+
+.scrolling-horizontal-code-blocks .HyperMD-codeblock.HyperMD-codeblock-bg.cm-line::-webkit-scrollbar {
+    display: none;
+}
+
+.scrolling-horizontal-code-blocks .HyperMD-codeblock.HyperMD-codeblock-begin.HyperMD-codeblock-begin-bg.HyperMD-codeblock-bg.cm-line {
+    padding-bottom: 0.6rem;
+}
+
+/* Scrollable code in reading view */
+.scrolling-horizontal-code-blocks code {
+    white-space: pre;
+    overflow-x: auto;
 }
