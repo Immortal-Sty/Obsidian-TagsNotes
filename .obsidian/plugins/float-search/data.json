@@ -4,7 +4,7 @@
     "explainSearch": false,
     "extraContext": false,
     "matchingCase": false,
-    "query": "[\"dd\"]",
+    "query": "[\"ctime\"]",
     "sortOrder": "alphabetical"
   },
   "showFilePath": false,
