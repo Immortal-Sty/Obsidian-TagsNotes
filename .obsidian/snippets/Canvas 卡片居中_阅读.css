@@ -2,6 +2,6 @@
   * @Author: cumany cuman@qq.com
   * @Source: Pkmer.cn
   */
- .canvas-node-container .canvas-node-content.markdown-embed:not(.is-loaded) {
-	 text-align: center;
- }
+.canvas-node-container .canvas-node-content.markdown-embed:not(.is-loaded) {
+	text-align: center;
+}
